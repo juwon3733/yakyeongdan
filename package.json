@@ -1,0 +1,11 @@
+{
+  "name": "yakyeongdan",
+  "private": true,
+  "type": "module",
+  "description": "빌드 없음. js/ 파일을 Node 도구(tools/*.mjs)에서도 ES 모듈로 읽게 하려고 둔 파일.",
+  "scripts": {
+    "check": "node tools/export-prompts.mjs --check && node tools/check-assets.mjs",
+    "prompts": "node tools/export-prompts.mjs",
+    "smoke": "node tools/smoke.mjs"
+  }
+}

@@ -23,4 +23,5 @@
 ## 작업 방식
 - `main`은 항상 플레이 가능. 작업은 `feat/` `fix/` `chore/` `docs/` 브랜치 → main 병합.
 - 수치를 바꾸면 `node tools/sim.mjs`로 승률을 확인한다(도구가 생긴 뒤).
-- 그림 파이프라인: 사용자가 GPT 에이전트에게 `AGENTS.md`대로 묶음 id를 맡김 → `assets/…` 브랜치 → Claude가 이미지를 열어 보고 게임 화면에서 확인 후 병합.
+- 그림 파이프라인: 사용자가 GPT 에이전트에게 `AGENTS.md`대로 묶음 id를 맡김(요청 글·추천 순서 `docs/GPT_REQUEST.md`) → `assets/…` 브랜치 → Claude가 이미지를 열어 보고 게임 화면에서 확인 후 병합.
+- 그림 프롬프트는 `js/asset_prompts.js`만 고친다 → `node tools/export-prompts.mjs` → 커밋. `assets/prompts.json`, `docs/PROMPTS.md`는 자동 생성. 커밋 전에 `npm run check`(프롬프트 동기화 + `tools/check-assets.mjs`).

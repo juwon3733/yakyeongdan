@@ -28,8 +28,8 @@ js/
     moons.js       달
     talks.js       휴식 대화
     gacha.js       소환 확률·천장·픽업·별자리·교환소 가격
-  asset_prompts.js 그림 프롬프트 원본
-assets/ (chars/ enemies/ bg/ cards/ ui/ cg/ audio/)
+  asset_prompts.js 그림 프롬프트 원본 (→ assets/prompts.json, docs/PROMPTS.md)
+assets/ (chars/ cutins/ cg/ enemies/ bg/ title/ summon/ icons/ cards/ audio/, prompts.json)
 fonts/  (Galmuri)
 tools/
   sim.mjs          자동 플레이 시뮬레이션
@@ -69,3 +69,10 @@ prototype/index.html  처음 프로토타입 (참고용, 손대지 않음)
 - 캔버스 대신 DOM + CSS(카드·버튼)와 작은 캔버스(컷인·효과)를 섞는다. 카드 글자를 또렷하게.
 - `prefers-reduced-motion`이면 흔들림·컷인 짧게.
 - 키보드: 1~5 카드, E 턴 끝, Esc 메뉴.
+
+## 그림 로더 (아직 안 넣음, M1 뒤에)
+- `js/assets.js`: `assetList()`(js/asset_prompts.js)로 파일 목록을 알고, 화면이 그림을 요청하면 `assets/<file>`을 `Image`로 불러 본다. 있으면 그 그림, 없거나 실패하면 지금의 임시 도트(`js/render/sprites.js`)를 그대로 쓴다. 한 번 실패한 파일은 다시 요청하지 않는다(404 반복 방지).
+- 동료: `chars/<id>_stand.png`(전투·대열), `_normal/_smile/_serious`(휴식 대화·도감·대사 얼굴), `cutins/<id>_cutin.png`(듀오 컷인 대체), `cutins/duo_<a>_<b>.png`(인연 듀오, 없으면 두 컷인을 반씩 붙임).
+- 적: `enemies/<id>.png`, 보스 `boss_<id>_1/2`(체력 절반에서 바꿈). 데이터 적에 `art: 'sea_ghost'` 같은 키를 붙여 연결한다.
+- 그리기는 원본 도트 크기로 줄여 `image-rendering: pixelated`로 키운다. 배경은 320×180 원본을 640×360 판에 정확히 2배.
+- `tools/smoke.mjs`는 그림이 없어도 통과해야 한다(임시 도트).
