@@ -1112,33 +1112,34 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 /* 전투 캐릭터는 일러스트가 아니라 전투 스프라이트(원본 96×128 = 판 1:1, 적 128×128) */
 .field{padding:0 28px 6px;justify-content:space-between;align-items:flex-end}
 .party{gap:2px}
-.pm{width:96px}
-.pm img,#stage.bigtext .pm img,#app.tut[data-screen="combat"] .pm img,#stage #app.tut[data-screen="combat"] .pm img{width:96px;height:128px;margin:0;image-rendering:pixelated}
+.pm{width:80px}
+.pm img,#stage.bigtext .pm img,#app.tut[data-screen="combat"] .pm img,#stage #app.tut[data-screen="combat"] .pm img{width:72px;height:96px;margin:0;image-rendering:pixelated}
 .pm .lab{margin-top:-6px}
 .pm .lab .hpbar{flex-basis:60px;width:60px}
-.pm .lab .s{max-width:96px}
-.pm img[src^="data:"],#stage.bigtext .pm img[src^="data:"]{width:60px;height:80px;margin:48px 18px 0}
+.pm .lab .s{max-width:80px}
+.pm img[src^="data:"],#stage.bigtext .pm img[src^="data:"]{width:48px;height:64px;margin:32px 12px 0}
 .swap{margin:0 -8px 28px}
 .foes{gap:6px}
 .foe{min-width:96px}
-.foe img,#stage.bigtext .foe img,#app.tut[data-screen="combat"] .foe img,#stage #app.tut[data-screen="combat"] .foe img{width:128px;height:128px;image-rendering:pixelated}
+.foe img,#stage.bigtext .foe img,#app.tut[data-screen="combat"] .foe img,#stage #app.tut[data-screen="combat"] .foe img{width:96px;height:96px;image-rendering:pixelated}
 .foe.sm{min-width:80px}
-.foe.sm img,#stage.bigtext .foe.sm img{width:96px;height:96px}
-.foe img[src^="data:"],#stage.bigtext .foe img[src^="data:"]{width:60px;height:80px;margin-top:48px}
-.foe.sm img[src^="data:"],#stage.bigtext .foe.sm img[src^="data:"]{width:48px;height:64px;margin-top:32px}
+.foe.sm img,#stage.bigtext .foe.sm img{width:72px;height:72px}
+.foe img[src^="data:"],#stage.bigtext .foe img[src^="data:"]{width:48px;height:64px;margin-top:32px}
+.foe.sm img[src^="data:"],#stage.bigtext .foe.sm img[src^="data:"]{width:40px;height:54px;margin-top:18px}
 .foe .lab .foehp{flex-basis:64px;width:64px}
 /* 손패: 작은 카드가 겹쳐 놓이고, 커서를 대거나 고른 카드만 위로 올라오며 크게 */
-.bottom{height:84px}
+.bottom{height:70px}
 .bottom .hand{gap:0;padding:0 8px}
-.bottom .hand .card,#stage.bigtext .bottom .hand .card{flex:none;width:68px;height:92px;--ah:32px;margin:0 -5px 0;transform-origin:50% 100%;
+.bottom .hand .card,#stage.bigtext .bottom .hand .card{flex:none;width:58px;height:80px;--ah:26px;margin:0 -6px -12px;transform-origin:50% 100%;
   transition:transform .14s cubic-bezier(.2,.8,.3,1)}
-.bottom .hand .card .hd{font-size:8px}
-.bottom .hand .card .bd{font-size:7px;line-height:1.25}
-.bottom .hand .card .who{font-size:6.5px}
-.bottom .hand .card:not(.no):hover,.bottom .hand .card.sel{transform:translateY(-4px) rotate(0deg) scale(1.6);z-index:6}
+.bottom .hand .card .hd{font-size:7px;padding:0 2px 0 3px}
+.bottom .hand .card .cost{width:13px;height:13px;font-size:8px}
+.bottom .hand .card .bd{font-size:6px;line-height:1.25;padding:1px 2px}
+.bottom .hand .card .who{font-size:5.5px;padding:0 2px 1px}
+.bottom .hand .card:not(.no):hover,.bottom .hand .card.sel{transform:translateY(-14px) rotate(0deg) scale(1.9);z-index:6}
 .bottom .hand .card.sel{box-shadow:2px 2px 0 var(--shadow),0 0 0 1px var(--gold)}
 .energy b{font-size:12px}
 .endcol button{font-size:11px;padding:6px 8px}
 .topbar button{font-size:11px;padding:3px 7px}
 .topbar .clock{font-size:14px}
-.foe.boss img,#stage.bigtext .foe.boss img{width:128px;height:192px}
+.foe.boss img,#stage.bigtext .foe.boss img{width:96px;height:144px}

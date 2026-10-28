@@ -132,4 +132,3 @@
 
 /* 전투: 적 칸이 판 높이를 넘쳐 의도·노림 얼굴이 위 띠 밑으로 숨던 것 — 의도를 그림 머리 위에 겹치고 큰 적 그림을 조금 줄인다 */
 .foe .intent{position:relative;z-index:2;margin-bottom:-16px;background:rgba(12,13,30,.78);padding:0 3px}
-#stage:not(.bigtext) .foe:not(.sm) img:not(.face img){width:72px;height:108px}
