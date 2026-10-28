@@ -5,12 +5,13 @@
 import { CARDS } from './data/cards.js';
 import { cardArtKind } from './cardkind.js';
 
-export const STYLE_VERSION = 5; // 5: 전투는 일러스트 대신 저해상도 전투 스프라이트(동료 4×2 시트 8동작, 적 128×128). 4: 여러 장을 한 시트에(칸은 2배 도트라 한 장짜리와 같은 세밀함, 자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
+export const STYLE_VERSION = 6; // 6: 기술 이펙트 시트(공용 4종·동료별 시그니처), 스킨은 skin-<id>로 맨 뒤. 5: 전투는 일러스트 대신 저해상도 전투 스프라이트(동료 4×2 시트 8동작, 적 128×128). 4: 여러 장을 한 시트에(칸은 2배 도트라 한 장짜리와 같은 세밀함, 자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
 
 // ── 공통 스타일 ──────────────────────────────────────────
 export const STYLE = {
   pixel: '이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.',
   sprite: '이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.',
+  vfx: '이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.',
   distinct: 'Give each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.',
   character: 'Character design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.',
   rarity5: 'This is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.',
@@ -40,10 +41,12 @@ export const SPEC = {
   appicon:  { w: 1024, h: 1024, native: '64×64',   scale: 16, transparent: false, colors: 64, folder: 'app', note: '앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다' },
   style:    { w: 1024, h: 1536, native: '시안마다 다름', scale: 0, transparent: true, colors: Infinity, folder: 'style', note: '그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다' },
   card:     { w: 768,  h: 576,  native: '256×192', scale: 3, transparent: false, colors: 256, folder: 'cards', note: '카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
+  fx:       { w: 512,  h: 512,  native: '128×128', scale: 4, transparent: true,  colors: 128, folder: 'fx', note: '기술 이펙트 한 프레임(캐릭터 없이 효과만) · 이펙트 시트에서 잘라 냄 · 프레임을 차례로 돌려 움직인다' },
   // 시트: GPT가 한 장에 여러 개를 그리고, tools/slice-sheets.mjs가 칸마다 잘라 위 종류의 파일로 만든다(npm run art).
   battlesheet: { w: 1536, h: 1024, native: '384×256 (칸 96×128 × 8)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '전투 스프라이트 4×2 — 위: 서 있기·숨쉬기·공격·스킬 / 아래: 방어·피격·쓰러짐·승리, 칸 384×512' },
   cardsheet: { w: 1024, h: 1024, native: '512×512 (칸 256×256 × 4)', scale: 2, transparent: false, colors: Infinity, folder: 'sheets', note: '카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀' },
   foesheet:  { w: 1536, h: 1024, native: '384×256 (칸 128×128 × 6)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '적 3×2, 칸 512×512' },
+  fxsheet:  { w: 1536, h: 1024, native: '384×256 (칸 128×128 × 6)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512' },
   iconsheet: { w: 1024, h: 1024, native: '128×128 (칸 32×32 × 16)', scale: 8, transparent: true, colors: Infinity, folder: 'sheets', note: '아이콘 4×4, 칸 256×256' },
 };
 
@@ -392,11 +395,11 @@ export function assetList() {
         join(base, STYLE.onModel, `${who}\nWaist-up portrait facing slightly to the side. Expression and pose: ${expr}. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric.`),
         { followup_prompt: `Same character, same style. Waist-up portrait, transparent background. Expression and pose: ${expr}.`, reference_images: face === 'normal' ? [] : ref }));
     }
-    batches.push({ id: `extra-${id}`, title: `${c.name} 나중(표정·컷인·두 번째 의상)` });
+    batches.push({ id: `extra-${id}`, title: `${c.name} 나중(웃음·진지 표정·컷인)` });
     out.push(item('cutin', `${id}_cutin`, `extra-${id}`, `${id}_cutin.png`,
       join(base, STYLE.onModel, `${who}\nDramatic cut-in panel for a special move: ${c.cutin}. Wide horizontal composition, the face and action inside the middle horizontal band (the top and bottom will be cropped to 1536x576). Speed lines made of pixels, strong accent colors (${c.accent}).`),
       { reference_images: ref, must_show: '얼굴이 가운데 띠 안' }));
-    out.push(item('outfit', `${id}_outfit2`, `extra-${id}`, `${id}_outfit2.png`,
+    out.push(item('outfit', `${id}_outfit2`, `skin-${id}`, `${id}_outfit2.png`,
       join(base, STYLE.onModel, `${who}\nSame person, same face and hair, but in a ${c.outfit}. Full-body standing pose facing slightly right, transparent background. Native resolution 256x384 pixels, upscaled exactly 4x to 1024x1536.`),
       { reference_images: ref }));
   }
@@ -506,6 +509,25 @@ ${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transpare
   }
 
   // 배경·타이틀·소환·아이콘
+  // 기술 이펙트: 공용 4종(6프레임) + 동료마다 시그니처 이펙트(공격 3프레임 / 스킬 3프레임). 프레임을 차례로 돌려 터뜨린다(js/juice.js playFx).
+  const fxCells = (name, n) => Array.from({ length: n }, (_, i) => ['fx', `fx_${name}_${i + 1}`, `${name}_${i + 1}.png`, i % 3, Math.floor(i / 3)]);
+  const fxSheet = (batch, id, prompt, cells, must) => out.push(sheet('fxsheet', id, batch, `${id}.png`, join(STYLE.vfx, prompt + `
+One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`), [3, 2], cells, { must_show: must }));
+  const COMMON_FX = {
+    slash: 'a sword SLASH hit: a wide crescent slash arc (white core, pale blue edge) appearing, flashing brightest, then breaking into sparks and fading',
+    explode: 'an EXPLOSION hit: a small bright flash, expanding fireball with smoke ring, debris and embers, then dissipating smoke',
+    pierce: 'a PIERCE hit: a sharp spear thrust streak from the left with a star-shaped impact flash, shock ring, then fading sparks',
+    magic: 'a MAGIC hit: a glowing rune circle snapping open, a burst of light orbs and stars, then sparkling dust fading',
+  };
+  batches.push({ id: 'fx-common', title: '공용 타격 이펙트 4종 (시트 4장 → 6프레임씩)' });
+  for (const [name, desc] of Object.entries(COMMON_FX)) fxSheet('fx-common', `fx_${name}`, `Six animation frames of ${desc}. Frame 1 is the very start (small), frame 3-4 the peak (biggest, brightest), frame 6 almost gone.`, fxCells(name, 6), `3×2 프레임: ${name} 시작→절정→사라짐`);
+  for (const [id, c] of Object.entries(CHARS)) {
+    batches.push({ id: `fx-${id}`, title: `${c.name} 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)` });
+    fxSheet(`fx-${id}`, `fx_${id}`, `${c.name}'s signature skill effects (her motifs: ${c.fx}; accent colors ${c.accent}). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.`,
+      [...[0, 1, 2].map((i) => ['fx', `fx_${id}_atk_${i + 1}`, `${id}_atk_${i + 1}.png`, i, 0]), ...[0, 1, 2].map((i) => ['fx', `fx_${id}_skill_${i + 1}`, `${id}_skill_${i + 1}.png`, i, 1])],
+      '위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만');
+  }
+
   batches.push({ id: 'bg', title: '배경' });
   for (const [id, desc] of Object.entries(BGS)) {
     out.push(item('bg', `bg_${id}`, 'bg', `${id}.png`, join(STYLE.pixel, `Background: ${desc}. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 pixels, full color, limited palette of about 64 colors, upscaled exactly 2x with nearest-neighbor to 1280x720.`)));
@@ -537,5 +559,7 @@ ${part.length < 16 ? `Cells ${part.length + 1}-16 stay completely empty (transpa
   };
   iconSheets('icons', '도구 아이콘', Object.entries(RELICS));
   iconSheets('icons-sig', '동료 전용 도구 아이콘', Object.entries(SIG_RELICS));
+  // 스킨(두 번째 의상)은 나중에 — 맨 뒤
+  for (const [id, c] of Object.entries(CHARS)) batches.push({ id: `skin-${id}`, title: `${c.name} 스킨(두 번째 의상) — 나중` });
   return { batches, items: out, outputs: [...outputs] };
 }

@@ -17,7 +17,7 @@ const json = JSON.stringify({
   items,
 }, null, 2) + '\n';
 
-const kindName = { stand: '서 있는 그림', portrait: '상반신', outfit: '두 번째 의상', cutin: '컷인', duo: '인연 듀오 컷인', cg: '★5 전신 CG', enemy: '일반 적', elite: '강적', boss: '보스', bg: '배경', title: '타이틀', summon: '소환 배경', meteor: '별똥별', icon: '도구 아이콘', card: '카드 그림', sprite: '전투 스프라이트', battlesheet: '전투 스프라이트 시트', cardsheet: '카드 시트', foesheet: '적 시트', iconsheet: '아이콘 시트' };
+const kindName = { stand: '서 있는 그림', portrait: '상반신', outfit: '두 번째 의상', cutin: '컷인', duo: '인연 듀오 컷인', cg: '★5 전신 CG', enemy: '일반 적', elite: '강적', boss: '보스', bg: '배경', title: '타이틀', summon: '소환 배경', meteor: '별똥별', icon: '도구 아이콘', card: '카드 그림', sprite: '전투 스프라이트', fx: '기술 이펙트', fxsheet: '이펙트 시트', battlesheet: '전투 스프라이트 시트', cardsheet: '카드 시트', foesheet: '적 시트', iconsheet: '아이콘 시트' };
 const md = [];
 md.push('# 그림 프롬프트 목록');
 md.push('');

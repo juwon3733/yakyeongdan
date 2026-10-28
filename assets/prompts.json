@@ -1,6 +1,6 @@
 {
   "generated_from": "js/asset_prompts.js",
-  "style_version": 5,
+  "style_version": 6,
   "rules": "AGENTS.md를 따른다. 프롬프트는 고치지 말고 그대로 쓴다.",
   "batches": [
     {
@@ -14,12 +14,11 @@
     },
     {
       "id": "extra-sion",
-      "title": "시온 나중(표정·컷인·두 번째 의상)",
+      "title": "시온 나중(웃음·진지 표정·컷인)",
       "items": [
         "sion_smile",
         "sion_serious",
-        "sion_cutin",
-        "sion_outfit2"
+        "sion_cutin"
       ]
     },
     {
@@ -33,12 +32,11 @@
     },
     {
       "id": "extra-lunaria",
-      "title": "루나리아 나중(표정·컷인·두 번째 의상)",
+      "title": "루나리아 나중(웃음·진지 표정·컷인)",
       "items": [
         "lunaria_smile",
         "lunaria_serious",
-        "lunaria_cutin",
-        "lunaria_outfit2"
+        "lunaria_cutin"
       ]
     },
     {
@@ -52,12 +50,11 @@
     },
     {
       "id": "extra-akane",
-      "title": "아카네 나중(표정·컷인·두 번째 의상)",
+      "title": "아카네 나중(웃음·진지 표정·컷인)",
       "items": [
         "akane_smile",
         "akane_serious",
-        "akane_cutin",
-        "akane_outfit2"
+        "akane_cutin"
       ]
     },
     {
@@ -71,12 +68,11 @@
     },
     {
       "id": "extra-eleonore",
-      "title": "엘레오노르 나중(표정·컷인·두 번째 의상)",
+      "title": "엘레오노르 나중(웃음·진지 표정·컷인)",
       "items": [
         "eleonore_smile",
         "eleonore_serious",
-        "eleonore_cutin",
-        "eleonore_outfit2"
+        "eleonore_cutin"
       ]
     },
     {
@@ -90,12 +86,11 @@
     },
     {
       "id": "extra-nerea",
-      "title": "네레아 나중(표정·컷인·두 번째 의상)",
+      "title": "네레아 나중(웃음·진지 표정·컷인)",
       "items": [
         "nerea_smile",
         "nerea_serious",
-        "nerea_cutin",
-        "nerea_outfit2"
+        "nerea_cutin"
       ]
     },
     {
@@ -109,12 +104,11 @@
     },
     {
       "id": "extra-iris",
-      "title": "아이리스 나중(표정·컷인·두 번째 의상)",
+      "title": "아이리스 나중(웃음·진지 표정·컷인)",
       "items": [
         "iris_smile",
         "iris_serious",
-        "iris_cutin",
-        "iris_outfit2"
+        "iris_cutin"
       ]
     },
     {
@@ -128,12 +122,11 @@
     },
     {
       "id": "extra-noel",
-      "title": "노엘 나중(표정·컷인·두 번째 의상)",
+      "title": "노엘 나중(웃음·진지 표정·컷인)",
       "items": [
         "noel_smile",
         "noel_serious",
-        "noel_cutin",
-        "noel_outfit2"
+        "noel_cutin"
       ]
     },
     {
@@ -147,12 +140,11 @@
     },
     {
       "id": "extra-raven",
-      "title": "레이븐 나중(표정·컷인·두 번째 의상)",
+      "title": "레이븐 나중(웃음·진지 표정·컷인)",
       "items": [
         "raven_smile",
         "raven_serious",
-        "raven_cutin",
-        "raven_outfit2"
+        "raven_cutin"
       ]
     },
     {
@@ -166,12 +158,11 @@
     },
     {
       "id": "extra-mimimomo",
-      "title": "미미·모모 나중(표정·컷인·두 번째 의상)",
+      "title": "미미·모모 나중(웃음·진지 표정·컷인)",
       "items": [
         "mimimomo_smile",
         "mimimomo_serious",
-        "mimimomo_cutin",
-        "mimimomo_outfit2"
+        "mimimomo_cutin"
       ]
     },
     {
@@ -185,12 +176,11 @@
     },
     {
       "id": "extra-sebas",
-      "title": "세바스 나중(표정·컷인·두 번째 의상)",
+      "title": "세바스 나중(웃음·진지 표정·컷인)",
       "items": [
         "sebas_smile",
         "sebas_serious",
-        "sebas_cutin",
-        "sebas_outfit2"
+        "sebas_cutin"
       ]
     },
     {
@@ -204,12 +194,11 @@
     },
     {
       "id": "extra-mariana",
-      "title": "마리아나 나중(표정·컷인·두 번째 의상)",
+      "title": "마리아나 나중(웃음·진지 표정·컷인)",
       "items": [
         "mariana_smile",
         "mariana_serious",
-        "mariana_cutin",
-        "mariana_outfit2"
+        "mariana_cutin"
       ]
     },
     {
@@ -223,12 +212,11 @@
     },
     {
       "id": "extra-tomori",
-      "title": "토모리 나중(표정·컷인·두 번째 의상)",
+      "title": "토모리 나중(웃음·진지 표정·컷인)",
       "items": [
         "tomori_smile",
         "tomori_serious",
-        "tomori_cutin",
-        "tomori_outfit2"
+        "tomori_cutin"
       ]
     },
     {
@@ -242,12 +230,11 @@
     },
     {
       "id": "extra-sigrun",
-      "title": "시그룬 나중(표정·컷인·두 번째 의상)",
+      "title": "시그룬 나중(웃음·진지 표정·컷인)",
       "items": [
         "sigrun_smile",
         "sigrun_serious",
-        "sigrun_cutin",
-        "sigrun_outfit2"
+        "sigrun_cutin"
       ]
     },
     {
@@ -261,12 +248,11 @@
     },
     {
       "id": "extra-zeno",
-      "title": "제노 나중(표정·컷인·두 번째 의상)",
+      "title": "제노 나중(웃음·진지 표정·컷인)",
       "items": [
         "zeno_smile",
         "zeno_serious",
-        "zeno_cutin",
-        "zeno_outfit2"
+        "zeno_cutin"
       ]
     },
     {
@@ -280,12 +266,11 @@
     },
     {
       "id": "extra-bertha",
-      "title": "베르타 나중(표정·컷인·두 번째 의상)",
+      "title": "베르타 나중(웃음·진지 표정·컷인)",
       "items": [
         "bertha_smile",
         "bertha_serious",
-        "bertha_cutin",
-        "bertha_outfit2"
+        "bertha_cutin"
       ]
     },
     {
@@ -299,12 +284,11 @@
     },
     {
       "id": "extra-brick",
-      "title": "브릭 나중(표정·컷인·두 번째 의상)",
+      "title": "브릭 나중(웃음·진지 표정·컷인)",
       "items": [
         "brick_smile",
         "brick_serious",
-        "brick_cutin",
-        "brick_outfit2"
+        "brick_cutin"
       ]
     },
     {
@@ -318,12 +302,11 @@
     },
     {
       "id": "extra-marta",
-      "title": "마르타 나중(표정·컷인·두 번째 의상)",
+      "title": "마르타 나중(웃음·진지 표정·컷인)",
       "items": [
         "marta_smile",
         "marta_serious",
-        "marta_cutin",
-        "marta_outfit2"
+        "marta_cutin"
       ]
     },
     {
@@ -337,12 +320,11 @@
     },
     {
       "id": "extra-finn",
-      "title": "핀 나중(표정·컷인·두 번째 의상)",
+      "title": "핀 나중(웃음·진지 표정·컷인)",
       "items": [
         "finn_smile",
         "finn_serious",
-        "finn_cutin",
-        "finn_outfit2"
+        "finn_cutin"
       ]
     },
     {
@@ -356,12 +338,11 @@
     },
     {
       "id": "extra-laila",
-      "title": "라일라 나중(표정·컷인·두 번째 의상)",
+      "title": "라일라 나중(웃음·진지 표정·컷인)",
       "items": [
         "laila_smile",
         "laila_serious",
-        "laila_cutin",
-        "laila_outfit2"
+        "laila_cutin"
       ]
     },
     {
@@ -375,12 +356,11 @@
     },
     {
       "id": "extra-dora",
-      "title": "도라 나중(표정·컷인·두 번째 의상)",
+      "title": "도라 나중(웃음·진지 표정·컷인)",
       "items": [
         "dora_smile",
         "dora_serious",
-        "dora_cutin",
-        "dora_outfit2"
+        "dora_cutin"
       ]
     },
     {
@@ -394,12 +374,11 @@
     },
     {
       "id": "extra-gordon",
-      "title": "고든 나중(표정·컷인·두 번째 의상)",
+      "title": "고든 나중(웃음·진지 표정·컷인)",
       "items": [
         "gordon_smile",
         "gordon_serious",
-        "gordon_cutin",
-        "gordon_outfit2"
+        "gordon_cutin"
       ]
     },
     {
@@ -413,12 +392,11 @@
     },
     {
       "id": "extra-fukuro",
-      "title": "후쿠로 나중(표정·컷인·두 번째 의상)",
+      "title": "후쿠로 나중(웃음·진지 표정·컷인)",
       "items": [
         "fukuro_smile",
         "fukuro_serious",
-        "fukuro_cutin",
-        "fukuro_outfit2"
+        "fukuro_cutin"
       ]
     },
     {
@@ -877,6 +855,170 @@
       ]
     },
     {
+      "id": "fx-common",
+      "title": "공용 타격 이펙트 4종 (시트 4장 → 6프레임씩)",
+      "items": [
+        "fx_slash",
+        "fx_explode",
+        "fx_pierce",
+        "fx_magic"
+      ]
+    },
+    {
+      "id": "fx-sion",
+      "title": "시온 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_sion"
+      ]
+    },
+    {
+      "id": "fx-lunaria",
+      "title": "루나리아 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_lunaria"
+      ]
+    },
+    {
+      "id": "fx-akane",
+      "title": "아카네 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_akane"
+      ]
+    },
+    {
+      "id": "fx-eleonore",
+      "title": "엘레오노르 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_eleonore"
+      ]
+    },
+    {
+      "id": "fx-nerea",
+      "title": "네레아 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_nerea"
+      ]
+    },
+    {
+      "id": "fx-iris",
+      "title": "아이리스 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_iris"
+      ]
+    },
+    {
+      "id": "fx-noel",
+      "title": "노엘 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_noel"
+      ]
+    },
+    {
+      "id": "fx-raven",
+      "title": "레이븐 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_raven"
+      ]
+    },
+    {
+      "id": "fx-mimimomo",
+      "title": "미미·모모 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_mimimomo"
+      ]
+    },
+    {
+      "id": "fx-sebas",
+      "title": "세바스 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_sebas"
+      ]
+    },
+    {
+      "id": "fx-mariana",
+      "title": "마리아나 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_mariana"
+      ]
+    },
+    {
+      "id": "fx-tomori",
+      "title": "토모리 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_tomori"
+      ]
+    },
+    {
+      "id": "fx-sigrun",
+      "title": "시그룬 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_sigrun"
+      ]
+    },
+    {
+      "id": "fx-zeno",
+      "title": "제노 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_zeno"
+      ]
+    },
+    {
+      "id": "fx-bertha",
+      "title": "베르타 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_bertha"
+      ]
+    },
+    {
+      "id": "fx-brick",
+      "title": "브릭 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_brick"
+      ]
+    },
+    {
+      "id": "fx-marta",
+      "title": "마르타 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_marta"
+      ]
+    },
+    {
+      "id": "fx-finn",
+      "title": "핀 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_finn"
+      ]
+    },
+    {
+      "id": "fx-laila",
+      "title": "라일라 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_laila"
+      ]
+    },
+    {
+      "id": "fx-dora",
+      "title": "도라 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_dora"
+      ]
+    },
+    {
+      "id": "fx-gordon",
+      "title": "고든 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_gordon"
+      ]
+    },
+    {
+      "id": "fx-fukuro",
+      "title": "후쿠로 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_fukuro"
+      ]
+    },
+    {
       "id": "bg",
       "title": "배경",
       "items": [
@@ -934,6 +1076,160 @@
       "items": [
         "icons-sig_1",
         "icons-sig_2"
+      ]
+    },
+    {
+      "id": "skin-sion",
+      "title": "시온 스킨(두 번째 의상) — 나중",
+      "items": [
+        "sion_outfit2"
+      ]
+    },
+    {
+      "id": "skin-lunaria",
+      "title": "루나리아 스킨(두 번째 의상) — 나중",
+      "items": [
+        "lunaria_outfit2"
+      ]
+    },
+    {
+      "id": "skin-akane",
+      "title": "아카네 스킨(두 번째 의상) — 나중",
+      "items": [
+        "akane_outfit2"
+      ]
+    },
+    {
+      "id": "skin-eleonore",
+      "title": "엘레오노르 스킨(두 번째 의상) — 나중",
+      "items": [
+        "eleonore_outfit2"
+      ]
+    },
+    {
+      "id": "skin-nerea",
+      "title": "네레아 스킨(두 번째 의상) — 나중",
+      "items": [
+        "nerea_outfit2"
+      ]
+    },
+    {
+      "id": "skin-iris",
+      "title": "아이리스 스킨(두 번째 의상) — 나중",
+      "items": [
+        "iris_outfit2"
+      ]
+    },
+    {
+      "id": "skin-noel",
+      "title": "노엘 스킨(두 번째 의상) — 나중",
+      "items": [
+        "noel_outfit2"
+      ]
+    },
+    {
+      "id": "skin-raven",
+      "title": "레이븐 스킨(두 번째 의상) — 나중",
+      "items": [
+        "raven_outfit2"
+      ]
+    },
+    {
+      "id": "skin-mimimomo",
+      "title": "미미·모모 스킨(두 번째 의상) — 나중",
+      "items": [
+        "mimimomo_outfit2"
+      ]
+    },
+    {
+      "id": "skin-sebas",
+      "title": "세바스 스킨(두 번째 의상) — 나중",
+      "items": [
+        "sebas_outfit2"
+      ]
+    },
+    {
+      "id": "skin-mariana",
+      "title": "마리아나 스킨(두 번째 의상) — 나중",
+      "items": [
+        "mariana_outfit2"
+      ]
+    },
+    {
+      "id": "skin-tomori",
+      "title": "토모리 스킨(두 번째 의상) — 나중",
+      "items": [
+        "tomori_outfit2"
+      ]
+    },
+    {
+      "id": "skin-sigrun",
+      "title": "시그룬 스킨(두 번째 의상) — 나중",
+      "items": [
+        "sigrun_outfit2"
+      ]
+    },
+    {
+      "id": "skin-zeno",
+      "title": "제노 스킨(두 번째 의상) — 나중",
+      "items": [
+        "zeno_outfit2"
+      ]
+    },
+    {
+      "id": "skin-bertha",
+      "title": "베르타 스킨(두 번째 의상) — 나중",
+      "items": [
+        "bertha_outfit2"
+      ]
+    },
+    {
+      "id": "skin-brick",
+      "title": "브릭 스킨(두 번째 의상) — 나중",
+      "items": [
+        "brick_outfit2"
+      ]
+    },
+    {
+      "id": "skin-marta",
+      "title": "마르타 스킨(두 번째 의상) — 나중",
+      "items": [
+        "marta_outfit2"
+      ]
+    },
+    {
+      "id": "skin-finn",
+      "title": "핀 스킨(두 번째 의상) — 나중",
+      "items": [
+        "finn_outfit2"
+      ]
+    },
+    {
+      "id": "skin-laila",
+      "title": "라일라 스킨(두 번째 의상) — 나중",
+      "items": [
+        "laila_outfit2"
+      ]
+    },
+    {
+      "id": "skin-dora",
+      "title": "도라 스킨(두 번째 의상) — 나중",
+      "items": [
+        "dora_outfit2"
+      ]
+    },
+    {
+      "id": "skin-gordon",
+      "title": "고든 스킨(두 번째 의상) — 나중",
+      "items": [
+        "gordon_outfit2"
+      ]
+    },
+    {
+      "id": "skin-fukuro",
+      "title": "후쿠로 스킨(두 번째 의상) — 나중",
+      "items": [
+        "fukuro_outfit2"
       ]
     }
   ],
@@ -1029,7 +1325,7 @@
     {
       "id": "sion_outfit2",
       "kind": "outfit",
-      "batch": "extra-sion",
+      "batch": "skin-sion",
       "file": "chars/sion_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -1134,7 +1430,7 @@
     {
       "id": "lunaria_outfit2",
       "kind": "outfit",
-      "batch": "extra-lunaria",
+      "batch": "skin-lunaria",
       "file": "chars/lunaria_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -1239,7 +1535,7 @@
     {
       "id": "akane_outfit2",
       "kind": "outfit",
-      "batch": "extra-akane",
+      "batch": "skin-akane",
       "file": "chars/akane_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -1344,7 +1640,7 @@
     {
       "id": "eleonore_outfit2",
       "kind": "outfit",
-      "batch": "extra-eleonore",
+      "batch": "skin-eleonore",
       "file": "chars/eleonore_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -1449,7 +1745,7 @@
     {
       "id": "nerea_outfit2",
       "kind": "outfit",
-      "batch": "extra-nerea",
+      "batch": "skin-nerea",
       "file": "chars/nerea_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -1554,7 +1850,7 @@
     {
       "id": "iris_outfit2",
       "kind": "outfit",
-      "batch": "extra-iris",
+      "batch": "skin-iris",
       "file": "chars/iris_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -1659,7 +1955,7 @@
     {
       "id": "noel_outfit2",
       "kind": "outfit",
-      "batch": "extra-noel",
+      "batch": "skin-noel",
       "file": "chars/noel_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -1764,7 +2060,7 @@
     {
       "id": "raven_outfit2",
       "kind": "outfit",
-      "batch": "extra-raven",
+      "batch": "skin-raven",
       "file": "chars/raven_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -1869,7 +2165,7 @@
     {
       "id": "mimimomo_outfit2",
       "kind": "outfit",
-      "batch": "extra-mimimomo",
+      "batch": "skin-mimimomo",
       "file": "chars/mimimomo_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -1974,7 +2270,7 @@
     {
       "id": "sebas_outfit2",
       "kind": "outfit",
-      "batch": "extra-sebas",
+      "batch": "skin-sebas",
       "file": "chars/sebas_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -2079,7 +2375,7 @@
     {
       "id": "mariana_outfit2",
       "kind": "outfit",
-      "batch": "extra-mariana",
+      "batch": "skin-mariana",
       "file": "chars/mariana_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -2184,7 +2480,7 @@
     {
       "id": "tomori_outfit2",
       "kind": "outfit",
-      "batch": "extra-tomori",
+      "batch": "skin-tomori",
       "file": "chars/tomori_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -2289,7 +2585,7 @@
     {
       "id": "sigrun_outfit2",
       "kind": "outfit",
-      "batch": "extra-sigrun",
+      "batch": "skin-sigrun",
       "file": "chars/sigrun_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -2394,7 +2690,7 @@
     {
       "id": "zeno_outfit2",
       "kind": "outfit",
-      "batch": "extra-zeno",
+      "batch": "skin-zeno",
       "file": "chars/zeno_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -2499,7 +2795,7 @@
     {
       "id": "bertha_outfit2",
       "kind": "outfit",
-      "batch": "extra-bertha",
+      "batch": "skin-bertha",
       "file": "chars/bertha_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -2604,7 +2900,7 @@
     {
       "id": "brick_outfit2",
       "kind": "outfit",
-      "batch": "extra-brick",
+      "batch": "skin-brick",
       "file": "chars/brick_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -2709,7 +3005,7 @@
     {
       "id": "marta_outfit2",
       "kind": "outfit",
-      "batch": "extra-marta",
+      "batch": "skin-marta",
       "file": "chars/marta_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -2814,7 +3110,7 @@
     {
       "id": "finn_outfit2",
       "kind": "outfit",
-      "batch": "extra-finn",
+      "batch": "skin-finn",
       "file": "chars/finn_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -2919,7 +3215,7 @@
     {
       "id": "laila_outfit2",
       "kind": "outfit",
-      "batch": "extra-laila",
+      "batch": "skin-laila",
       "file": "chars/laila_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -3024,7 +3320,7 @@
     {
       "id": "dora_outfit2",
       "kind": "outfit",
-      "batch": "extra-dora",
+      "batch": "skin-dora",
       "file": "chars/dora_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -3129,7 +3425,7 @@
     {
       "id": "gordon_outfit2",
       "kind": "outfit",
-      "batch": "extra-gordon",
+      "batch": "skin-gordon",
       "file": "chars/gordon_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -3234,7 +3530,7 @@
     {
       "id": "fukuro_outfit2",
       "kind": "outfit",
-      "batch": "extra-fukuro",
+      "batch": "skin-fukuro",
       "file": "chars/fukuro_outfit2.png",
       "width": 1024,
       "height": 1536,
@@ -9586,6 +9882,2840 @@
       "reference_images": [
         "enemies/boss_dawn_1.png",
         "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "fx_slash",
+      "kind": "fxsheet",
+      "batch": "fx-common",
+      "file": "sheets/fx_slash.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\nSix animation frames of a sword SLASH hit: a wide crescent slash arc (white core, pale blue edge) appearing, flashing brightest, then breaking into sparks and fading. Frame 1 is the very start (small), frame 3-4 the peak (biggest, brightest), frame 6 almost gone.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "3×2 프레임: slash 시작→절정→사라짐",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/slash_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/slash_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/slash_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/slash_4.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/slash_5.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/slash_6.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_explode",
+      "kind": "fxsheet",
+      "batch": "fx-common",
+      "file": "sheets/fx_explode.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\nSix animation frames of an EXPLOSION hit: a small bright flash, expanding fireball with smoke ring, debris and embers, then dissipating smoke. Frame 1 is the very start (small), frame 3-4 the peak (biggest, brightest), frame 6 almost gone.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "3×2 프레임: explode 시작→절정→사라짐",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/explode_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/explode_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/explode_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/explode_4.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/explode_5.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/explode_6.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_pierce",
+      "kind": "fxsheet",
+      "batch": "fx-common",
+      "file": "sheets/fx_pierce.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\nSix animation frames of a PIERCE hit: a sharp spear thrust streak from the left with a star-shaped impact flash, shock ring, then fading sparks. Frame 1 is the very start (small), frame 3-4 the peak (biggest, brightest), frame 6 almost gone.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "3×2 프레임: pierce 시작→절정→사라짐",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/pierce_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/pierce_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/pierce_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/pierce_4.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/pierce_5.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/pierce_6.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_magic",
+      "kind": "fxsheet",
+      "batch": "fx-common",
+      "file": "sheets/fx_magic.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\nSix animation frames of a MAGIC hit: a glowing rune circle snapping open, a burst of light orbs and stars, then sparkling dust fading. Frame 1 is the very start (small), frame 3-4 the peak (biggest, brightest), frame 6 almost gone.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "3×2 프레임: magic 시작→절정→사라짐",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/magic_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/magic_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/magic_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/magic_4.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/magic_5.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/magic_6.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_sion",
+      "kind": "fxsheet",
+      "batch": "fx-sion",
+      "file": "sheets/fx_sion.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n시온's signature skill effects (her motifs: glowing star spirits like tiny lantern stars, constellation lines, a starfield swirling from her star-map cloak; accent colors silver-blue and gold). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/sion_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sion_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sion_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sion_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sion_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sion_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_lunaria",
+      "kind": "fxsheet",
+      "batch": "fx-lunaria",
+      "file": "sheets/fx_lunaria.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n루나리아's signature skill effects (her motifs: twin moonlight fans, silver crescent arcs, a translucent veil, ankle bells, the moon (crescent, half, full or new as the card says) huge behind her; accent colors moon silver and pale violet). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/lunaria_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/lunaria_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/lunaria_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/lunaria_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/lunaria_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/lunaria_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_akane",
+      "kind": "fxsheet",
+      "batch": "fx-akane",
+      "file": "sheets/fx_akane.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n아카네's signature skill effects (her motifs: twin katana-like blades with flame patterns, crimson fire trails, burning embers, a high ponytail whipping; accent colors crimson and gold). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/akane_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/akane_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/akane_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/akane_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/akane_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/akane_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_eleonore",
+      "kind": "fxsheet",
+      "batch": "fx-eleonore",
+      "file": "sheets/fx_eleonore.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n엘레오노르's signature skill effects (her motifs: a giant clock-hand staff, glowing clock faces, brass gears, violet time ripples, clock hands spinning; accent colors violet and brass). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/eleonore_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/eleonore_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/eleonore_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/eleonore_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/eleonore_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/eleonore_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_nerea",
+      "kind": "fxsheet",
+      "batch": "fx-nerea",
+      "file": "sheets/fx_nerea.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n네레아's signature skill effects (her motifs: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky; accent colors sea teal and starlight gold). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/nerea_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/nerea_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/nerea_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/nerea_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/nerea_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/nerea_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_iris",
+      "kind": "fxsheet",
+      "batch": "fx-iris",
+      "file": "sheets/fx_iris.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n아이리스's signature skill effects (her motifs: a slender silver longsword, sharp white slash arcs, a calm cold expression, long black hair flowing with the cut; accent colors silver and pale blue). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/iris_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/iris_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/iris_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/iris_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/iris_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/iris_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_noel",
+      "kind": "fxsheet",
+      "batch": "fx-noel",
+      "file": "sheets/fx_noel.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n노엘's signature skill effects (her motifs: a huge pillow, sleepy half-closed eyes, dreamy pink-lavender magic, shooting stars, floating sheep-shaped clouds and sparkles (never letters); accent colors pink and lavender). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/noel_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/noel_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/noel_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/noel_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/noel_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/noel_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_raven",
+      "kind": "fxsheet",
+      "batch": "fx-raven",
+      "file": "sheets/fx_raven.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n레이븐's signature skill effects (her motifs: a crow-beak half mask, black feathers flying like blades, wrist poison needles, green-violet poison mist; accent colors black and violet). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/raven_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/raven_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/raven_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/raven_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/raven_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/raven_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_mimimomo",
+      "kind": "fxsheet",
+      "batch": "fx-mimimomo",
+      "file": "sheets/fx_mimimomo.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n미미·모모's signature skill effects (her motifs: the twin girls: Mimi (pink hair, right ribbon, small dagger) and Momo (sky-blue hair, left ribbon, umbrella), mirrored symmetric poses, pink and blue sparkles; accent colors pink and sky blue). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/mimimomo_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/mimimomo_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/mimimomo_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/mimimomo_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/mimimomo_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/mimimomo_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_sebas",
+      "kind": "fxsheet",
+      "batch": "fx-sebas",
+      "file": "sheets/fx_sebas.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n세바스's signature skill effects (her motifs: an elegant old butler with a monocle, silver tea set, a pocket watch, a cane sword, impeccable white gloves; accent colors black and silver). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/sebas_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sebas_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sebas_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sebas_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sebas_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sebas_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_mariana",
+      "kind": "fxsheet",
+      "batch": "fx-mariana",
+      "file": "sheets/fx_mariana.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n마리아나's signature skill effects (her motifs: a pirate queen with a feathered tricorn, a flintlock pistol, gold coins flying, a ship's cannon or anchor; accent colors gold and deep red). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/mariana_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/mariana_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/mariana_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/mariana_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/mariana_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/mariana_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_tomori",
+      "kind": "fxsheet",
+      "batch": "fx-tomori",
+      "file": "sheets/fx_tomori.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n토모리's signature skill effects (her motifs: a big warm lantern, a lighthouse beam, a yellow raincoat, warm light pushing shadows away; accent colors yellow and warm orange). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/tomori_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/tomori_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/tomori_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/tomori_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/tomori_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/tomori_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_sigrun",
+      "kind": "fxsheet",
+      "batch": "fx-sigrun",
+      "file": "sheets/fx_sigrun.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n시그룬's signature skill effects (her motifs: a long silver lance, white feathered wings of light, a white feather cape, diving or soaring through clouds; accent colors silver and white). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/sigrun_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sigrun_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sigrun_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sigrun_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sigrun_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/sigrun_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_zeno",
+      "kind": "fxsheet",
+      "batch": "fx-zeno",
+      "file": "sheets/fx_zeno.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n제노's signature skill effects (her motifs: a black dragon-scale greatsword, black flames, a dragon silhouette, one golden dragon eye glowing; accent colors black and dragon gold). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/zeno_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/zeno_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/zeno_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/zeno_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/zeno_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/zeno_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_bertha",
+      "kind": "fxsheet",
+      "batch": "fx-bertha",
+      "file": "sheets/fx_bertha.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n베르타's signature skill effects (her motifs: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around; accent colors amber lantern and plum). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/bertha_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/bertha_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/bertha_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/bertha_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/bertha_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/bertha_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_brick",
+      "kind": "fxsheet",
+      "batch": "fx-brick",
+      "file": "sheets/fx_brick.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n브릭's signature skill effects (her motifs: a hand cannon bigger than her body, glowing shells, muzzle blasts, goggles on her head, a big grin; accent colors red and brass). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/brick_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/brick_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/brick_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/brick_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/brick_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/brick_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_marta",
+      "kind": "fxsheet",
+      "batch": "fx-marta",
+      "file": "sheets/fx_marta.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n마르타's signature skill effects (her motifs: a very tall muscular nun with iron gauntlets, golden holy light barriers, church bells, a kind smile; accent colors gold and white). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/marta_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/marta_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/marta_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/marta_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/marta_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/marta_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_finn",
+      "kind": "fxsheet",
+      "batch": "fx-finn",
+      "file": "sheets/fx_finn.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n핀's signature skill effects (her motifs: a big mail bag, letters and parcels flying like darts, a postman cap, dashing over rooftops; accent colors brown and red). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/finn_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/finn_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/finn_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/finn_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/finn_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/finn_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_laila",
+      "kind": "fxsheet",
+      "batch": "fx-laila",
+      "file": "sheets/fx_laila.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n라일라's signature skill effects (her motifs: twin short daggers, gusts of sky-blue wind, a torn knight's cape, fast afterimages; accent colors sky blue and grey). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/laila_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/laila_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/laila_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/laila_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/laila_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/laila_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_dora",
+      "kind": "fxsheet",
+      "batch": "fx-dora",
+      "file": "sheets/fx_dora.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n도라's signature skill effects (her motifs: a big smith's hammer, sparks, a glowing anvil, red-hot metal and quenching steam; accent colors brown and orange). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/dora_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/dora_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/dora_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/dora_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/dora_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/dora_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_gordon",
+      "kind": "fxsheet",
+      "batch": "fx-gordon",
+      "file": "sheets/fx_gordon.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n고든's signature skill effects (her motifs: a frying pan and a ladle, steaming hearty food, a big friendly cook with a beard; accent colors white and warm brown). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/gordon_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/gordon_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/gordon_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/gordon_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/gordon_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/gordon_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_fukuro",
+      "kind": "fxsheet",
+      "batch": "fx-fukuro",
+      "file": "sheets/fx_fukuro.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n후쿠로's signature skill effects (her motifs: an owl mask, a huge bundle of junk on his back, lucky charms, random trinkets and lanterns flying; accent colors brown and lantern orange). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/fukuro_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/fukuro_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/fukuro_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/fukuro_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/fukuro_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/fukuro_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
       ]
     },
     {

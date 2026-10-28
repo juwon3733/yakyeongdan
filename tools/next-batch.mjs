@@ -14,7 +14,8 @@ const STAR5 = ['akane', 'sion', 'lunaria', 'eleonore', 'nerea'];
 const FIRST = ['iris', 'brick', 'marta'];
 const REST = ['noel', 'raven', 'mimimomo', 'sebas', 'mariana', 'tomori', 'sigrun', 'zeno', 'bertha', 'finn', 'laila', 'dora', 'gordon', 'fukuro'];
 const ORDER = [
-  ...STAR5.flatMap((id) => [`char-${id}`, `pose-${id}`]),   // 모션은 서 있는 그림 바로 뒤에
+  'fx-common',   // 공용 타격 이펙트 — 모든 공격이 바로 화려해진다
+  ...STAR5.flatMap((id) => [`char-${id}`, `pose-${id}`, `fx-${id}`]),   // 전투 스프라이트·이펙트는 서 있는 그림 바로 뒤에
   'cg-star5',
   ...FIRST.map((id) => `char-${id}`),
   'bg',
@@ -23,12 +24,13 @@ const ORDER = [
   'enemy-act2', 'boss-cloud_captain', 'boss-storm_whale', 'enemy-act3', 'boss-dawn',
   'summon', 'icons',
   ...REST.map((id) => `char-${id}`),
-  ...[...FIRST, ...REST].map((id) => `pose-${id}`),
+  ...[...FIRST, ...REST].flatMap((id) => [`pose-${id}`, `fx-${id}`]),
   'duo',
   ...[...STAR5, ...FIRST, ...REST].map((id) => `cards-${id}`),
   'icons-sig', 'app',
 ];
-for (const b of P.batches) if (!ORDER.includes(b.id) && !b.id.startsWith('style')) ORDER.push(b.id);
+for (const b of P.batches) if (!ORDER.includes(b.id) && !b.id.startsWith('style') && !b.id.startsWith('skin-')) ORDER.push(b.id);
+for (const b of P.batches) if (b.id.startsWith('skin-')) ORDER.push(b.id);   // 스킨은 맨 뒤
 
 const items = (id) => P.items.filter((i) => i.batch === id);
 const missing = (id) => items(id).filter((i) => !has(i.file));

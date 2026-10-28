@@ -1172,3 +1172,5 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 @keyframes jcutwho{0%{transform:translateX(-60%);opacity:0}25%{transform:translateX(0);opacity:1}80%{transform:translateX(4%)}100%{transform:translateX(8%);opacity:0}}
 @keyframes jcutwho2{0%{transform:scaleX(-1) translateX(-60%);opacity:0}25%{transform:scaleX(-1) translateX(0);opacity:1}100%{transform:scaleX(-1) translateX(8%);opacity:0}}
 @keyframes jcuttx{0%{transform:skewY(-6deg) translateX(40%) scale(1.6);opacity:0}30%{transform:skewY(-6deg) translateX(0) scale(1);opacity:1}85%{opacity:1}100%{opacity:0}}
+#fx .jfx{position:absolute;z-index:3;pointer-events:none;image-rendering:pixelated;object-fit:contain}
+#fx .jfx.back{z-index:0}

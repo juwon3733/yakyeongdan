@@ -2,56 +2,56 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 5 · GPT가 그릴 그림 257장(시트 포함, 잘라 내면 559장) · 묶음 109개
+style_version 6 · GPT가 그릴 그림 283장(시트 포함, 잘라 내면 715장) · 묶음 154개
 
 ## 묶음
 
 | 묶음 id | 이름 | 장 수 |
 |---|---|---|
 | `char-sion` | ★★★★★ 시온 | 2 |
-| `extra-sion` | 시온 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-sion` | 시온 나중(웃음·진지 표정·컷인) | 3 |
 | `char-lunaria` | ★★★★★ 루나리아 | 2 |
-| `extra-lunaria` | 루나리아 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-lunaria` | 루나리아 나중(웃음·진지 표정·컷인) | 3 |
 | `char-akane` | ★★★★★ 아카네 | 2 |
-| `extra-akane` | 아카네 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-akane` | 아카네 나중(웃음·진지 표정·컷인) | 3 |
 | `char-eleonore` | ★★★★★ 엘레오노르 | 2 |
-| `extra-eleonore` | 엘레오노르 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-eleonore` | 엘레오노르 나중(웃음·진지 표정·컷인) | 3 |
 | `char-nerea` | ★★★★★ 네레아 | 2 |
-| `extra-nerea` | 네레아 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-nerea` | 네레아 나중(웃음·진지 표정·컷인) | 3 |
 | `char-iris` | ★★★★ 아이리스 | 2 |
-| `extra-iris` | 아이리스 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-iris` | 아이리스 나중(웃음·진지 표정·컷인) | 3 |
 | `char-noel` | ★★★★ 노엘 | 2 |
-| `extra-noel` | 노엘 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-noel` | 노엘 나중(웃음·진지 표정·컷인) | 3 |
 | `char-raven` | ★★★★ 레이븐 | 2 |
-| `extra-raven` | 레이븐 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-raven` | 레이븐 나중(웃음·진지 표정·컷인) | 3 |
 | `char-mimimomo` | ★★★★ 미미·모모 | 2 |
-| `extra-mimimomo` | 미미·모모 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-mimimomo` | 미미·모모 나중(웃음·진지 표정·컷인) | 3 |
 | `char-sebas` | ★★★★ 세바스 | 2 |
-| `extra-sebas` | 세바스 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-sebas` | 세바스 나중(웃음·진지 표정·컷인) | 3 |
 | `char-mariana` | ★★★★ 마리아나 | 2 |
-| `extra-mariana` | 마리아나 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-mariana` | 마리아나 나중(웃음·진지 표정·컷인) | 3 |
 | `char-tomori` | ★★★★ 토모리 | 2 |
-| `extra-tomori` | 토모리 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-tomori` | 토모리 나중(웃음·진지 표정·컷인) | 3 |
 | `char-sigrun` | ★★★★ 시그룬 | 2 |
-| `extra-sigrun` | 시그룬 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-sigrun` | 시그룬 나중(웃음·진지 표정·컷인) | 3 |
 | `char-zeno` | ★★★★ 제노 | 2 |
-| `extra-zeno` | 제노 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-zeno` | 제노 나중(웃음·진지 표정·컷인) | 3 |
 | `char-bertha` | ★★★★ 베르타 | 2 |
-| `extra-bertha` | 베르타 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-bertha` | 베르타 나중(웃음·진지 표정·컷인) | 3 |
 | `char-brick` | ★★★ 브릭 | 2 |
-| `extra-brick` | 브릭 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-brick` | 브릭 나중(웃음·진지 표정·컷인) | 3 |
 | `char-marta` | ★★★ 마르타 | 2 |
-| `extra-marta` | 마르타 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-marta` | 마르타 나중(웃음·진지 표정·컷인) | 3 |
 | `char-finn` | ★★★ 핀 | 2 |
-| `extra-finn` | 핀 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-finn` | 핀 나중(웃음·진지 표정·컷인) | 3 |
 | `char-laila` | ★★★ 라일라 | 2 |
-| `extra-laila` | 라일라 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-laila` | 라일라 나중(웃음·진지 표정·컷인) | 3 |
 | `char-dora` | ★★★ 도라 | 2 |
-| `extra-dora` | 도라 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-dora` | 도라 나중(웃음·진지 표정·컷인) | 3 |
 | `char-gordon` | ★★★ 고든 | 2 |
-| `extra-gordon` | 고든 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-gordon` | 고든 나중(웃음·진지 표정·컷인) | 3 |
 | `char-fukuro` | ★★★ 후쿠로 | 2 |
-| `extra-fukuro` | 후쿠로 나중(표정·컷인·두 번째 의상) | 4 |
+| `extra-fukuro` | 후쿠로 나중(웃음·진지 표정·컷인) | 3 |
 | `pose-sion` | ★★★★★ 시온 전투 스프라이트 (시트 1장 → 8동작) | 1 |
 | `pose-lunaria` | ★★★★★ 루나리아 전투 스프라이트 (시트 1장 → 8동작) | 1 |
 | `pose-akane` | ★★★★★ 아카네 전투 스프라이트 (시트 1장 → 8동작) | 1 |
@@ -111,12 +111,57 @@ style_version 5 · GPT가 그릴 그림 257장(시트 포함, 잘라 내면 559�
 | `boss-fog_queen` | 보스 안개 마녀 여왕 | 3 |
 | `boss-storm_whale` | 보스 폭풍 고래 | 3 |
 | `boss-dawn` | 보스 새벽 | 4 |
+| `fx-common` | 공용 타격 이펙트 4종 (시트 4장 → 6프레임씩) | 4 |
+| `fx-sion` | 시온 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-lunaria` | 루나리아 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-akane` | 아카네 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-eleonore` | 엘레오노르 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-nerea` | 네레아 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-iris` | 아이리스 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-noel` | 노엘 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-raven` | 레이븐 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-mimimomo` | 미미·모모 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-sebas` | 세바스 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-mariana` | 마리아나 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-tomori` | 토모리 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-sigrun` | 시그룬 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-zeno` | 제노 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-bertha` | 베르타 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-brick` | 브릭 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-marta` | 마르타 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-finn` | 핀 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-laila` | 라일라 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-dora` | 도라 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-gordon` | 고든 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-fukuro` | 후쿠로 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
 | `bg` | 배경 | 13 |
 | `title` | 타이틀 키아트 | 1 |
 | `summon` | 별 소환 연출 | 4 |
 | `app` | 앱 아이콘 | 1 |
 | `icons` | 도구 아이콘 40 (시트 → 한 개씩) | 3 |
 | `icons-sig` | 동료 전용 도구 아이콘 22 (시트 → 한 개씩) | 2 |
+| `skin-sion` | 시온 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-lunaria` | 루나리아 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-akane` | 아카네 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-eleonore` | 엘레오노르 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-nerea` | 네레아 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-iris` | 아이리스 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-noel` | 노엘 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-raven` | 레이븐 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-mimimomo` | 미미·모모 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-sebas` | 세바스 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-mariana` | 마리아나 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-tomori` | 토모리 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-sigrun` | 시그룬 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-zeno` | 제노 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-bertha` | 베르타 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-brick` | 브릭 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-marta` | 마르타 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-finn` | 핀 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-laila` | 라일라 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-dora` | 도라 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-gordon` | 고든 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-fukuro` | 후쿠로 스킨(두 번째 의상) — 나중 | 1 |
 
 ## 종류별 크기
 
@@ -140,9 +185,11 @@ style_version 5 · GPT가 그릴 그림 257장(시트 포함, 잘라 내면 559�
 | appicon (`appicon`) | 1024×1024 | 64×64 | 아니오 | 64 | 앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다 |
 | style (`style`) | 1024×1536 | 시안마다 다름 | 예 | 제한 없음 | 그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다 |
 | 카드 그림 (`card`) | 768×576 | 256×192 | 아니오 | 256 | 카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배 |
+| 기술 이펙트 (`fx`) | 512×512 | 128×128 | 예 | 128 | 기술 이펙트 한 프레임(캐릭터 없이 효과만) · 이펙트 시트에서 잘라 냄 · 프레임을 차례로 돌려 움직인다 |
 | 전투 스프라이트 시트 (`battlesheet`) | 1536×1024 | 384×256 (칸 96×128 × 8) | 예 | 제한 없음 | 전투 스프라이트 4×2 — 위: 서 있기·숨쉬기·공격·스킬 / 아래: 방어·피격·쓰러짐·승리, 칸 384×512 |
 | 카드 시트 (`cardsheet`) | 1024×1024 | 512×512 (칸 256×256 × 4) | 아니오 | 제한 없음 | 카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀 |
 | 적 시트 (`foesheet`) | 1536×1024 | 384×256 (칸 128×128 × 6) | 예 | 제한 없음 | 적 3×2, 칸 512×512 |
+| 이펙트 시트 (`fxsheet`) | 1536×1024 | 384×256 (칸 128×128 × 6) | 예 | 제한 없음 | 이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512 |
 | 아이콘 시트 (`iconsheet`) | 1024×1024 | 128×128 (칸 32×32 × 16) | 예 | 제한 없음 | 아이콘 4×4, 칸 256×256 |
 
 ## `char-sion` — ★★★★★ 시온
@@ -169,14 +216,13 @@ Character reference sheet of 시온 (sion): a calm, beautiful woman in her late 
 | `sion_stand` | `assets/chars/sion_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `sion_normal` | `assets/chars/sion_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-sion` — 시온 나중(표정·컷인·두 번째 의상)
+## `extra-sion` — 시온 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `sion_smile` | `assets/chars/sion_smile.png` | 1024×1536 투명 | `assets/chars/sion_normal.png` `assets/style/akane_c.png` | — |
 | `sion_serious` | `assets/chars/sion_serious.png` | 1024×1536 투명 | `assets/chars/sion_normal.png` `assets/style/akane_c.png` | — |
 | `sion_cutin` | `assets/cutins/sion_cutin.png` | 1536×576 | `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `sion_outfit2` | `assets/chars/sion_outfit2.png` | 1024×1536 투명 | `assets/chars/sion_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-lunaria` — ★★★★★ 루나리아
 
@@ -202,14 +248,13 @@ Character reference sheet of 루나리아 (lunaria): a graceful dancer woman in 
 | `lunaria_stand` | `assets/chars/lunaria_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `lunaria_normal` | `assets/chars/lunaria_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-lunaria` — 루나리아 나중(표정·컷인·두 번째 의상)
+## `extra-lunaria` — 루나리아 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `lunaria_smile` | `assets/chars/lunaria_smile.png` | 1024×1536 투명 | `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | — |
 | `lunaria_serious` | `assets/chars/lunaria_serious.png` | 1024×1536 투명 | `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | — |
 | `lunaria_cutin` | `assets/cutins/lunaria_cutin.png` | 1536×576 | `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `lunaria_outfit2` | `assets/chars/lunaria_outfit2.png` | 1024×1536 투명 | `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-akane` — ★★★★★ 아카네
 
@@ -235,14 +280,13 @@ Character reference sheet of 아카네 (akane): a confident swordswoman in her m
 | `akane_stand` | `assets/chars/akane_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `akane_normal` | `assets/chars/akane_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-akane` — 아카네 나중(표정·컷인·두 번째 의상)
+## `extra-akane` — 아카네 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `akane_smile` | `assets/chars/akane_smile.png` | 1024×1536 투명 | `assets/chars/akane_normal.png` `assets/style/akane_c.png` | — |
 | `akane_serious` | `assets/chars/akane_serious.png` | 1024×1536 투명 | `assets/chars/akane_normal.png` `assets/style/akane_c.png` | — |
 | `akane_cutin` | `assets/cutins/akane_cutin.png` | 1536×576 | `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `akane_outfit2` | `assets/chars/akane_outfit2.png` | 1024×1536 투명 | `assets/chars/akane_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-eleonore` — ★★★★★ 엘레오노르
 
@@ -268,14 +312,13 @@ Character reference sheet of 엘레오노르 (eleonore): an elegant, haughty wit
 | `eleonore_stand` | `assets/chars/eleonore_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `eleonore_normal` | `assets/chars/eleonore_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-eleonore` — 엘레오노르 나중(표정·컷인·두 번째 의상)
+## `extra-eleonore` — 엘레오노르 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `eleonore_smile` | `assets/chars/eleonore_smile.png` | 1024×1536 투명 | `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | — |
 | `eleonore_serious` | `assets/chars/eleonore_serious.png` | 1024×1536 투명 | `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | — |
 | `eleonore_cutin` | `assets/cutins/eleonore_cutin.png` | 1536×576 | `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `eleonore_outfit2` | `assets/chars/eleonore_outfit2.png` | 1024×1536 투명 | `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-nerea` — ★★★★★ 네레아
 
@@ -301,14 +344,13 @@ Character reference sheet of 네레아 (nerea): a free-spirited star-whale rider
 | `nerea_stand` | `assets/chars/nerea_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `nerea_normal` | `assets/chars/nerea_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-nerea` — 네레아 나중(표정·컷인·두 번째 의상)
+## `extra-nerea` — 네레아 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `nerea_smile` | `assets/chars/nerea_smile.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | — |
 | `nerea_serious` | `assets/chars/nerea_serious.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | — |
 | `nerea_cutin` | `assets/cutins/nerea_cutin.png` | 1536×576 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `nerea_outfit2` | `assets/chars/nerea_outfit2.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-iris` — ★★★★ 아이리스
 
@@ -334,14 +376,13 @@ Character reference sheet of 아이리스 (iris): a cool, quiet swordswoman in h
 | `iris_stand` | `assets/chars/iris_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `iris_normal` | `assets/chars/iris_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-iris` — 아이리스 나중(표정·컷인·두 번째 의상)
+## `extra-iris` — 아이리스 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `iris_smile` | `assets/chars/iris_smile.png` | 1024×1536 투명 | `assets/chars/iris_normal.png` `assets/style/akane_c.png` | — |
 | `iris_serious` | `assets/chars/iris_serious.png` | 1024×1536 투명 | `assets/chars/iris_normal.png` `assets/style/akane_c.png` | — |
 | `iris_cutin` | `assets/cutins/iris_cutin.png` | 1536×576 | `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `iris_outfit2` | `assets/chars/iris_outfit2.png` | 1024×1536 투명 | `assets/chars/iris_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-noel` — ★★★★ 노엘
 
@@ -367,14 +408,13 @@ Character reference sheet of 노엘 (noel): a sleepy sorceress woman in her earl
 | `noel_stand` | `assets/chars/noel_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `noel_normal` | `assets/chars/noel_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-noel` — 노엘 나중(표정·컷인·두 번째 의상)
+## `extra-noel` — 노엘 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `noel_smile` | `assets/chars/noel_smile.png` | 1024×1536 투명 | `assets/chars/noel_normal.png` `assets/style/akane_c.png` | — |
 | `noel_serious` | `assets/chars/noel_serious.png` | 1024×1536 투명 | `assets/chars/noel_normal.png` `assets/style/akane_c.png` | — |
 | `noel_cutin` | `assets/cutins/noel_cutin.png` | 1536×576 | `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `noel_outfit2` | `assets/chars/noel_outfit2.png` | 1024×1536 투명 | `assets/chars/noel_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-raven` — ★★★★ 레이븐
 
@@ -400,14 +440,13 @@ Character reference sheet of 레이븐 (raven): a cynical assassin man in his la
 | `raven_stand` | `assets/chars/raven_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `raven_normal` | `assets/chars/raven_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-raven` — 레이븐 나중(표정·컷인·두 번째 의상)
+## `extra-raven` — 레이븐 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `raven_smile` | `assets/chars/raven_smile.png` | 1024×1536 투명 | `assets/chars/raven_normal.png` `assets/style/akane_c.png` | — |
 | `raven_serious` | `assets/chars/raven_serious.png` | 1024×1536 투명 | `assets/chars/raven_normal.png` `assets/style/akane_c.png` | — |
 | `raven_cutin` | `assets/cutins/raven_cutin.png` | 1536×576 | `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `raven_outfit2` | `assets/chars/raven_outfit2.png` | 1024×1536 투명 | `assets/chars/raven_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-mimimomo` — ★★★★ 미미·모모
 
@@ -433,14 +472,13 @@ Character reference sheet of 미미·모모 (mimimomo): twin 12-year-old girls s
 | `mimimomo_stand` | `assets/chars/mimimomo_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `mimimomo_normal` | `assets/chars/mimimomo_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-mimimomo` — 미미·모모 나중(표정·컷인·두 번째 의상)
+## `extra-mimimomo` — 미미·모모 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `mimimomo_smile` | `assets/chars/mimimomo_smile.png` | 1024×1536 투명 | `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | — |
 | `mimimomo_serious` | `assets/chars/mimimomo_serious.png` | 1024×1536 투명 | `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | — |
 | `mimimomo_cutin` | `assets/cutins/mimimomo_cutin.png` | 1536×576 | `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `mimimomo_outfit2` | `assets/chars/mimimomo_outfit2.png` | 1024×1536 투명 | `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-sebas` — ★★★★ 세바스
 
@@ -466,14 +504,13 @@ Character reference sheet of 세바스 (sebas): a dignified butler man in his 60
 | `sebas_stand` | `assets/chars/sebas_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `sebas_normal` | `assets/chars/sebas_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-sebas` — 세바스 나중(표정·컷인·두 번째 의상)
+## `extra-sebas` — 세바스 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `sebas_smile` | `assets/chars/sebas_smile.png` | 1024×1536 투명 | `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | — |
 | `sebas_serious` | `assets/chars/sebas_serious.png` | 1024×1536 투명 | `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | — |
 | `sebas_cutin` | `assets/cutins/sebas_cutin.png` | 1536×576 | `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `sebas_outfit2` | `assets/chars/sebas_outfit2.png` | 1024×1536 투명 | `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-mariana` — ★★★★ 마리아나
 
@@ -499,14 +536,13 @@ Character reference sheet of 마리아나 (mariana): a bold pirate queen woman i
 | `mariana_stand` | `assets/chars/mariana_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `mariana_normal` | `assets/chars/mariana_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-mariana` — 마리아나 나중(표정·컷인·두 번째 의상)
+## `extra-mariana` — 마리아나 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `mariana_smile` | `assets/chars/mariana_smile.png` | 1024×1536 투명 | `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | — |
 | `mariana_serious` | `assets/chars/mariana_serious.png` | 1024×1536 투명 | `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | — |
 | `mariana_cutin` | `assets/cutins/mariana_cutin.png` | 1536×576 | `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `mariana_outfit2` | `assets/chars/mariana_outfit2.png` | 1024×1536 투명 | `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-tomori` — ★★★★ 토모리
 
@@ -532,14 +568,13 @@ Character reference sheet of 토모리 (tomori): a cheerful 17-year-old girl, th
 | `tomori_stand` | `assets/chars/tomori_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `tomori_normal` | `assets/chars/tomori_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-tomori` — 토모리 나중(표정·컷인·두 번째 의상)
+## `extra-tomori` — 토모리 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `tomori_smile` | `assets/chars/tomori_smile.png` | 1024×1536 투명 | `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | — |
 | `tomori_serious` | `assets/chars/tomori_serious.png` | 1024×1536 투명 | `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | — |
 | `tomori_cutin` | `assets/cutins/tomori_cutin.png` | 1536×576 | `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `tomori_outfit2` | `assets/chars/tomori_outfit2.png` | 1024×1536 투명 | `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-sigrun` — ★★★★ 시그룬
 
@@ -565,14 +600,13 @@ Character reference sheet of 시그룬 (sigrun): a noble knight woman in her lat
 | `sigrun_stand` | `assets/chars/sigrun_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `sigrun_normal` | `assets/chars/sigrun_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-sigrun` — 시그룬 나중(표정·컷인·두 번째 의상)
+## `extra-sigrun` — 시그룬 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `sigrun_smile` | `assets/chars/sigrun_smile.png` | 1024×1536 투명 | `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | — |
 | `sigrun_serious` | `assets/chars/sigrun_serious.png` | 1024×1536 투명 | `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | — |
 | `sigrun_cutin` | `assets/cutins/sigrun_cutin.png` | 1536×576 | `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `sigrun_outfit2` | `assets/chars/sigrun_outfit2.png` | 1024×1536 투명 | `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-zeno` — ★★★★ 제노
 
@@ -598,14 +632,13 @@ Character reference sheet of 제노 (zeno): a silent dark knight man in his late
 | `zeno_stand` | `assets/chars/zeno_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `zeno_normal` | `assets/chars/zeno_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-zeno` — 제노 나중(표정·컷인·두 번째 의상)
+## `extra-zeno` — 제노 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `zeno_smile` | `assets/chars/zeno_smile.png` | 1024×1536 투명 | `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | — |
 | `zeno_serious` | `assets/chars/zeno_serious.png` | 1024×1536 투명 | `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | — |
 | `zeno_cutin` | `assets/cutins/zeno_cutin.png` | 1536×576 | `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `zeno_outfit2` | `assets/chars/zeno_outfit2.png` | 1024×1536 투명 | `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-bertha` — ★★★★ 베르타
 
@@ -631,14 +664,13 @@ Character reference sheet of 베르타 (bertha): a gentle but sharp retired towe
 | `bertha_stand` | `assets/chars/bertha_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `bertha_normal` | `assets/chars/bertha_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-bertha` — 베르타 나중(표정·컷인·두 번째 의상)
+## `extra-bertha` — 베르타 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `bertha_smile` | `assets/chars/bertha_smile.png` | 1024×1536 투명 | `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | — |
 | `bertha_serious` | `assets/chars/bertha_serious.png` | 1024×1536 투명 | `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | — |
 | `bertha_cutin` | `assets/cutins/bertha_cutin.png` | 1536×576 | `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `bertha_outfit2` | `assets/chars/bertha_outfit2.png` | 1024×1536 투명 | `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-brick` — ★★★ 브릭
 
@@ -664,14 +696,13 @@ Character reference sheet of 브릭 (brick): an energetic gunner woman in her mi
 | `brick_stand` | `assets/chars/brick_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `brick_normal` | `assets/chars/brick_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-brick` — 브릭 나중(표정·컷인·두 번째 의상)
+## `extra-brick` — 브릭 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `brick_smile` | `assets/chars/brick_smile.png` | 1024×1536 투명 | `assets/chars/brick_normal.png` `assets/style/akane_c.png` | — |
 | `brick_serious` | `assets/chars/brick_serious.png` | 1024×1536 투명 | `assets/chars/brick_normal.png` `assets/style/akane_c.png` | — |
 | `brick_cutin` | `assets/cutins/brick_cutin.png` | 1536×576 | `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `brick_outfit2` | `assets/chars/brick_outfit2.png` | 1024×1536 투명 | `assets/chars/brick_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-marta` — ★★★ 마르타
 
@@ -697,14 +728,13 @@ Character reference sheet of 마르타 (marta): a very tall, muscular nun woman 
 | `marta_stand` | `assets/chars/marta_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `marta_normal` | `assets/chars/marta_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-marta` — 마르타 나중(표정·컷인·두 번째 의상)
+## `extra-marta` — 마르타 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `marta_smile` | `assets/chars/marta_smile.png` | 1024×1536 투명 | `assets/chars/marta_normal.png` `assets/style/akane_c.png` | — |
 | `marta_serious` | `assets/chars/marta_serious.png` | 1024×1536 투명 | `assets/chars/marta_normal.png` `assets/style/akane_c.png` | — |
 | `marta_cutin` | `assets/cutins/marta_cutin.png` | 1536×576 | `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `marta_outfit2` | `assets/chars/marta_outfit2.png` | 1024×1536 투명 | `assets/chars/marta_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-finn` — ★★★ 핀
 
@@ -730,14 +760,13 @@ Character reference sheet of 핀 (finn): a lively 14-year-old mail delivery boy.
 | `finn_stand` | `assets/chars/finn_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `finn_normal` | `assets/chars/finn_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-finn` — 핀 나중(표정·컷인·두 번째 의상)
+## `extra-finn` — 핀 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `finn_smile` | `assets/chars/finn_smile.png` | 1024×1536 투명 | `assets/chars/finn_normal.png` `assets/style/akane_c.png` | — |
 | `finn_serious` | `assets/chars/finn_serious.png` | 1024×1536 투명 | `assets/chars/finn_normal.png` `assets/style/akane_c.png` | — |
 | `finn_cutin` | `assets/cutins/finn_cutin.png` | 1536×576 | `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `finn_outfit2` | `assets/chars/finn_outfit2.png` | 1024×1536 투명 | `assets/chars/finn_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-laila` — ★★★ 라일라
 
@@ -763,14 +792,13 @@ Character reference sheet of 라일라 (laila): a brusque deserter knight woman 
 | `laila_stand` | `assets/chars/laila_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `laila_normal` | `assets/chars/laila_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-laila` — 라일라 나중(표정·컷인·두 번째 의상)
+## `extra-laila` — 라일라 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `laila_smile` | `assets/chars/laila_smile.png` | 1024×1536 투명 | `assets/chars/laila_normal.png` `assets/style/akane_c.png` | — |
 | `laila_serious` | `assets/chars/laila_serious.png` | 1024×1536 투명 | `assets/chars/laila_normal.png` `assets/style/akane_c.png` | — |
 | `laila_cutin` | `assets/cutins/laila_cutin.png` | 1536×576 | `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `laila_outfit2` | `assets/chars/laila_outfit2.png` | 1024×1536 투명 | `assets/chars/laila_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-dora` — ★★★ 도라
 
@@ -796,14 +824,13 @@ Character reference sheet of 도라 (dora): a cheerful 19-year-old blacksmith wo
 | `dora_stand` | `assets/chars/dora_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `dora_normal` | `assets/chars/dora_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-dora` — 도라 나중(표정·컷인·두 번째 의상)
+## `extra-dora` — 도라 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `dora_smile` | `assets/chars/dora_smile.png` | 1024×1536 투명 | `assets/chars/dora_normal.png` `assets/style/akane_c.png` | — |
 | `dora_serious` | `assets/chars/dora_serious.png` | 1024×1536 투명 | `assets/chars/dora_normal.png` `assets/style/akane_c.png` | — |
 | `dora_cutin` | `assets/cutins/dora_cutin.png` | 1536×576 | `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `dora_outfit2` | `assets/chars/dora_outfit2.png` | 1024×1536 투명 | `assets/chars/dora_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-gordon` — ★★★ 고든
 
@@ -829,14 +856,13 @@ Character reference sheet of 고든 (gordon): a big burly cook man in his 40s. A
 | `gordon_stand` | `assets/chars/gordon_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `gordon_normal` | `assets/chars/gordon_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-gordon` — 고든 나중(표정·컷인·두 번째 의상)
+## `extra-gordon` — 고든 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `gordon_smile` | `assets/chars/gordon_smile.png` | 1024×1536 투명 | `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | — |
 | `gordon_serious` | `assets/chars/gordon_serious.png` | 1024×1536 투명 | `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | — |
 | `gordon_cutin` | `assets/cutins/gordon_cutin.png` | 1536×576 | `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `gordon_outfit2` | `assets/chars/gordon_outfit2.png` | 1024×1536 투명 | `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | — |
 
 ## `char-fukuro` — ★★★ 후쿠로
 
@@ -862,14 +888,13 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `fukuro_stand` | `assets/chars/fukuro_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `fukuro_normal` | `assets/chars/fukuro_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 
-## `extra-fukuro` — 후쿠로 나중(표정·컷인·두 번째 의상)
+## `extra-fukuro` — 후쿠로 나중(웃음·진지 표정·컷인)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `fukuro_smile` | `assets/chars/fukuro_smile.png` | 1024×1536 투명 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | — |
 | `fukuro_serious` | `assets/chars/fukuro_serious.png` | 1024×1536 투명 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | — |
 | `fukuro_cutin` | `assets/cutins/fukuro_cutin.png` | 1536×576 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
-| `fukuro_outfit2` | `assets/chars/fukuro_outfit2.png` | 1024×1536 투명 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | — |
 
 ## `pose-sion` — ★★★★★ 시온 전투 스프라이트 (시트 1장 → 8동작)
 
@@ -1267,6 +1292,147 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `boss_dawn_3` | `assets/enemies/boss_dawn_3.png` | 1024×1536 투명 | `assets/enemies/boss_dawn_1.png` `assets/style/akane_c.png` | — |
 | `boss_dawn_cutin` | `assets/cutins/boss_dawn_cutin.png` | 1536×576 | `assets/enemies/boss_dawn_1.png` `assets/style/akane_c.png` | — |
 
+## `fx-common` — 공용 타격 이펙트 4종 (시트 4장 → 6프레임씩)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_slash` | `assets/sheets/fx_slash.png` → `slash_1.png` `slash_2.png` `slash_3.png` `slash_4.png` `slash_5.png` `slash_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 프레임: slash 시작→절정→사라짐 |
+| `fx_explode` | `assets/sheets/fx_explode.png` → `explode_1.png` `explode_2.png` `explode_3.png` `explode_4.png` `explode_5.png` `explode_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 프레임: explode 시작→절정→사라짐 |
+| `fx_pierce` | `assets/sheets/fx_pierce.png` → `pierce_1.png` `pierce_2.png` `pierce_3.png` `pierce_4.png` `pierce_5.png` `pierce_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 프레임: pierce 시작→절정→사라짐 |
+| `fx_magic` | `assets/sheets/fx_magic.png` → `magic_1.png` `magic_2.png` `magic_3.png` `magic_4.png` `magic_5.png` `magic_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 프레임: magic 시작→절정→사라짐 |
+
+## `fx-sion` — 시온 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_sion` | `assets/sheets/fx_sion.png` → `sion_atk_1.png` `sion_atk_2.png` `sion_atk_3.png` `sion_skill_1.png` `sion_skill_2.png` `sion_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-lunaria` — 루나리아 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_lunaria` | `assets/sheets/fx_lunaria.png` → `lunaria_atk_1.png` `lunaria_atk_2.png` `lunaria_atk_3.png` `lunaria_skill_1.png` `lunaria_skill_2.png` `lunaria_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-akane` — 아카네 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_akane` | `assets/sheets/fx_akane.png` → `akane_atk_1.png` `akane_atk_2.png` `akane_atk_3.png` `akane_skill_1.png` `akane_skill_2.png` `akane_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-eleonore` — 엘레오노르 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_eleonore` | `assets/sheets/fx_eleonore.png` → `eleonore_atk_1.png` `eleonore_atk_2.png` `eleonore_atk_3.png` `eleonore_skill_1.png` `eleonore_skill_2.png` `eleonore_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-nerea` — 네레아 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_nerea` | `assets/sheets/fx_nerea.png` → `nerea_atk_1.png` `nerea_atk_2.png` `nerea_atk_3.png` `nerea_skill_1.png` `nerea_skill_2.png` `nerea_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-iris` — 아이리스 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_iris` | `assets/sheets/fx_iris.png` → `iris_atk_1.png` `iris_atk_2.png` `iris_atk_3.png` `iris_skill_1.png` `iris_skill_2.png` `iris_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-noel` — 노엘 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_noel` | `assets/sheets/fx_noel.png` → `noel_atk_1.png` `noel_atk_2.png` `noel_atk_3.png` `noel_skill_1.png` `noel_skill_2.png` `noel_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-raven` — 레이븐 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_raven` | `assets/sheets/fx_raven.png` → `raven_atk_1.png` `raven_atk_2.png` `raven_atk_3.png` `raven_skill_1.png` `raven_skill_2.png` `raven_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-mimimomo` — 미미·모모 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_mimimomo` | `assets/sheets/fx_mimimomo.png` → `mimimomo_atk_1.png` `mimimomo_atk_2.png` `mimimomo_atk_3.png` `mimimomo_skill_1.png` `mimimomo_skill_2.png` `mimimomo_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-sebas` — 세바스 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_sebas` | `assets/sheets/fx_sebas.png` → `sebas_atk_1.png` `sebas_atk_2.png` `sebas_atk_3.png` `sebas_skill_1.png` `sebas_skill_2.png` `sebas_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-mariana` — 마리아나 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_mariana` | `assets/sheets/fx_mariana.png` → `mariana_atk_1.png` `mariana_atk_2.png` `mariana_atk_3.png` `mariana_skill_1.png` `mariana_skill_2.png` `mariana_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-tomori` — 토모리 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_tomori` | `assets/sheets/fx_tomori.png` → `tomori_atk_1.png` `tomori_atk_2.png` `tomori_atk_3.png` `tomori_skill_1.png` `tomori_skill_2.png` `tomori_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-sigrun` — 시그룬 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_sigrun` | `assets/sheets/fx_sigrun.png` → `sigrun_atk_1.png` `sigrun_atk_2.png` `sigrun_atk_3.png` `sigrun_skill_1.png` `sigrun_skill_2.png` `sigrun_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-zeno` — 제노 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_zeno` | `assets/sheets/fx_zeno.png` → `zeno_atk_1.png` `zeno_atk_2.png` `zeno_atk_3.png` `zeno_skill_1.png` `zeno_skill_2.png` `zeno_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-bertha` — 베르타 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_bertha` | `assets/sheets/fx_bertha.png` → `bertha_atk_1.png` `bertha_atk_2.png` `bertha_atk_3.png` `bertha_skill_1.png` `bertha_skill_2.png` `bertha_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-brick` — 브릭 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_brick` | `assets/sheets/fx_brick.png` → `brick_atk_1.png` `brick_atk_2.png` `brick_atk_3.png` `brick_skill_1.png` `brick_skill_2.png` `brick_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-marta` — 마르타 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_marta` | `assets/sheets/fx_marta.png` → `marta_atk_1.png` `marta_atk_2.png` `marta_atk_3.png` `marta_skill_1.png` `marta_skill_2.png` `marta_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-finn` — 핀 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_finn` | `assets/sheets/fx_finn.png` → `finn_atk_1.png` `finn_atk_2.png` `finn_atk_3.png` `finn_skill_1.png` `finn_skill_2.png` `finn_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-laila` — 라일라 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_laila` | `assets/sheets/fx_laila.png` → `laila_atk_1.png` `laila_atk_2.png` `laila_atk_3.png` `laila_skill_1.png` `laila_skill_2.png` `laila_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-dora` — 도라 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_dora` | `assets/sheets/fx_dora.png` → `dora_atk_1.png` `dora_atk_2.png` `dora_atk_3.png` `dora_skill_1.png` `dora_skill_2.png` `dora_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-gordon` — 고든 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_gordon` | `assets/sheets/fx_gordon.png` → `gordon_atk_1.png` `gordon_atk_2.png` `gordon_atk_3.png` `gordon_skill_1.png` `gordon_skill_2.png` `gordon_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-fukuro` — 후쿠로 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_fukuro` | `assets/sheets/fx_fukuro.png` → `fukuro_atk_1.png` `fukuro_atk_2.png` `fukuro_atk_3.png` `fukuro_skill_1.png` `fukuro_skill_2.png` `fukuro_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
 ## `bg` — 배경
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
@@ -1320,3 +1486,135 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 |---|---|---|---|---|
 | `icons-sig_1` | `assets/sheets/icons-sig_1.png` → `relic_sig_sion.png` `relic_sig_lunaria.png` `relic_sig_akane.png` `relic_sig_eleonore.png` `relic_sig_iris.png` `relic_sig_noel.png` `relic_sig_raven.png` `relic_sig_mimimomo.png` `relic_sig_sebas.png` `relic_sig_mariana.png` `relic_sig_tomori.png` `relic_sig_sigrun.png` `relic_sig_zeno.png` `relic_sig_brick.png` `relic_sig_marta.png` `relic_sig_finn.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 16개 |
 | `icons-sig_2` | `assets/sheets/icons-sig_2.png` → `relic_sig_laila.png` `relic_sig_dora.png` `relic_sig_gordon.png` `relic_sig_nerea.png` `relic_sig_bertha.png` `relic_sig_fukuro.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 6개 |
+
+## `skin-sion` — 시온 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `sion_outfit2` | `assets/chars/sion_outfit2.png` | 1024×1536 투명 | `assets/chars/sion_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-lunaria` — 루나리아 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `lunaria_outfit2` | `assets/chars/lunaria_outfit2.png` | 1024×1536 투명 | `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-akane` — 아카네 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `akane_outfit2` | `assets/chars/akane_outfit2.png` | 1024×1536 투명 | `assets/chars/akane_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-eleonore` — 엘레오노르 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `eleonore_outfit2` | `assets/chars/eleonore_outfit2.png` | 1024×1536 투명 | `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-nerea` — 네레아 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `nerea_outfit2` | `assets/chars/nerea_outfit2.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-iris` — 아이리스 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `iris_outfit2` | `assets/chars/iris_outfit2.png` | 1024×1536 투명 | `assets/chars/iris_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-noel` — 노엘 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `noel_outfit2` | `assets/chars/noel_outfit2.png` | 1024×1536 투명 | `assets/chars/noel_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-raven` — 레이븐 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `raven_outfit2` | `assets/chars/raven_outfit2.png` | 1024×1536 투명 | `assets/chars/raven_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-mimimomo` — 미미·모모 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `mimimomo_outfit2` | `assets/chars/mimimomo_outfit2.png` | 1024×1536 투명 | `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-sebas` — 세바스 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `sebas_outfit2` | `assets/chars/sebas_outfit2.png` | 1024×1536 투명 | `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-mariana` — 마리아나 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `mariana_outfit2` | `assets/chars/mariana_outfit2.png` | 1024×1536 투명 | `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-tomori` — 토모리 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `tomori_outfit2` | `assets/chars/tomori_outfit2.png` | 1024×1536 투명 | `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-sigrun` — 시그룬 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `sigrun_outfit2` | `assets/chars/sigrun_outfit2.png` | 1024×1536 투명 | `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-zeno` — 제노 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `zeno_outfit2` | `assets/chars/zeno_outfit2.png` | 1024×1536 투명 | `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-bertha` — 베르타 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `bertha_outfit2` | `assets/chars/bertha_outfit2.png` | 1024×1536 투명 | `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-brick` — 브릭 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `brick_outfit2` | `assets/chars/brick_outfit2.png` | 1024×1536 투명 | `assets/chars/brick_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-marta` — 마르타 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `marta_outfit2` | `assets/chars/marta_outfit2.png` | 1024×1536 투명 | `assets/chars/marta_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-finn` — 핀 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `finn_outfit2` | `assets/chars/finn_outfit2.png` | 1024×1536 투명 | `assets/chars/finn_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-laila` — 라일라 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `laila_outfit2` | `assets/chars/laila_outfit2.png` | 1024×1536 투명 | `assets/chars/laila_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-dora` — 도라 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `dora_outfit2` | `assets/chars/dora_outfit2.png` | 1024×1536 투명 | `assets/chars/dora_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-gordon` — 고든 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `gordon_outfit2` | `assets/chars/gordon_outfit2.png` | 1024×1536 투명 | `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-fukuro` — 후쿠로 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fukuro_outfit2` | `assets/chars/fukuro_outfit2.png` | 1024×1536 투명 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | — |

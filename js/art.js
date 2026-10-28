@@ -22,6 +22,12 @@ export function charArt(id, kind = 'stand', outfit = false) {
 // 전투 스프라이트(전투 화면 전용 저해상도 도트): sprites/<id>_<frame>.png. 기본 의상만.
 export const FRAMES = ['idle', 'idle2', 'attack', 'skill', 'guard', 'hurt', 'down', 'win'];
 export const battleArt = (id, frame = 'idle') => artURL(`sprites/${id}_${frame}.png`);
+// 기술 이펙트 프레임: fx/<name>_1.png, _2 … (있는 것만). 동료 시그니처는 <id>_atk·<id>_skill, 공용은 slash·explode·pierce·magic
+export function fxFrames(name) {
+  const out = [];
+  for (let i = 1; i <= 8; i++) { const u = artURL(`fx/${name}_${i}.png`); if (!u) break; out.push(u); }
+  return out;
+}
 
 // 적 그림: 전투 데이터의 적 키 → 그림 파일 이름 (js/asset_prompts.js ENEMIES·BOSSES)
 const FOE_FILE = {

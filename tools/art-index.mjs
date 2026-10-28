@@ -6,7 +6,7 @@ import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('../assets/', import.meta.url));
-const DIRS = ['chars', 'sprites', 'cards', 'cutins', 'cg', 'enemies', 'bg', 'title', 'summon', 'icons'];
+const DIRS = ['chars', 'sprites', 'fx', 'cards', 'cutins', 'cg', 'enemies', 'bg', 'title', 'summon', 'icons'];
 const files = [];
 for (const d of DIRS) {
   let names = [];

@@ -11,7 +11,7 @@ import { sfx as sfxRaw } from './audio.js';
 let hush = false;
 const sfx = (...a) => { if (!hush) sfxRaw(...a); };
 import { showPhase, showBoss, shake, showBurst } from './fx.js';
-import { battleArt, FRAMES, charArt } from './art.js';
+import { battleArt, FRAMES, charArt, fxFrames } from './art.js';
 import { cardData } from './data/cards.js';
 
 const stage = document.getElementById('stage');
@@ -270,7 +270,7 @@ function swapSrc(img, url, fade) {
   img.src = url;
 }
 function pose(id, kind, ms) {
-  const img = allyEl(id)?.querySelector('img'), u = battleArt(id, kind);
+  const img = allyEl(id)?.querySelector(':scope > img'), u = battleArt(id, kind);
   if (!img || !u) return false;
   const was = img.getAttribute('src');
   swapSrc(img, u, 60); busy.add(img);
@@ -315,7 +315,7 @@ function actFx(e, special = false) {
   const d = cardData(e.id);
   const who = e.ch === 'duo' ? [e.a, e.b] : [e.actor || e.ch];
   for (const [n, id] of who.entries()) {
-    const img = allyEl(id)?.querySelector('img'); if (!img) continue;
+    const img = allyEl(id)?.querySelector(':scope > img'); if (!img) continue;
     const m = e.ch === 'duo' ? (e.atk ? 'finisher' : 'cast') : motionOf(d, id);
     const [cls, ms, p] = MOTION[m];
     const col = colOf(id), r = rel(img);
@@ -332,14 +332,27 @@ function actFx(e, special = false) {
       else if (m === 'heal') { circle(r, '#9af0b0', 26); rise(r, '#c8ffd0', 18); }
       else { circle(r, col, special ? 34 : 26); rise(r, col, special ? 26 : 14); if (special && SET.shake) camera(id, e, 1.08, 600); }
     }
+    if (!/slash|sweep|finisher|shot/.test(m)) playFx(`${id}_skill`, r.cx, r.cy, special ? 140 : 110, 80);
     if (special || m === 'finisher') dim(special ? 900 : 600);
   }
+}
+// 그림 이펙트 재생: 프레임을 차례로 바꾸고 마지막에 사라진다. 그림이 없으면 아무것도 안 함(코드 입자만)
+const FX_OF = { slash: 'slash', boom: 'explode', pierce: 'pierce', star: 'magic', magic: 'magic', mist: 'magic', impact: 'explode' };
+function playFx(name, x, y, size = 72, step = 55, behind = false) {
+  const fr = fxFrames(name); if (!fr.length || !layer) return false;
+  const el = document.createElement('img'); el.className = 'px jfx' + (behind ? ' back' : ''); el.alt = '';
+  Object.assign(el.style, { left: `${x - size / 2}px`, top: `${y - size / 2}px`, width: `${size}px`, height: `${size}px` });
+  el.src = fr[0]; layer.insertBefore(el, cv.nextSibling);
+  fr.forEach((u, i) => { if (i) at(i * step, () => { el.src = u; }); });
+  el.animate([{ opacity: 1, transform: 'scale(.9)' }, { opacity: 1, transform: 'scale(1.05)', offset: .5 }, { opacity: 0, transform: 'scale(1.12)' }],
+    { duration: fr.length * step + 120, easing: 'ease-out' }).onfinish = () => el.remove();
+  return true;
 }
 const isSpecial = e => !calmNow() && (e.ch === 'duo' || cardData(e.id)?.rarity === 'r');
 // 돌진: 그림만 적 앞까지 갔다가 돌아온다. 맞히는 순간(카드가 날아간 뒤 ≈170ms)에 도착
 const moving = new Set();
 function dash(id, img, e, m, delay = 0) {
-  const tgt = e.foe != null ? foeEl(e.foe)?.querySelector('img') : root()?.querySelector('.foes');
+  const tgt = e.foe != null ? foeEl(e.foe)?.querySelector(':scope > img') : root()?.querySelector('.foes');
   const a = rel(img), b = tgt ? rel(tgt) : { x: a.x + 160, cx: a.cx + 160 };
   const dx = Math.max(20, (tgt ? b.x : b.cx) - a.x - a.w * .55);
   const dur = m === 'finisher' ? 820 : m === 'sweep' ? 700 : 600, up = m === 'finisher' ? -26 : 0;
@@ -492,15 +505,18 @@ function hitFoe(e, P) {
   }
   const el = foeEl(e.i) || null;
   const r = el ? rel(el) : P?.foes.get(e.i)?.r; if (!r) return;
-  const img = el?.querySelector('img'), ir = img ? rel(img) : r;
+  const img = el?.querySelector(':scope > img'), ir = img ? rel(img) : r;
   const x = ir.cx, y = ir.cy, col = colOf(e.actor), st = styleOf(e);
   if (S.C?.all?.[e.i]?.thorns && e.dmg && e.actor) {
     at(60, () => sfx('thorns', { vol: .7 }));
     // 가시: 적에게서 친 동료 쪽으로 가시가 튄다
     const a = allyEl(e.actor);
-    if (a) { const ar = rel(a.querySelector('img') || a); for (let k = 0; k < 5; k++) add({ k: 'line', x0: x, y0: y + rnd(-8, 8), x1: ar.cx + rnd(-6, 6), y1: ar.cy + rnd(-6, 6), col: '#c0d0ff', speed: 9, life: 9, s: 1 }); }
+    if (a) { const ar = rel(a.querySelector(':scope > img') || a); for (let k = 0; k < 5; k++) add({ k: 'line', x0: x, y0: y + rnd(-8, 8), x1: ar.cx + rnd(-6, 6), y1: ar.cy + rnd(-6, 6), col: '#c0d0ff', speed: 9, life: 9, s: 1 }); }
     ring(x, y, '#c0d0ff', 10, 24, 8);
   }
+  // 그림 이펙트: 그 동료 시그니처 공격 이펙트 → 없으면 공용(베기·폭발·찌르기·마법). 코드 입자는 그 위에 계속 얹는다
+  const big = e.dmg >= 15 || e.crit;
+  playFx(e.actor && fxFrames(`${e.actor}_atk`).length ? `${e.actor}_atk` : FX_OF[st] || 'explode', x, y, big ? 96 : 72);
   if (st === 'slash') slashFx(x, y, col);
   else if (st === 'boom') { const from = e.actor && allyEl(e.actor); if (from) tracer(rel(from).cx, rel(from).y + 20, x, y, '#ffd890'); boomFx(x, y); }
   else if (st === 'star') { const from = allyEl('sion'); if (from) starTrail(rel(from).cx, rel(from).y + 14, x, y, col); sparks(x, y, '#fff6c8', 10, 1.6); }
@@ -509,7 +525,7 @@ function hitFoe(e, P) {
   else if (st === 'magic') { ring(x, y, col, 4, 24, 12); sparks(x, y, col, 12, 1.8); }
   else impactFx(x, y, col);
   if (e.blocked) shieldBreak(x, y - 6, e.dmg === 0);
-  if (el) pulse(el.querySelector('img') || el, SET.shake ? 'jhitF' : 'jflash', 380);
+  if (el) pulse(el.querySelector(':scope > img') || el, SET.shake ? 'jhitF' : 'jflash', 380);
   if (e.dmg > 0) num(x, ir.y + 6, String(e.dmg), e.crit ? 'crit' : '', e.dmg);
   else if (e.blocked) num(x, ir.y + 6, '막음', 'blk', 8);
   if (e.bleed) at(110, () => num(x + 14, ir.y + 16, String(e.bleed), 'bleed', e.bleed));
@@ -525,7 +541,7 @@ function killFoe(e, P) {
     { filter: 'brightness(2.5) grayscale(1)', transform: 'translateY(4px) scaleY(.9)', opacity: .8, offset: .5 },
     { filter: 'brightness(1) grayscale(1)', transform: 'translateY(14px) scaleY(.2)', opacity: 0 },
   ], { duration: 640, easing: 'cubic-bezier(.3,.6,.4,1)' }).onfinish = () => ghost.remove();
-  const img = ghost.querySelector('img'), r = img ? rel(img) : c.r;
+  const img = ghost.querySelector('.foe > img'), r = img ? rel(img) : c.r;
   for (let k = 0; k < 26; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: rnd(r.y, r.y + r.h), vx: rnd(-.6, .6), vy: rnd(-1.6, -.2), g: .05, life: rnd(18, 34), col: k % 3 ? '#ece8f6' : '#8a86b8', s: 1 });
   ring(r.cx, r.cy, '#ffffff', 6, 40, 14);
   sfx('foe_down');
@@ -533,23 +549,23 @@ function killFoe(e, P) {
 }
 function hurtFx(e) {
   const el = allyEl(e.id); if (!el) return;
-  const img = el.querySelector('img'), r = img ? rel(img) : rel(el), x = r.cx, y = r.cy;
+  const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el), x = r.cx, y = r.cy;
   if (e.blocked) shieldBreak(x, y - 4, e.dmg === 0);
   if (e.dmg > 0) {
     impactFx(x, y, '#ff6a7a');
-    pulse(el.querySelector('img') || el, SET.shake ? 'jhitA' : 'jflash', 380);
+    pulse(el.querySelector(':scope > img') || el, SET.shake ? 'jhitA' : 'jflash', 380);
     if (!e.down) pose(e.id, 'hurt', 380);
     num(x, r.y + 4, String(e.dmg), 'hurt', e.dmg);
     if (e.dmg >= 10) shake();
   } else num(x, r.y + 4, '막음', 'blk', 8);
   if (e.down) {
-    at(160, () => { pulse(el.querySelector('img') || el, 'jdown', 820); num(x, r.y + 18, '쓰러짐', 'down', 12); for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: rnd(-1, 1), vy: rnd(-1, -.2), g: .06, life: 22, col: '#6a6688', s: 1 }); });
+    at(160, () => { pulse(el.querySelector(':scope > img') || el, 'jdown', 820); num(x, r.y + 18, '쓰러짐', 'down', 12); for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: rnd(-1, 1), vy: rnd(-1, -.2), g: .06, life: 22, col: '#6a6688', s: 1 }); });
     sfx('down');
   } else sfx(e.dmg ? 'hurt' : 'block');
 }
 function foeActFx(e) {
   const el = foeEl(e.i); if (!el) return;
-  const img = el.querySelector('img'), r = img ? rel(img) : rel(el);
+  const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   if (e.t === 'atk' || e.t === 'mix') { pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 400); pulse(el.querySelector('.intent'), 'jfire', 300); }
   else if (e.t === 'blk') { shieldIcon(r.cx, r.cy - 4, '#c9d2f0'); sfx('block', { vol: .6 }); }
   else if (e.t === 'buf') { for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: 0, vy: rnd(-1.4, -.6), g: 0, life: 24, col: '#ff7a6a', s: 1 }); num(r.cx, r.y, `힘 +${e.v}`, 'buf', 10); sfx('mana', { rate: .7 }); }
@@ -564,21 +580,21 @@ function foeActFx(e) {
 }
 function tickFx(e) {
   const el = foeEl(e.i); if (!el) return;
-  const img = el.querySelector('img'), r = img ? rel(img) : rel(el);
+  const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   if (e.what === 'poison') { mistFx(r.cx, r.cy); num(r.cx, r.y + 8, String(e.dmg), 'poison', e.dmg); sfx('poison', { vol: .6 }); }
   else { flames(r.cx, r.cy + 10); num(r.cx, r.y + 8, String(e.dmg), 'burn', e.dmg); sfx('hit', { vol: .5, rate: 1.3 }); }
   pulse(el, 'jflash', 200);
 }
 function blockGain(e) {
   const el = allyEl(e.id); if (!el) return;
-  const img = el.querySelector('img'), r = img ? rel(img) : rel(el);
+  const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   shieldIcon(r.cx, r.cy, '#c9d2f0');
   num(r.cx + 12, r.y + 10, `+${e.n}`, 'blkup', 9);
   sfx('block', { vol: .6 });
 }
 function healFx(e) {
   const el = allyEl(e.id); if (!el) return;
-  const img = el.querySelector('img'), r = img ? rel(img) : rel(el);
+  const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   for (let k = 0; k < 10; k++) add({ k: 'dot', x: rnd(r.x + 4, r.x + r.w - 4), y: rnd(r.cy, r.y + r.h), vx: 0, vy: rnd(-1.2, -.5), g: 0, life: 26, col: k % 2 ? '#9af0a0' : '#e8ffe8', s: 1 });
   num(r.cx, r.y + 8, `+${e.n}`, 'heal', 10);
   sfx('heal', { vol: .7 });
@@ -699,7 +715,7 @@ function hitStop(lv, v) {
 let freeze = 0;
 
 // ---------- 적 쪽 연출 ----------
-const foeR = i => { const el = foeEl(i); if (!el) return null; const img = el.querySelector('img'); return { el, r: img ? rel(img) : rel(el) }; };
+const foeR = i => { const el = foeEl(i); if (!el) return null; const img = el.querySelector(':scope > img'); return { el, r: img ? rel(img) : rel(el) }; };
 // 안개 마녀 여왕: 장막이 걷힘 (흰 안개가 흩어지고 「취약」)
 function veilFx(e) {
   const q = foeR(e.i); if (!q) return;
@@ -727,7 +743,7 @@ function rageFx(e) {
 }
 function duelFx(e) {
   const q = foeR(e.i), a = allyEl(e.id); if (!q || !a) return;
-  const ar = rel(a.querySelector('img') || a);
+  const ar = rel(a.querySelector(':scope > img') || a);
   tracer(q.r.cx, q.r.cy, ar.cx, ar.cy, '#e8f0ff'); slashFx(ar.cx, ar.cy, '#c9d2f0');
   num(q.r.cx, q.r.y - 4, '도전!', 'buf', 9);
   sfx('slash', { rate: .8 });
@@ -765,7 +781,7 @@ function mendFx(e) {
 function summonFx(e) {
   const q = foeR(e.i); if (q) { ring(q.r.cx, q.r.cy, '#f0d040', 4, 34, 14); sparks(q.r.cx, q.r.cy, '#f0d040', 12, 1.6); }
   const t = foeEl(e.to); if (!t) return;
-  const tr = rel(t.querySelector('img') || t);
+  const tr = rel(t.querySelector(':scope > img') || t);
   pulse(t, 'jsummon', 450);
   for (let k = 0; k < 3; k++) ring(tr.cx, tr.y + tr.h - 4, k ? '#b48ae8' : '#f0d040', 2 + k * 6, 30 + k * 8, 16 + k * 4);
   if (q) add({ k: 'line', x0: q.r.cx, y0: q.r.y, x1: tr.cx, y1: tr.cy, col: '#f0d040', speed: 7, life: 12, s: 1 });
@@ -786,7 +802,7 @@ function retargetFx(e) {
   const q = foeR(e.i); if (!q) return;
   ring(q.r.cx, q.r.cy, '#f0d040', 6, 26, 10);
   const a = e.to && allyEl(e.to); if (!a) return;
-  const ar = rel(a.querySelector('img') || a);
+  const ar = rel(a.querySelector(':scope > img') || a);
   add({ k: 'line', x0: q.r.cx, y0: q.r.cy, x1: ar.cx, y1: ar.cy, col: '#ff6a7a', speed: 8, life: 18, s: 1 });
   setTimeout(() => { pulse(a, 'jflash', 260); ring(ar.cx, ar.cy, '#ff6a7a', 4, 20, 10); }, 120);
 }
