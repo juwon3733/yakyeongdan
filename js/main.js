@@ -1,13 +1,14 @@
 // 입력과 화면 전환. 규칙은 run/map/combat/meta, 그리기는 render/.
 import { S, newRun, checkCollapse } from './run.js';
-import { goNode, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, specialBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
+import { goNode, reachable, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, specialBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
 import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, devWin, pickCombatMoon } from './combat.js';
 import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw } from './meta.js';
 import { temperPick } from './effects.js';
 import { render as draw } from './render/index.js';
 import { deckModal } from './render/screens.js';
-import { showCut } from './fx.js';
-import { beforeRender, afterRender } from './juice.js';
+import { keepSlots } from './render/combat.js';
+import { showCut, hideCut } from './fx.js';
+import { beforeRender, afterRender, skipFx } from './juice.js';
 import { sfx, applyVolumes } from './audio.js';
 import { SET, applySettings, setOption, calmNow } from './settings.js';
 import { startTutorial, skipTutorial, finishTutorial, tutorialPending } from './tutorial.js';
@@ -36,6 +37,14 @@ if (S.dev) window.__yk = {
   stars: (id, n) => { P.owned[id] = { stars: n }; save(); render(); },
   wins: n => { P.wins = n; P.runs = Math.max(P.runs, n); save(); render(); },
   loadV1: obj => { loadRaw(obj); render(); return P; },
+  // 지금 층의 갈 수 있는 칸 하나를 원하는 종류로 바꿔 들어간다 (rest·event·shop·fight·elite)
+  node: kind => {
+    const G = S.G; if (!G || !kind) return false;
+    const r = G.row, row = G.map.rows[r]; if (!row) return false;
+    if (r > 0 && !reachable(r).length) G.took[r - 1] = Math.max(0, G.map.edges[r - 1].findIndex(e => e.length));   // 개발 치트로 칸을 건너뛰었으면 이어 준다
+    const i = reachable(r).find(j => j < row.length); if (i == null) return false;
+    G.screen = 'map'; row[i] = kind; goNode(r, i); render(); return G.screen;
+  },
 };
 const seedParam = qs.has('seed') ? Number(qs.get('seed')) >>> 0 : undefined;
 
@@ -81,6 +90,9 @@ stage.addEventListener('pointerover', e => {
 stage.addEventListener('pointerleave', hideTip);
 addEventListener('pointerdown', e => { if (!e.target.closest('[data-tip],[title]')) hideTip(); });
 addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
+// 누르면 넘기기 (docs/11 #1): 판 위를 누르면 남은 연출(배너·적 행동·띠)을 바로 끝낸다. 누른 것(카드·버튼)은 그대로 처리된다.
+// 손패 카드를 누를 때는 넘기지 않는다 (남은 연출이 카드를 옮기면 누른 자리 아래 카드가 바뀔 수 있다)
+stage.addEventListener('pointerdown', e => { if (modal.hidden && !e.target.closest?.('.hand .card')) { skipFx(); hideCut(); } }, true);
 fit();
 
 // 듀오 컷인: 카드가 날아가 맞은 뒤에 띄운다 (애니메이션 줄이기면 바로)
@@ -158,7 +170,11 @@ app.addEventListener('click', e => {
     const uid = +D.play, inst = C.hand.find(h => h.uid === uid);
     if (!inst || !usable(inst)) return;
     const tk = targetOf(inst), once = tk === 'none' || tk === 'all' || (tk === 'foe' && livingFoes().length === 1);
-    if (C.pending === uid && once) play(uid);
+    // 빠른 사용(설정, 기본 켬): 대상이 하나뿐이면 한 번 눌러 바로 쓴다 (적 1마리, 대상 없는 카드, 서 있는 동료가 한 명뿐인 동료 카드)
+    const standing = tk === 'ally' ? S.G.party.filter(p => !S.G.members[p].down) : [];
+    const quick = SET.quick && (once || standing.length === 1) && !keepSlots();
+    if (quick) play(uid, standing.length === 1 ? { ally: standing[0] } : undefined);
+    else if (C.pending === uid && once) play(uid);
     else C.pending = uid;
   }
   else if (D.foe !== undefined) {

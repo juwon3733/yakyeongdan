@@ -41,6 +41,7 @@ tools/
   check-assets.mjs 그림 파일명·크기 검사
   export-prompts.mjs
   smoke.mjs        모든 화면을 띄워 오류 검사 (Playwright)
+  gen-docs.mjs     docs/04 적 표를 js/data/enemies.js에서 만듦 (--check: CI)
 prototype/index.html  처음 프로토타입 (참고용, 손대지 않음)
 ```
 

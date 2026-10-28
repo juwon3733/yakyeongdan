@@ -245,6 +245,30 @@ export const BGS = {
 };
 
 // ── 도구 아이콘 40 ───────────────────────────────────────
+// ── 동료 전용 도구 아이콘 20 (별자리 4, docs/10) ─────────────────
+export const SIG_RELICS = {
+  sig_sion: '첫 별의 모래 — a tiny glass vial of glittering star sand',
+  sig_lunaria: '달빛 방울 — a small silver bell shaped like a crescent moon',
+  sig_akane: '붉은 숫돌 — a red whetstone with ember sparks',
+  sig_eleonore: '태엽 열쇠 — an ornate brass wind-up key with a clock motif',
+  sig_iris: '스승의 숫돌 — an old grey whetstone wrapped in a faded cloth band',
+  sig_noel: '깃털 베개 — a small fluffy pink feather pillow',
+  sig_raven: '독 주머니 — a black leather pouch with a green poison drop mark',
+  sig_mimimomo: '쌍둥이 거울 — two small hand mirrors, pink and sky blue, back to back',
+  sig_sebas: '은 찻주전자 — a polished silver teapot with steam',
+  sig_mariana: '금화 주머니 — a bulging pouch spilling gold coins',
+  sig_tomori: '작은 등불 — a small yellow hand lantern',
+  sig_sigrun: '은빛 깃 — a single silver-white feather plume',
+  sig_zeno: '용비늘 조각 — a black dragon scale with a golden edge',
+  sig_brick: '예비 포탄 — a spare cannonball with a red stripe',
+  sig_marta: '성당 열쇠 — a heavy iron chapel key with a cross-shaped bow',
+  sig_finn: '지름길 지도 — a folded paper map with a red dotted shortcut line',
+  sig_laila: '바람 깃발 — a small torn sky-blue pennant fluttering',
+  sig_dora: '모루 방패 — a tiny anvil-shaped shield',
+  sig_gordon: '큰 도시락 — a big stacked lunch box tied with cloth',
+  sig_fukuro: '행운 고양이 — a small beckoning lucky cat charm with an owl mask',
+};
+
 export const RELICS = {
   old_watch: '낡은 회중시계 — an old brass pocket watch',
   lantern: '야경단 등불 — a night-watch lantern',
@@ -439,8 +463,9 @@ export function assetList() {
     out.push(item('meteor', `meteor_${r}`, 'summon', `meteor_${r}.png`, join(STYLE.pixel, `A single shooting star effect, ${col}, falling diagonally from top-right to bottom-left with a pixel trail. Fully transparent background. Native 64x64, upscaled 8x to 512x512.`)));
   }
   batches.push({ id: 'icons', title: '도구 아이콘 40' });
-  for (const [id, desc] of Object.entries(RELICS)) {
-    out.push(item('icon', `relic_${id}`, 'icons', `relic_${id}.png`, join(STYLE.pixel, `A single item icon: ${desc}. Centered, readable at 24x24 pixels, bold outline, fully transparent background. Native resolution 24x24 pixels, upscaled exactly 8x to 192x192.`)));
-  }
+  const icon = (batch, id, desc) => out.push(item('icon', `relic_${id}`, batch, `relic_${id}.png`, join(STYLE.pixel, `A single item icon: ${desc}. Centered, readable at 24x24 pixels, bold outline, fully transparent background. Native resolution 24x24 pixels, upscaled exactly 8x to 192x192.`)));
+  for (const [id, desc] of Object.entries(RELICS)) icon('icons', id, desc);
+  batches.push({ id: 'icons-sig', title: '동료 전용 도구 아이콘 20' });
+  for (const [id, desc] of Object.entries(SIG_RELICS)) icon('icons-sig', id, desc);
   return { batches, items: out };
 }

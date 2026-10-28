@@ -6,7 +6,10 @@ import { S, dawnAt } from './run.js';
 import { CHARACTERS } from './data/characters.js';
 import { ACT_NAME } from './data/rules.js';
 import { calmNow, SET } from './settings.js';
-import { sfx } from './audio.js';
+import { sfx as sfxRaw } from './audio.js';
+// 누르면 넘기기(skipFx)로 남은 연출을 한꺼번에 돌릴 때는 효과음을 겹쳐 내지 않는다
+let hush = false;
+const sfx = (...a) => { if (!hush) sfxRaw(...a); };
 import { showPhase, showBoss, shake } from './fx.js';
 
 const stage = document.getElementById('stage');
@@ -39,8 +42,29 @@ const root = () => frozen || app();
 const foeEl = i => frozen ? frozen.querySelector(`[data-jfi="${i}"]`) : app()?.querySelector(`[data-fi="${i}"]`);
 const allyEl = id => frozen ? frozen.querySelector(`[data-jally="${id}"]`) : app()?.querySelector(`[data-ally="${id}"]`);
 const rnd = (a, b) => a + Math.random() * (b - a);
-const timers = new Set();
-function at(ms, fn) { const t = setTimeout(() => { timers.delete(t); try { fn(); } catch (e) { /* 연출 때문에 게임이 멈추면 안 된다 */ } }, ms); timers.add(t); }
+const timers = new Map();   // 타이머 → { when, fn } (누르면 넘기기 때 남은 것을 순서대로 바로 돌린다)
+function at(ms, fn) {
+  const run = () => { timers.delete(t); try { fn(); } catch (e) { /* 연출 때문에 게임이 멈추면 안 된다 */ } };
+  const t = setTimeout(run, ms); timers.set(t, { when: performance.now() + ms, run });
+}
+// 누르면 넘기기 (docs/11 #1): 기다리는 연출(배너·적 행동·보상 내려앉기)을 지금 다 돌리고, 움직이는 연출은 끝 상태로
+export function skipFx() {
+  if (!layer || !timers.size) return false;
+  const left = [...timers.entries()].sort((a, b) => a[1].when - b[1].when);
+  hush = true;
+  for (const [t, x] of left) { clearTimeout(t); x.run(); }
+  hush = false;
+  // 연출 층과 기다리는 등장 연출(보상 카드 등)만 끝 상태로 (손패 카드는 그대로 두어야 누른 자리 아래 카드가 바뀌지 않는다)
+  const anims = [...layer.getAnimations({ subtree: true }), ...tracked];
+  tracked.clear();
+  for (const a of anims) { try { if (Number.isFinite(a.effect?.getComputedTiming().endTime)) a.finish(); } catch (e) { /* 끝낼 수 없는 연출 */ } }
+  layer.querySelectorAll('.jbanner,.jclimb,.jclock,.jwarm').forEach(x => x.remove());
+  return left.length > 0;
+}
+export const fxBusy = () => timers.size > 0;
+// 누르면 넘기기 때 끝 상태로 보낼 화면 쪽 연출 (지연이 긴 등장 연출)
+const tracked = new Set();
+function track(a) { tracked.add(a); a.onfinish = () => tracked.delete(a); return a; }
 
 // ---------- 그리기 직전: 재 두기 ----------
 let pre = null;
@@ -121,6 +145,7 @@ export function afterRender(events = []) {
   // 화면 넘어감: 전투 → 보상(승리), 막이 바뀜(올라가는 장면)
   const G = S.G;
   if (P && G && P.screen === 'combat' && G.screen === 'reward') { at(t + 120, () => { banner('승리', 'win'); sfx('win'); }); dealReward(t + 420); }
+  if (G && G.screen === 'result' && P && P.screen !== 'result') countUp(frozen ? t + 650 : 0);
   if (G && S.view === 'run' && G.screen === 'map' && !G.tutorial && P && (P.seed !== G.seed || P.act !== G.act)) at(P.seed !== G.seed ? 0 : t + 200, () => climb(G.act));
   if (G && S.view === 'run') { shown.seed = G.seed; shown.act = G.act; }
   dropFrozen(frozen ? t + 650 : 0);
@@ -384,12 +409,25 @@ function banner(text, cls) {
 function dealReward(t0) {
   const cards = app()?.querySelectorAll('[data-screen="reward"] .hand.big .card') || [];
   cards.forEach((el, k) => {
-    el.animate([{ transform: 'translateY(-40px) rotate(-8deg) scale(.6)', opacity: 0 }, { transform: 'translateY(4px) rotate(1deg) scale(1.03)', opacity: 1, offset: .7 }, { transform: 'none', opacity: 1 }],
-      { duration: 320, delay: t0 + k * 110, easing: 'steps(8)', fill: 'backwards' });
+    track(el.animate([{ transform: 'translateY(-40px) rotate(-8deg) scale(.6)', opacity: 0 }, { transform: 'translateY(4px) rotate(1deg) scale(1.03)', opacity: 1, offset: .7 }, { transform: 'none', opacity: 1 }],
+      { duration: 320, delay: t0 + k * 110, easing: 'steps(8)', fill: 'backwards' }));
     at(t0 + k * 110, () => sfx('card', { vol: .5, rate: .9 + k * .1 }));
+    // 뒷면으로 내려앉았다가 한 장씩 뒤집힌다 (docs/11 #3)
+    el.classList.add('cardback');
+    const tf = t0 + cards.length * 110 + 220 + k * 140;
+    at(tf, () => { if (!hush) el.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 90, easing: 'steps(3)' }); });
+    at(tf + 90, () => { el.classList.remove('cardback'); if (!hush) el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 110, easing: 'steps(3)' }); sfx('select', { vol: .5, rate: 1 + k * .12 }); });
   });
   const gold = app()?.querySelector('[data-screen="reward"] .center > .note');
-  if (gold) gold.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: t0, easing: 'steps(4)', fill: 'backwards' });
+  if (gold) track(gold.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: t0, easing: 'steps(4)', fill: 'backwards' }));
+}
+// 결과 화면: 얻은 별 조각이 0부터 올라간다 (별 조각 줄이 하나씩 나온 뒤)
+function countUp(t0) {
+  const el = app()?.querySelector('.countup'); if (!el) return;
+  const to = +el.dataset.to || 0, rows = app().querySelectorAll('table.shards tr').length, start = t0 + 400 + rows * 120;
+  el.textContent = '0';
+  const n = 10;
+  for (let k = 1; k <= n; k++) at(start + k * 50, () => { el.textContent = String(Math.round(to * k / n)); if (k === n) sfx('star', { vol: .5 }); });
 }
 // 막이 바뀌면: 탑을 올라가는 짧은 장면
 function climb(act) {
@@ -503,7 +541,7 @@ function shieldIcon(x, y, col) { add({ k: 'icon', x, y, col, life: 24 }); }
 
 // 화면이 바뀌면(판 밖으로 나가면) 남은 연출 정리
 export function clearFx() {
-  for (const t of timers) clearTimeout(t); timers.clear();
+  for (const t of timers.keys()) clearTimeout(t); timers.clear();
   parts.length = 0;
   layer?.querySelectorAll('.jghost,.jnum,.jbanner,.jclock,.jwarm,.jclimb').forEach(x => x.remove());
 }

@@ -4,7 +4,7 @@ import { hasRelic } from '../relics.js';
 import { MOONS } from '../data/moons.js';
 import { CHARACTERS } from '../data/characters.js';
 import { RULES, NODE, ACT_NAME, ROW_NAME } from '../data/rules.js';
-import { fmt, face } from './common.js';
+import { fmt, face, paceOf } from './common.js';
 
 // 가로 지도: 왼쪽(1층) → 오른쪽(꼭대기). 층 사이 선은 갈렸다 합쳐진다. 아래에 대열 고치기.
 const MW = 624, MH = 232, NW = 100, NH = 36;
@@ -21,7 +21,7 @@ export function mapView() {
   const nodes = M.rows.map((row, r) => row.map((t, j) => {
     const p = P[r][j], ok = r === G.row && can.includes(j), cls = r < G.row ? 'past' : ok ? 'now' : 'future';
     return `<button type="button" class="node k-${t} ${cls} ${G.took[r] === j ? 'took' : ''}" style="left:${p.x}px;top:${p.y}px" ${ok ? `data-node="${r},${j}"` : 'disabled'}>
-      <span class="t">${NODE[t].name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → ${fmt(G.clock + nodeTime(t))}` : ''}</span></button>`;
+      <span class="t">${NODE[t].name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → <b class="pace ${G.tutorial ? '' : paceOf(G, G.clock + nodeTime(t), 1)}">${fmt(G.clock + nodeTime(t))}</b>` : ''}</span></button>`;
   }).join('')).join('');
   const labels = M.rows.map((row, r) => `<span class="rowlabel" style="left:${P[r][0].x}px">${r === cols - 1 ? '꼭대기' : `${r + 1}층`}</span>`).join('');
   // 대열 칸: 왼쪽→오른쪽 = 뒤·가운데·앞

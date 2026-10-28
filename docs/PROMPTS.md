@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 1 · 전체 499장 · 묶음 56개
+style_version 1 · 전체 519장 · 묶음 57개
 
 ## 묶음
 
@@ -64,6 +64,7 @@ style_version 1 · 전체 499장 · 묶음 56개
 | `title` | 타이틀 키아트 | 1 |
 | `summon` | 별 소환 연출 | 4 |
 | `icons` | 도구 아이콘 40 | 40 |
+| `icons-sig` | 동료 전용 도구 아이콘 20 | 20 |
 
 ## 종류별 크기
 
@@ -1163,3 +1164,28 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `relic_twin_star` | `assets/icons/relic_twin_star.png` | 192×192 투명 | — | — |
 | `relic_reverse_clock` | `assets/icons/relic_reverse_clock.png` | 192×192 투명 | — | — |
 | `relic_star_sash` | `assets/icons/relic_star_sash.png` | 192×192 투명 | — | — |
+
+## `icons-sig` — 동료 전용 도구 아이콘 20
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `relic_sig_sion` | `assets/icons/relic_sig_sion.png` | 192×192 투명 | — | — |
+| `relic_sig_lunaria` | `assets/icons/relic_sig_lunaria.png` | 192×192 투명 | — | — |
+| `relic_sig_akane` | `assets/icons/relic_sig_akane.png` | 192×192 투명 | — | — |
+| `relic_sig_eleonore` | `assets/icons/relic_sig_eleonore.png` | 192×192 투명 | — | — |
+| `relic_sig_iris` | `assets/icons/relic_sig_iris.png` | 192×192 투명 | — | — |
+| `relic_sig_noel` | `assets/icons/relic_sig_noel.png` | 192×192 투명 | — | — |
+| `relic_sig_raven` | `assets/icons/relic_sig_raven.png` | 192×192 투명 | — | — |
+| `relic_sig_mimimomo` | `assets/icons/relic_sig_mimimomo.png` | 192×192 투명 | — | — |
+| `relic_sig_sebas` | `assets/icons/relic_sig_sebas.png` | 192×192 투명 | — | — |
+| `relic_sig_mariana` | `assets/icons/relic_sig_mariana.png` | 192×192 투명 | — | — |
+| `relic_sig_tomori` | `assets/icons/relic_sig_tomori.png` | 192×192 투명 | — | — |
+| `relic_sig_sigrun` | `assets/icons/relic_sig_sigrun.png` | 192×192 투명 | — | — |
+| `relic_sig_zeno` | `assets/icons/relic_sig_zeno.png` | 192×192 투명 | — | — |
+| `relic_sig_brick` | `assets/icons/relic_sig_brick.png` | 192×192 투명 | — | — |
+| `relic_sig_marta` | `assets/icons/relic_sig_marta.png` | 192×192 투명 | — | — |
+| `relic_sig_finn` | `assets/icons/relic_sig_finn.png` | 192×192 투명 | — | — |
+| `relic_sig_laila` | `assets/icons/relic_sig_laila.png` | 192×192 투명 | — | — |
+| `relic_sig_dora` | `assets/icons/relic_sig_dora.png` | 192×192 투명 | — | — |
+| `relic_sig_gordon` | `assets/icons/relic_sig_gordon.png` | 192×192 투명 | — | — |
+| `relic_sig_fukuro` | `assets/icons/relic_sig_fukuro.png` | 192×192 투명 | — | — |

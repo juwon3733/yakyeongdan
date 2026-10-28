@@ -55,6 +55,13 @@ button.mini{padding:2px 6px;font-family:var(--f-disp);font-size:10px}
 .clock.dawn{color:#ffb070}
 .night{width:56px;height:4px;background:#1e2046;position:relative}
 .night i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#3a3f8a,#c9d2f0 85%,#ffb070)}
+/* 시간 페이스: 막 경계(2:00·4:00) 눈금 + 지금 층 목표 시각(작은 금색 표시) */
+.night{width:72px;height:5px;border:1px solid #2e3266}
+.night b{position:absolute;top:-2px;width:1px;height:9px;background:#8a90c8}
+.night u{position:absolute;top:-3px;width:3px;height:3px;margin-left:-1px;background:var(--gold);text-decoration:none}
+.chip.pace{font-size:8.5px}
+.chip.pace.ok{color:#9ad0a0}.chip.pace.early{color:#7ab0d8}.chip.pace.late{color:#ff9a6a}
+.node .m b.pace{font-weight:400}.node .m b.pace.ok{color:#9ad0a0}.node .m b.pace.early{color:#7ab0d8}.node .m b.pace.late{color:#ff9a6a}
 img.moon{width:15px;height:15px}
 .topbar .grow{flex:1}
 .mates{display:flex;gap:6px}
@@ -833,3 +840,75 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s steps
 @media (prefers-reduced-motion:reduce){.card.duonext{animation:none}}
 #stage.calm .card.duonext{animation:none}
 .card{position:relative}
+
+/* ---- 전투 배치 (docs/11 #2): 상자 대신 무대 바닥 위에 크게 선다. 그림 자리는 서 있는 그림 비율 2:3(원본 128×192) ---- */
+.field{position:relative;gap:6px;padding:0 2px;justify-content:space-evenly}
+.party,.foes{position:relative;z-index:1}
+.party{gap:0}
+.pm{width:88px;padding:0 2px 3px;background:none;border:0;border-bottom:3px solid var(--c);gap:1px;text-shadow:1px 1px 0 #000}
+.pm img,.foe img{object-fit:contain;background:radial-gradient(ellipse 45% 6% at 50% 97%,rgba(0,0,0,.55),transparent);object-position:50% 100%;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.55))}
+.pm img{width:72px;height:108px}
+.pm .hpbar{width:70px}
+.pm.tg{background:rgba(76,192,138,.16);outline:2px solid #4cc08a;outline-offset:-2px}
+.pm.last{outline:1px dashed var(--c);outline-offset:-2px}
+.pm.aimed{border-bottom-color:var(--rose);box-shadow:0 3px 0 var(--rose)}
+.pm.lit{background:rgba(255,224,96,.12);outline:2px solid #ffe060;outline-offset:-2px}
+.swap{margin-bottom:52px}
+.foes{gap:6px}
+.foe{width:auto;min-width:120px;padding:0 4px 3px;background:none;border:0;border-bottom:3px solid #3a2440;text-shadow:1px 1px 0 #000}
+.foe img{width:84px;height:126px}
+.foe.tg{background:rgba(224,74,106,.16);outline:2px solid var(--rose);outline-offset:-2px}
+.foe.sm{width:auto;min-width:96px;padding:0 3px 3px}
+.foe.sm img{width:64px;height:96px}
+.foe.gone{background:none}
+#stage.bigtext .pm{width:84px}
+#stage.bigtext .pm img{width:68px;height:102px}
+#stage.bigtext .foe img{width:80px;height:120px}
+#stage.bigtext .foe.sm img{width:62px;height:93px}
+#stage.bigtext .foe.sm{width:auto;min-width:92px}
+#app.tut[data-screen="combat"] .pm img{width:52px;height:78px}
+#app.tut[data-screen="combat"] .foe img{width:64px;height:96px}
+#app.tut[data-screen="combat"] .foe.sm img{width:48px;height:72px}
+
+/* ---- 사건·휴식 무대 (docs/11 #3): 배경 + 동료 상반신 + 가운데 글 상자 ---- */
+.scene{position:relative;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:-4px -8px -6px}
+.scene .epbg .bgimg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+.scene .sport{position:absolute;bottom:0;width:120px;height:180px;object-fit:contain;object-position:50% 100%;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6));z-index:1}
+.scene .sport.l{left:6px}
+.scene .sport.r{right:6px;transform:scaleX(-1)}
+.scene .sbox{position:relative;z-index:2;flex:0 1 auto;max-width:420px;background:rgba(10,10,24,.86);border:2px solid var(--line);box-shadow:3px 3px 0 var(--shadow);padding:8px 12px}
+.scene .sbox h2{margin:0}
+.needtag{font-family:var(--f-disp);font-size:9px;border:1px solid currentColor;padding:0 3px;margin-right:2px}
+#stage.bigtext .scene .sport{width:96px;height:144px}
+#stage.bigtext .needtag{font-size:10px}
+
+/* ---- 보상 카드 뒤집기 (js/juice.js dealReward가 .cardback을 붙였다 뗀다) ---- */
+.card.cardback::before{content:"";position:absolute;inset:0;z-index:5;pointer-events:none;
+  background:radial-gradient(circle at 50% 42%,var(--gold) 0 3px,transparent 4px),repeating-linear-gradient(45deg,#1c1a40 0 4px,#24224e 4px 8px);
+  box-shadow:inset 0 0 0 2px #0b0b18,inset 0 0 0 4px #6a5a2a}
+
+/* ---- 결과 화면 진행 막대 · 별 조각 줄이 하나씩 (docs/11 #3) ---- */
+.runbar{position:relative;margin:14px 0 6px}
+.runbar .track{position:relative;height:14px;background:#141634;border:1px solid var(--line)}
+.runbar .seg{position:absolute;top:0;bottom:0;border-right:1px solid #2e3266;font-family:var(--f-disp);font-size:7.5px;color:var(--dim);display:flex;align-items:center;justify-content:center;white-space:nowrap;overflow:hidden;z-index:1}
+.runbar .seg.done{color:#c9d2f0}.runbar .seg.now{color:#ffb070}
+.runbar .fill{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#2a2f6a,#5a64b0);animation:runfill .9s steps(12) both}
+.runbar .fill.won{background:linear-gradient(90deg,#2a2f6a,#c9a040)}
+@keyframes runfill{from{width:0}}
+.runbar .dawnmark{position:absolute;top:-3px;bottom:-3px;width:2px;background:#ffb070;z-index:2}
+.runbar .me{position:absolute;top:-12px;transform:translateX(-50%);font-family:var(--f-disp);font-size:8px;color:#fff;text-decoration:none;z-index:2}
+.runbar .ticks{position:relative;height:10px;font-size:7.5px;color:var(--dim)}
+.runbar .ticks span{position:absolute;top:1px;transform:translateX(-50%)}
+.runbar .ticks span:first-child{transform:none}
+table.shards tr{animation:rowin .3s steps(4) both;animation-delay:calc(var(--i,0) * .12s + .4s)}
+@keyframes rowin{from{opacity:0;transform:translateX(-8px)}}
+.ok10{color:var(--gold)}
+
+/* ---- 야시장 노점 (docs/11 #3): 줄무늬 차양과 등불 ---- */
+.shopscr{position:relative;padding-top:14px}
+.shopscr::before{content:"";position:absolute;left:-8px;right:-8px;top:-4px;height:14px;
+  background:repeating-linear-gradient(90deg,#a03a3a 0 16px,#efe2c8 16px 32px);border-bottom:2px solid #5a1e1e;
+  -webkit-mask:radial-gradient(circle at 8px 100%,transparent 4px,#000 4.5px) 0 0/16px 100%;mask:radial-gradient(circle at 8px 100%,transparent 4px,#000 4.5px) 0 0/16px 100%}
+.shopscr::after{content:"";position:absolute;top:10px;left:10%;right:10%;height:10px;pointer-events:none;
+  background:radial-gradient(circle,#ffb04a 0 3px,#a04a20 3.5px 4.5px,transparent 5px) 0 0/25% 100% repeat-x;filter:drop-shadow(0 0 3px #ff9a4a)}
+.shophead .fukuro{width:30px;height:30px;font-size:16px}

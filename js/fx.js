@@ -31,6 +31,8 @@ export function showBoss(name, line = '') {
   show(`<div class="bossband"><i class="stripe"></i><div class="tx"><span>보스</span><b>${name}</b>${line ? `<small>${line}</small>` : ''}</div></div>`, 1400);
 }
 cutEl.addEventListener('click', () => { cutEl.hidden = true; });
+// 누르면 넘기기: 떠 있는 띠(듀오·보스·2단계)를 바로 닫는다
+export function hideCut() { if (cutEl.hidden) return false; clearTimeout(cutTimer); cutEl.hidden = true; return true; }
 
 // 동료가 맞으면 판을 짧게 흔든다 (설정 「화면 흔들림 끔」·애니메이션 줄이기면 #stage.noshake라 안 흔들린다)
 const stageEl = document.getElementById('stage');

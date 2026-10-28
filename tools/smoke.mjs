@@ -32,7 +32,7 @@ const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false
   migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
   ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false,
-  tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false };
+  tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false };
 
 // 전투가 아닌 화면 한 걸음 (지도·보상·휴식·사건·야시장·보스 도구·달 고르기·카드 고르기)
 async function advance(page, tag) {
@@ -440,6 +440,36 @@ try {
       const top = await ev(() => ({ clock: !!document.querySelector('.topbar .clock'), tag: !!document.querySelector('.topbar .eptag'), amb: window.__yk.audio?.().amb }));
       if (!top.clock && top.tag) seen.epClock = true; else fail(`특별 전투 위 띠 ${JSON.stringify(top)}`);
     } else fail('에피소드 2화 특별 전투까지 못 감');
+    await page.close();
+  }
+  // docs/11 상위 과제: 빠른 사용(한 번 눌러 바로 쓰기, 끄면 두 번), 시간 페이스 표시, 사건·휴식 무대, 결과 진행 막대
+  {
+    const page = await browser.newPage({ viewport: { width: 844, height: 390 } });
+    page.on('pageerror', e => errors.push(`[qa-top] ${e.message}`));
+    await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+    await page.goto(`http://127.0.0.1:${port}/?notut&seed=6`);
+    const ev = f => page.evaluate(f);
+    await openParty(page);
+    for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
+    await page.click('[data-start]'); await page.waitForSelector('[data-node="0,0"]');
+    const pace = await ev(() => !!document.querySelector('.topbar .chip.pace') && !!document.querySelector('.night u') && !!document.querySelector('.node .m b.pace'));
+    const rig = () => ev(() => { window.__yk.fight(['ghost'], 'fight'); const C = window.__yk.S.C; C.energy = 9; C.hand = ['iris.slash', 'iris.slash'].map((id, k) => ({ uid: 9100 + k, id })); window.__yk.render(); });
+    await rig();
+    await page.click('[data-play="9100"]');
+    const once = await ev(() => !window.__yk.S.C.hand.some(h => h.uid === 9100) && window.__yk.S.C.pending == null);
+    await page.click('[data-settings]'); await page.click('[data-set="quick:false"]'); await page.click('[data-close]');
+    await page.click('[data-play="9101"]');
+    const twice = await ev(() => window.__yk.S.C.pending === 9101 && window.__yk.S.C.hand.some(h => h.uid === 9101));
+    await page.click('[data-settings]'); await page.click('[data-set="quick:true"]'); await page.click('[data-close]');
+    if (once && twice) seen.quick = true; else fail(`빠른 사용 ${JSON.stringify({ once, twice })}`);
+    await ev(() => window.__yk.win());
+    if (await page.$('[data-take]')) await page.click('[data-take]');
+    const scenes = [];
+    for (const k of ['event', 'rest']) { await page.evaluate(k2 => window.__yk.node(k2), k); scenes.push(await ev(() => !!document.querySelector('.scene .sport') && !!document.querySelector('.scene .sbox'))); }
+    await ev(() => { const Y = window.__yk, G = Y.S.G; Y.S.C = null; G.won = true; G.why = 'win'; G.screen = 'result'; Y.render(); });
+    const bar = await ev(() => !!document.querySelector('.runbar .fill') && !!document.querySelector('.countup'));
+    if (pace && scenes.every(Boolean) && bar) { seen.qaTop = true; console.log('qa-top: 빠른 사용(켬 한 번 · 끔 두 번), 시간 페이스, 사건·휴식 무대, 결과 진행 막대'); }
+    else fail(`qa-top ${JSON.stringify({ pace, scenes, bar })}`);
     await page.close();
   }
   // 세로 폰: 돌려 달라는 안내

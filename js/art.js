@@ -21,8 +21,12 @@ export function charArt(id, kind = 'stand', outfit = false) {
 // 적 그림: 전투 데이터의 적 키 → 그림 파일 이름 (js/asset_prompts.js ENEMIES·BOSSES)
 const FOE_FILE = {
   ghost: 'sea_ghost', crab: 'crab_soldier', pirate: 'dock_pirate', gull: 'gulls', anchor: 'anchor_giant', witch: 'fog_witch',
-  cloud: 'cloud_spirit', feather: 'feather_knight', sheep: 'thunder_sheep', vane: 'vane_soldier', bird: 'thunderbird', vanes: 'twin_vanes',
+  eel: 'lamp_eel', powder: 'powder_sailor', parrot: 'captain_parrot', smuggler: 'smuggler_boss',
+  cloud: 'cloud_spirit', feather: 'feather_knight', sheep: 'thunder_sheep', vane: 'vane_soldier', bird: 'thunderbird', vaneL: 'twin_vanes', vaneR: 'twin_vanes',
+  jelly: 'mist_jelly', kite: 'kite_knight', puff: 'puff_bomber', trumpet: 'storm_trumpeter',
   statue: 'star_statue', cat: 'shadow_cat', archer: 'meteor_archer', angel: 'clock_angel', rider: 'meteor_rider', shadow: 'moon_shadow',
+  comet: 'tail_comet', gear: 'gear_knight', thief: 'star_thief', sage: 'constellation_sage',
+  tut_ghost: 'sea_ghost', tut_gull: 'gulls',
 };
 const BOSS_FILE = { keeper: 'lighthouse', captain: 'cloud_captain', dawn: 'dawn' };
 export function foeArt(f) {

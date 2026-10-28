@@ -16,6 +16,7 @@ export function settingsModal() {
     <div class="srow"><label for="set-music">음악</label><input id="set-music" type="range" min="0" max="1" step="0.05" value="${SET.music}" data-vol="music"><output id="out-music">${pct(SET.music)}</output></div>
     <div class="srow"><label for="set-sfx">효과음</label><input id="set-sfx" type="range" min="0" max="1" step="0.05" value="${SET.sfx}" data-vol="sfx"><output id="out-sfx">${pct(SET.sfx)}</output></div>
     <p class="note small">환경음(파도·바람)은 음악 음량을 따른다. 위 띠의 소리 버튼(M 키)은 전체를 켬·작게·끔으로 바꾼다.</p>
+    <div class="srow"><span class="lb">빠른 사용</span>${seg('quick', [[true, '켬'], [false, '끔']], SET.quick)}<span class="note small">대상이 하나뿐인 카드는 한 번 눌러 바로 쓴다</span></div>
     <div class="srow"><span class="lb">화면 흔들림</span>${seg('shake', [[true, '켬'], [false, '끔']], SET.shake)}</div>
     <div class="srow"><span class="lb">애니메이션 줄이기</span>${seg('calm', [['null', '기기 설정대로'], [true, '줄임'], [false, '그대로']], SET.calm ?? 'null')}<span class="note small">지금 ${calmNow() ? '줄임' : '그대로'}</span></div>
     <div class="srow"><span class="lb">글자 크기</span>${seg('text', [['auto', '자동'], ['normal', '보통'], ['big', '크게']], SET.text)}<span class="note small">지금 ${bigTextNow() ? '크게' : '보통'} (자동: 작은 화면이면 크게)</span></div>

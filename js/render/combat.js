@@ -10,6 +10,7 @@ import { sprite, moonImg } from './sprites.js';
 import { esc, cardHTML, face, hpBar, charSrc } from './common.js';
 import { kwTip, kwOne } from '../data/keywords.js';
 import { foeArt } from '../art.js';
+import { SET } from '../settings.js';
 
 // 동료별 고유 수치 표시
 const STAT = {
@@ -48,6 +49,9 @@ const foeTraits = f => [
 const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f.dim * 100) + '%' : 0, '빛 −', '#f0d040') + chip(f.bounty, '현상금', '#e0a050') + chip(f.block, '방어', 'var(--moon)') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
   + chip(f.str, '힘', '#ff9a8a') + chip(f.weak, '약화', '#f08ac0') + chip(f.vuln, '취약', '#ffd060');
 
+// 세바스·예약: 턴 끝에 남길 수 있는 카드 수 (있으면 빠른 사용 대신 카드 → [남기기]를 고를 수 있게 두 번 누르기)
+export const keepSlots = () => (alive('sebas') ? CHARACTERS.sebas.passive.keepCard || 0 : 0) + (S.C?.reserve || 0);
+
 export function combatView() {
   const G = S.G, C = S.C;
   const pend = C.pending != null ? C.hand.find(h => h.uid === C.pending) : null;
@@ -85,7 +89,7 @@ export function combatView() {
   // 담금질 고르기 중이면 강화할 수 있는 카드만 누를 수 있다. 세바스·예약: 남길 카드 표시.
   const tempering = C.choose?.kind === 'temper';
   const canTemper = h => !/^(duo|bond):/.test(h.id) && cardDef(h).ch !== 'curse' && canUpgrade(h.id);
-  const keepN = (alive('sebas') ? CHARACTERS.sebas.passive.keepCard || 0 : 0) + (C.reserve || 0);
+  const keepN = keepSlots();
   const marks = C.keepMark || [];
   const hand = C.hand.map(h => {
     const html = tempering ? cardHTML(h, canTemper(h), canTemper(h) ? 'temper' : 'none') : cardHTML(h, usable(h), 'play', undefined, h.uid === C.pending);
@@ -96,7 +100,7 @@ export function combatView() {
   const temperBar = tempering ? `<span class="tempbar">담금질: 강화할 카드를 고르세요 (${C.choose.left}장) <button type="button" class="mini" data-temperauto>자동으로</button></span>` : '';
   const pip = (n, on) => Array.from({ length: Math.max(n, on) }, (_, k) => `<i class="${k < on ? '' : 'off'}"></i>`).join('');
   const tip = tempering ? '강화할 카드를 누르면 턴을 이어 갈 수 있다.' : wantAlly ? '받을 동료를 누르세요.' : wantFoe ? '칠 적을 누르세요.' : pend ? '카드를 한 번 더 누르면 씁니다.'
-    : lit.length ? '불빛이 비춘 동료의 카드는 비용 +1.' : '카드를 누르고 대상을 누르세요.';
+    : lit.length ? '불빛이 비춘 동료의 카드는 비용 +1.' : SET.quick && !keepN ? '카드를 누르면 쓴다. 적이 여럿이면 카드 → 적.' : '카드를 누르고 대상을 누르세요.';
   return `<div class="field">
       <div class="party">${party}</div>
       <div class="foes ${many ? 'many' : ''}">${foes}</div>

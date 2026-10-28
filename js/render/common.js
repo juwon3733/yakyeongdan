@@ -45,6 +45,27 @@ function relicRow(G, max = 6) {
   return list.slice(0, max).map(id => relicChip(id, G)).join('') + (more > 0 ? `<span class="more">+${more}</span>` : '');
 }
 
+// 시간 페이스 (docs/11 #4): 막마다 목표 2:00·4:00·6:00(새벽 시각의 1/3씩). 지금 층에서 있어야 할 시각과 비교한다.
+// at = 지금(0) 또는 다음 칸에 도착한 뒤(1)
+export function paceGoal(G, at = G.screen === 'map' ? 0 : 1) {   // 칸 안(전투·사건 등)이면 그 칸을 마친 시각이 목표
+  const per = dawnAt() / 3, rows = G.map?.rows.length || 5;
+  return Math.round((Math.min(3, G.act) - 1) * per + Math.min(rows, G.row + at) / rows * per);
+}
+const PACE_SLACK = 10;   // 목표 ±10분 안이면 「알맞음」
+export function paceOf(G, clock = G.clock, at) {
+  const d = clock - paceGoal(G, at);
+  return d > PACE_SLACK ? 'late' : d < -PACE_SLACK ? 'early' : 'ok';
+}
+function paceChip(G) {
+  if (G.tutorial) return '';
+  const d = G.clock - paceGoal(G), k = paceOf(G);
+  const t = k === 'late' ? `늦음 +${d}분` : k === 'early' ? `여유 ${-d}분` : '알맞음';
+  return `<span class="chip pace ${k}" data-tip="${esc(paceTip(G))}">${t}</span>`;
+}
+function paceTip(G) {
+  return `밤 시계 페이스: 막마다 목표 ${fmt(Math.round(dawnAt() / 3))} · ${fmt(Math.round(dawnAt() / 3 * 2))} · ${fmt(dawnAt())}. 지금 층의 목표 시각은 ${fmt(paceGoal(G))}. 늦으면 시간 카드를 아끼고 낮잠을 고려.`;
+}
+
 // 위 띠: 밤 시계 · 달 · (전투면 연계) · 덱. 지도에서는 동료 얼굴과 체력도.
 export function topbar(extra = '') {
   const G = S.G, m = MOONS[G.moon];
@@ -56,7 +77,7 @@ export function topbar(extra = '') {
   const ep = !!G.episode;
   return `<div class="topbar ${ep ? 'ep' : ''}">
     ${ep ? '<span class="chip eptag">에피소드 · 특별 전투</span>' : `<span class="clock ${G.clock >= dawnAt() ? 'dawn' : ''}">${fmt(G.clock)}</span>
-    <span class="night" aria-hidden="true"><i style="width:${Math.min(100, G.clock / dawnAt() * 100)}%"></i></span>`}
+    <span class="night" data-tip="${esc(paceTip(G))}"><i style="width:${Math.min(100, G.clock / dawnAt() * 100)}%"></i><b style="left:33.3%"></b><b style="left:66.6%"></b><u style="left:${Math.min(100, paceGoal(G) / dawnAt() * 100)}%"></u></span>${paceChip(G)}`}
     ${G.depth ? `<span class="chip depthchip" title="밤의 깊이 ${G.depth}">깊이 ${G.depth}</span>` : ''}
     <img class="px moon" src="${moonImg(G.moon)}" alt="">
     <span class="chip" style="color:var(--moon)" title="${esc(m.text)}">${m.name}</span>
