@@ -10,6 +10,7 @@ import { sprite, moonImg } from './sprites.js';
 import { esc, cardHTML, face, hpBar, charSrc } from './common.js';
 import { kwTip, kwOne } from '../data/keywords.js';
 import { foeArt } from '../art.js';
+import { AFFIX } from '../data/affixes.js';
 import { SET } from '../settings.js';
 import { burstProgHTML } from './burstprog.js';
 
@@ -36,7 +37,8 @@ const STAT = {
 };
 const chip = (v, nm, col) => v ? `<span class="chip" style="color:${col}" data-tip="${esc(kwOne(nm.replace(/ −$/, '')))}">${nm} ${v}</span>` : '';
 // 적 특징 (데이터 필드 → 짧은 이름 + 설명)
-const foeTraits = f => [
+const axChip = k => `<span class="chip trait ax" style="--ax:${AFFIX[k].col}" data-tip="${esc(`속성 「${AFFIX[k].pre}」: ${AFFIX[k].text}`)}">${AFFIX[k].pre}</span>`;
+const foeTraits = f => (f.affixes || []).map(axChip).join('') + [
   f.noPoisonWhileBlock ? ['단단한 껍데기', '방어가 남아 있는 동안 독이 들지 않는다.'] : null,
   f.armor ? [`갑옷 ${f.armor}`, `공격 한 번마다 받는 피해 -${f.armor}.`] : null,
   f.acts > 1 ? [`행동 ×${f.acts}`, `한 턴에 ${f.acts}번 움직인다.`] : null,
@@ -85,7 +87,10 @@ export function combatView() {
     const aim = aimShown(f), it = intentText(f), atk = /^공격 (\d+)(?:×(\d+))?/.exec(it);
     // 공격 의도는 흔들리고, 센 공격(한 번에 15 이상)은 붉게 빨리 (js/juice.js가 공격 직전 강조)
     const ic = atk ? `atk ${+atk[1] * (+atk[2] || 1) >= 15 ? 'big' : ''}` : '';
-    return `<button type="button" class="foe ${many ? 'sm' : ''} ${wantFoe ? 'tg' : ''}" data-foe="${f.i}" data-fi="${f.i}">
+    // 「숨은」 속성: 첫 턴에는 고를 수 없다(다른 적이 있을 때). 속성 붙은 적은 색 오라
+    const hid = f.hidden && C.all.some(g => !g.dead && !g.hidden);
+    const ax = f.affixes?.length ? ` affixed" style="--ax:${AFFIX[f.affixes[0]].col}` : '';
+    return `<button type="button" class="foe ${many ? 'sm' : ''} ${wantFoe && !hid ? 'tg' : ''} ${hid ? 'hidden' : ''}${ax}" ${hid ? 'aria-disabled="true" title="숨어 있어 이번 턴에는 고를 수 없다"' : `data-foe="${f.i}"`} data-fi="${f.i}">
         <span class="intent ${ic}" data-tip="${esc(`다음 행동. ${aim ? `노림: ${AIM_NAME[aimKey(f)]} (얼굴이 맞을 동료).` : ''}`)}">${it}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[aimKey(f)]}</span>`}` : ''}</span>
         <img class="px" src="${foeArt(f) || sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>

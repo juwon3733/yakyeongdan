@@ -7,7 +7,7 @@ import { RELICS } from './data/relics.js';
 import { RULES } from './data/rules.js';
 import { CHARACTERS } from './data/characters.js';
 import { canTemper, DUOS, duoKey } from './data/cards.js';
-import { dmgToFoe, foeTarget, livingFoes, killCheck, intentOf, newInst, cardDef } from './combat.js';
+import { dmgToFoe, foeTarget, livingFoes, targetableFoes, killCheck, intentOf, newInst, cardDef } from './combat.js';
 
 // 달 보너스(보름달: 아이리스·마르타 피해·방어 +2)는 효과를 내는 동료 기준으로 자동으로 붙는다.
 const boost = () => moonFx('boost')[S.C.actor] || 0;
@@ -45,7 +45,7 @@ export function hitAll(n) {
   for (const f of livingFoes()) { C.bonus = b; hit(n, f); }
   C.bonus = 0;
 }
-export function hitRandom(n) { const L = livingFoes(); if (L.length) hit(n, S.G.rng.pick(L)); }
+export function hitRandom(n) { const L = targetableFoes(); if (L.length) hit(n, S.G.rng.pick(L)); }
 // 방어 무시 피해 (독 터뜨리기 등)
 export function pierce(f, n) {
   if (!f || f.dead || n <= 0) return;

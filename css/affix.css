@@ -1,0 +1,14 @@
+/* 적 속성 (js/data/affixes.js): 속성 색 오라, 숨은 적, 속성 칩 */
+.foe.affixed img{filter:drop-shadow(1px 0 0 var(--ax)) drop-shadow(-1px 0 0 var(--ax)) drop-shadow(0 1px 0 var(--ax)) drop-shadow(0 -1px 0 var(--ax));animation:axglow 1.6s steps(4) infinite}
+@keyframes axglow{50%{filter:drop-shadow(2px 0 0 var(--ax)) drop-shadow(-2px 0 0 var(--ax)) drop-shadow(0 2px 0 var(--ax)) drop-shadow(0 -2px 0 var(--ax))}}
+.foe.hidden img{opacity:.35}
+.foe.hidden{cursor:not-allowed}
+.foe.hidden .nm::after{content:" · 숨음";color:#9a9ac8;font-size:.85em}
+.chip.trait.ax{color:var(--ax);border-color:var(--ax)}
+#stage.calm .foe.affixed img{animation:none}
+/* 도감 속성 목록 */
+.axlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px}
+.axlist .axi{border:2px solid var(--ax);padding:4px 6px;background:var(--panel);box-shadow:2px 2px 0 #000}
+.axlist .axi b{color:var(--ax)}
+.axlist .axi.unseen{border-color:var(--line);opacity:.55}
+.axlist .axi p{margin:2px 0 0;font-size:.85em;color:var(--dim)}

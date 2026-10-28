@@ -6,6 +6,7 @@ import { effects as E, draw } from './effects.js';
 import { cardData, duoKey, DUOS, CARDS } from './data/cards.js';
 import { CHARACTERS } from './data/characters.js';
 import { FOE } from './data/enemies.js';
+import { AFFIX, AFFIX_RULE } from './data/affixes.js';
 import { MOONS } from './data/moons.js';
 import { RULES, REWARD, AIM_NAME } from './data/rules.js';
 
@@ -25,10 +26,12 @@ function passives(hook, ...args) {
 }
 
 export const livingFoes = () => S.C.all.filter(f => !f.dead);
-// 지금 효과가 향하는 적: 고른 적(C.tf), 없으면 살아 있는 첫 적
+// 단일 대상으로 고를 수 있는 적: 「숨은」 속성은 첫 턴에 빠진다 (다 숨었으면 전부)
+export const targetableFoes = () => { const L = livingFoes(), T = L.filter(f => !f.hidden); return T.length ? T : L; };
+// 지금 효과가 향하는 적: 고른 적(C.tf), 없으면 고를 수 있는 첫 적
 export function foeTarget() {
   const C = S.C, f = C.all[C.tf];
-  return f && !f.dead ? f : livingFoes()[0] || null;
+  return f && !f.dead && (!f.hidden || targetableFoes().includes(f)) ? f : targetableFoes()[0] || null;
 }
 
 export function startCombat(ids, kind) {
@@ -37,6 +40,7 @@ export function startCombat(ids, kind) {
   const hpMul = (1 + (depthRule(kind === 'elite' ? 'eliteHp' : kind === 'boss' ? 'bossHp' : 'fightHp') || 0))
     * (G.tutorial || G.episode ? 1 : RULES.foeHpMul?.[G.act]?.[kind] || 1);
   const foes = ids.map((k, i) => makeFoe(k, i, hpMul));
+  rollAffixes(foes, kind);
   const C = S.C = {
     kind, all: foes, tf: null, hover: null,
     draw: G.rng.shuffle(G.deck.map(id => ({ uid: uid++, id }))), hand: [], disc: [], exh: [],
@@ -72,6 +76,8 @@ export function startCombat(ids, kind) {
   Object.defineProperty(C, 'foes', { get: livingFoes });
   Object.defineProperty(C, 'anyDown', { get: () => G.party.some(p => member(p).down) });
   // 보름달: 정령 피해 +1 등은 moons.js. 토모리 「등대 신호」: 다음 전투 시작 에너지·카드
+  // 「저주받은」: 저주 카드가 뽑을 더미 위에
+  for (const f of foes) if (f.ax?.curse) { C.draw.push({ uid: uid++, id: f.ax.curse }); logMsg(`${f.name}: 저주 「${CARDS[f.ax.curse].name}」이(가) 뽑을 더미 위에`); }
   if (G.nextFight) { C.nextEnergy += G.nextFight.energy; C.nextDraw += G.nextFight.draw; G.nextFight = null; }
   G.screen = 'combat';
   // 강적·보스 앞 한 줄 (lines면 그중 하나)
@@ -88,7 +94,30 @@ function makeFoe(k, i, hpMul = 1) {
   const d = FOE[k], hp = Math.round(d.hp * hpMul);
   S.G.foesMet?.add(k);
   return { key: k, i, ...d, pat: d.pat.slice(), hp, max: hp, pi: 0, block: 0, str: isDawn() ? RULES.dawnStartStr : 0, poison: 0, weak: 0, vuln: 0, bleed: 0, burn: 0,
-    armor: d.armor || 0, acts: d.acts || 1, p2: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null, aimedTurn: false, stolen: [] };
+    armor: d.armor || 0, acts: d.acts || 1, affixes: [], ax: null, baseName: d.name, p2: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null, aimedTurn: false, stolen: [] };
+}
+
+// 적 속성 (js/data/affixes.js): 강적은 첫 적에 1개(밤의 깊이 affix2면 2개), 2막 이후 일반 전투는 확률로 하나에 1개
+function rollAffixes(foes, kind) {
+  const G = S.G; if (G.tutorial || G.episode || kind === 'boss') return;
+  let target = null, n = 0;
+  if (kind === 'elite') { target = foes[0]; n = depthRule('affix2') ? AFFIX_RULE.eliteDeep : AFFIX_RULE.elite; }
+  else if (kind === 'fight' && G.rng.next() < (AFFIX_RULE.fight[G.act] || 0)) {
+    const big = foes.filter(f => !f.small); if (big.length) { target = G.rng.pick(big); n = 1; }
+  }
+  if (!target) return;
+  const keys = G.rng.shuffle(Object.keys(AFFIX).filter(k => !(k === 'split' && target.phase2)));
+  for (const k of keys.slice(0, n)) applyAffix(target, k);
+}
+export function applyAffix(f, k) {
+  const a = AFFIX[k]; f.affixes.push(k); S.G.affixSeen?.add(k);
+  f.ax = { ...(f.ax || {}) };
+  for (const x of ['firstActs', 'split', 'drain', 'guard', 'haste', 'hidden', 'curse', 'clock', 'regen', 'enrage']) if (a[x] !== undefined) f.ax[x] = a[x];
+  if (a.hp) { f.max = Math.round(f.max * a.hp); f.hp = f.max; }
+  if (a.block) f.block += Math.round(f.max * a.block);
+  if (a.thorns) f.thorns = (f.thorns || 0) + a.thorns;
+  if (a.hidden) f.hidden = true;
+  f.name = `${f.affixes.map(x => AFFIX[x].pre).join(' ')} ${f.baseName}`;
 }
 
 // 등대 불빛: 대열 자리 번호. 체력이 절반 아래면 불빛 둘.
@@ -149,7 +178,7 @@ function startTurn() {
   C.healTurn = 0; C.feastTurn = false; C.aimTurn = 0; C.tomoriLit = false; C.diveStreak = 0; C.valkyrie = false; C.landPending = false;
   C.timeFree = false; C.supportUsed = false; C.chainUps = 0; C.chain3Streak = 0; C.finnPrev = null; C.saintTurn = false;
   C.servTurn = C.servNext; C.servNext = false; C.spiritTurnBuff = 0; C.allSlash = false; C.keepAll = false; C.noelTurn = 0;
-  for (const f of C.all) f.aimedTurn = false;
+  for (const f of C.all) { f.aimedTurn = false; if (!first && f.hidden) f.hidden = false; }
   if (!first) C.moonPick = false;
   for (const p in C.nextBlock) if (alive(p)) C.blocks[p] += C.nextBlock[p];
   if (relicSum('frontBlockTurn')) { const f0 = living()[0]; if (f0) C.blocks[f0] += relicSum('frontBlockTurn'); }   // 밀물 종
@@ -253,6 +282,8 @@ function enterPhase2(f) {
 }
 export function killCheck(f) {
   if (f.hp > 0 && f.phase2 && !f.p2 && f.hp <= f.max * f.phase2.at) enterPhase2(f);
+  // 「성난」: 체력 절반 아래면 한 번 힘 +
+  if (f.hp > 0 && f.ax?.enrage && !f.enraged && f.hp <= f.max / 2) { f.enraged = true; f.str += f.ax.enrage; logMsg(`${f.name}이(가) 성났다: 힘 +${f.ax.enrage}`); pushFx({ kind: 'rage', i: f.i, v: f.ax.enrage }); }
   if (f.hp <= 0 && !f.dead) {
     f.dead = true; pushFx({ kind: 'kill', i: f.i, boss: S.C.kind === 'boss' }); logMsg(`<b>${f.name}</b> 쓰러뜨림`); if (S.C.tf === f.i) S.C.tf = null;
     if (f.bounty) { gainGold(f.bounty); logMsg(`현상금: 별빛 <b>+${f.bounty}</b>`); }
@@ -260,8 +291,19 @@ export function killCheck(f) {
     passives('onKill', f);
     if (f.deathBoom) for (const p of living()) hurtMember(p, f.deathBoom, `${f.name}의 폭발`);
     // 쌍둥이 풍향계 (docs/12 §4): 한쪽이 쓰러지면 남은 쪽 힘 +
+    // 「분열하는」: 작은 둘로 갈라진다 (한 전투 적 8마리까지)
+    if (f.ax?.split && S.C.all.length <= 6) splitFoe(f);
     if (f.twinRage) for (const g of livingFoes()) if (g.twinRage) { g.str += f.twinRage; logMsg(`${g.name}의 힘 +${f.twinRage}`); pushFx({ kind: 'rage', i: g.i, v: f.twinRage }); }
   }
+}
+
+function splitFoe(f) {
+  const C = S.C, d = FOE[f.key], hp = Math.max(4, Math.round(f.max * f.ax.split));
+  for (let k = 0; k < 2; k++) {
+    const g = { ...makeFoe(f.key, C.all.length), small: true, hp, max: hp, name: `작은 ${f.baseName}`, str: f.str, phase2: null, lines: null, line: null };
+    g.pi = k; C.all.push(g); pushFx({ kind: 'summon', i: f.i, to: g.i });
+  }
+  void d; logMsg(`${f.name}이(가) 둘로 갈라졌다`);
 }
 
 function hurtMember(id, d, src, fi = null) {
@@ -279,12 +321,19 @@ function hurtMember(id, d, src, fi = null) {
   if (m.hp <= 0 && !m.down && hasRelic('gold_feather') && !m.feather) { m.feather = true; m.hp = RELICS.gold_feather.goldFeather; logMsg(`금빛 깃털: <b>${nm}</b>이(가) 버텼다`); }
   if (m.hp <= 0 && !m.down) { m.down = true; m.wasDown = true; S.G.downs = (S.G.downs || 0) + 1; logMsg(`<b>${nm} 쓰러짐</b> · 카드를 쓸 수 없다`); }
   pushFx({ kind: 'hurt', id, dmg: before - m.hp, blocked: b, foe: fi, down: m.down && before > 0 && m.hp <= 0, air: id === 'sigrun' && C.air > 0 });
+  return before - m.hp;
+}
+// 「흡혈」: 동료에게 준 피해의 비율만큼 회복
+function drainHeal(f, d) {
+  if (!f.ax?.drain || d <= 0 || f.dead) return;
+  const h = Math.min(f.max - f.hp, Math.ceil(d * f.ax.drain)); if (h <= 0) return;
+  f.hp += h; logMsg(`${f.name}: 흡혈 ${h}`); pushFx({ kind: 'affix', i: f.i, ax: 'vamp', v: h });
 }
 function enemyHit(f, v, k = 0) {
   const C = S.C, id = aimTarget(f, k); if (!id) return;
   if (f.aim === 'cycle' && !C.taunt) f.cyc++;
   if (f.duel) f.duelWho = id;
-  hurtMember(id, foeDmg(f, v, id), f.name, f.i);
+  drainHeal(f, hurtMember(id, foeDmg(f, v, id), f.name, f.i));
   if (id === 'marta' && C.saintTurn) {
     // 마르타 「철의 성녀」③: 이번 적 턴 반격이 모든 적에게
     const n = Math.max(C.counter, 5);
@@ -337,9 +386,10 @@ export function playCard(id, pick = {}) {
   if (!usable(inst)) { logMsg(d.ch !== 'curse' && !who ? '쓰러진 동료의 카드는 쓸 수 없다.' : sleepBlocked(d) ? '노엘이 자고 있다.' : '에너지가 모자라.'); return {}; }
   if (d.target === 'ally' && !(pick.ally && alive(pick.ally))) return { needAlly: true };
   if (d.target === 'foe') {
-    const L = livingFoes();
+    const L = targetableFoes();
     if (pick.foe == null && L.length === 1) pick.foe = L[0].i;
     if (pick.foe == null || !C.all[pick.foe] || C.all[pick.foe].dead) return { needFoe: true };
+    if (!L.includes(C.all[pick.foe])) return { needFoe: true };   // 「숨은」 적은 첫 턴에 고를 수 없다
   }
   const paid = costOf(inst);
   C.energy -= paid; C.discount = 0;
@@ -479,7 +529,7 @@ function foeAct(f) {
   else if (it.t === 'deb') { const id = aimTarget(f); if (id) { C.ms[id][it.s] += it.v; logMsg(`${f.name} → ${CHARACTERS[id].name}: ${ST_NAME[it.s]} ${it.v}`); } }
   else if (it.t === 'curse') { for (let k = 0; k < it.n; k++) C.draw.push({ uid: uid++, id: it.card }); logMsg(`${f.name}: 저주 「${CARDS[it.card].name}」 ${it.n}장이 뽑을 더미 위에`); }
   else if (it.t === 'time') { const v = timeOf(f, it); addTime(v); logMsg(`${f.name}이(가) 밤 시계를 <b>${v}분</b> 돌렸다`); }
-  else if (it.t === 'aoe') { for (const p of living()) hurtMember(p, foeDmg(f, it.v, p), f.name); }
+  else if (it.t === 'aoe') { for (const p of living()) drainHeal(f, hurtMember(p, foeDmg(f, it.v, p), f.name)); }
   else if (it.t === 'boom') {
     for (const p of living()) hurtMember(p, foeDmg(f, it.v, p), `${f.name}의 자폭`);
     f.hp = 0; f.deathBoom = 0; killCheck(f);
@@ -566,14 +616,24 @@ export function endTurn() {
   if (!livingFoes().length) return winCombat();
   // 시그룬: 급강하로 착지가 남아 있으면 적 차례 전에 착지 (「발키리」③면 착지 안 함)
   if (C.landPending && !C.valkyrie) C.air = 0;
+  // 적 차례 시작: 방어 초기화 → 속성(재생·수호·시간 도둑) → 차례로 행동
+  for (const f of C.all) if (!f.dead) f.block = 0;
+  for (const f of livingFoes()) {
+    const ax = f.ax; if (!ax) continue;
+    if (ax.regen && f.hp < f.max) { const h = Math.min(ax.regen, f.max - f.hp); f.hp += h; pushFx({ kind: 'affix', i: f.i, ax: 'regen', v: h }); logMsg(`${f.name}: 재생 ${h}`); }
+    if (ax.guard) { const o = livingFoes().filter(g => g !== f); for (const g of o) g.block += ax.guard; if (o.length) { pushFx({ kind: 'affix', i: f.i, ax: 'guard', v: ax.guard, to: o.map(g => g.i) }); logMsg(`${f.name}: 다른 적에게 방어 ${ax.guard}`); } }
+    if (ax.clock) { addTime(ax.clock); pushFx({ kind: 'affix', i: f.i, ax: 'thief', v: ax.clock }); logMsg(`${f.name}이(가) 밤 시계를 <b>${ax.clock}분</b> 훔쳤다`); }
+  }
   for (const f of C.all) {
     if (f.dead) continue;
-    f.block = 0;
-    for (let a = 0; a < f.acts && !f.dead && living().length; a++) {
+    const acts = f.acts + (C.turn === 1 && f.ax?.firstActs ? f.ax.firstActs : 0);
+    for (let a = 0; a < acts && !f.dead && living().length; a++) {
       if (f.skip > 0) { f.skip--; logMsg(`${f.name}의 행동이 멈췄다`); }
       else foeAct(f);
       f.pi++;
     }
+    // 「가속하는」: 움직인 턴마다 힘 +
+    if (f.ax?.haste && !f.dead) { f.str += f.ax.haste; pushFx({ kind: 'affix', i: f.i, ax: 'haste', v: f.ax.haste }); }
     f.dim = 0; f.aimOverride = null;
     if (f.weak > 0) f.weak--; if (f.vuln > 0) f.vuln--;
   }
@@ -620,7 +680,11 @@ export function rewardCards(kind = 'fight', extra = 0) {
 }
 
 function winCombat() {
-  const G = S.G, C = S.C, k = C.kind, chain = C.chain, extra = C.rewardExtra, winGold = C.winGold;
+  const G = S.G, C = S.C, k = C.kind, chain = C.chain, extra = C.rewardExtra;
+  // 속성 붙은 적: 하나마다 보상 별빛 +, 희귀 카드 확률 +
+  const axN = C.all.reduce((t, f) => t + (f.affixes?.length || 0), 0);
+  const winGold = C.winGold + axN * AFFIX_RULE.gold;
+  if (axN) { G.pity = (G.pity || 0) + axN * AFFIX_RULE.rare; G.affixBeat = (G.affixBeat || 0) + axN; }
   G.moon = C.moonBase;                       // 루나리아가 바꾼 달은 이번 전투만
   for (const f of C.all) G.foesBeat?.add(f.key);
   G.fights++; S.C = null;

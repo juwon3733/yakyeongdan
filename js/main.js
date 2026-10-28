@@ -1,7 +1,7 @@
 // 입력과 화면 전환. 규칙은 run/map/combat/meta, 그리기는 render/.
 import { S, newRun, checkCollapse } from './run.js';
 import { goNode, reachable, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, specialBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
-import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, devWin, pickCombatMoon } from './combat.js';
+import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, targetableFoes, devWin, pickCombatMoon, applyAffix } from './combat.js';
 import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw, exportSave, readSave, importSave, dailyToday, setCardBack } from './meta.js';
 import { bootDone, syncWake, insets, toggleFullscreen, toast } from './pwa.js';
 import { temperPick } from './effects.js';
@@ -29,6 +29,8 @@ S.dev = /^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname) || locat
 // 개발판: 점검 도구(tools/smoke.mjs)가 상태를 들여다보고, 원하는 적과 바로 싸우고, 전투를 바로 이길 수 있다
 if (S.dev) window.__yk = {
   S, P: () => P, render: () => render(), fight: (ids, kind = 'fight') => { startCombat(ids, kind); render(); },
+  // 속성 붙은 적과 바로 싸우기: axFight(['anchor'], ['split', 'hidden'])
+  axFight: (ids, axes, kind = 'fight') => { startCombat(ids, kind); for (const f of S.C.all) f.affixes.length && (f.affixes = [], f.ax = null, f.name = f.baseName); for (const k of axes) applyAffix(S.C.all[0], k); render(); },
   win: () => { if (S.C) { devWin(); after(); render(); } }, reset: () => { resetProfile(); render(); },
   shards: n => { P.shards += n; save(); render(); },
   // 에피소드: 동료의 3화를 모두 연다 / 바로 재생
@@ -214,7 +216,7 @@ app.addEventListener('click', e => {
   else if (D.play) {
     const uid = +D.play, inst = C.hand.find(h => h.uid === uid);
     if (!inst || !usable(inst)) return;
-    const tk = targetOf(inst), once = tk === 'none' || tk === 'all' || (tk === 'foe' && livingFoes().length === 1);
+    const tk = targetOf(inst), once = tk === 'none' || tk === 'all' || (tk === 'foe' && targetableFoes().length === 1);
     // 빠른 사용(설정, 기본 켬): 대상이 하나뿐이면 한 번 눌러 바로 쓴다 (적 1마리, 대상 없는 카드, 서 있는 동료가 한 명뿐인 동료 카드)
     const standing = tk === 'ally' ? S.G.party.filter(p => !S.G.members[p].down) : [];
     const quick = SET.quick && (once || standing.length === 1) && !keepSlots();
@@ -291,7 +293,7 @@ function dropAt(x, y, uid) {
   const foe = el?.closest('.foe[data-foe]'), ally = el?.closest('.pm[data-ally]');
   if (tk === 'foe' && foe) return { el: foe, pick: { foe: +foe.dataset.foe } };
   if (tk === 'ally' && ally && !ally.classList.contains('down')) return { el: ally, pick: { ally: ally.dataset.ally } };
-  if ((tk === 'none' || tk === 'all' || (tk === 'foe' && livingFoes().length === 1)) && el?.closest('.field')) return { el: el.closest('.field'), pick: undefined };
+  if ((tk === 'none' || tk === 'all' || (tk === 'foe' && targetableFoes().length === 1)) && el?.closest('.field')) return { el: el.closest('.field'), pick: undefined };
   return null;
 }
 function markTargets(on) { app.classList.toggle('dragmode', on); }

@@ -29,7 +29,7 @@ const errors = [];
 const browser = await chromium.launch();
 const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; };
 const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false,
-  migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, ach: false, history: false,
+  migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, affix: false, ach: false, history: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
   ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false,
   tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false, pwa: false, backup: false };
@@ -328,8 +328,9 @@ try {
     await page.click('[data-start]');
     const run = await page.evaluate(() => { const G = window.__yk.S.G; return { depth: G.depth, relic: G.relics[0], up: G.deck.some(id => id.startsWith('iris.') && id.endsWith('+')), sigs: G.sigs, chip: !!document.querySelector('.depthchip') }; });
     await page.evaluate(() => window.__yk.fight(['anchor'], 'elite'));
-    const hp = await page.evaluate(() => { const f = window.__yk.S.C.all[0]; return [f.hp, f.max]; });
-    if (run.depth === 1 && run.relic === 'umbrella' && run.up && run.sigs.includes('iris') && run.chip && hp[1] === Math.round(70 * 1.15 * (await page.evaluate(async () => (await import('/js/data/rules.js')).RULES.foeHpMul[1].elite)))) { seen.depth = true; console.log(`meta: 밤의 깊이 1로 출발 (강적 체력 ${hp[1]}), 시작 도구 우산, 강화 시작 카드`); }
+    const hp = await page.evaluate(() => { const f = window.__yk.S.C.all[0]; return [f.hp, f.max, f.affixes.includes('giant')]; });
+    // 강적에는 속성이 하나 붙는다. 「거대한」이면 체력이 1.4배라 비교에서 뺀다.
+    if (run.depth === 1 && run.relic === 'umbrella' && run.up && run.sigs.includes('iris') && run.chip && (hp[2] || hp[1] === Math.round(70 * 1.15 * (await page.evaluate(async () => (await import('/js/data/rules.js')).RULES.foeHpMul[1].elite))))) { seen.depth = true; console.log(`meta: 밤의 깊이 1로 출발 (강적 체력 ${hp[1]}), 시작 도구 우산, 강화 시작 카드`); }
     else fail(`밤의 깊이 시작 실패 ${JSON.stringify({ ...run, hp })}`);
     // 도라 담금질 직접 고르기 · 세바스 남기기 고르기
     await page.evaluate(() => { window.__yk.S.view = 'party'; window.__yk.S.G = null; window.__yk.S.C = null; window.__yk.S.picked = []; window.__yk.render(); });
@@ -353,6 +354,17 @@ try {
     const kept = await page.evaluate(() => window.__yk.S.C ? window.__yk.S.C.hand.some(h => h.uid === 9001) : null);
     if (ch === 'temper' && !tp.choose && tp.id === 'iris.parry+' && kept) { seen.chooseUi = true; console.log('meta: 도라 담금질 고르기 · 세바스 남기기 고르기'); }
     else fail(`담금질·남기기 고르기 실패 ${JSON.stringify({ ch, tp, kept })}`);
+    // 적 속성: 숨은(첫 턴 못 고름)·분열(쓰러지면 둘)·수호(다른 적 방어) + 칩·오라
+    await page.evaluate(() => window.__yk.axFight(['anchor', 'pirate'], ['hidden', 'split', 'guard'], 'elite'));
+    const ax1 = await page.evaluate(() => { const f = window.__yk.S.C.all[0], b = document.querySelector('.foe[data-fi="0"]');
+      return { name: f.name, noPick: !b.hasAttribute('data-foe'), chips: document.querySelectorAll('.foe[data-fi="0"] .chip.ax').length, aura: b.classList.contains('affixed') }; });
+    await page.evaluate(() => { window.__yk.S.C.pending = null; window.__yk.render(); });
+    await page.click('[data-end]');
+    const ax2 = await page.evaluate(async () => { const C = window.__yk.S.C; if (!C) return null; const f = C.all[0], m = await import('/js/combat.js');
+      const r = { hidden: f.hidden, guarded: C.all[1].dead || C.all[1].block > 0 };
+      f.hp = 0; m.killCheck(f); window.__yk.render(); r.n = C.all.length; r.small = C.all.slice(2).every(g => g.small && g.name.startsWith('작은')); return r; });
+    if (/숨은/.test(ax1.name) && ax1.noPick && ax1.chips === 3 && ax1.aura && ax2 && !ax2.hidden && ax2.guarded && ax2.n === 4 && ax2.small) { seen.affix = true; console.log(`affix: ${ax1.name} · 숨음 첫 턴 · 수호 방어 · 분열 → 작은 둘`); }
+    else fail(`적 속성 실패 ${JSON.stringify({ ax1, ax2 })}`);
     await page.close();
   }
   // 매일의 밤 → 오늘의 시드·규칙으로 출발 → 이겨서 결과(첫 격파 별 조각 +15, 업적 띠, 숙련도) → 기록 화면 최근 판 · 도감 업적 탭

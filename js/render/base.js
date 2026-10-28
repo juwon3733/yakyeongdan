@@ -6,6 +6,7 @@ import { SUMMON, STAR_STEPS, EXCHANGE, PICKUP_DAYS } from '../data/gacha.js';
 import { CARDS, DUOS, cardData } from '../data/cards.js';
 import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
 import { FOE } from '../data/enemies.js';
+import { AFFIX } from '../data/affixes.js';
 import { MOONS } from '../data/moons.js';
 import { TALKS } from '../data/talks.js';
 import { DEPTH, DEPTH_MAX } from '../data/depth.js';
@@ -286,7 +287,9 @@ const CODEX = {
     return `<p class="note">만난 적 ${P.foesSeen.length} · 이긴 적 ${P.foesBeaten.length} / ${ks.length}</p><div class="cgrid foesg">${ks.map(k => {
       const seen = P.foesSeen.includes(k), beat = P.foesBeaten.includes(k);
       return `<div class="centry ${seen ? '' : 'none'}"><b>${seen ? esc(FOE[k].name) : '???'}</b><small>${seen ? `체력 ${FOE[k].hp}${beat ? ' · 이김' : ''}` : ''}</small></div>`;
-    }).join('')}</div>`;
+    }).join('')}</div>
+    <p class="note">속성 ${(P.affixSeen || []).length}/${Object.keys(AFFIX).length} · 강적과 2막부터 일부 적에게 붙는다. 이기면 별빛과 희귀 카드 확률이 오른다.</p>
+    <div class="axlist">${Object.entries(AFFIX).map(([k, a]) => { const seen = (P.affixSeen || []).includes(k); return `<div class="axi ${seen ? '' : 'unseen'}" style="--ax:${a.col}"><b>${seen ? a.pre : '???'}</b><p>${seen ? esc(a.text) : ''}</p></div>`; }).join('')}</div>`;
   },
   talks: () => {
     const L = P.talksSeen.slice().sort((a, b) => a - b).filter(i => TALKS[i]);

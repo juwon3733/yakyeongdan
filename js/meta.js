@@ -29,7 +29,7 @@ function fresh() {
     epProg: {}, epSeen: {}, bondOpen: [], bondSeen: [],
     // v2 (M5): 초심자 ★5 고르기 대기 수 · 픽업 확정 · 의상(열린 것·입은 것) · 산 카드 묶음 수 · 시작 도구 고르기 후보
     pick5: 0, pickGuar: false, costumeOwn: [], costume: {}, packs: {}, startRelics: [],
-    talksSeen: [], titles: [], charStats: {}, cardsSeen: [], cardsUsed: [], foesSeen: [], foesBeaten: [],
+    talksSeen: [], titles: [], charStats: {}, cardsSeen: [], cardsUsed: [], foesSeen: [], foesBeaten: [], affixSeen: [],
     rec: { combo: {}, moons: {}, depthBest: 0 },
     tutDone: false,   // 첫 실행 튜토리얼을 끝냈거나 건너뜀 (js/tutorial.js)
     // v3: 매일의 밤(날짜 → { best 가장 빠른 도착, won, tries }) · 업적(달성한 id) · 평생 기록 · 최근 판 20개 · 숙련도 점수 · 카드 뒷면
@@ -355,6 +355,7 @@ export function grantRun(G) {
   for (const id of G.played || []) if (CARDS[id]) uniqPush(P.cardsUsed, id);
   for (const k of G.foesMet || []) uniqPush(P.foesSeen, k);
   for (const k of G.foesBeat || []) uniqPush(P.foesBeaten, k);
+  for (const k of G.affixSeen || []) uniqPush(P.affixSeen, k);
   for (const i of G.talks || []) uniqPush(P.talksSeen, i);
   r.newEps = epProgress(G);
   // 인연 듀오를 처음 썼으면 인연 장면이 열린다

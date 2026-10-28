@@ -38,7 +38,7 @@ export function newRun(party, seed = newSeed(), opts = {}) {
     floors: 0, elites: 0, bossKills: 0, removes: 0, seenEvents: [], note: '', moonPick: false, shop: null,
     haggle: 0, nextFight: null, smithLeft: 0,
     // 도감·기록용 (meta.js grantRun이 모은다)
-    offered: new Set(), played: new Set(), foesMet: new Set(), foesBeat: new Set(), talks: new Set(),
+    offered: new Set(), played: new Set(), foesMet: new Set(), foesBeat: new Set(), affixSeen: new Set(), talks: new Set(),
   };
   S.G.map = makeMap(rng, moon);
   S.G.nextMap = makeMap(rng, moon);

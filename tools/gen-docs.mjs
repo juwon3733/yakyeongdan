@@ -6,6 +6,7 @@ import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { FOE, ACTS } from '../js/data/enemies.js';
 import { CARDS } from '../js/data/cards.js';
+import { AFFIX, AFFIX_RULE } from '../js/data/affixes.js';
 import { AIM_NAME, ACT_NAME } from '../js/data/rules.js';
 
 const DOC = fileURLToPath(new URL('../docs/04_enemies.md', import.meta.url));
@@ -81,7 +82,13 @@ export function build() {
     (by[k] ||= []).push(f.name);
   }
   out.push('### 노림별', '', '| 노림 | 적 |', '|---|---|',
-    ...Object.entries(by).map(([k, l]) => `| ${k === 'shift' ? '바뀜(행동으로 앞↔뒤)' : AIM_NAME[k] || k} | ${l.join(', ')} |`), '', END);
+    ...Object.entries(by).map(([k, l]) => `| ${k === 'shift' ? '바뀜(행동으로 앞↔뒤)' : AIM_NAME[k] || k} | ${l.join(', ')} |`), '');
+  // 속성 (js/data/affixes.js)
+  const R = AFFIX_RULE;
+  out.push('### 속성', '',
+    `강적 전투는 첫 적에 속성 ${R.elite}개(밤의 깊이 「강적 속성 2개」 단계부터 ${R.eliteDeep}개). 일반 전투는 ${Object.entries(R.fight).filter(([, p]) => p).map(([a, p]) => `${a}막 ${Math.round(p * 100)}%`).join(' · ')} 확률로 작은 적이 아닌 하나에 1개. 보스·튜토리얼·에피소드 특별 전투에는 붙지 않는다.`, '',
+    `속성 하나마다 이기면 별빛 +${R.gold}, 희귀 카드 확률 +${Math.round(R.rare * 100)}%p. 이름 앞에 수식어가 붙는다(예: 「단단한 닻 거인」).`, '',
+    '| 수식어 | 효과 |', '|---|---|', ...Object.values(AFFIX).map(a => `| ${a.pre} | ${a.text} |`), '', END);
   return out.join('\n');
 }
 

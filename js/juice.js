@@ -140,6 +140,7 @@ export function afterRender(events = []) {
       case 'rage': at(t, () => rageFx(e)); t += 220; break;
       case 'duel': at(t, () => duelFx(e)); t += 160; break;
       case 'mend': at(t, () => mendFx(e)); t += 200; break;
+      case 'affix': at(t, () => affixFx(e)); t += e.ax === 'haste' ? 160 : 220; break;
       case 'summon': at(t, () => summonFx(e)); t += 260; break;
       case 'steal': at(t, () => stealFx(e)); t += 240; break;
       case 'retarget': at(t, () => retargetFx(e)); t += 220; break;
@@ -525,6 +526,28 @@ function duelFx(e) {
   tracer(q.r.cx, q.r.cy, ar.cx, ar.cy, '#e8f0ff'); slashFx(ar.cx, ar.cy, '#c9d2f0');
   num(q.r.cx, q.r.y - 4, '도전!', 'buf', 9);
   sfx('slash', { rate: .8 });
+}
+// 적 속성 (js/data/affixes.js): 흡혈·재생은 초록 회복, 수호는 다른 적에게 방패 고리, 가속은 붉은 불티, 시간 도둑은 금빛 시계
+function affixFx(e) {
+  const q = foeR(e.i); if (!q) return;
+  if (e.ax === 'vamp' || e.ax === 'regen') {
+    const col = e.ax === 'vamp' ? '#e05a7a' : '#7dff9a';
+    for (let k = 0; k < 12; k++) add({ k: 'dot', x: rnd(q.r.x + 4, q.r.x + q.r.w - 4), y: rnd(q.r.cy, q.r.y + q.r.h), vx: 0, vy: rnd(-1.4, -.5), g: 0, life: 24, col: k % 2 ? col : '#ffe8e8', s: 1 });
+    ring(q.r.cx, q.r.cy, col, 6, 28, 12);
+    num(q.r.cx, q.r.y + 6, `+${e.v}`, 'heal', 10);
+    sfx(e.ax === 'vamp' ? 'foe_heal' : 'heal', { vol: .6 });
+  } else if (e.ax === 'guard') {
+    ring(q.r.cx, q.r.cy, '#e0c060', 6, 30, 12);
+    for (const j of e.to || []) { const t = foeR(j); if (!t) continue; add({ k: 'line', x0: q.r.cx, y0: q.r.cy, x1: t.r.cx, y1: t.r.cy, col: '#e0c060', speed: 6, life: 12, s: 1 }); ring(t.r.cx, t.r.cy, '#e0c060', 10, 26, 14); num(t.r.cx, t.r.y + 6, `방어 +${e.v}`, 'buf', 9); }
+    sfx('block', { vol: .6 });
+  } else if (e.ax === 'haste') {
+    for (let k = 0; k < 10; k++) add({ k: 'dot', x: rnd(q.r.x, q.r.x + q.r.w), y: q.r.y + q.r.h, vx: rnd(-.3, .3), vy: rnd(-1.8, -.7), g: 0, life: rnd(14, 22), col: k % 2 ? '#ff8a5a' : '#ffd0a0', s: 2 });
+    num(q.r.cx, q.r.y, `힘 +${e.v}`, 'buf', 10);
+  } else if (e.ax === 'thief') {
+    ring(q.r.cx, q.r.cy, '#f0d040', 4, 34, 14); sparks(q.r.cx, q.r.cy, '#f0d040', 10, 1.4);
+    num(q.r.cx, q.r.y, `+${e.v}분`, 'buf', 11);
+    sfx('clock', { rate: 1.2, vol: .6 });
+  }
 }
 function mendFx(e) {
   const q = foeR(e.i), t = foeR(e.to); if (!q) return;
