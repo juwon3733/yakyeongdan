@@ -18,7 +18,9 @@ js/
   effects.js     카드 효과 기본 동작(피해, 방어, 상태, 뽑기, 시계)
   render/        화면별 그리기 (map, combat, reward, shop, rest, event, result)
   fx.js          컷인, 흔들림, 숫자 튀기기
-  audio.js       곡·효과음
+  audio.js       곡·효과음·환경음 (설정 음량)
+  settings.js    설정 (음량·흔들림·애니메이션 줄이기·글자 크기, localStorage yk-settings)
+  tutorial.js    첫 실행 튜토리얼 (정해진 지도·손패·도움말 줄, 데이터는 data/tutorial.js)
   data/
     characters.js  동료 20명 (성급, 최대 체력, 키워드, 패시브, 색, 말투, 시작 덱)
     cards.js       동료 카드 + 인연 듀오 카드 (듀오가 있는 짝 = 인연 목록)

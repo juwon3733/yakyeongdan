@@ -28,8 +28,8 @@ export function baseView() {
     <div class="hall"><span class="hallwin" aria-hidden="true"></span><div class="resting">${rest3}</div>
       <p class="note">야경단 본부 · 등대 아래. 해가 뜨면 모두 여기서 잠든다.</p></div>
     <div class="bmenu">
-      <div class="bhead"><button type="button" class="mini" data-view="title">‹ 타이틀</button>${wallet()}</div>
-      <button type="button" class="primary" data-view="summon">별 소환${P.pick5 ? ' <b class="newt">★5 고르기</b>' : ''}</button>
+      <div class="bhead"><button type="button" class="mini" data-view="title">‹ 타이틀</button>${wallet()}<button type="button" class="mini" data-settings>설정</button></div>
+      <button type="button" class="primary ${S.hint === 'summon' ? 'hint' : ''}" data-view="summon">별 소환${P.pick5 ? ' <b class="newt">★5 고르기</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">여기서 10연</b>' : ''}</button>
       <button type="button" data-view="exchange">교환소</button>
       <button type="button" data-view="mates">동료 <small>${own.length}/${ROSTER_IDS.length}</small></button>
       <button type="button" data-view="episodes">에피소드${epNewCount() ? ` <b class="newt">NEW ${epNewCount()}</b>` : ''}</button>
@@ -223,7 +223,7 @@ const CODEX = {
     return `<p class="note">본 카드 ${P.cardsSeen.length} · 쓴 카드 ${P.cardsUsed.length} / ${ids.length}. 굵은 글자는 쓴 카드.</p>${rows}`;
   },
   foes: () => {
-    const ks = Object.keys(FOE);
+    const ks = Object.keys(FOE).filter(k => !k.startsWith('tut_'));   // 튜토리얼 적은 도감에 없음
     return `<p class="note">만난 적 ${P.foesSeen.length} · 이긴 적 ${P.foesBeaten.length} / ${ks.length}</p><div class="cgrid foesg">${ks.map(k => {
       const seen = P.foesSeen.includes(k), beat = P.foesBeaten.includes(k);
       return `<div class="centry ${seen ? '' : 'none'}"><b>${seen ? esc(FOE[k].name) : '???'}</b><small>${seen ? `체력 ${FOE[k].hp}${beat ? ' · 이김' : ''}` : ''}</small></div>`;

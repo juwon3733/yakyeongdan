@@ -97,6 +97,7 @@ export function checkCollapse() {
 }
 export function endRun(won, why) {
   if (S.G.episode) { S.C = null; S.G.episode.won = won; S.G.screen = 'epdone'; return; }   // 에피소드 특별 전투
+  if (S.G.tutorial) { S.C = null; S.G.tutorial.won = won; S.G.screen = 'tutdone'; return; }   // 첫 실행 튜토리얼
   S.C = null; S.G.won = won; S.G.why = why || (won ? 'win' : 'down'); S.G.screen = 'result'; }
 
 // 도구 얻기 (얻는 순간 효과가 있는 도구는 화면을 바꾼다)

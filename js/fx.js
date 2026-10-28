@@ -25,3 +25,13 @@ export function showPhase(name, text) {
   show(`<div class="band phase"><div class="tx"><span>${name}</span><b>${text}</b></div></div>`, 1800);
 }
 cutEl.addEventListener('click', () => { cutEl.hidden = true; });
+
+// 동료가 맞으면 판을 짧게 흔든다 (설정 「화면 흔들림 끔」·애니메이션 줄이기면 #stage.noshake라 안 흔들린다)
+const stageEl = document.getElementById('stage');
+let shakeTimer = null;
+export function shake() {
+  if (!stageEl || stageEl.classList.contains('noshake')) return;
+  stageEl.classList.remove('shake'); void stageEl.offsetWidth;
+  stageEl.classList.add('shake');
+  clearTimeout(shakeTimer); shakeTimer = setTimeout(() => stageEl.classList.remove('shake'), 260);
+}

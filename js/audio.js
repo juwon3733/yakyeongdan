@@ -3,20 +3,23 @@
 // 그래서 게임 규칙 코드는 소리를 몰라도 된다. 곡·효과음은 tools/compose/build.py가 만든다.
 import { S } from './run.js';
 import { RULES } from './data/rules.js';
+import { SET } from './settings.js';
 
 const BASE = 'assets/audio/';
 const LEVELS = [1, 0.45, 0];            // 켬 · 작게 · 끔
 const LABELS = ['소리 켬', '소리 작게', '소리 끔'];
-const BGM_VOL = 0.5, SFX_VOL = 0.8;
+const BGM_VOL = 0.5, SFX_VOL = 0.8, AMB_VOL = 0.22;   // 설정의 음악·효과음 음량(SET.music·SET.sfx)을 곱한다. 환경음은 음악 음량을 따른다
+const AMB_LEN = 16;                     // 환경음 루프 길이(초, tools/compose/ambience.py LEN)
 const LATE = 300;                       // 5:00부터 전투곡이 조금 빨라진다
 const LATE_RATE = 1.05;
 
 let level = 0;
 try { level = Math.min(2, Math.max(0, +(localStorage.getItem('yk-sound') || 0))); } catch (e) { /* 저장 안 됨 */ }
 
-let ctx = null, master = null, bgmBus = null, sfxBus = null, manifest = null;
+let ctx = null, master = null, bgmBus = null, sfxBus = null, ambBus = null, manifest = null;
 const buffers = new Map(), loading = new Map();
 let want = null, curName = null, curSrc = null, curGain = null, curRate = 1;
+let wantAmb = null, ambName = null, ambSrc = null, ambGain = null;
 
 function load(file) {
   if (buffers.has(file)) return Promise.resolve(buffers.get(file));
@@ -42,13 +45,23 @@ function unlock() {
   if (!AC) return;
   ctx = new AC();
   master = ctx.createGain(); master.gain.value = LEVELS[level]; master.connect(ctx.destination);
-  bgmBus = ctx.createGain(); bgmBus.gain.value = BGM_VOL; bgmBus.connect(master);
-  sfxBus = ctx.createGain(); sfxBus.gain.value = SFX_VOL; sfxBus.connect(master);
+  bgmBus = ctx.createGain(); bgmBus.gain.value = BGM_VOL * SET.music; bgmBus.connect(master);
+  sfxBus = ctx.createGain(); sfxBus.gain.value = SFX_VOL * SET.sfx; sfxBus.connect(master);
+  ambBus = ctx.createGain(); ambBus.gain.value = AMB_VOL * SET.music; ambBus.connect(master);
   fetch(BASE + 'manifest.json').then(r => r.json()).then(m => {
     manifest = m;
     for (const n of m.sfx) load(`sfx_${n}.wav`);
   }).catch(() => {});
   if (want) playBgm(want, true);
+  if (wantAmb) playAmb(wantAmb, true);
+}
+// 설정 화면에서 음량을 바꾸면
+export function applyVolumes() {
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  bgmBus.gain.setTargetAtTime(BGM_VOL * SET.music, t, 0.05);
+  ambBus.gain.setTargetAtTime(AMB_VOL * SET.music, t, 0.05);
+  sfxBus.gain.setTargetAtTime(SFX_VOL * SET.sfx, t, 0.05);
 }
 addEventListener('pointerdown', unlock, { capture: true });
 addEventListener('keydown', unlock, { capture: true });
@@ -76,6 +89,29 @@ async function playBgm(name, force = false) {
   curSrc = src; curGain = g;
 }
 
+// 환경음: 막마다 하나(파도·바람·탑 안 웅웅). 이음매 없이 반복, 바뀔 때 천천히 바꿔 낀다.
+async function playAmb(name, force = false) {
+  wantAmb = name;
+  if (!ctx || (!force && ambName === name)) return;
+  ambName = name;
+  const t = ctx.currentTime;
+  if (ambSrc) {
+    const s = ambSrc, g = ambGain; ambSrc = null;
+    g.gain.setTargetAtTime(0, t, 0.6);
+    setTimeout(() => { try { s.stop(); } catch (e) { /* 이미 멈춤 */ } s.disconnect(); g.disconnect(); }, 3000);
+  }
+  if (!name) return;
+  const buf = await load(`amb_${name}.mp3`);
+  if (!buf || wantAmb !== name || ambSrc) return;
+  const g = ctx.createGain(); g.gain.value = 0; g.connect(ambBus);
+  const src = ctx.createBufferSource();
+  src.buffer = buf; src.loop = true;
+  if (buf.duration > AMB_LEN) { src.loopStart = 0; src.loopEnd = AMB_LEN; }
+  src.connect(g); src.start();
+  g.gain.setTargetAtTime(1, ctx.currentTime, 0.8);
+  ambSrc = src; ambGain = g;
+}
+
 let lastSfx = {};
 export function sfx(name, { vol = 1, rate = 1 } = {}) {
   if (!ctx || !LEVELS[level]) return;
@@ -94,12 +130,22 @@ function pickBgm() {
   const G = S.G;
   if (!G || S.view !== 'run') return ['base', 'summon', 'reveal', 'episodes', 'ep'].includes(S.view) ? 'base' : 'title';
   if (G.screen === 'result') return G.won ? 'victory' : 'result';
+  if (G.screen === 'tutdone') return 'victory';
   if (G.screen === 'combat' && S.C) {
     if (S.C.kind === 'boss') return G.act >= 3 ? 'dawn' : `boss${G.act}`;
     return S.C.kind === 'elite' ? 'elite' : 'battle';
   }
   if (G.screen === 'rest') return 'base';
   return `map${Math.min(3, G.act)}`;
+}
+
+// 화면 → 환경음: 판 안이면 막(1 파도 · 2 바람 · 3 탑 안), 판 밖(타이틀·본부)은 파도. 에피소드 특별 전투는 없음.
+const AMB_ACT = { 1: 'sea', 2: 'wind', 3: 'tower' };
+function pickAmb() {
+  const G = S.G;
+  if (!G || S.view !== 'run') return S.view === 'ep' ? null : 'sea';
+  if (G.episode) return null;
+  return AMB_ACT[Math.min(3, G.act)] || 'sea';
 }
 
 function setRate(r) {
@@ -186,10 +232,12 @@ addEventListener('keydown', e => { if ((e.key === 'm' || e.key === 'M') && !e.re
 
 export function sync() {
   if (window.__yk && !window.__yk.audio) {   // 개발판 점검용
-    window.__yk.audio = () => ({ ctx: ctx && ctx.state, bgm: curName, rate: curRate, level, loaded: buffers.size });
+    window.__yk.audio = () => ({ ctx: ctx && ctx.state, bgm: curName, amb: ambName, rate: curRate, level, loaded: buffers.size,
+      vol: ctx ? { bgm: bgmBus.gain.value, sfx: sfxBus.gain.value, amb: ambBus.gain.value } : null });
   }
   placeButton();
   playBgm(pickBgm());
+  playAmb(pickAmb());
   setRate(S.G && S.G.screen === 'combat' && S.G.clock >= LATE ? LATE_RATE : 1);
   const now = snap();
   try { sounds(prev, now); } catch (e) { /* 소리 때문에 게임이 멈추면 안 된다 */ }

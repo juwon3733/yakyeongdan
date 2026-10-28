@@ -40,5 +40,10 @@
   "star",
   "turn",
   "win"
+ ],
+ "amb": [
+  "sea",
+  "tower",
+  "wind"
  ]
 }

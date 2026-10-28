@@ -27,12 +27,14 @@ function fresh() {
     pick5: 0, pickGuar: false, costumeOwn: [], costume: {}, packs: {}, startRelics: [],
     talksSeen: [], titles: [], charStats: {}, cardsSeen: [], cardsUsed: [], foesSeen: [], foesBeaten: [],
     rec: { combo: {}, moons: {}, depthBest: 0 },
+    tutDone: false,   // 첫 실행 튜토리얼을 끝냈거나 건너뜀 (js/tutorial.js)
   };
 }
 // 예전 저장(v1)을 이어받는다: 없는 필드만 새 값으로 채운다
 function migrate(d) {
   const f = fresh(), out = Object.assign(f, d);
   out.rec = Object.assign(fresh().rec, d.rec || {});
+  if (d.tutDone === undefined) out.tutDone = (d.runs || 0) > 0;   // 이미 판을 해 본 저장이면 튜토리얼을 건너뛴다
   out.v = VERSION;
   return out;
 }

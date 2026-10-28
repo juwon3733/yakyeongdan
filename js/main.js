@@ -6,12 +6,18 @@ import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOption
 import { temperPick } from './effects.js';
 import { render as draw } from './render/index.js';
 import { deckModal } from './render/screens.js';
-import { showCut, showPhase } from './fx.js';
-import { sfx } from './audio.js';
+import { showCut, showPhase, shake } from './fx.js';
+import { sfx, applyVolumes } from './audio.js';
+import { SET, applySettings, setOption } from './settings.js';
+import { startTutorial, skipTutorial, finishTutorial, tutorialPending } from './tutorial.js';
+import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epNext, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
 
 const qs = new URLSearchParams(location.search);
+// 처음 켜면 타이틀 전에 튜토리얼 들어가기 화면 (주소에 ?notut 이면 건너뜀: 점검 도구용)
+if (qs.has('notut')) { P.tutDone = true; save(); }
+if (tutorialPending()) S.view = 'tutintro';
 S.ui = true;   // 화면에서 하는 판: 담금질 등을 직접 고른다 (시뮬레이션은 자동)
 S.dev = /^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname) || location.protocol === 'file:' || qs.has('dev');
 // 개발판: 점검 도구(tools/smoke.mjs)가 상태를 들여다보고, 원하는 적과 바로 싸우고, 전투를 바로 이길 수 있다
@@ -36,14 +42,21 @@ const modal = document.getElementById('modal');
 const render = () => draw(app);
 
 // 논리 640×360을 창에 맞춰 키운다. 2배 이상 들어가면 정수배, 그보다 작으면 맞춤 배율.
-const W = 640, H = 360;
+// 폰처럼 16:9보다 옆으로 긴 화면(2:1 등)이면 판 폭을 최대 800까지 늘려 남는 옆자리를 쓴다(높이 360은 그대로).
+const W = 640, H = 360, W_MAX = 800;
 function fit() {
-  const s = Math.min(innerWidth / W, innerHeight / H);
-  stage.style.setProperty('--s', s >= 2 ? Math.floor(s) : Math.max(s, .5));
+  const w = Math.round(Math.min(W_MAX, Math.max(W, H * innerWidth / innerHeight)));
+  stage.style.width = `${w}px`;
+  const s = Math.min(innerWidth / w, innerHeight / H);
+  const k = s >= 2 ? Math.floor(s) : Math.max(s, .5);
+  stage.style.setProperty('--s', k);
+  applySettings(k);   // 작은 화면이면 글자 크게(설정 「자동」)
 }
 addEventListener('resize', fit);
 fit();
 
+// 동료 체력 합: 행동 전후로 비교해 맞았으면 화면을 흔든다 (설정에서 끔)
+const partyHp = () => S.G && S.C ? S.G.party.reduce((t, p) => t + S.G.members[p].hp, 0) : null;
 function play(uid, pick) {
   const r = playCard(uid, pick);
   if (r.duo) showCut(r.duo);
@@ -59,8 +72,14 @@ function after() {
 
 app.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b || b.disabled) return;
-  const D = b.dataset, C = S.C;
+  const D = b.dataset, C = S.C, hp0 = partyHp();
+  if ('settings' in D) { S.wipeArm = false; openSettings(); return; }
+  // 첫 실행 튜토리얼
+  if ('tutstart' in D) { startTutorial(); render(); return; }
+  if ('tutskip' in D) { skipTutorial(); render(); return; }
+  if ('tutfinish' in D) { finishTutorial(); render(); return; }
   if (D.view) {
+    if (D.view === 'summon') S.hint = null;
     S.view = D.view;
     if (D.view === 'party') { S.G = null; S.C = null; S.picked = S.picked.filter(k => k && P.owned[k] || S.dev); }
     if (D.view === 'exchange') S.exMsg = '';
@@ -148,8 +167,89 @@ app.addEventListener('click', e => {
   else return;
   after();
   render();
+  const hp1 = partyHp();
+  if (hp0 != null && hp1 != null && hp1 < hp0) shake();
 });
-modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('[data-close]')) modal.hidden = true; });
+// ---------- 카드 끌어 놓기: 손패 카드를 적·동료 위(대상 없는 카드는 손패 위쪽 아무 데나)에 놓으면 쓴다 ----------
+// 누르기 방식(카드 → 대상)은 그대로. 8px 넘게 움직였을 때만 끌기로 보고, 그 뒤의 click은 무시한다.
+let drag = null, eatClick = false;
+app.addEventListener('pointerdown', e => {
+  const cardEl = e.target.closest('.hand .card[data-play]');
+  if (!cardEl || e.button > 0 || !S.C || S.C.choose) return;
+  const uid = +cardEl.dataset.play, inst = S.C.hand.find(h => h.uid === uid);
+  if (!inst || !usable(inst)) return;
+  drag = { uid, el: cardEl, x: e.clientX, y: e.clientY, ghost: null, id: e.pointerId };
+});
+addEventListener('pointermove', e => {
+  if (!drag || e.pointerId !== drag.id) return;
+  if (!drag.ghost) {
+    if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 8) return;
+    const r = drag.el.getBoundingClientRect(), g = drag.el.cloneNode(true);
+    g.classList.add('dragghost'); g.removeAttribute('data-play');
+    g.style.width = `${drag.el.offsetWidth}px`; g.style.height = `${drag.el.offsetHeight}px`;
+    g.style.transform = `scale(${r.width / drag.el.offsetWidth})`;
+    document.body.append(g); drag.ghost = g; drag.el.classList.add('dragging');
+    S.C.pending = drag.uid; markTargets(true);
+  }
+  drag.ghost.style.left = `${e.clientX}px`; drag.ghost.style.top = `${e.clientY}px`;
+  const over = dropAt(e.clientX, e.clientY, drag.uid);
+  document.querySelectorAll('.dropover').forEach(x => x.classList.remove('dropover'));
+  over?.el?.classList.add('dropover');
+});
+// 놓을 곳: 적 / 동료 / (대상 없는 카드) 손패 위쪽 판
+function dropAt(x, y, uid) {
+  const C = S.C; if (!C) return null;
+  const inst = C.hand.find(h => h.uid === uid); if (!inst) return null;
+  const tk = targetOf(inst), el = document.elementFromPoint(x, y);
+  const foe = el?.closest('.foe[data-foe]'), ally = el?.closest('.pm[data-ally]');
+  if (tk === 'foe' && foe) return { el: foe, pick: { foe: +foe.dataset.foe } };
+  if (tk === 'ally' && ally && !ally.classList.contains('down')) return { el: ally, pick: { ally: ally.dataset.ally } };
+  if ((tk === 'none' || tk === 'all' || (tk === 'foe' && livingFoes().length === 1)) && el?.closest('.field')) return { el: el.closest('.field'), pick: undefined };
+  return null;
+}
+function markTargets(on) { app.classList.toggle('dragmode', on); }
+function endDrag(e, cancel) {
+  if (!drag || e.pointerId !== drag.id) return;
+  const d = drag; drag = null;
+  document.querySelectorAll('.dropover').forEach(x => x.classList.remove('dropover'));
+  markTargets(false);
+  if (!d.ghost) return;   // 끌지 않았으면 보통 click
+  d.ghost.remove(); d.el.classList.remove('dragging');
+  eatClick = true; setTimeout(() => { eatClick = false; }, 0);
+  const tgt = cancel ? null : dropAt(e.clientX, e.clientY, d.uid);
+  if (!tgt) { render(); return; }
+  const hp0 = partyHp();
+  play(d.uid, tgt.pick);
+  after(); render();
+  const hp1 = partyHp(); if (hp0 != null && hp1 != null && hp1 < hp0) shake();
+}
+addEventListener('pointerup', e => endDrag(e, false));
+addEventListener('pointercancel', e => endDrag(e, true));
+app.addEventListener('click', e => { if (eatClick) { e.stopImmediatePropagation(); e.preventDefault(); } }, true);
+
+// 설정 창
+function openSettings() { modal.innerHTML = settingsModal(); modal.hidden = false; modal.dataset.kind = 'settings'; }
+modal.addEventListener('click', e => {
+  if (e.target === modal || e.target.closest('[data-close]')) { modal.hidden = true; S.wipeArm = false; delete modal.dataset.kind; return; }
+  const b = e.target.closest('button'); if (!b || b.disabled) return;
+  const D = b.dataset;
+  if (D.set) {
+    const [k, raw] = D.set.split(':');
+    setOption(k, raw === 'true' ? true : raw === 'false' ? false : raw === 'null' ? null : raw);
+  } else if ('tutreplay' in D) { modal.hidden = true; delete modal.dataset.kind; startTutorial(); render(); return; }
+  else if ('wipe' in D) {
+    if (!S.wipeArm) S.wipeArm = true;
+    else { S.wipeArm = false; resetProfile(); S.G = null; S.C = null; S.view = 'tutintro'; modal.hidden = true; delete modal.dataset.kind; render(); return; }
+  } else return;
+  openSettings();
+});
+modal.addEventListener('input', e => {
+  const r = e.target.closest('input[data-vol]'); if (!r) return;
+  SET[r.dataset.vol] = +r.value;
+  setOption(r.dataset.vol, +r.value);
+  const o = document.getElementById(`out-${r.dataset.vol}`); if (o) o.textContent = `${Math.round(+r.value * 100)}%`;
+  applyVolumes();
+});
 addEventListener('keydown', e => {
   if (e.key === 'Escape' && S.C?.pending) { S.C.pending = null; render(); }
   // 에피소드: 스페이스·엔터로 다음 줄

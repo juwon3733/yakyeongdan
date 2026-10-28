@@ -437,6 +437,7 @@ function winCombat() {
   if (winGold) gainGold(winGold);
   if (k === 'boss') {
     G.bossKills++;
+    if (G.tutorial) { G.tutorial.won = true; G.screen = 'tutdone'; return; }   // 첫 실행 튜토리얼 끝 (js/tutorial.js)
     if (G.act === 3) return endRun(true);
     for (const p of G.party) healMember(p, Math.ceil(member(p).max * RULES.bossHealPct));
     G.reward = { cards: rewardCards('boss', extra), next: 'act', kind: k };

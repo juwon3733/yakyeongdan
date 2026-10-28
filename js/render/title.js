@@ -19,6 +19,7 @@ export function titleView() {
       <p class="note">0시에 솟는 탑을 <b>6시 해 뜨기 전에</b> 오른다</p>
       <button type="button" class="primary" data-view="party">밤 오르기</button>
       <button type="button" data-view="base">본부</button>
+      <button type="button" data-settings>설정</button>
       <span class="note small">별 조각 <b>${P.shards}</b> · 동료 ${Object.keys(P.owned).length}/${ROSTER_IDS.length}${S.dev ? ' · <span class="dev">개발판</span>' : ''}</span>
     </div>
   </div>`;

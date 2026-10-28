@@ -10,6 +10,7 @@ import { MOONS } from './data/moons.js';
 import { RELICS } from './data/relics.js';
 import { RULES, NODE, SHOP } from './data/rules.js';
 import { hasRelic, relicSum, relicMul, rollRelic } from './relics.js';
+import { tutNode, rigHand } from './tutorial.js';
 
 // ---------- 지도 만들기 (docs/10_details.md §4) ----------
 // 층 i의 칸 n개를 층 i+1의 칸 m개에 겹치지 않게 잇는다 (갈렸다 합쳐짐, 교차 없음)
@@ -80,8 +81,11 @@ export function goNode(r, i) {
   if (!t || !reachable(r).includes(i)) return;
   G.took[r] = i; G.floors++; G.note = '';
   addTime(nodeTime(t));
-  const pool = ACTS[G.act];
-  if (t === 'fight') startCombat(G.rng.pick(r === 0 ? pool.easy : pool.fights), 'fight');
+  const pool = ACTS[G.act], tn = tutNode(r);
+  // 첫 실행 튜토리얼: 정해진 적·사건, 첫 턴 손패 맞추기 (js/tutorial.js)
+  if (tn?.foes) { startCombat(tn.foes.slice(), tn.kind); if (tn.rig) rigHand(tn.rig); }
+  else if (tn?.event) openEvent(tn.event);
+  else if (t === 'fight') startCombat(G.rng.pick(r === 0 ? pool.easy : pool.fights), 'fight');
   else if (t === 'elite') { const e = G.nextElite; G.nextElite = pickElite(); startCombat(e, 'elite'); }
   else if (t === 'boss') startCombat(pool.boss, 'boss');
   else if (t === 'rest') { G.restTalk = restTalk(G); if (G.restTalk != null) G.talks?.add(G.restTalk); G.screen = 'rest'; }
@@ -202,11 +206,11 @@ export function shopBuy(kind, i) {
 export function leaveShop() { S.G.shop = null; nextRow(); }
 
 // ---------- 사건 ----------
-function openEvent() {
+function openEvent(id) {
   const G = S.G;
   let pool = EVENTS.filter(e => !G.seenEvents.includes(e.id));
   if (!pool.length) pool = EVENTS;
-  const def = G.rng.pick(pool);
+  const def = EVENTS.find(e => e.id === id) || G.rng.pick(pool);
   G.seenEvents.push(def.id);
   G.event = { def, mate: G.rng.pick(G.party) };
   G.screen = 'event';

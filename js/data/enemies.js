@@ -58,6 +58,11 @@ export const FOE = {
              line: '"왜 매일 밤 올라오는 거야? …그냥 아침이 오게 두면 되잖아."',
              phase2: { at: .5, msg: '해가 뜬다. 밤 시계 +10분, 이제 매 턴 +5분.', clockOnce: 10, turnClock: 5 },
              pat: [A(11), A(5, 4), M(14, 14), U(4), A(24)] },
+  // 첫 실행 튜토리얼 (js/data/tutorial.js): 약하게
+  tut_ghost: { name: '아기 바다 유령', hp: 16, pal: 'sea', long: true, pat: [A(4), A(2, 2), A(5)] },
+  tut_gull:  { name: '갈매기', hp: 8, pal: 'gull', aim: 'back', small: true, pat: [A(3)] },
+  tut_lamp:  { name: '떠도는 등불', hp: 40, pal: 'keeper', crown: true, line: '"작은 불빛이라고 얕보지 마."',
+               pat: [A(6), B(6), A(3, 2), A(7)] },
 };
 
 export const ACTS = {

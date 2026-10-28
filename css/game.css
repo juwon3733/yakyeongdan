@@ -506,3 +506,147 @@ h3.sub{font-family:var(--f-disp);font-weight:400;font-size:11px;color:var(--gold
 .tempbar{font-family:var(--f-disp);color:#d08a4a;margin-right:6px}
 #cut .band.sp{background:linear-gradient(90deg,#2a2410,#3a2e10 50%,#2a2410);border-color:#ffe080;box-shadow:0 0 0 2px #8a6a1a}
 #cut .band.sp .tx i{font-style:normal;color:#fff}
+
+/* ---------- M8: 튜토리얼 · 설정 · 끌어 놓기 · 흔들림 · 글자 크게 ---------- */
+/* 첫 실행 튜토리얼: 들어가기·끝 화면, 판 위 도움말 줄 */
+.tutintro{position:relative;height:100%;overflow:hidden;background:linear-gradient(180deg,#0a0b26 0,#1a1c4a 60%,#2a2050 100%)}
+.tutintro .sky .tower{position:absolute;right:120px;bottom:0;width:46px;height:300px;background:repeating-linear-gradient(180deg,#141432 0 18px,#1e1e46 18px 20px);box-shadow:0 0 0 2px #0a0a1e}
+.tutintro .sky .tower::before{content:"";position:absolute;left:18px;top:-14px;width:10px;height:14px;background:#ffe060;box-shadow:0 0 0 2px #0a0a1e}
+.tutintro .moonbig{position:absolute;right:40px;top:30px;width:40px;height:40px;background:#e8ecff;box-shadow:-10px 4px 0 0 #1a1c4a inset}
+.tutintro .tbox{position:absolute;left:28px;top:50%;transform:translateY(-50%);width:340px;display:flex;flex-direction:column;gap:8px;background:var(--panel);border:2px solid var(--gold);box-shadow:3px 3px 0 var(--shadow);padding:14px 16px}
+.tutintro h1{font-size:26px;color:var(--gold)}
+.tutintro p{margin:0;font-size:11px;line-height:1.6}
+.tutintro .trio{display:flex;gap:6px}
+.tutintro .trio img{width:42px;height:56px;background:#0b0b18}
+.tutintro .acts{justify-content:flex-start}
+.tutintro .acts button{font-family:var(--f-disp);font-size:13px;padding:6px 12px}
+.tutbar{flex:none;display:flex;align-items:center;gap:6px;background:#10283a;border-bottom:2px solid #2a5a7a;padding:3px 8px;font-size:9.5px;line-height:1.35;color:#d8eef8}
+.tutbar .lb{font-family:var(--f-disp);font-size:9px;color:#0b1a24;background:#7ad0f0;padding:0 4px;flex:none}
+.tutbar .tx{flex:1;min-width:0}
+.tutbar .mini{flex:none}
+button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s steps(2) infinite}
+@keyframes hint{50%{outline-color:transparent}}
+
+/* 설정 창 */
+.sheet{background:var(--panel);border:2px solid var(--gold);box-shadow:3px 3px 0 var(--shadow);padding:10px 12px;width:440px;max-height:340px;overflow:auto;display:flex;flex-direction:column;gap:7px}
+.shead{display:flex;align-items:center;justify-content:space-between}
+.srow{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.srow label,.srow .lb{font-family:var(--f-disp);font-size:11px;width:96px;flex:none}
+.srow input[type=range]{flex:1;min-width:120px;accent-color:var(--gold)}
+.srow output{font-family:var(--f-disp);font-size:10px;width:34px;text-align:right}
+.seg{display:inline-flex;gap:3px}
+.seg .mini.on{border-color:var(--gold);color:var(--gold);background:#2a2614}
+.srow.danger .mini{border-color:#7a2a3a;color:#ff9aaa}
+.srow.danger .mini[aria-pressed="true"]{background:#4a1424;color:#fff}
+.topbar.ep .eptag{color:#b48ae8}
+
+/* 카드 끌어 놓기 */
+.hand .card{touch-action:none}
+.card.dragging{opacity:.35}
+.card.dragghost{position:fixed;z-index:50;pointer-events:none;margin:0;transform-origin:0 0;translate:-50% -60%;box-shadow:4px 4px 0 var(--shadow),0 0 0 2px var(--gold)}
+.dropover{outline:3px solid var(--gold)!important;outline-offset:-3px}
+
+/* 맞으면 판이 짧게 흔들린다 (계단식) */
+#stage.shake{animation:shake .24s steps(4)}
+@keyframes shake{
+  0%{transform:translate(calc(-50% + 3px),-50%) scale(var(--s,1))}
+  25%{transform:translate(calc(-50% - 3px),calc(-50% + 1px)) scale(var(--s,1))}
+  50%{transform:translate(calc(-50% + 2px),calc(-50% - 1px)) scale(var(--s,1))}
+  75%{transform:translate(calc(-50% - 1px),-50%) scale(var(--s,1))}
+  100%{transform:translate(-50%,-50%) scale(var(--s,1))}
+}
+/* 애니메이션 줄이기 */
+#stage.calm,#stage.calm *{animation:none!important;transition:none!important}
+/* 튜토리얼 전투: 도움말 줄 높이만큼 그림을 줄여 판이 넘치지 않게 */
+#app.tut[data-screen="combat"] .pm img{width:33px;height:44px}
+#app.tut[data-screen="combat"] .foe img{width:48px;height:64px}
+#app.tut[data-screen="combat"] .foe.sm img{width:36px;height:48px}
+#app.tut[data-screen="combat"] .pm .row{display:none}
+
+/* 글자 크게 (설정 「크게」, 또는 「자동」이면 판 배율 1.5 미만인 작은 화면 = 폰 가로).
+   논리 픽셀 기준으로 작은 글자를 1.5~2px씩 키우고, 카드·동료 칸을 조금 넓힌다. */
+#stage.bigtext .note{font-size:11px}
+#stage.bigtext .note.small{font-size:10.5px}
+#stage.bigtext .chip{font-size:10px}
+#stage.bigtext button.mini{font-size:11px;padding:3px 7px}
+#stage.bigtext .relic{font-size:9.5px}
+#stage.bigtext .gold{font-size:11px}
+#stage.bigtext .mt{font-size:10.5px}
+/* 전투 */
+#stage.bigtext .bottom{height:124px}
+#stage.bigtext .card{width:94px;flex:0 1 94px;height:118px}
+#stage.bigtext .card .hd{font-size:11.5px}
+#stage.bigtext .card .cost{font-size:11.5px}
+#stage.bigtext .card .bd{font-size:10px;line-height:1.3}
+#stage.bigtext .card .who{font-size:9px}
+#stage.bigtext .card .rar{font-size:8.5px}
+#stage.bigtext .card .tm,#stage.bigtext .card .tg{font-size:9px}
+#stage.bigtext .pm{width:86px}
+#stage.bigtext .pm .row{font-size:10px}
+#stage.bigtext .pm .nm{font-size:11.5px}
+#stage.bigtext .pm .hp{font-size:10.5px}
+#stage.bigtext .pm .s{font-size:10px}
+#stage.bigtext .intent{font-size:12.5px}
+#stage.bigtext .aimnm{font-size:10px}
+#stage.bigtext .foe .nm{font-size:13px}
+#stage.bigtext .foe .hp{font-size:10.5px}
+#stage.bigtext .foe.sm{width:100px}
+#stage.bigtext .foe.sm .nm{font-size:11.5px}
+#stage.bigtext .foe.sm .intent{font-size:11px}
+#stage.bigtext .log{font-size:10.5px}
+#stage.bigtext .endcol .note{font-size:10px}
+#stage.bigtext .energy b{font-size:16px}
+#stage.bigtext .tutbar{font-size:11px}
+/* 지도·파티·화면들 */
+#stage.bigtext .node .t{font-size:13.5px}
+#stage.bigtext .node .m{font-size:10.5px}
+#stage.bigtext .rowlabel{font-size:10.5px}
+#stage.bigtext .slot{font-size:11px}
+#stage.bigtext .slot .row{font-size:10.5px}
+#stage.bigtext .formation .lbl small{font-size:10px}
+#stage.bigtext .mate .nm{font-size:12px}
+#stage.bigtext .mate .rl{font-size:10px}
+#stage.bigtext .mate .ps{font-size:9.5px}
+#stage.bigtext .bonds,#stage.bigtext .talk{font-size:10.5px}
+#stage.bigtext .bmenu button{font-size:13.5px}
+#stage.bigtext .bmenu button small{font-size:9.5px}
+#stage.bigtext .wallet{font-size:11.5px}
+#stage.bigtext .odds,#stage.bigtext .got{font-size:10.5px}
+#stage.bigtext .got .nm{font-size:11.5px}
+#stage.bigtext .got .tag{font-size:10px}
+#stage.bigtext .price{font-size:11px}
+#stage.bigtext .rbox{font-size:10.5px}
+#stage.bigtext .shards{font-size:11px}
+#stage.bigtext .newt{font-size:9.5px}
+/* 에피소드 */
+#stage.bigtext .epbox .who{font-size:12.5px}
+#stage.bigtext .epbox .tx{font-size:13px;line-height:1.5}
+#stage.bigtext .eprow .nm{font-size:12.5px}
+#stage.bigtext .epslot b{font-size:11px}
+#stage.bigtext .epslot small,#stage.bigtext .eprow .nm small{font-size:9px}
+#stage.bigtext .eptop .ttl{font-size:11.5px}
+#stage.bigtext .eplog .loglines{font-size:11.5px}
+/* 설정 창 */
+#stage.bigtext .srow label,#stage.bigtext .srow .lb{font-size:12px}
+/* 본부 메뉴 머리: 지갑은 아래 줄로, 버튼 글은 줄바꿈 없이 */
+.bmenu .bhead{flex-wrap:wrap;justify-content:flex-start}
+.bmenu .bhead .wallet{order:5;width:100%}
+.bhead .mini{white-space:nowrap}
+#stage.bigtext .bmenu{gap:4px;padding:6px 8px}
+#stage.bigtext .bmenu button:not(.mini){padding:4px 8px}
+/* 지도 칸: 두 줄이 칸 안에 들어가게 */
+.mapgrid .node{gap:0;justify-content:center}
+.mapgrid .node .t,.mapgrid .node .m{line-height:1.2}
+/* 판은 절대 스크롤되지 않는다(포커스로 밀려 올라가는 것 막기). 넘치는 목록은 그 안에서 스크롤 */
+#stage,#app{overflow:clip}
+.title .tleft{min-height:0}
+.title .pick{flex:1;min-height:0;overflow-y:auto;padding-right:2px}
+#stage.bigtext .foe:not(.sm) img{width:54px;height:72px}
+/* 튜토리얼 전투(글자 크게여도): 그림을 더 줄인다 */
+#stage #app.tut[data-screen="combat"] .foe img{width:44px;height:58px}
+#stage #app.tut[data-screen="combat"] .foe.sm img{width:34px;height:45px}
+#stage #app.tut[data-screen="combat"] .pm img{width:30px;height:40px}
+#app.tut[data-screen="combat"] .foe .st{min-height:0}
+#app.tut[data-screen="combat"] .foe{padding:2px 6px;gap:1px}
+#app.tut[data-screen="combat"] .pm{padding:2px 2px 3px}
+#app.tut[data-screen="combat"] .body{padding-top:3px;gap:3px}

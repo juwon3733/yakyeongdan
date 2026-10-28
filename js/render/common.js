@@ -49,17 +49,20 @@ export function topbar(extra = '') {
     const M = G.members[p];
     return `<span class="mt ${M.down ? 'down' : ''}">${face(p)}<span class="hp">${M.hp}/${M.max}</span>${hpBar(M)}</span>`;
   }).join('')}</span>`;
-  return `<div class="topbar">
-    <span class="clock ${G.clock >= dawnAt() ? 'dawn' : ''}">${fmt(G.clock)}</span>
-    <span class="night" aria-hidden="true"><i style="width:${Math.min(100, G.clock / dawnAt() * 100)}%"></i></span>
+  // 에피소드 특별 전투: 밤 시계·별빛·도구는 의미가 없어 숨긴다
+  const ep = !!G.episode;
+  return `<div class="topbar ${ep ? 'ep' : ''}">
+    ${ep ? '<span class="chip eptag">에피소드 · 특별 전투</span>' : `<span class="clock ${G.clock >= dawnAt() ? 'dawn' : ''}">${fmt(G.clock)}</span>
+    <span class="night" aria-hidden="true"><i style="width:${Math.min(100, G.clock / dawnAt() * 100)}%"></i></span>`}
     ${G.depth ? `<span class="chip depthchip" title="밤의 깊이 ${G.depth}">깊이 ${G.depth}</span>` : ''}
     <img class="px moon" src="${moonImg(G.moon)}" alt="">
     <span class="chip" style="color:var(--moon)" title="${esc(m.text)}">${m.name}</span>
     ${extra}
     <span class="grow"></span>
-    <span class="relics">${relicRow(G)}</span>
-    <span class="gold" title="별빛 (야시장·사건에서 쓴다)">별빛 ${G.gold}</span>
+    ${ep ? '' : `<span class="relics">${relicRow(G)}</span>
+    <span class="gold" title="별빛 (야시장·사건에서 쓴다)">별빛 ${G.gold}</span>`}
     ${mates}
+    <button type="button" class="mini" data-settings title="설정">설정</button>
     <button type="button" class="mini" data-deck>덱 ${G.deck.length}</button>
   </div>`;
 }

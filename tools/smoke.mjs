@@ -31,7 +31,8 @@ const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; }
 const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false,
   migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
-  ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false };
+  ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false,
+  tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false };
 
 // 전투가 아닌 화면 한 걸음 (지도·보상·휴식·사건·야시장·보스 도구·달 고르기·카드 고르기)
 async function advance(page, tag) {
@@ -79,7 +80,7 @@ try {
     page.on('requestfailed', r => { if (!isFont(r.url())) errors.push(`[seed ${seed}] 불러오기 실패 ${r.url()}`); });
     page.on('response', r => { if (r.status() >= 400 && !isFont(r.url())) errors.push(`[seed ${seed}] ${r.status()} ${r.url()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
-    await page.goto(`http://127.0.0.1:${port}/?seed=${seed}`);
+    await page.goto(`http://127.0.0.1:${port}/?notut&seed=${seed}`);
     const party = [['iris', 'brick', 'marta'], ['noel', 'raven', 'marta'], ['brick', 'raven', 'noel'], ['lunaria', 'sion', 'mimimomo'], ['akane', 'iris', 'finn']][seed - 1];
     await openParty(page);
     for (const k of party) await page.click(`[data-pick="${k}"]`);
@@ -135,7 +136,7 @@ try {
     page.on('pageerror', e => errors.push(`[act1] ${e.message}`));
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[act1] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
-    await page.goto(`http://127.0.0.1:${port}/?seed=7`);
+    await page.goto(`http://127.0.0.1:${port}/?notut&seed=7`);
     await openParty(page);
     for (const k of ['iris', 'marta', 'raven']) await page.click(`[data-pick="${k}"]`);
     await page.click('[data-start]');
@@ -179,7 +180,7 @@ try {
     page.on('pageerror', e => errors.push(`[full] ${e.message}`));
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[full] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
-    await page.goto(`http://127.0.0.1:${port}/?seed=21`);
+    await page.goto(`http://127.0.0.1:${port}/?notut&seed=21`);
     await openParty(page);
     for (const k of ['iris', 'brick', 'noel']) await page.click(`[data-pick="${k}"]`);
     await page.click('[data-start]');
@@ -239,7 +240,7 @@ try {
     page.on('pageerror', e => errors.push(`[ep] ${e.message}`));
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[ep] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
-    await page.goto(`http://127.0.0.1:${port}/?seed=5`);
+    await page.goto(`http://127.0.0.1:${port}/?notut&seed=5`);
     await page.evaluate(() => window.__yk.reset());
     await openParty(page);
     for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
@@ -280,7 +281,7 @@ try {
     page.on('pageerror', e => errors.push(`[meta] ${e.message}`));
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[meta] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
-    await page.goto(`http://127.0.0.1:${port}/?seed=7`);
+    await page.goto(`http://127.0.0.1:${port}/?notut&seed=7`);
     const mig = await page.evaluate(() => {
       const P = window.__yk.loadV1({ v: 1, owned: { iris: { stars: 0 }, brick: { stars: 0 }, marta: { stars: 0 }, noel: { stars: 2 } }, shards: 40, dust: 3, items: ['흔한 도구'],
         pulls: 12, pity5: 12, pity4: 0, firstTen: true, got5: false, seenDuos: ['iris+marta'], runs: 2, wins: 0, best: null, sseed: 7, epProg: {}, epSeen: {}, bondOpen: [], bondSeen: [] });
@@ -352,6 +353,92 @@ try {
     const kept = await page.evaluate(() => window.__yk.S.C ? window.__yk.S.C.hand.some(h => h.uid === 9001) : null);
     if (ch === 'temper' && !tp.choose && tp.id === 'iris.parry+' && kept) { seen.chooseUi = true; console.log('meta: 도라 담금질 고르기 · 세바스 남기기 고르기'); }
     else fail(`담금질·남기기 고르기 실패 ${JSON.stringify({ ch, tp, kept })}`);
+    await page.close();
+  }
+  // M8: 첫 실행 튜토리얼 끝까지 (끌어 놓기 · 대열 · 사건 · 손패 맞춘 듀오 · 작은 보스 → 본부 [별 소환] 안내)
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    page.on('pageerror', e => errors.push(`tutorial: ${e.message}`));
+    await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+    await page.goto(`http://127.0.0.1:${port}/`);
+    const ev = f => page.evaluate(f);
+    const where = () => ev(() => window.__yk.S.G?.screen || window.__yk.S.view);
+    if (await where() !== 'tutintro' || !(await page.$('[data-tutstart]'))) fail('처음 켰을 때 튜토리얼 들어가기 화면이 아님');
+    await page.click('[data-tutstart]');
+    const tip0 = await ev(() => document.querySelector('.tutbar .tx')?.textContent || '');
+    await page.click('[data-node="0,0"]');
+    // 끌어 놓기: 첫 카드를 적 위에 놓는다
+    const c = await page.$('.hand .card[data-play]:not(.no)'), f = await page.$('.foe[data-foe]');
+    const cb = await c.boundingBox(), fb = await f.boundingBox();
+    const hp0 = await ev(() => window.__yk.S.C.all[0].hp);
+    await page.mouse.move(cb.x + cb.width / 2, cb.y + cb.height / 2); await page.mouse.down();
+    await page.mouse.move(cb.x + cb.width / 2, cb.y - 30, { steps: 3 });
+    await page.mouse.move(fb.x + fb.width / 2, fb.y + fb.height / 2, { steps: 6 });
+    await page.mouse.up();
+    const dragged = await ev(() => ({ hp: window.__yk.S.C?.all[0].hp, hand: window.__yk.S.C?.hand.length }));
+    if (!(dragged.hp < hp0 && dragged.hand === 4)) fail(`카드 끌어 놓기 실패 ${JSON.stringify({ hp0, dragged })}`);
+    else seen.drag = true;
+    for (let k = 0; k < 40 && await where() === 'combat'; k++) if (!(await playOne(page))) await page.click('[data-end]');
+    await page.click('[data-take]');
+    const f0 = await ev(() => window.__yk.S.G.formation.join());
+    await page.click('[data-slot="0"]'); await page.click('[data-slot="2"]');
+    const f1 = await ev(() => window.__yk.S.G.formation.join());
+    await page.click('[data-node="1,0"]');
+    const evId = await ev(() => window.__yk.S.G.event?.def.id);
+    await page.click('[data-opt="1"]');
+    await page.click('[data-node="2,0"]');
+    const hand = await ev(() => window.__yk.S.C.hand.slice(0, 3).map(h => h.id).join());
+    for (const u of await ev(() => window.__yk.S.C.hand.slice(0, 3).map(h => h.uid))) {
+      await page.click(`[data-play="${u}"]`);
+      if (await page.$('.foe.tg')) await page.click('.foe.tg'); else if (await page.$(`[data-play="${u}"]`)) await page.click(`[data-play="${u}"]`);
+    }
+    const duo = await ev(() => window.__yk.S.C?.hand.some(h => h.id === 'duo:iris+marta'));
+    for (let k = 0; k < 40 && await where() === 'combat'; k++) if (!(await playOne(page))) await page.click('[data-end]');
+    if (await where() === 'reward') await page.click('[data-take]');
+    await page.click('[data-node="3,0"]');
+    const boss = await ev(() => window.__yk.S.C?.kind === 'boss' && window.__yk.S.C.all[0].key === 'tut_lamp');
+    for (let k = 0; k < 80 && await where() === 'combat'; k++) if (!(await playOne(page))) await page.click('[data-end]');
+    if (await where() === 'combat') await ev(() => window.__yk.win());
+    const done = await where();
+    await page.click('[data-tutfinish]');
+    const fin = await ev(() => ({ view: window.__yk.S.view, tut: window.__yk.P().tutDone, runs: window.__yk.P().runs, shards: window.__yk.P().shards, hint: !!document.querySelector('button.hint[data-view="summon"]') }));
+    const ok = tip0.startsWith('①') && f0 !== f1 && evId === 'child' && hand === 'brick.load,iris.issen,marta.wall' && duo && boss && done === 'tutdone'
+      && fin.view === 'base' && fin.tut && fin.runs === 0 && fin.shards === 100 && fin.hint;
+    if (ok) { seen.tutorial = true; console.log('tutorial: 첫 밤 끝까지 (끌어 놓기, 대열, 사건, 듀오 「검과 방패」, 작은 보스 → 본부 [별 소환] 안내)'); }
+    else fail(`튜토리얼 실패 ${JSON.stringify({ tip0: tip0.slice(0, 3), f0, f1, evId, hand, duo, boss, done, fin })}`);
+    // 다시 켜면 튜토리얼 없이 타이틀
+    await page.reload();
+    if (await where() !== 'title') fail('튜토리얼을 끝낸 뒤에도 들어가기 화면이 나옴');
+    // 설정: 음량 · 흔들림 · 애니메이션 줄이기 · 글자 크기 → 저장 → 다시 켜도 그대로
+    await page.click('[data-settings]');
+    await page.fill('#set-music', '0.3'); await page.dispatchEvent('#set-music', 'input');
+    await page.click('[data-set="shake:false"]'); await page.click('[data-set="calm:true"]'); await page.click('[data-set="text:big"]');
+    const st = await ev(() => ({ s: JSON.parse(localStorage.getItem('yk-settings')), cls: document.getElementById('stage').className }));
+    await page.click('[data-close]');
+    await page.reload();
+    const st2 = await ev(() => document.getElementById('stage').className);
+    if (st.s.music === 0.3 && st.s.shake === false && st.s.calm === true && st.s.text === 'big' && /bigtext/.test(st.cls) && /calm/.test(st.cls) && /noshake/.test(st.cls) && /bigtext/.test(st2)) {
+      seen.settings = true; console.log('settings: 음악 30%, 흔들림 끔, 애니메이션 줄임, 글자 크게 → 다시 켜도 유지');
+    } else fail(`설정 실패 ${JSON.stringify({ st, st2 })}`);
+    // 저장 지우기(두 번 눌러야) → 튜토리얼 들어가기로
+    await page.click('[data-settings]');
+    await page.click('[data-wipe]');
+    const armed = await ev(() => !!document.querySelector('[data-wipe][aria-pressed="true"]') && window.__yk.P().tutDone);
+    await page.click('[data-wipe]');
+    const wiped = await ev(() => ({ view: window.__yk.S.view, tut: window.__yk.P().tutDone }));
+    if (armed && wiped.view === 'tutintro' && !wiped.tut) seen.wipe = true; else fail(`저장 지우기 실패 ${JSON.stringify({ armed, wiped })}`);
+    // 건너뛰기 → 타이틀, 환경음은 판 밖에서 파도
+    await page.click('[data-tutskip]');
+    const amb = await ev(() => window.__yk.audio?.().amb);
+    if (await where() === 'title' && amb === 'sea') seen.amb = true; else fail(`건너뛰기·환경음 실패 ${JSON.stringify({ where: await where(), amb })}`);
+    // 에피소드 특별 전투: 위 띠에 밤 시계가 없다
+    await ev(() => { window.__yk.epUnlock('iris'); window.__yk.ep('iris', 1); });
+    if (await page.$('[data-epskip]')) await page.click('[data-epskip]');
+    if (await page.$('[data-epfight]')) {
+      await page.click('[data-epfight]');
+      const top = await ev(() => ({ clock: !!document.querySelector('.topbar .clock'), tag: !!document.querySelector('.topbar .eptag'), amb: window.__yk.audio?.().amb }));
+      if (!top.clock && top.tag) seen.epClock = true; else fail(`특별 전투 위 띠 ${JSON.stringify(top)}`);
+    } else fail('에피소드 2화 특별 전투까지 못 감');
     await page.close();
   }
   // 세로 폰: 돌려 달라는 안내
