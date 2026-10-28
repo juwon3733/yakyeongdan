@@ -22,6 +22,7 @@
 | [docs/PROMPTS.md](docs/PROMPTS.md) | 그림 241장 목록·크기·프롬프트 (자동 생성) |
 | [docs/GPT_REQUEST.md](docs/GPT_REQUEST.md) | GPT에 보낼 그림 요청 글, 묶음 추천 순서 |
 | [docs/10_details.md](docs/10_details.md) | 카드 희귀도·보상, 저주, 도구 24개, 지도 만들기, 튜토리얼, 숫자 표시 |
+| [docs/12_signature.md](docs/12_signature.md) | 동료 특색 재설계: 고유 게이지·각성·공명·터지는 턴·시그니처 콤보 (설계안) |
 
 ## 로컬 실행
 빌드 없음. 저장소 폴더에서 정적 서버를 띄운다(ES 모듈이라 파일을 직접 열면 안 됨).
