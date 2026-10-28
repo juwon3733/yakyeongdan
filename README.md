@@ -19,5 +19,21 @@
 | [docs/07_tech.md](docs/07_tech.md) | 폴더 구조, 데이터 모양, 시뮬레이션, 저장, CI |
 | [docs/08_roadmap.md](docs/08_roadmap.md) | 만드는 순서, 밸런스 목표, 미정 사항 |
 
+## 로컬 실행
+빌드 없음. 저장소 폴더에서 정적 서버를 띄운다(ES 모듈이라 파일을 직접 열면 안 됨).
+
+```
+npx serve .
+# 또는
+python3 -m http.server 8000   # → http://localhost:8000
+```
+
+- localhost나 주소 끝 `?dev`로 열면 개발판: 동료 5명을 다 고를 수 있다(공개판은 아이리스·브릭·마르타만).
+- `?seed=123`으로 지도·달·셔플을 고정할 수 있다.
+- 검사: `node tools/smoke.mjs` (Playwright 필요. 파티 고르기 → 전투 → 보상 → 지도까지).
+
+## 코드 구조
+`docs/07_tech.md` 참고. 규칙 데이터는 `js/data/`, 엔진은 `js/run.js`·`map.js`·`combat.js`·`effects.js`, 화면은 `js/render/`.
+
 ## 프로토타입
 `prototype/index.html` — 처음 만든 한 파일 프로토타입(동료 5명, 3막, 연계·듀오, 달). 브라우저로 열면 바로 된다.
