@@ -3,7 +3,7 @@
 //   그 밖의 표시: noPoisonWhileBlock(방어가 남아 있으면 독이 안 듦), light(등대 불빛)
 //   armor: 공격 한 번마다 받는 피해 감소 · acts: 한 턴 행동 수 · turnClock: 내 턴 시작마다 밤 시계 +분
 //   phase2: 체력이 at 비율 아래가 되면 한 번 바뀜 { at, msg, clockOnce, ...바꿀 필드(armor·acts·aim·turnClock·pat) }
-//   line / lines: 강적·보스 앞 한 줄 대사 (lines면 그중 하나)
+//   line / lines: 강적·보스 앞 한 줄 대사 (lines면 그중 하나) · burstClock: 내 턴 피해가 RULES.bigTurn 이상이면 밤 시계 +분 (턴당 1번)
 //   thorns: 이 적을 친 동료가 받는 피해 · deathBoom: 쓰러질 때 모든 동료 피해
 //   ACTS[막]: easy(1층 전투), fights(그 위 전투), elites, boss — 각 항목은 적 id 배열(1~3마리)
 // 행동: A 공격(v, 횟수) · B 방어 · U 힘 · M 공격+방어 · W 동료에게 상태(약화·취약) · K 저주 카드를 뽑을 더미 위에 · T 밤 시계 +분
@@ -88,14 +88,14 @@ export const FOE = {
              lines: ['"너희 그림자, 내가 가져가도 될까."', '달빛이 비틀리며 사람 모양이 된다.'] },
   sage:    { name: '성좌 마법사', hp: 92, pal: 'thief', long: true, crown: true, pat: [G(10), R(8), Z('comet'), A(20)],
              lines: ['"별자리는 내가 이어. 너희 자리는 없어."', '"떨어지는 별은 다 내 거야."'] },
-  dawn:    { name: '새벽', hp: 192, pal: 'dawn', long: true, crown: true, aim: 'dawn', turnClock: 2,
+  dawn:    { name: '새벽', hp: 192, pal: 'dawn', long: true, crown: true, aim: 'dawn', turnClock: 1, burstClock: 5,
              lines: ['"왜 매일 밤 올라오는 거야? …그냥 아침이 오게 두면 되잖아."', '"또 너희구나. 오늘은 몇 시에 왔어?"', '"밤은 끝나야 해. 그게 맞는 거야."'],
-             phase2: { at: .5, msg: '해가 뜬다. 밤 시계 +10분, 이제 매 턴 +5분.', clockOnce: 10, turnClock: 5 },
+             phase2: { at: .5, msg: '해가 뜬다. 밤 시계 +5분, 이제 매 턴 +2분.', clockOnce: 5, turnClock: 2 },
              pat: [A(11), A(5, 4), M(14, 14), U(4), A(24)] },
   // 첫 실행 튜토리얼 (js/data/tutorial.js): 약하게
-  tut_ghost: { name: '아기 바다 유령', hp: 16, pal: 'sea', long: true, pat: [A(4), A(2, 2), A(5)] },
-  tut_gull:  { name: '갈매기', hp: 8, pal: 'gull', aim: 'back', small: true, pat: [A(3)] },
-  tut_lamp:  { name: '떠도는 등불', hp: 40, pal: 'keeper', crown: true, line: '"작은 불빛이라고 얕보지 마."',
+  tut_ghost: { name: '아기 바다 유령', hp: 24, pal: 'sea', long: true, pat: [A(4), A(2, 2), A(5)] },
+  tut_gull:  { name: '갈매기', hp: 10, pal: 'gull', aim: 'back', small: true, pat: [A(3)] },
+  tut_lamp:  { name: '떠도는 등불', hp: 60, pal: 'keeper', crown: true, line: '"작은 불빛이라고 얕보지 마."',
                pat: [A(6), B(6), A(3, 2), A(7)] },
 };
 

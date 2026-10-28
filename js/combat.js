@@ -1,5 +1,5 @@
 // 전투 엔진: 턴, 손패, 적 1~3마리(의도·노림·상태), 동료별 체력·방어·상태, 대열, 쓰러짐, 연계·듀오, 패시브, 저주.
-import { S, addTime, rewind, timeCost, logMsg, isDawn, depthRule, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll } from './run.js';
+import { S, addTime, rewind, timeCost, moonFx, logMsg, isDawn, depthRule, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll } from './run.js';
 import { hasRelic, relicSum, relicFlag, rollRelic } from './relics.js';
 import { RELICS } from './data/relics.js';
 import { effects as E, draw } from './effects.js';
@@ -34,7 +34,8 @@ export function foeTarget() {
 export function startCombat(ids, kind) {
   const G = S.G;
   // 밤의 깊이: 강적·보스·일반 적 체력 +%
-  const hpMul = 1 + (depthRule(kind === 'elite' ? 'eliteHp' : kind === 'boss' ? 'bossHp' : 'fightHp') || 0);
+  const hpMul = (1 + (depthRule(kind === 'elite' ? 'eliteHp' : kind === 'boss' ? 'bossHp' : 'fightHp') || 0))
+    * (G.tutorial || G.episode ? 1 : RULES.foeHpMul?.[G.act]?.[kind] || 1);
   const foes = ids.map((k, i) => makeFoe(k, i, hpMul));
   const C = S.C = {
     kind, all: foes, tf: null, hover: null,
@@ -54,6 +55,13 @@ export function startCombat(ids, kind) {
     double: false, freeNext: 0, atkFree: false, playedTurn: 0, turnChars: new Set(), tempered: 0, playedUp: false,
     timeUsedTurn: 0, rewardExtra: 0, winGold: 0, swapsBonus: 0, moonBase: G.moon, moonChanged: false, moonPick: false,
     lostTurn: {}, flameGuard: 0, sigCounter: 0, burnAll: 0, reserve: 0, keepCards: [], atkCard: false,
+    // 패시브 ①②③ (docs/12_signature.md): 턴 단위 세기와 ③ 폭발 기록
+    dmgTurn: 0, dmgBy: {}, dmgPrev: {}, burstTurn: new Set(), bursts: {}, burstBond: new Set(), cardMul: 1, curCard: null, curSlash: false,
+    moonTurn: 0, allMoons: false, pairTurn: 0, mirrorWorld: false, zeroTurn: 0, randTurn: 0, jackpot: false,
+    healTurn: 0, feastTurn: false, partyStr: 0, aimTurn: 0, tomoriLit: false, diveStreak: 0, valkyrie: false, landPending: false,
+    lostCombat: {}, zenoSaved: false, timeFree: false, supportUsed: false, supportFree: 0, chainUps: 0, chain3Streak: 0,
+    finnPrev: null, finnBondUsed: false, saintTurn: false, servTurn: false, servNext: false, spiritBuff: 0, spiritTurnBuff: 0, spiritNext: 0,
+    allSlash: false, tempered2: 0, keepAll: false, noelTurn: 0,
   };
   Object.defineProperty(C, 'block', {
     get() { return C.actor ? C.blocks[C.actor] : 0; },
@@ -80,15 +88,18 @@ function makeFoe(k, i, hpMul = 1) {
   const d = FOE[k], hp = Math.round(d.hp * hpMul);
   S.G.foesMet?.add(k);
   return { key: k, i, ...d, pat: d.pat.slice(), hp, max: hp, pi: 0, block: 0, str: isDawn() ? RULES.dawnStartStr : 0, poison: 0, weak: 0, vuln: 0, bleed: 0, burn: 0,
-    armor: d.armor || 0, acts: d.acts || 1, p2: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null, stolen: [] };
+    armor: d.armor || 0, acts: d.acts || 1, p2: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null, aimedTurn: false, stolen: [] };
 }
 
 // 등대 불빛: 대열 자리 번호. 체력이 절반 아래면 불빛 둘.
+// 불빛은 지난 턴 피해를 가장 많이 준 동료를 비춘다(docs/12 §4). 아직 아무도 안 쳤으면 앞줄부터.
 export function litMembers() {
   const C = S.C; if (C.light == null) return [];
   const src = livingFoes().find(f => f.light); if (!src) return [];
-  const n = src.light.double && src.hp <= src.max * src.light.double ? 2 : 1, F = S.G.formation;
-  return Array.from({ length: n }, (_, k) => F[(C.light + k) % F.length]);
+  const n = src.light.double && src.hp <= src.max * src.light.double ? 2 : 1;
+  const L = living(), dp = C.dmgPrev || {};
+  const order = L.slice().sort((a, b) => (dp[b] || 0) - (dp[a] || 0));
+  return order.slice(0, n);
 }
 
 // 전투 첫 턴의 도구: 등불(앞줄 방어), 우산(뒷줄 방어), 권총(무작위 적 피해)
@@ -133,6 +144,12 @@ function startTurn() {
   C.turnAtk = C.nextAtk; C.nextAtk = 0; C.zeroBonus = 0; C.playedTurn = 0; C.turnChars = new Set(); C.playedUp = false; C.timeUsedTurn = 0;
   C.moonChanged = false; C.flameGuard = 0; C.sigCounter = 0; C.burnAll = 0; C.swapsBonus = 0; C.atkFree = false; C.freeNext = 0; C.noDmg = false;
   C.lostTurn = {}; C.reserve = 0; C.double = false; C.lastPlay = null;
+  C.dmgPrev = C.dmgBy; C.dmgBy = {}; C.dmgTurn = 0; C.burstTurn = new Set();
+  C.moonTurn = 0; C.allMoons = false; C.pairTurn = 0; C.mirrorWorld = false; C.zeroTurn = 0; C.randTurn = 0; C.jackpot = false;
+  C.healTurn = 0; C.feastTurn = false; C.aimTurn = 0; C.tomoriLit = false; C.diveStreak = 0; C.valkyrie = false; C.landPending = false;
+  C.timeFree = false; C.supportUsed = false; C.chainUps = 0; C.chain3Streak = 0; C.finnPrev = null; C.saintTurn = false;
+  C.servTurn = C.servNext; C.servNext = false; C.spiritTurnBuff = 0; C.allSlash = false; C.keepAll = false; C.noelTurn = 0;
+  for (const f of C.all) f.aimedTurn = false;
   if (!first) C.moonPick = false;
   for (const p in C.nextBlock) if (alive(p)) C.blocks[p] += C.nextBlock[p];
   if (relicSum('frontBlockTurn')) { const f0 = living()[0]; if (f0) C.blocks[f0] += relicSum('frontBlockTurn'); }   // 밀물 종
@@ -143,7 +160,6 @@ function startTurn() {
   if (isDawn()) { for (const f of livingFoes()) f.str += RULES.dawnStrPerTurn; logMsg(`<b>새벽</b>: 적의 힘 +${RULES.dawnStrPerTurn}`); }
   // 「새벽」: 내 턴 시작마다 밤 시계가 돈다
   for (const f of livingFoes()) if (f.turnClock) { const t = f.turnClock + (depthRule('dawnClock') || 0); addTime(t); logMsg(`${f.name}: 밤 시계 <b>+${t}분</b>`); }
-  if (C.light != null && C.turn > 1) C.light = (C.light + 1) % S.G.formation.length;
   if (first) { passives('onCombatStart'); relicsAtStart(); }
   passives('onTurnStart');
   // 녹슨 열쇠: 손패에 있는 동안 1장 덜 뽑는다. 별의 왕관 -1, 야경단 완장 첫 턴 +1
@@ -161,7 +177,7 @@ const intentHits = it => it.t === 'atk' || it.t === 'mix';
 const ST_NAME = { weak: '약화', vuln: '취약' };
 export function foeDmg(f, v, id) {
   const ms = id && S.C.ms[id];
-  return Math.max(0, Math.floor((v + f.str) * (f.weak ? RULES.weakMul : 1) * (ms?.vuln ? RULES.vulnMul : 1) * (1 - (f.dim || 0))));
+  return Math.max(0, Math.floor((v + f.str) * (RULES.foeAtkMul || 1) * (f.weak ? RULES.weakMul : 1) * (ms?.vuln ? RULES.vulnMul : 1) * (1 - (f.dim || 0))));
 }
 export function intentText(f) {
   const it = intentOf(f), id = intentHits(it) ? aimTarget(f) : null, v = foeDmg(f, it.v || 0, id);
@@ -187,15 +203,17 @@ function one(it, v) {
 
 // 적의 단일 공격·상태가 노리는 동료 (살아 있는 동료 중). k = 연타의 몇 번째 타
 export function aimTarget(f, k = 0) {
-  const C = S.C, L = living(); if (!L.length) return null;
+  const C = S.C, A = living(); if (!A.length) return null;
   if (C.taunt && alive(C.taunt)) return C.taunt;
+  // 시그룬 「비상」①: 공중이면 단일 공격의 대상에서 빠진다(혼자 남으면 예외)
+  const L = C.air && A.length > 1 ? A.filter(p => p !== 'sigrun') : A;
   const a = f.aimOverride || f.aim || RULES.defaultAim;
   if (a === 'cycle') return L[f.cyc % L.length];
   if (a === 'dawn') { const it = intentOf(f); return it.n > 1 ? L[k % L.length] : L.reduce((x, y) => member(y).hp > member(x).hp ? y : x); }
-  if (a === 'back') { const B = L.filter(p => !(p === 'sigrun' && C.air)); return (B.length ? B : L)[(B.length ? B : L).length - 1]; }
+  if (a === 'back') return L[L.length - 1];
   if (a === 'weakest') return L.reduce((x, y) => member(y).hp < member(x).hp ? y : x);
   if (a === 'last' && f.lastHitter && alive(f.lastHitter)) return f.lastHitter;
-  if (a === 'light') { const lit = litMembers().find(alive); if (lit) return lit; }
+  if (a === 'light') { const lit = litMembers().find(p => L.includes(p)); if (lit) return lit; }
   return L[0];
 }
 // 화면 표시용: 이 적의 다음 행동이 노리는 동료 (공격·상태일 때만)
@@ -228,6 +246,7 @@ export function killCheck(f) {
     f.dead = true; pushFx({ kind: 'kill', i: f.i, boss: S.C.kind === 'boss' }); logMsg(`<b>${f.name}</b> 쓰러뜨림`); if (S.C.tf === f.i) S.C.tf = null;
     if (f.bounty) { gainGold(f.bounty); logMsg(`현상금: 별빛 <b>+${f.bounty}</b>`); }
     if (f.stolen?.length) { S.C.disc.push(...f.stolen); logMsg(`훔쳐 간 카드 ${f.stolen.length}장을 되찾았다`); f.stolen = []; }
+    passives('onKill', f);
     if (f.deathBoom) for (const p of living()) hurtMember(p, f.deathBoom, `${f.name}의 폭발`);
   }
 }
@@ -239,6 +258,9 @@ function hurtMember(id, d, src, fi = null) {
   const b = Math.min(C.blocks[id], d); C.blocks[id] -= b; d -= b;
   const before = m.hp; m.hp = Math.max(0, m.hp - d);
   m.lost = (m.lost || 0) + (before - m.hp); C.lostTurn[id] = (C.lostTurn[id] || 0) + (before - m.hp);
+  C.lostCombat[id] = (C.lostCombat[id] || 0) + (before - m.hp);
+  // 제노 「흑룡」③: 이번 전투에 잃은 체력 20 이상이면 한 번 체력 1에서 버틴다
+  if (id === 'zeno' && m.hp <= 0 && (C.lostCombat.zeno || 0) >= 20 && !C.zenoSaved) { C.zenoSaved = true; m.hp = 1; E.burst('zeno', '흑룡'); logMsg('제노가 용의 피로 버텼다'); }
   logMsg(`${src} → ${nm}: 피해 <b>${d}</b>${b ? ` (방어 ${b} 막음)` : ''}`);
   // 금빛 깃털: 판마다 동료당 한 번 버틴다
   if (m.hp <= 0 && !m.down && hasRelic('gold_feather') && !m.feather) { m.feather = true; m.hp = RELICS.gold_feather.goldFeather; logMsg(`금빛 깃털: <b>${nm}</b>이(가) 버텼다`); }
@@ -249,7 +271,12 @@ function enemyHit(f, v, k = 0) {
   const C = S.C, id = aimTarget(f, k); if (!id) return;
   if (f.aim === 'cycle' && !C.taunt) f.cyc++;
   hurtMember(id, foeDmg(f, v, id), f.name, f.i);
-  if (id === 'marta' && C.counter > 0 && !f.dead) { f.hp = Math.max(0, f.hp - C.counter); pushFx({ kind: 'hitFoe', i: f.i, dmg: C.counter, blocked: 0, bleed: 0, actor: 'marta', counter: true }); logMsg(`마르타의 반격 <b>${C.counter}</b>`); killCheck(f); }
+  if (id === 'marta' && C.saintTurn) {
+    // 마르타 「철의 성녀」③: 이번 적 턴 반격이 모든 적에게
+    const n = Math.max(C.counter, 5);
+    for (const g of livingFoes()) { g.hp = Math.max(0, g.hp - n); pushFx({ kind: 'hitFoe', i: g.i, dmg: n, blocked: 0, bleed: 0, actor: 'marta', counter: true }); killCheck(g); }
+    logMsg(`철의 성녀: 모든 적에게 반격 <b>${n}</b>`);
+  } else if (id === 'marta' && C.counter > 0 && !f.dead) { f.hp = Math.max(0, f.hp - C.counter); pushFx({ kind: 'hitFoe', i: f.i, dmg: C.counter, blocked: 0, bleed: 0, actor: 'marta', counter: true }); logMsg(`마르타의 반격 <b>${C.counter}</b>`); killCheck(f); }
   if (id === 'sigrun' && C.sigCounter > 0 && !f.dead) { f.hp = Math.max(0, f.hp - C.sigCounter); pushFx({ kind: 'hitFoe', i: f.i, dmg: C.sigCounter, blocked: 0, bleed: 0, actor: 'sigrun', counter: true }); logMsg(`창벽 반격 <b>${C.sigCounter}</b>`); killCheck(f); }
   if (id === 'akane' && C.flameGuard > 0 && !f.dead) f.burn += C.flameGuard;
 }
@@ -272,6 +299,7 @@ export function costOf(inst) {
   if (d.ch === 'duo' && relicFlag('duoFree')) c = 0;               // 은 호루라기
   if (d.time && C.payEnergy && relicFlag('hourglass')) c = Math.max(c, 1);   // 깨진 모래시계: 시간 대신 에너지 1
   const who = actorOf(d);
+  if (C.servTurn && who && who !== 'sebas' && d.ch !== 'duo') c = Math.max(0, c - 1);   // 세바스 「완벽한 응대」③
   if (who && litMembers().includes(who)) c += RULES.lightCost;
   c = Math.max(0, c - C.discount);
   return C.freeNext > 0 ? 0 : c;                                   // 속달
@@ -304,13 +332,18 @@ export function playCard(id, pick = {}) {
   if (C.freeNext > 0) C.freeNext--;
   C.hand.splice(i, 1);
   C.pending = null;
-  G.played?.add(inst.id.replace(/\+$/, ''));
-  if (d.time && !(C.payEnergy && relicFlag('hourglass'))) {
+  G.played?.add(inst.id.replace(/\++$/, ''));
+  if (d.time && !inst.freeTime && !(C.payEnergy && relicFlag('hourglass'))) {
     const t = timeCost(d); if (t) { addTime(t); logMsg(`시간을 썼다: <b>+${t}분</b>`); }
     // 엘레오노르: 매 턴 처음 쓴 시간 카드는 에너지를 돌려준다
     if (!C.timeUsedTurn) { const back = G.party.reduce((s, p) => s + (alive(p) ? CHARACTERS[p].passive?.firstTimeEnergy || 0 : 0), 0); if (back) C.energy += back; }
   }
-  if (d.time) { C.timeUsedTurn++; if (relicSum('timeCardBlock') && who) C.blocks[who] += relicSum('timeCardBlock'); }   // 모래시계 펜던트
+  if (d.time) {
+    C.timeUsedTurn++;
+    if (relicSum('timeCardBlock') && who) C.blocks[who] += relicSum('timeCardBlock');   // 모래시계 펜던트
+    // 엘레오노르 「멈춘 자정」③: 한 턴에 시간 카드 2장째면 밤 시계 5분 되돌리기, 그 턴 남은 시간 카드 0분 (전투당 1번)
+    if (C.timeUsedTurn === 2 && alive('eleonore') && !C.bursts.eleonore) { E.rewind(5); C.timeFree = true; E.burst('eleonore', '멈춘 자정'); }
+  }
   let duo = null, bond = null;
   if (d.ch === 'duo' && !d.bond) G.duoSet.add(`${d.a}+${d.b}`);
   // 맞춤 목도리·한 쌍의 방패: 듀오를 쓰면 두 사람에게
@@ -322,41 +355,77 @@ export function playCard(id, pick = {}) {
     if (differs) {
       const before = C.chain;
       C.chain = Math.min(RULES.chainMax, C.chain + 1);
+      if (C.chain > before) C.chainUps++;
       if (before < RULES.chainMax && C.chain === RULES.chainMax && relicSum('chain3Draw')) draw(relicSum('chain3Draw'));   // 쌍둥이 리본
+      // 핀 「속달」③: 연계 3칸이 찬 뒤 서로 다른 동료 카드를 2장 더
+      if (before === RULES.chainMax && ++C.chain3Streak === 2 && alive('finn') && G.party.includes('finn')) {
+        C.chainUps++; draw(2); C.turnAtk += 2; E.burst('finn', '속달');
+      }
       if (C.last !== d.ch) {
-        const k = duoKey(C.last, d.ch), need = MOONS[G.moon].duoNeed ?? RULES.duoNeed;
+        const k = duoKey(C.last, d.ch), need = moonFx('duoNeed') ?? RULES.duoNeed;
         if (C.chain >= need && DUOS[k] && !C.duoUsed.has(k) && alive(C.last)) { C.duoUsed.add(k); duo = k; }
         // 인연의 실: 인연이 아닌 짝도 연계 3칸에서 「합동」
         else if (!DUOS[k] && relicFlag('bond') && C.chain >= RULES.chainMax && !C.duoUsed.has('bond:' + k) && alive(C.last)) { C.duoUsed.add('bond:' + k); bond = k; }
       }
-    } else if (C.lastKey === key) C.chain = 0;
-    // 쌍: 직전이 반대쪽 쌍둥이 카드(또는 「둘 다」)
+    } else if (C.lastKey === key && !(d.ch === 'iris' && alive('iris'))) C.chain = 0;   // 아이리스 ①: 아이리스 카드끼리는 연계가 안 끊긴다
+    // 핀 「지름길」①: 핀 카드를 사이에 두고 인연이 없는 두 동료 카드를 이어 쓰면 「합동」 (전투당 1번)
+    if (d.ch === 'finn') { if (C.last !== 'finn') C.finnPrev = C.last; }
+    else if (C.last === 'finn' && C.finnPrev && C.finnPrev !== d.ch && !DUOS[duoKey(C.finnPrev, d.ch)] && !C.finnBondUsed && !bond && alive('finn')) {
+      C.finnBondUsed = true; bond = duoKey(C.finnPrev, d.ch);
+    }
+    // 쌍: 직전이 반대쪽 쌍둥이 카드(또는 「둘 다」). 미미·모모 「거울 세계」③(한 턴 쌍 2번) 중엔 쌍둥이 카드가 모두 쌍, 쌍 효과 2배
     C.pair = !!d.sub && !!C.lastSub && (C.lastSub === 'both' || (d.sub !== 'both' && C.lastSub !== d.sub));
-    C.pairMul = MOONS[G.moon].twinMul || 1;
+    C.pairMul = moonFx('twinMul') || 1;
+    if (C.mirrorWorld && d.ch === 'mimimomo') { C.pair = true; C.pairMul *= 2; }
+    if (C.pair && ++C.pairTurn >= 2 && !C.mirrorWorld && alive('mimimomo')) { C.mirrorWorld = true; E.burst('mimimomo', '거울 세계'); }
     C.last = d.ch; C.lastKey = key; C.lastSub = d.sub || null;
     C.turnChars.add(d.ch);
   } else C.pair = false;
   C.playedTurn++;
+  if (d.ch === 'noel') C.noelTurn++;
   if (d.up) C.playedUp = true;
   C.actor = who; C.target = d.target === 'ally' ? pick.ally : who; C.tf = d.target === 'foe' ? pick.foe : null;
-  // 공격 보너스: 연계 + 이번 턴 모든 동료 공격 + 비용 0 카드(각오) + 제노(포효·각성)
-  C.bonus = d.atk ? C.chain + C.turnAtk + (paid === 0 ? C.zeroBonus : 0)
+  // 공격 보너스: 연계 + 이번 턴 모든 동료 공격 + 이번 전투 모든 동료 힘(고든) + 비용 0 카드(각오) + 제노(포효·각성)
+  C.bonus = d.atk ? C.chain + C.turnAtk + C.partyStr + (paid === 0 ? C.zeroBonus : 0)
     + (who === 'zeno' ? C.zenoStr + (C.zenoAwake && E.low('zeno') ? C.zenoAwake : 0) : 0) : 0;
+  // 브릭 「여분 탄약」①: 다른 동료 공격에 장전 1을 실어 보낸다(피해 +6, 턴당 1번, 탄띠면 공짜)
+  if (d.atk && who && who !== 'brick' && alive('brick') && G.party.includes('brick')) {
+    if (C.supportFree > 0) { C.supportFree--; C.bonus += 6; }
+    else if (!C.supportUsed && C.loaded >= 1) { C.loaded--; C.supportUsed = true; C.bonus += 6; }
+  }
   C.atkCard = !!d.atk;
+  C.curCard = d; C.cardMul = 1; C.curSlash = !!d.slash || /slash/.test(d.tags || '') || (C.allSlash && !!d.atk);
+  // 무작위 카드 (후쿠로 「대박」③: 한 턴 2장째는 최대값으로 두 번)
+  let jackpot = false;
+  if (d.rand && ++C.randTurn === 2 && alive('fukuro')) { jackpot = C.jackpot = true; E.burst('fukuro', '대박'); }
+  const keepCard = d.keepIf?.(C);
   if (d.ch !== 'curse') passives('beforeCard', d);
   pushFx({ kind: 'play', uid: inst.uid, id: inst.id, ch: d.ch, a: d.a, b: d.b, actor: who, target: d.target, foe: d.target === 'foe' ? pick.foe : null, ally: d.target === 'ally' ? pick.ally : null, time: !!d.time, atk: !!d.atk, chain: C.chain });
-  C.curSlash = !!d.slash || /slash/.test(d.tags || '');
-  const twice = C.double && d.ch !== 'curse' && !d.id.startsWith('seb.service'); if (twice) C.double = false;
-  const bonus = C.bonus;
+  // 폭발 턴: ③이 터진 동료는 그 턴 남은 공격 피해 ×RULES.burstMul (docs/12_signature.md §1-2)
+  if (d.atk && who && C.burstTurn.has(who)) C.cardMul *= RULES.burstMul;
+  const twice = (C.double || jackpot) && d.ch !== 'curse' && !d.id.startsWith('seb.service'); if (C.double && twice) C.double = false;
+  const bonus = C.bonus, mul = C.cardMul;
   d.play?.(C, E, d.v, d.up);
-  if (twice && livingFoes().length) { C.bonus = bonus; d.play?.(C, E, d.v, d.up); }
+  if (twice && livingFoes().length) { C.bonus = bonus; C.cardMul = mul; d.play?.(C, E, d.v, d.up); }
+  if (C.curSlash && !d.slash) E.slash(1);   // 대장간의 불: 베기로 친 공격
+  C.jackpot = false;
   if (d.ch !== 'curse') passives('afterCard', d, pick);
-  C.lastPlay = { d, tf: C.tf, target: C.target, actor: C.actor, pair: C.pair }; C.curSlash = false;
-  C.bonus = 0; C.actor = null; C.target = null; C.tf = null; C.atkCard = false;
-  if (d.exhaust || inst.ghost) C.exh.push(inst); else C.disc.push(inst);
-  delete inst.disc;
+  // 비용 0으로 쓴 카드 (라일라 「순풍」①·「폭풍」③)
+  if (paid === 0 && d.ch !== 'curse' && d.ch !== 'duo') {
+    C.zeroTurn++;
+    if (alive('laila') && G.party.includes('laila')) {
+      if (C.zeroTurn <= 2) draw(1);
+      if (C.zeroTurn >= 5) { if (C.zeroTurn === 5) E.burst('laila', '폭풍'); const pa = C.actor; C.actor = 'laila'; C.bonus = 0; C.cardMul = 1; E.hitRandom(4); C.actor = pa; }
+    }
+  }
+  C.lastPlay = { d, tf: C.tf, target: C.target, actor: C.actor, pair: C.pair };
+  C.bonus = 0; C.actor = null; C.target = null; C.tf = null; C.atkCard = false; C.curCard = null; C.cardMul = 1; C.curSlash = false;
+  if ((d.exhaust && !keepCard) || inst.ghost) C.exh.push(inst); else C.disc.push(inst);
+  delete inst.disc; delete inst.freeTime;
   if (duo) { C.hand.push({ uid: uid++, id: 'duo:' + duo }); G.duos++; if (relicSum('duoDraw')) draw(relicSum('duoDraw')); }   // 쌍별 펜던트
   if (bond) C.hand.push({ uid: uid++, id: 'bond:' + bond });
+  if (!duo && C.burstDuo) duo = C.burstDuo;
+  C.burstDuo = null;
   if (!livingFoes().length) winCombat();
   return { duo, bond };
 }
@@ -408,7 +477,7 @@ function foeAct(f) {
   }
   else if (it.t === 'sum') {
     if (livingFoes().length < 3 && C.all.length < 6) {
-      const g = makeFoe(it.id, C.all.length, 1 + (depthRule('fightHp') || 0)); g.str = Math.max(g.str, f.str > 0 ? 0 : g.str);
+      const g = makeFoe(it.id, C.all.length, (1 + (depthRule('fightHp') || 0)) * (S.G.tutorial || S.G.episode ? 1 : RULES.foeHpMul?.[S.G.act]?.fight || 1)); g.str = Math.max(g.str, f.str > 0 ? 0 : g.str);
       C.all.push(g); logMsg(`${f.name}이(가) <b>${g.name}</b>을(를) 불렀다`);
     } else { f.block += 6; logMsg(`${f.name} 방어 6`); }
   }
@@ -432,26 +501,56 @@ export function endTurn() {
     if (x.hurt) { const L = living(); if (L.length) hurtMember(G.rng.pick(L), x.hurt, '안개'); }
     if (x.frontBlock) { const p = living()[0]; if (p) C.blocks[p] = Math.max(0, C.blocks[p] - x.frontBlock); }
   }
-  // 남기기: 세바스 패시브(가장 비싼 1장) + 예약·전해 줄게(가장 비싼 카드, 다음 턴 비용 −1)
-  const keepN = (alive('sebas') ? CHARACTERS.sebas.passive.keepCard : 0) + C.reserve;
+  // 남기기: 세바스 패시브(1장) + 예약·전해 줄게. 남긴 카드는 다음 턴 비용 −1(세바스 ②).
+  // 세바스 「완벽한 응대」③: 손패가 6장 이상이면 전부 남기고, 다음 턴 다른 동료 카드 비용 −1. 만찬 준비도 전부 남긴다.
   const keepable = C.hand.filter(h => !/^(duo|bond):/.test(h.id) && cardDef(h).ch !== 'curse' && !h.ghost)
     .sort((a, b) => (cardDef(b).cost - cardDef(a).cost) || (b.uid - a.uid));
+  const sebas = alive('sebas') && G.party.includes('sebas');
+  const serve = sebas && keepable.length >= 6;
+  if (serve) { C.servNext = true; E.burst('sebas', '완벽한 응대'); }
+  const keepN = serve || C.keepAll ? keepable.length : (sebas ? CHARACTERS.sebas.passive.keepCard : 0) + C.reserve;
   // 직접 고른 카드(남기기 표시)가 먼저, 나머지는 가장 비싼 카드
   const marked = (C.keepMark || []).map(u => keepable.find(h => h.uid === u)).filter(Boolean);
   const keep = [...marked, ...keepable.filter(h => !marked.includes(h))].slice(0, keepN);
   C.keepMark = [];
-  keep.forEach((h, k) => { if (k >= keepN - C.reserve) h.disc = (h.disc || 0) + 1; });
+  for (const h of keep) h.disc = (h.disc || 0) + 1;
   C.keepCards = keep;
   for (const h of C.hand) if (!/^(duo|bond):/.test(h.id) && !keep.includes(h)) (h.ghost ? C.exh : C.disc).push(h);
   C.hand = []; C.pending = null;
   pushFx({ kind: 'foeTurn', keep: keep.map(h => h.uid) });
-  // 정령: 내 턴 끝마다 (시온이 서 있을 때)
-  if (alive('sion') && C.spirits.length) { E.spiritsAct(1 + C.spiritExtra); if (!livingFoes().length) return winCombat(); }
+  // 노엘 「잠버릇」①: 잠든 턴에 노엘 카드를 한 장도 안 쓰면 다음 턴 시작 마력 2배
+  if (C.asleep && alive('noel') && G.party.includes('noel') && !C.noelTurn) C.late = true;
+  // 마르타 「철의 성녀」③: 방어 30 이상으로 턴을 끝내면 방어가 다음 턴까지 남고, 이번 적 턴 반격이 모든 적에게
+  if (alive('marta') && G.party.includes('marta') && C.blocks.marta >= 30) { C.keep.marta = true; C.saintTurn = true; E.burst('marta', '철의 성녀'); }
+  // 정령: 내 턴 끝마다 (시온이 서 있을 때). 시온 「천구」③: 정령 6(최대)이면 두 번씩
+  if (alive('sion') && C.spirits.length) {
+    let times = 1 + C.spiritExtra + C.spiritNext;
+    if (C.spirits.length >= 6) { times *= 2; E.burst('sion', '천구'); }
+    E.spiritsAct(times);
+    if (!livingFoes().length) { finishTurnDamage(); return winCombat(); }
+  }
+  C.spiritNext = 0;
+  // 화상·독 (레이븐 「흑우」③: 독 30 이상인 적은 독이 줄지 않고 두 번 받는다)
+  const raven = alive('raven') && G.party.includes('raven');
   for (const f of C.all) {
     if (f.dead) continue;
-    if (f.burn > 0) { f.hp = Math.max(0, f.hp - f.burn); pushFx({ kind: 'tick', i: f.i, dmg: f.burn, what: 'burn' }); logMsg(`${f.name} 화상 피해 <b>${f.burn}</b>`); f.burn = Math.floor(f.burn / 2); }
-    if (f.poison > 0 && !(f.noPoisonWhileBlock && f.block > 0)) { f.hp = Math.max(0, f.hp - f.poison); pushFx({ kind: 'tick', i: f.i, dmg: f.poison, what: 'poison' }); logMsg(`${f.name} 독 피해 <b>${f.poison}</b>`); f.poison--; }
-    killCheck(f); if (f.dead) continue;
+    if (f.burn > 0) { const n = Math.min(f.hp, f.burn); f.hp -= n; C.dmgTurn += n; pushFx({ kind: 'tick', i: f.i, dmg: f.burn, what: 'burn' }); logMsg(`${f.name} 화상 피해 <b>${f.burn}</b>`); f.burn = Math.floor(f.burn / 2); }
+    if (f.poison > 0 && !(f.noPoisonWhileBlock && f.block > 0)) {
+      const black = raven && f.poison >= 40;
+      if (black) E.burst('raven', '흑우');
+      const n = Math.min(f.hp, f.poison * (black ? 2 : 1)); f.hp -= n; C.dmgTurn += n;
+      pushFx({ kind: 'tick', i: f.i, dmg: n, what: 'poison' });
+      logMsg(`${f.name} 독 피해 <b>${n}</b>`);
+      if (!black) f.poison--;
+    }
+    killCheck(f);
+  }
+  finishTurnDamage();
+  if (!livingFoes().length) return winCombat();
+  // 시그룬: 급강하로 착지가 남아 있으면 적 차례 전에 착지 (「발키리」③면 착지 안 함)
+  if (C.landPending && !C.valkyrie) C.air = 0;
+  for (const f of C.all) {
+    if (f.dead) continue;
     f.block = 0;
     for (let a = 0; a < f.acts && !f.dead && living().length; a++) {
       if (f.skip > 0) { f.skip--; logMsg(`${f.name}의 행동이 멈췄다`); }
@@ -466,6 +565,19 @@ export function endTurn() {
   if (!livingFoes().length) return winCombat();
   if (!living().length) return endRun(false);
   startTurn();
+}
+
+// 내 턴이 끝날 때 한 턴 피해를 센다: 「터지는 턴」 기록, 「새벽」은 한 턴 100 이상이면 밤 시계 +5분 (엘레오노르 「멈춘 자정」이 터진 턴은 무효)
+function finishTurnDamage() {
+  const C = S.C, G = S.G; if (C.dmgDone === C.turn) return; C.dmgDone = C.turn;
+  const d = C.dmgTurn;
+  if (d > (G.bestTurn?.dmg || 0)) G.bestTurn = { dmg: d, act: G.act, bursts: [...C.burstTurn], party: G.party.slice() };
+  if (d < RULES.bigTurn) return;
+  G.bigTurns = (G.bigTurns || 0) + 1;
+  pushFx({ kind: 'bigturn', dmg: d });
+  if (C.burstTurn.has('eleonore')) return;
+  const f = livingFoes().find(x => x.burstClock);
+  if (f) { addTime(f.burstClock); logMsg(`${f.name}: 한 턴 피해 ${d} — 밤 시계 <b>+${f.burstClock}분</b>`); }
 }
 
 // 보상 카드: 파티 셋에게서 한 장씩. 희귀도는 칸 종류별 확률 + 희귀가 안 나온 만큼 보정 (docs/10_details.md §1)
@@ -547,8 +659,8 @@ function predictedBonus(d) {
 export function shownValue(d, type, base, first) {
   const G = S.G; if (!G) return base;
   const who = S.C ? actorOf(d) : (d.ch === 'duo' ? d.a : d.ch);
-  const boost = MOONS[G.moon].boost?.[who] || 0;
-  if (type === 'k') return base + (MOONS[G.moon].darkBonus || 0);
+  const boost = S.C ? moonFx('boost')[who] || 0 : MOONS[G.moon].boost?.[who] || 0;
+  if (type === 'k') return base + ((S.C ? moonFx('darkBonus') : MOONS[G.moon].darkBonus) || 0);
   if (type === 'b') return base + boost;
   if (type !== 'd') return base;
   let x = base + boost + (first ? predictedBonus(d) : 0);

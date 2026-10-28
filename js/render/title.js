@@ -60,7 +60,7 @@ export function partyView() {
     return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'} title="${c ? esc(`${c.passive.name}: ${c.passive.text}`) : ''}">
       <img class="px" src="${charSrc(k)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
       <span class="rl">${r.role}${c ? ` · 체력 ${c.maxHp}` : ''}</span>
-      <span class="ps">${c ? `<b>${c.passive.name}</b> ${c.passive.text}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
+      <span class="ps" ${c ? `title="${c.passive.name}: ${c.passive.text}"` : ''}>${c ? `<b>${c.passive.name}</b> ${c.passive.short}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
   }).join('');
   const chosen = [0, 1, 2].map(i => {
     const k = S.picked[i], r = k && ROSTER[k];

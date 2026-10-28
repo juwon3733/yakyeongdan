@@ -136,6 +136,7 @@ export function resultView() {
       <p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</p>
       <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`} · 싸움 ${G.fights}번 · 달 ${MOONS[G.moon].name} · 시드 ${G.seed}</p>
       <p class="note">쓴 듀오 ${duos}</p>
+      ${G.bestTurn?.dmg ? `<p class="note">오늘 밤 최고의 한 턴 <b>${G.bestTurn.dmg}</b>${G.bestTurn.bursts.length ? ` · 터진 패시브 ${G.bestTurn.bursts.map(id => CHARACTERS[id].name).join('·')}` : ''}${G.bigTurns ? ` · 피해 ${RULES.bigTurn}+ 턴 ${G.bigTurns}번` : ''}</p>` : ''}
       ${epNote}
       ${runBar(G)}
       <table class="shards">${R.lines.map(([t, v], i) => `<tr style="--i:${i}"><td>${t}</td><td>+${v}</td></tr>`).join('')}<tr class="sum" style="--i:${R.lines.length}"><td>얻은 별 조각</td><td>+<b class="countup" data-to="${R.total}">${R.total}</b></td></tr></table>

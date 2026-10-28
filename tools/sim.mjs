@@ -140,6 +140,23 @@ function combatValue(t0clock) {
   for (const f of C.all) if (!f.dead) v += f.bounty * 0.15;
   v += G.gold * 0.05;
   v += C.hand.length * 0.6;
+  // 패시브 ③ 폭발 노리기 (docs/12_signature.md §3): 터진 ③, 조건 쌓기(턴 단위 세기)
+  v += C.burstTurn.size * 14;
+  const has = id => S.G.party.includes(id) && alive(id);
+  if (has('iris')) v += Math.min(C.slashes, 4) * 2;
+  if (has('lunaria')) v += Math.min(C.moonTurn, 3) * 3;
+  if (has('mimimomo')) v += Math.min(C.pairTurn, 3) * 2.5;
+  if (has('eleonore')) v += Math.min(C.timeUsedTurn, 3) * 1.5;
+  if (has('laila')) v += Math.min(C.zeroTurn, 5) * 1;
+  if (has('fukuro')) v += Math.min(C.randTurn, 3) * 1.5;
+  if (has('tomori')) v += Math.min(C.aimTurn, 2) * 3;
+  if (has('sigrun')) v += (C.air ? 4 : 0) + Math.min(C.diveStreak, 2) * 2;
+  if (has('marta')) v += Math.min(C.blocks.marta || 0, 30) * 0.15;
+  if (has('zeno')) v += Math.min(C.lostCombat.zeno || 0, 20) * 0.4;
+  if (has('brick')) v += Math.min(C.loaded, 8) * 0.8;
+  if (has('noel')) v += Math.min(C.mana, 20) * 0.5;
+  if (has('gordon')) v += Math.min(C.healTurn, 15) * 0.3;
+  v += C.partyStr * 4 + C.supportFree * 3 + C.spiritNext * 6 + C.spiritBuff * 2;
   v -= (G.clock - t0clock) * timeWeight();
   return v;
 }
@@ -180,7 +197,7 @@ function playTurn(stats) {
     const ck = S.G.clock;
     const r = playCard(best.uid, best.pick);
     stats.cardMin = (stats.cardMin || 0) + (S.G ? S.G.clock - ck : 0);
-    stats.plays[best.id.replace(/\+$/, '')] = (stats.plays[best.id.replace(/\+$/, '')] || 0) + 1;
+    stats.plays[best.id.replace(/\++$/, '')] = (stats.plays[best.id.replace(/\++$/, '')] || 0) + 1;
     if (r.duo) stats.duoMade[r.duo] = (stats.duoMade[r.duo] || 0) + 1;
     if (/^duo:/.test(best.id)) stats.duoPlayed[best.id.slice(4)] = (stats.duoPlayed[best.id.slice(4)] || 0) + 1;
   }
@@ -335,6 +352,7 @@ function playRun(party, seed, stats) {
     }
     else if (sc === 'combat') {
       rec.lastFight = `${G.act}막 ${S.C.kind}`;
+      if (G.act === 3 && S.C.kind === "boss") rec.dawnStart = G.clock;
       let turns = 0; const tag = S.C._tag = ++combatTag;
       while (sameCombat(tag) && S.G.screen === 'combat' && turns++ < 60) { playTurn(stats); if (checkCollapse()) break; }
       if (sameCombat(tag) && turns >= 60) { rec.why = 'stall'; S.G.screen = 'result'; S.G.won = false; break; }
@@ -357,6 +375,7 @@ function playRun(party, seed, stats) {
   if (!G.won) stats.deathAt[(G.why === 'collapse' ? '7시 ' : '') + rec.lastFight] = (stats.deathAt[(G.why === 'collapse' ? '7시 ' : '') + rec.lastFight] || 0) + 1;
   if (G.screen !== 'result') { rec.why = rec.why || `stuck:${G.screen}`; console.error(`멈춘 판: 시드 ${seed} ${party.join('·')} 화면 ${G.screen}${G.event ? ` 사건 ${G.event.def.id}` : ''}`); }
   rec.won = !!G.won; rec.why = rec.why || G.why; rec.clock = G.clock; rec.act = G.act; rec.duos = G.duoSet.size; rec.fights = G.fights;
+  rec.big = G.bigTurns || 0; rec.best = G.bestTurn?.dmg || 0; rec.bursts = { ...(G.burstLog || {}) };
   if (G.clock >= RULES.dawn) rec.over6 = true;
   if (rec.won) rec.bossClock[3] = G.clock;
   for (const k of G.duoSet) stats.duoRuns[k] = (stats.duoRuns[k] || 0) + 1;
@@ -434,15 +453,26 @@ console.log(`| 6시 넘은 판 | ${pct(recs.filter(r => r.over6).length, N)} | 2
 console.log(`| 1막 보스 격파 시각 | ${hhmm(out.act1End)} | 약 2:00 |`);
 console.log(`| 2막 보스 격파 시각 | ${hhmm(out.act2End)} | 약 4:00 |`);
 console.log(`| 진 이유 | ${Object.entries(why).map(([k, v]) => `${k} ${pct(v, N)}`).join(', ')} | |`);
+// 「터지는 턴」(docs/12_signature.md §1-2): 판마다 한 턴 피해 100 이상이 몇 번, 이긴 판 기준도 함께
+out.bigTurns = avg(recs.map(r => r.big)); out.bigTurnsWin = avg(wins.map(r => r.big)); out.bestTurn = avg(recs.map(r => r.best));
+out.bursts = avg(recs.map(r => Object.values(r.bursts).reduce((t, x) => t + x, 0)));
+{ const ds = recs.filter(r => r.dawnStart != null), col = ds.filter(r => r.why === "collapse"), fin = ds.filter(r => r.won);
+  console.log(`| 「새벽」 전투 시작 시각 (전체 / 7시 붕괴 판) · 걸린 시간(이긴 판) | ${hhmm(avg(ds.map(r => r.dawnStart)))} / ${hhmm(avg(col.map(r => r.dawnStart)))} · ${Math.round(avg(fin.map(r => r.clock - r.dawnStart)))}분 | |`); }
+if (process.env.DBG) { const col = recs.filter(r => r.why === "collapse"); console.log("붕괴 판 막 끝", hhmm(avg(col.map(r => r.bossClock[1]))), hhmm(avg(col.map(r => r.bossClock[2]))), "새벽 시작", hhmm(avg(col.filter(r=>r.dawnStart).map(r => r.dawnStart))), "n", col.length, "새벽 못 감", col.filter(r=>r.dawnStart==null).length); }
+console.log(`| 한 턴 피해 100+ (판당, 전체 / 이긴 판) | ${out.bigTurns.toFixed(2)} / ${out.bigTurnsWin.toFixed(2)} | 3~5 |`);
+console.log(`| 최고의 한 턴 (판당 평균) | ${out.bestTurn.toFixed(0)} | |`);
+console.log(`| 패시브 ③ 폭발 (판당, 턴 기준) | ${out.bursts.toFixed(1)} | |`);
 
 console.log('\n동료별 (그 동료가 낀 판)');
-console.log('| 동료 | 성급 | 판 | 새벽 격파 | 2막 보스 도달 |');
-console.log('|---|---|---|---|---|');
+console.log('| 동료 | 성급 | 판 | 새벽 격파 | 2막 보스 도달 | ③ 폭발 (판당) | 최고의 한 턴 | 100+ 턴 (판당) |');
+console.log('|---|---|---|---|---|---|---|---|');
 out.chars = {};
 for (const id of IDS) {
   const rs = recs.filter(r => r.party.includes(id)), w = rs.filter(r => r.won).length;
-  out.chars[id] = { runs: rs.length, win: w / rs.length };
-  console.log(`| ${CHARACTERS[id].name} | ★${CHARACTERS[id].rarity} | ${rs.length} | ${pct(w, rs.length)} | ${pct(rs.filter(r => r.bossReach[2]).length, rs.length)} |`);
+  const bu = avg(rs.map(r => r.bursts[id] || 0));
+  const bt = avg(rs.map(r => r.best)), bg = avg(rs.map(r => r.big));
+  out.chars[id] = { runs: rs.length, win: w / rs.length, bursts: bu, best: bt, big: bg };
+  console.log(`| ${CHARACTERS[id].name} | ★${CHARACTERS[id].rarity} | ${rs.length} | ${pct(w, rs.length)} | ${pct(rs.filter(r => r.bossReach[2]).length, rs.length)} | ${bu.toFixed(1)} | ${bt.toFixed(0)} | ${bg.toFixed(2)} |`);
 }
 // 성급별: ★5 포함 파티 / ★5 없는 파티 / ★3만 파티
 const RAR = id => CHARACTERS[id].rarity;
@@ -457,7 +487,8 @@ console.log('| 파티 | 판 | 새벽 격파 |');
 console.log('|---|---|---|');
 for (const [n, a, w] of tiers) console.log(`| ${n} | ${a} | ${pct(w, a)} |`);
 for (const r of [5, 4, 3]) {
-  const ids = IDS.filter(id => RAR(id) === r), ws = ids.map(id => out.chars[id].win), m = avg(ws);
+  const ids = IDS.filter(id => RAR(id) === r && Number.isFinite(out.chars[id]?.win)), ws = ids.map(id => out.chars[id].win), m = avg(ws);
+  if (!ids.length) continue;
   console.log(`★${r} 평균 ${(m * 100).toFixed(1)}% · 가장 낮음 ${CHARACTERS[ids[ws.indexOf(Math.min(...ws))]].name} ${(Math.min(...ws) * 100).toFixed(1)}% (${((Math.min(...ws) / m - 1) * 100).toFixed(0)}%) · 가장 높음 ${CHARACTERS[ids[ws.indexOf(Math.max(...ws))]].name} ${(Math.max(...ws) * 100).toFixed(1)}% (+${((Math.max(...ws) / m - 1) * 100).toFixed(0)}%)`);
 }
 if (!QUICK) {

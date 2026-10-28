@@ -12,9 +12,12 @@
 //     c.foe 고른 적 · c.foes 살아 있는 적 · c.block 카드 주인의 방어 · c.loaded · c.mana · c.asleep
 //     c.slashes(이번 턴 베기) · c.totalSlashes · c.sheath · c.mirror · c.counter · c.taunt · c.nextEnergy
 //     c.retain · c.keep · c.discount · c.late · c.garden
+//   docs/12_signature.md: fire:1 발사 계열(브릭 「전탄」) · dive:1 급강하 계열(시그룬) · rand:1 무작위 카드(후쿠로 「대박」) · keepIf(c) 참이면 소멸하지 않음
+// 미미·모모 쌍 효과: (수치 + 4(텔레파시 ②)) × 쌍 배수. 쌍이 아니면 0
+const pv = (c, v) => c.pair ? (v + 4) * c.pairMul : 0;
 export const CARDS = {
   // 아이리스 — 베기
-  'iris.slash':  { ch: 'iris', name: '베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [6, 4], up: { v: [9, 4] },
+  'iris.slash':  { ch: 'iris', name: '베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [8, 4], up: { v: [11, 4] },
     text: '피해 {d0}. 이번 턴 세 번째 베기부터 +{n1}.', play: (c, e, v) => { e.hit(v[0] + (c.slashes >= 2 ? v[1] : 0) + e.sheath()); e.slash(1); } },
   'iris.parry':  { ch: 'iris', name: '흘려 베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [4, 4], up: { v: [5, 5] },
     text: '피해 {d0}, 방어 {b1}. 베기.', play: (c, e, v) => { e.hit(v[0] + e.sheath()); e.guard(v[1]); e.slash(1); } },
@@ -34,14 +37,17 @@ export const CARDS = {
     text: '피해 {d0}. 베기 두 번으로 친다.', play: (c, e, v) => { e.hit(v[0] + e.sheath()); e.slash(2); } },
   'iris.final':  { ch: 'iris', name: '마지막 일격', cost: 2, atk: 1, rarity: 'r', v: [20], up: { v: [26] }, free: c => c.slashes >= 3,
     text: '피해 {d0}. 이번 턴 베기 3번 이상이면 비용 0.', play: (c, e, v) => e.hit(v[0]) },
-  'iris.thousand': { ch: 'iris', name: '천 번 베기', cost: 3, atk: 1, exhaust: 1, rarity: 'r', v: [2], up: { v: [3] },
+  'iris.edge':   { ch: 'iris', name: '칼끝 세우기', cost: 0, rarity: 'c', v: [3], up: { v: [5] },
+    text: '이번 턴 베기 수 +1. 다음 베기 +{n0}.', play: (c, e, v) => { c.slashes += 1; c.sheath += v[0]; } },
+  'iris.thousand': { ch: 'iris', name: '천 번 베기', cost: 3, atk: 1, exhaust: 1, rarity: 'r', v: [3], up: { v: [4] },
     text: '피해 = 이번 전투에서 쓴 베기 수 ×{n0}. 소멸.', play: (c, e, v) => e.hit(c.totalSlashes * v[0]) },
 
   // 브릭 — 장전
   'brick.load':  { ch: 'brick', name: '장전', cost: 1, rarity: 'c', v: [2], up: { v: [3] },
     text: '장전 +{k0}.', play: (c, e, v) => { c.loaded += v[0] + e.dark(); } },
-  'brick.fire':  { ch: 'brick', name: '발사', cost: 1, atk: 1, rarity: 'c', v: [5], up: { v: [6] },
-    text: '피해 장전×{n0} (장전 없으면 3). 장전 0.', play: (c, e, v) => { e.hit(c.loaded ? c.loaded * v[0] : 3); c.loaded = 0; } },
+  'brick.fire':  { ch: 'brick', name: '발사', cost: 1, atk: 1, fire: 1, rarity: 'c', v: [5], up: { v: [6] },
+    text: '피해 장전×{n0} (장전 없으면 3). 장전 0. 장전 6 이상이면 모든 적에게(전탄).',
+    play: (c, e, v) => { const n = c.loaded ? c.loaded * v[0] : 3; if (e.fullLoad()) e.hitAll(n); else e.hit(n); c.loaded = 0; } },
   'brick.over':  { ch: 'brick', name: '과적재', cost: 0, time: 1, rarity: 'u', v: [5], up: { v: [7] },
     text: '장전 +{k0}.', play: (c, e, v) => { c.loaded += v[0] + e.dark(); } },
   'brick.quick': { ch: 'brick', name: '급히 쏘기', cost: 0, atk: 1, rarity: 'c', v: [3], up: { v: [5] },
@@ -56,10 +62,14 @@ export const CARDS = {
     text: '모든 적 피해 장전×{n0}. 장전 절반 남김.', play: (c, e, v) => { e.hitAll(c.loaded * v[0]); c.loaded = Math.floor(c.loaded / 2); } },
   'brick.recoil':{ ch: 'brick', name: '반동 이동', cost: 1, rarity: 'u', v: [2], up: { v: [3] },
     text: '방어 장전×{n0}. 장전은 남음.', play: (c, e, v) => e.guard(c.loaded * v[0]) },
-  'brick.volley':{ ch: 'brick', name: '일제 사격', cost: 2, atk: 1, rarity: 'r', v: [8], up: { v: [10] },
-    text: '피해 장전×{n0}. 장전 0.', play: (c, e, v) => { e.hit(c.loaded * v[0]); c.loaded = 0; } },
-  'brick.last':  { ch: 'brick', name: '최후의 포탄', cost: 3, atk: 1, exhaust: 1, rarity: 'r', v: [12], up: { cost: 2 },
-    text: '피해 장전×{n0}. 장전 0. 소멸.', play: (c, e, v) => { e.hit(c.loaded * v[0]); c.loaded = 0; } },
+  'brick.volley':{ ch: 'brick', name: '일제 사격', cost: 2, atk: 1, fire: 1, rarity: 'r', v: [8], up: { v: [10] },
+    text: '피해 장전×{n0}. 장전 0. 장전 6 이상이면 모든 적에게(전탄).',
+    play: (c, e, v) => { const n = c.loaded * v[0]; if (e.fullLoad()) e.hitAll(n); else e.hit(n); c.loaded = 0; } },
+  'brick.last':  { ch: 'brick', name: '최후의 포탄', cost: 3, atk: 1, fire: 1, exhaust: 1, rarity: 'r', v: [12], up: { cost: 2 }, keepIf: c => c.loaded >= 6,
+    text: '피해 장전×{n0}. 장전 0. 소멸(장전 6 이상이면 모든 적에게, 소멸 안 함).',
+    play: (c, e, v) => { const n = c.loaded * v[0]; if (e.fullLoad()) e.hitAll(n); else e.hit(n); c.loaded = 0; } },
+  'brick.belt':  { ch: 'brick', name: '탄띠', cost: 1, rarity: 'c', v: [2], up: { v: [3] },
+    text: '장전 +{k0}. 지원 포격 1번 공짜(장전을 쓰지 않음).', play: (c, e, v) => { c.loaded += v[0] + e.dark(); c.supportFree += 1; } },
 
   // 마르타 — 방어·반격
   'marta.wall':  { ch: 'marta', name: '기도의 벽', cost: 1, rarity: 'c', v: [7], up: { v: [10], target: 'ally', text: '고른 동료 방어 {b0}.' },
@@ -77,7 +87,7 @@ export const CARDS = {
   'marta.bell':  { ch: 'marta', name: '종소리', cost: 1, target: 'all', rarity: 'u', v: [1, 5], up: { v: [2, 5] },
     text: '모든 적 약화 {n0}, 방어 {b1}.', play: (c, e, v) => { e.foeStatusAll('weak', v[0]); e.guard(v[1]); } },
   'marta.judge': { ch: 'marta', name: '심판', cost: 1, atk: 1, rarity: 'u', v: [], up: { cost: 0 },
-    text: '지금 마르타의 방어만큼 피해.', play: (c, e) => e.hit(c.block) },
+    text: '지금 마르타의 방어만큼 피해. 방어 30 이상이면 1.5배.', play: (c, e) => e.hit(Math.floor(c.block * (c.block >= 30 ? 1.5 : 1))) },
   'marta.martyr':{ ch: 'marta', name: '순교자의 결의', cost: 0, rarity: 'u', v: [5, 15], up: { v: [5, 20] },
     text: '마르타 체력 {n0} 잃고 방어 {b1}.', play: (c, e, v) => { e.loseHp(v[0]); e.guard(v[1]); } },
   'marta.rampart':{ ch: 'marta', name: '성벽', cost: 2, rarity: 'r', v: [16], up: { v: [22] },
@@ -89,15 +99,16 @@ export const CARDS = {
 
   // 노엘 — 잠·마력 (잠든 동안 노엘의 공격 카드는 wake·sleepOk 카드만)
   'noel.sleep':  { ch: 'noel', name: '잠들기', cost: 1, rarity: 'c', v: [], up: { cost: 0 },
-    text: '잠든다. 잠든 동안 턴 시작마다 마력 +5.', play: c => { c.asleep = true; } },
+    text: '잠든다. 잠든 동안 턴 시작마다 마력 +4.', play: c => { c.asleep = true; } },
   'noel.star':   { ch: 'noel', name: '별똥 마법', cost: 1, atk: 1, wake: 1, rarity: 'c', v: [3], up: { v: [4] },
-    text: '피해 마력×{n0} (최소 8). 마력 0, 깨어난다.', play: (c, e, v) => { e.hit(Math.max(8, c.mana * v[0])); c.mana = 0; c.asleep = false; } },
+    text: '피해 마력×{n0} (최소 8). 마력 0, 깨어난다(마력 20 이상이면 절반만 쓰고 안 깸).',
+    play: (c, e, v) => { const keep = e.dream(); e.hit(Math.max(8, c.mana * v[0])); e.spendMana(keep); } },
   'noel.pillow': { ch: 'noel', name: '베개 방어', cost: 1, rarity: 'c', v: [8, 5], up: { v: [10, 7] },
     text: '방어 {b0}. 잠들어 있으면 +{n1}.', play: (c, e, v) => e.guard(v[0] + (c.asleep ? v[1] : 0)) },
   'noel.deep':   { ch: 'noel', name: '깊은 잠', cost: 0, time: 1, rarity: 'u', v: [5], up: { v: [8] },
     text: '잠든다. 마력 +{k0}.', play: (c, e, v) => { c.asleep = true; c.mana += v[0] + e.dark(); } },
   'noel.yawn':   { ch: 'noel', name: '하품', cost: 0, rarity: 'c', v: [1], up: { v: [2] },
-    text: '카드 1장. 마력 +{k0}.', play: (c, e, v) => { e.draw(1); c.mana += v[0] + e.dark(); } },
+    text: '카드 1장. 마력 +{k0}, 잠들어 있으면 +2 더.', play: (c, e, v) => { e.draw(1); c.mana += v[0] + e.dark() + (c.asleep ? 2 : 0); } },
   'noel.lull':   { ch: 'noel', name: '자장가', cost: 1, target: 'foe', rarity: 'c', v: [2], up: { v: [3] },
     text: '적 약화 {n0} (주는 피해 25% 줄어듦).', play: (c, e, v) => e.foeStatus('weak', v[0]) },
   'noel.walk':   { ch: 'noel', name: '몽유', cost: 1, atk: 1, sleepOk: 1, rarity: 'u', v: [8], up: { v: [11] },
@@ -109,10 +120,11 @@ export const CARDS = {
   'noel.late':   { ch: 'noel', name: '늦잠', cost: 0, time: 1, rarity: 'u', v: [], up: { cost: 1, time: 0 },
     text: '다음 턴 시작 마력 2배.', play: c => { c.late = true; } },
   'noel.burst':  { ch: 'noel', name: '꿈 폭발', cost: 2, atk: 1, wake: 1, rarity: 'r', v: [5], up: { v: [6] },
-    text: '피해 마력×{n0}. 마력 0, 깨어난다.', play: (c, e, v) => { e.hit(c.mana * v[0]); c.mana = 0; c.asleep = false; } },
+    text: '피해 마력×{n0}. 마력 0, 깨어난다(마력 20 이상이면 절반만 쓰고 안 깸).',
+    play: (c, e, v) => { const keep = e.dream(); e.hit(c.mana * v[0]); e.spendMana(keep); } },
 
   // 레이븐 — 독·출혈
-  'raven.needle':{ ch: 'raven', name: '독침', cost: 1, atk: 1, rarity: 'c', v: [3, 2], up: { v: [4, 3] },
+  'raven.needle':{ ch: 'raven', name: '독침', cost: 1, atk: 1, rarity: 'c', v: [3, 2], up: { v: [4, 2] },
     text: '피해 {d0}, 독 {k1}.', play: (c, e, v) => { e.hit(v[0]); e.foeStatus('poison', v[1] + e.dark()); } },
   'raven.step':  { ch: 'raven', name: '그림자 걸음', cost: 1, rarity: 'c', v: [5], up: { v: [7] },
     text: '방어 {b0}, 카드 1장.', play: (c, e, v) => { e.guard(v[0]); e.draw(1); } },
@@ -126,14 +138,15 @@ export const CARDS = {
     text: '방어 {b0}. 다음 카드 비용 -1.', play: (c, e, v) => { e.guard(v[0]); c.discount += 1; } },
   'raven.crow':  { ch: 'raven', name: '까마귀 눈', cost: 0, target: 'all', rarity: 'u', v: [], up: { text: '독이 있는 모든 적 약화 1, 취약 1.' },
     text: '독이 있는 모든 적 약화 1.', play: (c, e, v, up) => { for (const f of c.foes) if (f.poison > 0) { f.weak += 1; if (up) f.vuln += 1; } } },
-  'raven.fog':   { ch: 'raven', name: '독 안개', cost: 1, target: 'all', rarity: 'u', v: [6], up: { v: [8] },
+  'raven.fog':   { ch: 'raven', name: '독 안개', cost: 1, target: 'all', rarity: 'u', v: [5], up: { v: [7] },
     text: '모든 적 독 {k0}.', play: (c, e, v) => e.foeStatusAll('poison', v[0] + e.dark()) },
   'raven.throat':{ ch: 'raven', name: '목 긋기', cost: 2, atk: 1, rarity: 'r', v: [], up: { cost: 1 },
     text: '적의 독만큼 피해. 독은 남는다.', play: (c, e) => e.hit(c.foe.poison) },
   'raven.garden':{ ch: 'raven', name: '독의 정원', cost: 2, exhaust: 1, rarity: 'r', v: [2], up: { v: [3] },
     text: '이번 전투 턴 시작마다 모든 적 독 +{n0}. 소멸.', play: (c, e, v) => { c.garden += v[0]; } },
-  'raven.last':  { ch: 'raven', name: '마지막 깃', cost: 3, exhaust: 1, target: 'all', rarity: 'r', v: [], up: { cost: 2 },
-    text: '모든 적의 독×2 피해를 바로 준다(방어 무시). 소멸.', play: (c, e) => { for (const f of c.foes) e.pierce(f, f.poison * 2); } },
+  'raven.last':  { ch: 'raven', name: '마지막 깃', cost: 2, exhaust: 1, target: 'all', rarity: 'r', v: [], up: { cost: 1 },
+    text: '모든 적의 독을 가장 독이 높은 적의 독으로 맞춘다. 소멸.',
+    play: c => { const m = Math.max(0, ...c.foes.map(f => f.poison)); for (const f of c.foes) f.poison = m; } },
 
   // ===== ★5 시온 — 별 정령 (정령: 내 턴 끝마다 무작위 적을 친다) =====
   'sion.call':    { ch: 'sion', name: '별 정령 부르기', cost: 1, rarity: 'c', v: [3], up: { v: [4] },
@@ -156,8 +169,12 @@ export const CARDS = {
     text: '방어 정령×{n0} (최소 5).', play: (c, e, v) => e.guard(Math.max(5, c.spirits.length * v[0])) },
   'sion.shower':  { ch: 'sion', name: '별똥 소나기', cost: 2, atk: 1, target: 'none', rarity: 'r', v: [4], up: { v: [5] },
     text: '무작위 적에게 피해 {n0}을 (정령+2)번.', play: (c, e, v) => { for (let k = 0; k < c.spirits.length + 2; k++) e.hitRandom(v[0]); } },
-  'sion.complete':{ ch: 'sion', name: '별자리 완성', cost: 3, atk: 1, exhaust: 1, rarity: 'r', v: [45], up: { v: [60] },
-    text: '정령이 3 이상이면 피해 {d0}. 소멸.', play: (c, e, v) => { if (c.spirits.length >= 3) e.hit(v[0]); } },
+  'sion.complete':{ ch: 'sion', name: '별자리 완성', cost: 3, atk: 1, exhaust: 1, rarity: 'r', v: [10], up: { v: [13] }, need: c => c.spirits.length >= 5,
+    text: '정령이 5 이상일 때만. 피해 정령 수 ×{n0}. 소멸.', play: (c, e, v) => e.hit(c.spirits.length * v[0]) },
+  'sion.gemini':  { ch: 'sion', name: '쌍둥이자리', cost: 1, rarity: 'u', v: [3], up: { v: [4] },
+    text: '정령 2 (피해 {n0}). 다음 턴 끝 정령 행동 +1회.', play: (c, e, v) => { e.spirit(v[0], 2); c.spiritNext += 1; } },
+  'sion.guide':   { ch: 'sion', name: '유성 인도', cost: 0, rarity: 'c', v: [2], up: { v: [3] },
+    text: '이번 턴 모든 정령 피해 +{n0}.', play: (c, e, v) => { c.spiritTurnBuff += v[0]; } },
 
   // ===== ★5 루나리아 — 달 바꾸기 =====
   'luna.crescent':{ ch: 'lunaria', name: '초승의 춤', cost: 1, atk: 1, rarity: 'c', v: [6], up: { v: [9] },
@@ -171,7 +188,8 @@ export const CARDS = {
   'luna.half':    { ch: 'lunaria', name: '반달 베일', cost: 1, rarity: 'c', v: [7], up: { v: [9] },
     text: '방어 {b0}, 연계 +1. 달을 반달로.', play: (c, e, v) => { e.guard(v[0]); e.chain(1); e.setMoon('half'); } },
   'luna.eclipse': { ch: 'lunaria', name: '월식', cost: 2, target: 'all', rarity: 'r', v: [2], up: { cost: 1 },
-    text: '모든 적 약화 {n0}, 취약 {n0}.', play: (c, e, v) => { e.foeStatusAll('weak', v[0]); e.foeStatusAll('vuln', v[0]); } },
+    text: '달을 반대로 바꾼다(보름↔그믐, 초승↔반달). 모든 적 약화 {n0}, 취약 {n0}.',
+    play: (c, e, v) => { e.flipMoon(); e.foeStatusAll('weak', v[0]); e.foeStatusAll('vuln', v[0]); } },
   'luna.grace':   { ch: 'lunaria', name: '만월의 가호', cost: 1, rarity: 'u', v: [3, 1], up: { v: [5, 2] },
     text: '이번 턴 모든 동료 공격 +{n0} (보름달이 아니면 +{n1}).', play: (c, e, v) => { c.turnAtk += e.moon === 'full' ? v[0] : v[1]; } },
   'luna.swap':    { ch: 'lunaria', name: '달빛 교대', cost: 0, rarity: 'c', v: [1, 2], up: { v: [2, 3] },
@@ -181,19 +199,20 @@ export const CARDS = {
   'luna.veil':    { ch: 'lunaria', name: '그믐 베일', cost: 0, target: 'foe', rarity: 'c', v: [1, 3], up: { v: [2, 4] },
     text: '적 취약 {n0}. 그믐달이면 독 {n1}도.', play: (c, e, v) => { e.foeStatus('vuln', v[0]); if (e.moon === 'new') e.foeStatus('poison', v[1]); } },
   'luna.spin':    { ch: 'lunaria', name: '은빛 회전', cost: 2, atk: 1, target: 'all', rarity: 'r', v: [8], up: { v: [10] },
-    text: '모든 적 피해 {d0}을 두 번.', play: (c, e, v) => { e.hitAll(v[0]); e.hitAll(v[0]); } },
+    text: '모든 적 피해 {d0}을 두 번, 이번 턴 달이 바뀐 횟수만큼 한 번 더.',
+    play: (c, e, v) => { for (let k = 0; k < 2 + c.moonTurn; k++) e.hitAll(v[0]); } },
   'luna.song':    { ch: 'lunaria', name: '달의 노래', cost: 1, target: 'ally', rarity: 'u', v: [7], up: { v: [10] },
     text: '고른 동료 체력 {n0} 회복, 카드 1장.', play: (c, e, v) => { e.heal(v[0]); e.draw(1); } },
   'luna.wax':     { ch: 'lunaria', name: '차고 기우는 달', cost: 0, time: 1, rarity: 'r', v: [1], up: { v: [2] },
     text: '달을 두 번 바꾼다(다음 모양으로). 에너지 {n0}.', play: (c, e, v) => { e.nextMoon(); e.nextMoon(); c.energy += v[0]; } },
 
   // ===== ★5 아카네 — 베기 + 화상 (패시브: 베기마다 화상 3) =====
-  'akane.slash':  { ch: 'akane', name: '홍련 베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [7], up: { v: [10] },
+  'akane.slash':  { ch: 'akane', name: '홍련 베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [8], up: { v: [11] },
     text: '피해 {d0}. 베기.', play: (c, e, v) => { e.hit(v[0] + e.sheath()); e.slash(1); } },
   'akane.guard':  { ch: 'akane', name: '불꽃 막기', cost: 1, rarity: 'c', v: [7, 3], up: { v: [9, 4] },
     text: '방어 {b0}. 이번 턴 아카네를 친 적 화상 {n1}.', play: (c, e, v) => { e.guard(v[0]); c.flameGuard += v[1]; } },
-  'akane.inferno':{ ch: 'akane', name: '업화 일섬', cost: 0, time: 1, atk: 1, slash: 1, rarity: 'u', v: [20, 5], up: { v: [26, 6] },
-    text: '피해 {d0}, 화상 {n1}. 베기.', play: (c, e, v) => { e.hit(v[0] + e.sheath()); e.foeStatus('burn', v[1]); e.slash(1); } },
+  'akane.inferno':{ ch: 'akane', name: '업화 일섬', cost: 0, time: 1, atk: 1, slash: 1, rarity: 'u', v: [22], up: { v: [28] },
+    text: '대상 화상 2배 뒤 피해 {d0}. 베기.', play: (c, e, v) => { const f = c.foe; if (f) f.burn *= 2; e.hit(v[0] + e.sheath()); e.slash(1); } },
   'akane.draw':   { ch: 'akane', name: '발도', cost: 0, atk: 1, slash: 1, rarity: 'c', v: [5], up: { v: [7] },
     text: '피해 {d0}. 베기.', play: (c, e, v) => { e.hit(v[0] + e.sheath()); e.slash(1); } },
   'akane.twin':   { ch: 'akane', name: '쌍염', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [5], up: { v: [6] },
@@ -210,8 +229,8 @@ export const CARDS = {
     text: '적 화상 +{n0}.', play: (c, e, v) => e.foeStatus('burn', v[0]) },
   'akane.phoenix':{ ch: 'akane', name: '불사조 자세', cost: 1, rarity: 'u', v: [6, 6], up: { v: [8, 8] },
     text: '아카네 체력 {n0} 회복, 다음 베기 +{n1}.', play: (c, e, v) => { e.healSelf(v[0]); c.sheath += v[1]; } },
-  'akane.forge':  { ch: 'akane', name: '대장간의 불', cost: 1, rarity: 'u', v: [1], up: { v: [2] },
-    text: '이번 턴 모든 동료의 공격에 화상 {n0}.', play: (c, e, v) => { c.burnAll += v[0]; } },
+  'akane.forge':  { ch: 'akane', name: '대장간의 불', cost: 1, rarity: 'u', v: [], up: { cost: 0 },
+    text: '이번 턴 모든 동료의 공격이 베기로 친다(누구든 화상을 건다).', play: c => { c.allSlash = true; } },
   'akane.redmoon':{ ch: 'akane', name: '붉은 달', cost: 0, time: 1, target: 'all', rarity: 'r', v: [0], up: { v: [4] },
     text: '모든 적 화상 +{n0} 뒤 2배.', play: (c, e, v) => { for (const f of c.foes) f.burn = (f.burn + v[0]) * 2; } },
 
@@ -224,12 +243,13 @@ export const CARDS = {
     text: '적 하나 다음 행동을 건너뛴다. 약화 {n0}.', play: (c, e, v) => { c.foe.skip += 1; if (v[0]) e.foeStatus('weak', v[0]); } },
   'eleo.rewind':  { ch: 'eleonore', name: '되감기', cost: 0, rarity: 'c', v: [5], up: { v: [0] },
     text: '버린 카드 1장(가장 비싼)을 손으로. 밤 시계 +{n0}분.', play: (c, e, v) => { e.fromDiscard(1); if (v[0]) e.addTime(v[0]); } },
-  'eleo.minute':  { ch: 'eleonore', name: '분침 베기', cost: 0, time: 1, atk: 1, target: 'all', rarity: 'u', v: [16], up: { v: [22] },
+  'eleo.minute':  { ch: 'eleonore', name: '분침 베기', cost: 0, time: 1, atk: 1, target: 'all', rarity: 'c', v: [16], up: { v: [22] },
     text: '모든 적 피해 {d0}.', play: (c, e, v) => e.hitAll(v[0]) },
   'eleo.alarm':   { ch: 'eleonore', name: '알람', cost: 1, rarity: 'u', v: [2], up: { cost: 0 },
     text: '다음 턴 에너지 +{n0}.', play: (c, e, v) => { c.nextEnergy += v[0]; } },
   'eleo.lag':     { ch: 'eleonore', name: '시차', cost: 1, rarity: 'r', v: [], up: { cost: 0 },
-    text: '이번 전투에 쓴 시간 카드 1장을 손으로 되돌린다.', play: (c, e) => e.fromDiscard(1, d => d.time) },
+    text: '이번 전투에 쓴 시간 카드 1장을 손으로 되돌린다. 그 카드는 이번엔 시간이 들지 않는다.',
+    play: (c, e) => { for (const h of e.fromDiscard(1, d => d.time)) h.freeTime = true; } },
   'eleo.wind':    { ch: 'eleonore', name: '태엽 감기', cost: 1, rarity: 'c', v: [2], up: { v: [3] },
     text: '다음 턴 카드 +{n0}장.', play: (c, e, v) => { c.nextDraw += v[0]; } },
   'eleo.noon':    { ch: 'eleonore', name: '정오의 종', cost: 2, atk: 1, target: 'all', rarity: 'u', v: [11, 1], up: { v: [14, 2] },
@@ -244,10 +264,10 @@ export const CARDS = {
     text: '모든 적 다음 행동을 건너뛴다. 모든 동료 방어 {n0}. 소멸.', play: (c, e, v) => { for (const f of c.foes) f.skip += 1; if (v[0]) e.guardAll(v[0]); } },
 
   // ===== ★4 미미·모모 — 쌍 (미미 카드와 모모 카드는 연계에서 서로 다른 동료. 직전이 반대쪽이면 「쌍」) =====
-  'mm.stab':      { ch: 'mimimomo', sub: 'mimi', name: '미미 찌르기', cost: 1, atk: 1, rarity: 'c', v: [7, 6], up: { v: [9, 7] },
-    text: '피해 {d0}. 쌍: +{n1}.', play: (c, e, v) => e.hit(v[0] + (c.pair ? v[1] * c.pairMul : 0)) },
+  'mm.stab':      { ch: 'mimimomo', sub: 'mimi', name: '미미 찌르기', cost: 1, atk: 1, rarity: 'c', v: [8, 6], up: { v: [10, 7] },
+    text: '피해 {d0}. 쌍: +{n1}.', play: (c, e, v) => e.hit(v[0] + pv(c, v[1])) },
   'mm.block':     { ch: 'mimimomo', sub: 'momo', name: '모모 막기', cost: 1, rarity: 'c', v: [7, 6], up: { v: [9, 7] },
-    text: '방어 {b0}. 쌍: +{n1}.', play: (c, e, v) => e.guard(v[0] + (c.pair ? v[1] * c.pairMul : 0)) },
+    text: '방어 {b0}. 쌍: +{n1}.', play: (c, e, v) => e.guard(v[0] + pv(c, v[1])) },
   'mm.clap':      { ch: 'mimimomo', sub: 'both', name: '손뼉 맞추기', cost: 0, rarity: 'c', v: [1, 3], up: { v: [2, 3] },
     text: '카드 {n0}장, 방어 {b1}. 미미·모모 둘 다로 친다.', play: (c, e, v) => { e.draw(v[0]); e.guard(v[1]); } },
   'mm.hide':      { ch: 'mimimomo', sub: 'momo', name: '숨바꼭질', cost: 0, time: 1, rarity: 'u', v: [0], up: { v: [5] },
@@ -264,8 +284,8 @@ export const CARDS = {
     text: '적 취약 {n0}. 쌍: 약화 {n1}도.', play: (c, e, v) => { e.foeStatus('vuln', v[0]); if (c.pair) e.foeStatus('weak', v[1] * c.pairMul); } },
   'mm.cake':      { ch: 'mimimomo', sub: 'momo', name: '생일 케이크', cost: 1, target: 'ally', rarity: 'u', v: [6], up: { v: [9] },
     text: '고른 동료 체력 {n0} 회복. 쌍: 연계 +1.', play: (c, e, v) => { e.heal(v[0]); if (c.pair) e.chain(1); } },
-  'mm.one':       { ch: 'mimimomo', sub: 'both', name: '둘이서 하나', cost: 2, atk: 1, rarity: 'r', v: [4], up: { v: [5] },
-    text: '피해 = 이번 턴 쓴 카드 수 ×{n0}.', play: (c, e, v) => e.hit(c.playedTurn * v[0]) },
+  'mm.one':       { ch: 'mimimomo', sub: 'both', name: '둘이서 하나', cost: 2, atk: 1, rarity: 'r', v: [5], up: { v: [6] },
+    text: '피해 = 이번 턴 쓴 카드 수 ×{n0} (쌍이 난 카드는 2장으로 친다).', play: (c, e, v) => e.hit((c.playedTurn + c.pairTurn) * v[0]) },
   'mm.star':      { ch: 'mimimomo', sub: 'both', name: '쌍둥이 별', cost: 3, exhaust: 1, rarity: 'r', v: [], up: { cost: 2 },
     text: '연계를 3칸으로, 카드 2장. 소멸.', play: (c, e) => { e.chain(3); e.draw(2); } },
 
@@ -276,8 +296,8 @@ export const CARDS = {
     text: '방어 {b0}.', play: (c, e, v) => e.guard(v[0]) },
   'seb.cane':     { ch: 'sebas', name: '지팡이 칼', cost: 1, atk: 1, rarity: 'c', v: [8], up: { v: [11] },
     text: '피해 {d0}.', play: (c, e, v) => e.hit(v[0]) },
-  'seb.watch':    { ch: 'sebas', name: '회중시계', cost: 0, exhaust: 1, rarity: 'u', v: [10], up: { v: [15] },
-    text: '밤 시계 {n0}분 되돌리기. 소멸.', play: (c, e, v) => e.rewind(v[0]) },
+  'seb.watch':    { ch: 'sebas', name: '예비 찻잔', cost: 0, rarity: 'u', v: [1], up: { v: [2] },
+    text: '카드 {n0}장. 이번 턴 끝에 손패 1장을 더 남긴다.', play: (c, e, v) => { e.draw(v[0]); c.reserve += 1; } },
   'seb.tidy':     { ch: 'sebas', name: '정리 정돈', cost: 0, rarity: 'c', v: [0], up: { v: [1] },
     text: '손패를 모두 버리고 같은 수+{n0}장 뽑기.', play: (c, e, v) => { const n = c.hand.length; e.discardHand(); e.draw(n + v[0]); } },
   'seb.afternoon':{ ch: 'sebas', name: '오후의 홍차', cost: 1, rarity: 'u', v: [2], up: { v: [3] },
@@ -292,13 +312,14 @@ export const CARDS = {
     text: '피해 {d0}을 세 번.', play: (c, e, v) => { e.hit(v[0]); e.hit(v[0]); e.hit(v[0]); } },
   'seb.service':  { ch: 'sebas', name: '마지막 서비스', cost: 2, rarity: 'r', v: [], up: { cost: 1 },
     text: '다음에 쓰는 카드를 두 번 쓴다.', play: c => { c.double = true; } },
-  'seb.clock':    { ch: 'sebas', name: '집사의 시계', cost: 0, exhaust: 1, rarity: 'r', v: [20], up: { v: [30] },
-    text: '밤 시계 {n0}분 되돌리기. 소멸.', play: (c, e, v) => e.rewind(v[0]) },
+  'seb.clock':    { ch: 'sebas', name: '만찬 준비', cost: 0, exhaust: 1, rarity: 'r', v: [1], up: { v: [2] },
+    text: '이번 턴 끝에 손패를 모두 남기고, 다음 턴 에너지 +{n0}. 소멸.', play: (c, e, v) => { c.keepAll = true; c.nextEnergy += v[0]; } },
 
   // ===== ★4 마리아나 — 별빛(돈) =====
-  'mari.coin':    { ch: 'mariana', name: '금화 던지기', cost: 1, atk: 1, rarity: 'c', v: [13, 4], up: { v: [17, 5] },
-    text: '별빛 5를 써서 피해 {d0} (별빛이 없으면 {n1}).', play: (c, e, v) => e.hit(e.spend(5) ? v[0] : v[1]) },
-  'mari.loot':    { ch: 'mariana', name: '약탈', cost: 1, atk: 1, rarity: 'c', v: [7, 10], up: { v: [9, 15] },
+  'mari.coin':    { ch: 'mariana', name: '금화 던지기', cost: 1, atk: 1, rarity: 'c', v: [14, 4], up: { v: [17, 5] },
+    text: '별빛을 5씩 최대 3번 써서, 5마다 피해 {n0} (별빛이 없으면 {n1}).',
+    play: (c, e, v) => { const k = e.spendSteps(3, 5); e.hit(k ? k * v[0] : v[1]); } },
+  'mari.loot':    { ch: 'mariana', name: '약탈', cost: 1, atk: 1, rarity: 'c', v: [9, 10], up: { v: [12, 15] },
     text: '피해 {d0}. 이 공격으로 쓰러뜨리면 별빛 +{n1}.', play: (c, e, v) => { const f = c.foe; e.hit(v[0]); if (f?.dead) e.gold(v[1]); } },
   'mari.rum':     { ch: 'mariana', name: '럼 한 모금', cost: 0, rarity: 'c', v: [3, 1], up: { v: [5, 2] },
     text: '마리아나 체력 {n0} 회복, 이번 턴 모든 동료 공격 +{n1}.', play: (c, e, v) => { e.healSelf(v[0]); c.turnAtk += v[1]; } },
@@ -321,23 +342,25 @@ export const CARDS = {
 
   // ===== ★4 토모리 — 빛 (적의 다음 공격을 약하게) =====
   'tomo.light':   { ch: 'tomori', name: '등불 비추기', cost: 1, target: 'foe', rarity: 'c', v: [40], up: { v: [60] },
-    text: '적 하나의 이번 공격 −{n0}%.', play: (c, e, v) => e.dim(v[0] / 100) },
+    text: '적 하나의 이번 공격 −{n0}%. 노림 바꿈으로 친다.', play: (c, e, v) => { e.dim(v[0] / 100); e.setAim(c.foe, null); } },
   'tomo.glare':   { ch: 'tomori', name: '눈부심', cost: 1, target: 'foe', rarity: 'c', v: [2], up: { v: [3] },
     text: '적 약화 {n0}.', play: (c, e, v) => e.foeStatus('weak', v[0]) },
-  'tomo.arrow':   { ch: 'tomori', name: '빛의 화살', cost: 1, atk: 1, rarity: 'c', v: [9, 1], up: { v: [12, 1] },
+  'tomo.arrow':   { ch: 'tomori', name: '빛의 화살', cost: 1, atk: 1, rarity: 'c', v: [11, 1], up: { v: [14, 1] },
     text: '피해 {d0}, 취약 {n1}.', play: (c, e, v) => { e.hit(v[0]); e.foeStatus('vuln', v[1]); } },
   'tomo.signal':  { ch: 'tomori', name: '등대 신호', cost: 0, time: 1, rarity: 'u', v: [1, 2], up: { v: [2, 2] },
     text: '다음 전투 시작 에너지 +{n0}, 카드 +{n1}.', play: (c, e, v) => e.nextFight(v[0], v[1]) },
   'tomo.spin':    { ch: 'tomori', name: '회전하는 빛', cost: 2, target: 'all', rarity: 'u', v: [8], up: { v: [11] },
-    text: '모든 적의 이번 공격 −25%, 방어 {b0}.', play: (c, e, v) => { e.dimAll(.25); e.guard(v[0]); } },
+    text: '모든 적의 이번 공격 −25%, 방어 {b0}. 노림 바꿈으로 친다.',
+    play: (c, e, v) => { e.dimAll(.25); e.guard(v[0]); for (const f of c.foes) f.aimedTurn = true; e.setAim(c.foes[0], null); } },
   'tomo.home':    { ch: 'tomori', name: '귀갓길', cost: 0, target: 'ally', rarity: 'c', v: [3], up: { v: [5] },
     text: '고른 동료 체력 {n0} 회복.', play: (c, e, v) => e.heal(v[0]) },
   'tomo.flash':   { ch: 'tomori', name: '손전등 깜빡', cost: 0, target: 'foe', rarity: 'c', v: [0], up: { v: [1] },
-    text: '적 하나가 이번 턴 앞줄을 노린다. 약화 {n0}.', play: (c, e, v) => { c.foe.aimOverride = 'front'; if (v[0]) e.foeStatus('weak', v[0]); } },
+    text: '적 하나가 이번 턴 앞줄을 노린다. 약화 {n0}.', play: (c, e, v) => { e.setAim(c.foe, 'front'); if (v[0]) e.foeStatus('weak', v[0]); } },
   'tomo.warm':    { ch: 'tomori', name: '따뜻한 불빛', cost: 1, rarity: 'u', v: [3], up: { v: [5] },
     text: '모든 동료 체력 {n0} 회복.', play: (c, e, v) => e.healAll(v[0]) },
   'tomo.chase':   { ch: 'tomori', name: '그림자 몰기', cost: 1, atk: 1, rarity: 'c', v: [6, 1], up: { v: [9, 1] },
-    text: '피해 {d0}. 적이 공격하려 하면 약화 {n1}.', play: (c, e, v) => { const f = c.foe; e.hit(v[0]); if (f && !f.dead && e.attacking(f)) e.foeStatus('weak', v[1], f); } },
+    text: '피해 {d0}. 이번 턴 노림을 바꾼 적에게는 2배, 약화 {n1}.',
+    play: (c, e, v) => { const f = c.foe, on = f?.aimedTurn; e.hit(v[0] * (on ? 2 : 1)); if (on && !f.dead) e.foeStatus('weak', v[1], f); } },
   'tomo.flagsig': { ch: 'tomori', name: '신호 깃발', cost: 1, rarity: 'c', v: [1], up: { v: [2] },
     text: '연계 +1, 카드 {n0}장.', play: (c, e, v) => { e.chain(1); e.draw(v[0]); } },
   'tomo.grand':   { ch: 'tomori', name: '할아버지의 등불', cost: 2, exhaust: 1, target: 'all', rarity: 'r', v: [2], up: { v: [3] },
@@ -346,31 +369,31 @@ export const CARDS = {
   // ===== ★4 시그룬 — 공중 (받는 피해 절반, 「뒤를 노림」에서 빠짐, 급강하로 착지) =====
   'sig.thrust':   { ch: 'sigrun', name: '창 찌르기', cost: 1, atk: 1, rarity: 'c', v: [8], up: { v: [11] },
     text: '피해 {d0}. 적의 방어를 무시한다.', play: (c, e, v) => e.hit(v[0], undefined, true) },
-  'sig.rise':     { ch: 'sigrun', name: '날아오르기', cost: 1, rarity: 'c', v: [5], up: { v: [8] },
+  'sig.rise':     { ch: 'sigrun', name: '날아오르기', cost: 1, rarity: 'c', v: [7], up: { v: [10] },
     text: '공중. 방어 {b0}.', play: (c, e, v) => { e.fly(); e.guard(v[0]); } },
-  'sig.dive':     { ch: 'sigrun', name: '급강하', cost: 1, atk: 1, rarity: 'c', v: [18, 6], up: { v: [22, 8] },
-    text: '공중이면 피해 {d0}, 아니면 {n1}. 착지.', play: (c, e, v) => { e.hit(c.air ? v[0] : v[1]); e.land(); } },
+  'sig.dive':     { ch: 'sigrun', name: '급강하', cost: 1, atk: 1, dive: 1, rarity: 'c', v: [28, 7], up: { v: [33, 9] },
+    text: '공중이면 피해 {d0}, 아니면 {n1}. 급강하 계열: 턴 끝에 착지.', play: (c, e, v) => { e.hit(c.air ? v[0] : v[1]); e.land(); } },
   'sig.feather':  { ch: 'sigrun', name: '깃털 방패', cost: 1, rarity: 'c', v: [7], up: { v: [10] },
     text: '방어 {b0}.', play: (c, e, v) => e.guard(v[0]) },
   'sig.whirl':    { ch: 'sigrun', name: '회오리 창', cost: 2, atk: 1, target: 'all', rarity: 'u', v: [8], up: { v: [10] },
     text: '모든 적 피해 {d0}. 공중이면 두 번.', play: (c, e, v) => { e.hitAll(v[0]); if (c.air) e.hitAll(v[0]); } },
   'sig.glide':    { ch: 'sigrun', name: '활공', cost: 0, rarity: 'u', v: [2], up: { v: [3] },
     text: '공중이면 카드 {n0}장.', play: (c, e, v) => { if (c.air) e.draw(v[0]); } },
-  'sig.oath':     { ch: 'sigrun', name: '기사의 맹세', cost: 1, rarity: 'u', v: [12], up: { v: [15] },
-    text: '방어 {b0}. 이번 턴 모든 단일 공격이 시그룬을 노린다.', play: (c, e, v) => { e.guard(v[0]); c.taunt = 'sigrun'; } },
-  'sig.valhalla': { ch: 'sigrun', name: '발할라 낙하', cost: 2, atk: 1, exhaust: 1, target: 'all', rarity: 'r', v: [20, 10], up: { v: [26, 13] },
+  'sig.oath':     { ch: 'sigrun', name: '기사의 맹세', cost: 1, rarity: 'u', v: [10], up: { v: [13] },
+    text: '방어 {b0}. 공중이면 다른 동료들에게도 같은 방어.', play: (c, e, v) => { if (c.air) e.guardAll(v[0]); else e.guard(v[0]); } },
+  'sig.valhalla': { ch: 'sigrun', name: '발할라 낙하', cost: 2, atk: 1, dive: 1, exhaust: 1, target: 'all', rarity: 'r', v: [20, 10], up: { v: [26, 13] },
     text: '공중이면 모든 적 피해 {d0}, 아니면 {n1}. 착지. 소멸.', play: (c, e, v) => { e.hitAll(c.air ? v[0] : v[1]); e.land(); } },
   'sig.wall':     { ch: 'sigrun', name: '창벽', cost: 1, rarity: 'c', v: [10, 4], up: { v: [13, 5] },
     text: '방어 {b0}. 공중이면 이번 턴 시그룬을 친 적에게 {n1} 되돌려 준다.', play: (c, e, v) => { e.guard(v[0]); if (c.air) c.sigCounter += v[1]; } },
-  'sig.sky':      { ch: 'sigrun', name: '하늘 가르기', cost: 1, atk: 1, rarity: 'c', v: [10, 4], up: { v: [13, 5] },
-    text: '피해 {d0}. 공중이면 +{n1}.', play: (c, e, v) => e.hit(v[0] + (c.air ? v[1] : 0)) },
+  'sig.sky':      { ch: 'sigrun', name: '하늘 가르기', cost: 1, atk: 1, dive: 1, rarity: 'c', v: [12, 5], up: { v: [15, 6] },
+    text: '피해 {d0}. 공중이면 +{n1}. 급강하 계열: 턴 끝에 착지.', play: (c, e, v) => { e.hit(v[0] + (c.air ? v[1] : 0)); e.land(); } },
   'sig.up':       { ch: 'sigrun', name: '깃털 비상', cost: 0, rarity: 'c', v: [0], up: { v: [4] },
     text: '공중이 아니면 공중. 방어 {b0}.', play: (c, e, v) => { if (!c.air) e.fly(); if (v[0]) e.guard(v[0]); } },
   'sig.charge':   { ch: 'sigrun', name: '돌격 명령', cost: 0, time: 1, rarity: 'r', v: [4], up: { v: [6] },
     text: '이번 턴 모든 동료 공격 +{n0}.', play: (c, e, v) => { c.turnAtk += v[0]; } },
 
   // ===== ★4 제노 — 자기 체력을 힘으로 =====
-  'zeno.slash':   { ch: 'zeno', name: '흑룡 베기', cost: 1, atk: 1, rarity: 'c', v: [8, 2], up: { v: [11, 2] },
+  'zeno.slash':   { ch: 'zeno', name: '흑룡 베기', cost: 1, atk: 1, rarity: 'c', v: [12, 2], up: { v: [15, 2] },
     text: '피해 {d0}, 제노 체력 {n1} 잃음.', play: (c, e, v) => { e.hit(v[0]); e.loseHp(v[1]); } },
   'zeno.scale':   { ch: 'zeno', name: '비늘 갑옷', cost: 1, rarity: 'c', v: [9], up: { v: [12] },
     text: '방어 {b0}.', play: (c, e, v) => e.guard(v[0]) },
@@ -384,8 +407,8 @@ export const CARDS = {
     text: '모든 적 피해 {d0}, 제노 체력 {n1} 잃음.', play: (c, e, v) => { e.hitAll(v[0]); e.loseHp(v[1]); } },
   'zeno.awaken':  { ch: 'zeno', name: '용혈 각성', cost: 1, exhaust: 1, rarity: 'u', v: [4], up: { cost: 0 },
     text: '이번 전투 동안 제노 체력이 절반 이하면 제노 공격 +{n0}. 소멸.', play: (c, e, v) => { c.zenoAwake += v[0]; } },
-  'zeno.release': { ch: 'zeno', name: '흑룡 해방', cost: 2, atk: 1, exhaust: 1, rarity: 'r', v: [6, 45], up: { v: [8, 60] },
-    text: '피해 = 이번 판에 제노가 잃은 체력 ×0.{n0} (최대 {n1}). 소멸.', play: (c, e, v) => e.hit(Math.min(v[1], Math.floor(e.lost('zeno') * v[0] / 10))) },
+  'zeno.release': { ch: 'zeno', name: '흑룡 해방', cost: 2, atk: 1, exhaust: 1, rarity: 'r', v: [70], up: { v: [90], cost: 1 }, need: (c) => c.lostCombat.zeno >= 20,
+    text: '이번 전투에 제노가 잃은 체력 20 이상일 때만. 피해 = 이번 판에 잃은 체력 (최대 {n0}). 소멸.', play: (c, e, v) => e.hit(Math.min(v[0], e.lost('zeno'))) },
   'zeno.shield':  { ch: 'zeno', name: '용린 방패', cost: 1, rarity: 'c', v: [4], up: { v: [7] },
     text: '방어 = 제노의 깎인 체력 ÷2 + {n0}.', play: (c, e, v) => e.guard(Math.floor(e.missing('zeno') / 2) + v[0]) },
   'zeno.thirst':  { ch: 'zeno', name: '피의 갈증', cost: 1, atk: 1, rarity: 'u', v: [8], up: { v: [11] },
@@ -398,7 +421,7 @@ export const CARDS = {
     text: '적 취약 {n0}.', play: (c, e, v) => e.foeStatus('vuln', v[0]) },
 
   // ===== ★3 핀 — 핀의 카드는 언제나 연계를 잇는다(link) =====
-  'finn.letter':  { ch: 'finn', link: 1, name: '편지 던지기', cost: 1, atk: 1, rarity: 'c', v: [9], up: { v: [12] },
+  'finn.letter':  { ch: 'finn', link: 1, name: '편지 던지기', cost: 1, atk: 1, rarity: 'c', v: [12], up: { v: [15] },
     text: '피해 {d0}. 연계를 잇는다.', play: (c, e, v) => e.hit(v[0]) },
   'finn.fast':    { ch: 'finn', link: 1, name: '빠른 배달', cost: 0, rarity: 'c', v: [2], up: { v: [3] },
     text: '카드 {n0}장, 연계 +1.', play: (c, e, v) => { e.draw(v[0]); e.chain(1); } },
@@ -408,7 +431,7 @@ export const CARDS = {
     text: '이번 턴 다음 카드 {n0}장 비용 0.', play: (c, e, v) => { c.freeNext += v[0]; } },
   'finn.pass':    { ch: 'finn', link: 1, name: '전해 줄게', cost: 1, rarity: 'c', v: [], up: { cost: 0 },
     text: '턴 끝에 손패 1장(가장 비싼)을 남기고, 다음 턴 그 카드 비용 −1.', play: c => { c.reserve += 1; } },
-  'finn.bag':     { ch: 'finn', link: 1, name: '우편 가방 휘두르기', cost: 1, atk: 1, rarity: 'c', v: [6], up: { v: [7] },
+  'finn.bag':     { ch: 'finn', link: 1, name: '우편 가방 휘두르기', cost: 1, atk: 1, rarity: 'c', v: [8], up: { v: [10] },
     text: '피해 {d0}을 두 번.', play: (c, e, v) => { e.hit(v[0]); e.hit(v[0]); } },
   'finn.return':  { ch: 'finn', link: 1, name: '반송', cost: 0, rarity: 'u', v: [1], up: { v: [2] },
     text: '버린 카드 {n0}장(가장 비싼)을 손으로.', play: (c, e, v) => e.fromDiscard(v[0]) },
@@ -416,8 +439,8 @@ export const CARDS = {
     text: '손패의 다른 동료 카드 1장(가장 비싼) 이번 턴 비용 −{n0}.', play: (c, e, v) => e.cheapen(v[0], 'finn') },
   'finn.run':     { ch: 'finn', link: 1, name: '지름길 달리기', cost: 1, rarity: 'c', v: [8], up: { v: [11] },
     text: '이번 턴 대열 바꾸기 1번 더. 방어 {b0}.', play: (c, e, v) => { c.swapsBonus += 1; e.guard(v[0]); } },
-  'finn.last':    { ch: 'finn', link: 1, name: '마지막 편지', cost: 2, atk: 1, rarity: 'r', v: [8], up: { v: [10] },
-    text: '피해 = 이번 턴 카드를 쓴 동료 수 ×{n0}.', play: (c, e, v) => e.hit(c.turnChars.size * v[0]) },
+  'finn.last':    { ch: 'finn', link: 1, name: '마지막 편지', cost: 2, atk: 1, rarity: 'r', v: [6], up: { v: [8] },
+    text: '피해 = 이번 턴 연계가 오른 횟수 ×{n0} (최소 1번).', play: (c, e, v) => e.hit(Math.max(1, c.chainUps) * v[0]) },
 
   // ===== ★3 라일라 — 바람: 뽑기 + 연타 =====
   'laila.blade':  { ch: 'laila', name: '바람 칼', cost: 1, atk: 1, rarity: 'c', v: [4], up: { v: [5] },
@@ -436,6 +459,8 @@ export const CARDS = {
     text: '카드 {n0}장 뽑고 1장(가장 쓸모없는) 버림.', play: (c, e, v) => { e.draw(v[0]); e.discardWorst(1); } },
   'laila.resolve':{ ch: 'laila', name: '탈영병의 각오', cost: 1, rarity: 'u', v: [3], up: { v: [4] },
     text: '이번 턴 비용 0 카드의 피해 +{n0}.', play: (c, e, v) => { c.zeroBonus += v[0]; } },
+  'laila.empty':  { ch: 'laila', name: '빈손', cost: 0, rarity: 'c', v: [1], up: { v: [2] },
+    text: '카드 1장. 이번 턴 비용 0 카드의 피해 +{n0} (쌓인다).', play: (c, e, v) => { e.draw(1); c.zeroBonus += v[0]; } },
   'laila.gale':   { ch: 'laila', name: '칼바람', cost: 1, atk: 1, rarity: 'c', v: [2], up: { v: [3] },
     text: '피해 {d0}을 네 번.', play: (c, e, v) => { for (let k = 0; k < 4; k++) e.hit(v[0]); } },
 
@@ -458,8 +483,8 @@ export const CARDS = {
     text: '피해 {d0}, 취약 {n1}.', play: (c, e, v) => { e.hit(v[0]); e.foeStatus('vuln', v[1]); } },
   'dora.tidy':    { ch: 'dora', name: '공방 정리', cost: 0, rarity: 'u', v: [1], up: { v: [2] },
     text: '손패 1장(가장 쓸모없는)을 버리고 {n0}장 강화.', play: (c, e, v) => { e.discardWorst(1); e.temper(v[0]); } },
-  'dora.master':  { ch: 'dora', name: '걸작', cost: 2, atk: 1, rarity: 'r', v: [7], up: { v: [9] },
-    text: '피해 = 이번 전투에 담금질한 카드 수 ×{n0}.', play: (c, e, v) => e.hit(c.tempered * v[0]) },
+  'dora.master':  { ch: 'dora', name: '걸작', cost: 2, atk: 1, rarity: 'r', v: [10], up: { v: [13] },
+    text: '피해 = 이번 전투에 담금질한 카드 수 ×{n0} (++는 2로 친다).', play: (c, e, v) => e.hit((c.tempered + c.tempered2) * v[0]) },
 
   // ===== ★3 고든 — 음식: 회복·다음 턴 =====
   'gord.soup':    { ch: 'gordon', name: '따뜻한 수프', cost: 1, target: 'ally', rarity: 'c', v: [5], up: { v: [8] },
@@ -468,8 +493,8 @@ export const CARDS = {
     text: '피해 {d0}, 방어 {b1}.', play: (c, e, v) => { e.hit(v[0]); e.guard(v[1]); } },
   'gord.meat':    { ch: 'gordon', name: '든든한 고기', cost: 1, rarity: 'c', v: [2], up: { v: [3] },
     text: '다음 턴 모든 동료 공격 +{n0}.', play: (c, e, v) => { c.nextAtk += v[0]; } },
-  'gord.feast':   { ch: 'gordon', name: '만찬', cost: 0, time: 1, target: 'ally', rarity: 'u', v: [12], up: { v: [16] },
-    text: '고른 동료 체력 {n0} 회복, 다음 턴 에너지 +1.', play: (c, e, v) => { e.heal(v[0]); c.nextEnergy += 1; } },
+  'gord.feast':   { ch: 'gordon', name: '만찬', cost: 0, time: 1, rarity: 'u', v: [6], up: { v: [8] },
+    text: '모든 동료 체력 {n0} 회복, 이번 전투 모든 동료 공격 +1.', play: (c, e, v) => { e.healAll(v[0]); c.partyStr += 1; } },
   'gord.snack':   { ch: 'gordon', name: '간식', cost: 0, target: 'ally', rarity: 'c', v: [2], up: { v: [4] },
     text: '고른 동료 체력 {n0} 회복, 카드 1장.', play: (c, e, v) => { e.heal(v[0]); e.draw(1); } },
   'gord.ladle':   { ch: 'gordon', name: '국자 치기', cost: 1, atk: 1, rarity: 'c', v: [5], up: { v: [7] },
@@ -484,7 +509,7 @@ export const CARDS = {
     text: '쓰러진 동료 하나를 체력 {n0}으로 일으킨다. 소멸.', play: (c, e, v) => e.revive(v[0]) },
 
   // ===== ★3 후쿠로 — 장사 =====
-  'fuku.junk':    { ch: 'fukuro', name: '잡동사니 던지기', cost: 1, atk: 1, rarity: 'c', v: [6, 14], up: { v: [8, 16] },
+  'fuku.junk':    { ch: 'fukuro', name: '잡동사니 던지기', cost: 1, atk: 1, rand: 1, rarity: 'c', v: [6, 14], up: { v: [8, 16] },
     text: '피해 {n0}~{n1} 무작위.', play: (c, e, v) => e.hit(v[0] + e.roll(v[1] - v[0] + 1)) },
   'fuku.haggle':  { ch: 'fukuro', name: '흥정', cost: 0, rarity: 'c', v: [10], up: { v: [15] },
     text: '다음 야시장 {n0}% 할인 (판 동안 쌓임, 최대 40%).', play: (c, e, v) => e.haggle(v[0] / 100) },
@@ -492,9 +517,11 @@ export const CARDS = {
     text: '방어 {b0}, 별빛 +{n1}.', play: (c, e, v) => { e.guard(v[0]); e.gold(v[1]); } },
   'fuku.clear':   { ch: 'fukuro', name: '떨이', cost: 0, time: 1, rarity: 'u', v: [3], up: { v: [4] },
     text: '카드 {n0}장. 이번 턴 공격 카드 비용 0.', play: (c, e, v) => { e.draw(v[0]); c.atkFree = true; } },
-  'fuku.mask':    { ch: 'fukuro', name: '가면 속', cost: 1, target: 'foe', rarity: 'u', v: [], up: { cost: 0 },
+  'fuku.mask':    { ch: 'fukuro', name: '가면 속', cost: 1, target: 'foe', rand: 1, rarity: 'u', v: [], up: { cost: 0 },
     text: '적 하나의 다음 행동을 무작위로 바꾼다.', play: (c, e) => e.shuffleIntent() },
-  'fuku.fake':    { ch: 'fukuro', name: '짝퉁 부적', cost: 0, rarity: 'c', v: [6], up: { v: [9] },
+  'fuku.lottery': { ch: 'fukuro', name: '복권', cost: 1, atk: 1, rand: 1, rarity: 'u', v: [1, 30], up: { v: [5, 30] },
+    text: '피해 {n0}~{n1} 무작위.', play: (c, e, v) => e.hit(v[0] + e.roll(v[1] - v[0] + 1)) },
+  'fuku.fake':    { ch: 'fukuro', name: '짝퉁 부적', cost: 0, rand: 1, rarity: 'c', v: [6], up: { v: [9] },
     text: '무작위: 방어 {b0} / 카드 1장 / 모든 적 약화 1.', play: (c, e, v) => { const k = e.roll(3); if (k === 0) e.guard(v[0]); else if (k === 1) e.draw(1); else e.foeStatusAll('weak', 1); } },
   'fuku.bundle':  { ch: 'fukuro', name: '보따리 던지기', cost: 2, atk: 1, rarity: 'u', v: [18], up: { v: [23] },
     text: '피해 {d0}.', play: (c, e, v) => e.hit(v[0]) },
@@ -552,7 +579,7 @@ const MORE_DUOS = [
   ['raven', 'sebas', { name: '독이 든 홍차', target: 'foe', text: '독 {k0}, 약화 {n1}.', v: [10, 2], play: (c, e, v) => { e.foeStatus('poison', v[0] + e.dark()); e.foeStatus('weak', v[1]); } }],
   ['mimimomo', 'sion', { name: '별 보는 밤', text: '정령 1, 연계 +1, 카드 1장.', play: (c, e) => { e.spirit(3); e.chain(1); e.draw(1); } }],
   ['mimimomo', 'sebas', { name: '집사와 쌍둥이', text: '카드 3장, 에너지 1.', play: (c, e) => { e.draw(3); c.energy += 1; } }],
-  ['sebas', 'sion', { name: '별의 시간', text: '밤 시계 15분 되돌리기, 정령 1.', play: (c, e) => { e.rewind(15); e.spirit(3); } }],
+  ['sebas', 'sion', { name: '별의 시간', text: '정령 1, 다음 턴 카드 +2장.', play: (c, e) => { e.spirit(3); c.nextDraw += 2; } }],
   // 새 동료 인연 16쌍
   ['iris', 'akane', { name: '홍백 쌍검', atk: 1, slash: 1, text: '피해 {d0}을 세 번, 화상 {n1}. 베기 셋.', v: [8, 4], play: (c, e, v) => { e.hit(v[0]); e.hit(v[0]); e.hit(v[0]); e.foeStatus('burn', v[1]); e.slash(3); } }],
   ['sigrun', 'laila', { name: '옛 기사단', atk: 1, text: '시그룬 공중, 피해 {d0}을 네 번.', v: [4], play: (c, e, v) => { e.fly(); for (let k = 0; k < 4; k++) e.hit(v[0]); } }],
@@ -587,12 +614,16 @@ export function cardData(id) {
     const k = id.slice(4), D = DUOS[k], [a, b] = k.split('+');
     d = { ...D, id, ch: 'duo', a, b, cost: 1, exhaust: 1, rarity: 'duo', v: D.v || [] };
   } else {
-    const up = id.endsWith('+'), base = CARDS[up ? id.slice(0, -1) : id];
+    // 'id+' 강화판, 'id++' 도라 「명장」 두 번 강화(강화판 수치 +50%, 올림)
+    const up2 = id.endsWith('++'), up = id.endsWith('+'), base = CARDS[id.replace(/\++$/, '')];
     if (!base) return null;
-    d = up ? { ...base, ...base.up, id, up: true, name: base.name + '+' } : { ...base, id, up: false };
+    d = up ? { ...base, ...base.up, id, up: true, name: base.name + (up2 ? '++' : '+') } : { ...base, id, up: false };
+    if (up2) { d.up2 = true; d.v = (d.v || []).map(x => Math.ceil(x * 1.5)); }
   }
   if (!d.target) d.target = d.atk ? 'foe' : 'none';
   cache.set(id, d);
   return d;
 }
 export const canUpgrade = id => !id.endsWith('+') && !!CARDS[id]?.up;
+// 전투 중 담금질: 보통은 강화판까지, 도라 「명장」이면 ++까지
+export const canTemper = (id, two) => two ? !id.endsWith('++') && !!CARDS[id.replace(/\++$/, '')]?.up : canUpgrade(id);

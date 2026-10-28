@@ -912,3 +912,8 @@ table.shards tr{animation:rowin .3s steps(4) both;animation-delay:calc(var(--i,0
 .shopscr::after{content:"";position:absolute;top:10px;left:10%;right:10%;height:10px;pointer-events:none;
   background:radial-gradient(circle,#ffb04a 0 3px,#a04a20 3.5px 4.5px,transparent 5px) 0 0/25% 100% repeat-x;filter:drop-shadow(0 0 3px #ff9a4a)}
 .shophead .fukuro{width:30px;height:30px;font-size:16px}
+/* 패시브 ③ 폭발 이름 띠 (docs/12_signature.md §1-1): 0.6초 */
+#burst{position:absolute;left:50%;top:58px;transform:translateX(-50%);z-index:30;pointer-events:none;display:flex;align-items:baseline;gap:6px;
+  padding:3px 12px;background:var(--bg);border:2px solid var(--c);box-shadow:3px 3px 0 #000;font-family:var(--f-disp);white-space:nowrap}
+#burst span{font-size:9px;color:var(--dim)}
+#burst b{font-weight:400;font-size:14px;color:var(--c)}

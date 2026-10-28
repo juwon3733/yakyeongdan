@@ -34,6 +34,18 @@ cutEl.addEventListener('click', () => { cutEl.hidden = true; });
 // 누르면 넘기기: 떠 있는 띠(듀오·보스·2단계)를 바로 닫는다
 export function hideCut() { if (cutEl.hidden) return false; clearTimeout(cutTimer); cutEl.hidden = true; return true; }
 
+// 패시브 ③ 폭발: 이름 띠 0.6초 (docs/12_signature.md §1-1). 컷인과 겹치지 않게 따로 띄운다.
+let burstEl = null, burstTimer = null;
+export function showBurst(who, name) {
+  const st = document.getElementById('stage'); if (!st) return;
+  if (!burstEl) { burstEl = document.createElement('div'); burstEl.id = 'burst'; st.appendChild(burstEl); }
+  const c = CHARACTERS[who];
+  burstEl.style.setProperty('--c', c.col);
+  burstEl.innerHTML = `<span>${c.name}</span><b>「${name}」</b>`;
+  burstEl.hidden = false;
+  clearTimeout(burstTimer); burstTimer = setTimeout(() => { burstEl.hidden = true; }, 600);
+}
+
 // 동료가 맞으면 판을 짧게 흔든다 (설정 「화면 흔들림 끔」·애니메이션 줄이기면 #stage.noshake라 안 흔들린다)
 const stageEl = document.getElementById('stage');
 let shakeTimer = null;

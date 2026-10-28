@@ -10,7 +10,7 @@ import { sfx as sfxRaw } from './audio.js';
 // 누르면 넘기기(skipFx)로 남은 연출을 한꺼번에 돌릴 때는 효과음을 겹쳐 내지 않는다
 let hush = false;
 const sfx = (...a) => { if (!hush) sfxRaw(...a); };
-import { showPhase, showBoss, shake } from './fx.js';
+import { showPhase, showBoss, shake, showBurst } from './fx.js';
 
 const stage = document.getElementById('stage');
 let layer = null, cv = null, g = null, sky = null;
@@ -103,7 +103,7 @@ export function afterRender(events = []) {
   fanHand();
   const P = pre; pre = null;
   if (calmNow()) {   // 애니메이션 줄이기: 소리만
-    for (const e of events) { soundOf(e); if (e.kind === 'phase') showPhase(e.name, e.text); }
+    for (const e of events) { soundOf(e); if (e.kind === 'phase') showPhase(e.name, e.text); if (e.kind === 'burst') showBurst(e.who, e.name); }
     if (S.G && S.view === 'run') { shown.seed = S.G.seed; shown.act = S.G.act; }
     dropFrozen(0);
     return;
@@ -126,6 +126,8 @@ export function afterRender(events = []) {
       case 'time': at(t, () => clockFx(e, false)); t += 140; break;
       case 'rewind': at(t, () => clockFx(e, true)); t += 140; break;
       case 'phase': at(t, () => { showPhase(e.name, e.text); sfx('dawn', { vol: .5 }); }); t += 900; break;
+      // 패시브 ③ 폭발 (docs/12_signature.md): 이름 띠 0.6초 + 효과음 한 단계 위
+      case 'burst': at(t, () => { showBurst(e.who, e.name); sfx('chain3', { vol: .9 }); }); t += 220; break;
       case 'foeTurn':
         foePhase = true;
         discardHand(P, e.keep || [], t);

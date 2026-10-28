@@ -329,7 +329,7 @@ try {
     const run = await page.evaluate(() => { const G = window.__yk.S.G; return { depth: G.depth, relic: G.relics[0], up: G.deck.some(id => id.startsWith('iris.') && id.endsWith('+')), sigs: G.sigs, chip: !!document.querySelector('.depthchip') }; });
     await page.evaluate(() => window.__yk.fight(['anchor'], 'elite'));
     const hp = await page.evaluate(() => { const f = window.__yk.S.C.all[0]; return [f.hp, f.max]; });
-    if (run.depth === 1 && run.relic === 'umbrella' && run.up && run.sigs.includes('iris') && run.chip && hp[1] === Math.round(70 * 1.15)) { seen.depth = true; console.log(`meta: 밤의 깊이 1로 출발 (강적 체력 ${hp[1]}), 시작 도구 우산, 강화 시작 카드`); }
+    if (run.depth === 1 && run.relic === 'umbrella' && run.up && run.sigs.includes('iris') && run.chip && hp[1] === Math.round(70 * 1.15 * (await page.evaluate(async () => (await import('/js/data/rules.js')).RULES.foeHpMul[1].elite)))) { seen.depth = true; console.log(`meta: 밤의 깊이 1로 출발 (강적 체력 ${hp[1]}), 시작 도구 우산, 강화 시작 카드`); }
     else fail(`밤의 깊이 시작 실패 ${JSON.stringify({ ...run, hp })}`);
     // 도라 담금질 직접 고르기 · 세바스 남기기 고르기
     await page.evaluate(() => { window.__yk.S.view = 'party'; window.__yk.S.G = null; window.__yk.S.C = null; window.__yk.S.picked = []; window.__yk.render(); });

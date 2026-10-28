@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 1 · 전체 519장 · 묶음 57개
+style_version 1 · 전체 525장 · 묶음 57개
 
 ## 묶음
 
@@ -28,11 +28,11 @@ style_version 1 · 전체 519장 · 묶음 57개
 | `char-dora` | ★★★ 도라 | 6 |
 | `char-gordon` | ★★★ 고든 | 6 |
 | `char-fukuro` | ★★★ 후쿠로 | 6 |
-| `cards-sion` | ★★★★★ 시온 카드 11장 | 11 |
+| `cards-sion` | ★★★★★ 시온 카드 13장 | 13 |
 | `cards-lunaria` | ★★★★★ 루나리아 카드 13장 | 13 |
 | `cards-akane` | ★★★★★ 아카네 카드 13장 | 13 |
 | `cards-eleonore` | ★★★★★ 엘레오노르 카드 13장 | 13 |
-| `cards-iris` | ★★★★ 아이리스 카드 11장 | 11 |
+| `cards-iris` | ★★★★ 아이리스 카드 12장 | 12 |
 | `cards-noel` | ★★★★ 노엘 카드 11장 | 11 |
 | `cards-raven` | ★★★★ 레이븐 카드 11장 | 11 |
 | `cards-mimimomo` | ★★★★ 미미·모모 카드 12장 | 12 |
@@ -41,13 +41,13 @@ style_version 1 · 전체 519장 · 묶음 57개
 | `cards-tomori` | ★★★★ 토모리 카드 11장 | 11 |
 | `cards-sigrun` | ★★★★ 시그룬 카드 12장 | 12 |
 | `cards-zeno` | ★★★★ 제노 카드 13장 | 13 |
-| `cards-brick` | ★★★ 브릭 카드 11장 | 11 |
+| `cards-brick` | ★★★ 브릭 카드 12장 | 12 |
 | `cards-marta` | ★★★ 마르타 카드 12장 | 12 |
 | `cards-finn` | ★★★ 핀 카드 10장 | 10 |
-| `cards-laila` | ★★★ 라일라 카드 9장 | 9 |
+| `cards-laila` | ★★★ 라일라 카드 10장 | 10 |
 | `cards-dora` | ★★★ 도라 카드 10장 | 10 |
 | `cards-gordon` | ★★★ 고든 카드 10장 | 10 |
-| `cards-fukuro` | ★★★ 후쿠로 카드 10장 | 10 |
+| `cards-fukuro` | ★★★ 후쿠로 카드 11장 | 11 |
 | `cards-duo-1` | 인연 듀오 카드 1~11 | 11 |
 | `cards-duo-2` | 인연 듀오 카드 12~22 | 11 |
 | `cards-duo-3` | 인연 듀오 카드 23~33 | 11 |
@@ -606,7 +606,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `fukuro_cutin` | `assets/cutins/fukuro_cutin.png` | 1536×576 | `assets/chars/fukuro_normal.png` | 얼굴이 가운데 띠 안 |
 | `fukuro_outfit2` | `assets/chars/fukuro_outfit2.png` | 1024×1536 투명 | `assets/chars/fukuro_normal.png` | — |
 
-## `cards-sion` — ★★★★★ 시온 카드 11장
+## `cards-sion` — ★★★★★ 시온 카드 13장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -621,6 +621,8 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_sion_nebula` | `assets/cards/card_sion_nebula.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` | 시온 얼굴, 「성운 망토」 효과 |
 | `card_sion_shower` | `assets/cards/card_sion_shower.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` | 시온 얼굴, 「별똥 소나기」 효과 |
 | `card_sion_complete` | `assets/cards/card_sion_complete.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` | 시온 얼굴, 「별자리 완성」 효과 |
+| `card_sion_gemini` | `assets/cards/card_sion_gemini.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` | 시온 얼굴, 「쌍둥이자리」 효과 |
+| `card_sion_guide` | `assets/cards/card_sion_guide.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` | 시온 얼굴, 「유성 인도」 효과 |
 
 ## `cards-lunaria` — ★★★★★ 루나리아 카드 13장
 
@@ -676,7 +678,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_eleo_echo` | `assets/cards/card_eleo_echo.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` | 엘레오노르 얼굴, 「과거의 잔상」 효과 |
 | `card_eleo_midnight` | `assets/cards/card_eleo_midnight.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` | 엘레오노르 얼굴, 「자정의 정적」 효과 |
 
-## `cards-iris` — ★★★★ 아이리스 카드 11장
+## `cards-iris` — ★★★★ 아이리스 카드 12장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -690,6 +692,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_iris_mirror` | `assets/cards/card_iris_mirror.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` | 아이리스 얼굴, 「거울 자세」 효과 |
 | `card_iris_dance` | `assets/cards/card_iris_dance.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` | 아이리스 얼굴, 「검무」 효과 |
 | `card_iris_final` | `assets/cards/card_iris_final.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` | 아이리스 얼굴, 「마지막 일격」 효과 |
+| `card_iris_edge` | `assets/cards/card_iris_edge.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` | 아이리스 얼굴, 「칼끝 세우기」 효과 |
 | `card_iris_thousand` | `assets/cards/card_iris_thousand.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` | 아이리스 얼굴, 「천 번 베기」 효과 |
 
 ## `cards-noel` — ★★★★ 노엘 카드 11장
@@ -748,7 +751,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_seb_tea` | `assets/cards/card_seb_tea.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「차 준비」 효과 |
 | `card_seb_tray` | `assets/cards/card_seb_tray.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「은쟁반」 효과 |
 | `card_seb_cane` | `assets/cards/card_seb_cane.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「지팡이 칼」 효과 |
-| `card_seb_watch` | `assets/cards/card_seb_watch.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「회중시계」 효과 |
+| `card_seb_watch` | `assets/cards/card_seb_watch.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「예비 찻잔」 효과 |
 | `card_seb_tidy` | `assets/cards/card_seb_tidy.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「정리 정돈」 효과 |
 | `card_seb_afternoon` | `assets/cards/card_seb_afternoon.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「오후의 홍차」 효과 |
 | `card_seb_polite` | `assets/cards/card_seb_polite.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「정중한 일격」 효과 |
@@ -756,7 +759,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_seb_proxy` | `assets/cards/card_seb_proxy.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「대리 응대」 효과 |
 | `card_seb_silver` | `assets/cards/card_seb_silver.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「은식기 투척」 효과 |
 | `card_seb_service` | `assets/cards/card_seb_service.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「마지막 서비스」 효과 |
-| `card_seb_clock` | `assets/cards/card_seb_clock.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「집사의 시계」 효과 |
+| `card_seb_clock` | `assets/cards/card_seb_clock.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` | 세바스 얼굴, 「만찬 준비」 효과 |
 
 ## `cards-mariana` — ★★★★ 마리아나 카드 11장
 
@@ -825,7 +828,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_zeno_threat` | `assets/cards/card_zeno_threat.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` | 제노 얼굴, 「위협」 효과 |
 | `card_zeno_eye` | `assets/cards/card_zeno_eye.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` | 제노 얼굴, 「용의 눈」 효과 |
 
-## `cards-brick` — ★★★ 브릭 카드 11장
+## `cards-brick` — ★★★ 브릭 카드 12장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -840,6 +843,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_brick_recoil` | `assets/cards/card_brick_recoil.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` | 브릭 얼굴, 「반동 이동」 효과 |
 | `card_brick_volley` | `assets/cards/card_brick_volley.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` | 브릭 얼굴, 「일제 사격」 효과 |
 | `card_brick_last` | `assets/cards/card_brick_last.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` | 브릭 얼굴, 「최후의 포탄」 효과 |
+| `card_brick_belt` | `assets/cards/card_brick_belt.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` | 브릭 얼굴, 「탄띠」 효과 |
 
 ## `cards-marta` — ★★★ 마르타 카드 12장
 
@@ -873,7 +877,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_finn_run` | `assets/cards/card_finn_run.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` | 핀 얼굴, 「지름길 달리기」 효과 |
 | `card_finn_last` | `assets/cards/card_finn_last.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` | 핀 얼굴, 「마지막 편지」 효과 |
 
-## `cards-laila` — ★★★ 라일라 카드 9장
+## `cards-laila` — ★★★ 라일라 카드 10장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -885,6 +889,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_laila_whirl` | `assets/cards/card_laila_whirl.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` | 라일라 얼굴, 「회오리」 효과 |
 | `card_laila_read` | `assets/cards/card_laila_read.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` | 라일라 얼굴, 「바람 읽기」 효과 |
 | `card_laila_resolve` | `assets/cards/card_laila_resolve.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` | 라일라 얼굴, 「탈영병의 각오」 효과 |
+| `card_laila_empty` | `assets/cards/card_laila_empty.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` | 라일라 얼굴, 「빈손」 효과 |
 | `card_laila_gale` | `assets/cards/card_laila_gale.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` | 라일라 얼굴, 「칼바람」 효과 |
 
 ## `cards-dora` — ★★★ 도라 카드 10장
@@ -917,7 +922,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_gord_lunch` | `assets/cards/card_gord_lunch.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` | 고든 얼굴, 「도시락」 효과 |
 | `card_gord_ration` | `assets/cards/card_gord_ration.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` | 고든 얼굴, 「비상식량」 효과 |
 
-## `cards-fukuro` — ★★★ 후쿠로 카드 10장
+## `cards-fukuro` — ★★★ 후쿠로 카드 11장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -926,6 +931,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_fuku_charm` | `assets/cards/card_fuku_charm.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` | 후쿠로 얼굴, 「행운 부적」 효과 |
 | `card_fuku_clear` | `assets/cards/card_fuku_clear.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` | 후쿠로 얼굴, 「떨이」 효과 |
 | `card_fuku_mask` | `assets/cards/card_fuku_mask.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` | 후쿠로 얼굴, 「가면 속」 효과 |
+| `card_fuku_lottery` | `assets/cards/card_fuku_lottery.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` | 후쿠로 얼굴, 「복권」 효과 |
 | `card_fuku_fake` | `assets/cards/card_fuku_fake.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` | 후쿠로 얼굴, 「짝퉁 부적」 효과 |
 | `card_fuku_bundle` | `assets/cards/card_fuku_bundle.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` | 후쿠로 얼굴, 「보따리 던지기」 효과 |
 | `card_fuku_credit` | `assets/cards/card_fuku_credit.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` | 후쿠로 얼굴, 「외상」 효과 |

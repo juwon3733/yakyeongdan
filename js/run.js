@@ -89,9 +89,20 @@ export function addTime(m) {
 export const rewind = m => { S.G.clock = Math.max(0, S.G.clock - m); pushFx({ kind: 'rewind', m }); };
 // 파티 패시브 숫자 합 (서 있는 동료만)
 export const partySum = k => S.G.party.reduce((t, p) => t + (alive(p) ? CHARACTERS[p].passive?.[k] || 0 : 0), 0);
-// 시간 카드 비용(분): 달(초승 15) · 멈춘 시계탑(0) · 엘레오노르(−10)
-// 거꾸로 도는 시계 +10
-export const timeCost = () => relicFlag('timeCardFree') ? 0 : Math.max(0, (MOONS[S.G.moon].timeCost ?? RULES.timeCard) - partySum('timeMinus') + relicSum('timeCardAdd'));
+// 지금 걸린 달 효과 값. 루나리아 「만월야」(C.allMoons)면 네 달 효과가 한꺼번에: 수치는 가장 좋은 쪽, boost는 동료별 가장 큰 값.
+const MOON_MIN = { timeCost: 1, duoNeed: 1 };
+export function moonFx(k) {
+  const ms = S.C?.allMoons ? Object.values(MOONS) : [MOONS[S.G.moon]];
+  if (k === 'boost') {
+    const o = {}; for (const m of ms) for (const [c, v] of Object.entries(m.boost || {})) o[c] = Math.max(o[c] || 0, v);
+    return o;
+  }
+  const vs = ms.map(m => m[k]).filter(v => v != null);
+  if (!vs.length) return undefined;
+  return MOON_MIN[k] ? Math.min(...vs) : Math.max(...vs);
+}
+// 시간 카드 비용(분): 달(초승 8) · 멈춘 시계탑(0) · 엘레오노르(−5) · 엘레오노르 「멈춘 자정」이 터진 턴(0) · 거꾸로 도는 시계 +10
+export const timeCost = () => relicFlag('timeCardFree') || S.C?.timeFree ? 0 : Math.max(0, (moonFx('timeCost') ?? RULES.timeCard) - partySum('timeMinus') + relicSum('timeCardAdd'));
 export const isDawn = () => S.G.clock >= dawnAt() && !relicFlag('noDawn');
 
 // 7시가 되면 탑이 무너진다 (어떤 행동 뒤든 main.js가 부른다)

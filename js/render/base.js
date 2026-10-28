@@ -187,7 +187,7 @@ function mateDetail(k) {
   const locked = new Set(packCards(k).slice(packsOpen(k)).flat());
   return `<div class="mhead ${starRing(k)}" style="--c:${r.col}">${img(k)}<div><h2>${r.name} <span class="stars">${stars(r.rarity)}</span></h2>
       <p class="note">${r.role} · 체력 ${c?.maxHp ?? '-'} · 별자리 ${s}/${SUMMON.maxStars} · 판 ${st.runs} · 이긴 판 ${st.wins}${P.titles.includes(k) ? ` · 칭호 「${r.name}의 새벽」` : ''}</p>
-      ${c ? `<p class="ps"><b>${esc(c.passive.name)}</b> ${esc(c.passive.text)}</p>` : ''}${cos}</div></div>
+      ${c ? `<p class="ps"><b>${esc(c.passive.name)}</b></p>${(c.passive.lines || [['', '', c.passive.text]]).map(([k, n, t]) => `<p class="ps">${{ trait: '①', keyword: '②', burst: '③' }[k] || ''} ${n ? `<b>「${esc(n)}」</b> ` : ''}${esc(t)}</p>`).join('')}` : ''}${cos}</div></div>
     <ul class="steps">${steps}</ul>
     ${c ? `<h3 class="sub">시작 카드</h3><div class="hand mini">${start}</div>
     <h3 class="sub">보상 카드 ${pool.length - locked.size}/${pool.length}</h3><div class="hand mini scroll">${pool.map(id => locked.has(id) ? `<span class="lockcard" title="카드 묶음이 열리면 나온다">${esc(CARDS[id].name)}<small>잠김</small></span>` : cardHTML(id, true, 'none')).join('')}</div>` : ''}`;
