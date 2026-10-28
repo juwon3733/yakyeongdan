@@ -1114,7 +1114,7 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 .party{gap:2px}
 .pm{width:80px}
 .pm img,#stage.bigtext .pm img,#app.tut[data-screen="combat"] .pm img,#stage #app.tut[data-screen="combat"] .pm img{width:72px;height:96px;margin:0;image-rendering:pixelated}
-.pm .lab{margin-top:-6px}
+.pm .lab{margin-top:2px}
 .pm .lab .hpbar{flex-basis:60px;width:60px}
 .pm .lab .s{max-width:80px}
 .pm img[src^="data:"],#stage.bigtext .pm img[src^="data:"]{width:48px;height:64px;margin:32px 12px 0}
