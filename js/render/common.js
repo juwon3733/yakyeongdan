@@ -1,5 +1,5 @@
 import { S, timeCost, dawnAt } from '../run.js';
-import { actorOf, costOf, shownValue } from '../combat.js';
+import { actorOf, costOf, shownValue, duoPreview } from '../combat.js';
 import { cardData } from '../data/cards.js';
 import { CHARACTERS } from '../data/characters.js';
 import { MOONS } from '../data/moons.js';
@@ -8,6 +8,7 @@ import { ROSTER } from '../data/roster.js';
 import { relicFlag } from '../relics.js';
 import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
 import { moonImg, sprite } from './sprites.js';
+import { kwTip } from '../data/keywords.js';
 import { wearing } from '../meta.js';
 
 export const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
@@ -22,8 +23,8 @@ export const palOf = (id, alt) => { const pal = ROSTER[id]?.pal || CHARACTERS[id
 export function relicChip(id, G) {
   const d = RELICS[id], usable = d.use && !G.used[id] && (d.use !== 'moon' || S.C);
   const tip = esc(`${d.name} (${RELIC_TIER_NAME[d.tier]}) — ${d.text}${d.use ? (G.used[id] ? ' · 이번 판엔 썼다' : ' · 누르면 쓴다') : ''}`);
-  return d.use ? `<button type="button" class="relic t-${d.tier} ${usable ? 'can' : 'spent'}" data-relic="${id}" title="${tip}" aria-label="${tip}" ${usable ? '' : 'disabled'}>${esc(d.name.slice(0, 1))}</button>`
-    : `<span class="relic t-${d.tier}" title="${tip}" aria-label="${tip}" tabindex="0">${esc(d.name.slice(0, 1))}</span>`;
+  return d.use ? `<button type="button" class="relic t-${d.tier} ${usable ? 'can' : 'spent'}" data-relic="${id}" data-tip="${tip}" aria-label="${tip}" ${usable ? '' : 'disabled'}>${esc(d.name.slice(0, 1))}</button>`
+    : `<span class="relic t-${d.tier}" data-tip="${tip}" aria-label="${tip}" tabindex="0">${esc(d.name.slice(0, 1))}</span>`;
 }
 
 // 동료 얼굴 (서 있는 그림의 윗부분을 잘라 보여 줌)
@@ -90,8 +91,10 @@ export function cardHTML(inst, playable, act = 'play', idOverride, sel = false) 
   if (!isStr && S.C) { const c = costOf(inst); if (c != null) { cost = String(c); cc = c > d.cost ? 'dn' : c < d.cost ? 'up' : ''; } }
   const tags = [d.time ? `<span class="tm">${S.C?.payEnergy && relicFlag('hourglass') ? '에너지로' : `+${S.G ? timeCost() : RULES.timeCard}분`}</span>` : '', d.target === 'ally' ? '<span class="tg">동료 고름</span>' : '',
     d.target === 'all' ? '<span class="tg all">모든 적</span>' : ''].join('');
-  return `<button type="button" class="card r-${d.rarity} ${duo ? 'duo' : ''} ${curse ? 'curse' : ''} ${d.up ? 'upg' : ''} ${playable ? '' : 'no'} ${down ? 'down' : ''} ${sel ? 'sel' : ''}" style="--c:${col};--c2:${col2}" data-${act}="${id}">
-    <span class="hd"><span class="cost ${cc}">${cost}</span><span class="nm">${esc(d.name)}</span></span>
+  const dn = !isStr && S.C && playable && act === 'play' ? duoPreview(inst) : null;
+  const tip = (dn ? `지금 쓰면 듀오 「${dn}」 카드가 손에 들어온다.\n` : '') + kwTip(`${d.text || ''} ${d.time ? '시간 카드' : ''} ${d.exhaust ? '소멸' : ''} ${duo ? '듀오' : ''} ${curse ? '저주' : ''} ${(d.tags || []).includes('slash') ? '베기' : ''}`);
+  return `<button type="button" class="card r-${d.rarity} ${duo ? 'duo' : ''} ${curse ? 'curse' : ''} ${d.up ? 'upg' : ''} ${playable ? '' : 'no'} ${down ? 'down' : ''} ${sel ? 'sel' : ''} ${dn ? 'duonext' : ''}" style="--c:${col};--c2:${col2}" data-${act}="${id}"${tip ? ` data-tip="${esc(tip)}"` : ''}>
+    <span class="hd"><span class="cost ${cc}">${cost}</span><span class="nm ${d.name.length >= 6 ? 'long' : ''}">${esc(d.name)}</span></span>
     <span class="bd">${tags}${cardText(d)}</span>
     <span class="who">${down ? '쓰러짐' : who}${duo ? ' · 듀오' : ''}<span class="rar">${RARITY_NAME[d.rarity] || ''}${d.exhaust && !duo ? ' · 소멸' : ''}</span></span></button>`;
 }

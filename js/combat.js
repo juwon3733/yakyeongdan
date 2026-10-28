@@ -361,6 +361,14 @@ export function playCard(id, pick = {}) {
   return { duo, bond };
 }
 
+// 이 카드를 지금 쓰면 듀오가 생기는지 (손패에서 미리 반짝이게). playCard의 조건과 같다.
+export function duoPreview(inst) {
+  const C = S.C, G = S.G; if (!C || !C.last) return null;
+  const d = cardData(inst.id); if (d.ch === 'duo' || d.ch === 'curse' || d.ch === C.last) return null;
+  const k = duoKey(C.last, d.ch), need = MOONS[G.moon].duoNeed ?? RULES.duoNeed;
+  return DUOS[k] && !C.duoUsed.has(k) && alive(C.last) && Math.min(RULES.chainMax, C.chain + 1) >= need ? DUOS[k].name : null;
+}
+
 // 전투 중 대열 바꾸기: formation[i] ↔ [i+1], 턴마다 RULES.swapsPerTurn번, 바꾼 둘 방어 감소
 export function swapInCombat(i) {
   const C = S.C, F = S.G.formation;

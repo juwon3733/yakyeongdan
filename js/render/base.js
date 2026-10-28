@@ -109,8 +109,10 @@ export function revealView() {
       return `<div class="got g${r.rarity} ${r.rarity === 5 ? 'crack' : ''}" style="--c:${c.col}">${img(r.id)}
         <span class="nm">${c.name}</span><span class="stars">${stars(r.rarity)}</span><span class="tag">${tag}</span></div>`;
     }
-    return `<div class="got g${r.rarity} item"><span class="ico">${r.name.slice(0, 1)}</span><span class="nm">${r.name}</span><span class="stars">${stars(r.rarity)}</span>
-      <span class="tag" title="${esc(r.text || '')}">${r.dust ? `별가루 +${r.dust}` : esc(r.text || '보관함에')}</span></div>`;
+    // 물건 이름(「…」)을 크게, 종류(흔한 도구·의상 등)는 아래 작게
+    const m = /「(.+?)」/.exec(r.text || ''), nm = m ? m[1] : r.name;
+    return `<div class="got g${r.rarity} item"><span class="ico">${esc(nm.slice(0, 1))}</span><span class="nm">${esc(nm)}</span><span class="stars">${stars(r.rarity)}</span>
+      <span class="tag" title="${esc(r.text || '')}">${r.dust ? (/^별가루/.test(nm) ? '교환소에서 쓴다' : `이미 있음 → 별가루 +${r.dust}`) : esc(m ? r.text.replace(m[0], '').trim() || r.name : r.text || '보관함에')}</span></div>`;
   }).join('');
   const done = R.open.every(Boolean);
   const next = P.pick5 ? '<button type="button" class="primary" data-view="pick5">★5 동료 고르기</button>' : '<button type="button" class="primary" data-view="summon">확인</button>';

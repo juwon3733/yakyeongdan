@@ -41,7 +41,7 @@ const stage = document.getElementById('stage');
 const app = document.getElementById('app');
 const modal = document.getElementById('modal');
 // 그리기 전후로 연출 층(js/juice.js)이 카드·체력 막대 자리를 재고, 엔진이 쌓은 연출 사건을 순서대로 보여 준다
-const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); };
+const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); };
 
 // 논리 640×360을 창에 맞춰 키운다. 2배 이상 들어가면 정수배, 그보다 작으면 맞춤 배율.
 // 폰처럼 16:9보다 옆으로 긴 화면(2:1 등)이면 판 폭을 최대 800까지 늘려 남는 옆자리를 쓴다(높이 360은 그대로).
@@ -55,6 +55,30 @@ function fit() {
   applySettings(k);   // 작은 화면이면 글자 크게(설정 「자동」)
 }
 addEventListener('resize', fit);
+
+// 키워드 도움말: data-tip이 있는 것에 마우스를 올리거나 손가락을 대면 뜬다 (js/data/keywords.js)
+const tipEl = document.getElementById('tip');
+var tipFor = null;   // var: render()가 이 줄보다 먼저 불려도 되게
+function showTip(el) {
+  const t = el.dataset.tip; if (!t) return hideTip();
+  tipFor = el; tipEl.textContent = t; tipEl.hidden = false;
+  const s = parseFloat(getComputedStyle(stage).getPropertyValue('--s')) || 1;
+  tipEl.style.setProperty('--ts', Math.max(1, s));
+  const r = el.getBoundingClientRect(), w = tipEl.offsetWidth, h = tipEl.offsetHeight;
+  let x = Math.min(Math.max(4, r.left + r.width / 2 - w / 2), innerWidth - w - 4);
+  let y = r.top - h - 6; if (y < 4) y = Math.min(innerHeight - h - 4, r.bottom + 6);
+  tipEl.style.left = `${x}px`; tipEl.style.top = `${y}px`;
+}
+function hideTip() { tipFor = null; tipEl.hidden = true; }
+// title이 붙은 것(도구·달·밤의 깊이 버튼 등)도 같은 도움말로 띄운다 (손가락으로도 보이게)
+stage.addEventListener('pointerover', e => {
+  const el = e.target.closest('[data-tip],[title]');
+  if (el && !el.dataset.tip && el.title) { el.dataset.tip = el.title; el.removeAttribute('title'); }
+  if (el && el !== tipFor) showTip(el); else if (!el) hideTip();
+});
+stage.addEventListener('pointerleave', hideTip);
+addEventListener('pointerdown', e => { if (!e.target.closest('[data-tip],[title]')) hideTip(); });
+addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
 fit();
 
 // 듀오 컷인: 카드가 날아가 맞은 뒤에 띄운다 (애니메이션 줄이기면 바로)

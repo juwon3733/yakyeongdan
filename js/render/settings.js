@@ -57,5 +57,5 @@ export function tutDoneView() {
 // 판 위 도움말 줄 (튜토리얼 중)
 export function tutBar() {
   const t = tutTip(); if (!S.G?.tutorial) return '';
-  return `<div class="tutbar" role="status"><span class="lb">도움말</span><span class="tx">${esc(t)}</span><button type="button" class="mini" data-tutskip>건너뛰기</button></div>`;
+  return `<div class="tutbar" role="status"><span class="lb">도움말</span><span class="tx">${esc(t)}</span><button type="button" class="mini" data-tutskip title="첫 밤을 그만두고 타이틀로">튜토리얼 그만두기</button></div>`;
 }

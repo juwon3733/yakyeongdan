@@ -40,7 +40,7 @@ export function mapView() {
       <div class="mapgrid" style="width:${MW}px;height:${MH}px">
         <svg class="edges" width="${MW}" height="${MH}" aria-hidden="true">${lines}</svg>${labels}${nodes}</div>
       <div class="mapfoot">
-        <div class="formation"><span class="lbl">대열<br><small>두 칸을 눌러 자리 바꾸기</small></span>${slots}<span class="enemy-side">적 ›</span></div>
+        <div class="formation"><span class="lbl">대열<br><small>두 칸을 눌러 자리 바꾸기</small></span>${slots}<span class="enemy-side" data-tip="오른쪽이 적 쪽. 앞줄이 먼저 맞는다(적마다 노림이 다르다).">적은 이쪽 ›</span></div>
       </div>
     </div>`;
 }

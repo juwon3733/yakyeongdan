@@ -8,6 +8,7 @@ import { RULES, AIM_NAME, ROW_NAME } from '../data/rules.js';
 import { MOONS } from '../data/moons.js';
 import { sprite, moonImg } from './sprites.js';
 import { esc, cardHTML, face, hpBar, palOf } from './common.js';
+import { kwTip, kwOne } from '../data/keywords.js';
 
 // 동료별 고유 수치 표시
 const STAT = {
@@ -30,7 +31,16 @@ const STAT = {
   gordon: C => C.nextAtk ? `다음 턴 공격 +${C.nextAtk}` : '',
   fukuro: C => C.atkFree ? '공격 0비용' : '',
 };
-const chip = (v, nm, col) => v ? `<span class="chip" style="color:${col}">${nm} ${v}</span>` : '';
+const chip = (v, nm, col) => v ? `<span class="chip" style="color:${col}" data-tip="${esc(kwOne(nm.replace(/ −$/, '')))}">${nm} ${v}</span>` : '';
+// 적 특징 (데이터 필드 → 짧은 이름 + 설명)
+const foeTraits = f => [
+  f.noPoisonWhileBlock ? ['단단한 껍데기', '방어가 남아 있는 동안 독이 들지 않는다.'] : null,
+  f.armor ? [`갑옷 ${f.armor}`, `공격 한 번마다 받는 피해 -${f.armor}.`] : null,
+  f.acts > 1 ? [`행동 ×${f.acts}`, `한 턴에 ${f.acts}번 움직인다.`] : null,
+  f.turnClock ? [`시계 +${f.turnClock}분`, `내 턴이 시작될 때마다 밤 시계가 ${f.turnClock}분 간다.`] : null,
+  f.light ? ['불빛', kwOne('불빛')] : null,
+  f.phase2 && !f.p2 ? ['2단계', `체력이 ${Math.round(f.phase2.at * 100)}% 아래가 되면 모습이 바뀐다.`] : null,
+].filter(Boolean).map(([n, t]) => `<span class="chip trait" data-tip="${esc(`${n}: ${t}`)}">${n}</span>`).join('');
 const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f.dim * 100) + '%' : 0, '빛 −', '#f0d040') + chip(f.bounty, '현상금', '#e0a050') + chip(f.block, '방어', 'var(--moon)') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
   + chip(f.str, '힘', '#ff9a8a') + chip(f.weak, '약화', '#f08ac0') + chip(f.vuln, '취약', '#ffd060');
 
@@ -51,7 +61,7 @@ export function combatView() {
         <img class="px" src="${sprite(palOf(p), c.long)}" alt="">
         <span class="nm">${c.name}</span>
         ${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : `${M.hp}/${M.max}`}${blk ? ` <b class="blk">방어 ${blk}</b>` : ''}</span>
-        <span class="s">${s}</span></button>${swap}`;
+        <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span></button>${swap}`;
   }).join('');
   const many = C.all.length > 1;
   const foes = C.all.map(f => {
@@ -60,12 +70,12 @@ export function combatView() {
     // 공격 의도는 흔들리고, 센 공격(한 번에 15 이상)은 붉게 빨리 (js/juice.js가 공격 직전 강조)
     const ic = atk ? `atk ${+atk[1] * (+atk[2] || 1) >= 15 ? 'big' : ''}` : '';
     return `<button type="button" class="foe ${many ? 'sm' : ''} ${wantFoe ? 'tg' : ''}" data-foe="${f.i}" data-fi="${f.i}">
-        <span class="intent ${ic}">${it}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[C.taunt ? 'taunt' : f.aim || RULES.defaultAim]}</span>`}` : ''}</span>
+        <span class="intent ${ic}" data-tip="${esc(`다음 행동. ${aim ? `노림: ${AIM_NAME[C.taunt ? 'taunt' : f.aim || RULES.defaultAim]} (얼굴이 맞을 동료).` : ''}`)}">${it}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[C.taunt ? 'taunt' : f.aim || RULES.defaultAim]}</span>`}` : ''}</span>
         <img class="px" src="${sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
         <span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span>
         <span class="hp">${f.hp}/${f.max}</span>
-        <span class="st">${foeSt(f)}</span>
+        <span class="st">${foeTraits(f)}${foeSt(f)}</span>
       </button>`;
   }).join('');
   // 담금질 고르기 중이면 강화할 수 있는 카드만 누를 수 있다. 세바스·예약: 남길 카드 표시.
@@ -81,7 +91,7 @@ export function combatView() {
     ? `<button type="button" class="mini keepbtn ${marks.includes(pend.uid) ? 'on' : ''}" data-keepmark title="턴 끝에 이 카드를 버리지 않고 남긴다 (${keepN}장)">${marks.includes(pend.uid) ? '남기기 취소' : `남기기 (${marks.length}/${keepN})`}</button>` : '';
   const temperBar = tempering ? `<span class="tempbar">담금질: 강화할 카드를 고르세요 (${C.choose.left}장) <button type="button" class="mini" data-temperauto>자동으로</button></span>` : '';
   const pip = (n, on) => Array.from({ length: Math.max(n, on) }, (_, k) => `<i class="${k < on ? '' : 'off'}"></i>`).join('');
-  const tip = tempering ? '' : wantAlly ? '받을 동료를 누르세요.' : wantFoe ? '칠 적을 누르세요.' : pend ? '카드를 한 번 더 누르면 씁니다.'
+  const tip = tempering ? '강화할 카드를 누르면 턴을 이어 갈 수 있다.' : wantAlly ? '받을 동료를 누르세요.' : wantFoe ? '칠 적을 누르세요.' : pend ? '카드를 한 번 더 누르면 씁니다.'
     : lit.length ? '불빛이 비춘 동료의 카드는 비용 +1.' : '카드를 누르고 대상을 누르세요.';
   return `<div class="field">
       <div class="party">${party}</div>
@@ -90,7 +100,7 @@ export function combatView() {
     <div class="log" aria-live="polite">${C.moonPick ? `<span class="cmoonpick">월광 · 이번 전투의 달: ${Object.keys(MOONS).map(k => `<button type="button" class="mini ${G.moon === k ? 'on' : ''}" data-cmoon="${k}" title="${esc(MOONS[k].text)}"><img class="px" src="${moonImg(k)}" alt="">${MOONS[k].name}</button>`).join('')}</span>` : ''}${temperBar}${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span>${pendKeep}${relicFlag('hourglass')
       ? `<button type="button" class="mini hg ${C.payEnergy ? 'on' : ''}" data-hg aria-pressed="${C.payEnergy}" title="깨진 모래시계: 시간 카드를 시간 대신 에너지 1로">시간 카드: ${C.payEnergy ? '에너지 1' : '시간'}</button>` : ''}</div>
     <div class="bottom">
-      <span class="energy" title="에너지">${pip(RULES.energy, C.energy)}<b>${C.energy}</b></span>
+      <span class="energy" data-tip="에너지: 카드를 쓰는 데 든다. 턴마다 다시 찬다.">${pip(RULES.energy, C.energy)}<b>${C.energy}</b><small>에너지</small></span>
       <div class="hand">${hand || '<p class="note">손패가 비었다.</p>'}</div>
       <div class="endcol"><button type="button" class="primary" data-end ${tempering ? 'disabled' : ''}>턴 끝</button><span class="note">뽑을 ${C.draw.length} · 버린 ${C.disc.length}${C.exh.length ? ` · 소멸 ${C.exh.length}` : ''}</span></div>
     </div>`;
@@ -99,5 +109,5 @@ export function combatView() {
 export const combatTopExtra = () => {
   const C = S.C;
   const extra = [C.turnAtk ? `<span class="chip" style="color:#ff9a8a">이번 턴 공격 +${C.turnAtk}</span>` : '', C.noDmg ? '<span class="chip" style="color:#9ad0f0">숨바꼭질</span>' : ''].join('');
-  return extra + `<span class="chip">연계</span><span class="chain">${Array.from({ length: RULES.chainMax }, (_, k) => `<i class="${k < C.chain ? 'on' : ''}"></i>`).join('')}</span><span class="note">${C.turn}턴</span>`;
+  return extra + `<span class="chip" data-tip="${esc(kwOne('연계') + '\n' + kwOne('듀오'))}">연계</span><span class="chain">${Array.from({ length: RULES.chainMax }, (_, k) => `<i class="${k < C.chain ? 'on' : ''}"></i>`).join('')}</span><span class="note">${C.turn}턴</span>`;
 };

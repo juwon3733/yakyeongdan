@@ -58,7 +58,7 @@ export function partyView() {
   const can = k => !!CHARACTERS[k] && (S.dev || owns(k));
   const mates = ROSTER_IDS.filter(k => owns(k) || (S.dev && CHARACTERS[k])).map(k => {
     const r = ROSTER[k], c = CHARACTERS[k], on = S.picked.includes(k), ok = can(k);
-    return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'}>
+    return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'} title="${c ? esc(`${c.passive.name}: ${c.passive.text}`) : ''}">
       <img class="px" src="${sprite(palOf(k), r.long)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
       <span class="rl">${r.role}${c ? ` · 체력 ${c.maxHp}` : ''}</span>
       <span class="ps">${c ? `<b>${c.passive.name}</b> ${c.passive.text}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
@@ -75,10 +75,11 @@ export function partyView() {
     <div class="tright">
       <h2>동료 셋 (${S.picked.length}/3)</h2>
       <div class="chosenrow">${chosen}</div>
-      ${bondsOf(S.picked)}
       ${runSetup()}
-      <p class="note">대열은 지도에서 바꿀 수 있다. 처음엔 체력이 높은 동료가 앞에 선다.</p>
       <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>출발</button>
+      ${bondsOf(S.picked)}
+      ${S.picked.length ? `<div class="chosenps">${S.picked.map(k => { const r = ROSTER[k], c = CHARACTERS[k]; return c ? `<span style="--c:${r.col}"><b>${r.name} · ${esc(c.passive.name)}</b> ${esc(c.passive.text)}</span>` : ''; }).join('')}</div>` : ''}
+      <p class="note">대열은 지도에서 바꿀 수 있다. 처음엔 체력이 높은 동료가 앞에 선다.</p>
       <p class="note small"><b>연계</b>: 서로 다른 동료 카드를 번갈아 쓰면 칸이 차고 공격이 세진다. 2칸 이상에서 인연 있는 둘을 이어 쓰면 <b>듀오 카드</b>.</p>
     </div>
   </div>`;

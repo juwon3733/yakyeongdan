@@ -22,7 +22,10 @@ const condText = (cid, n) => {
 };
 
 export function episodesView() {
-  const rows = Object.keys(EPISODES).map(cid => {
+  // 안 본 화가 있는 동료 → 가진 동료 → 아직 없는 동료 순 (원래 순서 안에서)
+  const rank = cid => EPISODES[cid].some((_, n) => epOpen(cid, n) && !P.epSeen[epKey(cid, n)]) ? 0 : P.owned[cid] ? 1 : 2;
+  const ids = Object.keys(EPISODES).map((k, i) => [k, i]).sort((x, y) => rank(x[0]) - rank(y[0]) || x[1] - y[1]).map(x => x[0]);
+  const rows = ids.map(cid => {
     const w = who(cid), owned = !!P.owned[cid];
     const eps = EPISODES[cid].map((ep, n) => {
       const open = epOpen(cid, n), seen = !!P.epSeen[epKey(cid, n)];
