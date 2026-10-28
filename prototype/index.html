@@ -1,0 +1,607 @@
+<title>야경단</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=IBM+Plex+Sans+KR:wght@400;700&display=swap">
+<style>
+/* 밤의 탑 한 가지 모습(다크 단일 테마). 위: 시계·체력 줄, 가운데: 화면(지도/전투/보상), 카드는 종이색. */
+:root{
+  --bg:#0c0d1e; --panel:#161731; --line:#2b2d55; --ink:#ece8f6; --dim:#9a97bb;
+  --gold:#e0b84a; --rose:#e04a6a; --moon:#c9d2f0; --paper:#ece6d8; --paper-ink:#1a1820; --shadow:#000;
+  --f-disp:"DotGothic16","IBM Plex Sans KR",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans KR",system-ui,sans-serif;
+  color-scheme:dark;
+}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body)}
+[hidden]{display:none!important}
+.wrap{max-width:560px;margin:0 auto;padding-block:14px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:12px}
+h1,h2,h3{font-family:var(--f-disp);font-weight:400;margin:0;text-wrap:balance}
+h1{font-size:28px;letter-spacing:.04em}
+h2{font-size:20px;color:var(--gold)}
+.sub{color:var(--dim);font-size:13px;margin:2px 0 0}
+img.px{image-rendering:pixelated}
+button{font:inherit;color:var(--ink);background:var(--panel);border:2px solid var(--line);padding:9px 12px;cursor:pointer;box-shadow:3px 3px 0 var(--shadow);touch-action:manipulation}
+button:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--shadow)}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+button.primary{border-color:var(--gold);color:var(--gold)}
+button:disabled{opacity:.4;cursor:default;transform:none}
+.topbar{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--panel);border:2px solid var(--line);padding:8px 10px;font-family:var(--f-disp)}
+.clock{font-size:22px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.clock.dawn{color:#ffb070}
+.topbar .grow{flex:1}
+.chip{font-family:var(--f-disp);font-size:12px;border:1px solid currentColor;padding:1px 6px;white-space:nowrap}
+.hpbar{height:8px;background:#2a1424;position:relative;min-width:60px}
+.hpbar i{position:absolute;inset:0 auto 0 0;background:var(--rose)}
+.night{height:6px;background:#1e2046;position:relative}
+.night i{position:absolute;inset:0 auto 0 0;background:linear-gradient(90deg,#3a3f8a,#c9d2f0 85%,#ffb070)}
+.note{color:var(--dim);font-size:13px;line-height:1.6;margin:0}
+.note b{color:var(--ink)}
+/* 동료 고르기 */
+.pick{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.mate{display:grid;grid-template-columns:48px minmax(0,1fr);gap:8px;text-align:left;padding:8px;align-items:start}
+.mate img{width:48px;height:64px;background:#0b0b18;border-bottom:3px solid var(--c)}
+.mate .nm{font-weight:700}
+.mate .rl{font-size:12px;color:var(--c)}
+.mate .ds{font-size:12px;color:var(--dim);line-height:1.45;margin-top:2px}
+.mate.on{border-color:var(--c);background:#1f2042}
+.mate.locked{opacity:.45}
+/* 지도 */
+.map{display:flex;flex-direction:column;gap:8px}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:8px}
+.node{display:flex;flex-direction:column;gap:2px;align-items:flex-start;padding:8px 10px;text-align:left}
+.node .t{font-family:var(--f-disp);font-size:15px}
+.node .m{font-size:12px;color:var(--dim)}
+.node.k-boss{border-color:var(--rose)} .node.k-elite{border-color:#b06ae0} .node.k-rest{border-color:#4cc08a} .node.k-event{border-color:var(--moon)}
+.row.past .node{opacity:.35;box-shadow:none}
+.row.past .node.took{opacity:1;border-style:dashed}
+.row.future .node{opacity:.55;box-shadow:none;cursor:default}
+.rowlabel{font-family:var(--f-disp);font-size:12px;color:var(--dim)}
+/* 전투 */
+.foe{display:grid;grid-template-columns:96px minmax(0,1fr);gap:12px;background:var(--panel);border:2px solid var(--line);padding:10px;align-items:center}
+.foe img{width:96px;height:128px;background:#0b0b18}
+.foe .nm{font-family:var(--f-disp);font-size:18px}
+.foe .st{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.intent{margin-top:8px;font-family:var(--f-disp);font-size:15px;color:#ff9a8a}
+.party{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.pm{display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--panel);border:2px solid var(--line);padding:6px 4px;border-bottom-color:var(--c)}
+.pm img{width:36px;height:48px}
+.pm .nm{font-size:12px}
+.pm .s{font-family:var(--f-disp);font-size:11px;color:var(--c);min-height:1.2em;text-align:center}
+.pm.last{outline:2px solid var(--c);outline-offset:-5px}
+.res{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-family:var(--f-disp)}
+.energy{display:flex;gap:4px}
+.energy i{width:14px;height:14px;background:var(--gold);box-shadow:2px 2px 0 var(--shadow)}
+.energy i.off{background:#3a3420}
+.chain{display:flex;gap:3px;align-items:center}
+.chain i{width:18px;height:8px;background:#26284e}
+.chain i.on{background:var(--moon)}
+.hand{display:grid;grid-template-columns:repeat(auto-fill,minmax(98px,1fr));gap:8px}
+.card{background:var(--paper);color:var(--paper-ink);border:2px solid var(--shadow);box-shadow:3px 3px 0 var(--shadow);padding:0;text-align:left;display:flex;flex-direction:column;min-height:118px}
+.card .hd{background:var(--c);color:#111;display:flex;align-items:center;gap:6px;padding:3px 6px;font-family:var(--f-disp);font-size:13px}
+.card .cost{background:#111;color:var(--gold);min-width:18px;text-align:center;font-family:var(--f-disp);font-size:13px;padding:0 2px}
+.card .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .bd{padding:5px 6px 6px;font-size:12px;line-height:1.45;flex:1}
+.card .who{font-size:11px;color:#6a6478;padding:0 6px 5px}
+.card .tm{display:inline-block;background:#24284e;color:var(--moon);font-family:var(--f-disp);font-size:11px;padding:0 4px;margin-right:4px}
+.card.duo{background:#fff4d8;border-color:var(--gold)}
+.card.duo .hd{background:linear-gradient(90deg,var(--c),var(--c2))}
+.card.no{opacity:.45}
+.log{font-size:12px;color:var(--dim);background:#0b0b18;border:2px solid var(--line);padding:6px 8px;min-height:3.6em;line-height:1.5}
+.log b{color:var(--ink);font-weight:400}
+.acts{display:flex;gap:8px;flex-wrap:wrap}.acts button{flex:1}
+.banner{font-family:var(--f-disp);text-align:center;padding:6px;background:#3a1f10;color:#ffb070;border:2px solid #7a3a18}
+/* 컷인 */
+#cut{position:fixed;inset:0;z-index:20;pointer-events:none;display:grid;place-items:center;background:rgba(6,6,18,.6)}
+#cut .band{width:100%;background:#1c1838;border-block:3px solid var(--gold);display:flex;align-items:center;justify-content:center;gap:10px;padding:14px 12px;transform:skewY(-6deg)}
+#cut img{width:72px;height:96px;background:#0b0b18;border:2px solid var(--shadow);animation:slide .35s steps(5) both}
+#cut img:nth-child(2){animation-delay:.08s}
+#cut .tx{transform:skewY(6deg);display:flex;flex-direction:column;gap:4px;min-width:0}
+#cut .tx b{font-family:var(--f-disp);font-size:24px;color:#fff;font-weight:400}
+#cut .tx span{font-size:12px;color:var(--gold)}
+@keyframes slide{from{transform:translateX(120px);opacity:0}to{transform:none;opacity:1}}
+.modal{position:fixed;inset:0;z-index:15;background:rgba(6,6,18,.8);display:grid;place-items:center;padding:16px}
+.modal .box{background:var(--panel);border:2px solid var(--gold);box-shadow:4px 4px 0 var(--shadow);padding:14px;max-height:80vh;overflow:auto;width:min(100%,520px);display:flex;flex-direction:column;gap:10px}
+@media (prefers-reduced-motion:reduce){button:active{transform:none}#cut img{animation:none}}
+</style>
+
+<main class="wrap">
+  <header>
+    <h1>야경단</h1>
+    <p class="sub">프로토타입 · 해 뜨기 전에 탑 꼭대기로 · 그림은 임시</p>
+  </header>
+  <div id="app"></div>
+</main>
+<div id="cut" hidden></div>
+<div id="modal" class="modal" hidden></div>
+
+<script>
+(() => {
+'use strict';
+// ---------- 도트 ----------
+const K = '#141018';
+const TPL = [
+  '...kkkkkk...','..khhhhhhk..','.khhhhhhhhk.','.khHhhhhHhk.',
+  'khhsssssshhk','khsewssewshk','khseesseeshk','khssssssssHk',
+  '.kHksssssH..','..koaooaok..','.kooaooaook.','ksoooooooosk',
+  'ksOooooooOsk','.kOOOaaOOOk.','..kok..kok..','..kkk..kkk..',
+];
+function sprite(pal, long, crown, skin) {
+  const rows = TPL.map(r => r.split(''));
+  rows[8][11] = '.';
+  if (long) for (let y = 7; y <= 12; y++) { rows[y][0] = 'H'; rows[y][11] = 'H'; }
+  const off = crown ? 2 : 0, S = 4;
+  const c = document.createElement('canvas'); c.width = 12 * S; c.height = (16 + off) * S;
+  const g = c.getContext('2d');
+  const P = Object.assign({ k:K, s:skin || '#f6d5c0', w:'#ffffff' }, pal);
+  const put = (ch, x, y) => { if (ch !== '.') { g.fillStyle = P[ch]; g.fillRect(x * S, y * S, S, S); } };
+  if (crown) ['..a.a..a.a..','..aaaaaaaa..'].forEach((r, y) => [...r].forEach((ch, x) => put(ch, x, y)));
+  rows.forEach((r, y) => r.forEach((ch, x) => put(ch, x, y + off)));
+  return c.toDataURL();
+}
+function moonImg(phase) {
+  const S = 3, c = document.createElement('canvas'); c.width = 15 * S; c.height = 15 * S;
+  const g = c.getContext('2d');
+  for (let y = -7; y <= 7; y++) for (let x = -7; x <= 7; x++) {
+    const inC = x * x + y * y <= 42; if (!inC) continue;
+    let lit = phase === 'full' ? true : phase === 'half' ? x >= 0 : phase === 'crescent' ? (x - 4) ** 2 + y * y > 42 && x > -1 : false;
+    if (phase === 'crescent') lit = ((x + 4) ** 2 + y * y > 36);
+    const edge = x * x + y * y > 30;
+    g.fillStyle = lit ? '#e8ecff' : edge ? '#5a6090' : '#1e2046';
+    g.fillRect((x + 7) * S, (y + 7) * S, S, S);
+  }
+  return c.toDataURL();
+}
+
+// ---------- 동료 ----------
+const CH = {
+  iris:  { name:'아이리스', role:'검사', col:'#c8d4f0', ds:'베기를 이어서 쓸수록 세진다.', long:true,
+           pal:{ h:'#1c1c2a', H:'#0c0c16', e:'#8ab0ff', o:'#c8d0e8', O:'#8a92b0', a:'#f0f4ff' } },
+  brick: { name:'브릭', role:'대포', col:'#ef6352', ds:'장전을 쌓았다가 한 번에 쏜다.', long:false,
+           pal:{ h:'#d0463a', H:'#902a24', e:'#ffd060', o:'#3a3030', O:'#201818', a:'#e0b84a' } },
+  marta: { name:'마르타', role:'수녀', col:'#e0b84a', ds:'막고, 맞으면 되받아친다.', long:true,
+           pal:{ h:'#24242e', H:'#121218', e:'#5a7ab0', o:'#1e1e28', O:'#0e0e16', a:'#f0f0f0' } },
+  noel:  { name:'노엘', role:'마술사', col:'#f08ac0', ds:'자는 동안 마력이 쌓인다.', long:true,
+           pal:{ h:'#f08ac0', H:'#b05a88', e:'#a0d0ff', o:'#f0e0f0', O:'#c0a8d0', a:'#ffd0e8' } },
+  raven: { name:'레이븐', role:'암살자', col:'#9a86d8', ds:'독을 쌓고 목을 긋는다.', long:false,
+           pal:{ h:'#2a2a38', H:'#141420', e:'#e04a4a', o:'#2a2238', O:'#16121e', a:'#9a86d8' } },
+};
+const LOCKED = [
+  { name:'미미·모모', role:'쌍둥이', col:'#ffb0a0', pal:{ h:'#ffb0a0', H:'#c07a6a', e:'#5a5ab0', o:'#ffffff', O:'#c8c8d8', a:'#ff8a8a' }, long:false },
+  { name:'시온', role:'소환사', col:'#7ab0d8', pal:{ h:'#9ab8e0', H:'#5a78a8', e:'#e0e8ff', o:'#2a3a6a', O:'#18224a', a:'#e0c860' }, long:true },
+  { name:'세바스', role:'집사', col:'#c0c0c0', pal:{ h:'#d8d8d8', H:'#9a9a9a', e:'#3a3a3a', o:'#1a1a1a', O:'#0a0a0a', a:'#ffffff' }, long:false },
+];
+for (const k in CH) CH[k].img = sprite(CH[k].pal, CH[k].long);
+LOCKED.forEach(l => { l.img = sprite(l.pal, l.long); });
+
+const MOONS = {
+  crescent: { name:'초승달', text:'시간 카드가 15분만 든다.' },
+  half:     { name:'반달',   text:'연계 1칸만 차도 듀오 카드가 생긴다.' },
+  full:     { name:'보름달', text:'아이리스·마르타의 피해와 방어 +2.' },
+  new:      { name:'그믐달', text:'노엘 마력, 레이븐 독, 브릭 장전 +1.' },
+};
+
+// ---------- 카드 ----------
+// c = 전투 상태. hit/guard/draw 는 아래 전투 도우미.
+const full = ch => G.moon === 'full' && (ch === 'iris' || ch === 'marta') ? 2 : 0;
+const dark = () => G.moon === 'new' ? 1 : 0;
+const CARDS = {
+  'iris.slash':  { ch:'iris', name:'베기', cost:1, atk:1, slash:1, text:'피해 6. 이번 턴 세 번째 베기부터 +4.', play:c => { hit(6 + (c.slashes >= 2 ? 4 : 0) + full('iris')); c.slashes++; } },
+  'iris.parry':  { ch:'iris', name:'흘려 베기', cost:1, atk:1, slash:1, text:'피해 4, 방어 4. 베기로 친다.', play:c => { hit(4 + (c.slashes >= 2 ? 4 : 0) + full('iris')); guard(4); c.slashes++; } },
+  'iris.issen':  { ch:'iris', name:'일섬', cost:0, time:1, atk:1, slash:1, text:'피해 12.', play:c => { hit(12 + full('iris')); c.slashes++; } },
+  'iris.twin':   { ch:'iris', name:'연속 베기', cost:1, atk:1, slash:1, reward:1, text:'피해 3을 두 번. 베기 두 번으로 친다.', play:c => { hit(3 + full('iris')); hit(3 + (c.slashes >= 1 ? 4 : 0)); c.slashes += 2; } },
+  'iris.moon':   { ch:'iris', name:'달빛 칼날', cost:1, atk:1, reward:1, text:'피해 8. 보름달이면 +6.', play:() => { hit(8 + (G.moon === 'full' ? 6 : 0)); } },
+  'iris.dance':  { ch:'iris', name:'검무', cost:2, atk:1, slash:1, reward:1, text:'피해 10. 베기 횟수 +2.', play:c => { hit(10 + full('iris')); c.slashes += 2; } },
+
+  'brick.load':  { ch:'brick', name:'장전', cost:1, text:'장전 +2.', play:c => { c.loaded += 2 + dark(); } },
+  'brick.fire':  { ch:'brick', name:'발사', cost:1, atk:1, text:'피해 장전×5 (장전 없으면 3). 장전 0.', play:c => { hit(c.loaded ? c.loaded * 5 : 3); c.loaded = 0; } },
+  'brick.quick': { ch:'brick', name:'급히 쏘기', cost:0, atk:1, text:'피해 3.', play:() => hit(3) },
+  'brick.over':  { ch:'brick', name:'과적재', cost:0, time:1, reward:1, text:'장전 +5.', play:c => { c.loaded += 5 + dark(); } },
+  'brick.mount': { ch:'brick', name:'대포 받침', cost:1, reward:1, text:'장전 +1, 방어 6.', play:c => { c.loaded += 1 + dark(); guard(6); } },
+  'brick.volley':{ ch:'brick', name:'일제 사격', cost:2, atk:1, reward:1, text:'피해 장전×8. 장전 0.', play:c => { hit(c.loaded * 8); c.loaded = 0; } },
+
+  'marta.wall':  { ch:'marta', name:'기도의 벽', cost:1, text:'방어 7.', play:() => guard(7 + full('marta')) },
+  'marta.fist':  { ch:'marta', name:'철권', cost:1, atk:1, text:'피해 7.', play:() => hit(7 + full('marta')) },
+  'marta.counter':{ ch:'marta', name:'반격 자세', cost:1, text:'방어 3. 이번 턴 맞을 때마다 5 되돌려 준다.', play:c => { guard(3 + full('marta')); c.counter += 5; } },
+  'marta.rampart':{ ch:'marta', name:'성벽', cost:2, reward:1, text:'방어 16.', play:() => guard(16 + full('marta')) },
+  'marta.judge': { ch:'marta', name:'심판', cost:1, atk:1, reward:1, text:'지금 방어만큼 피해.', play:c => hit(c.block) },
+  'marta.confess':{ ch:'marta', name:'고해', cost:0, time:1, reward:1, text:'방어 12, 체력 4 회복.', play:() => { guard(12 + full('marta')); heal(4); } },
+
+  'noel.sleep':  { ch:'noel', name:'잠들기', cost:1, text:'잠든다. 잠든 동안 턴 시작마다 마력 +3.', play:c => { c.asleep = true; } },
+  'noel.star':   { ch:'noel', name:'별똥 마법', cost:1, atk:1, text:'피해 마력×3 (최소 4). 마력 0, 깨어난다.', play:c => { hit(Math.max(4, c.mana * 3)); c.mana = 0; c.asleep = false; } },
+  'noel.pillow': { ch:'noel', name:'베개 방어', cost:1, text:'방어 6. 잠들어 있으면 +5.', play:c => guard(6 + (c.asleep ? 5 : 0)) },
+  'noel.yawn':   { ch:'noel', name:'하품', cost:0, text:'카드 1장 뽑기. 마력 +1.', play:c => { draw(1); c.mana += 1; } },
+  'noel.deep':   { ch:'noel', name:'깊은 잠', cost:0, time:1, reward:1, text:'잠든다. 마력 +5.', play:c => { c.asleep = true; c.mana += 5 + dark(); } },
+  'noel.burst':  { ch:'noel', name:'꿈 폭발', cost:2, atk:1, reward:1, text:'피해 마력×5. 마력 0, 깨어난다.', play:c => { hit(c.mana * 5); c.mana = 0; c.asleep = false; } },
+  'noel.lull':   { ch:'noel', name:'자장가', cost:1, reward:1, text:'적 약화 2턴 (주는 피해 25% 줄어듦).', play:c => { c.foe.weak += 2; } },
+
+  'raven.needle':{ ch:'raven', name:'독침', cost:1, atk:1, text:'피해 3, 독 3.', play:c => { hit(3); c.foe.poison += 3 + dark(); } },
+  'raven.step':  { ch:'raven', name:'그림자 걸음', cost:1, text:'방어 5. 카드 1장 뽑기.', play:() => { guard(5); draw(1); } },
+  'raven.throat':{ ch:'raven', name:'목 긋기', cost:2, atk:1, text:'적의 독만큼 피해 (독은 남는다).', play:c => hit(c.foe.poison) },
+  'raven.fog':   { ch:'raven', name:'독 안개', cost:1, reward:1, text:'독 6.', play:c => { c.foe.poison += 6 + dark(); } },
+  'raven.venom': { ch:'raven', name:'맹독', cost:0, time:1, reward:1, text:'적의 독 2배.', play:c => { c.foe.poison *= 2; } },
+  'raven.feather':{ ch:'raven', name:'깃털 비', cost:1, atk:1, reward:1, text:'피해 2를 세 번.', play:() => { hit(2); hit(2); hit(2); } },
+};
+const START = {
+  iris:['iris.slash','iris.slash','iris.parry','iris.issen'],
+  brick:['brick.load','brick.load','brick.fire','brick.quick'],
+  marta:['marta.wall','marta.wall','marta.fist','marta.counter'],
+  noel:['noel.sleep','noel.star','noel.pillow','noel.yawn'],
+  raven:['raven.needle','raven.needle','raven.step','raven.throat'],
+};
+// 듀오: 두 사람 카드를 번갈아 쓰다 연계가 차면 손에 생긴다.
+const DUO = {
+  'brick+iris':  { name:'포탄 베기', text:'피해 장전×4+8. 장전은 남는다.', play:c => hit(c.loaded * 4 + 8) },
+  'iris+marta':  { name:'검과 방패', text:'피해 10, 방어 10.', play:() => { hit(10); guard(10); } },
+  'iris+noel':   { name:'꿈의 칼날', text:'피해 마력×3+6.', play:c => hit(c.mana * 3 + 6) },
+  'iris+raven':  { name:'쌍그림자', text:'피해 5를 세 번, 독 2.', play:c => { hit(5); hit(5); hit(5); c.foe.poison += 2; } },
+  'brick+marta': { name:'성당 포격', text:'장전 +3, 방어 8.', play:c => { c.loaded += 3; guard(8); } },
+  'brick+noel':  { name:'별똥 포탄', text:'피해 (장전+마력)×4. 둘 다 0.', play:c => { hit((c.loaded + c.mana) * 4); c.loaded = 0; c.mana = 0; c.asleep = false; } },
+  'brick+raven': { name:'독탄', text:'독 8, 장전 +1.', play:c => { c.foe.poison += 8; c.loaded += 1; } },
+  'marta+noel':  { name:'자장가 기도', text:'체력 6 회복, 방어 6.', play:() => { heal(6); guard(6); } },
+  'marta+raven': { name:'참회의 독', text:'방어 (독+6).', play:c => guard(c.foe.poison + 6) },
+  'noel+raven':  { name:'악몽', text:'적의 독 2배, 약화 1턴.', play:c => { c.foe.poison *= 2; c.foe.weak += 1; } },
+};
+const duoKey = (a, b) => [a, b].sort().join('+');
+
+// ---------- 적 ----------
+const PAL_FOE = {
+  sea:{ h:'#6ad0e0', H:'#2a8aa0', e:'#ffffff', o:'#2a5a7a', O:'#163a52', a:'#a8f0ff' },
+  crab:{ h:'#d05a3a', H:'#8a2a1a', e:'#ffe080', o:'#a0402a', O:'#601e10', a:'#f0c0a0' },
+  pirate:{ h:'#3a2a1a', H:'#1a120a', e:'#e0e0e0', o:'#6a2a2a', O:'#3a1414', a:'#e0b84a' },
+  cloud:{ h:'#e8f0ff', H:'#a0b0d0', e:'#5a8ae0', o:'#c0d0f0', O:'#8090b8', a:'#ffffff' },
+  knight:{ h:'#c8c0a0', H:'#8a8060', e:'#3a5a8a', o:'#e0e0e8', O:'#9a9aa8', a:'#e0b84a' },
+  star:{ h:'#1a1a3a', H:'#0a0a1e', e:'#ffe080', o:'#3a3a7a', O:'#22224a', a:'#ffe080' },
+  cat:{ h:'#141418', H:'#08080a', e:'#a0ff80', o:'#202028', O:'#101014', a:'#a0ff80' },
+  dawn:{ h:'#ffd0a0', H:'#e08a5a', e:'#ff5a3a', o:'#ffe8d0', O:'#e0b090', a:'#ff8a3a' },
+};
+const A = (v, n = 1) => ({ t:'atk', v, n }), B = v => ({ t:'blk', v }), U = v => ({ t:'buf', v }), M = (v, b) => ({ t:'mix', v, b });
+const FOES = {
+  1: { fight:[ { name:'바다 유령', hp:24, pal:'sea', long:true, pat:[A(7), A(4, 2), A(9)] },
+               { name:'게 갑옷병', hp:30, pal:'crab', pat:[B(8), A(9), M(5, 5)] },
+               { name:'부두 해적', hp:26, pal:'pirate', pat:[A(6), U(2), A(3, 3)] } ],
+       elite:{ name:'닻 거인', hp:60, pal:'pirate', pat:[A(14), B(10), A(6, 2), U(3)] },
+       boss: { name:'등대지기', hp:95, pal:'sea', long:true, crown:true, pat:[A(8), M(10, 8), A(5, 3), U(3)] } },
+  2: { fight:[ { name:'구름 정령', hp:34, pal:'cloud', long:true, pat:[A(5, 2), B(10), A(12)] },
+               { name:'깃털 기사', hp:40, pal:'knight', pat:[A(11), M(7, 7), U(3)] },
+               { name:'천둥 양', hp:36, pal:'cloud', pat:[A(4, 3), A(10)] } ],
+       elite:{ name:'번개새', hp:80, pal:'knight', long:true, pat:[A(6, 3), U(3), A(18)] },
+       boss: { name:'구름 기사단장', hp:140, pal:'knight', long:true, crown:true, pat:[M(12, 12), A(7, 3), U(4), A(22)] } },
+  3: { fight:[ { name:'별 조각상', hp:50, pal:'star', pat:[B(15), A(16)] },
+               { name:'그림자 고양이', hp:44, pal:'cat', long:true, pat:[A(5, 4), U(3)] },
+               { name:'유성 사수', hp:48, pal:'star', long:true, pat:[A(9, 2), A(18)] } ],
+       elite:{ name:'유성 기수', hp:100, pal:'star', crown:true, pat:[A(8, 3), M(14, 14), U(4)] },
+       boss: { name:'새벽', hp:190, pal:'dawn', long:true, crown:true, pat:[A(12), A(6, 4), M(16, 16), U(5), A(28)] } },
+};
+const FOE_IMG = {};
+function foeImg(d) { const k = d.name; return FOE_IMG[k] || (FOE_IMG[k] = sprite(PAL_FOE[d.pal], d.long, d.crown, d.pal === 'cat' || d.pal === 'star' ? '#c0c0d8' : undefined)); }
+
+const NODE = {
+  fight:{ name:'전투', min:20 }, elite:{ name:'강적', min:35 }, event:{ name:'사건', min:10 },
+  rest:{ name:'휴식', min:45 }, boss:{ name:'보스', min:20 },
+};
+const ACT_NAME = { 1:'1막 · 항구층', 2:'2막 · 구름층', 3:'3막 · 별층' };
+const DAWN = 360;
+
+// ---------- 상태 ----------
+let G = null;
+const rnd = n => Math.floor(Math.random() * n);
+const pickN = (arr, n) => { const a = arr.slice(), out = []; while (out.length < n && a.length) out.push(a.splice(rnd(a.length), 1)[0]); return out; };
+const shuffle = a => { for (let i = a.length - 1; i > 0; i--) { const j = rnd(i + 1); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const fmt = m => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+let uid = 1;
+
+function newRun(party) {
+  G = { screen:'map', party, moon:pickN(Object.keys(MOONS), 1)[0], clock:0, hp:70, maxHp:70,
+        deck:party.flatMap(p => START[p]), act:1, row:0, map:null, took:[], duos:0, fights:0, dawnSeen:false };
+  G.map = makeMap();
+}
+function makeMap() {
+  const rows = [];
+  rows.push(['fight', 'fight']);
+  for (let r = 1; r < 4; r++) {
+    const n = 2 + rnd(2), row = [];
+    for (let i = 0; i < n; i++) { const x = Math.random(); row.push(x < .45 ? 'fight' : x < .65 ? 'event' : x < .82 ? 'rest' : 'elite'); }
+    rows.push(row);
+  }
+  rows.push(['boss']);
+  return rows;
+}
+function addTime(m) {
+  const before = G.clock; G.clock += m;
+  if (before < DAWN && G.clock >= DAWN) { G.dawnSeen = true; logMsg('<b>6시. 해가 뜬다.</b> 탑이 무너지기 시작해 적이 매 턴 강해진다.'); }
+}
+const timeCost = () => G.moon === 'crescent' ? 15 : 30;
+
+// ---------- 전투 ----------
+let C = null;
+function startCombat(def, kind) {
+  C = { kind, foe:{ ...def, hp:def.hp, max:def.hp, pi:0, block:0, str:0, poison:0, weak:0, img:foeImg(def) },
+        draw:shuffle(G.deck.map(id => ({ uid:uid++, id }))), hand:[], disc:[], energy:3, block:0,
+        chain:0, last:null, bonus:0, loaded:0, mana:0, asleep:false, counter:0, slashes:0, duoUsed:new Set(),
+        turn:0, log:[] };
+  G.screen = 'combat';
+  startTurn();
+}
+function logMsg(s) { if (C) { C.log.push(s); if (C.log.length > 3) C.log.shift(); } }
+function draw(n) {
+  for (let i = 0; i < n; i++) {
+    if (!C.draw.length) { if (!C.disc.length) return; C.draw = shuffle(C.disc); C.disc = []; }
+    if (C.hand.length >= 9) return;
+    C.hand.push(C.draw.pop());
+  }
+}
+function hit(n) {
+  const f = C.foe; let d = Math.max(0, Math.floor(n + C.bonus)); C.bonus = 0;
+  const b = Math.min(f.block, d); f.block -= b; d -= b; f.hp = Math.max(0, f.hp - d);
+  logMsg(`${f.name}에게 피해 <b>${d}</b>${b ? ` (방어 ${b} 막힘)` : ''}`);
+}
+function guard(n) { C.block += Math.max(0, n); }
+function heal(n) { G.hp = Math.min(G.maxHp, G.hp + n); }
+function startTurn() {
+  C.turn++;
+  C.block = 0; C.energy = 3; C.chain = 0; C.last = null; C.slashes = 0; C.counter = 0; C.duoUsed.clear();
+  if (C.asleep) C.mana += 3 + dark();
+  if (G.clock >= DAWN) { C.foe.str += 2; logMsg('<b>새벽</b>: 적의 힘 +2'); }
+  draw(5);
+}
+function intentOf(f) { return f.pat[f.pi % f.pat.length]; }
+function intentText(f) {
+  const it = intentOf(f), s = f.str, w = f.weak ? .75 : 1, v = Math.floor((it.v + s) * w);
+  if (it.t === 'atk') return `공격 ${v}${it.n > 1 ? '×' + it.n : ''}`;
+  if (it.t === 'blk') return `방어 ${it.v}`;
+  if (it.t === 'buf') return `힘 +${it.v}`;
+  return `공격 ${v} · 방어 ${it.b}`;
+}
+function hurtParty(v) {
+  const f = C.foe; let d = Math.floor((v + f.str) * (f.weak ? .75 : 1));
+  const b = Math.min(C.block, d); C.block -= b; d -= b; G.hp = Math.max(0, G.hp - d);
+  logMsg(`${f.name}의 공격: 피해 <b>${d}</b>${b ? ` (방어 ${b} 막음)` : ''}`);
+  if (C.counter > 0) { f.hp = Math.max(0, f.hp - C.counter); logMsg(`마르타의 반격 <b>${C.counter}</b>`); }
+}
+function playCard(id) {
+  const i = C.hand.findIndex(h => h.uid === id); if (i < 0) return;
+  const inst = C.hand[i], d = cardDef(inst);
+  if (C.energy < d.cost) { logMsg('에너지가 모자라.'); return render(); }
+  C.energy -= d.cost;
+  C.hand.splice(i, 1);
+  if (d.time) { addTime(timeCost()); logMsg(`시간을 썼다: <b>+${timeCost()}분</b>`); }
+  let duo = null;
+  if (!inst.duo) {
+    if (C.last && C.last !== d.ch) {
+      C.chain = Math.min(3, C.chain + 1);
+      const k = duoKey(C.last, d.ch), need = G.moon === 'half' ? 1 : 2;
+      if (C.chain >= need && DUO[k] && !C.duoUsed.has(k)) { C.duoUsed.add(k); duo = k; }
+    } else if (C.last === d.ch) C.chain = 0;
+    C.last = d.ch;
+  }
+  C.bonus = d.atk ? C.chain : 0;
+  d.play(C);
+  C.bonus = 0;
+  if (!inst.duo) C.disc.push(inst);
+  if (duo) { C.hand.push({ uid:uid++, duo, id:'duo:' + duo }); G.duos++; showCut(duo); }
+  if (C.foe.hp <= 0) return winCombat();
+  render();
+}
+function cardDef(inst) {
+  if (inst.duo) { const [a, b] = inst.duo.split('+'); const D = DUO[inst.duo]; return { ch:'duo', a, b, name:D.name, cost:0, atk:1, text:D.text, play:D.play }; }
+  return CARDS[inst.id];
+}
+function endTurn() {
+  for (const h of C.hand) if (!h.duo) C.disc.push(h);
+  C.hand = [];
+  const f = C.foe;
+  if (f.poison > 0) { f.hp = Math.max(0, f.hp - f.poison); logMsg(`독 피해 <b>${f.poison}</b>`); f.poison--; if (f.hp <= 0) return winCombat(); }
+  f.block = 0;
+  const it = intentOf(f);
+  if (it.t === 'atk') for (let k = 0; k < it.n; k++) hurtParty(it.v);
+  else if (it.t === 'blk') { f.block += it.v; logMsg(`${f.name}이(가) 방어 ${it.v}`); }
+  else if (it.t === 'buf') { f.str += it.v; logMsg(`${f.name}의 힘 +${it.v}`); }
+  else { hurtParty(it.v); f.block += it.b; }
+  f.pi++; if (f.weak > 0) f.weak--;
+  if (f.hp <= 0) return winCombat();
+  if (G.hp <= 0) return endRun(false);
+  startTurn(); render();
+}
+function winCombat() {
+  G.fights++;
+  const k = C.kind; C = null;
+  if (k === 'boss') {
+    if (G.act === 3) return endRun(true);
+    G.reward = { cards:rewardCards(), next:'act' };
+  } else G.reward = { cards:rewardCards(), next:'map', bonus:k === 'elite' ? 10 : 0 };
+  if (G.reward.bonus) heal(G.reward.bonus);
+  G.screen = 'reward'; render();
+}
+function rewardCards() { const pool = Object.keys(CARDS).filter(id => G.party.includes(CARDS[id].ch)); const rw = pool.filter(id => CARDS[id].reward); return pickN(rw.concat(pickN(pool.filter(id => !CARDS[id].reward), 2)), 3); }
+function endRun(won) { C = null; G.won = won; G.screen = 'result'; render(); }
+
+// ---------- 지도 진행 ----------
+function goNode(r, i) {
+  const t = G.map[r][i]; G.took[r] = i;
+  addTime(NODE[t].min);
+  const pool = FOES[G.act];
+  if (t === 'fight') startCombat(pool.fight[rnd(pool.fight.length)], 'fight');
+  else if (t === 'elite') startCombat(pool.elite, 'elite');
+  else if (t === 'boss') startCombat(pool.boss, 'boss');
+  else if (t === 'rest') G.screen = 'rest';
+  else { G.event = EVENTS[rnd(EVENTS.length)]; G.screen = 'event'; }
+  render();
+}
+function nextRow() {
+  G.row++; G.screen = 'map'; render();
+}
+function nextAct() { G.act++; G.row = 0; G.took = []; G.map = makeMap(); G.screen = 'map'; render(); }
+const EVENTS = [
+  { title:'시간 상인', text:'모래시계를 든 상인이 말을 건다. "밤 한 조각, 사고 팔지."',
+    opts:[ { t:'30분을 판다: 체력 +15, 시계 +30분', f:() => { heal(15); addTime(30); } },
+           { t:'30분을 산다: 체력 -8, 시계 -30분', f:() => { G.hp = Math.max(1, G.hp - 8); G.clock = Math.max(0, G.clock - 30); } } ] },
+  { title:'떠도는 별 조각', text:'계단참에 별 조각이 굴러다닌다. 손에 쥐면 무언가를 덜어 가거나 보태 준다.',
+    opts:[ { t:'덱에서 카드 한 장 지우기', f:() => { G.screen = 'remove'; return true; } },
+           { t:'최대 체력 +6', f:() => { G.maxHp += 6; G.hp += 6; } } ] },
+  { title:'탑의 우물', text:'달빛이 고인 우물. 물을 마시거나, 바닥에 가라앉은 무언가를 건질 수 있다.',
+    opts:[ { t:'물을 마신다: 체력 +12', f:() => heal(12) },
+           { t:'건져 본다: 무작위 카드 1장', f:() => { G.deck.push(rewardCards()[0]); } } ] },
+];
+
+// ---------- 그리기 ----------
+const app = document.getElementById('app');
+const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[ch]));
+function topbar() {
+  const m = MOONS[G.moon];
+  return `<div class="topbar">
+    <span class="clock ${G.clock >= DAWN ? 'dawn' : ''}">${fmt(G.clock)}</span>
+    <img class="px" src="${moonImg(G.moon)}" width="22" height="22" alt="${m.name}">
+    <span class="chip" style="color:var(--moon)" title="${esc(m.text)}">${m.name}</span>
+    <span class="grow"></span>
+    <span class="chip" style="color:var(--rose)">체력 ${G.hp}/${G.maxHp}</span>
+  </div>
+  <div class="night" aria-hidden="true"><i style="width:${Math.min(100, G.clock / DAWN * 100)}%"></i></div>`;
+}
+function cardHTML(inst, playable, opts = {}) {
+  const d = typeof inst === 'string' ? CARDS[inst] : cardDef(inst);
+  const id = typeof inst === 'string' ? inst : inst.uid;
+  const duo = d.ch === 'duo';
+  const col = duo ? CH[d.a].col : CH[d.ch].col, col2 = duo ? CH[d.b].col : col;
+  const who = duo ? `${CH[d.a].name} + ${CH[d.b].name}` : CH[d.ch].name;
+  return `<button type="button" class="card ${duo ? 'duo' : ''} ${playable ? '' : 'no'}" style="--c:${col};--c2:${col2}" data-${opts.act || 'play'}="${id}">
+    <span class="hd"><span class="cost">${d.cost}</span><span class="nm">${esc(d.name)}</span></span>
+    <span class="bd">${d.time ? `<span class="tm">+${timeCost()}분</span>` : ''}${esc(d.text)}</span>
+    <span class="who">${who}${duo ? ' · 듀오' : ''}</span></button>`;
+}
+function render() {
+  const s = G ? G.screen : 'title';
+  if (s === 'title') app.innerHTML = titleView();
+  else if (s === 'map') app.innerHTML = topbar() + mapView();
+  else if (s === 'combat') app.innerHTML = topbar() + combatView();
+  else if (s === 'reward') app.innerHTML = topbar() + rewardView();
+  else if (s === 'rest') app.innerHTML = topbar() + restView();
+  else if (s === 'event') app.innerHTML = topbar() + eventView();
+  else if (s === 'remove') app.innerHTML = topbar() + removeView();
+  else if (s === 'result') app.innerHTML = resultView();
+}
+let picked = [];
+function titleView() {
+  const mates = Object.entries(CH).map(([k, c]) => `<button type="button" class="mate ${picked.includes(k) ? 'on' : ''}" style="--c:${c.col}" data-pick="${k}" aria-pressed="${picked.includes(k)}">
+      <img class="px" src="${c.img}" alt=""><span><span class="nm">${c.name}</span><br><span class="rl">${c.role}</span><span class="ds" style="display:block">${c.ds}</span></span></button>`).join('')
+    + LOCKED.map(c => `<button type="button" class="mate locked" style="--c:${c.col}" disabled>
+      <img class="px" src="${c.img}" alt=""><span><span class="nm">${c.name}</span><br><span class="rl">${c.role}</span><span class="ds" style="display:block">잠김. 별 조각으로 해금 (프로토타입엔 없음)</span></span></button>`).join('');
+  return `<p class="note">매일 밤 0시, 바다 위로 탑이 솟는다. <b>6시 해 뜨기 전에</b> 꼭대기의 「새벽」을 쓰러뜨려야 한다. 칸을 지날 때마다, 시간 카드를 쓸 때마다 밤이 줄어든다.</p>
+    <h2>동료 셋을 고르세요 (${picked.length}/3)</h2>
+    <div class="pick">${mates}</div>
+    <div class="acts"><button type="button" class="primary" data-start ${picked.length === 3 ? '' : 'disabled'}>출발</button></div>
+    <p class="note"><b>연계</b>: 한 턴에 서로 다른 사람의 카드를 번갈아 쓰면 연계 칸이 차고, 공격에 칸 수만큼 피해가 더해집니다. 연계가 2칸 이상일 때 두 사람 카드를 이어 쓰면 그 짝만의 <b>듀오 카드</b>가 손에 생깁니다. 같은 사람 카드를 연달아 쓰면 연계가 끊깁니다.</p>`;
+}
+function mapView() {
+  const rows = G.map.map((row, r) => {
+    const cls = r < G.row ? 'past' : r > G.row ? 'future' : 'now';
+    const nodes = row.map((t, i) => `<button type="button" class="node k-${t} ${G.took[r] === i ? 'took' : ''}" ${cls === 'now' ? `data-node="${r},${i}"` : 'disabled'}>
+      <span class="t">${NODE[t].name}</span><span class="m">+${NODE[t].min}분${cls === 'now' ? ` → ${fmt(G.clock + NODE[t].min)}` : ''}</span></button>`).join('');
+    return `<div class="rowlabel">${r === G.map.length - 1 ? '꼭대기' : `${r + 1}층`}</div><div class="row ${cls}">${nodes}</div>`;
+  }).reverse().join('');
+  return `<h2>${ACT_NAME[G.act]}</h2>
+    ${G.clock >= DAWN ? '<div class="banner">해가 떴다. 적이 매 턴 힘 +2.</div>' : ''}
+    <p class="note">아래에서 위로 오릅니다. 지금 층에서 칸 하나를 고르세요. 달: <b>${MOONS[G.moon].name}</b> · ${MOONS[G.moon].text}</p>
+    <div class="map">${rows}</div>
+    <div class="acts"><button type="button" data-deck>덱 보기 (${G.deck.length}장)</button></div>`;
+}
+function combatView() {
+  const f = C.foe;
+  const st = [f.block ? `<span class="chip" style="color:var(--moon)">방어 ${f.block}</span>` : '',
+              f.poison ? `<span class="chip" style="color:#9af07a">독 ${f.poison}</span>` : '',
+              f.str ? `<span class="chip" style="color:#ff9a8a">힘 ${f.str}</span>` : '',
+              f.weak ? `<span class="chip" style="color:#f08ac0">약화 ${f.weak}</span>` : ''].join('');
+  const party = G.party.map(p => {
+    const c = CH[p]; let s = '';
+    if (p === 'brick') s = `장전 ${C.loaded}`;
+    if (p === 'noel') s = `마력 ${C.mana}${C.asleep ? ' · 잠' : ''}`;
+    if (p === 'iris') s = C.slashes ? `베기 ${C.slashes}` : '';
+    if (p === 'marta') s = C.counter ? `반격 ${C.counter}` : '';
+    if (p === 'raven') s = f.poison ? `독 ${f.poison}` : '';
+    return `<div class="pm ${C.last === p ? 'last' : ''}" style="--c:${c.col}"><img class="px" src="${c.img}" alt=""><span class="nm">${c.name}</span><span class="s">${s}</span></div>`;
+  }).join('');
+  const hand = C.hand.map(h => cardHTML(h, C.energy >= cardDef(h).cost)).join('');
+  return `<div class="foe"><img class="px" src="${f.img}" alt="">
+      <div style="min-width:0"><div class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</div>
+        <div class="hpbar" style="margin-top:6px"><i style="width:${f.hp / f.max * 100}%"></i></div>
+        <div class="note" style="margin-top:2px">체력 ${f.hp}/${f.max}</div>
+        <div class="st">${st}</div>
+        <div class="intent">다음: ${intentText(f)}</div></div></div>
+    <div class="party">${party}</div>
+    <div class="res">
+      <span>에너지</span><span class="energy">${[0, 1, 2].map(k => `<i class="${k < C.energy ? '' : 'off'}"></i>`).join('')}</span>
+      <span>연계</span><span class="chain">${[0, 1, 2].map(k => `<i class="${k < C.chain ? 'on' : ''}"></i>`).join('')}</span>
+      <span class="grow" style="flex:1"></span>
+      <span class="chip" style="color:var(--moon)">방어 ${C.block}</span>
+    </div>
+    <div class="hand">${hand || '<p class="note">손패가 비었다.</p>'}</div>
+    <div class="acts"><button type="button" class="primary" data-end>턴 끝내기</button></div>
+    <div class="log" aria-live="polite">${C.log.join('<br>') || '카드를 눌러 쓰세요.'}</div>
+    <p class="note">뽑을 카드 ${C.draw.length} · 버린 카드 ${C.disc.length} · ${C.turn}턴</p>`;
+}
+function rewardView() {
+  return `<h2>보상: 카드 한 장</h2>
+    ${G.reward.bonus ? `<p class="note">강적을 쓰러뜨려 체력 +${G.reward.bonus}.</p>` : ''}
+    <div class="hand">${G.reward.cards.map(id => cardHTML(id, true, { act:'take' })).join('')}</div>
+    <div class="acts"><button type="button" data-take="">건너뛰기</button></div>`;
+}
+function restView() {
+  return `<h2>휴식</h2><p class="note">탑의 계단참. 얼마나 쉴지 정하세요.</p>
+    <div class="acts" style="flex-direction:column">
+      <button type="button" class="primary" data-rest="long">푹 쉰다: 체력 +25</button>
+      <button type="button" data-rest="short">선잠만 잔다: 체력 +10, 30분 돌려받기</button></div>`;
+}
+function eventView() {
+  const e = G.event;
+  return `<h2>${e.title}</h2><p class="note">${e.text}</p>
+    <div class="acts" style="flex-direction:column">${e.opts.map((o, i) => `<button type="button" data-opt="${i}">${o.t}</button>`).join('')}</div>`;
+}
+function removeView() {
+  return `<h2>지울 카드를 고르세요</h2><div class="hand">${G.deck.map((id, i) => cardHTML(id, true, { act:'rm' }).replace(`data-rm="${id}"`, `data-rm="${i}"`)).join('')}</div>`;
+}
+function resultView() {
+  const shards = (G.act - (G.won ? 0 : 1)) * 10 + G.fights * 2 + G.duos;
+  return `<h2 style="font-size:28px">${G.won ? '새벽을 넘었다' : '탑에서 떨어졌다'}</h2>
+    <p class="note">${G.won ? `꼭대기에 닿은 시각 <b>${fmt(G.clock)}</b>${G.clock >= DAWN ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}.` : `${ACT_NAME[G.act]}에서 쓰러졌다. 시각 <b>${fmt(G.clock)}</b>.`}</p>
+    <p class="note">싸움 ${G.fights}번 · 듀오 카드 ${G.duos}번 · 달 ${MOONS[G.moon].name}</p>
+    <p class="note">얻은 별 조각 <b>${shards}</b> (프로토타입: 해금에 쓰는 기능은 없음)</p>
+    <div class="acts"><button type="button" class="primary" data-again>다시 하기</button></div>`;
+}
+
+// 컷인
+const cutEl = document.getElementById('cut');
+let cutTimer = null;
+function showCut(k) {
+  const [a, b] = k.split('+');
+  cutEl.innerHTML = `<div class="band"><img class="px" src="${CH[a].img}" alt=""><img class="px" src="${CH[b].img}" alt="">
+    <div class="tx"><span>${CH[a].name} + ${CH[b].name} · 듀오 카드가 손에 들어왔다</span><b>${DUO[k].name}</b></div></div>`;
+  cutEl.hidden = false;
+  clearTimeout(cutTimer); cutTimer = setTimeout(() => { cutEl.hidden = true; }, 1300);
+}
+const modal = document.getElementById('modal');
+function showDeck() {
+  modal.innerHTML = `<div class="box" role="dialog" aria-label="덱"><h2>덱 ${G.deck.length}장</h2>
+    <div class="hand">${G.deck.slice().sort().map(id => cardHTML(id, true, { act:'none' })).join('')}</div>
+    <button type="button" data-close>닫기</button></div>`;
+  modal.hidden = false;
+}
+modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('[data-close]')) modal.hidden = true; });
+
+// ---------- 입력 ----------
+app.addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b || b.disabled) return;
+  const D = b.dataset;
+  if (D.pick) { const k = D.pick; picked = picked.includes(k) ? picked.filter(x => x !== k) : picked.length < 3 ? [...picked, k] : picked; render(); }
+  else if ('start' in D) { newRun(picked.slice()); render(); }
+  else if (D.node) { const [r, i] = D.node.split(',').map(Number); goNode(r, i); }
+  else if (D.play) playCard(+D.play);
+  else if ('end' in D) endTurn();
+  else if ('take' in D) { if (D.take) G.deck.push(D.take); G.reward.next === 'act' ? nextAct() : nextRow(); }
+  else if (D.rest) { heal(D.rest === 'long' ? 25 : 10); if (D.rest === 'short') G.clock = Math.max(0, G.clock - 30); nextRow(); }
+  else if (D.opt) { const stay = G.event.opts[+D.opt].f(); if (stay) render(); else nextRow(); }
+  else if (D.rm !== undefined) { G.deck.splice(+D.rm, 1); nextRow(); }
+  else if ('deck' in D) showDeck();
+  else if ('again' in D) { G = null; picked = []; render(); }
+});
+cutEl.addEventListener('click', () => { cutEl.hidden = true; });
+render();
+})();
+</script>
