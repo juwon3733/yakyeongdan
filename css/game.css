@@ -1143,3 +1143,9 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 .topbar button{font-size:11px;padding:3px 7px}
 .topbar .clock{font-size:14px}
 .foe.boss img,#stage.bigtext .foe.boss img{width:96px;height:144px}
+/* 커서를 댄(고른) 카드 양옆은 비켜난다 — 커진 카드가 옆 카드를 가려 못 누르던 것 (슬레이 더 스파이어식) */
+.bottom .hand:has(.card:not(.no):hover) .card:not(.no):hover ~ .card,.bottom .hand:has(.card.sel) .card.sel ~ .card{transform:translate(36px,var(--fy,0px)) rotate(var(--fr,0deg))}
+.bottom .hand .card:has(~ .card:not(.no):hover),.bottom .hand .card:has(~ .card.sel){transform:translate(-36px,var(--fy,0px)) rotate(var(--fr,0deg))}
+/* 전투 스프라이트 칸 가장자리에서 잘린 효과가 네모로 보이지 않게 가장자리를 흐리게 */
+.pm > img:not([src^="data:"]),.foe > img:not([src^="data:"]){-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(0deg,#000 0,#000 100%);-webkit-mask-size:100% 92%,100% 8%;-webkit-mask-position:0 0,0 100%;-webkit-mask-repeat:no-repeat;
+  mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(0deg,#000 0,#000 100%);mask-size:100% 92%,100% 8%;mask-position:0 0,0 100%;mask-repeat:no-repeat}
