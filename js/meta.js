@@ -53,6 +53,34 @@ export function save() {
 export function resetProfile() { P = fresh(); save(); return P; }
 export function loadRaw(obj) { P = migrate(obj); save(); return P; }
 
+// ---------- 저장 백업 (설정 「저장 내보내기 / 불러오기」: 폰을 바꿀 때) ----------
+// 코드 = "YK<버전>-" + base64(UTF-8 JSON) + "-" + 확인값(FNV-1a 8자리). 잘리거나 바뀐 코드를 걸러 낸다.
+const fnv = s => { let h = 0x811c9dc5; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 0x01000193) >>> 0; } return h.toString(16).padStart(8, '0'); };
+const b64e = s => { const u = new TextEncoder().encode(s); let t = ''; for (let i = 0; i < u.length; i += 0x8000) t += String.fromCharCode(...u.subarray(i, i + 0x8000)); return btoa(t); };
+const b64d = s => new TextDecoder().decode(Uint8Array.from(atob(s), c => c.charCodeAt(0)));
+export function exportSave(settings) {
+  const body = b64e(JSON.stringify({ k: 'yakyeongdan', v: VERSION, t: Date.now(), p: P, s: settings || null }));
+  return `YK${VERSION}-${body}-${fnv(body)}`;
+}
+// 코드를 읽어 본다(저장은 아직 안 바꿈). { ok, err, data }
+export function readSave(code) {
+  const m = String(code || '').replace(/\s+/g, '').match(/^YK(\d+)-([A-Za-z0-9+/=]+)-([0-9a-f]{8})$/);
+  if (!m) return { ok: false, err: '저장 코드 모양이 아니에요. 내보낸 코드를 처음부터 끝까지 그대로 붙여 넣어 주세요.' };
+  if (fnv(m[2]) !== m[3]) return { ok: false, err: '코드가 잘렸거나 바뀌었어요. 다시 복사해 주세요.' };
+  let d;
+  try { d = JSON.parse(b64d(m[2])); } catch (e) { return { ok: false, err: '코드를 읽을 수 없어요.' }; }
+  if (d?.k !== 'yakyeongdan' || !d.p) return { ok: false, err: '야경단 저장 코드가 아니에요.' };
+  if (!(d.v >= 1) || !(d.p.v >= 1)) return { ok: false, err: '알 수 없는 저장 버전이에요.' };
+  if (d.v > VERSION || d.p.v > VERSION) return { ok: false, err: '더 새 버전에서 만든 저장이에요. 게임을 새로고침해서 최신으로 만든 뒤 불러와 주세요.' };
+  return { ok: true, data: d };
+}
+// 불러오기: 지금 저장을 코드의 저장으로 바꾼다(예전 버전이면 이어받기)
+export function importSave(code) {
+  const r = readSave(code); if (!r.ok) return r;
+  P = migrate(r.data.p); save();
+  return { ok: true, settings: r.data.s, when: r.data.t };
+}
+
 export const owns = id => !!P.owned[id];
 const uniqPush = (arr, x) => { if (!arr.includes(x)) arr.push(x); };
 

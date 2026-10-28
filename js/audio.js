@@ -256,7 +256,7 @@ function cycle() {
   unlock(); applyLevel();
 }
 document.addEventListener('click', e => { if (e.target.closest('[data-sound]')) cycle(); });
-addEventListener('keydown', e => { if ((e.key === 'm' || e.key === 'M') && !e.repeat) cycle(); });
+addEventListener('keydown', e => { if (e.target.closest?.('input, textarea')) return; if ((e.key === 'm' || e.key === 'M') && !e.repeat) cycle(); });
 
 export function sync() {
   if (window.__yk && !window.__yk.audio) {   // 개발판 점검용

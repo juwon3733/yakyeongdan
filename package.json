@@ -4,7 +4,8 @@
   "type": "module",
   "description": "빌드 없음. js/ 파일을 Node 도구(tools/*.mjs)에서도 ES 모듈로 읽게 하려고 둔 파일.",
   "scripts": {
-    "check": "node tools/export-prompts.mjs --check && node tools/check-assets.mjs && node tools/art-index.mjs --check && node tools/gen-docs.mjs --check",
+    "check": "node tools/export-prompts.mjs --check && node tools/check-assets.mjs && node tools/art-index.mjs --check && node tools/gen-docs.mjs --check && node tools/make-icons.mjs --check",
+    "icons": "node tools/make-icons.mjs",
     "docs": "node tools/gen-docs.mjs",
     "art": "node tools/art-index.mjs",
     "prompts": "node tools/export-prompts.mjs",

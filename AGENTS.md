@@ -52,7 +52,7 @@
 
 1. 브랜치는 **항상 새 이름**: `assets/<묶음 id>-<월일시분>` (예: `assets/char-iris-1029-1530`). 이름이 겹치면 시각만 바꿔 다시 푸시. 기존 브랜치·PR은 건드리지 않는다(강제 푸시 금지).
 2. 그림 파일만 커밋한다. 커밋 메시지: `assets: <묶음 id> — <그림 id 목록>`
-3. 검사를 돌려 **통과**시킨다: `node tools/check-assets.mjs`, 그다음 `node tools/art-index.mjs`(게임이 쓸 그림 목록 `assets/art.json`을 다시 만든다. 이 파일도 같이 커밋)
+3. 검사를 돌려 **통과**시킨다: `node tools/check-assets.mjs`, 그다음 `node tools/art-index.mjs`(게임이 쓸 그림 목록 `assets/art.json`을 다시 만든다. 이 파일도 같이 커밋). 앱 아이콘(app 묶음, assets/app/icon.png)을 넣었으면 node tools/make-icons.mjs도 돌려 icons/icon-192.png·icon-512.png를 다시 만들어 같이 커밋
 4. `main`을 대상으로 PR을 연다. 본문에:
    - 만든 그림 목록, 한 장마다 한 줄 "id — must_show가 그림 어디에 있는지"
    - 다시 만든 횟수가 많았던 그림, 투명 배경이 안 된 그림, 첨부 그림과 다르게 나온 것 같은 그림(솔직히)

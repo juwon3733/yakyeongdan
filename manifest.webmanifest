@@ -1,0 +1,20 @@
+{
+  "name": "야경단",
+  "short_name": "야경단",
+  "description": "해 뜨기 전 6시까지 탑 꼭대기에 닿아야 하는 3인 파티 덱빌딩 로그라이크",
+  "lang": "ko",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "fullscreen",
+  "display_override": ["fullscreen", "standalone"],
+  "orientation": "landscape",
+  "background_color": "#07081a",
+  "theme_color": "#07081a",
+  "categories": ["games"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

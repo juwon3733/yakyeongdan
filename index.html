@@ -2,8 +2,17 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <title>야경단</title>
+<meta name="description" content="해 뜨기 전 6시까지 탑 꼭대기에 닿아야 하는 3인 파티 덱빌딩 로그라이크">
+<meta name="theme-color" content="#07081a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="야경단">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&family=IBM+Plex+Sans+KR:wght@400;700&display=swap">
 <link rel="stylesheet" href="css/game.css">
@@ -17,7 +26,39 @@
   <div id="modal" class="modal" hidden></div>
 </div>
 <div id="tip" role="tooltip" hidden></div>
-<div id="rotate"><b>가로로 돌려 주세요</b><span>야경단은 가로 화면에서 합니다.</span></div>
-<script type="module" src="js/main.js"></script>
+<div id="rotate" aria-live="polite">
+  <div class="phone" aria-hidden="true"><i></i></div>
+  <b>가로로 돌려 주세요</b>
+  <span>야경단은 가로 화면에서 합니다. 돌리면 바로 이어져요.</span>
+  <small>세로 고정이 켜져 있으면 잠깐 풀어 주세요</small>
+</div>
+<!-- 첫 로딩 화면 (js/pwa.js bootDone이 걷는다). 게임 파일을 못 받으면 아래 스크립트가 안내를 띄운다. -->
+<div id="boot" role="status">
+  <div class="bx">
+    <b class="logo">야경단</b>
+    <div class="bar"><i id="boot-bar"></i></div>
+    <span id="boot-msg">불러오는 중…</span>
+    <div class="acts"><button type="button" id="boot-skip" class="mini" hidden>바로 시작</button><button type="button" id="boot-retry" class="mini primary" hidden>다시 시도</button></div>
+  </div>
+</div>
+<script>
+  // 게임 모듈을 못 받거나(오프라인 첫 방문 등) 시작 중 오류가 나면 안내. 정상이면 js/pwa.js가 ready를 켠다.
+  window.ykBoot = { ready: false, failed: false };
+  window.ykBoot.fail = function (msg) {
+    if (window.ykBoot.ready || window.ykBoot.failed) return;
+    window.ykBoot.failed = true;
+    var m = document.getElementById('boot-msg'), r = document.getElementById('boot-retry'), box = document.getElementById('boot');
+    if (!box) return;
+    box.classList.add('fail'); m.textContent = msg; r.hidden = false;
+    r.onclick = function () { location.reload(); };
+  };
+  window.addEventListener('error', function (e) {
+    if (e.target && e.target.tagName === 'SCRIPT') return;
+    window.ykBoot.fail('시작하다가 문제가 생겼어요. 다시 시도해 주세요. (' + (e.message || '알 수 없는 오류') + ')');
+  });
+  setTimeout(function () { window.ykBoot.fail('너무 오래 걸려요. 인터넷 연결을 확인하고 다시 시도해 주세요.'); }, 25000);
+  document.getElementById('boot-bar').style.width = '10%';
+</script>
+<script type="module" src="js/main.js" onerror="window.ykBoot.fail('게임 파일을 받지 못했어요. 인터넷 연결을 확인하고 다시 시도해 주세요.')"></script>
 </body>
 </html>

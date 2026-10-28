@@ -819,6 +819,13 @@
       ]
     },
     {
+      "id": "app",
+      "title": "앱 아이콘",
+      "items": [
+        "app_icon"
+      ]
+    },
+    {
       "id": "icons",
       "title": "도구 아이콘 40",
       "items": [
@@ -8755,6 +8762,19 @@
       "native": "64×64",
       "note": "별똥별 효과 · 투명 배경",
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nA single shooting star effect, gold, the biggest and brightest with sparkles, falling diagonally from top-right to bottom-left with a pixel trail. Fully transparent background. Native 64x64, upscaled 8x to 512x512."
+    },
+    {
+      "id": "app_icon",
+      "kind": "appicon",
+      "batch": "app",
+      "file": "app/icon.png",
+      "width": 1024,
+      "height": 1024,
+      "transparent": false,
+      "max_colors": 64,
+      "native": "64×64",
+      "note": "앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nApp icon for the game 「야경단」 (Night Watch): a tall dark tower rising from the night sea with a single warm lantern glowing at its top, a gold crescent moon, a few stars, deep navy sky. Bold, simple silhouette that still reads at 48x48. Fill the whole square edge to edge with the night background (no transparent corners, no border, no text); keep the tower and moon inside the central 80%. Native resolution 64x64 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1024."
     },
     {
       "id": "relic_old_watch",

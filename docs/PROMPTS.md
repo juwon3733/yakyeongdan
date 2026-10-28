@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 1 · 전체 525장 · 묶음 57개
+style_version 1 · 전체 526장 · 묶음 58개
 
 ## 묶음
 
@@ -63,6 +63,7 @@ style_version 1 · 전체 525장 · 묶음 57개
 | `bg` | 배경 | 13 |
 | `title` | 타이틀 키아트 | 1 |
 | `summon` | 별 소환 연출 | 4 |
+| `app` | 앱 아이콘 | 1 |
 | `icons` | 도구 아이콘 40 | 40 |
 | `icons-sig` | 동료 전용 도구 아이콘 20 | 20 |
 
@@ -84,6 +85,7 @@ style_version 1 · 전체 525장 · 묶음 57개
 | 소환 배경 (`summon`) | 1536×864 | — | 아니오 | 제한 없음 | 소환 화면 밤하늘 16:9 |
 | 별똥별 (`meteor`) | 512×512 | 64×64 | 예 | 256 | 별똥별 효과 · 투명 배경 |
 | 도구 아이콘 (`icon`) | 192×192 | 24×24 | 예 | 64 | 도구 아이콘 · 투명 배경 · 24×24 도트를 8배 |
+| appicon (`appicon`) | 1024×1024 | 64×64 | 아니오 | 64 | 앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다 |
 | 카드 그림 (`card`) | 768×576 | 96×72 | 아니오 | 256 | 스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배 |
 
 ## `char-sion` — ★★★★★ 시온
@@ -1125,6 +1127,12 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `meteor_3` | `assets/summon/meteor_3.png` | 512×512 투명 | — | — |
 | `meteor_4` | `assets/summon/meteor_4.png` | 512×512 투명 | — | — |
 | `meteor_5` | `assets/summon/meteor_5.png` | 512×512 투명 | — | — |
+
+## `app` — 앱 아이콘
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `app_icon` | `assets/app/icon.png` | 1024×1024 | — | — |
 
 ## `icons` — 도구 아이콘 40
 

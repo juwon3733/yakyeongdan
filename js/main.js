@@ -2,7 +2,8 @@
 import { S, newRun, checkCollapse } from './run.js';
 import { goNode, reachable, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, specialBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
 import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, devWin, pickCombatMoon } from './combat.js';
-import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw } from './meta.js';
+import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw, exportSave, readSave, importSave } from './meta.js';
+import { bootDone, syncWake, insets, toggleFullscreen, toast } from './pwa.js';
 import { temperPick } from './effects.js';
 import { render as draw } from './render/index.js';
 import { deckModal } from './render/screens.js';
@@ -10,7 +11,7 @@ import { keepSlots } from './render/combat.js';
 import { showCut, hideCut } from './fx.js';
 import { beforeRender, afterRender, skipFx } from './juice.js';
 import { sfx, applyVolumes } from './audio.js';
-import { SET, applySettings, setOption, calmNow } from './settings.js';
+import { SET, applySettings, setOption, calmNow, saveSettings } from './settings.js';
 import { startTutorial, skipTutorial, finishTutorial, tutorialPending } from './tutorial.js';
 import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
@@ -53,20 +54,25 @@ const stage = document.getElementById('stage');
 const app = document.getElementById('app');
 const modal = document.getElementById('modal');
 // 그리기 전후로 연출 층(js/juice.js)이 카드·체력 막대 자리를 재고, 엔진이 쌓은 연출 사건을 순서대로 보여 준다
-const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); };
+// 전투 중에는 화면이 꺼지지 않게 (js/pwa.js, 지원하는 기기만)
+const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); syncWake(!!S.C); };
 
 // 논리 640×360을 창에 맞춰 키운다. 2배 이상 들어가면 정수배, 그보다 작으면 맞춤 배율.
 // 폰처럼 16:9보다 옆으로 긴 화면(2:1 등)이면 판 폭을 최대 800까지 늘려 남는 옆자리를 쓴다(높이 360은 그대로).
 const W = 640, H = 360, W_MAX = 800;
+// 노치·둥근 모서리(safe-area)는 빼고 남은 자리 한가운데에 둔다.
 function fit() {
-  const w = Math.round(Math.min(W_MAX, Math.max(W, H * innerWidth / innerHeight)));
+  const a = insets(), aw = Math.max(1, innerWidth - a.l - a.r), ah = Math.max(1, innerHeight - a.t - a.b);
+  const w = Math.round(Math.min(W_MAX, Math.max(W, H * aw / ah)));
   stage.style.width = `${w}px`;
-  const s = Math.min(innerWidth / w, innerHeight / H);
+  stage.style.left = `${a.l + aw / 2}px`; stage.style.top = `${a.t + ah / 2}px`;
+  const s = Math.min(aw / w, ah / H);
   const k = s >= 2 ? Math.floor(s) : Math.max(s, .5);
   stage.style.setProperty('--s', k);
   applySettings(k);   // 작은 화면이면 글자 크게(설정 「자동」)
 }
 addEventListener('resize', fit);
+addEventListener('orientationchange', () => setTimeout(fit, 120));
 
 // 키워드 도움말: data-tip이 있는 것에 마우스를 올리거나 손가락을 대면 뜬다 (js/data/keywords.js)
 const tipEl = document.getElementById('tip');
@@ -296,11 +302,36 @@ addEventListener('pointercancel', e => endDrag(e, true));
 app.addEventListener('click', e => { if (eatClick) { e.stopImmediatePropagation(); e.preventDefault(); } }, true);
 
 // 설정 창
-function openSettings() { modal.innerHTML = settingsModal(); modal.hidden = false; modal.dataset.kind = 'settings'; }
+function openSettings() {
+  modal.innerHTML = settingsModal(); modal.hidden = false; modal.dataset.kind = 'settings';
+  if (S.backup) modal.querySelector('.backup')?.scrollIntoView({ block: 'nearest' });   // 작은 화면: 백업 칸이 아래에 가려지지 않게
+}
 modal.addEventListener('click', e => {
-  if (e.target === modal || e.target.closest('[data-close]')) { modal.hidden = true; S.wipeArm = false; delete modal.dataset.kind; return; }
+  if (e.target === modal || e.target.closest('[data-close]')) { modal.hidden = true; S.wipeArm = false; S.backup = null; delete modal.dataset.kind; return; }
   const b = e.target.closest('button'); if (!b || b.disabled) return;
   const D = b.dataset;
+  // 전체 화면 · 저장 백업 (js/pwa.js · js/meta.js)
+  if ('fs' in D) { toggleFullscreen().then(() => { if (!modal.hidden) openSettings(); }); return; }
+  if ('bexport' in D) { S.backup = S.backup?.mode === 'export' ? null : { mode: 'export', code: exportSave(SET) }; openSettings(); document.getElementById('backup-code')?.select(); return; }
+  if ('bimport' in D) { S.backup = S.backup?.mode === 'import' ? null : { mode: 'import', text: '', arm: false }; openSettings(); document.getElementById('backup-in')?.focus(); return; }
+  if ('bcopy' in D) {
+    const B = S.backup, ta = document.getElementById('backup-code');
+    const done = ok => { B.msg = ok ? '복사했어요. 새 기기의 설정 → 불러오기에 붙여 넣으세요.' : '복사가 막혀 있어요. 코드를 길게 눌러 전부 선택해 복사해 주세요.'; B.err = !ok; openSettings(); document.getElementById('backup-code')?.select(); };
+    if (navigator.clipboard?.writeText) navigator.clipboard.writeText(B.code).then(() => done(true), () => { ta?.select(); done(document.execCommand?.('copy')); });
+    else { ta?.select(); done(document.execCommand?.('copy')); }
+    return;
+  }
+  if ('bapply' in D) {
+    const B = S.backup;
+    if (!B.arm) { const r = readSave(B.text); B.arm = r.ok; B.err = !r.ok; B.msg = r.ok ? `읽었어요 (${new Date(r.data.t).toLocaleString('ko-KR')} 저장). 한 번 더 누르면 지금 저장 대신 이걸 쓴다.` : r.err; openSettings(); return; }
+    const r = importSave(B.text);
+    if (!r.ok) { B.arm = false; B.err = true; B.msg = r.err; openSettings(); return; }
+    if (r.settings) { Object.assign(SET, r.settings); saveSettings(); applySettings(); applyVolumes(); }
+    S.backup = null; S.G = null; S.C = null; S.view = P.tutDone ? 'title' : 'tutintro';
+    modal.hidden = true; delete modal.dataset.kind; render();
+    toast('저장을 불러왔어요', null, null, 4000);
+    return;
+  }
   if (D.set) {
     const [k, raw] = D.set.split(':');
     setOption(k, raw === 'true' ? true : raw === 'false' ? false : raw === 'null' ? null : raw);
@@ -312,6 +343,8 @@ modal.addEventListener('click', e => {
   openSettings();
 });
 modal.addEventListener('input', e => {
+  // 불러오기 칸: 다시 그려도 붙여 넣은 글이 남게 (붙여 넣으면 확인 단계는 처음부터)
+  if (e.target.matches?.('textarea[data-bin]') && S.backup) { S.backup.text = e.target.value; if (S.backup.arm) { S.backup.arm = false; S.backup.msg = ''; openSettings(); const t = document.getElementById('backup-in'); t?.focus(); t?.setSelectionRange(t.value.length, t.value.length); } return; }
   const r = e.target.closest('input[data-vol]'); if (!r) return;
   SET[r.dataset.vol] = +r.value;
   setOption(r.dataset.vol, +r.value);
@@ -327,5 +360,6 @@ addEventListener('keydown', e => {
 setInterval(() => { if (S.view === 'ep' && S.ep?.auto && S.ep.phase === 'read' && modal.hidden && !epTyping()) { epAdvance(); render(); } }, 1800);
 
 render();
+bootDone();   // 첫 로딩 화면: 소리를 미리 받고 걷는다 (js/pwa.js)
 // 그림 목록(assets/art.json)이 오면, 그림이 하나라도 있을 때만 다시 그린다 (없으면 임시 도트 그대로)
 artReady.then(n => { if (n) render(); });

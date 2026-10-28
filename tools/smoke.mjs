@@ -12,7 +12,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
-const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.json': 'application/json' };
+const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.png': 'image/png', '.json': 'application/json', '.webmanifest': 'application/manifest+json', '.mp3': 'audio/mpeg', '.wav': 'audio/wav' };
 
 const server = http.createServer(async (req, res) => {
   const p = normalize(decodeURIComponent(new URL(req.url, 'http://x').pathname)).replace(/^([/\\])+/, '');
@@ -32,7 +32,7 @@ const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false
   migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
   ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false,
-  tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false };
+  tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false, pwa: false, backup: false };
 
 // 전투가 아닌 화면 한 걸음 (지도·보상·휴식·사건·야시장·보스 도구·달 고르기·카드 고르기)
 async function advance(page, tag) {
@@ -470,6 +470,43 @@ try {
     const bar = await ev(() => !!document.querySelector('.runbar .fill') && !!document.querySelector('.countup'));
     if (pace && scenes.every(Boolean) && bar) { seen.qaTop = true; console.log('qa-top: 빠른 사용(켬 한 번 · 끔 두 번), 시간 페이스, 사건·휴식 무대, 결과 진행 막대'); }
     else fail(`qa-top ${JSON.stringify({ pace, scenes, bar })}`);
+    await page.close();
+  }
+  {
+    // 폰·오프라인 (js/pwa.js): manifest·아이콘, 서비스 워커 등록, 첫 로딩 화면이 걷힘, 저장 내보내기 → 지우기 → 불러오기 왕복
+    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    page.on('pageerror', e => errors.push(`[pwa] ${e.message}`));
+    await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+    await page.goto(`http://127.0.0.1:${port}/?notut`);
+    const ev = f => page.evaluate(f);
+    const man = await ev(async () => {
+      const l = document.querySelector('link[rel=manifest]'), m = await (await fetch(l.href)).json();
+      const ok = await Promise.all(m.icons.map(i => fetch(new URL(i.src, l.href)).then(r => r.ok)));
+      return { name: m.name, orient: m.orientation, display: m.display, icons: ok.length > 0 && ok.every(Boolean) };
+    });
+    const sw = await ev(() => Promise.race([navigator.serviceWorker.ready.then(r => !!r.active), new Promise(r => setTimeout(() => r(false), 10000))]));
+    await page.waitForSelector('#boot', { state: 'detached', timeout: 30000 });
+    if (man.name === '야경단' && man.orient === 'landscape' && man.icons && sw) { seen.pwa = true; console.log('pwa: manifest(가로·아이콘) · 서비스 워커 활성 · 첫 로딩 화면 걷힘'); }
+    else fail(`pwa ${JSON.stringify({ man, sw })}`);
+    // 저장 백업
+    await ev(() => window.__yk.shards(123));
+    const before = await ev(() => window.__yk.P().shards);
+    await page.click('[data-settings]'); await page.click('[data-bexport]');
+    const code = await page.inputValue('#backup-code');
+    await page.click('[data-close]');
+    await ev(() => window.__yk.reset());
+    const wiped = await ev(() => window.__yk.P().shards);
+    await page.click('[data-settings]'); await page.click('[data-bimport]');
+    await page.fill('#backup-in', 'YK2-AAAA-00000000'); await page.click('[data-bapply]');
+    const bad = await ev(() => document.querySelector('.backup .bmsg.err')?.textContent || '');
+    await page.fill('#backup-in', code.slice(0, -3)); await page.click('[data-bapply]');
+    const cut = await ev(() => document.querySelector('.backup .bmsg.err')?.textContent || '');
+    await page.fill('#backup-in', code); await page.click('[data-bapply]');
+    const armed = await ev(() => !!document.querySelector('[data-bapply][aria-pressed="true"]'));
+    await page.click('[data-bapply]');
+    const after = await ev(() => ({ shards: window.__yk.P().shards, open: !document.getElementById('modal').hidden }));
+    if (/^YK\d+-/.test(code) && wiped !== before && bad && cut && armed && after.shards === before && !after.open) { seen.backup = true; console.log(`backup: 내보내기(${code.length}자) → 지우기 → 잘못된 코드·잘린 코드 거절 → 두 번 눌러 불러오기, 별 조각 ${before} 되찾음`); }
+    else fail(`저장 백업 ${JSON.stringify({ code: code.slice(0, 12), before, wiped, bad, cut, armed, after })}`);
     await page.close();
   }
   // 세로 폰: 돌려 달라는 안내
