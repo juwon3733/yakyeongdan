@@ -9,14 +9,32 @@ export const S = { G: null, C: null, picked: [], dev: false };
 
 export function newRun(party, seed = newSeed()) {
   const rng = makeRng(seed);
-  const maxHp = party.reduce((s, p) => s + RULES.hpByRarity[CHARACTERS[p].rarity], 0);
+  const members = Object.fromEntries(party.map(p => {
+    const max = CHARACTERS[p].maxHp;
+    return [p, { hp: max, max, down: false, wasDown: false }];
+  }));
   S.G = {
     seed, rng, screen: 'map', party, moon: rng.pick(Object.keys(MOONS)),
-    clock: 0, hp: maxHp, maxHp, deck: party.flatMap(p => CHARACTERS[p].start),
+    clock: 0, members, formation: defaultFormation(party), fsel: null,
+    deck: party.flatMap(p => CHARACTERS[p].start),
     act: 1, row: 0, map: null, took: [], duos: 0, fights: 0,
   };
   S.G.map = makeMap(rng);
 }
+
+// 대열: formation[0] = 앞줄(적 쪽), [1] = 가운데, [2] = 뒤. 처음엔 최대 체력이 높은 동료가 앞.
+const defaultFormation = party => party.slice().sort((a, b) => CHARACTERS[b].maxHp - CHARACTERS[a].maxHp);
+
+export const member = id => S.G.members[id];
+export const alive = id => !S.G.members[id].down;
+export const living = () => S.G.formation.filter(alive);   // 앞에서 뒤 순서
+export const swapFormation = (i, j) => { const F = S.G.formation; [F[i], F[j]] = [F[j], F[i]]; };
+
+export function healMember(id, n) {
+  const m = member(id); if (m.down) return 0;
+  const before = m.hp; m.hp = Math.min(m.max, m.hp + n); return m.hp - before;
+}
+export const healAll = n => S.G.party.forEach(id => healMember(id, n));
 
 export function logMsg(s) {
   const C = S.C; if (!C) return;
@@ -28,5 +46,4 @@ export function addTime(m) {
 }
 export const rewind = m => { S.G.clock = Math.max(0, S.G.clock - m); };
 export const timeCost = () => MOONS[S.G.moon].timeCost ?? RULES.timeCard;
-export const heal = n => { const G = S.G; G.hp = Math.min(G.maxHp, G.hp + n); };
 export const isDawn = () => S.G.clock >= RULES.dawn;

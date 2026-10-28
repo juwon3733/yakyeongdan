@@ -9,15 +9,13 @@
 <link rel="stylesheet" href="css/game.css">
 </head>
 <body>
-<main class="wrap">
-  <header>
-    <h1>야경단</h1>
-    <p class="sub">해 뜨기 전에 탑 꼭대기로 · 그림은 임시</p>
-  </header>
+<!-- 논리 640×360 판. js/main.js가 창 크기에 맞춰 배율(--s)을 정한다. -->
+<div id="stage">
   <div id="app"></div>
-</main>
-<div id="cut" hidden></div>
-<div id="modal" class="modal" hidden></div>
+  <div id="cut" hidden></div>
+  <div id="modal" class="modal" hidden></div>
+</div>
+<div id="rotate"><b>가로로 돌려 주세요</b><span>야경단은 가로 화면에서 합니다.</span></div>
 <script type="module" src="js/main.js"></script>
 </body>
 </html>

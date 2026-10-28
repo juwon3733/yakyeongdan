@@ -32,7 +32,8 @@ python3 -m http.server 8000   # → http://localhost:8000
 
 - localhost나 주소 끝 `?dev`로 열면 개발판: 동료 5명을 다 고를 수 있다(공개판은 아이리스·브릭·마르타만).
 - `?seed=123`으로 지도·달·셔플을 고정할 수 있다.
-- 검사: `node tools/smoke.mjs` (Playwright 필요. 파티 고르기 → 전투 → 보상 → 지도까지).
+- 검사: `node tools/smoke.mjs` (Playwright 필요. 가로 1280×720으로 파티 고르기 → 대열 바꾸기 → 전투(노림·전투 중 자리 바꾸기·쓰러짐·동료 고르는 카드) → 보상 → 지도, 세로 화면 안내까지).
+- 조작: 카드를 누르고 대상(적 또는 동료)을 누른다. 적을 치는 카드는 한 번 더 눌러도 쓴다. 개발판에선 `window.__yk.S`로 상태를 볼 수 있다.
 
 ## 코드 구조
 `docs/07_tech.md` 참고. 규칙 데이터는 `js/data/`, 엔진은 `js/run.js`·`map.js`·`combat.js`·`effects.js`, 화면은 `js/render/`.

@@ -1,10 +1,12 @@
-// 동료 (docs/03_characters.md). hooks는 전투 상태 c와 효과 도우미 e를 받는다.
+// 동료 (docs/03_characters.md). maxHp = 최대 체력(캐릭터마다 다름).
+// hooks는 전투 상태 c와 효과 도우미 e를 받는다. 쓰러진 동료의 패시브는 불리지 않는다.
+// 훅 안에서 e.guard는 그 동료 자신에게 걸린다.
 //   onCombatStart: 첫 턴 시작(방어 초기화 뒤, 카드 뽑기 전)
 //   onTurnStart:   매 턴 시작
 //   beforeCard:    카드를 쓰기 직전 (card = 카드 정의)
 export const CHARACTERS = {
   iris: {
-    name: '아이리스', role: '검사', rarity: 4, col: '#c8d4f0', long: true,
+    name: '아이리스', role: '검사', rarity: 4, maxHp: 36, col: '#c8d4f0', long: true,
     ds: '베기를 이어서 쓸수록 세진다.',
     pal: { h: '#1c1c2a', H: '#0c0c16', e: '#8ab0ff', o: '#c8d0e8', O: '#8a92b0', a: '#f0f4ff' },
     start: ['iris.slash', 'iris.slash', 'iris.parry', 'iris.issen'],
@@ -13,7 +15,7 @@ export const CHARACTERS = {
       onTurnStart: c => { c.irisRhythm = false; } },
   },
   brick: {
-    name: '브릭', role: '대포', rarity: 3, col: '#ef6352', long: false,
+    name: '브릭', role: '대포', rarity: 3, maxHp: 34, col: '#ef6352', long: false,
     ds: '장전을 쌓았다가 한 번에 쏜다.',
     pal: { h: '#d0463a', H: '#902a24', e: '#ffd060', o: '#3a3030', O: '#201818', a: '#e0b84a' },
     start: ['brick.load', 'brick.load', 'brick.fire', 'brick.quick'],
@@ -21,7 +23,7 @@ export const CHARACTERS = {
       onCombatStart: c => { c.loaded += 1; } },
   },
   marta: {
-    name: '마르타', role: '수녀', rarity: 3, col: '#e0b84a', long: true,
+    name: '마르타', role: '수녀', rarity: 3, maxHp: 46, col: '#e0b84a', long: true,
     ds: '막고, 맞으면 되받아친다.',
     pal: { h: '#24242e', H: '#121218', e: '#5a7ab0', o: '#1e1e28', O: '#0e0e16', a: '#f0f0f0' },
     start: ['marta.wall', 'marta.wall', 'marta.fist', 'marta.counter'],
@@ -29,7 +31,7 @@ export const CHARACTERS = {
       onCombatStart: (c, e) => { e.guard(4); } },
   },
   noel: {
-    name: '노엘', role: '마술사', rarity: 4, col: '#f08ac0', long: true,
+    name: '노엘', role: '마술사', rarity: 4, maxHp: 26, col: '#f08ac0', long: true,
     ds: '자는 동안 마력이 쌓인다.',
     pal: { h: '#f08ac0', H: '#b05a88', e: '#a0d0ff', o: '#f0e0f0', O: '#c0a8d0', a: '#ffd0e8' },
     start: ['noel.sleep', 'noel.star', 'noel.pillow', 'noel.yawn'],
@@ -37,7 +39,7 @@ export const CHARACTERS = {
       onTurnStart: (c, e) => { if (c.asleep) e.guard(3); } },
   },
   raven: {
-    name: '레이븐', role: '암살자', rarity: 4, col: '#9a86d8', long: false,
+    name: '레이븐', role: '암살자', rarity: 4, maxHp: 30, col: '#9a86d8', long: false,
     ds: '독을 쌓고 목을 긋는다.',
     pal: { h: '#2a2a38', H: '#141420', e: '#e04a4a', o: '#2a2238', O: '#16121e', a: '#9a86d8' },
     start: ['raven.needle', 'raven.needle', 'raven.step', 'raven.throat'],

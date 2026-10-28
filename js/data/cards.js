@@ -1,7 +1,9 @@
 // 동료 카드와 인연 듀오 (docs/03_characters.md).
 // play(c, e): c = 전투 상태(c.foe, c.loaded, c.mana, c.asleep, c.slashes, c.counter, c.block),
 //             e = 효과 도우미(hit, guard, heal, draw, full(ch), dark(), moon)
-// time:1 = 에너지 대신 밤 시계 비용, reward:1 = 보상에서 주로 나오는 카드
+//   e.guard: 카드 주인(듀오는 둘 중 앞에 선 사람)에게 방어. e.heal: target:'ally' 카드면 고른 동료, 아니면 카드 주인.
+//   c.block: 카드 주인의 지금 방어.
+// time:1 = 에너지 대신 밤 시계 비용, reward:1 = 보상에서 주로 나오는 카드, target:'ally' = 받을 동료를 고른다
 export const CARDS = {
   'iris.slash':  { ch: 'iris', name: '베기', cost: 1, atk: 1, slash: 1, text: '피해 6. 이번 턴 세 번째 베기부터 +4.', play: (c, e) => { e.hit(6 + (c.slashes >= 2 ? 4 : 0) + e.full('iris')); c.slashes++; } },
   'iris.parry':  { ch: 'iris', name: '흘려 베기', cost: 1, atk: 1, slash: 1, text: '피해 4, 방어 4. 베기로 친다.', play: (c, e) => { e.hit(4 + (c.slashes >= 2 ? 4 : 0) + e.full('iris')); e.guard(4); c.slashes++; } },
@@ -19,10 +21,10 @@ export const CARDS = {
 
   'marta.wall':  { ch: 'marta', name: '기도의 벽', cost: 1, text: '방어 7.', play: (c, e) => e.guard(7 + e.full('marta')) },
   'marta.fist':  { ch: 'marta', name: '철권', cost: 1, atk: 1, text: '피해 7.', play: (c, e) => e.hit(7 + e.full('marta')) },
-  'marta.counter':{ ch: 'marta', name: '반격 자세', cost: 1, text: '방어 3. 이번 턴 맞을 때마다 5 되돌려 준다.', play: (c, e) => { e.guard(3 + e.full('marta')); c.counter += 5; } },
+  'marta.counter':{ ch: 'marta', name: '반격 자세', cost: 1, text: '방어 3. 이번 턴 마르타가 맞을 때마다 5 되돌려 준다.', play: (c, e) => { e.guard(3 + e.full('marta')); c.counter += 5; } },
   'marta.rampart':{ ch: 'marta', name: '성벽', cost: 2, reward: 1, text: '방어 16.', play: (c, e) => e.guard(16 + e.full('marta')) },
   'marta.judge': { ch: 'marta', name: '심판', cost: 1, atk: 1, reward: 1, text: '지금 방어만큼 피해.', play: (c, e) => e.hit(c.block) },
-  'marta.confess':{ ch: 'marta', name: '고해', cost: 0, time: 1, reward: 1, text: '방어 12, 체력 4 회복.', play: (c, e) => { e.guard(12 + e.full('marta')); e.heal(4); } },
+  'marta.confess':{ ch: 'marta', name: '고해', cost: 0, time: 1, reward: 1, target: 'ally', text: '마르타 방어 12. 고른 동료 체력 4 회복.', play: (c, e) => { e.guard(12 + e.full('marta')); e.heal(4); } },
 
   'noel.sleep':  { ch: 'noel', name: '잠들기', cost: 1, text: '잠든다. 잠든 동안 턴 시작마다 마력 +3.', play: c => { c.asleep = true; } },
   'noel.star':   { ch: 'noel', name: '별똥 마법', cost: 1, atk: 1, text: '피해 마력×3 (최소 4). 마력 0, 깨어난다.', play: (c, e) => { e.hit(Math.max(4, c.mana * 3)); c.mana = 0; c.asleep = false; } },
@@ -49,7 +51,7 @@ export const DUOS = {
   'brick+marta': { name: '성당 포격', text: '장전 +3, 방어 8.', play: (c, e) => { c.loaded += 3; e.guard(8); } },
   'brick+noel':  { name: '별똥 포탄', text: '피해 (장전+마력)×4. 둘 다 0.', play: (c, e) => { e.hit((c.loaded + c.mana) * 4); c.loaded = 0; c.mana = 0; c.asleep = false; } },
   'brick+raven': { name: '독탄', text: '독 8, 장전 +1.', play: c => { c.foe.poison += 8; c.loaded += 1; } },
-  'marta+noel':  { name: '자장가 기도', text: '체력 6 회복, 방어 6.', play: (c, e) => { e.heal(6); e.guard(6); } },
+  'marta+noel':  { name: '자장가 기도', target: 'ally', text: '고른 동료 체력 6 회복, 방어 6.', play: (c, e) => { e.heal(6); e.guard(6); } },
   'marta+raven': { name: '참회의 독', text: '방어 (독+6).', play: (c, e) => e.guard(c.foe.poison + 6) },
   'noel+raven':  { name: '악몽', text: '적의 독 2배, 약화 1턴.', play: c => { c.foe.poison *= 2; c.foe.weak += 1; } },
 };

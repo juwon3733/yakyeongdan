@@ -1,5 +1,5 @@
 // 지도 생성·이동·시간 계산, 사건·휴식 처리.
-import { S, addTime, heal, rewind } from './run.js';
+import { S, addTime, rewind, healAll, member, swapFormation } from './run.js';
 import { startCombat, rewardCards } from './combat.js';
 import { FOES } from './data/enemies.js';
 import { EVENTS } from './data/events.js';
@@ -42,17 +42,29 @@ export function takeReward(id) {
   G.reward.next === 'act' ? nextAct() : nextRow();
 }
 
+// 휴식: 쉬기 = 각자 최대 체력의 일정 비율(쓰러졌던 동료는 더), 낮잠 = 시간 되찾기
 export function rest(kind) {
-  const R = RULES.rest;
-  heal(kind === 'long' ? R.long : R.short);
-  if (kind === 'short') rewind(R.shortTime);
+  const R = RULES.rest, G = S.G;
+  if (kind === 'heal') for (const p of G.party) {
+    const m = member(p);
+    m.hp = Math.min(m.max, m.hp + Math.ceil(m.max * (m.wasDown ? R.downHealPct : R.healPct)));
+    m.wasDown = false;
+  }
+  else rewind(R.napTime);
   nextRow();
 }
 
+// 지도에서 대열 바꾸기: 한 칸 누르고 다른 칸 누르면 자리를 맞바꾼다 (자유)
+export function pickSlot(i) {
+  const G = S.G;
+  if (G.fsel === null || G.fsel === undefined) G.fsel = i;
+  else { if (G.fsel !== i) swapFormation(G.fsel, i); G.fsel = null; }
+}
+
 const eventApi = {
-  heal: n => heal(n), addTime: m => addTime(m), rewind: m => rewind(m),
-  loseHp: n => { S.G.hp = Math.max(1, S.G.hp - n); },
-  maxHp: n => { S.G.maxHp += n; S.G.hp += n; },
+  heal: n => healAll(n), addTime: m => addTime(m), rewind: m => rewind(m),
+  loseHp: n => { for (const p of S.G.party) { const m = member(p); if (!m.down) m.hp = Math.max(1, m.hp - n); } },
+  maxHp: n => { for (const p of S.G.party) { const m = member(p); m.max += n; if (!m.down) m.hp += n; } },
   addRandomCard: () => { S.G.deck.push(rewardCards()[0]); },
   removeCard: () => { S.G.screen = 'remove'; return true; },
 };
