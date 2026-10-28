@@ -30,8 +30,30 @@ export const RELICS = {
   dawn_feather:  { name: '새벽의 깃털', tier: 'boss', text: '6시 이후 여명 효과가 없다. 대신 휴식 칸 회복 절반.', noDawn: 1, restHealMul: .5 },
   stopped_tower: { name: '멈춘 시계탑', tier: 'boss', text: '시간 카드 비용 0분. 대신 칸 시간 +5분.', timeCardFree: 1, nodeTimeAdd: 5 },
   star_crown:    { name: '별의 왕관', tier: 'boss', text: '매 턴 에너지 +1. 대신 손패 4장.', energy: 1, handSize: -1 },
+  // 전용 도구 20개 (docs/10_details.md §3, 별자리 4). 주인(owner)이 파티에 있고 별자리 4일 때만 보통 등급 자리에 섞여 나온다.
+  //   ownerBlock 전투 시작에 주인 방어 · poisonAll/burnAll 전투 시작에 모든 적 독/화상 · napAdd 낮잠 +분
+  sig_sion:     { name: '첫 별의 모래', tier: 'sig', owner: 'sion', text: '첫 턴 카드 +1.', firstDraw: 1 },
+  sig_lunaria:  { name: '달빛 방울', tier: 'sig', owner: 'lunaria', text: '휴식 칸 쉬기 회복 +10%.', restHealAdd: .1 },
+  sig_akane:    { name: '붉은 숫돌', tier: 'sig', owner: 'akane', text: '전투 시작에 모든 적 화상 3.', burnAll: 3 },
+  sig_eleonore: { name: '태엽 열쇠', tier: 'sig', owner: 'eleonore', text: '휴식 칸 낮잠 +15분.', napAdd: 15 },
+  sig_iris:     { name: '스승의 숫돌', tier: 'sig', owner: 'iris', text: '전투 시작에 무작위 적 피해 6.', pistol: 6 },
+  sig_noel:     { name: '깃털 베개', tier: 'sig', owner: 'noel', text: '휴식 칸 낮잠 +10분.', napAdd: 10 },
+  sig_raven:    { name: '독 주머니', tier: 'sig', owner: 'raven', text: '전투 시작에 모든 적 독 3.', poisonAll: 3 },
+  sig_mimimomo: { name: '쌍둥이 거울', tier: 'sig', owner: 'mimimomo', text: '연계가 3칸이 될 때마다 카드 1장.', chain3Draw: 1 },
+  sig_sebas:    { name: '은 찻주전자', tier: 'sig', owner: 'sebas', text: '전투가 끝날 때 체력이 가장 낮은 동료 체력 5 회복.', winHealLowest: 5 },
+  sig_mariana:  { name: '금화 주머니', tier: 'sig', owner: 'mariana', text: '전투에서 이기면 별빛 +8.', winGold: 8 },
+  sig_tomori:   { name: '작은 등불', tier: 'sig', owner: 'tomori', text: '첫 턴 뒷줄 동료 방어 8.', blockBackFirst: 8 },
+  sig_sigrun:   { name: '은빛 깃', tier: 'sig', owner: 'sigrun', text: '전투 시작에 시그룬 방어 8.', ownerBlock: 8 },
+  sig_zeno:     { name: '용비늘 조각', tier: 'sig', owner: 'zeno', text: '전투 시작에 제노 방어 10.', ownerBlock: 10 },
+  sig_brick:    { name: '예비 포탄', tier: 'sig', owner: 'brick', text: '전투 시작에 무작위 적 피해 8.', pistol: 8 },
+  sig_marta:    { name: '성당 열쇠', tier: 'sig', owner: 'marta', text: '전투 시작에 앞줄 동료 방어 8.', blockFront: 8 },
+  sig_finn:     { name: '지름길 지도', tier: 'sig', owner: 'finn', text: '지도에서 강적 칸 시간 -10분.', eliteTime: -10 },
+  sig_laila:    { name: '바람 깃발', tier: 'sig', owner: 'laila', text: '첫 턴 카드 +1.', firstDraw: 1 },
+  sig_dora:     { name: '모루 방패', tier: 'sig', owner: 'dora', text: '전투 시작에 도라 방어 6.', ownerBlock: 6 },
+  sig_gordon:   { name: '큰 도시락', tier: 'sig', owner: 'gordon', text: '전투가 끝날 때 체력이 가장 낮은 동료 체력 6 회복.', winHealLowest: 6 },
+  sig_fukuro:   { name: '행운 고양이', tier: 'sig', owner: 'fukuro', text: '전투에서 이기면 별빛 +6.', winGold: 6 },
 };
-export const RELIC_TIER_NAME = { start: '시작', c: '흔함', u: '보통', r: '희귀', boss: '보스' };
+export const RELIC_TIER_NAME = { start: '시작', c: '흔함', u: '보통', r: '희귀', boss: '보스', sig: '전용' };
 // 강적·사건·야시장에서 나오는 도구 등급 확률 (흔함 50 / 보통 35 / 희귀 15)
 export const RELIC_ODDS = { c: .5, u: .35, r: .15 };
 export const START_RELIC = 'old_watch';

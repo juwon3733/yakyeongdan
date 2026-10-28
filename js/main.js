@@ -2,7 +2,8 @@
 import { S, newRun, checkCollapse } from './run.js';
 import { goNode, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
 import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, devWin, pickCombatMoon } from './combat.js';
-import { summon, P, resetProfile, save } from './meta.js';
+import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw } from './meta.js';
+import { temperPick } from './effects.js';
 import { render as draw } from './render/index.js';
 import { deckModal } from './render/screens.js';
 import { showCut, showPhase } from './fx.js';
@@ -11,6 +12,7 @@ import { openEp, openBond, epNext, epSkip, epStartFight, epFightDone, epSkipFigh
 import { epLogModal } from './render/episodes.js';
 
 const qs = new URLSearchParams(location.search);
+S.ui = true;   // 화면에서 하는 판: 담금질 등을 직접 고른다 (시뮬레이션은 자동)
 S.dev = /^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname) || location.protocol === 'file:' || qs.has('dev');
 // 개발판: 점검 도구(tools/smoke.mjs)가 상태를 들여다보고, 원하는 적과 바로 싸우고, 전투를 바로 이길 수 있다
 if (S.dev) window.__yk = {
@@ -20,6 +22,11 @@ if (S.dev) window.__yk = {
   // 에피소드: 동료의 3화를 모두 연다 / 바로 재생
   epUnlock: cid => { P.epProg[cid] = { runs: 1, act2: true, dawn: true }; save(); render(); },
   ep: (cid, n) => { openEp(cid, n); render(); },
+  // 판 바깥: 별가루·별자리·이긴 판 수 바꾸기, 예전 저장(v1) 이어받기 흉내
+  dust: n => { P.dust += n; save(); render(); },
+  stars: (id, n) => { P.owned[id] = { stars: n }; save(); render(); },
+  wins: n => { P.wins = n; P.runs = Math.max(P.runs, n); save(); render(); },
+  loadV1: obj => { loadRaw(obj); render(); return P; },
 };
 const seedParam = qs.has('seed') ? Number(qs.get('seed')) >>> 0 : undefined;
 
@@ -55,13 +62,23 @@ app.addEventListener('click', e => {
   const D = b.dataset, C = S.C;
   if (D.view) {
     S.view = D.view;
-    if (D.view === 'party') { S.G = null; S.C = null; S.picked = S.picked.filter(k => k); }
+    if (D.view === 'party') { S.G = null; S.C = null; S.picked = S.picked.filter(k => k && P.owned[k] || S.dev); }
+    if (D.view === 'exchange') S.exMsg = '';
   }
   else if (D.pick) {
     const k = D.pick;
     S.picked = S.picked.includes(k) ? S.picked.filter(x => x !== k) : S.picked.length < 3 ? [...S.picked, k] : S.picked;
   }
-  else if ('start' in D) newRun(S.picked.slice(), seedParam);
+  else if ('start' in D) newRun(S.picked.slice(), seedParam, runOptions(S.picked, S.depth || 0, S.startRelic));
+  else if (D.depth !== undefined) S.depth = +D.depth;
+  else if (D.srelic) S.startRelic = D.srelic;
+  // 판 바깥: 초심자 ★5 · 교환소 · 동료 · 도감
+  else if (D.choose5) { const r = choose5(D.choose5); if (r) { S.reveal = { list: [r], open: [true] }; S.view = 'reveal'; sfx('star'); } }
+  else if (D.ex) { const [k, a] = D.ex.split(':'); S.exMsg = exchange(k, a || null) || ''; }
+  else if (D.mate) S.mate = D.mate;
+  else if (D.costume) { const [k, on] = D.costume.split(':'); setCostume(k, on === '1'); }
+  else if (D.ctab) S.codexTab = D.ctab;
+  else if (D.replay) { showCut(D.replay, false, true); return; }
   else if ('home' in D) { S.G = null; S.C = null; S.view = 'base'; }
   // 에피소드
   else if (D.ep) { const [cid, n] = D.ep.split(':'); openEp(cid, +n); }
@@ -82,6 +99,16 @@ app.addEventListener('click', e => {
   // 판
   else if (D.node) { const [r, i] = D.node.split(',').map(Number); goNode(r, i); }
   // 카드: 누르면 고르고, 대상(적 또는 동료)을 누르면 쓴다. 적을 치는 카드는 한 번 더 눌러도 쓴다.
+  // 담금질 고르기 (도라): 고르는 동안 다른 카드·턴 끝은 막힌다
+  else if (D.temper) temperPick(+D.temper);
+  else if ('temperauto' in D) temperPick(null);
+  else if (C?.choose) return;
+  // 세바스·예약: 고른 카드를 턴 끝에 남기기
+  else if ('keepmark' in D) {
+    const u = C.pending; if (u == null) return;
+    C.keepMark ||= [];
+    C.keepMark = C.keepMark.includes(u) ? C.keepMark.filter(x => x !== u) : [...C.keepMark, u];
+  }
   else if (D.play) {
     const uid = +D.play, inst = C.hand.find(h => h.uid === uid);
     if (!inst || !usable(inst)) return;

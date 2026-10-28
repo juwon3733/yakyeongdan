@@ -29,7 +29,7 @@ export function restView() {
     const M = G.members[p], gain = Math.min(M.max - M.hp, Math.ceil(M.max * restPct(M.wasDown)));
     return `<span class="mt">${face(p)}<span>${CHARACTERS[p].name} ${M.hp}/${M.max} <b>+${gain}</b>${M.wasDown ? ' (쓰러졌던 동료)' : ''}</span></span>`;
   }).join('');
-  const talk = restTalk(G);
+  const talk = G.restTalk != null ? TALKS[G.restTalk] : null;
   return `<div class="center"><h2>휴식</h2><p class="note">탑의 계단참. 쉬거나, 잠깐 눈을 붙여 시간을 벌거나, 카드를 손질하거나.</p>
     <div class="restwho">${who}</div>
     ${talk ? `<div class="talk">${talk.lines.map(([p, t]) => `<p>${face(p, 'sm')}<b>${CHARACTERS[p].name}</b> ${esc(t)}</p>`).join('')}</div>` : ''}
@@ -37,11 +37,6 @@ export function restView() {
       <button type="button" class="primary" data-rest="heal">쉬기: 각자 최대 체력의 ${Math.round(restPct(false) * 100)}% (쓰러졌던 동료 ${Math.round(restPct(true) * 100)}%)</button>
       <button type="button" data-rest="nap">낮잠: ${napTime()}분 되찾기</button>
       <button type="button" data-rest="smith" ${G.deck.some(canUpgrade) ? '' : 'disabled'}>손질: 카드 1장 강화</button></div></div>`;
-}
-// 휴식 대화: 파티에 두 사람이 다 있는 대화 중 하나 (인연 짝 우선, 층마다 바뀜)
-function restTalk(G) {
-  const L = TALKS.filter(t => G.party.includes(t.a) && G.party.includes(t.b));
-  return L.length ? L[(G.floors + G.act * 7) % L.length] : null;
 }
 const val = (v, x) => typeof v === 'function' ? v(x) : v;
 export function eventView() {

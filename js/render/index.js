@@ -1,7 +1,7 @@
 import { S } from '../run.js';
 import { topbar } from './common.js';
 import { titleView, partyView } from './title.js';
-import { baseView, summonView, revealView } from './base.js';
+import { baseView, summonView, revealView, pick5View, oddsView, exchangeView, matesView, codexView, recordsView } from './base.js';
 import { episodesView, epView } from './episodes.js';
 import { mapView } from './map.js';
 import { combatView, combatTopExtra } from './combat.js';
@@ -12,7 +12,8 @@ import { sync as syncSound } from '../audio.js';
 const VIEWS = { map: mapView, combat: combatView, reward: rewardView, rest: restView, event: eventView, remove: removeView, upgrade: upgradeView,
   shop: shopView, dupe: dupeView, bossrelic: bossRelicView };
 // 판 밖의 화면
-const META = { title: titleView, party: partyView, base: baseView, summon: summonView, reveal: revealView, episodes: episodesView, ep: epView };
+const META = { title: titleView, party: partyView, base: baseView, summon: summonView, reveal: revealView, episodes: episodesView, ep: epView,
+  pick5: pick5View, odds: oddsView, exchange: exchangeView, mates: matesView, codex: codexView, records: recordsView };
 
 export function render(app) {
   const G = S.G;

@@ -1,31 +1,44 @@
 // 한 판 상태. S.G = 판, S.C = 지금 전투. 판이 없을 때는 S.view가 화면(타이틀·본부·소환·파티 고르기).
 import { makeRng, newSeed } from './rng.js';
 import { CHARACTERS } from './data/characters.js';
+import { canUpgrade } from './data/cards.js';
 import { MOONS } from './data/moons.js';
 import { RULES } from './data/rules.js';
 import { RELICS, START_RELIC } from './data/relics.js';
 import { ACTS } from './data/enemies.js';
 import { makeMap } from './map.js';
 import { relicFlag, relicSum } from './relics.js';
+import { depthRuleAt } from './data/depth.js';
 
 export const S = { G: null, C: null, picked: [], dev: false, view: 'title', reveal: null, fxq: [] };
 
-export function newRun(party, seed = newSeed()) {
-  const rng = makeRng(seed);
+// opts (판 바깥에서 정함, meta.js runOptions): depth 밤의 깊이 · locked 아직 안 열린 카드 묶음 카드 · upgrades 시작 카드 하나를 강화판으로 시작할 동료(별자리 3)
+//   sigs 전용 도구가 열린 동료(별자리 4) · startRelic 시작 도구
+export function newRun(party, seed = newSeed(), opts = {}) {
+  const rng = makeRng(seed), depth = opts.depth || 0;
+  const startHp = depthRuleAt(depth, 'startHp') || 0;
   const members = Object.fromEntries(party.map(p => {
     const max = CHARACTERS[p].maxHp;
-    return [p, { hp: max, max, down: false, wasDown: false, feather: false, lost: 0 }];
+    return [p, { hp: Math.max(1, max + startHp), max, down: false, wasDown: false, feather: false, lost: 0 }];
   }));
+  const deck = party.flatMap(p => {
+    const st = CHARACTERS[p].start.slice();
+    if ((opts.upgrades || []).includes(p)) { const i = st.findIndex(canUpgrade); if (i >= 0) st[i] += '+'; }
+    return st;
+  });
+  const curse = depthRuleAt(depth, 'curse'); if (curse) deck.push(curse);
   const moon = rng.pick(Object.keys(MOONS));
   S.G = {
     seed, rng, screen: 'map', party, moon,
     clock: 0, members, formation: defaultFormation(party), fsel: null,
-    deck: party.flatMap(p => CHARACTERS[p].start),
+    deck, depth, locked: new Set(opts.locked || []), sigs: opts.sigs || [],
     act: 1, row: 0, map: null, nextMap: null, took: [], duos: 0, fights: 0, pity: 0,
-    gold: RULES.startGold, relics: [START_RELIC], used: {}, salt: 0,
+    gold: RULES.startGold, relics: [opts.startRelic && RELICS[opts.startRelic] ? opts.startRelic : START_RELIC], used: {}, salt: 0,
     duoSet: new Set(), stats: Object.fromEntries(party.map(p => [p, { dmg: 0, block: 0 }])),
     floors: 0, elites: 0, bossKills: 0, removes: 0, seenEvents: [], note: '', moonPick: false, shop: null,
     haggle: 0, nextFight: null, smithLeft: 0,
+    // 도감·기록용 (meta.js grantRun이 모은다)
+    offered: new Set(), played: new Set(), foesMet: new Set(), foesBeat: new Set(), talks: new Set(),
   };
   S.G.map = makeMap(rng, moon);
   S.G.nextMap = makeMap(rng, moon);
@@ -60,16 +73,20 @@ export function logMsg(s) {
 // 화면에 띄울 연출 (main.js가 꺼내 보여 준다): { kind: 'phase' | 'duo' | 'note', text }
 export const pushFx = fx => { S.fxq.push(fx); };
 
+// 밤의 깊이 규칙 (js/data/depth.js)
+export const depthRule = k => depthRuleAt(S.G?.depth || 0, k);
+// 여명이 시작되는 시각: 6:00 (깊이 8이면 5:30)
+export const dawnAt = () => depthRule('dawnAt') ?? RULES.dawn;
 export function addTime(m) {
   const G = S.G, before = G.clock; G.clock += m;
-  if (before < RULES.dawn && G.clock >= RULES.dawn && !relicFlag('noDawn')) logMsg('<b>6시. 해가 뜬다.</b> 탑이 무너지기 시작해 적이 매 턴 강해진다.');
+  if (before < dawnAt() && G.clock >= dawnAt() && !relicFlag('noDawn')) logMsg('<b>해가 뜬다.</b> 탑이 무너지기 시작해 적이 매 턴 강해진다.');
 }
 export const rewind = m => { S.G.clock = Math.max(0, S.G.clock - m); };
 // 파티 패시브 숫자 합 (서 있는 동료만)
 export const partySum = k => S.G.party.reduce((t, p) => t + (alive(p) ? CHARACTERS[p].passive?.[k] || 0 : 0), 0);
 // 시간 카드 비용(분): 달(초승 15) · 멈춘 시계탑(0) · 엘레오노르(−10)
 export const timeCost = () => relicFlag('timeCardFree') ? 0 : Math.max(0, (MOONS[S.G.moon].timeCost ?? RULES.timeCard) - partySum('timeMinus'));
-export const isDawn = () => S.G.clock >= RULES.dawn && !relicFlag('noDawn');
+export const isDawn = () => S.G.clock >= dawnAt() && !relicFlag('noDawn');
 
 // 7시가 되면 탑이 무너진다 (어떤 행동 뒤든 main.js가 부른다)
 export function checkCollapse() {

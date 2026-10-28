@@ -443,7 +443,7 @@ export const CARDS = {
   'dora.hammer':  { ch: 'dora', name: '망치질', cost: 1, atk: 1, rarity: 'c', v: [11], up: { v: [14] },
     text: '피해 {d0}.', play: (c, e, v) => e.hit(v[0]) },
   'dora.temper':  { ch: 'dora', name: '담금질', cost: 0, rarity: 'c', v: [1], up: { v: [2] },
-    text: '손패 {n0}장(가장 좋은 카드)을 이번 전투 동안 강화.', play: (c, e, v) => e.temper(v[0]) },
+    text: '손패 {n0}장을 골라 이번 전투 동안 강화.', play: (c, e, v) => e.temper(v[0]) },
   'dora.repair':  { ch: 'dora', name: '방패 수리', cost: 1, rarity: 'c', v: [9], up: { v: [12] },
     text: '방어 {b0}.', play: (c, e, v) => e.guard(v[0]) },
   'dora.forge':   { ch: 'dora', name: '명검 단조', cost: 0, time: 1, rarity: 'u', v: [9], up: { text: '손패 전부를 이번 전투 동안 강화. 카드 1장.' },

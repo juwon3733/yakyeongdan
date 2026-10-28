@@ -1,5 +1,5 @@
 // 전투 엔진: 턴, 손패, 적 1~3마리(의도·노림·상태), 동료별 체력·방어·상태, 대열, 쓰러짐, 연계·듀오, 패시브, 저주.
-import { S, addTime, timeCost, logMsg, isDawn, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll } from './run.js';
+import { S, addTime, timeCost, logMsg, isDawn, depthRule, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll } from './run.js';
 import { hasRelic, relicSum, relicFlag, rollRelic } from './relics.js';
 import { RELICS } from './data/relics.js';
 import { effects as E, draw } from './effects.js';
@@ -33,10 +33,13 @@ export function foeTarget() {
 
 export function startCombat(ids, kind) {
   const G = S.G;
+  // 밤의 깊이: 강적·보스·일반 적 체력 +%
+  const hpMul = 1 + (depthRule(kind === 'elite' ? 'eliteHp' : kind === 'boss' ? 'bossHp' : 'fightHp') || 0);
   const foes = ids.map((k, i) => {
-    const d = FOE[k];
+    const d = FOE[k], hp = Math.round(d.hp * hpMul);
+    G.foesMet?.add(k);
     // 6시 이후 들어간 전투: 적이 힘 +3으로 시작
-    return { key: k, i, ...d, hp: d.hp, max: d.hp, pi: 0, block: 0, str: isDawn() ? RULES.dawnStartStr : 0, poison: 0, weak: 0, vuln: 0, bleed: 0, burn: 0,
+    return { key: k, i, ...d, hp, max: hp, pi: 0, block: 0, str: isDawn() ? RULES.dawnStartStr : 0, poison: 0, weak: 0, vuln: 0, bleed: 0, burn: 0,
       armor: d.armor || 0, acts: d.acts || 1, p2: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null };
   });
   const C = S.C = {
@@ -87,6 +90,13 @@ function relicsAtStart() {
   const C = S.C, L = living();
   if (L.length && relicSum('blockFront')) C.blocks[L[0]] += relicSum('blockFront');
   if (L.length && relicSum('blockBackFirst')) C.blocks[L[L.length - 1]] += relicSum('blockBackFirst');
+  // 전용 도구: 주인 방어 · 모든 적 독/화상
+  for (const id of S.G.relics) {
+    const d = RELICS[id];
+    if (d.ownerBlock && alive(d.owner)) C.blocks[d.owner] += d.ownerBlock;
+    if (d.poisonAll) for (const f of livingFoes()) f.poison += d.poisonAll;
+    if (d.burnAll) for (const f of livingFoes()) f.burn += d.burnAll;
+  }
   const gun = relicSum('pistol');
   if (gun) { const f = S.G.rng.pick(livingFoes()); if (f) { f.hp = Math.max(0, f.hp - gun); logMsg(`권총: ${f.name}에게 피해 <b>${gun}</b>`); killCheck(f); } }
 }
@@ -112,7 +122,7 @@ function startTurn() {
   if (C.garden) for (const f of livingFoes()) f.poison += C.garden;
   if (isDawn()) { for (const f of livingFoes()) f.str += RULES.dawnStrPerTurn; logMsg(`<b>새벽</b>: 적의 힘 +${RULES.dawnStrPerTurn}`); }
   // 「새벽」: 내 턴 시작마다 밤 시계가 돈다
-  for (const f of livingFoes()) if (f.turnClock) { addTime(f.turnClock); logMsg(`${f.name}: 밤 시계 <b>+${f.turnClock}분</b>`); }
+  for (const f of livingFoes()) if (f.turnClock) { const t = f.turnClock + (depthRule('dawnClock') || 0); addTime(t); logMsg(`${f.name}: 밤 시계 <b>+${t}분</b>`); }
   if (C.light != null && C.turn > 1) C.light = (C.light + 1) % S.G.formation.length;
   if (first) { passives('onCombatStart'); relicsAtStart(); }
   passives('onTurnStart');
@@ -261,6 +271,7 @@ export function playCard(id, pick = {}) {
   if (C.freeNext > 0) C.freeNext--;
   C.hand.splice(i, 1);
   C.pending = null;
+  G.played?.add(inst.id.replace(/\+$/, ''));
   if (d.time && !(C.payEnergy && relicFlag('hourglass'))) {
     const t = timeCost(d); if (t) { addTime(t); logMsg(`시간을 썼다: <b>+${t}분</b>`); }
     // 엘레오노르: 매 턴 처음 쓴 시간 카드는 에너지를 돌려준다
@@ -354,7 +365,10 @@ export function endTurn() {
   const keepN = (alive('sebas') ? CHARACTERS.sebas.passive.keepCard : 0) + C.reserve;
   const keepable = C.hand.filter(h => !/^(duo|bond):/.test(h.id) && cardDef(h).ch !== 'curse' && !h.ghost)
     .sort((a, b) => (cardDef(b).cost - cardDef(a).cost) || (b.uid - a.uid));
-  const keep = keepable.slice(0, keepN);
+  // 직접 고른 카드(남기기 표시)가 먼저, 나머지는 가장 비싼 카드
+  const marked = (C.keepMark || []).map(u => keepable.find(h => h.uid === u)).filter(Boolean);
+  const keep = [...marked, ...keepable.filter(h => !marked.includes(h))].slice(0, keepN);
+  C.keepMark = [];
   keep.forEach((h, k) => { if (k >= keepN - C.reserve) h.disc = (h.disc || 0) + 1; });
   C.keepCards = keep;
   for (const h of C.hand) if (!/^(duo|bond):/.test(h.id) && !keep.includes(h)) (h.ghost ? C.exh : C.disc).push(h);
@@ -392,17 +406,20 @@ export function rewardCards(kind = 'fight', extra = 0) {
     let x = G.rng.next(), r;
     const rare = odds.r + (kind === 'boss' ? 0 : G.pity);
     if (x < rare) r = 'r'; else if (x < rare + odds.u) r = 'u'; else r = 'c';
-    const mine = Object.keys(CARDS).filter(id => CARDS[id].ch === p && !out.includes(id));
+    // 아직 안 열린 카드 묶음(G.locked)은 나오지 않는다
+    const mine = Object.keys(CARDS).filter(id => CARDS[id].ch === p && !out.includes(id) && !G.locked?.has(id));
     const pool = mine.filter(id => CARDS[id].rarity === r);
     out.push(G.rng.pick(pool.length ? pool : mine));
   }
   if (kind !== 'boss') G.pity = out.some(id => CARDS[id].rarity === 'r') ? 0 : G.pity + REWARD.pityStep;
+  for (const id of out) G.offered?.add(id);
   return out;
 }
 
 function winCombat() {
   const G = S.G, C = S.C, k = C.kind, chain = C.chain, extra = C.rewardExtra, winGold = C.winGold;
   G.moon = C.moonBase;                       // 루나리아가 바꾼 달은 이번 전투만
+  for (const f of C.all) G.foesBeat?.add(f.key);
   G.fights++; S.C = null;
   // 에피소드 특별 전투: 보상 없이 이야기로 돌아간다 (js/episodes.js)
   if (G.episode) { G.episode.won = true; G.screen = 'epdone'; return; }

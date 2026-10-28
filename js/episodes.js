@@ -3,7 +3,7 @@
 // 끝나면 combat.js/run.js가 G.screen = 'epdone'으로 돌려보낸다(main.js after()가 epFightDone을 부름).
 import { S, newRun } from './run.js';
 import { startCombat } from './combat.js';
-import { P, save, epKey } from './meta.js';
+import { P, save, epKey, epExtra } from './meta.js';
 import { EPISODES, BOND_SCENES, EP_REWARD } from './data/episodes.js';
 
 const isLine = it => Array.isArray(it);
@@ -86,6 +86,6 @@ function finish() {
   E.phase = 'end'; E.auto = false;
   if (E.kind === 'ep') {
     const k = epKey(E.cid, E.n);
-    if (!P.epSeen[k]) { P.epSeen[k] = true; E.reward = EP_REWARD[E.n]; P.shards += E.reward; save(); }
+    if (!P.epSeen[k]) { P.epSeen[k] = true; E.reward = EP_REWARD[E.n]; P.shards += E.reward; E.extra = epExtra(E.cid, E.n); save(); }
   } else if (!P.bondSeen.includes(E.key)) { P.bondSeen.push(E.key); save(); }
 }

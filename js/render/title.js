@@ -2,7 +2,9 @@ import { S } from '../run.js';
 import { CHARACTERS } from '../data/characters.js';
 import { ROSTER, ROSTER_IDS } from '../data/roster.js';
 import { DUOS, duoKey } from '../data/cards.js';
-import { P, owns } from '../meta.js';
+import { P, owns, duoSpecial, depthOpen, depthMax, startPickOpen, startRelicChoices } from '../meta.js';
+import { RELICS } from '../data/relics.js';
+import { DEPTH } from '../data/depth.js';
 import { sprite } from './sprites.js';
 import { stars, palOf, esc } from './common.js';
 
@@ -33,12 +35,29 @@ function bondsOf(picked) {
   return picked.length > 1 ? `<div class="bonds"><span class="note small">인연</span>${out.join('') || '<span class="note small">이 셋 사이엔 인연이 없다 (연계만 찬다)</span>'}</div>` : '';
 }
 
+// 밤의 깊이(「새벽」을 한 번 이기면) · 시작 도구 고르기(판을 한 번 끝내면)
+function runSetup() {
+  let out = '';
+  if (depthOpen()) {
+    const d = Math.min(S.depth || 0, depthMax());
+    out += `<div class="setup"><span class="note small">밤의 깊이</span><span class="depthsel">${Array.from({ length: depthMax() + 1 }, (_, n) =>
+      `<button type="button" class="mini ${n === d ? 'on' : ''}" data-depth="${n}" title="${n ? esc(DEPTH.slice(1, n + 1).map(x => x.text).join(' / ')) : '보통'}">${n}</button>`).join('')}</span>
+      ${d ? `<span class="note small">${esc(DEPTH[d].text)}${d > 1 ? ` 외 ${d - 1}개` : ''}</span>` : ''}</div>`;
+  }
+  if (startPickOpen()) {
+    const L = startRelicChoices(), cur = L.includes(S.startRelic) ? S.startRelic : L[0];
+    out += `<div class="setup"><span class="note small">시작 도구</span><span class="srsel">${L.map(k =>
+      `<button type="button" class="mini ${k === cur ? 'on' : ''}" data-srelic="${k}" title="${esc(RELICS[k].text)}">${esc(RELICS[k].name)}</button>`).join('')}</span></div>`;
+  }
+  return out;
+}
+
 // 파티 고르기: 가진 동료만 (개발판은 구현된 동료 전부). 아직 구현 안 된 동료는 「준비 중」.
 export function partyView() {
   const can = k => !!CHARACTERS[k] && (S.dev || owns(k));
   const mates = ROSTER_IDS.filter(k => owns(k) || (S.dev && CHARACTERS[k])).map(k => {
     const r = ROSTER[k], c = CHARACTERS[k], on = S.picked.includes(k), ok = can(k);
-    return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'}>
+    return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'}>
       <img class="px" src="${sprite(palOf(k), r.long)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
       <span class="rl">${r.role}${c ? ` · 체력 ${c.maxHp}` : ''}</span>
       <span class="ps">${c ? `<b>${c.passive.name}</b> ${c.passive.text}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
@@ -56,6 +75,7 @@ export function partyView() {
       <h2>동료 셋 (${S.picked.length}/3)</h2>
       <div class="chosenrow">${chosen}</div>
       ${bondsOf(S.picked)}
+      ${runSetup()}
       <p class="note">대열은 지도에서 바꿀 수 있다. 처음엔 체력이 높은 동료가 앞에 선다.</p>
       <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>출발</button>
       <p class="note small"><b>연계</b>: 서로 다른 동료 카드를 번갈아 쓰면 칸이 차고 공격이 세진다. 2칸 이상에서 인연 있는 둘을 이어 쓰면 <b>듀오 카드</b>.</p>

@@ -1,14 +1,19 @@
-// 판 바깥: 가진 동료·별 조각·별가루·소환 천장 저장(localStorage), 별 소환, 판이 끝나면 받는 별 조각.
-// 수치는 js/data/gacha.js. 저장이 안 되는 환경(사생활 보호 창 등)이면 메모리에만 두고 그대로 진행한다.
+// 판 바깥 (docs/05_meta.md): 가진 동료·별자리·의상·카드 묶음·별 조각·별가루·소환(천장·픽업·초심자 고르기)·교환소·
+// 도감·기록·밤의 깊이를 localStorage에 저장한다. 수치는 js/data/gacha.js · depth.js.
+// 저장이 안 되는 환경(사생활 보호 창 등)이면 메모리에만 두고 그대로 진행한다.
 import { makeRng, newSeed } from './rng.js';
-import { ROSTER, byRarity } from './data/roster.js';
-import { STARTER_OWNED } from './data/characters.js';
-import { SUMMON, SUMMON_ITEMS, SHARDS } from './data/gacha.js';
+import { ROSTER, ROSTER_IDS, byRarity } from './data/roster.js';
+import { STARTER_OWNED, CHARACTERS } from './data/characters.js';
+import { SUMMON, SUMMON_ITEMS, SHARDS, ITEM_DUST, PICKUPS, PICKUP_DAYS, PICKUP_EPOCH, EXCHANGE, START_PICK_RUNS, PACK_SIZE, PACK_COUNT } from './data/gacha.js';
 import { RULES } from './data/rules.js';
+import { RELICS } from './data/relics.js';
+import { CARDS } from './data/cards.js';
+import { TALKS } from './data/talks.js';
+import { DEPTH_MAX, DEPTH_BONUS } from './data/depth.js';
 import { EPISODES, BOND_SCENES } from './data/episodes.js';
 
 const KEY = 'yk-profile';
-const VERSION = 1;
+const VERSION = 2;
 
 function fresh() {
   return {
@@ -18,23 +23,71 @@ function fresh() {
     seenDuos: [], runs: 0, wins: 0, best: null, sseed: newSeed(),
     // 에피소드 (docs/09): 동료별 진행 · 다 본 화 · 열린 인연 장면 · 본 인연 장면
     epProg: {}, epSeen: {}, bondOpen: [], bondSeen: [],
+    // v2 (M5): 초심자 ★5 고르기 대기 수 · 픽업 확정 · 의상(열린 것·입은 것) · 산 카드 묶음 수 · 시작 도구 고르기 후보
+    pick5: 0, pickGuar: false, costumeOwn: [], costume: {}, packs: {}, startRelics: [],
+    talksSeen: [], titles: [], charStats: {}, cardsSeen: [], cardsUsed: [], foesSeen: [], foesBeaten: [],
+    rec: { combo: {}, moons: {}, depthBest: 0 },
   };
+}
+// 예전 저장(v1)을 이어받는다: 없는 필드만 새 값으로 채운다
+function migrate(d) {
+  const f = fresh(), out = Object.assign(f, d);
+  out.rec = Object.assign(fresh().rec, d.rec || {});
+  out.v = VERSION;
+  return out;
 }
 export let P = load();
 function load() {
   try {
     const d = JSON.parse(localStorage.getItem(KEY) || 'null');
-    if (d && d.v === VERSION) return Object.assign(fresh(), d);
+    if (d && d.v >= 1 && d.v <= VERSION) return migrate(d);
   } catch (e) { /* 저장이 막힌 환경 */ }
   return fresh();
 }
 export function save() {
   try { localStorage.setItem(KEY, JSON.stringify(P)); } catch (e) { /* 저장 안 됨 */ }
 }
-// 개발판 점검용: 새 프로필로
+// 개발판 점검용: 새 프로필로 / 예전 저장 흉내
 export function resetProfile() { P = fresh(); save(); return P; }
+export function loadRaw(obj) { P = migrate(obj); save(); return P; }
 
 export const owns = id => !!P.owned[id];
+const uniqPush = (arr, x) => { if (!arr.includes(x)) arr.push(x); };
+
+// ---------- 별자리 (§4) ----------
+export const starsOf = id => P.owned[id]?.stars ?? -1;
+export const costumeOpen = id => owns(id) && (P.costumeOwn.includes(id) || starsOf(id) >= 1);
+export const wearing = id => !!P.costume[id] && costumeOpen(id);
+// 카드 묶음: 보상 풀(시작 카드가 아닌 카드)의 마지막 4장을 2장씩
+export function packCards(id) {
+  const c = CHARACTERS[id]; if (!c) return [];
+  const pool = Object.keys(CARDS).filter(k => CARDS[k].ch === id && !c.start.includes(k));
+  const tail = pool.slice(-PACK_SIZE * PACK_COUNT), out = [];
+  for (let i = 0; i < tail.length; i += PACK_SIZE) out.push(tail.slice(i, i + PACK_SIZE));
+  return out;
+}
+export const packsOpen = id => Math.min(packCards(id).length, (P.packs[id] || 0) + (starsOf(id) >= 2 ? 1 : 0));
+export const startUp = id => starsOf(id) >= 3;
+export const sigOpen = id => starsOf(id) >= 4;
+export const duoSpecial = id => starsOf(id) >= 5;
+export const sigOf = id => Object.keys(RELICS).find(k => RELICS[k].tier === 'sig' && RELICS[k].owner === id);
+
+// 판을 시작할 때 넘기는 것 (run.js newRun opts)
+export function runOptions(party, depth = 0, startRelic) {
+  const locked = [];
+  for (const id of party) packCards(id).slice(packsOpen(id)).forEach(pk => locked.push(...pk));
+  return {
+    depth: depthOpen() ? Math.min(depth, depthMax()) : 0, locked,
+    upgrades: party.filter(startUp), sigs: party.filter(sigOpen),
+    startRelic: startPickOpen() && startRelicChoices().includes(startRelic) ? startRelic : undefined,
+  };
+}
+
+// ---------- 밤의 깊이 (§10) · 시작 도구 고르기 ----------
+export const depthOpen = () => P.wins > 0;
+export const depthMax = () => Math.min(DEPTH_MAX, (P.rec.depthBest || 0) + 1);
+export const startPickOpen = () => P.runs >= START_PICK_RUNS;
+export const startRelicChoices = () => [...Object.keys(RELICS).filter(k => RELICS[k].tier === 'start'), ...P.startRelics.filter(k => RELICS[k])];
 
 // ---------- 별 소환 ----------
 // 한 번 뽑기의 ★5 확률: 40번째부터 매번 +4%, 51번째는 확정
@@ -44,10 +97,24 @@ function rate5() {
   return SUMMON.rate5 + (k >= SUMMON.softFrom ? SUMMON.softStep * (k - SUMMON.softFrom + 1) : 0);
 }
 export const nextRate5 = rate5;
+// 지금 픽업 (2주 단위로 돌아감)
+export function pickupNow(now = Date.now()) {
+  const span = PICKUP_DAYS * 86400000;
+  const n = Math.floor((now - PICKUP_EPOCH) / span), i = ((n % PICKUPS.length) + PICKUPS.length) % PICKUPS.length;
+  return { ...PICKUPS[i], ends: PICKUP_EPOCH + (n + 1) * span };
+}
 
-// 동료 하나 고르기: 아직 없는 동료가 newFirst 확률로 먼저
+// 동료 하나 고르기: 픽업 먼저, 그다음 아직 없는 동료가 newFirst 확률로 먼저
 function pickChar(rng, rarity, prefer) {
-  const all = prefer || byRarity(rarity), fresh2 = all.filter(k => !owns(k));
+  let all = prefer || byRarity(rarity);
+  if (!prefer) {
+    const pk = pickupNow();
+    if (rarity === 5) {
+      if (P.pickGuar || rng.next() < SUMMON.pickShare5) { P.pickGuar = false; return pk.five; }
+      P.pickGuar = true; all = all.filter(k => k !== pk.five);
+    } else if (rarity === 4 && rng.next() < SUMMON.pickShare4) return rng.pick(pk.four);
+  }
+  const fresh2 = all.filter(k => !owns(k));
   const pool = fresh2.length && rng.next() < SUMMON.newFirst ? fresh2 : all;
   return rng.pick(pool);
 }
@@ -58,16 +125,41 @@ function grantChar(id) {
   else { P.dust += SUMMON.dustFullStars; r.dust = SUMMON.dustFullStars; }
   return r;
 }
+// 물건 열기 (소환·교환소). arg를 주면 그것, 없으면 무작위. 열었으면 설명 글, 열 것이 없으면 null.
+function unlock(kind, rng, arg, tier) {
+  const pick = L => arg != null ? (L.includes(arg) ? arg : null) : L.length ? rng.pick(L) : null;
+  if (kind === 'costume') {
+    const k = pick(ROSTER_IDS.filter(x => owns(x) && !costumeOpen(x))); if (!k) return null;
+    P.costumeOwn.push(k); return `${ROSTER[k].name}의 두 번째 의상`;
+  }
+  if (kind === 'pack') {
+    const k = pick(ROSTER_IDS.filter(x => owns(x) && packsOpen(x) < packCards(x).length)); if (!k) return null;
+    P.packs[k] = (P.packs[k] || 0) + 1;
+    const pk = packCards(k)[packsOpen(k) - 1] || [];
+    return `${ROSTER[k].name} 카드 묶음 ${packsOpen(k)}: ${pk.map(c => CARDS[c].name).join('·')}`;
+  }
+  if (kind === 'relic') {
+    const k = pick(Object.keys(RELICS).filter(x => RELICS[x].tier === (tier || RELICS[arg]?.tier) && !P.startRelics.includes(x))); if (!k) return null;
+    P.startRelics.push(k); return `시작 도구 「${RELICS[k].name}」`;
+  }
+  if (kind === 'talk') {
+    const k = pick(TALKS.map((t, i) => i).filter(i => !P.talksSeen.includes(i))); if (k == null) return null;
+    P.talksSeen.push(k); return `휴식 대화 「${ROSTER[TALKS[k].a].name}·${ROSTER[TALKS[k].b].name}」`;
+  }
+  return null;
+}
 function grantItem(rng, rarity) {
   const it = rng.pick(SUMMON_ITEMS[rarity]), r = { kind: it.kind, name: it.name, text: it.text, rarity };
-  if (it.dust) { P.dust += it.dust; r.dust = it.dust; }
-  else if (rarity === 3 && P.items.includes(it.name)) { P.dust += SUMMON.dustDupItem; r.dust = SUMMON.dustDupItem; }
-  else P.items.push(it.name);
+  P.items.push(it.name);
+  if (it.dust) { P.dust += it.dust; r.dust = it.dust; return r; }
+  const got = unlock(it.kind, rng, null, it.tier);
+  if (got) r.text = got;
+  else { r.dust = ITEM_DUST[it.kind] || SUMMON.dustDupItem; P.dust += r.dust; r.text = '열 것이 없어 별가루로'; }
   return r;
 }
 function rollOne(rng, force4) {
   P.pulls++; P.pity5++;
-  // 초심자: 처음 30번 안에 ★5 확정 (고르기 화면은 나중에)
+  // 초심자: 처음 30번 안에 ★5 확정
   const beginner = !P.got5 && P.pulls >= SUMMON.beginner;
   let rarity;
   const x = rng.next();
@@ -75,7 +167,12 @@ function rollOne(rng, force4) {
   else if (force4 || x < rate5() + SUMMON.rate4) rarity = 4;
   else rarity = 3;
   let r;
-  if (rarity === 5) { P.pity5 = 0; P.got5 = true; r = grantChar(pickChar(rng, 5)); }
+  if (rarity === 5) {
+    P.pity5 = 0;
+    // 처음 얻는 ★5는 4명 중 직접 고른다 (소환 결과 뒤 고르기 화면)
+    if (!P.got5) { P.got5 = true; P.pick5++; r = { kind: 'choose5', rarity: 5 }; }
+    else r = grantChar(pickChar(rng, 5));
+  }
   else if (rarity === 4) r = rng.next() < SUMMON.char4Share || force4 === 'char' ? grantChar(pickChar(rng, 4)) : grantItem(rng, 4);
   else r = rng.next() < SUMMON.char3Share ? grantChar(pickChar(rng, 3)) : grantItem(rng, 3);
   return r;
@@ -100,6 +197,42 @@ export function summon(n) {
   save();
   return out;
 }
+// 초심자 ★5 고르기
+export function choose5(id) {
+  if (!P.pick5 || ROSTER[id]?.rarity !== 5) return null;
+  P.pick5--; const r = grantChar(id); save(); return r;
+}
+
+// ---------- 교환소 (§5) ----------
+export function exchangePrice(kind, arg) {
+  if (kind === 'char') return EXCHANGE.char[ROSTER[arg]?.rarity];
+  if (kind === 'relic') return EXCHANGE.relic[RELICS[arg]?.tier];
+  return EXCHANGE[kind];
+}
+export function canExchange(kind, arg) {
+  const price = exchangePrice(kind, arg); if (price == null || P.dust < price) return false;
+  if (kind === 'char') return !!ROSTER[arg] && (!owns(arg) || P.owned[arg].stars < SUMMON.maxStars);
+  if (kind === 'costume') return owns(arg) && !costumeOpen(arg);
+  if (kind === 'pack') return owns(arg) && packsOpen(arg) < packCards(arg).length;
+  if (kind === 'relic') return !!RELICS[arg] && !P.startRelics.includes(arg);
+  if (kind === 'talk') return P.talksSeen.length < TALKS.length;
+  return false;
+}
+export function exchange(kind, arg) {
+  if (!canExchange(kind, arg)) return null;
+  const price = exchangePrice(kind, arg);
+  const rng = makeRng(P.sseed);
+  let msg;
+  if (kind === 'char') { const r = grantChar(arg); msg = `${ROSTER[arg].name} ${r.isNew ? '합류' : `별자리 ${r.stars}`}`; }
+  else msg = unlock(kind, rng, kind === 'talk' ? null : arg);
+  if (!msg) return null;
+  P.dust -= price; P.sseed = (rng.state + 0x9E3779B9) >>> 0;
+  save();
+  return msg;
+}
+
+// ---------- 동료 화면 ----------
+export function setCostume(id, on) { if (!costumeOpen(id)) return; P.costume[id] = on ? 1 : 0; save(); }
 
 // ---------- 판이 끝나면 별 조각 ----------
 export function runShards(G) {
@@ -111,6 +244,7 @@ export function runShards(G) {
     add('「새벽」 격파', SHARDS.dawnWin);
     const early = Math.max(0, RULES.dawn - G.clock);
     add(`6시 전 ${early}분`, Math.min(SHARDS.earlyMax, Math.floor(early / 10) * SHARDS.earlyPer10));
+    if ((G.depth || 0) > (P.rec.depthBest || 0)) add(`밤의 깊이 ${G.depth} 처음 격파`, G.depth * DEPTH_BONUS);
   }
   const newDuos = [...(G.duoSet || [])].filter(k => !P.seenDuos.includes(k));
   add(`새로 찾은 듀오 ${newDuos.length}쌍`, newDuos.length * SHARDS.newDuo);
@@ -145,14 +279,40 @@ function epProgress(G) {
   for (const cid of G.party) for (let n = 0; n < 3; n++) if (epOpen(cid, n) && !before.has(epKey(cid, n))) out.push({ cid, n });
   return out;
 }
+// 에피소드 보상 (2화: 그 동료 휴식 대화 2개, 3화: 칭호). 받은 것 설명 목록.
+export function epExtra(cid, n) {
+  const out = [];
+  if (n === 1) {
+    const L = TALKS.map((t, i) => i).filter(i => (TALKS[i].a === cid || TALKS[i].b === cid) && !P.talksSeen.includes(i)).slice(0, 2);
+    for (const i of L) P.talksSeen.push(i);
+    if (L.length) out.push(`휴식 대화 ${L.length}개`);
+  }
+  if (n === 2) { uniqPush(P.titles, cid); out.push(`칭호 「${ROSTER[cid]?.name || cid}의 새벽」`); }
+  return out;
+}
 
-// 결과 화면에서 한 번만
+// 결과 화면에서 한 번만: 별 조각·도감·기록
 export function grantRun(G) {
   if (G.granted) return G.granted;
   const r = runShards(G);
   P.shards += r.total; P.runs++;
   if (G.won) { P.wins++; if (P.best == null || G.clock < P.best) P.best = G.clock; }
   for (const k of r.newDuos) P.seenDuos.push(k);
+  // 기록: 동료별 판·이긴 판, 조합별 가장 빠른 도착, 달별 승리, 밤의 깊이
+  for (const p of G.party) { const s = P.charStats[p] ||= { runs: 0, wins: 0 }; s.runs++; if (G.won) s.wins++; }
+  if (G.won) {
+    const key = G.party.slice().sort().join('+');
+    if (P.rec.combo[key] == null || G.clock < P.rec.combo[key]) P.rec.combo[key] = G.clock;
+    P.rec.moons[G.moon] = (P.rec.moons[G.moon] || 0) + 1;
+    if ((G.depth || 0) > (P.rec.depthBest || 0)) P.rec.depthBest = G.depth;
+  }
+  // 도감: 본 카드(덱·보상에 나온 카드·쓴 카드)·쓴 카드·만난 적·이긴 적·휴식 대화
+  const base = id => id.replace(/\+$/, '');
+  for (const id of [...G.deck.map(base), ...(G.offered || []), ...(G.played || [])]) if (CARDS[id]) uniqPush(P.cardsSeen, id);
+  for (const id of G.played || []) if (CARDS[id]) uniqPush(P.cardsUsed, id);
+  for (const k of G.foesMet || []) uniqPush(P.foesSeen, k);
+  for (const k of G.foesBeat || []) uniqPush(P.foesBeaten, k);
+  for (const i of G.talks || []) uniqPush(P.talksSeen, i);
   r.newEps = epProgress(G);
   // 인연 듀오를 처음 썼으면 인연 장면이 열린다
   r.newBonds = [...(G.duoSet || [])].filter(k => BOND_SCENES[k] && !P.bondOpen.includes(k));

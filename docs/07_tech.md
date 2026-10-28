@@ -28,7 +28,8 @@ js/
     episodes.js    동료 에피소드 대본(3화씩)·특별 전투·인연 장면·여는 조건 (재생은 js/episodes.js, 화면은 js/render/episodes.js)
     moons.js       달
     talks.js       휴식 대화
-    gacha.js       소환 확률·천장·픽업·별자리·교환소 가격
+    gacha.js       소환 확률·천장·픽업·별자리·교환소 가격·카드 묶음
+    depth.js       밤의 깊이 1~10 규칙
   asset_prompts.js 그림 프롬프트 원본 (→ assets/prompts.json, docs/PROMPTS.md)
 assets/ (chars/ cutins/ cg/ enemies/ bg/ title/ summon/ icons/ cards/ audio/, prompts.json)
 fonts/  (Galmuri)

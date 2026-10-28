@@ -15,7 +15,7 @@ export const EP_COND = [
 ];
 // 처음 다 본 화의 보상 (별 조각). 휴식 대화·칭호·새 표정은 M5에서.
 export const EP_REWARD = [10, 15, 25];
-export const EP_EXTRA = ['', '휴식 대화 2개 (준비 중)', '칭호 · 새 표정 (준비 중)'];
+export const EP_EXTRA = ['', '휴식 대화 2개 (도감)', '칭호 · 새 표정(그림이 오면)'];
 
 // 명단에 없는 말하는 사람
 export const CAST = {

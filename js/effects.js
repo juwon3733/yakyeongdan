@@ -116,14 +116,25 @@ export function copyPlayed(disc = 0) {
   C.hand.push({ ...newInst(best.id), ghost: true, disc });
 }
 export function give(id) { const C = S.C; if (C.hand.length < RULES.maxHand) C.hand.push(newInst(id)); }
-// 담금질: 손패 n장(가장 좋은 카드)을 이번 전투 동안 강화
-export function temper(n) {
+// 담금질: 손패 n장을 이번 전투 동안 강화. 화면에서 하면(S.ui) 고를 카드가 n장보다 많을 때 직접 고르고(C.choose),
+// 시뮬레이션·자동이면 가장 좋은 카드.
+export function temper(n, auto = false) {
   const C = S.C;
+  if (S.ui && !auto && C.hand.filter(h => realCard(h) && canUpgrade(h.id)).length > n) { C.choose = { kind: 'temper', left: n }; return; }
   for (let k = 0; k < n; k++) {
     const L = C.hand.filter(h => realCard(h) && canUpgrade(h.id)); if (!L.length) return;
     const best = L.reduce((a, b) => worth(cardDef(b)) > worth(cardDef(a)) ? b : a);
     best.id += '+'; C.tempered++;
   }
+}
+// 담금질 고르기: 손패의 카드 하나 (uid). 다 고르면 끝. uid가 없으면 나머지는 자동으로.
+export function temperPick(uid) {
+  const C = S.C, ch = C?.choose; if (!ch || ch.kind !== 'temper') return;
+  const h = uid == null ? null : C.hand.find(x => x.uid === uid && realCard(x) && canUpgrade(x.id));
+  if (uid == null) { C.choose = null; temper(ch.left, true); return; }
+  if (!h) return;
+  h.id += '+'; C.tempered++; ch.left--;
+  if (ch.left <= 0 || !C.hand.some(x => realCard(x) && canUpgrade(x.id))) C.choose = null;
 }
 // 손패의 다른 동료 카드 1장(가장 비싼) 이번 턴 비용 −n
 export function cheapen(n, self) {

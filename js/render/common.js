@@ -1,4 +1,4 @@
-import { S, timeCost } from '../run.js';
+import { S, timeCost, dawnAt } from '../run.js';
 import { actorOf, costOf, shownValue } from '../combat.js';
 import { cardData } from '../data/cards.js';
 import { CHARACTERS } from '../data/characters.js';
@@ -8,12 +8,15 @@ import { ROSTER } from '../data/roster.js';
 import { relicFlag } from '../relics.js';
 import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
 import { moonImg, sprite } from './sprites.js';
+import { wearing } from '../meta.js';
 
 export const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 export const fmt = m => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
 export const stars = n => '★'.repeat(n);
-// 임시 도트 색: 명단(roster)에 있으면 그것, 없으면 전투 데이터의 색
-export const palOf = id => ROSTER[id]?.pal || CHARACTERS[id]?.pal;
+// 임시 도트 색: 명단(roster)에 있으면 그것, 없으면 전투 데이터의 색. 두 번째 의상을 입었으면 옷 색을 바꾼다(그림이 오기 전 임시).
+const shade = (hex, k) => '#' + [1, 3, 5].map(i => Math.round(parseInt(hex.slice(i, i + 2), 16) * k).toString(16).padStart(2, '0')).join('');
+export const costumePal = pal => ({ ...pal, o: pal.a, O: shade(pal.a, .62), a: pal.o });
+export const palOf = (id, alt) => { const pal = ROSTER[id]?.pal || CHARACTERS[id]?.pal; return pal && (alt ?? wearing(id)) ? costumePal(pal) : pal; };
 
 // 도구 표시 (그림이 없으면 이름 첫 글자). 판마다 한 번 누르는 도구는 버튼.
 export function relicChip(id, G) {
@@ -26,7 +29,7 @@ export function relicChip(id, G) {
 // 동료 얼굴 (서 있는 그림의 윗부분을 잘라 보여 줌)
 export function face(id, cls = '') {
   const c = CHARACTERS[id];
-  return `<span class="face ${cls}" style="--c:${c.col}"><img class="px" src="${sprite(c.pal, c.long)}" alt="${esc(c.name)}"></span>`;
+  return `<span class="face ${cls}" style="--c:${c.col}"><img class="px" src="${sprite(palOf(id), c.long)}" alt="${esc(c.name)}"></span>`;
 }
 export function hpBar(m) {
   return `<span class="hpbar ${m.down ? 'down' : ''}"><i style="width:${m.hp / m.max * 100}%"></i></span>`;
@@ -47,8 +50,9 @@ export function topbar(extra = '') {
     return `<span class="mt ${M.down ? 'down' : ''}">${face(p)}<span class="hp">${M.hp}/${M.max}</span>${hpBar(M)}</span>`;
   }).join('')}</span>`;
   return `<div class="topbar">
-    <span class="clock ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</span>
-    <span class="night" aria-hidden="true"><i style="width:${Math.min(100, G.clock / RULES.dawn * 100)}%"></i></span>
+    <span class="clock ${G.clock >= dawnAt() ? 'dawn' : ''}">${fmt(G.clock)}</span>
+    <span class="night" aria-hidden="true"><i style="width:${Math.min(100, G.clock / dawnAt() * 100)}%"></i></span>
+    ${G.depth ? `<span class="chip depthchip" title="밤의 깊이 ${G.depth}">깊이 ${G.depth}</span>` : ''}
     <img class="px moon" src="${moonImg(G.moon)}" alt="">
     <span class="chip" style="color:var(--moon)" title="${esc(m.text)}">${m.name}</span>
     ${extra}
@@ -81,7 +85,7 @@ export function cardHTML(inst, playable, act = 'play', idOverride, sel = false) 
   const down = !isStr && S.C && !curse && !actorOf(d);
   let cost = d.unplayable ? '–' : String(d.cost), cc = '';
   if (!isStr && S.C) { const c = costOf(inst); if (c != null) { cost = String(c); cc = c > d.cost ? 'dn' : c < d.cost ? 'up' : ''; } }
-  const tags = [d.time ? `<span class="tm">${S.C?.payEnergy && relicFlag('hourglass') ? '에너지로' : `+${timeCost()}분`}</span>` : '', d.target === 'ally' ? '<span class="tg">동료 고름</span>' : '',
+  const tags = [d.time ? `<span class="tm">${S.C?.payEnergy && relicFlag('hourglass') ? '에너지로' : `+${S.G ? timeCost() : RULES.timeCard}분`}</span>` : '', d.target === 'ally' ? '<span class="tg">동료 고름</span>' : '',
     d.target === 'all' ? '<span class="tg all">모든 적</span>' : ''].join('');
   return `<button type="button" class="card r-${d.rarity} ${duo ? 'duo' : ''} ${curse ? 'curse' : ''} ${d.up ? 'upg' : ''} ${playable ? '' : 'no'} ${down ? 'down' : ''} ${sel ? 'sel' : ''}" style="--c:${col};--c2:${col2}" data-${act}="${id}">
     <span class="hd"><span class="cost ${cc}">${cost}</span><span class="nm">${esc(d.name)}</span></span>

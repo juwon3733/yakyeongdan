@@ -1,5 +1,6 @@
 // 지도 생성·이동·시간 계산, 보상·휴식·야시장·사건 처리.
-import { S, addTime, rewind, healAll, healMember, member, swapFormation, pickElite, gainRelic, gainGold, endRun, partySum } from './run.js';
+import { S, addTime, rewind, healAll, healMember, member, swapFormation, pickElite, gainRelic, gainGold, endRun, partySum, depthRule } from './run.js';
+import { TALKS } from './data/talks.js';
 import { startCombat, rewardCards } from './combat.js';
 import { ACTS, FOE } from './data/enemies.js';
 import { CARDS, CURSES, canUpgrade, cardData } from './data/cards.js';
@@ -71,7 +72,8 @@ export function reachable(r) {
 }
 // 칸 시간: 기본 + 도구(구리 나침반 강적 -10, 멈춘 시계탑 +5)
 // 핀(지름길): 전투 칸 −5분
-export const nodeTime = t => Math.max(0, NODE[t].min + (t === 'elite' ? relicSum('eliteTime') : 0) + (t === 'fight' ? partySum('fightTime') : 0) + relicSum('nodeTimeAdd'));
+// 밤의 깊이 2: +5분
+export const nodeTime = t => Math.max(0, NODE[t].min + (t === 'elite' ? relicSum('eliteTime') : 0) + (t === 'fight' ? partySum('fightTime') : 0) + relicSum('nodeTimeAdd') + (depthRule('nodeTime') || 0));
 
 export function goNode(r, i) {
   const G = S.G, t = G.map.rows[r]?.[i];
@@ -82,7 +84,7 @@ export function goNode(r, i) {
   if (t === 'fight') startCombat(G.rng.pick(r === 0 ? pool.easy : pool.fights), 'fight');
   else if (t === 'elite') { const e = G.nextElite; G.nextElite = pickElite(); startCombat(e, 'elite'); }
   else if (t === 'boss') startCombat(pool.boss, 'boss');
-  else if (t === 'rest') G.screen = 'rest';
+  else if (t === 'rest') { G.restTalk = restTalk(G); if (G.restTalk != null) G.talks?.add(G.restTalk); G.screen = 'rest'; }
   else if (t === 'shop') openShop();
   else openEvent();
 }
@@ -112,8 +114,15 @@ export function pickBossRelic(id) {
 }
 
 // ---------- 휴식: 쉬기 = 각자 최대 체력의 비율(쓰러졌던 동료는 더), 낮잠 = 시간 되찾기, 손질 = 카드 1장 강화 ----------
-export const napTime = () => RULES.rest.napTime + partySum('napBonus');   // 엘레오노르 +15분
-export const restPct = wasDown => ((wasDown ? RULES.rest.downHealPct : RULES.rest.healPct) + relicSum('restHealAdd')) * relicMul('restHealMul');
+// 엘레오노르 +15분 · 전용 도구(깃털 베개·태엽 열쇠) · 밤의 깊이 5: 기본 20분
+export const napTime = () => (depthRule('napTime') ?? RULES.rest.napTime) + partySum('napBonus') + relicSum('napAdd');
+// 밤의 깊이 9: 쉬기 기본 20%
+export const restPct = wasDown => ((wasDown ? RULES.rest.downHealPct : depthRule('restPct') ?? RULES.rest.healPct) + relicSum('restHealAdd')) * relicMul('restHealMul');
+// 휴식 대화: 파티에 두 사람이 다 있는 대화 중 하나 (층마다 바뀜). TALKS 번호, 없으면 null
+export function restTalk(G) {
+  const L = TALKS.map((t, i) => i).filter(i => G.party.includes(TALKS[i].a) && G.party.includes(TALKS[i].b));
+  return L.length ? L[(G.floors + G.act * 7) % L.length] : null;
+}
 export function rest(kind) {
   const R = RULES.rest, G = S.G;
   if (kind === 'heal') for (const p of G.party) {
@@ -160,7 +169,7 @@ function openShop() {
   const cards = [];
   for (let k = 0; k < SHOP.cards; k++) {
     const p = G.party[k % G.party.length];
-    const pool = Object.keys(CARDS).filter(id => CARDS[id].ch === p && !cards.some(c => c.id === id) && !CHARACTERS[p].start.includes(id));
+    const pool = Object.keys(CARDS).filter(id => CARDS[id].ch === p && !cards.some(c => c.id === id) && !CHARACTERS[p].start.includes(id) && !G.locked?.has(id));
     if (pool.length) { const id = rng.pick(pool); cards.push({ id, price: priceOf(id), sold: false }); }
   }
   if (cards.length) { const s = rng.pick(cards); s.price = Math.ceil(s.price * SHOP.sale); s.sale = true; }

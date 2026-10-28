@@ -1,12 +1,13 @@
-import { S } from '../run.js';
+import { S, alive } from '../run.js';
 import { cardDef, intentText, aimShown, targetOf, usable, litMembers, swapLimit } from '../combat.js';
 import { relicFlag } from '../relics.js';
 import { CHARACTERS } from '../data/characters.js';
+import { canUpgrade } from '../data/cards.js';
 import { FOE_PAL } from '../data/enemies.js';
 import { RULES, AIM_NAME, ROW_NAME } from '../data/rules.js';
 import { MOONS } from '../data/moons.js';
 import { sprite, moonImg } from './sprites.js';
-import { esc, cardHTML, face, hpBar } from './common.js';
+import { esc, cardHTML, face, hpBar, palOf } from './common.js';
 
 // 동료별 고유 수치 표시
 const STAT = {
@@ -47,7 +48,7 @@ export function combatView() {
     const swap = k < 2 ? `<button type="button" class="swap" data-swap="${fi - 1}" ${C.swaps >= swapLimit() ? 'disabled' : ''} title="자리 바꾸기 (바꾼 둘 방어 -${RULES.swapBlockCost})">⇄</button>` : '';
     return `<button type="button" class="pm ${M.down ? 'down' : ''} ${aims.has(p) ? 'aimed' : ''} ${lit.includes(p) ? 'lit' : ''} ${wantAlly && !M.down ? 'tg' : ''} ${C.last === p ? 'last' : ''}" style="--c:${c.col}" data-ally="${p}" ${wantAlly && !M.down ? '' : 'tabindex="-1"'}>
         <span class="row">${ROW_NAME[fi]}${lit.includes(p) ? ' · <b class="litnm">불빛 +1</b>' : ''}</span>
-        <img class="px" src="${sprite(c.pal, c.long)}" alt="">
+        <img class="px" src="${sprite(palOf(p), c.long)}" alt="">
         <span class="nm">${c.name}</span>
         ${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : `${M.hp}/${M.max}`}${blk ? ` <b class="blk">방어 ${blk}</b>` : ''}</span>
         <span class="s">${s}</span></button>${swap}`;
@@ -65,20 +66,31 @@ export function combatView() {
         <span class="st">${foeSt(f)}</span>
       </button>`;
   }).join('');
-  const hand = C.hand.map(h => cardHTML(h, usable(h), 'play', undefined, h.uid === C.pending)).join('');
+  // 담금질 고르기 중이면 강화할 수 있는 카드만 누를 수 있다. 세바스·예약: 남길 카드 표시.
+  const tempering = C.choose?.kind === 'temper';
+  const canTemper = h => !/^(duo|bond):/.test(h.id) && cardDef(h).ch !== 'curse' && canUpgrade(h.id);
+  const keepN = (alive('sebas') ? CHARACTERS.sebas.passive.keepCard || 0 : 0) + (C.reserve || 0);
+  const marks = C.keepMark || [];
+  const hand = C.hand.map(h => {
+    const html = tempering ? cardHTML(h, canTemper(h), canTemper(h) ? 'temper' : 'none') : cardHTML(h, usable(h), 'play', undefined, h.uid === C.pending);
+    return marks.includes(h.uid) ? html.replace('class="card ', 'class="card kept ') : html;
+  }).join('');
+  const pendKeep = !tempering && keepN && pend && !/^(duo|bond):/.test(pend.id) && cardDef(pend).ch !== 'curse'
+    ? `<button type="button" class="mini keepbtn ${marks.includes(pend.uid) ? 'on' : ''}" data-keepmark title="턴 끝에 이 카드를 버리지 않고 남긴다 (${keepN}장)">${marks.includes(pend.uid) ? '남기기 취소' : `남기기 (${marks.length}/${keepN})`}</button>` : '';
+  const temperBar = tempering ? `<span class="tempbar">담금질: 강화할 카드를 고르세요 (${C.choose.left}장) <button type="button" class="mini" data-temperauto>자동으로</button></span>` : '';
   const pip = (n, on) => Array.from({ length: Math.max(n, on) }, (_, k) => `<i class="${k < on ? '' : 'off'}"></i>`).join('');
-  const tip = wantAlly ? '받을 동료를 누르세요.' : wantFoe ? '칠 적을 누르세요.' : pend ? '카드를 한 번 더 누르면 씁니다.'
+  const tip = tempering ? '' : wantAlly ? '받을 동료를 누르세요.' : wantFoe ? '칠 적을 누르세요.' : pend ? '카드를 한 번 더 누르면 씁니다.'
     : lit.length ? '불빛이 비춘 동료의 카드는 비용 +1.' : '카드를 누르고 대상을 누르세요.';
   return `<div class="field">
       <div class="party">${party}</div>
       <div class="foes ${many ? 'many' : ''}">${foes}</div>
     </div>
-    <div class="log" aria-live="polite">${C.moonPick ? `<span class="cmoonpick">월광 · 이번 전투의 달: ${Object.keys(MOONS).map(k => `<button type="button" class="mini ${G.moon === k ? 'on' : ''}" data-cmoon="${k}" title="${esc(MOONS[k].text)}"><img class="px" src="${moonImg(k)}" alt="">${MOONS[k].name}</button>`).join('')}</span>` : ''}${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span>${relicFlag('hourglass')
+    <div class="log" aria-live="polite">${C.moonPick ? `<span class="cmoonpick">월광 · 이번 전투의 달: ${Object.keys(MOONS).map(k => `<button type="button" class="mini ${G.moon === k ? 'on' : ''}" data-cmoon="${k}" title="${esc(MOONS[k].text)}"><img class="px" src="${moonImg(k)}" alt="">${MOONS[k].name}</button>`).join('')}</span>` : ''}${temperBar}${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span>${pendKeep}${relicFlag('hourglass')
       ? `<button type="button" class="mini hg ${C.payEnergy ? 'on' : ''}" data-hg aria-pressed="${C.payEnergy}" title="깨진 모래시계: 시간 카드를 시간 대신 에너지 1로">시간 카드: ${C.payEnergy ? '에너지 1' : '시간'}</button>` : ''}</div>
     <div class="bottom">
       <span class="energy" title="에너지">${pip(RULES.energy, C.energy)}<b>${C.energy}</b></span>
       <div class="hand">${hand || '<p class="note">손패가 비었다.</p>'}</div>
-      <div class="endcol"><button type="button" class="primary" data-end>턴 끝</button><span class="note">뽑을 ${C.draw.length} · 버린 ${C.disc.length}${C.exh.length ? ` · 소멸 ${C.exh.length}` : ''}</span></div>
+      <div class="endcol"><button type="button" class="primary" data-end ${tempering ? 'disabled' : ''}>턴 끝</button><span class="note">뽑을 ${C.draw.length} · 버린 ${C.disc.length}${C.exh.length ? ` · 소멸 ${C.exh.length}` : ''}</span></div>
     </div>`;
 }
 

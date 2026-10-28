@@ -29,6 +29,7 @@ const errors = [];
 const browser = await chromium.launch();
 const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; };
 const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false,
+  migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
   ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false };
 
@@ -205,6 +206,8 @@ try {
     const got = await page.evaluate(() => { const P = window.__yk.P(); return { owned: Object.keys(P.owned), pulls: P.pulls }; });
     if (got.pulls === 10 && (got.owned.includes('noel') || got.owned.includes('raven')) && await page.$('.got')) { seen.summon = true; console.log(`summon: 10연 → ${got.owned.join('·')}`); }
     else fail(`별 소환 결과가 이상함 ${JSON.stringify(got)}`);
+    // 10연에서 ★5가 나왔으면 처음 ★5라 고르기 화면부터
+    if (await page.$('[data-view="pick5"]')) { await page.click('[data-view="pick5"]'); await page.click('[data-choose5]'); }
     await page.click('[data-view="summon"]');
     // 구름 기사단장 2단계 · 「새벽」 밤 시계 · 7시 붕괴
     await page.click('[data-view="base"]'); await page.click('[data-view="party"]');
@@ -269,6 +272,86 @@ try {
     const r2 = await page.evaluate(() => ({ view: window.__yk.S.view, ph: window.__yk.S.ep.phase, G: !!window.__yk.S.G }));
     if (inFight && r2.view === 'ep' && r2.ph === 'end' && !r2.G) { seen.epFight = true; console.log('ep: 아이리스 2화 특별 전투 → 이겨서 끝까지'); }
     else fail(`특별 전투가 이상함 ${JSON.stringify({ inFight, ...r2 })}`);
+    await page.close();
+  }
+  // 판 바깥 (M5): 예전 저장(v1) 이어받기 → 초심자 ★5 고르기 → 교환소 → 동료·도감·기록·확률 화면 → 밤의 깊이 1로 시작
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    page.on('pageerror', e => errors.push(`[meta] ${e.message}`));
+    page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[meta] ${m.text()}`); });
+    await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+    await page.goto(`http://127.0.0.1:${port}/?seed=7`);
+    const mig = await page.evaluate(() => {
+      const P = window.__yk.loadV1({ v: 1, owned: { iris: { stars: 0 }, brick: { stars: 0 }, marta: { stars: 0 }, noel: { stars: 2 } }, shards: 40, dust: 3, items: ['흔한 도구'],
+        pulls: 12, pity5: 12, pity4: 0, firstTen: true, got5: false, seenDuos: ['iris+marta'], runs: 2, wins: 0, best: null, sseed: 7, epProg: {}, epSeen: {}, bondOpen: [], bondSeen: [] });
+      return { v: P.v, noel: P.owned.noel?.stars, dust: P.dust, rec: !!P.rec, packs: typeof P.packs };
+    });
+    if (mig.v === 2 && mig.noel === 2 && mig.dust === 3 && mig.rec && mig.packs === 'object') seen.migrate = true; else fail(`v1 저장 이어받기 실패 ${JSON.stringify(mig)}`);
+    // 초심자: 30번 안에 ★5 → 고르기 화면
+    await page.evaluate(() => { window.__yk.shards(300); window.__yk.S.view = 'summon'; window.__yk.render(); });
+    for (let k = 0; k < 3 && !(await page.evaluate(() => window.__yk.P().pick5)); k++) {
+      await page.click('[data-summon="10"]'); await page.click('[data-revealall]');
+      if (await page.$('[data-view="summon"].primary')) await page.click('[data-view="summon"].primary');
+    }
+    if (await page.evaluate(() => window.__yk.P().pick5)) {
+      if (await page.$('[data-view="pick5"]')) await page.click('[data-view="pick5"]');
+      await page.click('[data-choose5="akane"]');
+      const ok5 = await page.evaluate(() => ({ owned: !!window.__yk.P().owned.akane, left: window.__yk.P().pick5 }));
+      if (ok5.owned && ok5.left === 0 && await page.$('.got.g5')) { seen.pick5 = true; console.log('meta: 초심자 ★5 → 아카네를 직접 고름'); }
+      else fail(`초심자 ★5 고르기 실패 ${JSON.stringify(ok5)}`);
+    } else fail('30번 안에 ★5가 안 나옴');
+    // 교환소: 별가루로 ★3 동료 하나, 시작 도구 하나
+    await page.evaluate(() => { window.__yk.dust(200); window.__yk.S.view = 'exchange'; window.__yk.render(); });
+    const d0 = await page.evaluate(() => window.__yk.P().dust);
+    await page.click('[data-ex="char:dora"]');
+    await page.click('[data-ex="relic:umbrella"]');
+    const ex = await page.evaluate(() => ({ dora: !!window.__yk.P().owned.dora, umb: window.__yk.P().startRelics.includes('umbrella'), dust: window.__yk.P().dust }));
+    if (ex.dora && ex.umb && ex.dust === d0 - 80 - 20 && await page.$('.exmsg')) { seen.exchange = true; console.log('meta: 교환소 → 도라 · 우산'); }
+    else fail(`교환소 구매 실패 ${JSON.stringify({ d0, ...ex })}`);
+    // 동료 화면: 별자리 4로 두고 의상 갈아입기, 도감 탭 전부, 기록, 확률
+    await page.evaluate(() => { window.__yk.stars('iris', 5); window.__yk.S.view = 'mates'; window.__yk.render(); });
+    await page.click('[data-mate="iris"]');
+    await page.click('[data-costume="iris:1"]');
+    const cos = await page.evaluate(() => window.__yk.P().costume.iris === 1 && document.querySelectorAll('.steps li.on').length === 5);
+    await page.evaluate(() => { window.__yk.S.view = 'codex'; window.__yk.render(); });
+    for (const t of ['mates', 'duos', 'cards', 'foes', 'talks']) await page.click(`[data-ctab="${t}"]`);
+    await page.click('[data-ctab="duos"]');
+    if (await page.$('[data-replay]')) await page.click('[data-replay]');
+    await page.evaluate(() => { window.__yk.S.view = 'records'; window.__yk.render(); window.__yk.S.view = 'odds'; window.__yk.render(); });
+    if (cos && await page.$('table.odds')) seen.metaScreens = true; else fail(`동료·도감·기록 화면 확인 실패 (의상 ${cos})`);
+    // 밤의 깊이: 한 번 이겼다고 치고 깊이 1 + 시작 도구 우산으로 출발 → 별자리 3 강화 시작 카드, 별자리 4 전용 도구 후보
+    await page.evaluate(() => { window.__yk.wins(1); window.__yk.S.view = 'party'; window.__yk.S.picked = []; window.__yk.render(); });
+    for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
+    await page.click('[data-depth="1"]');
+    await page.click('[data-srelic="umbrella"]');
+    await page.click('[data-start]');
+    const run = await page.evaluate(() => { const G = window.__yk.S.G; return { depth: G.depth, relic: G.relics[0], up: G.deck.some(id => id.startsWith('iris.') && id.endsWith('+')), sigs: G.sigs, chip: !!document.querySelector('.depthchip') }; });
+    await page.evaluate(() => window.__yk.fight(['anchor'], 'elite'));
+    const hp = await page.evaluate(() => { const f = window.__yk.S.C.all[0]; return [f.hp, f.max]; });
+    if (run.depth === 1 && run.relic === 'umbrella' && run.up && run.sigs.includes('iris') && run.chip && hp[1] === Math.round(70 * 1.15)) { seen.depth = true; console.log(`meta: 밤의 깊이 1로 출발 (강적 체력 ${hp[1]}), 시작 도구 우산, 강화 시작 카드`); }
+    else fail(`밤의 깊이 시작 실패 ${JSON.stringify({ ...run, hp })}`);
+    // 도라 담금질 직접 고르기 · 세바스 남기기 고르기
+    await page.evaluate(() => { window.__yk.S.view = 'party'; window.__yk.S.G = null; window.__yk.S.C = null; window.__yk.S.picked = []; window.__yk.render(); });
+    await page.click('[data-depth="0"]');
+    for (const k of ['dora', 'sebas', 'iris']) await page.click(`[data-pick="${k}"]`);
+    await page.click('[data-start]');
+    await page.evaluate(() => {
+      window.__yk.fight(['ghost'], 'fight');
+      const C = window.__yk.S.C;
+      C.energy = 9; C.hand = ['dora.temper', 'iris.slash', 'iris.parry', 'seb.tray', 'seb.cane'].map((id, k) => ({ uid: 9000 + k, id }));
+      window.__yk.render();
+    });
+    await page.click('[data-play="9000"]'); if (await page.$('[data-play="9000"]')) await page.click('[data-play="9000"]');
+    const ch = await page.evaluate(() => window.__yk.S.C.choose?.kind);
+    if (await page.$('[data-temper="9002"]')) await page.click('[data-temper="9002"]');
+    const tp = await page.evaluate(() => ({ choose: window.__yk.S.C.choose, id: window.__yk.S.C.hand.find(h => h.uid === 9002)?.id }));
+    await page.click('[data-play="9001"]');
+    if (await page.$('[data-keepmark]')) await page.click('[data-keepmark]');
+    await page.evaluate(() => { window.__yk.S.C.pending = null; window.__yk.render(); });
+    await page.click('[data-end]');
+    const kept = await page.evaluate(() => window.__yk.S.C ? window.__yk.S.C.hand.some(h => h.uid === 9001) : null);
+    if (ch === 'temper' && !tp.choose && tp.id === 'iris.parry+' && kept) { seen.chooseUi = true; console.log('meta: 도라 담금질 고르기 · 세바스 남기기 고르기'); }
+    else fail(`담금질·남기기 고르기 실패 ${JSON.stringify({ ch, tp, kept })}`);
     await page.close();
   }
   // 세로 폰: 돌려 달라는 안내

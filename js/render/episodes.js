@@ -72,7 +72,7 @@ export function epView() {
     box = `<div class="epbox act"><span class="tx">${esc(E.lose)}</span>
       <span class="btns"><button type="button" class="primary" data-epfight>다시 싸우기</button><button type="button" data-epskipfight>이야기만 이어 보기</button></span></div>`;
   } else {
-    const extra = E.kind === 'ep' && EP_EXTRA[E.n] ? ` · ${EP_EXTRA[E.n]}` : '';
+    const extra = E.extra?.length ? ` · ${E.extra.join(' · ')}` : '';
     box = `<div class="epbox act"><span class="who" style="color:var(--gold)">끝</span>
       <span class="tx">${E.reward ? `처음 다 봤다. 별 조각 +${E.reward}${esc(extra)}` : '다시 본 이야기.'}</span>
       <span class="btns"><button type="button" class="primary" data-view="episodes">에피소드 목록</button></span></div>`;
