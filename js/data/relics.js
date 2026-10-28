@@ -71,6 +71,8 @@ export const RELICS = {
   sig_laila:    { name: '바람 깃발', tier: 'sig', owner: 'laila', text: '첫 턴 카드 +1.', firstDraw: 1 },
   sig_dora:     { name: '모루 방패', tier: 'sig', owner: 'dora', text: '전투 시작에 도라 방어 6.', ownerBlock: 6 },
   sig_gordon:   { name: '큰 도시락', tier: 'sig', owner: 'gordon', text: '전투가 끝날 때 체력이 가장 낮은 동료 체력 6 회복.', winHealLowest: 6 },
+  sig_nerea:    { name: '고래 귀걸이', tier: 'sig', owner: 'nerea', text: '전투 시작에 앞줄 동료 방어 8.', blockFront: 8 },
+  sig_bertha:   { name: '낡은 안내 깃발', tier: 'sig', owner: 'bertha', text: '지도에서 강적 칸 시간 -8분.', eliteTime: -8 },
   sig_fukuro:   { name: '행운 고양이', tier: 'sig', owner: 'fukuro', text: '전투에서 이기면 별빛 +6.', winGold: 6 },
 };
 export const RELIC_TIER_NAME = { start: '시작', c: '흔함', u: '보통', r: '희귀', boss: '보스', sig: '전용' };

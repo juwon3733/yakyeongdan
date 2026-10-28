@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 1 · 전체 542장 · 묶음 62개
+style_version 1 · 전체 594장 · 묶음 68개
 
 ## 묶음
 
@@ -12,6 +12,7 @@ style_version 1 · 전체 542장 · 묶음 62개
 | `char-lunaria` | ★★★★★ 루나리아 | 6 |
 | `char-akane` | ★★★★★ 아카네 | 6 |
 | `char-eleonore` | ★★★★★ 엘레오노르 | 6 |
+| `char-nerea` | ★★★★★ 네레아 | 6 |
 | `char-iris` | ★★★★ 아이리스 | 6 |
 | `char-noel` | ★★★★ 노엘 | 6 |
 | `char-raven` | ★★★★ 레이븐 | 6 |
@@ -21,6 +22,7 @@ style_version 1 · 전체 542장 · 묶음 62개
 | `char-tomori` | ★★★★ 토모리 | 6 |
 | `char-sigrun` | ★★★★ 시그룬 | 6 |
 | `char-zeno` | ★★★★ 제노 | 6 |
+| `char-bertha` | ★★★★ 베르타 | 6 |
 | `char-brick` | ★★★ 브릭 | 6 |
 | `char-marta` | ★★★ 마르타 | 6 |
 | `char-finn` | ★★★ 핀 | 6 |
@@ -32,6 +34,7 @@ style_version 1 · 전체 542장 · 묶음 62개
 | `cards-lunaria` | ★★★★★ 루나리아 카드 13장 | 13 |
 | `cards-akane` | ★★★★★ 아카네 카드 13장 | 13 |
 | `cards-eleonore` | ★★★★★ 엘레오노르 카드 13장 | 13 |
+| `cards-nerea` | ★★★★★ 네레아 카드 13장 | 13 |
 | `cards-iris` | ★★★★ 아이리스 카드 12장 | 12 |
 | `cards-noel` | ★★★★ 노엘 카드 11장 | 11 |
 | `cards-raven` | ★★★★ 레이븐 카드 11장 | 11 |
@@ -41,6 +44,7 @@ style_version 1 · 전체 542장 · 묶음 62개
 | `cards-tomori` | ★★★★ 토모리 카드 11장 | 11 |
 | `cards-sigrun` | ★★★★ 시그룬 카드 12장 | 12 |
 | `cards-zeno` | ★★★★ 제노 카드 13장 | 13 |
+| `cards-bertha` | ★★★★ 베르타 카드 12장 | 12 |
 | `cards-brick` | ★★★ 브릭 카드 12장 | 12 |
 | `cards-marta` | ★★★ 마르타 카드 12장 | 12 |
 | `cards-finn` | ★★★ 핀 카드 10장 | 10 |
@@ -52,12 +56,14 @@ style_version 1 · 전체 542장 · 묶음 62개
 | `cards-duo-2` | 인연 듀오 카드 12~22 | 11 |
 | `cards-duo-3` | 인연 듀오 카드 23~33 | 11 |
 | `cards-duo-4` | 인연 듀오 카드 34~44 | 11 |
+| `cards-duo-5` | 인연 듀오 카드 45~50 | 6 |
 | `style-sion` | 그림체 시안 시온 (4장, 게임에 안 씀) | 4 |
 | `style-lunaria` | 그림체 시안 루나리아 (4장, 게임에 안 씀) | 4 |
 | `style-akane` | 그림체 시안 아카네 (4장, 게임에 안 씀) | 4 |
 | `style-eleonore` | 그림체 시안 엘레오노르 (4장, 게임에 안 씀) | 4 |
-| `cg-star5` | ★5 전신 CG | 4 |
-| `duo` | 인연 듀오 컷인 (처음 8쌍) | 8 |
+| `style-nerea` | 그림체 시안 네레아 (4장, 게임에 안 씀) | 4 |
+| `cg-star5` | ★5 전신 CG | 5 |
+| `duo` | 인연 듀오 컷인 10쌍 | 10 |
 | `enemy-act1` | 1막 적 | 10 |
 | `enemy-act2` | 2막 적 | 10 |
 | `enemy-act3` | 3막 적 | 10 |
@@ -69,7 +75,7 @@ style_version 1 · 전체 542장 · 묶음 62개
 | `summon` | 별 소환 연출 | 4 |
 | `app` | 앱 아이콘 | 1 |
 | `icons` | 도구 아이콘 40 | 40 |
-| `icons-sig` | 동료 전용 도구 아이콘 20 | 20 |
+| `icons-sig` | 동료 전용 도구 아이콘 22 | 22 |
 
 ## 종류별 크기
 
@@ -196,6 +202,32 @@ Character reference sheet of 엘레오노르 (eleonore): an elegant, haughty wit
 | `eleonore_serious` | `assets/chars/eleonore_serious.png` | 1024×1536 투명 | `assets/chars/eleonore_normal.png` | — |
 | `eleonore_cutin` | `assets/cutins/eleonore_cutin.png` | 1536×576 | `assets/chars/eleonore_normal.png` | 얼굴이 가운데 띠 안 |
 | `eleonore_outfit2` | `assets/chars/eleonore_outfit2.png` | 1024×1536 투명 | `assets/chars/eleonore_normal.png` | — |
+
+## `char-nerea` — ★★★★★ 네레아
+
+<details><summary>설정화 프롬프트 (저장소에 올리지 않음)</summary>
+
+```
+이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.
+
+Authentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.
+
+Character design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.
+
+This is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.
+
+Character reference sheet of 네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold. Full body front view plus a face close-up, plain background. Native resolution about 256x170, upscaled with nearest-neighbor.
+```
+</details>
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `nerea_stand` | `assets/chars/nerea_stand.png` | 1024×1536 투명 | — | 전신, 오른쪽을 향한 전투 자세, 무기 |
+| `nerea_normal` | `assets/chars/nerea_normal.png` | 1024×1536 투명 | — | — |
+| `nerea_smile` | `assets/chars/nerea_smile.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` | — |
+| `nerea_serious` | `assets/chars/nerea_serious.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` | — |
+| `nerea_cutin` | `assets/cutins/nerea_cutin.png` | 1536×576 | `assets/chars/nerea_normal.png` | 얼굴이 가운데 띠 안 |
+| `nerea_outfit2` | `assets/chars/nerea_outfit2.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` | — |
 
 ## `char-iris` — ★★★★ 아이리스
 
@@ -430,6 +462,32 @@ Character reference sheet of 제노 (zeno): a silent dark knight man in his late
 | `zeno_serious` | `assets/chars/zeno_serious.png` | 1024×1536 투명 | `assets/chars/zeno_normal.png` | — |
 | `zeno_cutin` | `assets/cutins/zeno_cutin.png` | 1536×576 | `assets/chars/zeno_normal.png` | 얼굴이 가운데 띠 안 |
 | `zeno_outfit2` | `assets/chars/zeno_outfit2.png` | 1024×1536 투명 | `assets/chars/zeno_normal.png` | — |
+
+## `char-bertha` — ★★★★ 베르타
+
+<details><summary>설정화 프롬프트 (저장소에 올리지 않음)</summary>
+
+```
+이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.
+
+Authentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.
+
+Character design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.
+
+This is a 4-star character: one flashy signature prop or accessory, otherwise clean.
+
+Character reference sheet of 베르타 (bertha): a gentle but sharp retired tower guide, an elderly woman in her early 70s (clearly elderly: wrinkles, kind crow's feet). Long silver hair in a neat braided crown, warm hazel eyes behind small round glasses, a tidy plum guide uniform coat with brass buttons and a long skirt, a knitted shawl, a tall cane with a glowing amber lantern hanging from its tip, a ring of old brass keys at her belt. Accent colors: amber lantern and plum. Full body front view plus a face close-up, plain background. Native resolution about 256x170, upscaled with nearest-neighbor.
+```
+</details>
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `bertha_stand` | `assets/chars/bertha_stand.png` | 1024×1536 투명 | — | 전신, 오른쪽을 향한 전투 자세, 무기 |
+| `bertha_normal` | `assets/chars/bertha_normal.png` | 1024×1536 투명 | — | — |
+| `bertha_smile` | `assets/chars/bertha_smile.png` | 1024×1536 투명 | `assets/chars/bertha_normal.png` | — |
+| `bertha_serious` | `assets/chars/bertha_serious.png` | 1024×1536 투명 | `assets/chars/bertha_normal.png` | — |
+| `bertha_cutin` | `assets/cutins/bertha_cutin.png` | 1536×576 | `assets/chars/bertha_normal.png` | 얼굴이 가운데 띠 안 |
+| `bertha_outfit2` | `assets/chars/bertha_outfit2.png` | 1024×1536 투명 | `assets/chars/bertha_normal.png` | — |
 
 ## `char-brick` — ★★★ 브릭
 
@@ -685,6 +743,24 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_eleo_echo` | `assets/cards/card_eleo_echo.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` | 엘레오노르 얼굴, 「과거의 잔상」 효과 |
 | `card_eleo_midnight` | `assets/cards/card_eleo_midnight.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` | 엘레오노르 얼굴, 「자정의 정적」 효과 |
 
+## `cards-nerea` — ★★★★★ 네레아 카드 13장
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `card_nerea_harpoon` | `assets/cards/card_nerea_harpoon.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「별 작살」 효과 |
+| `card_nerea_song` | `assets/cards/card_nerea_song.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「고래의 노래」 효과 |
+| `card_nerea_tide` | `assets/cards/card_nerea_tide.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「밀물」 효과 |
+| `card_nerea_spout` | `assets/cards/card_nerea_spout.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「분수」 효과 |
+| `card_nerea_ride` | `assets/cards/card_nerea_ride.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「고래 등 타기」 효과 |
+| `card_nerea_dive` | `assets/cards/card_nerea_dive.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「깊은 잠수」 효과 |
+| `card_nerea_krill` | `assets/cards/card_nerea_krill.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「크릴 떼」 효과 |
+| `card_nerea_current` | `assets/cards/card_nerea_current.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「해류」 효과 |
+| `card_nerea_lullaby` | `assets/cards/card_nerea_lullaby.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「고래 자장가」 효과 |
+| `card_nerea_chorus` | `assets/cards/card_nerea_chorus.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「고래의 합창」 효과 |
+| `card_nerea_wave` | `assets/cards/card_nerea_wave.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「파도 가르기」 효과 |
+| `card_nerea_breach` | `assets/cards/card_nerea_breach.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「수면 돌파」 효과 |
+| `card_nerea_starsea` | `assets/cards/card_nerea_starsea.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | 네레아 얼굴, 「별바다」 효과 |
+
 ## `cards-iris` — ★★★★ 아이리스 카드 12장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
@@ -834,6 +910,23 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `card_zeno_flame` | `assets/cards/card_zeno_flame.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` | 제노 얼굴, 「흑염」 효과 |
 | `card_zeno_threat` | `assets/cards/card_zeno_threat.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` | 제노 얼굴, 「위협」 효과 |
 | `card_zeno_eye` | `assets/cards/card_zeno_eye.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` | 제노 얼굴, 「용의 눈」 효과 |
+
+## `cards-bertha` — ★★★★ 베르타 카드 12장
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `card_bertha_lantern` | `assets/cards/card_bertha_lantern.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「랜턴 지팡이」 효과 |
+| `card_bertha_skip` | `assets/cards/card_bertha_skip.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「이쪽이에요」 효과 |
+| `card_bertha_back` | `assets/cards/card_bertha_back.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「되돌아가요」 효과 |
+| `card_bertha_book` | `assets/cards/card_bertha_book.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「안내 책자」 효과 |
+| `card_bertha_tea` | `assets/cards/card_bertha_tea.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「보온병 차」 효과 |
+| `card_bertha_shortcut` | `assets/cards/card_bertha_shortcut.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「지름길」 효과 |
+| `card_bertha_map` | `assets/cards/card_bertha_map.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「낡은 탑 지도」 효과 |
+| `card_bertha_cane` | `assets/cards/card_bertha_cane.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「지팡이 일격」 효과 |
+| `card_bertha_stories` | `assets/cards/card_bertha_stories.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「옛날이야기」 효과 |
+| `card_bertha_keys` | `assets/cards/card_bertha_keys.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「탑 열쇠 꾸러미」 효과 |
+| `card_bertha_lastcall` | `assets/cards/card_bertha_lastcall.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「마지막 안내」 효과 |
+| `card_bertha_detour` | `assets/cards/card_bertha_detour.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` | 베르타 얼굴, 「돌아가는 길」 효과 |
 
 ## `cards-brick` — ★★★ 브릭 카드 12장
 
@@ -1009,6 +1102,17 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `duocard_marta_tomori` | `assets/cards/duocard_marta_tomori.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/tomori_normal.png` | 두 사람 얼굴 둘 다 |
 | `duocard_eleonore_iris` | `assets/cards/duocard_eleonore_iris.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/iris_normal.png` | 두 사람 얼굴 둘 다 |
 
+## `cards-duo-5` — 인연 듀오 카드 45~50
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `duocard_nerea_tomori` | `assets/cards/duocard_nerea_tomori.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/tomori_normal.png` | 두 사람 얼굴 둘 다 |
+| `duocard_nerea_sion` | `assets/cards/duocard_nerea_sion.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/sion_normal.png` | 두 사람 얼굴 둘 다 |
+| `duocard_mariana_nerea` | `assets/cards/duocard_mariana_nerea.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/nerea_normal.png` | 두 사람 얼굴 둘 다 |
+| `duocard_bertha_eleonore` | `assets/cards/duocard_bertha_eleonore.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/eleonore_normal.png` | 두 사람 얼굴 둘 다 |
+| `duocard_bertha_finn` | `assets/cards/duocard_bertha_finn.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/finn_normal.png` | 두 사람 얼굴 둘 다 |
+| `duocard_bertha_nerea` | `assets/cards/duocard_bertha_nerea.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/nerea_normal.png` | 두 사람 얼굴 둘 다 |
+
 ## `style-sion` — 그림체 시안 시온 (4장, 게임에 안 씀)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
@@ -1045,6 +1149,15 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `style_eleonore_c` | `assets/style/eleonore_c.png` | 1024×1536 투명 | `assets/style/eleonore_a.png` | 시안 C — 세밀한 도트(256×384 도트 4배) |
 | `style_eleonore_d` | `assets/style/eleonore_d.png` | 1024×1536 투명 | `assets/style/eleonore_a.png` | 시안 D — 고화질 픽셀 일러스트(색 제한 없음) |
 
+## `style-nerea` — 그림체 시안 네레아 (4장, 게임에 안 씀)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `style_nerea_a` | `assets/style/nerea_a.png` | 1024×1536 투명 | — | 시안 A — 기준(128×192 도트 8배) |
+| `style_nerea_b` | `assets/style/nerea_b.png` | 1024×1536 투명 | `assets/style/nerea_a.png` | 시안 B — 굵은 도트(64×96 도트 16배) |
+| `style_nerea_c` | `assets/style/nerea_c.png` | 1024×1536 투명 | `assets/style/nerea_a.png` | 시안 C — 세밀한 도트(256×384 도트 4배) |
+| `style_nerea_d` | `assets/style/nerea_d.png` | 1024×1536 투명 | `assets/style/nerea_a.png` | 시안 D — 고화질 픽셀 일러스트(색 제한 없음) |
+
 ## `cg-star5` — ★5 전신 CG
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
@@ -1053,8 +1166,9 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `star5_lunaria` | `assets/cg/star5_lunaria.png` | 1536×864 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` | — |
 | `star5_akane` | `assets/cg/star5_akane.png` | 1536×864 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` | — |
 | `star5_eleonore` | `assets/cg/star5_eleonore.png` | 1536×864 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` | — |
+| `star5_nerea` | `assets/cg/star5_nerea.png` | 1536×864 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` | — |
 
-## `duo` — 인연 듀오 컷인 (처음 8쌍)
+## `duo` — 인연 듀오 컷인 10쌍
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -1066,6 +1180,8 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `duo_lunaria_sion` | `assets/cutins/duo_lunaria_sion.png` | 1536×768 | `assets/chars/lunaria_normal.png` `assets/chars/sion_normal.png` | 두 사람 얼굴 둘 다 |
 | `duo_eleonore_sebas` | `assets/cutins/duo_eleonore_sebas.png` | 1536×768 | `assets/chars/eleonore_normal.png` `assets/chars/sebas_normal.png` | 두 사람 얼굴 둘 다 |
 | `duo_zeno_marta` | `assets/cutins/duo_zeno_marta.png` | 1536×768 | `assets/chars/zeno_normal.png` `assets/chars/marta_normal.png` | 두 사람 얼굴 둘 다 |
+| `duo_nerea_tomori` | `assets/cutins/duo_nerea_tomori.png` | 1536×768 | `assets/chars/nerea_normal.png` `assets/chars/tomori_normal.png` | 두 사람 얼굴 둘 다 |
+| `duo_bertha_nerea` | `assets/cutins/duo_bertha_nerea.png` | 1536×768 | `assets/chars/bertha_normal.png` `assets/chars/nerea_normal.png` | 두 사람 얼굴 둘 다 |
 
 ## `enemy-act1` — 1막 적
 
@@ -1220,7 +1336,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `relic_reverse_clock` | `assets/icons/relic_reverse_clock.png` | 192×192 투명 | — | — |
 | `relic_star_sash` | `assets/icons/relic_star_sash.png` | 192×192 투명 | — | — |
 
-## `icons-sig` — 동료 전용 도구 아이콘 20
+## `icons-sig` — 동료 전용 도구 아이콘 22
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -1243,4 +1359,6 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `relic_sig_laila` | `assets/icons/relic_sig_laila.png` | 192×192 투명 | — | — |
 | `relic_sig_dora` | `assets/icons/relic_sig_dora.png` | 192×192 투명 | — | — |
 | `relic_sig_gordon` | `assets/icons/relic_sig_gordon.png` | 192×192 투명 | — | — |
+| `relic_sig_nerea` | `assets/icons/relic_sig_nerea.png` | 192×192 투명 | — | — |
+| `relic_sig_bertha` | `assets/icons/relic_sig_bertha.png` | 192×192 투명 | — | — |
 | `relic_sig_fukuro` | `assets/icons/relic_sig_fukuro.png` | 192×192 투명 | — | — |

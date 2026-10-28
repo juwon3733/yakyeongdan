@@ -1,6 +1,6 @@
 # GPT 그림 요청
 
-전체 471장, 묶음 56개(`docs/PROMPTS.md`). 그중 스킬 카드 그림이 270장(동료 카드 226 + 인연 듀오 44, 묶음 `cards-<동료 id>` 20개 + `cards-duo-1`~`4`). 아래 글에서 `<묶음 id>`만 바꿔 GPT(이미지 에이전트)에게 보낸다. 한 번에 묶음 1~2개.
+전체 594장, 묶음 68개(`docs/PROMPTS.md`). 그중 스킬 카드 그림은 동료 카드 + 인연 듀오 50장(묶음 `cards-<동료 id>` 22개 + `cards-duo-1`~`5`). 아래 글에서 `<묶음 id>`만 바꿔 GPT(이미지 에이전트)에게 보낸다. 한 번에 묶음 1~2개.
 
 ```
 juwon3733/yakyeongdan 최신 main을 받고 AGENTS.md대로 그림을 만들어서 PR 올려줘.
@@ -32,4 +32,5 @@ juwon3733/yakyeongdan 최신 main을 받고 AGENTS.md대로 그림을 만들어�
 | 8 | `summon` `icons` | 소환 화면, 도구 아이콘 |
 | 9 | 나머지 `char-…` 11명 → `duo` | 듀오는 두 사람 상반신이 다 있어야 함 |
 | 10 | `cards-iris` `cards-brick` `cards-marta` → 나머지 `cards-…` | 스킬 카드 그림. 그 동료 `char-…`가 main에 들어온 뒤에. 한 묶음 9~13장 |
-| 11 | `cards-duo-1` ~ `cards-duo-4` | 인연 듀오 카드 44장. 두 사람 `char-…`가 다 있어야 함 |
+| 11 | `cards-duo-1` ~ `cards-duo-5` | 인연 듀오 카드 50장. 두 사람 `char-…`가 다 있어야 함 |
+| 12 | `char-nerea` `char-bertha` → `cards-nerea` `cards-bertha` | 2차 동료(★5 네레아·★4 베르타). 네레아 전신 CG는 `cg-star5`에 같이 들어 있다 |

@@ -1,4 +1,4 @@
-// 동료 명단 20명 (docs/03_characters.md 「동료 20명 한눈에」). 별 소환·본부·파티 고르기가 쓴다.
+// 동료 명단 22명 (docs/03_characters.md 「동료 20명 한눈에」). 별 소환·본부·파티 고르기가 쓴다.
 // 실제로 싸울 수 있는 동료는 characters.js의 CHARACTERS에 있는 동료뿐(나머지는 「준비 중」).
 // id는 그림 프롬프트(js/asset_prompts.js CHARS)와 같다. pal = 그림이 없을 때 쓰는 임시 도트 색(외형 문서대로).
 export const ROSTER = {
@@ -10,6 +10,8 @@ export const ROSTER = {
               pal: { h: '#d8382a', H: '#8a1e18', e: '#ffc040', o: '#b02a24', O: '#6a1410', a: '#ffb040' } },
   eleonore: { name: '엘레오노르', role: '시계탑의 마녀', rarity: 5, col: '#b48ae8', long: true,
               pal: { h: '#2e2244', H: '#160e24', e: '#d0a0ff', o: '#3a2858', O: '#1e1432', a: '#e0c060' } },
+  nerea:    { name: '네레아', role: '별 고래 기수', rarity: 5, col: '#5ad0d8', long: true,
+              pal: { h: '#c8f0f0', H: '#7ab8c8', e: '#2a8ab8', o: '#1e3a6a', O: '#0e2244', a: '#f0e0a0' } },
   iris:     { name: '아이리스', role: '검사', rarity: 4, col: '#c8d4f0', long: true, pal: null },
   noel:     { name: '노엘', role: '마술사', rarity: 4, col: '#f08ac0', long: true, pal: null },
   raven:    { name: '레이븐', role: '암살자', rarity: 4, col: '#9a86d8', long: false, pal: null },
@@ -25,6 +27,8 @@ export const ROSTER = {
               pal: { h: '#f0d880', H: '#b0985a', e: '#4a7ac0', o: '#d0d8e8', O: '#8a92a8', a: '#ffffff' } },
   zeno:     { name: '제노', role: '용의 피 흑기사', rarity: 4, col: '#8a6ae0', long: true,
               pal: { h: '#18141c', H: '#08060a', e: '#e0b030', o: '#24202c', O: '#100e16', a: '#8a2a2a' } },
+  bertha:   { name: '베르타', role: '은퇴한 탑 안내인', rarity: 4, col: '#d8b070', long: true,
+              pal: { h: '#e8e8f0', H: '#a8a8b8', e: '#6a5a3a', o: '#3a2a4a', O: '#20162c', a: '#d8b070', skin: '#e8c8b0' } },
   brick:    { name: '브릭', role: '대포', rarity: 3, col: '#ef6352', long: false, pal: null },
   marta:    { name: '마르타', role: '수녀', rarity: 3, col: '#e0b84a', long: true, pal: null },
   finn:     { name: '핀', role: '우편배달부', rarity: 3, col: '#7aa0d0', long: false,

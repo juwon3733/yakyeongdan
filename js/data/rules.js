@@ -16,6 +16,7 @@ export const RULES = {
   swapsPerTurn: 1,
   reviveHp: 1,
   sleepMana: 4,          // 노엘이 잠든 채 턴을 시작하면 마력
+  whaleMax: 8, whaleMul: 3, whaleBlock: 2, whaleBurst: 7,   // 네레아 별 고래: 최대 크기, 물보라 피해 = 크기×whaleMul, 커질 때마다 앞줄 방어
   weakMul: .75,         // 약화: 주는 피해
   vulnMul: 1.5,         // 취약: 받는 피해
   lightCost: 1,         // 등대 불빛이 비춘 동료 카드 비용 +

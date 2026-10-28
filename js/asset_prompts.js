@@ -38,7 +38,7 @@ export const SPEC = {
   card:     { w: 768,  h: 576,  native: '96×72',   scale: 8, transparent: false, colors: 256, folder: 'cards', note: '스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배' },
 };
 
-// ── 동료 20명 ────────────────────────────────────────────
+// ── 동료 22명 ────────────────────────────────────────────
 // sheet: 설정화(전신 정면 + 얼굴 클로즈업). 같은 묶음의 다른 그림은 전부 이 설정화를 기준으로.
 // faces: 상반신 표정 3개(normal·smile·serious), cutin: 컷인 연출, outfit: 두 번째 의상,
 // fx: 카드 그림에 쓰는 그 동료다운 무기·이펙트. 카드 그림 장면은 js/data/cards.js의 카드(이름·효과·종류)에서 자동으로 만든다.
@@ -67,6 +67,12 @@ export const CHARS = {
     cutin: 'close-up of her face with a giant glowing clock face behind her, the hands spinning backward',
     outfit: 'second outfit: a clocktower keeper coat in plum and brass, monocle, pocket watches on chains',
     fx: 'a giant clock-hand staff, glowing clock faces, brass gears, violet time ripples, clock hands spinning' },
+  nerea: { name: '네레아', rarity: 5, accent: 'sea teal and starlight gold',
+    sheet: 'a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her.',
+    faces: { normal: 'relaxed smile, hair drifting as if underwater, one hand on the harpoon staff', smile: 'laughing with her eyes closed, a little star fish swimming past', serious: 'raising the harpoon staff, the star whale\'s eye glowing behind her' },
+    cutin: 'close-up of her riding on the star whale\'s head, the whale breaching through a sea of stars, a huge spray of starlight water',
+    outfit: 'second outfit: a white-and-gold sailor captain coat over a teal swimsuit-style top and shorts, a whale-tail pendant',
+    fx: 'a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky' },
   iris: { name: '아이리스', rarity: 4, accent: 'silver and pale blue',
     sheet: 'a cool, quiet swordswoman in her early 20s. Waist-length straight black hair, pale-blue eyes, a long silver coat styled as light armor, a slim longsword, an expressionless but kind face.',
     faces: { normal: 'calm, expressionless, sword at her side', smile: 'small rare smile, looking away', serious: 'sword raised in a ready stance, eyes sharp' },
@@ -121,6 +127,12 @@ export const CHARS = {
     cutin: 'close-up of the golden dragon eye and black flames',
     outfit: 'second outfit: a dark-crimson coat over scale mail with a torn black cape',
     fx: 'a black dragon-scale greatsword, black flames, a dragon silhouette, one golden dragon eye glowing' },
+  bertha: { name: '베르타', rarity: 4, accent: 'amber lantern and plum',
+    sheet: 'a gentle but sharp retired tower guide, an elderly woman in her early 70s (clearly elderly: wrinkles, kind crow\'s feet). Long silver hair in a neat braided crown, warm hazel eyes behind small round glasses, a tidy plum guide uniform coat with brass buttons and a long skirt, a knitted shawl, a tall cane with a glowing amber lantern hanging from its tip, a ring of old brass keys at her belt.',
+    faces: { normal: 'kind smile, both hands resting on the lantern cane', smile: 'laughing warmly, glasses slightly askew', serious: 'pointing the lantern cane forward, eyes sharp behind the glasses, a trail of guiding light' },
+    cutin: 'close-up of her glasses glinting and the lantern cane pointing the way, a glowing path of footprints and arrows of light',
+    outfit: 'second outfit: her old young-days tower guide uniform in navy with a captain-style cap, shawl kept',
+    fx: 'a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around' },
   brick: { name: '브릭', rarity: 3, accent: 'red and brass',
     sheet: 'an energetic gunner woman in her mid 20s. Short red hair, goggles pushed up on her head, a huge hand cannon bigger than her body, a cropped work top that shows her shoulders and midriff, suspender shorts, work boots.',
     faces: { normal: 'big grin, cannon on shoulder', smile: 'laughing loudly, thumbs up', serious: 'aiming the cannon, goggles down' },
@@ -165,7 +177,7 @@ export const CHARS = {
     fx: 'an owl mask, a huge bundle of junk on his back, lucky charms, random trinkets and lanterns flying' },
 };
 
-// 인연 듀오 컷인 (처음 8쌍)
+// 인연 듀오 컷인 (처음 8쌍 + 2차 동료 2쌍)
 export const DUOS = {
   iris_marta: { pair: ['iris', 'marta'], scene: 'sword and shield: the swordswoman slashing from behind the tall nun\'s raised holy barrier' },
   iris_akane: { pair: ['iris', 'akane'], scene: 'rivals back to back, a silver blade and two burning blades crossing in an X' },
@@ -175,6 +187,8 @@ export const DUOS = {
   lunaria_sion: { pair: ['lunaria', 'sion'], scene: 'the dancer under a full moon and the summoner under a sky of stars, moonlight and starlight merging' },
   eleonore_sebas: { pair: ['eleonore', 'sebas'], scene: 'the witch and the old butler sharing tea while clock hands spin backward around them' },
   zeno_marta: { pair: ['zeno', 'marta'], scene: 'the dark knight kneeling before the tall nun, golden light and black flames meeting' },
+  nerea_tomori: { pair: ['nerea', 'tomori'], scene: 'the star whale following the girl\'s lantern beam across the night sea, the rider waving from its head' },
+  bertha_nerea: { pair: ['bertha', 'nerea'], scene: 'the old guide pointing the way with her lantern cane while the star whale rider sails past on the whale, a path of light between them' },
 };
 
 // ── 적 ───────────────────────────────────────────────────
@@ -268,6 +282,8 @@ export const SIG_RELICS = {
   sig_laila: '바람 깃발 — a small torn sky-blue pennant fluttering',
   sig_dora: '모루 방패 — a tiny anvil-shaped shield',
   sig_gordon: '큰 도시락 — a big stacked lunch box tied with cloth',
+  sig_nerea: '고래 귀걸이 — a teal earring shaped like a small whale tail',
+  sig_bertha: '낡은 안내 깃발 — a small faded guide pennant on a short pole',
   sig_fukuro: '행운 고양이 — a small beckoning lucky cat charm with an owl mask',
 };
 
@@ -337,6 +353,8 @@ function cardPose(d) {
   if (/별빛/.test(t)) out.push('gold coins and starlight');
   if (/공중/.test(t)) out.push('high in the air above clouds');
   if (/달/.test(t)) out.push('a big moon behind');
+  if (/고래|물보라/.test(t)) out.push('the giant star whale made of constellations, sprays of starlight water');
+  if (/행동을/.test(t)) out.push('a guiding lantern light turning enemy silhouettes around, glowing arrows');
   if (!out.length) out.push('a confident skill-casting pose with the character\'s signature effect');
   if (d.exhaust) out.push('a one-time all-out move, the most dramatic version');
   return out.join('; ');
@@ -397,9 +415,9 @@ export function assetList() {
     }
   }
 
-  // 인연 듀오 카드 그림 44장(두 사람이 함께 기술을 쓰는 장면), 11장씩 4묶음
+  // 인연 듀오 카드 그림(두 사람이 함께 기술을 쓰는 장면), 11장씩 묶음
   const duoList = Object.entries(CARD_DUOS);
-  for (let n = 0; n < 4; n++) {
+  for (let n = 0; n * 11 < duoList.length; n++) {
     const batch = `cards-duo-${n + 1}`;
     const part = duoList.slice(n * 11, n * 11 + 11);
     batches.push({ id: batch, title: `인연 듀오 카드 ${n * 11 + 1}~${n * 11 + part.length}` });
@@ -439,7 +457,7 @@ export function assetList() {
   }
 
   // 인연 듀오 컷인
-  batches.push({ id: 'duo', title: '인연 듀오 컷인 (처음 8쌍)' });
+  batches.push({ id: 'duo', title: `인연 듀오 컷인 ${Object.keys(DUOS).length}쌍` });
   for (const [id, d] of Object.entries(DUOS)) {
     const [a, b] = d.pair;
     out.push(item('duo', `duo_${id}`, 'duo', `duo_${id}.png`,
@@ -487,7 +505,7 @@ export function assetList() {
   batches.push({ id: 'icons', title: '도구 아이콘 40' });
   const icon = (batch, id, desc) => out.push(item('icon', `relic_${id}`, batch, `relic_${id}.png`, join(STYLE.pixel, `A single item icon: ${desc}. Centered, readable at 24x24 pixels, bold outline, fully transparent background. Native resolution 24x24 pixels, upscaled exactly 8x to 192x192.`)));
   for (const [id, desc] of Object.entries(RELICS)) icon('icons', id, desc);
-  batches.push({ id: 'icons-sig', title: '동료 전용 도구 아이콘 20' });
+  batches.push({ id: 'icons-sig', title: `동료 전용 도구 아이콘 ${Object.keys(SIG_RELICS).length}` });
   for (const [id, desc] of Object.entries(SIG_RELICS)) icon('icons-sig', id, desc);
   return { batches, items: out };
 }

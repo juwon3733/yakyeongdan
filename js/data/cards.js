@@ -420,6 +420,60 @@ export const CARDS = {
   'zeno.eye':     { ch: 'zeno', name: '용의 눈', cost: 1, target: 'foe', rarity: 'c', v: [2], up: { v: [3] },
     text: '적 취약 {n0}.', play: (c, e, v) => e.foeStatus('vuln', v[0]) },
 
+  // ===== ★5 네레아 — 별 고래 (내 턴 끝마다 물보라: 모든 적 피해 고래 크기×3, 크기는 전투마다 1에서 시작, 최대 8) =====
+  'nerea.harpoon':{ ch: 'nerea', name: '별 작살', cost: 1, atk: 1, rarity: 'c', v: [8, 2], up: { v: [11, 2] },
+    text: '피해 {d0} + 고래 크기×{n1}.', play: (c, e, v) => e.hit(v[0] + c.whale * v[1]) },
+  'nerea.song':   { ch: 'nerea', name: '고래의 노래', cost: 1, rarity: 'c', v: [7, 1], up: { v: [10, 1] },
+    text: '방어 {b0}, 고래 크기 +{n1}.', play: (c, e, v) => { e.guard(v[0]); e.whaleGrow(v[1]); } },
+  'nerea.tide':   { ch: 'nerea', name: '밀물', cost: 0, time: 1, atk: 1, target: 'all', rarity: 'u', v: [2], up: { v: [3] },
+    text: '고래 크기 +{n0}, 지금 물보라 한 번.', play: (c, e, v) => { e.whaleGrow(v[0]); e.spout(); } },
+  'nerea.spout':  { ch: 'nerea', name: '분수', cost: 1, atk: 1, target: 'all', rarity: 'c', v: [], up: { cost: 0 },
+    text: '지금 물보라 한 번 (모든 적 피해 고래 크기×3).', play: (c, e) => e.spout() },
+  'nerea.ride':   { ch: 'nerea', name: '고래 등 타기', cost: 1, target: 'ally', rarity: 'u', v: [3], up: { v: [4] },
+    text: '고른 동료 방어 고래 크기×{n0} (최소 6).', play: (c, e, v) => e.guardTarget(Math.max(6, c.whale * v[0])) },
+  'nerea.dive':   { ch: 'nerea', name: '깊은 잠수', cost: 0, rarity: 'u', v: [1], up: { v: [2] },
+    text: '고래 크기 +{n0}. 이번 턴 끝 물보라 피해 +50%.', play: (c, e, v) => { e.whaleGrow(v[0]); c.whaleDive = true; } },
+  'nerea.krill':  { ch: 'nerea', name: '크릴 떼', cost: 0, rarity: 'c', v: [1], up: { v: [2] },
+    text: '카드 {n0}장, 고래 크기 +1.', play: (c, e, v) => { e.draw(v[0]); e.whaleGrow(1); } },
+  'nerea.current':{ ch: 'nerea', name: '해류', cost: 1, rarity: 'c', v: [8, 4], up: { v: [11, 5] },
+    text: '방어 {b0}. 고래 크기 4 이상이면 모든 동료 방어 {n1}.', play: (c, e, v) => { e.guard(v[0]); if (c.whale >= 4) e.guardAll(v[1]); } },
+  'nerea.lullaby':{ ch: 'nerea', name: '고래 자장가', cost: 1, target: 'ally', rarity: 'u', v: [2], up: { v: [3] },
+    text: '고른 동료 체력 고래 크기×{n0} 회복 (최소 4).', play: (c, e, v) => e.heal(Math.max(4, c.whale * v[0])) },
+  'nerea.chorus': { ch: 'nerea', name: '고래의 합창', cost: 1, exhaust: 1, rarity: 'u', v: [3], up: { v: [5] },
+    text: '이번 전투 물보라 피해 +{n0}. 소멸.', play: (c, e, v) => { c.whalePlus += v[0]; } },
+  'nerea.wave':   { ch: 'nerea', name: '파도 가르기', cost: 2, atk: 1, target: 'all', rarity: 'r', v: [5], up: { v: [6] },
+    text: '모든 적 피해 고래 크기×{n0}.', play: (c, e, v) => e.hitAll(c.whale * v[0]) },
+  'nerea.breach': { ch: 'nerea', name: '수면 돌파', cost: 2, atk: 1, rarity: 'r', v: [9], up: { v: [11] },
+    text: '피해 고래 크기×{n0}. 고래 크기 −2.', play: (c, e, v) => { e.hit(c.whale * v[0]); c.whale = Math.max(1, c.whale - 2); } },
+  'nerea.starsea':{ ch: 'nerea', name: '별바다', cost: 0, time: 1, exhaust: 1, rarity: 'r', v: [6], up: { v: [7] },
+    text: '고래 크기를 {n0}으로 (이미 그 이상이면 +2). 소멸.', play: (c, e, v) => e.whaleGrow(c.whale >= v[0] ? 2 : v[0] - c.whale) },
+
+  // ===== ★4 베르타 — 안내: 적의 행동 순서를 넘기거나(다음 행동) 되돌린다(바로 전 행동) =====
+  'bertha.lantern':{ ch: 'bertha', name: '랜턴 지팡이', cost: 1, atk: 1, rarity: 'c', v: [7, 4], up: { v: [10, 5] },
+    text: '피해 {d0}, 방어 {b1}.', play: (c, e, v) => { e.hit(v[0]); e.guard(v[1]); } },
+  'bertha.skip':  { ch: 'bertha', name: '이쪽이에요', cost: 1, target: 'foe', rarity: 'c', v: [5], up: { v: [8] },
+    text: '적 하나의 행동을 다음 것으로 넘긴다. 방어 {b0}.', play: (c, e, v) => { e.guide(1); e.guard(v[0]); } },
+  'bertha.back':  { ch: 'bertha', name: '되돌아가요', cost: 1, target: 'foe', rarity: 'c', v: [5], up: { v: [8] },
+    text: '적 하나의 행동을 바로 전 것으로 되돌린다. 방어 {b0}.', play: (c, e, v) => { e.guide(-1); e.guard(v[0]); } },
+  'bertha.book':  { ch: 'bertha', name: '안내 책자', cost: 0, time: 1, target: 'all', rarity: 'u', v: [1], up: { v: [2] },
+    text: '모든 적의 행동을 다음 것으로 넘긴다. 카드 {n0}장.', play: (c, e, v) => { e.guideAll(1); e.draw(v[0]); } },
+  'bertha.tea':   { ch: 'bertha', name: '보온병 차', cost: 0, target: 'ally', rarity: 'c', v: [4], up: { v: [6] },
+    text: '고른 동료 체력 {n0} 회복.', play: (c, e, v) => e.heal(v[0]) },
+  'bertha.shortcut':{ ch: 'bertha', name: '지름길', cost: 0, rarity: 'u', v: [1], up: { v: [2] },
+    text: '카드 {n0}장. 이번 턴 행동을 바꾼 적이 있으면 에너지 1.', play: (c, e, v) => { e.draw(v[0]); if (c.guideTurn > 0) c.energy += 1; } },
+  'bertha.map':   { ch: 'bertha', name: '낡은 탑 지도', cost: 1, rarity: 'u', v: [4], up: { v: [6] },
+    text: '이번 턴 행동을 바꾼 적마다 카드 1장, 방어 {b0}.', play: (c, e, v) => { const n = c.foes.filter(f => f.guidedTurn).length; if (n) { e.draw(n); e.guard(v[0] * n); } } },
+  'bertha.cane':  { ch: 'bertha', name: '지팡이 일격', cost: 1, atk: 1, rarity: 'c', v: [7], up: { v: [10] },
+    text: '피해 {d0}. 이번 턴 행동을 바꾼 적에게는 2배.', play: (c, e, v) => e.hit(c.foe?.guidedTurn ? v[0] * 2 : v[0]) },
+  'bertha.stories':{ ch: 'bertha', name: '옛날이야기', cost: 1, target: 'foe', rarity: 'c', v: [2], up: { v: [3] },
+    text: '적 약화 {n0}. 이번 턴 행동을 바꾼 적이면 취약 {n0}도.', play: (c, e, v) => { const g = c.foe?.guidedTurn; e.foeStatus('weak', v[0]); if (g) e.foeStatus('vuln', v[0]); } },
+  'bertha.keys':  { ch: 'bertha', name: '탑 열쇠 꾸러미', cost: 1, rarity: 'u', v: [8], up: { v: [11] },
+    text: '방어 {b0}, 다음 턴 카드 +1장.', play: (c, e, v) => { e.guard(v[0]); c.nextDraw += 1; } },
+  'bertha.lastcall':{ ch: 'bertha', name: '마지막 안내', cost: 2, atk: 1, rarity: 'r', v: [14, 8], up: { v: [18, 10] },
+    text: '피해 {d0}, 이번 턴 행동을 바꾼 횟수마다 +{n1}.', play: (c, e, v) => e.hit(v[0] + c.guideTurn * v[1]) },
+  'bertha.detour':{ ch: 'bertha', name: '돌아가는 길', cost: 1, target: 'all', exhaust: 1, rarity: 'r', v: [2], up: { cost: 0 },
+    text: '모든 적의 행동을 바로 전 것으로 되돌리고, 모든 적 취약 {n0}. 소멸.', play: (c, e, v) => { e.guideAll(-1); e.foeStatusAll('vuln', v[0]); } },
+
   // ===== ★3 핀 — 핀의 카드는 언제나 연계를 잇는다(link) =====
   'finn.letter':  { ch: 'finn', link: 1, name: '편지 던지기', cost: 1, atk: 1, rarity: 'c', v: [14], up: { v: [17] },
     text: '피해 {d0}. 연계를 잇는다.', play: (c, e, v) => e.hit(v[0]) },
@@ -560,7 +614,7 @@ export const DUOS = {
   'noel+raven':  { name: '악몽', target: 'foe', text: '적의 독 2배, 약화 1.', play: (c, e) => { c.foe.poison *= 2; e.foeStatus('weak', 1); } },
 };
 export const duoKey = (a, b) => [a, b].sort().join('+');
-// 나머지 인연 듀오 (처음 8명 사이 18쌍 + 새 동료 인연 16쌍). [동료 A, 동료 B, 듀오]
+// 나머지 인연 듀오 (처음 8명 사이 18쌍 + 새 동료 인연 16쌍 + 2차 동료 6쌍). [동료 A, 동료 B, 듀오]
 const MORE_DUOS = [
   ['iris', 'mimimomo', { name: '세 자루 칼', atk: 1, text: '피해 {d0}을 세 번, 연계 +1.', v: [5], play: (c, e, v) => { e.hit(v[0]); e.hit(v[0]); e.hit(v[0]); e.chain(1); } }],
   ['iris', 'sion', { name: '별을 베다', atk: 1, text: '피해 정령×6+4.', play: (c, e) => e.hit(c.spirits.length * 6 + 4) }],
@@ -597,6 +651,13 @@ const MORE_DUOS = [
   ['raven', 'laila', { name: '바람 속 그림자', atk: 1, text: '독 {k0}, 피해 {d1}을 네 번.', v: [6, 3], play: (c, e, v) => { e.foeStatus('poison', v[0] + e.dark()); for (let k = 0; k < 4; k++) e.hit(v[1]); } }],
   ['tomori', 'marta', { name: '등대의 기도', target: 'foe', text: '방어 {b0}. 적 하나의 이번 공격 −40%.', v: [14], play: (c, e, v) => { e.guard(v[0]); e.dim(.4); } }],
   ['eleonore', 'iris', { name: '멈춘 일섬', atk: 1, text: '적 하나 다음 행동 건너뜀, 피해 {d0}.', v: [16], play: (c, e, v) => { const f = c.foe; e.hit(v[0]); if (f && !f.dead) f.skip += 1; } }],
+  // 2차 동료 인연 6쌍 (네레아·베르타)
+  ['nerea', 'tomori', { name: '등불 고래', target: 'all', atk: 1, text: '고래 크기 +2, 모든 적 약화 {n0}, 지금 물보라 한 번.', v: [1], play: (c, e, v) => { e.whaleGrow(2); e.foeStatusAll('weak', v[0]); e.spout(); } }],
+  ['nerea', 'sion', { name: '별고래자리', text: '정령 2, 고래 크기 +1.', play: (c, e) => { e.spirit(3, 2); e.whaleGrow(1); } }],
+  ['mariana', 'nerea', { name: '전설의 항로', target: 'all', atk: 1, text: '모든 적 피해 고래 크기×{n0}, 별빛 +10.', v: [4], play: (c, e, v) => { e.hitAll(c.whale * v[0]); e.gold(10); } }],
+  ['bertha', 'eleonore', { name: '옛 시간표', target: 'all', text: '모든 적의 행동을 다음 것으로 넘기고, 밤 시계 10분 되돌리기.', play: (c, e) => { e.guideAll(1); e.rewind(10); } }],
+  ['bertha', 'finn', { name: '길 잃은 편지', text: '카드 3장, 이번 턴 모든 동료 공격 +{n0}.', v: [3], play: (c, e, v) => { e.draw(3); c.turnAtk += v[0]; } }],
+  ['bertha', 'nerea', { name: '첫 안내', target: 'all', text: '모든 적의 행동을 바로 전 것으로 되돌리고, 고래 크기 +2.', play: (c, e) => { e.guideAll(-1); e.whaleGrow(2); } }],
 ];
 for (const [a, b, d] of MORE_DUOS) DUOS[duoKey(a, b)] = d;
 export const BOND = { name: '합동', atk: 1, text: '피해 {d0}, 방어 {b1}.', v: [8, 8], play: (c, e, v) => { e.hit(v[0]); e.guard(v[1]); } };

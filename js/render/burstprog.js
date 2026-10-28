@@ -26,6 +26,8 @@ export const BURST_PROG = {
   dora: C => [C.tempered, 3],
   gordon: C => [C.healTurn, 15],
   fukuro: C => [C.randTurn, 2],
+  nerea: C => [C.whale, 7],
+  bertha: C => [C.guideTurn, 2],
 };
 const burstLine = p => (CHARACTERS[p].passive?.lines || []).find(l => l[0] === 'burst');
 

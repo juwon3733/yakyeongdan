@@ -126,7 +126,8 @@ function metaNote(R) {
   const out = [];
   if (R.daily) out.push(`<span class="chip dailychip">매일의 밤</span> ${R.daily.best != null ? `오늘 최고 <b>${fmt(R.daily.best)}</b>` : '오늘은 아직 못 깼다'}${R.daily.first ? ' · <b class="newt">오늘 첫 격파</b>' : ''}`);
   for (const u of R.mastery || []) out.push(`<span class="chip">숙련도</span> ${esc(CHARACTERS[u.id]?.name || u.id)} <b>${u.lv}단계</b>`);
-  if (R.ach?.length) out.push(`<span class="chip">업적</span> ${R.ach.map(a => `「${esc(a.name)}」`).join(' ')} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b>`);
+  // 업적이 많으면 앞의 4개만 이름으로, 나머지는 「외 n개」 (결과 화면이 판 밖으로 넘치지 않게)
+  if (R.ach?.length) out.push(`<span class="chip">업적</span> ${R.ach.slice(0, 4).map(a => `「${esc(a.name)}」`).join(' ')}${R.ach.length > 4 ? ` 외 ${R.ach.length - 4}개` : ''} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b>`);
   return out.length ? `<div class="metanote">${out.map(x => `<p class="note">${x}</p>`).join('')}</div>` : '';
 }
 export function resultView() {
@@ -136,7 +137,12 @@ export function resultView() {
   const mc = CHARACTERS[mvp], st = G.stats[mvp];
   const duos = [...G.duoSet].map(k => `<span class="chip">${DUOS[k]?.name || k}</span>`).join('') || '<span class="note">없음</span>';
   // 새로 열린 에피소드 · 인연 장면 (본부 [에피소드]에서 본다)
-  const opened = [...(R.newEps || []).map(e => `${CHARACTERS[e.cid]?.name || e.cid} ${e.n + 1}화 「${EPISODES[e.cid][e.n].title}」`),
+  // 한 동료의 여러 화가 한꺼번에 열리면 「아이리스 1·2·3화」로 묶어 줄이 넘치지 않게
+  const byCid = {};
+  for (const e of R.newEps || []) (byCid[e.cid] ||= []).push(e.n);
+  const opened = [...Object.entries(byCid).map(([cid, ns]) => ns.length === 1
+      ? `${CHARACTERS[cid]?.name || cid} ${ns[0] + 1}화 「${EPISODES[cid][ns[0]].title}」`
+      : `${CHARACTERS[cid]?.name || cid} ${ns.map(n => n + 1).join('·')}화`),
     ...(R.newBonds || []).map(k => `인연 장면 「${BOND_SCENES[k].title}」`)];
   const epNote = opened.length ? `<p class="epnew"><b class="newt">새 에피소드</b> ${opened.map(esc).join(' · ')}</p>` : '';
   return `<div class="resultscr">

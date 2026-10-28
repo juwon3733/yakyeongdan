@@ -30,6 +30,8 @@ const MATE_TALK = {
   dora: '도라가 망치를 내려다본다. "자루가 흔들려. 금방 고칠게, 잠깐만!"',
   gordon: '고든이 국자를 휘휘 젓는다. "간이 안 맞아. 한 숟갈 먹어 봐."',
   fukuro: '후쿠로가 보따리를 풀어헤친다. "손님, 이 중에 쓸 만한 거 하나 골라 볼래?"',
+  nerea: '네레아가 창밖 하늘을 본다. "라나 숨소리가 얕아. 같이 노래 좀 불러 줄래?"',
+  bertha: '베르타가 지팡이 랜턴 심지를 고른다. "늙은이 무릎에 잠깐 맞춰 주겠니? 금방 따라잡으마."',
 };
 
 export const EVENTS = [
@@ -144,10 +146,12 @@ export const EVENTS = [
   { id: 'stairs', title: '끝없는 나선 계단', text: '아래도 위도 같은 계단. 한참 돌면 어딘가에 닿을 것 같다.',
     opts: [ { t: '끝까지 오른다: 밤 시계 +40분, 모든 동료 최대 체력 +5', f: x => { x.addTime(40); x.maxHp(5); } },
             { t: '창문으로 뛰어넘는다: 다음 층을 건너뜀, 모든 동료 체력 -8', can: x => x.canSkip, f: x => { x.loseHp(8); x.skipFloor(); } },
+            { need: 'bertha', t: '베르타가 옛 지름길 문을 연다: 다음 층을 건너뜀, 모든 동료 최대 체력 +2', can: x => x.canSkip, f: x => { x.maxHp(2); x.skipFloor(); } },
             { t: '되돌아간다', f: () => {} } ] },
   // ---- 달 사건 ----
   { id: 'fullaltar', title: '보름 제단', moon: 'full', text: '둥근 달이 제단 위 은쟁반에 그대로 비친다.',
     opts: [ { t: '쟁반에 손을 담근다: 모든 동료 최대 체력 +4', f: x => x.maxHp(4) },
+            { need: 'nerea', t: '네레아가 달빛 물을 라나에게 준다: 모든 동료 최대 체력 +4, 체력 +6', f: x => { x.maxHp(4); x.heal(6); } },
             { t: '달빛을 병에 담는다: 도구 하나, 밤 시계 +15분', f: x => { x.addTime(15); x.relic(); } } ] },
   { id: 'newmarket', title: '그믐 그림자 시장', moon: 'new', text: '달이 없는 밤에만 서는 시장. 상인 얼굴이 하나도 안 보인다.',
     opts: [ { t: '별빛 60으로 희귀 도구', can: x => x.haveGold >= 60, f: x => { x.gold(-60); x.relicTier('r'); } },

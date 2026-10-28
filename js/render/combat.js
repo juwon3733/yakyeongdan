@@ -34,6 +34,8 @@ const STAT = {
   dora: C => C.tempered ? `담금질 ${C.tempered}` : '',
   gordon: C => C.nextAtk ? `다음 턴 공격 +${C.nextAtk}` : '',
   fukuro: C => C.atkFree ? '공격 0비용' : '',
+  nerea: C => C.whale ? `고래 ${C.whale}${C.whalePlus ? ` (+${C.whalePlus})` : ''}${C.whaleDive ? ' · 잠수' : ''}` : '',
+  bertha: C => C.guideTurn ? `안내 ${C.guideTurn}` : '',
 };
 const chip = (v, nm, col) => v ? `<span class="chip" style="color:${col}" data-tip="${esc(kwOne(nm.replace(/ −$/, '')))}">${nm} ${v}</span>` : '';
 // 적 특징 (데이터 필드 → 짧은 이름 + 설명)

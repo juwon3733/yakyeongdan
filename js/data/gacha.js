@@ -10,7 +10,7 @@ export const SUMMON = {
   char4Share: .5,          // ★4 중 동료 비율 (나머지는 의상·희귀 도구·카드 묶음)
   char3Share: .3,          // ★3 중 동료 비율 (나머지는 흔한 도구·별가루·대화 조각)
   newFirst: .7,            // 동료가 나오면 아직 없는 동료가 먼저 나올 확률
-  beginner: 30,            // 처음 30번 안에 ★5 확정. 처음 얻는 ★5는 4명 중 직접 고른다
+  beginner: 30,            // 처음 30번 안에 ★5 확정. 처음 얻는 ★5는 ★5 동료 중 직접 고른다
   pickShare5: .5,          // ★5 중 픽업 동료 비율 (놓치면 다음 ★5는 픽업 확정)
   pickShare4: .5,          // ★4 동료 중 픽업 둘 비율
   firstTen: ['noel', 'raven'],   // 첫 10연: ★4 동료 1명 확정 후보
@@ -37,6 +37,7 @@ export const PICKUPS = [
   { five: 'lunaria', four: ['tomori', 'sigrun'] },
   { five: 'akane', four: ['zeno', 'mimimomo'] },
   { five: 'eleonore', four: ['sebas', 'raven'] },
+  { five: 'nerea', four: ['bertha', 'zeno'] },
 ];
 export const PICKUP_DAYS = 14;
 export const PICKUP_EPOCH = Date.UTC(2026, 9, 26);

@@ -297,7 +297,7 @@ function tweenBars(P, barT) {
 // ---------- 타격 ----------
 const STYLE = { iris: 'slash', akane: 'slash', laila: 'slash', mimimomo: 'slash', sebas: 'slash', brick: 'boom', mariana: 'boom', fukuro: 'boom',
   sion: 'star', raven: 'mist', marta: 'impact', zeno: 'impact', gordon: 'impact', dora: 'impact', finn: 'impact', sigrun: 'pierce',
-  noel: 'magic', lunaria: 'magic', eleonore: 'magic', tomori: 'magic' };
+  noel: 'magic', lunaria: 'magic', eleonore: 'magic', tomori: 'magic', nerea: 'magic', bertha: 'impact' };
 const styleOf = e => e.counter ? 'impact' : e.slash ? 'slash' : e.gun ? 'boom' : STYLE[e.actor] || 'impact';
 const styleSound = s => ({ slash: 'slash', boom: 'cannon', star: 'spirit', mist: 'poison', magic: 'mana' })[s] || 'hit';
 const colOf = id => CHARACTERS[id]?.col || '#ece8f6';

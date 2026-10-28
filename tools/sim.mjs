@@ -138,6 +138,8 @@ function combatValue(t0clock) {
   v += C.hand.filter(h => /^(duo|bond):/.test(h.id)).length * 5;
   // 새 동료 상태: 정령(턴 끝 피해), 다음 턴 덕, 담금질, 남길 카드
   if (alive('sion')) v += C.spirits.reduce((t, s) => t + spiritDmg(s), 0) * (1 + C.spiritExtra) * 1.3;
+  // 별 고래(네레아): 턴 끝 물보라 기대 피해 × 적 수
+  if (alive('nerea') && C.whale) v += (C.whale * 3 + C.whalePlus) * (C.whale >= 7 ? 2 : 1) * (C.whaleDive ? 1.5 : 1) * Math.min(3, C.foes.length) * 1.1 + C.whale * 2;
   v += C.nextDraw * 2 + C.nextAtk * 3 + C.reserve * 2 + C.tempered * 1.5 + (C.double ? 6 : 0) + C.freeNext * 3 + C.zenoStr * 2 + C.spiritExtra * 4;
   v += Object.values(C.nextBlock).reduce((t, x) => t + x, 0) * 0.6;
   for (const f of C.all) if (!f.dead) v += f.bounty * 0.15;
@@ -152,6 +154,7 @@ function combatValue(t0clock) {
   if (has('eleonore')) v += Math.min(C.timeUsedTurn, 3) * 1.5;
   if (has('laila')) v += Math.min(C.zeroTurn, 5) * 1;
   if (has('fukuro')) v += Math.min(C.randTurn, 3) * 1.5;
+  if (has('bertha')) v += Math.min(C.guideTurn, 2) * 3;
   if (has('tomori')) v += Math.min(C.aimTurn, 2) * 3;
   if (has('sigrun')) v += (C.air ? 4 : 0) + Math.min(C.diveStreak, 2) * 2;
   if (has('marta')) v += Math.min(C.blocks.marta || 0, 30) * 0.15;
@@ -417,6 +420,7 @@ if (opt('--fight', null)) {
     turnsT += t; if (S.G.screen !== 'result') won++;
   }
   console.log(`${ids.join('+')} vs ${party.join('·')}: 이김 ${(100 * won / n).toFixed(0)}%, 평균 ${(turnsT / n).toFixed(1)}턴`);
+  if (Object.keys(st.duoMade).length) console.log('듀오 생김', JSON.stringify(st.duoMade));
   process.exit(0);
 }
 

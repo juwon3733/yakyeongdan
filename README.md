@@ -12,7 +12,7 @@
 |---|---|
 | [docs/01_overview.md](docs/01_overview.md) | 개요, 핵심 재미, 한 판 흐름 |
 | [docs/02_rules.md](docs/02_rules.md) | 전투·밤 시계·연계/듀오·달·지도·보상·도구·사건 규칙과 수치 |
-| [docs/03_characters.md](docs/03_characters.md) | 동료 20명(★5 4·★4 9·★3 7), 성급 차이, 카드, 듀오, 휴식 대화 |
+| [docs/03_characters.md](docs/03_characters.md) | 동료 22명(★5 5·★4 10·★3 7), 성급 차이, 카드, 듀오, 휴식 대화 |
 | [docs/04_enemies.md](docs/04_enemies.md) | 막별 적·강적·보스 |
 | [docs/05_meta.md](docs/05_meta.md) | 별 조각, 별 소환(가챠), 별자리, 교환소, 도감, 난이도 「밤의 깊이」 |
 | [docs/06_art_ui_sound.md](docs/06_art_ui_sound.md) | 그림 규칙·목록, 화면, 연출, 소리 |

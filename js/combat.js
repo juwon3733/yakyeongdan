@@ -67,6 +67,7 @@ export function startCombat(ids, kind) {
     lostCombat: {}, zenoSaved: false, timeFree: false, supportUsed: false, supportFree: 0, chainUps: 0, chain3Streak: 0,
     finnPrev: null, finnBondUsed: false, saintTurn: false, servTurn: false, servNext: false, spiritBuff: 0, spiritTurnBuff: 0, spiritNext: 0,
     allSlash: false, tempered2: 0, keepAll: false, noelTurn: 0,
+    whale: 0, whalePlus: 0, whaleDive: false, guideTurn: 0, berthaLit: false,   // 네레아 별 고래 · 베르타 안내
   };
   Object.defineProperty(C, 'block', {
     get() { return C.actor ? C.blocks[C.actor] : 0; },
@@ -179,7 +180,8 @@ function startTurn() {
   C.healTurn = 0; C.feastTurn = false; C.aimTurn = 0; C.tomoriLit = false; C.diveStreak = 0; C.valkyrie = false; C.landPending = false;
   C.timeFree = false; C.supportUsed = false; C.chainUps = 0; C.chain3Streak = 0; C.finnPrev = null; C.saintTurn = false;
   C.servTurn = C.servNext; C.servNext = false; C.spiritTurnBuff = 0; C.allSlash = false; C.keepAll = false; C.noelTurn = 0;
-  for (const f of C.all) { f.aimedTurn = false; if (!first && f.hidden) f.hidden = false; }
+  C.guideTurn = 0; C.berthaLit = false;
+  for (const f of C.all) { f.aimedTurn = false; f.guidedTurn = false; if (!first && f.hidden) f.hidden = false; }
   if (!first) C.moonPick = false;
   for (const p in C.nextBlock) if (alive(p)) C.blocks[p] += C.nextBlock[p];
   if (relicSum('frontBlockTurn')) { const f0 = living()[0]; if (f0) C.blocks[f0] += relicSum('frontBlockTurn'); }   // 밀물 종
@@ -598,6 +600,17 @@ export function endTurn() {
     if (!livingFoes().length) { finishTurnDamage(); return winCombat(); }
   }
   C.spiritNext = 0;
+  // 별 고래 물보라: 내 턴 끝마다 (네레아가 서 있을 때). 「대해일」③: 크기 6 이상이면 두 번, 물보라마다 모든 적 약화 1. 깊은 잠수면 +50%
+  if (alive('nerea') && G.party.includes('nerea') && C.whale > 0) {
+    const big = C.whale >= RULES.whaleBurst;
+    if (big) E.burst('nerea', '대해일');
+    for (let k = 0; k < (big ? 2 : 1) && livingFoes().length; k++) {
+      E.spout(C.whaleDive ? 1.5 : 1);
+      if (big) for (const f of livingFoes()) f.weak += 1;
+    }
+    if (!livingFoes().length) { C.whaleDive = false; finishTurnDamage(); return winCombat(); }
+  }
+  C.whaleDive = false;
   // 화상·독 (레이븐 「흑우」③: 독 30 이상인 적은 독이 줄지 않고 두 번 받는다)
   const raven = alive('raven') && G.party.includes('raven');
   for (const f of C.all) {

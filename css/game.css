@@ -401,7 +401,7 @@ button.relic.spent{opacity:.35}
 .mvp{width:160px;flex:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(--panel);border:2px solid var(--c)}
 .face.big{width:72px;height:72px}.face.big img{width:72px;height:96px}
 .mvp .nm{font-family:var(--f-disp);font-size:12px;color:var(--c)}
-.rinfo{flex:1;display:flex;flex-direction:column;gap:5px;justify-content:center}
+.rinfo{flex:1;display:flex;flex-direction:column;gap:5px;justify-content:safe center;min-height:0;overflow-y:auto}
 .clockbig{font-family:var(--f-disp);font-size:30px;margin:0;font-variant-numeric:tabular-nums}
 .clockbig.dawn{color:#ffb070}
 .shards{border-collapse:collapse;font-size:9.5px;min-width:240px}

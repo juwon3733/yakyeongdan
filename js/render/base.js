@@ -89,7 +89,7 @@ export function summonView() {
     ${pk.four.map(k => `<span class="pk4" style="--c:${ROSTER[k].col}">${img(k)}${ROSTER[k].name}</span>`).join('')}
     <span class="note small">★5의 ${pct(SUMMON.pickShare5)}가 픽업${P.pickGuar ? ' · <b>다음 ★5는 픽업 확정</b>' : ''}. ${PICKUP_DAYS}일마다 바뀐다.</span></div>`;
   const firstTen = !P.firstTen ? '<p class="note"><b>첫 10연</b>: 노엘·레이븐 중 ★4 동료 1명 확정.</p>' : '';
-  const beginner = !P.got5 ? `<p class="note">초심자: 처음 ${SUMMON.beginner}번 안에 ★5 동료 확정, <b>처음 얻는 ★5는 4명 중 직접 고른다</b> (지금 ${P.pulls}번).</p>` : '';
+  const beginner = !P.got5 ? `<p class="note">초심자: 처음 ${SUMMON.beginner}번 안에 ★5 동료 확정, <b>처음 얻는 ★5는 직접 고른다</b> (지금 ${P.pulls}번).</p>` : '';
   const choose = P.pick5 ? `<button type="button" class="primary" data-view="pick5">★5 동료 고르기 (${P.pick5})</button>` : '';
   return `<div class="summonscr">
     <div class="ssky" aria-hidden="true"><span class="sstar s1"></span><span class="sstar s2"></span><span class="sstar s3"></span></div>
@@ -179,7 +179,7 @@ export function revealView() {
   </div>`;
 }
 
-// 초심자 ★5 고르기: 4명 중 하나
+// 초심자 ★5 고르기: ★5 동료 중 하나
 export function pick5View() {
   const L = byRarity(5).map(k => {
     const r = ROSTER[k], c = CHARACTERS[k];

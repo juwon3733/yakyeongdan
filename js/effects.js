@@ -19,6 +19,7 @@ export function hit(n, f = foeTarget(), pierceBlock = false) {
   // 카드 배수(아이리스 「무한일섬」·시그룬 「발키리」), 토모리 「등대 불빛」③: 노림을 바꾼 적에게 2배
   let x = (n + C.bonus + boost()) * (C.cardMul || 1);
   if (C.tomoriLit && f.aimedTurn) x *= 2;
+  if (C.berthaLit && f.guidedTurn) x *= 1.5;   // 베르타 「옛길」③
   const burn0 = f.burn;
   const d = dmgToFoe(f, Math.floor(x), C.actor, pierceBlock); C.bonus = 0;
   if (C.actor) { f.lastHitter = C.actor; stat(C.actor, 'dmg', d.dealt); }
@@ -267,6 +268,47 @@ export const attacking = f => { const t = intentOf(f).t; return t === 'atk' || t
 export function nextFight(e, d) { const G = S.G; G.nextFight = { energy: (G.nextFight?.energy || 0) + e, draw: (G.nextFight?.draw || 0) + d }; }
 // 적 하나의 다음 행동을 무작위로 (가면 속)
 export function shuffleIntent(f = foeTarget()) { if (f && !f.dead) f.pi = S.G.rng.int(f.pat.length); }
+// 별 고래 (네레아): 크기는 전투마다 1에서 시작, 최대 RULES.whaleMax. 「별 고래 라나」②: 커질 때마다 앞줄 동료 방어 2
+export function whaleGrow(n) {
+  const C = S.C; if (!alive('nerea') || n <= 0) return;
+  const before = C.whale; C.whale = Math.min(RULES.whaleMax, C.whale + n);
+  const up = C.whale - before; if (up <= 0) return;
+  const f0 = living()[0]; if (f0) guard(RULES.whaleBlock * up, f0);
+  logMsg(`별 고래 크기 <b>${C.whale}</b>`);
+}
+export const whaleDmg = () => S.C.whale * RULES.whaleMul + S.C.whalePlus;
+// 물보라: 모든 적 피해 고래 크기×3 (+합창). 고래는 가시에 안 다친다
+export function spout(mult = 1) {
+  const C = S.C; if (!C.whale || !alive('nerea')) return;
+  const prev = C.actor, sh = C.spiritHit; C.actor = 'nerea'; C.spiritHit = true;
+  const mul = C.cardMul; C.cardMul = 1; C.bonus = 0;
+  hitAll(Math.floor(whaleDmg() * mult));
+  C.actor = prev; C.spiritHit = sh; C.cardMul = mul;
+}
+// 안내 (베르타): 적의 행동 순서를 d만큼(+1 다음 것으로 넘기기, −1 바로 전 것으로 되돌리기).
+// 「사십 년의 길」②: 행동을 바꾼 적 취약 1. 「옛길」③: 한 턴에 2번 바꾸면 카드 2장, 에너지 1, 이번 턴 그 적들에게 주는 피해 +50%.
+// guideAll은 한 번으로 센다.
+export function guide(d = 1, f = foeTarget(), count = true) {
+  const C = S.C; if (!f || f.dead || !f.pat?.length) return;
+  const n = f.pat.length; f.pi = ((f.pi + d) % n + n) % n;
+  f.guidedTurn = true;
+  const bertha = alive('bertha') && S.G.party.includes('bertha');
+  if (bertha) f.vuln += 1;
+  pushFx({ kind: 'retarget', i: f.i });
+  logMsg(`${f.name}의 행동 순서가 바뀌었다`);
+  if (count) guideCount();
+}
+function guideCount() {
+  const C = S.C; C.guideTurn++;
+  if (alive('bertha') && S.G.party.includes('bertha') && C.guideTurn >= 2 && !C.berthaLit) {
+    C.berthaLit = true; burst('bertha', '옛길'); draw(2); C.energy += 1;
+  }
+}
+export function guideAll(d = 1) {
+  const L = livingFoes(); if (!L.length) return;
+  for (const f of L) guide(d, f, false);
+  guideCount();
+}
 // 무작위 (후쿠로 「대박」③ 중이면 최대값)
 export const roll = n => S.C?.jackpot ? n - 1 : S.G.rng.int(n);
 // 직전에 쓴 카드를 한 번 더 (거울 춤)
@@ -309,7 +351,7 @@ export const effects = {
   hit, hitAll, hitRandom, pierce, guard, guardTarget, guardAll, draw, heal, healSelf, healAll, loseHp, lost, lostCombat, missing, low, revive,
   keepBlock, nextBlock, foeStatus, foeStatusAll, slash, sheath, burnTargets, chain, discardWorst, discardHand, fromDiscard, copyPlayed, give,
   temper, cheapen, spirit, dropSpirit, spiritsAct, setMoon, nextMoon, flipMoon, rewind, addTime, fly, land, spend, spendSteps, gold, haggle,
-  dim, dimAll, dimStrongest, setAim, attacking, nextFight, shuffleIntent, roll, replayLast,
+  dim, dimAll, dimStrongest, setAim, attacking, nextFight, shuffleIntent, roll, replayLast, whaleGrow, spout, guide, guideAll,
   burst, dream, spendMana, fullLoad, isSlash,
   get moon() { return S.G.moon; },
   full: ch => moonFx('boost')[ch] || 0,

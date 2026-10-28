@@ -3,7 +3,7 @@
 // 규칙 일부는 엔진이 동료 id로 직접 본다(combat.js·effects.js에 「동료 이름 ①②③」 주석): 아이리스 연계, 브릭 지원 포격,
 // 마르타 철의 성녀, 노엘 잠든 턴, 레이븐 흑우, 시온 천구, 루나리아 만월야, 아카네 홍련 개화, 엘레오노르 멈춘 자정,
 // 미미·모모 거울 세계, 세바스 완벽한 응대, 마리아나 약탈의 밤, 토모리 등대 불빛, 시그룬 노림 빠지기, 제노 버티기,
-// 핀 합동·속달, 라일라 순풍·폭풍, 도라 명장, 고든 만찬, 후쿠로 대박.
+// 핀 합동·속달, 라일라 순풍·폭풍, 도라 명장, 고든 만찬, 후쿠로 대박, 네레아 물보라·대해일, 베르타 안내·옛길.
 // hooks는 전투 상태 c와 효과 도우미 e를 받는다. 쓰러진 동료의 패시브는 불리지 않는다.
 // 훅 안에서 e.guard는 그 동료 자신에게 걸린다.
 //   onCombatStart: 첫 턴 시작(방어 초기화 뒤, 카드 뽑기 전)
@@ -120,6 +120,16 @@ export const CHARACTERS = {
         ['burst', '멈춘 자정', '한 턴에 시간 카드 2장째를 쓰면 밤 시계 5분을 되돌리고, 그 턴 남은 시간 카드 0분 (전투당 1번).']],
       timeMinus: 5, firstTimeEnergy: 1, napBonus: 10 },
   },
+  nerea: {
+    name: '네레아', role: '별 고래 기수', rarity: 5, maxHp: 34, col: '#5ad0d8', long: true, pal: pal('nerea'),
+    ds: '별 고래와 함께 싸운다. 고래가 클수록 턴 끝 물보라가 세다.',
+    start: ['nerea.harpoon', 'nerea.harpoon', 'nerea.song', 'nerea.tide'],
+    passive: { name: '별 고래 라나',
+      lines: [['trait', '', '별 고래가 함께 싸운다: 내 턴이 끝날 때마다 물보라(모든 적 피해 고래 크기×3). 크기는 전투마다 1에서 시작해 네레아 카드로 커진다(최대 8).'],
+        ['keyword', '', '고래가 커질 때마다 앞줄 동료 방어 2.'],
+        ['burst', '대해일', '고래 크기 7 이상이면 턴 끝 물보라가 두 번, 물보라마다 모든 적 약화 1.']],
+      onCombatStart: c => { c.whale = 1; } },
+  },
   // ---------- ★4 (나머지) ----------
   mimimomo: {
     name: '미미·모모', role: '쌍둥이', rarity: 4, maxHp: 34, col: '#ffb0a0', long: false, pal: pal('mimimomo'),
@@ -185,6 +195,15 @@ export const CHARACTERS = {
         if (card.atk && c.actor === 'zeno' && l >= 20) { c.bonus += Math.floor(l * .3); e.burst('zeno', '흑룡'); }
       },
       preview: (c, card, e) => (card.atk && e.low('zeno') ? 3 : 0) + (card.ch === 'zeno' && card.atk && e.lostCombat('zeno') >= 20 ? Math.floor(e.lostCombat('zeno') * .3) : 0) },
+  },
+  bertha: {
+    name: '베르타', role: '은퇴한 탑 안내인', rarity: 4, maxHp: 30, col: '#d8b070', long: true, pal: pal('bertha'),
+    ds: '적의 행동 순서를 넘기거나 되돌린다.',
+    start: ['bertha.lantern', 'bertha.skip', 'bertha.back', 'bertha.book'],
+    passive: { name: '사십 년의 길',
+      lines: [['trait', '', '적의 행동 순서를 바꾼다: 다음 행동으로 넘기거나 바로 전 행동으로 되돌린다(안내).'],
+        ['keyword', '', '행동을 바꾼 적은 취약 1.'],
+        ['burst', '옛길', '한 턴에 행동을 2번 바꾸면 카드 2장, 에너지 1, 이번 턴 그 적들에게 주는 피해 +50%.']] },
   },
   // ---------- ★3 (나머지) ----------
   finn: {

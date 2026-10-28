@@ -31,7 +31,7 @@ const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; }
 const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false,
   migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, affix: false, ach: false, history: false, endless: false, climbOn: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
-  ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false,
+  ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false, whale: false, guide: false,
   tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false, pwa: false, backup: false };
 
 // 전투가 아닌 화면 한 걸음 (지도·보상·휴식·사건·야시장·보스 도구·달 고르기·카드 고르기)
@@ -72,7 +72,7 @@ const screenOf = page => page.evaluate(() => document.querySelector('[data-end]'
 
 try {
   // seed 4·5: M4 새 동료 (루나리아 달 고르기, 시온 정령, 쌍둥이, 인연 줄)
-  for (const seed of [1, 2, 3, 4, 5]) {
+  for (const seed of [1, 2, 3, 4, 5, 6]) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[seed ${seed}] ${e.message}`));
     const isFont = u => /fonts\.(googleapis|gstatic)\.com/.test(u);
@@ -81,7 +81,7 @@ try {
     page.on('response', r => { if (r.status() >= 400 && !isFont(r.url())) errors.push(`[seed ${seed}] ${r.status()} ${r.url()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
     await page.goto(`http://127.0.0.1:${port}/?notut&seed=${seed}`);
-    const party = [['iris', 'brick', 'marta'], ['noel', 'raven', 'marta'], ['brick', 'raven', 'noel'], ['lunaria', 'sion', 'mimimomo'], ['akane', 'iris', 'finn']][seed - 1];
+    const party = [['iris', 'brick', 'marta'], ['noel', 'raven', 'marta'], ['brick', 'raven', 'noel'], ['lunaria', 'sion', 'mimimomo'], ['akane', 'iris', 'finn'], ['nerea', 'bertha', 'tomori']][seed - 1];
     await openParty(page);
     for (const k of party) await page.click(`[data-pick="${k}"]`);
     if (await page.$('.bond')) seen.bonds = true;
@@ -100,6 +100,28 @@ try {
     await page.waitForSelector('[data-end]');
     if (await page.$('[data-cmoon="full"]')) { await page.click('[data-cmoon="full"]'); if (await page.evaluate(() => window.__yk.S.G.moon) === 'full' && !(await page.$('[data-cmoon]'))) seen.moonPick = true; }
     if (party.includes('sion') && await page.evaluate(() => window.__yk.S.C.spirits.length > 0)) seen.spirit = true;
+    // 2차 동료 (seed 6): 베르타 안내(행동 순서 바꾸기) · 네레아 별 고래(전투 시작 크기 1, 턴 끝 물보라)
+    if (party.includes('bertha') && await page.$('[data-end]')) {
+      const g = await page.evaluate(() => {
+        const C = window.__yk.S.C, f = C.all.find(x => !x.dead); if (!f) return false;
+        C.hand.push({ uid: 99001, id: 'bertha.skip' }); C.energy += 1; window.__yk.render();
+        return true;
+      });
+      if (g) {
+        await page.click('[data-play="99001"]').catch(() => {});
+        if (await page.$('.foe.tg')) await page.click('.foe.tg');
+        if (await page.evaluate(() => window.__yk.S.C.guideTurn > 0)) seen.guide = true;
+        else fail('seed 6: 베르타 「이쪽이에요」로 행동 순서가 안 바뀜');
+      }
+    }
+    if (party.includes('nerea') && await page.$('[data-end]')) {
+      const w0 = await page.evaluate(() => { const C = window.__yk.S.C; return { w: C.whale, hp: C.all.reduce((t, f) => t + Math.max(0, f.hp), 0) }; });
+      if (w0.w >= 1) {
+        await page.click('[data-end]');
+        const hp1 = await page.evaluate(() => (window.__yk.S.C?.all || []).reduce((t, f) => t + Math.max(0, f.hp), 0));
+        if (hp1 < w0.hp) seen.whale = true; else fail('seed 6: 별 고래 물보라가 적을 안 침');
+      } else fail('seed 6: 전투 시작에 고래 크기가 1이 아님');
+    }
     // 쓰러짐 확인용 (seed 1): 앞줄 동료 체력 1, 한 명이 쓰러질 때까지 카드 없이 턴만 넘긴다
     if (seed === 1) {
       await page.evaluate(() => { const G = window.__yk.S.G; G.members[G.formation[0]].hp = 1; });

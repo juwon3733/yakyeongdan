@@ -211,7 +211,7 @@ function rollOne(rng, force4) {
   let r;
   if (rarity === 5) {
     P.pity5 = 0;
-    // 처음 얻는 ★5는 4명 중 직접 고른다 (소환 결과 뒤 고르기 화면)
+    // 처음 얻는 ★5는 ★5 동료 중 직접 고른다 (소환 결과 뒤 고르기 화면)
     if (!P.got5) { P.got5 = true; P.pick5++; r = { kind: 'choose5', rarity: 5 }; }
     else r = grantChar(pickChar(rng, 5));
   }

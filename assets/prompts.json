@@ -56,6 +56,19 @@
       ]
     },
     {
+      "id": "char-nerea",
+      "title": "★★★★★ 네레아",
+      "reference_sheet_prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nCharacter reference sheet of 네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold. Full body front view plus a face close-up, plain background. Native resolution about 256x170, upscaled with nearest-neighbor.",
+      "items": [
+        "nerea_stand",
+        "nerea_normal",
+        "nerea_smile",
+        "nerea_serious",
+        "nerea_cutin",
+        "nerea_outfit2"
+      ]
+    },
+    {
       "id": "char-iris",
       "title": "★★★★ 아이리스",
       "reference_sheet_prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nCharacter reference sheet of 아이리스 (iris): a cool, quiet swordswoman in her early 20s. Waist-length straight black hair, pale-blue eyes, a long silver coat styled as light armor, a slim longsword, an expressionless but kind face. Accent colors: silver and pale blue. Full body front view plus a face close-up, plain background. Native resolution about 256x170, upscaled with nearest-neighbor.",
@@ -170,6 +183,19 @@
         "zeno_serious",
         "zeno_cutin",
         "zeno_outfit2"
+      ]
+    },
+    {
+      "id": "char-bertha",
+      "title": "★★★★ 베르타",
+      "reference_sheet_prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nCharacter reference sheet of 베르타 (bertha): a gentle but sharp retired tower guide, an elderly woman in her early 70s (clearly elderly: wrinkles, kind crow's feet). Long silver hair in a neat braided crown, warm hazel eyes behind small round glasses, a tidy plum guide uniform coat with brass buttons and a long skirt, a knitted shawl, a tall cane with a glowing amber lantern hanging from its tip, a ring of old brass keys at her belt. Accent colors: amber lantern and plum. Full body front view plus a face close-up, plain background. Native resolution about 256x170, upscaled with nearest-neighbor.",
+      "items": [
+        "bertha_stand",
+        "bertha_normal",
+        "bertha_smile",
+        "bertha_serious",
+        "bertha_cutin",
+        "bertha_outfit2"
       ]
     },
     {
@@ -340,6 +366,25 @@
       ]
     },
     {
+      "id": "cards-nerea",
+      "title": "★★★★★ 네레아 카드 13장",
+      "items": [
+        "card_nerea_harpoon",
+        "card_nerea_song",
+        "card_nerea_tide",
+        "card_nerea_spout",
+        "card_nerea_ride",
+        "card_nerea_dive",
+        "card_nerea_krill",
+        "card_nerea_current",
+        "card_nerea_lullaby",
+        "card_nerea_chorus",
+        "card_nerea_wave",
+        "card_nerea_breach",
+        "card_nerea_starsea"
+      ]
+    },
+    {
       "id": "cards-iris",
       "title": "★★★★ 아이리스 카드 12장",
       "items": [
@@ -496,6 +541,24 @@
         "card_zeno_flame",
         "card_zeno_threat",
         "card_zeno_eye"
+      ]
+    },
+    {
+      "id": "cards-bertha",
+      "title": "★★★★ 베르타 카드 12장",
+      "items": [
+        "card_bertha_lantern",
+        "card_bertha_skip",
+        "card_bertha_back",
+        "card_bertha_book",
+        "card_bertha_tea",
+        "card_bertha_shortcut",
+        "card_bertha_map",
+        "card_bertha_cane",
+        "card_bertha_stories",
+        "card_bertha_keys",
+        "card_bertha_lastcall",
+        "card_bertha_detour"
       ]
     },
     {
@@ -684,6 +747,18 @@
       ]
     },
     {
+      "id": "cards-duo-5",
+      "title": "인연 듀오 카드 45~50",
+      "items": [
+        "duocard_nerea_tomori",
+        "duocard_nerea_sion",
+        "duocard_mariana_nerea",
+        "duocard_bertha_eleonore",
+        "duocard_bertha_finn",
+        "duocard_bertha_nerea"
+      ]
+    },
+    {
       "id": "style-sion",
       "title": "그림체 시안 시온 (4장, 게임에 안 씀)",
       "items": [
@@ -724,18 +799,29 @@
       ]
     },
     {
+      "id": "style-nerea",
+      "title": "그림체 시안 네레아 (4장, 게임에 안 씀)",
+      "items": [
+        "style_nerea_a",
+        "style_nerea_b",
+        "style_nerea_c",
+        "style_nerea_d"
+      ]
+    },
+    {
       "id": "cg-star5",
       "title": "★5 전신 CG",
       "items": [
         "star5_sion",
         "star5_lunaria",
         "star5_akane",
-        "star5_eleonore"
+        "star5_eleonore",
+        "star5_nerea"
       ]
     },
     {
       "id": "duo",
-      "title": "인연 듀오 컷인 (처음 8쌍)",
+      "title": "인연 듀오 컷인 10쌍",
       "items": [
         "duo_iris_marta",
         "duo_iris_akane",
@@ -744,7 +830,9 @@
         "duo_sigrun_laila",
         "duo_lunaria_sion",
         "duo_eleonore_sebas",
-        "duo_zeno_marta"
+        "duo_zeno_marta",
+        "duo_nerea_tomori",
+        "duo_bertha_nerea"
       ]
     },
     {
@@ -913,7 +1001,7 @@
     },
     {
       "id": "icons-sig",
-      "title": "동료 전용 도구 아이콘 20",
+      "title": "동료 전용 도구 아이콘 22",
       "items": [
         "relic_sig_sion",
         "relic_sig_lunaria",
@@ -934,6 +1022,8 @@
         "relic_sig_laila",
         "relic_sig_dora",
         "relic_sig_gordon",
+        "relic_sig_nerea",
+        "relic_sig_bertha",
         "relic_sig_fukuro"
       ]
     }
@@ -1321,6 +1411,102 @@
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n엘레오노르 (eleonore): an elegant, haughty witch woman in her early 30s. Long black hair with a violet sheen, half-lidded violet eyes, a wide-brimmed witch hat decorated with clock faces, a gothic dress with a high side slit, a staff as tall as a person shaped like a giant clock hand, small brass gears floating around her. Accent colors: violet and brass.\nSame person, same face and hair, but in a second outfit: a clocktower keeper coat in plum and brass, monocle, pocket watches on chains. Full-body standing pose facing slightly right, transparent background. Native resolution 128x192 pixels, upscaled exactly 8x to 1024x1536.",
       "reference_images": [
         "chars/eleonore_normal.png"
+      ]
+    },
+    {
+      "id": "nerea_stand",
+      "kind": "stand",
+      "batch": "char-nerea",
+      "file": "chars/nerea_stand.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT (toward enemies), weapon ready. Fully transparent background, nothing behind the character. Feet near the bottom edge, empty margin above the head. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "must_show": "전신, 오른쪽을 향한 전투 자세, 무기"
+    },
+    {
+      "id": "nerea_normal",
+      "kind": "portrait",
+      "batch": "char-nerea",
+      "file": "chars/nerea_normal.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nWaist-up portrait facing slightly to the side. Expression and pose: relaxed smile, hair drifting as if underwater, one hand on the harpoon staff. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "followup_prompt": "Same character, same style. Waist-up portrait, transparent background. Expression and pose: relaxed smile, hair drifting as if underwater, one hand on the harpoon staff.",
+      "reference_images": []
+    },
+    {
+      "id": "nerea_smile",
+      "kind": "portrait",
+      "batch": "char-nerea",
+      "file": "chars/nerea_smile.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nWaist-up portrait facing slightly to the side. Expression and pose: laughing with her eyes closed, a little star fish swimming past. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "followup_prompt": "Same character, same style. Waist-up portrait, transparent background. Expression and pose: laughing with her eyes closed, a little star fish swimming past.",
+      "reference_images": [
+        "chars/nerea_normal.png"
+      ]
+    },
+    {
+      "id": "nerea_serious",
+      "kind": "portrait",
+      "batch": "char-nerea",
+      "file": "chars/nerea_serious.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nWaist-up portrait facing slightly to the side. Expression and pose: raising the harpoon staff, the star whale's eye glowing behind her. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "followup_prompt": "Same character, same style. Waist-up portrait, transparent background. Expression and pose: raising the harpoon staff, the star whale's eye glowing behind her.",
+      "reference_images": [
+        "chars/nerea_normal.png"
+      ]
+    },
+    {
+      "id": "nerea_cutin",
+      "kind": "cutin",
+      "batch": "char-nerea",
+      "file": "cutins/nerea_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "256×96",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nDramatic cut-in panel for a special move: close-up of her riding on the star whale's head, the whale breaching through a sea of stars, a huge spray of starlight water. Wide horizontal composition, the face and action inside the middle horizontal band (the top and bottom will be cropped to 1536x576). Speed lines made of pixels, strong accent colors (sea teal and starlight gold).",
+      "reference_images": [
+        "chars/nerea_normal.png"
+      ],
+      "must_show": "얼굴이 가운데 띠 안"
+    },
+    {
+      "id": "nerea_outfit2",
+      "kind": "outfit",
+      "batch": "char-nerea",
+      "file": "chars/nerea_outfit2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "두 번째 의상 전신 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nSame person, same face and hair, but in a second outfit: a white-and-gold sailor captain coat over a teal swimsuit-style top and shorts, a whale-tail pendant. Full-body standing pose facing slightly right, transparent background. Native resolution 128x192 pixels, upscaled exactly 8x to 1024x1536.",
+      "reference_images": [
+        "chars/nerea_normal.png"
       ]
     },
     {
@@ -2185,6 +2371,102 @@
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n제노 (zeno): a silent dark knight man in his late 20s. Long black hair, one eye a golden dragon eye, black armor with dragon scales, a huge greatsword on his back. Accent colors: black and dragon gold.\nSame person, same face and hair, but in a second outfit: a dark-crimson coat over scale mail with a torn black cape. Full-body standing pose facing slightly right, transparent background. Native resolution 128x192 pixels, upscaled exactly 8x to 1024x1536.",
       "reference_images": [
         "chars/zeno_normal.png"
+      ]
+    },
+    {
+      "id": "bertha_stand",
+      "kind": "stand",
+      "batch": "char-bertha",
+      "file": "chars/bertha_stand.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n베르타 (bertha): a gentle but sharp retired tower guide, an elderly woman in her early 70s (clearly elderly: wrinkles, kind crow's feet). Long silver hair in a neat braided crown, warm hazel eyes behind small round glasses, a tidy plum guide uniform coat with brass buttons and a long skirt, a knitted shawl, a tall cane with a glowing amber lantern hanging from its tip, a ring of old brass keys at her belt. Accent colors: amber lantern and plum.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT (toward enemies), weapon ready. Fully transparent background, nothing behind the character. Feet near the bottom edge, empty margin above the head. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "must_show": "전신, 오른쪽을 향한 전투 자세, 무기"
+    },
+    {
+      "id": "bertha_normal",
+      "kind": "portrait",
+      "batch": "char-bertha",
+      "file": "chars/bertha_normal.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n베르타 (bertha): a gentle but sharp retired tower guide, an elderly woman in her early 70s (clearly elderly: wrinkles, kind crow's feet). Long silver hair in a neat braided crown, warm hazel eyes behind small round glasses, a tidy plum guide uniform coat with brass buttons and a long skirt, a knitted shawl, a tall cane with a glowing amber lantern hanging from its tip, a ring of old brass keys at her belt. Accent colors: amber lantern and plum.\nWaist-up portrait facing slightly to the side. Expression and pose: kind smile, both hands resting on the lantern cane. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "followup_prompt": "Same character, same style. Waist-up portrait, transparent background. Expression and pose: kind smile, both hands resting on the lantern cane.",
+      "reference_images": []
+    },
+    {
+      "id": "bertha_smile",
+      "kind": "portrait",
+      "batch": "char-bertha",
+      "file": "chars/bertha_smile.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n베르타 (bertha): a gentle but sharp retired tower guide, an elderly woman in her early 70s (clearly elderly: wrinkles, kind crow's feet). Long silver hair in a neat braided crown, warm hazel eyes behind small round glasses, a tidy plum guide uniform coat with brass buttons and a long skirt, a knitted shawl, a tall cane with a glowing amber lantern hanging from its tip, a ring of old brass keys at her belt. Accent colors: amber lantern and plum.\nWaist-up portrait facing slightly to the side. Expression and pose: laughing warmly, glasses slightly askew. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "followup_prompt": "Same character, same style. Waist-up portrait, transparent background. Expression and pose: laughing warmly, glasses slightly askew.",
+      "reference_images": [
+        "chars/bertha_normal.png"
+      ]
+    },
+    {
+      "id": "bertha_serious",
+      "kind": "portrait",
+      "batch": "char-bertha",
+      "file": "chars/bertha_serious.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n베르타 (bertha): a gentle but sharp retired tower guide, an elderly woman in her early 70s (clearly elderly: wrinkles, kind crow's feet). Long silver hair in a neat braided crown, warm hazel eyes behind small round glasses, a tidy plum guide uniform coat with brass buttons and a long skirt, a knitted shawl, a tall cane with a glowing amber lantern hanging from its tip, a ring of old brass keys at her belt. Accent colors: amber lantern and plum.\nWaist-up portrait facing slightly to the side. Expression and pose: pointing the lantern cane forward, eyes sharp behind the glasses, a trail of guiding light. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "followup_prompt": "Same character, same style. Waist-up portrait, transparent background. Expression and pose: pointing the lantern cane forward, eyes sharp behind the glasses, a trail of guiding light.",
+      "reference_images": [
+        "chars/bertha_normal.png"
+      ]
+    },
+    {
+      "id": "bertha_cutin",
+      "kind": "cutin",
+      "batch": "char-bertha",
+      "file": "cutins/bertha_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "256×96",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n베르타 (bertha): a gentle but sharp retired tower guide, an elderly woman in her early 70s (clearly elderly: wrinkles, kind crow's feet). Long silver hair in a neat braided crown, warm hazel eyes behind small round glasses, a tidy plum guide uniform coat with brass buttons and a long skirt, a knitted shawl, a tall cane with a glowing amber lantern hanging from its tip, a ring of old brass keys at her belt. Accent colors: amber lantern and plum.\nDramatic cut-in panel for a special move: close-up of her glasses glinting and the lantern cane pointing the way, a glowing path of footprints and arrows of light. Wide horizontal composition, the face and action inside the middle horizontal band (the top and bottom will be cropped to 1536x576). Speed lines made of pixels, strong accent colors (amber lantern and plum).",
+      "reference_images": [
+        "chars/bertha_normal.png"
+      ],
+      "must_show": "얼굴이 가운데 띠 안"
+    },
+    {
+      "id": "bertha_outfit2",
+      "kind": "outfit",
+      "batch": "char-bertha",
+      "file": "chars/bertha_outfit2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "두 번째 의상 전신 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n베르타 (bertha): a gentle but sharp retired tower guide, an elderly woman in her early 70s (clearly elderly: wrinkles, kind crow's feet). Long silver hair in a neat braided crown, warm hazel eyes behind small round glasses, a tidy plum guide uniform coat with brass buttons and a long skirt, a knitted shawl, a tall cane with a glowing amber lantern hanging from its tip, a ring of old brass keys at her belt. Accent colors: amber lantern and plum.\nSame person, same face and hair, but in a second outfit: her old young-days tower guide uniform in navy with a captain-style cap, shawl kept. Full-body standing pose facing slightly right, transparent background. Native resolution 128x192 pixels, upscaled exactly 8x to 1024x1536.",
+      "reference_images": [
+        "chars/bertha_normal.png"
       ]
     },
     {
@@ -3608,7 +3890,7 @@
       "max_colors": 256,
       "native": "96×72",
       "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
-      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「정지된 순간」 (Korean title; NEVER write any text in the image). Effect: 적 하나 다음 행동을 건너뛴다. 약화 0.\nShow 엘레오노르, ON-MODEL from the attached references, performing this exact skill: a time-bending move: glowing clock faces and clock hands swirling behind, the night sky brightening slightly. Visual motifs for this character: a giant clock-hand staff, glowing clock faces, brass gears, violet time ripples, clock hands spinning. Accent colors: violet and brass.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「정지된 순간」 (Korean title; NEVER write any text in the image). Effect: 적 하나 다음 행동을 건너뛴다. 약화 0.\nShow 엘레오노르, ON-MODEL from the attached references, performing this exact skill: a time-bending move: glowing clock faces and clock hands swirling behind, the night sky brightening slightly; a guiding lantern light turning enemy silhouettes around, glowing arrows. Visual motifs for this character: a giant clock-hand staff, glowing clock faces, brass gears, violet time ripples, clock hands spinning. Accent colors: violet and brass.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
       "reference_images": [
         "chars/eleonore_normal.png",
         "chars/eleonore_stand.png"
@@ -3788,12 +4070,246 @@
       "max_colors": 256,
       "native": "96×72",
       "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
-      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「자정의 정적」 (Korean title; NEVER write any text in the image). Effect: 모든 적 다음 행동을 건너뛴다. 모든 동료 방어 0. 소멸.\nShow 엘레오노르, ON-MODEL from the attached references, performing this exact skill: a time-bending move: glowing clock faces and clock hands swirling behind, the night sky brightening slightly; a strong defensive pose, a glowing barrier or shield; a one-time all-out move, the most dramatic version. Visual motifs for this character: a giant clock-hand staff, glowing clock faces, brass gears, violet time ripples, clock hands spinning. Accent colors: violet and brass.\nRare card: the most dramatic angle and the biggest, most beautiful effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「자정의 정적」 (Korean title; NEVER write any text in the image). Effect: 모든 적 다음 행동을 건너뛴다. 모든 동료 방어 0. 소멸.\nShow 엘레오노르, ON-MODEL from the attached references, performing this exact skill: a time-bending move: glowing clock faces and clock hands swirling behind, the night sky brightening slightly; a strong defensive pose, a glowing barrier or shield; a guiding lantern light turning enemy silhouettes around, glowing arrows; a one-time all-out move, the most dramatic version. Visual motifs for this character: a giant clock-hand staff, glowing clock faces, brass gears, violet time ripples, clock hands spinning. Accent colors: violet and brass.\nRare card: the most dramatic angle and the biggest, most beautiful effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
       "reference_images": [
         "chars/eleonore_normal.png",
         "chars/eleonore_stand.png"
       ],
       "must_show": "엘레오노르 얼굴, 「자정의 정적」 효과"
+    },
+    {
+      "id": "card_nerea_harpoon",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_harpoon.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「별 작살」 (Korean title; NEVER write any text in the image). Effect: 피해 8 + 고래 크기×2.\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: attacking toward the right, the target only as a dark silhouette, impact flash; the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「별 작살」 효과"
+    },
+    {
+      "id": "card_nerea_song",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_song.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「고래의 노래」 (Korean title; NEVER write any text in the image). Effect: 방어 7, 고래 크기 +1.\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: a strong defensive pose, a glowing barrier or shield; the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「고래의 노래」 효과"
+    },
+    {
+      "id": "card_nerea_tide",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_tide.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「밀물」 (Korean title; NEVER write any text in the image). Effect: 고래 크기 +2, 지금 물보라 한 번.\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: a time-bending move: glowing clock faces and clock hands swirling behind, the night sky brightening slightly; a wide sweeping attack hitting several enemies (enemies only as dark silhouettes on the right); the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「밀물」 효과"
+    },
+    {
+      "id": "card_nerea_spout",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_spout.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「분수」 (Korean title; NEVER write any text in the image). Effect: 지금 물보라 한 번 (모든 적 피해 고래 크기×3).\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: a wide sweeping attack hitting several enemies (enemies only as dark silhouettes on the right); the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「분수」 효과"
+    },
+    {
+      "id": "card_nerea_ride",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_ride.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「고래 등 타기」 (Korean title; NEVER write any text in the image). Effect: 고른 동료 방어 고래 크기×3 (최소 6).\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: a strong defensive pose, a glowing barrier or shield; the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「고래 등 타기」 효과"
+    },
+    {
+      "id": "card_nerea_dive",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_dive.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「깊은 잠수」 (Korean title; NEVER write any text in the image). Effect: 고래 크기 +1. 이번 턴 끝 물보라 피해 +50%.\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「깊은 잠수」 효과"
+    },
+    {
+      "id": "card_nerea_krill",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_krill.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「크릴 떼」 (Korean title; NEVER write any text in the image). Effect: 카드 1장, 고래 크기 +1.\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「크릴 떼」 효과"
+    },
+    {
+      "id": "card_nerea_current",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_current.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「해류」 (Korean title; NEVER write any text in the image). Effect: 방어 8. 고래 크기 4 이상이면 모든 동료 방어 4.\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: a strong defensive pose, a glowing barrier or shield; the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「해류」 효과"
+    },
+    {
+      "id": "card_nerea_lullaby",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_lullaby.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「고래 자장가」 (Korean title; NEVER write any text in the image). Effect: 고른 동료 체력 고래 크기×2 회복 (최소 4).\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: healing an ally with warm light; the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「고래 자장가」 효과"
+    },
+    {
+      "id": "card_nerea_chorus",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_chorus.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「고래의 합창」 (Korean title; NEVER write any text in the image). Effect: 이번 전투 물보라 피해 +3. 소멸.\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: the giant star whale made of constellations, sprays of starlight water; a one-time all-out move, the most dramatic version. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「고래의 합창」 효과"
+    },
+    {
+      "id": "card_nerea_wave",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_wave.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「파도 가르기」 (Korean title; NEVER write any text in the image). Effect: 모든 적 피해 고래 크기×5.\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: a wide sweeping attack hitting several enemies (enemies only as dark silhouettes on the right); the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nRare card: the most dramatic angle and the biggest, most beautiful effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「파도 가르기」 효과"
+    },
+    {
+      "id": "card_nerea_breach",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_breach.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「수면 돌파」 (Korean title; NEVER write any text in the image). Effect: 피해 고래 크기×9. 고래 크기 −2.\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: attacking toward the right, the target only as a dark silhouette, impact flash; the giant star whale made of constellations, sprays of starlight water. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nRare card: the most dramatic angle and the biggest, most beautiful effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「수면 돌파」 효과"
+    },
+    {
+      "id": "card_nerea_starsea",
+      "kind": "card",
+      "batch": "cards-nerea",
+      "file": "cards/card_nerea_starsea.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「별바다」 (Korean title; NEVER write any text in the image). Effect: 고래 크기를 6으로 (이미 그 이상이면 +2). 소멸.\nShow 네레아, ON-MODEL from the attached references, performing this exact skill: a time-bending move: glowing clock faces and clock hands swirling behind, the night sky brightening slightly; the giant star whale made of constellations, sprays of starlight water; a one-time all-out move, the most dramatic version. Visual motifs for this character: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: sea teal and starlight gold.\nRare card: the most dramatic angle and the biggest, most beautiful effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
+      ],
+      "must_show": "네레아 얼굴, 「별바다」 효과"
     },
     {
       "id": "card_iris_slash",
@@ -5686,6 +6202,222 @@
       "must_show": "제노 얼굴, 「용의 눈」 효과"
     },
     {
+      "id": "card_bertha_lantern",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_lantern.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「랜턴 지팡이」 (Korean title; NEVER write any text in the image). Effect: 피해 7, 방어 4.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: attacking toward the right, the target only as a dark silhouette, impact flash. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「랜턴 지팡이」 효과"
+    },
+    {
+      "id": "card_bertha_skip",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_skip.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「이쪽이에요」 (Korean title; NEVER write any text in the image). Effect: 적 하나의 행동을 다음 것으로 넘긴다. 방어 5.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: a strong defensive pose, a glowing barrier or shield; a guiding lantern light turning enemy silhouettes around, glowing arrows. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「이쪽이에요」 효과"
+    },
+    {
+      "id": "card_bertha_back",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_back.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「되돌아가요」 (Korean title; NEVER write any text in the image). Effect: 적 하나의 행동을 바로 전 것으로 되돌린다. 방어 5.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: a strong defensive pose, a glowing barrier or shield; a guiding lantern light turning enemy silhouettes around, glowing arrows. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「되돌아가요」 효과"
+    },
+    {
+      "id": "card_bertha_book",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_book.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「안내 책자」 (Korean title; NEVER write any text in the image). Effect: 모든 적의 행동을 다음 것으로 넘긴다. 카드 1장.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: a time-bending move: glowing clock faces and clock hands swirling behind, the night sky brightening slightly; a guiding lantern light turning enemy silhouettes around, glowing arrows. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「안내 책자」 효과"
+    },
+    {
+      "id": "card_bertha_tea",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_tea.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「보온병 차」 (Korean title; NEVER write any text in the image). Effect: 고른 동료 체력 4 회복.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: healing an ally with warm light. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「보온병 차」 효과"
+    },
+    {
+      "id": "card_bertha_shortcut",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_shortcut.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「지름길」 (Korean title; NEVER write any text in the image). Effect: 카드 1장. 이번 턴 행동을 바꾼 적이 있으면 에너지 1.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: a guiding lantern light turning enemy silhouettes around, glowing arrows. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「지름길」 효과"
+    },
+    {
+      "id": "card_bertha_map",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_map.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「낡은 탑 지도」 (Korean title; NEVER write any text in the image). Effect: 이번 턴 행동을 바꾼 적마다 카드 1장, 방어 4.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: a strong defensive pose, a glowing barrier or shield; cards or papers fanning out; a guiding lantern light turning enemy silhouettes around, glowing arrows. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「낡은 탑 지도」 효과"
+    },
+    {
+      "id": "card_bertha_cane",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_cane.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「지팡이 일격」 (Korean title; NEVER write any text in the image). Effect: 피해 7. 이번 턴 행동을 바꾼 적에게는 2배.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: attacking toward the right, the target only as a dark silhouette, impact flash; a guiding lantern light turning enemy silhouettes around, glowing arrows. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「지팡이 일격」 효과"
+    },
+    {
+      "id": "card_bertha_stories",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_stories.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「옛날이야기」 (Korean title; NEVER write any text in the image). Effect: 적 약화 2. 이번 턴 행동을 바꾼 적이면 취약 2도.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: a guiding lantern light turning enemy silhouettes around, glowing arrows. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nCommon card: a clean, simple pose.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「옛날이야기」 효과"
+    },
+    {
+      "id": "card_bertha_keys",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_keys.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「탑 열쇠 꾸러미」 (Korean title; NEVER write any text in the image). Effect: 방어 8, 다음 턴 카드 +1장.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: a strong defensive pose, a glowing barrier or shield. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「탑 열쇠 꾸러미」 효과"
+    },
+    {
+      "id": "card_bertha_lastcall",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_lastcall.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「마지막 안내」 (Korean title; NEVER write any text in the image). Effect: 피해 14, 이번 턴 행동을 바꾼 횟수마다 +8.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: attacking toward the right, the target only as a dark silhouette, impact flash; a guiding lantern light turning enemy silhouettes around, glowing arrows. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nRare card: the most dramatic angle and the biggest, most beautiful effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「마지막 안내」 효과"
+    },
+    {
+      "id": "card_bertha_detour",
+      "kind": "card",
+      "batch": "cards-bertha",
+      "file": "cards/card_bertha_detour.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「돌아가는 길」 (Korean title; NEVER write any text in the image). Effect: 모든 적의 행동을 바로 전 것으로 되돌리고, 모든 적 취약 2. 소멸.\nShow 베르타, ON-MODEL from the attached references, performing this exact skill: a guiding lantern light turning enemy silhouettes around, glowing arrows; a one-time all-out move, the most dramatic version. Visual motifs for this character: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. Accent colors: amber lantern and plum.\nRare card: the most dramatic angle and the biggest, most beautiful effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/bertha_stand.png"
+      ],
+      "must_show": "베르타 얼굴, 「돌아가는 길」 효과"
+    },
+    {
       "id": "card_brick_load",
       "kind": "card",
       "batch": "cards-brick",
@@ -6920,7 +7652,7 @@
       "max_colors": 256,
       "native": "96×72",
       "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
-      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 3-star character: simple, friendly and approachable design, still cute or cool.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「가면 속」 (Korean title; NEVER write any text in the image). Effect: 적 하나의 다음 행동을 무작위로 바꾼다.\nShow 후쿠로, ON-MODEL from the attached references, performing this exact skill: a confident skill-casting pose with the character's signature effect. Visual motifs for this character: an owl mask, a huge bundle of junk on his back, lucky charms, random trinkets and lanterns flying. Accent colors: brown and lantern orange.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 3-star character: simple, friendly and approachable design, still cute or cool.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nSkill card illustration. Card: 「가면 속」 (Korean title; NEVER write any text in the image). Effect: 적 하나의 다음 행동을 무작위로 바꾼다.\nShow 후쿠로, ON-MODEL from the attached references, performing this exact skill: a guiding lantern light turning enemy silhouettes around, glowing arrows. Visual motifs for this character: an owl mask, a huge bundle of junk on his back, lucky charms, random trinkets and lanterns flying. Accent colors: brown and lantern orange.\nUncommon card: a stylish dynamic pose with a stronger effect.\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.",
       "reference_images": [
         "chars/fukuro_normal.png",
         "chars/fukuro_stand.png"
@@ -7828,6 +8560,114 @@
       "must_show": "두 사람 얼굴 둘 다"
     },
     {
+      "id": "duocard_nerea_tomori",
+      "kind": "card",
+      "batch": "cards-duo-5",
+      "file": "cards/duocard_nerea_tomori.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nDuo skill card illustration. Card: 「등불 고래」 (Korean title; NEVER write any text in the image). Effect: 고래 크기 +2, 모든 적 약화 1, 지금 물보라 한 번.\nShow 네레아 and 토모리 together, both ON-MODEL from the attached references, combining their skills in one move: a wide sweeping attack hitting several enemies (enemies only as dark silhouettes on the right); the giant star whale made of constellations, sprays of starlight water. 네레아's motifs: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. 토모리's motifs: a big warm lantern, a lighthouse beam, a yellow raincoat, warm light pushing shadows away. Accent colors: sea teal and starlight gold meeting yellow and warm orange.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/tomori_normal.png"
+      ],
+      "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
+      "id": "duocard_nerea_sion",
+      "kind": "card",
+      "batch": "cards-duo-5",
+      "file": "cards/duocard_nerea_sion.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nDuo skill card illustration. Card: 「별고래자리」 (Korean title; NEVER write any text in the image). Effect: 정령 2, 고래 크기 +1.\nShow 네레아 and 시온 together, both ON-MODEL from the attached references, combining their skills in one move: little star spirits; the giant star whale made of constellations, sprays of starlight water. 네레아's motifs: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. 시온's motifs: glowing star spirits like tiny lantern stars, constellation lines, a starfield swirling from her star-map cloak. Accent colors: sea teal and starlight gold meeting silver-blue and gold.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/sion_normal.png"
+      ],
+      "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
+      "id": "duocard_mariana_nerea",
+      "kind": "card",
+      "batch": "cards-duo-5",
+      "file": "cards/duocard_mariana_nerea.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nDuo skill card illustration. Card: 「전설의 항로」 (Korean title; NEVER write any text in the image). Effect: 모든 적 피해 고래 크기×4, 별빛 +10.\nShow 마리아나 and 네레아 together, both ON-MODEL from the attached references, combining their skills in one move: a wide sweeping attack hitting several enemies (enemies only as dark silhouettes on the right); gold coins and starlight; the giant star whale made of constellations, sprays of starlight water. 마리아나's motifs: a pirate queen with a feathered tricorn, a flintlock pistol, gold coins flying, a ship's cannon or anchor. 네레아's motifs: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: gold and deep red meeting sea teal and starlight gold.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576.",
+      "reference_images": [
+        "chars/mariana_normal.png",
+        "chars/nerea_normal.png"
+      ],
+      "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
+      "id": "duocard_bertha_eleonore",
+      "kind": "card",
+      "batch": "cards-duo-5",
+      "file": "cards/duocard_bertha_eleonore.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nDuo skill card illustration. Card: 「옛 시간표」 (Korean title; NEVER write any text in the image). Effect: 모든 적의 행동을 다음 것으로 넘기고, 밤 시계 10분 되돌리기.\nShow 베르타 and 엘레오노르 together, both ON-MODEL from the attached references, combining their skills in one move: a guiding lantern light turning enemy silhouettes around, glowing arrows. 베르타's motifs: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. 엘레오노르's motifs: a giant clock-hand staff, glowing clock faces, brass gears, violet time ripples, clock hands spinning. Accent colors: amber lantern and plum meeting violet and brass.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/eleonore_normal.png"
+      ],
+      "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
+      "id": "duocard_bertha_finn",
+      "kind": "card",
+      "batch": "cards-duo-5",
+      "file": "cards/duocard_bertha_finn.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nDuo skill card illustration. Card: 「길 잃은 편지」 (Korean title; NEVER write any text in the image). Effect: 카드 3장, 이번 턴 모든 동료 공격 +3.\nShow 베르타 and 핀 together, both ON-MODEL from the attached references, combining their skills in one move: cards or papers fanning out. 베르타's motifs: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. 핀's motifs: a big mail bag, letters and parcels flying like darts, a postman cap, dashing over rooftops. Accent colors: amber lantern and plum meeting brown and red.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/finn_normal.png"
+      ],
+      "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
+      "id": "duocard_bertha_nerea",
+      "kind": "card",
+      "batch": "cards-duo-5",
+      "file": "cards/duocard_bertha_nerea.png",
+      "width": 768,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "96×72",
+      "note": "스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nDuo skill card illustration. Card: 「첫 안내」 (Korean title; NEVER write any text in the image). Effect: 모든 적의 행동을 바로 전 것으로 되돌리고, 고래 크기 +2.\nShow 베르타 and 네레아 together, both ON-MODEL from the attached references, combining their skills in one move: the giant star whale made of constellations, sprays of starlight water; a guiding lantern light turning enemy silhouettes around, glowing arrows. 베르타's motifs: a lantern cane, glowing guiding arrows and footprints of light, an old tower map, brass keys, enemy silhouettes being turned around. 네레아's motifs: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky. Accent colors: amber lantern and plum meeting sea teal and starlight gold.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/nerea_normal.png"
+      ],
+      "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
       "id": "style_sion_a",
       "kind": "style",
       "batch": "style-sion",
@@ -8092,6 +8932,72 @@
       ]
     },
     {
+      "id": "style_nerea_a",
+      "kind": "style",
+      "batch": "style-nerea",
+      "file": "style/nerea_a.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536. Up to about 48 colors.\nThis is style test 「A」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 A — 기준(128×192 도트 8배)",
+      "reference_images": []
+    },
+    {
+      "id": "style_nerea_b",
+      "kind": "style",
+      "batch": "style-nerea",
+      "file": "style/nerea_b.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Very chunky retro pixel art: native resolution only 64x96 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1536. About 24 colors. Big readable pixel clusters, iconic shapes.\nThis is style test 「B」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 B — 굵은 도트(64×96 도트 16배)",
+      "reference_images": [
+        "style/nerea_a.png"
+      ]
+    },
+    {
+      "id": "style_nerea_c",
+      "kind": "style",
+      "batch": "style-nerea",
+      "file": "style/nerea_c.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Fine, detailed pixel art: native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric, still no anti-aliasing.\nThis is style test 「C」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 C — 세밀한 도트(256×384 도트 4배)",
+      "reference_images": [
+        "style/nerea_a.png"
+      ]
+    },
+    {
+      "id": "style_nerea_d",
+      "kind": "style",
+      "batch": "style-nerea",
+      "file": "style/nerea_d.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 최고 화질로, 색을 줄이지 말고.\n\nHigh-quality, highly detailed pixel-art style illustration, like the key visual of a premium modern pixel-art game: crisp pixel detail, rich dramatic lighting, clean anime gacha-game faces. Night sky, a tall tower rising from the sea, lanterns and stars. No text, no letters, no logo, no watermark, no UI.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Premium high-detail pixel-art illustration like a modern HD pixel gacha game splash: crisp pixel detail, rich lighting and glow effects, no color limit, still visibly pixel-based (no smooth airbrush).\nThis is style test 「D」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 D — 고화질 픽셀 일러스트(색 제한 없음)",
+      "reference_images": [
+        "style/nerea_a.png"
+      ]
+    },
+    {
       "id": "star5_sion",
       "kind": "cg",
       "batch": "cg-star5",
@@ -8157,6 +9063,23 @@
       "reference_images": [
         "chars/eleonore_normal.png",
         "chars/eleonore_stand.png"
+      ]
+    },
+    {
+      "id": "star5_nerea",
+      "kind": "cg",
+      "batch": "cg-star5",
+      "file": "cg/star5_nerea.png",
+      "width": 1536,
+      "height": 864,
+      "transparent": false,
+      "max_colors": null,
+      "native": "—",
+      "note": "★5 전신 CG · 16:9 · 화질 우선, 색 제한 없음",
+      "prompt": "이미지를 만들어줘. 최고 화질로, 색을 줄이지 말고.\n\nHigh-quality, highly detailed pixel-art style illustration, like the key visual of a premium modern pixel-art game: crisp pixel detail, rich dramatic lighting, clean anime gacha-game faces. Night sky, a tall tower rising from the sea, lanterns and stars. No text, no letters, no logo, no watermark, no UI.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nFull-body splash art of 네레아: a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Her most dramatic signature pose with her magical effect at full power (close-up of her riding on the star whale's head, the whale breaching through a sea of stars, a huge spray of starlight water). 16:9 composition (1536x864), the character fills the frame, night sky and tower background.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/nerea_stand.png"
       ]
     },
     {
@@ -8300,6 +9223,42 @@
       "reference_images": [
         "chars/zeno_normal.png",
         "chars/marta_normal.png"
+      ],
+      "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
+      "id": "duo_nerea_tomori",
+      "kind": "duo",
+      "batch": "duo",
+      "file": "cutins/duo_nerea_tomori.png",
+      "width": 1536,
+      "height": 768,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "256×128",
+      "note": "인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nDuo cut-in of 네레아 and 토모리: the star whale following the girl's lantern beam across the night sea, the rider waving from its head. Both characters ON-MODEL from the attached references, faces clearly visible. Wide horizontal composition; the top and bottom will be cropped to 1536x768. Speed lines made of pixels.",
+      "reference_images": [
+        "chars/nerea_normal.png",
+        "chars/tomori_normal.png"
+      ],
+      "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
+      "id": "duo_bertha_nerea",
+      "kind": "duo",
+      "batch": "duo",
+      "file": "cutins/duo_bertha_nerea.png",
+      "width": 1536,
+      "height": 768,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "256×128",
+      "note": "인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nDuo cut-in of 베르타 and 네레아: the old guide pointing the way with her lantern cane while the star whale rider sails past on the whale, a path of light between them. Both characters ON-MODEL from the attached references, faces clearly visible. Wide horizontal composition; the top and bottom will be cropped to 1536x768. Speed lines made of pixels.",
+      "reference_images": [
+        "chars/bertha_normal.png",
+        "chars/nerea_normal.png"
       ],
       "must_show": "두 사람 얼굴 둘 다"
     },
@@ -9846,6 +10805,32 @@
       "native": "24×24",
       "note": "도구 아이콘 · 투명 배경 · 24×24 도트를 8배",
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nA single item icon: 큰 도시락 — a big stacked lunch box tied with cloth. Centered, readable at 24x24 pixels, bold outline, fully transparent background. Native resolution 24x24 pixels, upscaled exactly 8x to 192x192."
+    },
+    {
+      "id": "relic_sig_nerea",
+      "kind": "icon",
+      "batch": "icons-sig",
+      "file": "icons/relic_sig_nerea.png",
+      "width": 192,
+      "height": 192,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "24×24",
+      "note": "도구 아이콘 · 투명 배경 · 24×24 도트를 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nA single item icon: 고래 귀걸이 — a teal earring shaped like a small whale tail. Centered, readable at 24x24 pixels, bold outline, fully transparent background. Native resolution 24x24 pixels, upscaled exactly 8x to 192x192."
+    },
+    {
+      "id": "relic_sig_bertha",
+      "kind": "icon",
+      "batch": "icons-sig",
+      "file": "icons/relic_sig_bertha.png",
+      "width": 192,
+      "height": 192,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "24×24",
+      "note": "도구 아이콘 · 투명 배경 · 24×24 도트를 8배",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nA single item icon: 낡은 안내 깃발 — a small faded guide pennant on a short pole. Centered, readable at 24x24 pixels, bold outline, fully transparent background. Native resolution 24x24 pixels, upscaled exactly 8x to 192x192."
     },
     {
       "id": "relic_sig_fukuro",
