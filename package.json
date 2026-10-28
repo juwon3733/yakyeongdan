@@ -10,6 +10,7 @@
     "art": "node tools/art-index.mjs",
     "prompts": "node tools/export-prompts.mjs",
     "smoke": "node tools/smoke.mjs",
-    "sim": "node tools/sim.mjs"
+    "sim": "node tools/sim.mjs",
+    "next": "node tools/next-batch.mjs"
   }
 }
