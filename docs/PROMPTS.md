@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 1 · 전체 526장 · 묶음 58개
+style_version 1 · 전체 542장 · 묶음 62개
 
 ## 묶음
 
@@ -52,6 +52,10 @@ style_version 1 · 전체 526장 · 묶음 58개
 | `cards-duo-2` | 인연 듀오 카드 12~22 | 11 |
 | `cards-duo-3` | 인연 듀오 카드 23~33 | 11 |
 | `cards-duo-4` | 인연 듀오 카드 34~44 | 11 |
+| `style-sion` | 그림체 시안 시온 (4장, 게임에 안 씀) | 4 |
+| `style-lunaria` | 그림체 시안 루나리아 (4장, 게임에 안 씀) | 4 |
+| `style-akane` | 그림체 시안 아카네 (4장, 게임에 안 씀) | 4 |
+| `style-eleonore` | 그림체 시안 엘레오노르 (4장, 게임에 안 씀) | 4 |
 | `cg-star5` | ★5 전신 CG | 4 |
 | `duo` | 인연 듀오 컷인 (처음 8쌍) | 8 |
 | `enemy-act1` | 1막 적 | 10 |
@@ -86,6 +90,7 @@ style_version 1 · 전체 526장 · 묶음 58개
 | 별똥별 (`meteor`) | 512×512 | 64×64 | 예 | 256 | 별똥별 효과 · 투명 배경 |
 | 도구 아이콘 (`icon`) | 192×192 | 24×24 | 예 | 64 | 도구 아이콘 · 투명 배경 · 24×24 도트를 8배 |
 | appicon (`appicon`) | 1024×1024 | 64×64 | 아니오 | 64 | 앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다 |
+| style (`style`) | 1024×1536 | 시안마다 다름 | 예 | 제한 없음 | 그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다 |
 | 카드 그림 (`card`) | 768×576 | 96×72 | 아니오 | 256 | 스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배 |
 
 ## `char-sion` — ★★★★★ 시온
@@ -1003,6 +1008,42 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `duocard_laila_raven` | `assets/cards/duocard_laila_raven.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/raven_normal.png` | 두 사람 얼굴 둘 다 |
 | `duocard_marta_tomori` | `assets/cards/duocard_marta_tomori.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/tomori_normal.png` | 두 사람 얼굴 둘 다 |
 | `duocard_eleonore_iris` | `assets/cards/duocard_eleonore_iris.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/iris_normal.png` | 두 사람 얼굴 둘 다 |
+
+## `style-sion` — 그림체 시안 시온 (4장, 게임에 안 씀)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `style_sion_a` | `assets/style/sion_a.png` | 1024×1536 투명 | — | 시안 A — 기준(128×192 도트 8배) |
+| `style_sion_b` | `assets/style/sion_b.png` | 1024×1536 투명 | `assets/style/sion_a.png` | 시안 B — 굵은 도트(64×96 도트 16배) |
+| `style_sion_c` | `assets/style/sion_c.png` | 1024×1536 투명 | `assets/style/sion_a.png` | 시안 C — 세밀한 도트(256×384 도트 4배) |
+| `style_sion_d` | `assets/style/sion_d.png` | 1024×1536 투명 | `assets/style/sion_a.png` | 시안 D — 고화질 픽셀 일러스트(색 제한 없음) |
+
+## `style-lunaria` — 그림체 시안 루나리아 (4장, 게임에 안 씀)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `style_lunaria_a` | `assets/style/lunaria_a.png` | 1024×1536 투명 | — | 시안 A — 기준(128×192 도트 8배) |
+| `style_lunaria_b` | `assets/style/lunaria_b.png` | 1024×1536 투명 | `assets/style/lunaria_a.png` | 시안 B — 굵은 도트(64×96 도트 16배) |
+| `style_lunaria_c` | `assets/style/lunaria_c.png` | 1024×1536 투명 | `assets/style/lunaria_a.png` | 시안 C — 세밀한 도트(256×384 도트 4배) |
+| `style_lunaria_d` | `assets/style/lunaria_d.png` | 1024×1536 투명 | `assets/style/lunaria_a.png` | 시안 D — 고화질 픽셀 일러스트(색 제한 없음) |
+
+## `style-akane` — 그림체 시안 아카네 (4장, 게임에 안 씀)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `style_akane_a` | `assets/style/akane_a.png` | 1024×1536 투명 | — | 시안 A — 기준(128×192 도트 8배) |
+| `style_akane_b` | `assets/style/akane_b.png` | 1024×1536 투명 | `assets/style/akane_a.png` | 시안 B — 굵은 도트(64×96 도트 16배) |
+| `style_akane_c` | `assets/style/akane_c.png` | 1024×1536 투명 | `assets/style/akane_a.png` | 시안 C — 세밀한 도트(256×384 도트 4배) |
+| `style_akane_d` | `assets/style/akane_d.png` | 1024×1536 투명 | `assets/style/akane_a.png` | 시안 D — 고화질 픽셀 일러스트(색 제한 없음) |
+
+## `style-eleonore` — 그림체 시안 엘레오노르 (4장, 게임에 안 씀)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `style_eleonore_a` | `assets/style/eleonore_a.png` | 1024×1536 투명 | — | 시안 A — 기준(128×192 도트 8배) |
+| `style_eleonore_b` | `assets/style/eleonore_b.png` | 1024×1536 투명 | `assets/style/eleonore_a.png` | 시안 B — 굵은 도트(64×96 도트 16배) |
+| `style_eleonore_c` | `assets/style/eleonore_c.png` | 1024×1536 투명 | `assets/style/eleonore_a.png` | 시안 C — 세밀한 도트(256×384 도트 4배) |
+| `style_eleonore_d` | `assets/style/eleonore_d.png` | 1024×1536 투명 | `assets/style/eleonore_a.png` | 시안 D — 고화질 픽셀 일러스트(색 제한 없음) |
 
 ## `cg-star5` — ★5 전신 CG
 

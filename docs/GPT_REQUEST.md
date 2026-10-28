@@ -21,6 +21,7 @@ juwon3733/yakyeongdan 최신 main을 받고 AGENTS.md대로 그림을 만들어�
 
 | 순서 | 묶음 | 이유 |
 |---|---|---|
+| 0 | `style-akane` (또는 `style-sion` `style-lunaria` `style-eleonore`) | **그림체 시안**. ★5 한 명을 도트 굵기만 바꿔 4장(A 기준·B 굵게·C 세밀·D 고화질). 사용자가 고른 시안으로 공통 스타일을 고정한 뒤 나머지를 뽑는다. 게임엔 안 씀 |
 | 1 | `char-iris` `char-brick` `char-marta` | 처음부터 가진 동료 셋. 매 판 보임 |
 | 2 | `bg` | 전투·지도·본부 배경 13장 |
 | 3 | `enemy-act1` `boss-lighthouse` | 1막 적과 보스 |

@@ -684,6 +684,46 @@
       ]
     },
     {
+      "id": "style-sion",
+      "title": "그림체 시안 시온 (4장, 게임에 안 씀)",
+      "items": [
+        "style_sion_a",
+        "style_sion_b",
+        "style_sion_c",
+        "style_sion_d"
+      ]
+    },
+    {
+      "id": "style-lunaria",
+      "title": "그림체 시안 루나리아 (4장, 게임에 안 씀)",
+      "items": [
+        "style_lunaria_a",
+        "style_lunaria_b",
+        "style_lunaria_c",
+        "style_lunaria_d"
+      ]
+    },
+    {
+      "id": "style-akane",
+      "title": "그림체 시안 아카네 (4장, 게임에 안 씀)",
+      "items": [
+        "style_akane_a",
+        "style_akane_b",
+        "style_akane_c",
+        "style_akane_d"
+      ]
+    },
+    {
+      "id": "style-eleonore",
+      "title": "그림체 시안 엘레오노르 (4장, 게임에 안 씀)",
+      "items": [
+        "style_eleonore_a",
+        "style_eleonore_b",
+        "style_eleonore_c",
+        "style_eleonore_d"
+      ]
+    },
+    {
       "id": "cg-star5",
       "title": "★5 전신 CG",
       "items": [
@@ -7786,6 +7826,270 @@
         "chars/iris_normal.png"
       ],
       "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
+      "id": "style_sion_a",
+      "kind": "style",
+      "batch": "style-sion",
+      "file": "style/sion_a.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n시온 (sion): a calm, beautiful woman in her late 20s, a star summoner. Very long straight silver-blue hair, gentle pale-blue eyes, a long dark-navy cloak printed with a glowing star map, an elegant gown with an open back under it, gold star ornaments in her hair, tiny glowing star spirits floating around her fingertips. Accent colors: silver-blue and gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536. Up to about 48 colors.\nThis is style test 「A」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 A — 기준(128×192 도트 8배)",
+      "reference_images": []
+    },
+    {
+      "id": "style_sion_b",
+      "kind": "style",
+      "batch": "style-sion",
+      "file": "style/sion_b.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n시온 (sion): a calm, beautiful woman in her late 20s, a star summoner. Very long straight silver-blue hair, gentle pale-blue eyes, a long dark-navy cloak printed with a glowing star map, an elegant gown with an open back under it, gold star ornaments in her hair, tiny glowing star spirits floating around her fingertips. Accent colors: silver-blue and gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Very chunky retro pixel art: native resolution only 64x96 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1536. About 24 colors. Big readable pixel clusters, iconic shapes.\nThis is style test 「B」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 B — 굵은 도트(64×96 도트 16배)",
+      "reference_images": [
+        "style/sion_a.png"
+      ]
+    },
+    {
+      "id": "style_sion_c",
+      "kind": "style",
+      "batch": "style-sion",
+      "file": "style/sion_c.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n시온 (sion): a calm, beautiful woman in her late 20s, a star summoner. Very long straight silver-blue hair, gentle pale-blue eyes, a long dark-navy cloak printed with a glowing star map, an elegant gown with an open back under it, gold star ornaments in her hair, tiny glowing star spirits floating around her fingertips. Accent colors: silver-blue and gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Fine, detailed pixel art: native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric, still no anti-aliasing.\nThis is style test 「C」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 C — 세밀한 도트(256×384 도트 4배)",
+      "reference_images": [
+        "style/sion_a.png"
+      ]
+    },
+    {
+      "id": "style_sion_d",
+      "kind": "style",
+      "batch": "style-sion",
+      "file": "style/sion_d.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 최고 화질로, 색을 줄이지 말고.\n\nHigh-quality, highly detailed pixel-art style illustration, like the key visual of a premium modern pixel-art game: crisp pixel detail, rich dramatic lighting, clean anime gacha-game faces. Night sky, a tall tower rising from the sea, lanterns and stars. No text, no letters, no logo, no watermark, no UI.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n시온 (sion): a calm, beautiful woman in her late 20s, a star summoner. Very long straight silver-blue hair, gentle pale-blue eyes, a long dark-navy cloak printed with a glowing star map, an elegant gown with an open back under it, gold star ornaments in her hair, tiny glowing star spirits floating around her fingertips. Accent colors: silver-blue and gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Premium high-detail pixel-art illustration like a modern HD pixel gacha game splash: crisp pixel detail, rich lighting and glow effects, no color limit, still visibly pixel-based (no smooth airbrush).\nThis is style test 「D」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 D — 고화질 픽셀 일러스트(색 제한 없음)",
+      "reference_images": [
+        "style/sion_a.png"
+      ]
+    },
+    {
+      "id": "style_lunaria_a",
+      "kind": "style",
+      "batch": "style-lunaria",
+      "file": "style/lunaria_a.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n루나리아 (lunaria): a graceful dancer woman in her mid 20s. Silver hair reaching her ankles, a crescent-moon hair ornament, a translucent veil, a dancer outfit with an open back and a bare midriff, little bells on her ankles, two folding fans that hold moonlight. Accent colors: moon silver and pale violet.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536. Up to about 48 colors.\nThis is style test 「A」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 A — 기준(128×192 도트 8배)",
+      "reference_images": []
+    },
+    {
+      "id": "style_lunaria_b",
+      "kind": "style",
+      "batch": "style-lunaria",
+      "file": "style/lunaria_b.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n루나리아 (lunaria): a graceful dancer woman in her mid 20s. Silver hair reaching her ankles, a crescent-moon hair ornament, a translucent veil, a dancer outfit with an open back and a bare midriff, little bells on her ankles, two folding fans that hold moonlight. Accent colors: moon silver and pale violet.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Very chunky retro pixel art: native resolution only 64x96 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1536. About 24 colors. Big readable pixel clusters, iconic shapes.\nThis is style test 「B」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 B — 굵은 도트(64×96 도트 16배)",
+      "reference_images": [
+        "style/lunaria_a.png"
+      ]
+    },
+    {
+      "id": "style_lunaria_c",
+      "kind": "style",
+      "batch": "style-lunaria",
+      "file": "style/lunaria_c.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n루나리아 (lunaria): a graceful dancer woman in her mid 20s. Silver hair reaching her ankles, a crescent-moon hair ornament, a translucent veil, a dancer outfit with an open back and a bare midriff, little bells on her ankles, two folding fans that hold moonlight. Accent colors: moon silver and pale violet.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Fine, detailed pixel art: native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric, still no anti-aliasing.\nThis is style test 「C」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 C — 세밀한 도트(256×384 도트 4배)",
+      "reference_images": [
+        "style/lunaria_a.png"
+      ]
+    },
+    {
+      "id": "style_lunaria_d",
+      "kind": "style",
+      "batch": "style-lunaria",
+      "file": "style/lunaria_d.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 최고 화질로, 색을 줄이지 말고.\n\nHigh-quality, highly detailed pixel-art style illustration, like the key visual of a premium modern pixel-art game: crisp pixel detail, rich dramatic lighting, clean anime gacha-game faces. Night sky, a tall tower rising from the sea, lanterns and stars. No text, no letters, no logo, no watermark, no UI.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n루나리아 (lunaria): a graceful dancer woman in her mid 20s. Silver hair reaching her ankles, a crescent-moon hair ornament, a translucent veil, a dancer outfit with an open back and a bare midriff, little bells on her ankles, two folding fans that hold moonlight. Accent colors: moon silver and pale violet.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Premium high-detail pixel-art illustration like a modern HD pixel gacha game splash: crisp pixel detail, rich lighting and glow effects, no color limit, still visibly pixel-based (no smooth airbrush).\nThis is style test 「D」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 D — 고화질 픽셀 일러스트(색 제한 없음)",
+      "reference_images": [
+        "style/lunaria_a.png"
+      ]
+    },
+    {
+      "id": "style_akane_a",
+      "kind": "style",
+      "batch": "style-akane",
+      "file": "style/akane_a.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n아카네 (akane): a confident swordswoman in her mid 20s. Long crimson hair in a high ponytail, gold eyes, a red off-shoulder top with hakama-style armored skirt, two katana with flame-patterned blades, a cocky grin. Accent colors: crimson and gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536. Up to about 48 colors.\nThis is style test 「A」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 A — 기준(128×192 도트 8배)",
+      "reference_images": []
+    },
+    {
+      "id": "style_akane_b",
+      "kind": "style",
+      "batch": "style-akane",
+      "file": "style/akane_b.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n아카네 (akane): a confident swordswoman in her mid 20s. Long crimson hair in a high ponytail, gold eyes, a red off-shoulder top with hakama-style armored skirt, two katana with flame-patterned blades, a cocky grin. Accent colors: crimson and gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Very chunky retro pixel art: native resolution only 64x96 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1536. About 24 colors. Big readable pixel clusters, iconic shapes.\nThis is style test 「B」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 B — 굵은 도트(64×96 도트 16배)",
+      "reference_images": [
+        "style/akane_a.png"
+      ]
+    },
+    {
+      "id": "style_akane_c",
+      "kind": "style",
+      "batch": "style-akane",
+      "file": "style/akane_c.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n아카네 (akane): a confident swordswoman in her mid 20s. Long crimson hair in a high ponytail, gold eyes, a red off-shoulder top with hakama-style armored skirt, two katana with flame-patterned blades, a cocky grin. Accent colors: crimson and gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Fine, detailed pixel art: native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric, still no anti-aliasing.\nThis is style test 「C」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 C — 세밀한 도트(256×384 도트 4배)",
+      "reference_images": [
+        "style/akane_a.png"
+      ]
+    },
+    {
+      "id": "style_akane_d",
+      "kind": "style",
+      "batch": "style-akane",
+      "file": "style/akane_d.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 최고 화질로, 색을 줄이지 말고.\n\nHigh-quality, highly detailed pixel-art style illustration, like the key visual of a premium modern pixel-art game: crisp pixel detail, rich dramatic lighting, clean anime gacha-game faces. Night sky, a tall tower rising from the sea, lanterns and stars. No text, no letters, no logo, no watermark, no UI.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n아카네 (akane): a confident swordswoman in her mid 20s. Long crimson hair in a high ponytail, gold eyes, a red off-shoulder top with hakama-style armored skirt, two katana with flame-patterned blades, a cocky grin. Accent colors: crimson and gold.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Premium high-detail pixel-art illustration like a modern HD pixel gacha game splash: crisp pixel detail, rich lighting and glow effects, no color limit, still visibly pixel-based (no smooth airbrush).\nThis is style test 「D」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 D — 고화질 픽셀 일러스트(색 제한 없음)",
+      "reference_images": [
+        "style/akane_a.png"
+      ]
+    },
+    {
+      "id": "style_eleonore_a",
+      "kind": "style",
+      "batch": "style-eleonore",
+      "file": "style/eleonore_a.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n엘레오노르 (eleonore): an elegant, haughty witch woman in her early 30s. Long black hair with a violet sheen, half-lidded violet eyes, a wide-brimmed witch hat decorated with clock faces, a gothic dress with a high side slit, a staff as tall as a person shaped like a giant clock hand, small brass gears floating around her. Accent colors: violet and brass.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536. Up to about 48 colors.\nThis is style test 「A」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 A — 기준(128×192 도트 8배)",
+      "reference_images": []
+    },
+    {
+      "id": "style_eleonore_b",
+      "kind": "style",
+      "batch": "style-eleonore",
+      "file": "style/eleonore_b.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n엘레오노르 (eleonore): an elegant, haughty witch woman in her early 30s. Long black hair with a violet sheen, half-lidded violet eyes, a wide-brimmed witch hat decorated with clock faces, a gothic dress with a high side slit, a staff as tall as a person shaped like a giant clock hand, small brass gears floating around her. Accent colors: violet and brass.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Very chunky retro pixel art: native resolution only 64x96 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1536. About 24 colors. Big readable pixel clusters, iconic shapes.\nThis is style test 「B」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 B — 굵은 도트(64×96 도트 16배)",
+      "reference_images": [
+        "style/eleonore_a.png"
+      ]
+    },
+    {
+      "id": "style_eleonore_c",
+      "kind": "style",
+      "batch": "style-eleonore",
+      "file": "style/eleonore_c.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n엘레오노르 (eleonore): an elegant, haughty witch woman in her early 30s. Long black hair with a violet sheen, half-lidded violet eyes, a wide-brimmed witch hat decorated with clock faces, a gothic dress with a high side slit, a staff as tall as a person shaped like a giant clock hand, small brass gears floating around her. Accent colors: violet and brass.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Fine, detailed pixel art: native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric, still no anti-aliasing.\nThis is style test 「C」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 C — 세밀한 도트(256×384 도트 4배)",
+      "reference_images": [
+        "style/eleonore_a.png"
+      ]
+    },
+    {
+      "id": "style_eleonore_d",
+      "kind": "style",
+      "batch": "style-eleonore",
+      "file": "style/eleonore_d.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 최고 화질로, 색을 줄이지 말고.\n\nHigh-quality, highly detailed pixel-art style illustration, like the key visual of a premium modern pixel-art game: crisp pixel detail, rich dramatic lighting, clean anime gacha-game faces. Night sky, a tall tower rising from the sea, lanterns and stars. No text, no letters, no logo, no watermark, no UI.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.\n\n엘레오노르 (eleonore): an elegant, haughty witch woman in her early 30s. Long black hair with a violet sheen, half-lidded violet eyes, a wide-brimmed witch hat decorated with clock faces, a gothic dress with a high side slit, a staff as tall as a person shaped like a giant clock hand, small brass gears floating around her. Accent colors: violet and brass.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Premium high-detail pixel-art illustration like a modern HD pixel gacha game splash: crisp pixel detail, rich lighting and glow effects, no color limit, still visibly pixel-based (no smooth airbrush).\nThis is style test 「D」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 D — 고화질 픽셀 일러스트(색 제한 없음)",
+      "reference_images": [
+        "style/eleonore_a.png"
+      ]
     },
     {
       "id": "star5_sion",

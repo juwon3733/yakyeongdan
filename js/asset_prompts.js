@@ -34,6 +34,7 @@ export const SPEC = {
   meteor:   { w: 512,  h: 512,  native: '64×64',   scale: 8, transparent: true,  colors: 256, folder: 'summon', note: '별똥별 효과 · 투명 배경' },
   icon:     { w: 192,  h: 192,  native: '24×24',   scale: 8, transparent: true,  colors: 64,  folder: 'icons', note: '도구 아이콘 · 투명 배경 · 24×24 도트를 8배' },
   appicon:  { w: 1024, h: 1024, native: '64×64',   scale: 16, transparent: false, colors: 64, folder: 'app', note: '앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다' },
+  style:    { w: 1024, h: 1536, native: '시안마다 다름', scale: 0, transparent: true, colors: Infinity, folder: 'style', note: '그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다' },
   card:     { w: 768,  h: 576,  native: '96×72',   scale: 8, transparent: false, colors: 256, folder: 'cards', note: '스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배' },
 };
 
@@ -408,6 +409,24 @@ export function assetList() {
       out.push(item('card', `duocard_${a}_${b}`, batch, `duocard_${a}_${b}.png`,
         join(STYLE.pixel, STYLE.character, STYLE.onModel, `Duo skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${A.name} and ${B.name} together, both ON-MODEL from the attached references, combining their skills in one move: ${cardPose(d)}. ${A.name}'s motifs: ${A.fx}. ${B.name}'s motifs: ${B.fx}. Accent colors: ${A.accent} meeting ${B.accent}.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576.`),
         { reference_images: [`chars/${a}_normal.png`, `chars/${b}_normal.png`], must_show: '두 사람 얼굴 둘 다' }));
+    }
+  }
+
+  // 그림체 시안: ★5 한 명을 도트 굵기만 다르게 4장. 사용자가 고른 시안이 STYLE의 기준이 된다(게임에 안 씀).
+  const STYLE_VARIANTS = {
+    a: ['기준(128×192 도트 8배)', 'Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536. Up to about 48 colors.'],
+    b: ['굵은 도트(64×96 도트 16배)', 'Very chunky retro pixel art: native resolution only 64x96 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1536. About 24 colors. Big readable pixel clusters, iconic shapes.'],
+    c: ['세밀한 도트(256×384 도트 4배)', 'Fine, detailed pixel art: native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric, still no anti-aliasing.'],
+    d: ['고화질 픽셀 일러스트(색 제한 없음)', 'Premium high-detail pixel-art illustration like a modern HD pixel gacha game splash: crisp pixel detail, rich lighting and glow effects, no color limit, still visibly pixel-based (no smooth airbrush).'],
+  };
+  for (const [id, c] of Object.entries(CHARS).filter(([, c]) => c.rarity === 5)) {
+    const batch = `style-${id}`;
+    batches.push({ id: batch, title: `그림체 시안 ${c.name} (4장, 게임에 안 씀)` });
+    const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
+    for (const [v, [label, res]] of Object.entries(STYLE_VARIANTS)) {
+      out.push(item('style', `style_${id}_${v}`, batch, `${id}_${v}.png`,
+        join(v === 'd' ? STYLE.keyart : STYLE.pixel, STYLE.character, STYLE.rarity5, `${who}\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. ${res}\nThis is style test 「${v.toUpperCase()}」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.`),
+        { must_show: `시안 ${v.toUpperCase()} — ${label}`, reference_images: v === 'a' ? [] : [`style/${id}_a.png`] }));
     }
   }
 
