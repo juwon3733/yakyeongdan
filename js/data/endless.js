@@ -9,7 +9,7 @@ export const ENDLESS = {
   bossEvery: 10,       // 이 층마다 관문이 보스
   bosses: ['keeper', 'captain', 'dawn'],   // 돌아가며 나오는 보스
   // 적 강화: 체력 배수 = 3막 배수 × (1 + 층 × hpPerFloor), 힘 = 층 × strPerFloor(내림) + 여명 쌓임
-  baseHp: { fight: 2.6, elite: 3.2, boss: 3.2 },   // 0층 기준 체력 배수 (3막보다 강적·보스가 조금 약하다: 층마다 커지므로)
+  baseHp: { fight: 2.6, elite: 2.9, boss: 3.2 },   // 0층 기준 체력 배수 (3막보다 강적·보스가 조금 약하다: 층마다 커지므로)
   hpPerFloor: .03,
   strPerFloor: .2,
   // 여명 게이지: 끝없는 탑에 들어선 뒤 밤 시계가 dawnMin분 흐를 때마다 적 시작 힘 +1 (시간 카드·칸 시간이 그대로 압박이 된다)
