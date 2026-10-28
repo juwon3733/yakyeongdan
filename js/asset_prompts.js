@@ -2,6 +2,8 @@
 // 고친 뒤에는 `node tools/export-prompts.mjs`로 assets/prompts.json, docs/PROMPTS.md를 다시 만든다.
 // 캐릭터 외형은 docs/03_characters.md, 적은 docs/04_enemies.md, 그림 목록은 docs/06_art_ui_sound.md를 따른다.
 
+import { CARDS, DUOS as CARD_DUOS } from './data/cards.js';
+
 export const STYLE_VERSION = 1;
 
 // ── 공통 스타일 ──────────────────────────────────────────
@@ -31,133 +33,134 @@ export const SPEC = {
   summon:   { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'summon', note: '소환 화면 밤하늘 16:9' },
   meteor:   { w: 512,  h: 512,  native: '64×64',   scale: 8, transparent: true,  colors: 256, folder: 'summon', note: '별똥별 효과 · 투명 배경' },
   icon:     { w: 192,  h: 192,  native: '24×24',   scale: 8, transparent: true,  colors: 64,  folder: 'icons', note: '도구 아이콘 · 투명 배경 · 24×24 도트를 8배' },
-  card:     { w: 512,  h: 352,  native: '64×44',   scale: 8, transparent: false, colors: 128, folder: 'cards', note: '카드 그림 · 1536×1024로 만든 뒤 가운데를 잘라 냄' },
+  card:     { w: 768,  h: 576,  native: '96×72',   scale: 8, transparent: false, colors: 256, folder: 'cards', note: '스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배' },
 };
 
 // ── 동료 20명 ────────────────────────────────────────────
 // sheet: 설정화(전신 정면 + 얼굴 클로즈업). 같은 묶음의 다른 그림은 전부 이 설정화를 기준으로.
-// faces: 상반신 표정 3개(normal·smile·serious), cutin: 컷인 연출, outfit: 두 번째 의상, cards: 대표 카드 2장.
+// faces: 상반신 표정 3개(normal·smile·serious), cutin: 컷인 연출, outfit: 두 번째 의상,
+// fx: 카드 그림에 쓰는 그 동료다운 무기·이펙트. 카드 그림 장면은 js/data/cards.js의 카드(이름·효과·종류)에서 자동으로 만든다.
 export const CHARS = {
   sion: { name: '시온', rarity: 5, accent: 'silver-blue and gold',
     sheet: 'a calm, beautiful woman in her late 20s, a star summoner. Very long straight silver-blue hair, gentle pale-blue eyes, a long dark-navy cloak printed with a glowing star map, an elegant gown with an open back under it, gold star ornaments in her hair, tiny glowing star spirits floating around her fingertips.',
     faces: { normal: 'calm, faint smile, one hand raised with small star spirits', smile: 'delighted, talking excitedly about the stars, eyes sparkling', serious: 'focused, cloak spread, star spirits circling her' },
     cutin: 'close-up of her face and raised hand, star spirits bursting outward, a constellation line glowing across the panel',
     outfit: 'second outfit: a white-and-gold observatory robe with a crescent telescope pendant, hair tied loosely with a star ribbon',
-    cards: { 'sion_call': 'summoning a small glowing star spirit from her palm', 'sion_galaxy': 'a river of stars pouring across the night sky toward enemies' } },
+    fx: 'glowing star spirits like tiny lantern stars, constellation lines, a starfield swirling from her star-map cloak' },
   lunaria: { name: '루나리아', rarity: 5, accent: 'moon silver and pale violet',
     sheet: 'a graceful dancer woman in her mid 20s. Silver hair reaching her ankles, a crescent-moon hair ornament, a translucent veil, a dancer outfit with an open back and a bare midriff, little bells on her ankles, two folding fans that hold moonlight.',
     faces: { normal: 'serene smile, fan held near her face', smile: 'playful laugh, spinning with her veil flowing', serious: 'graceful but sharp gaze, fans opened like blades' },
     cutin: 'close-up mid-spin, silver hair sweeping across the panel, a huge full moon behind her, moonlight petals',
     outfit: 'second outfit: a deep-indigo evening dance dress with silver moon-phase embroidery and a long trailing scarf',
-    cards: { 'lunaria_crescent': 'dancing under a crescent moon, fans trailing silver arcs', 'lunaria_eclipse': 'a dark eclipse ring behind her as she strikes a pose' } },
+    fx: 'twin moonlight fans, silver crescent arcs, a translucent veil, ankle bells, the moon (crescent, half, full or new as the card says) huge behind her' },
   akane: { name: '아카네', rarity: 5, accent: 'crimson and gold',
     sheet: 'a confident swordswoman in her mid 20s. Long crimson hair in a high ponytail, gold eyes, a red off-shoulder top with hakama-style armored skirt, two katana with flame-patterned blades, a cocky grin.',
     faces: { normal: 'confident smirk, one hand on a sword hilt', smile: 'fierce grin, thumb pointing at herself', serious: 'drawing both swords, flames licking the blades' },
     cutin: 'close-up of her eyes and crossed burning blades, embers and fire streaks across the panel',
     outfit: 'second outfit: a black-and-red festival kimono worn short with armored gauntlets, a fox mask on the side of her head',
-    cards: { 'akane_slash': 'a crimson diagonal slash trailing fire', 'akane_flame': 'twin blades spinning in a ring of flame' } },
+    fx: 'twin katana-like blades with flame patterns, crimson fire trails, burning embers, a high ponytail whipping' },
   eleonore: { name: '엘레오노르', rarity: 5, accent: 'violet and brass',
     sheet: 'an elegant, haughty witch woman in her early 30s. Long black hair with a violet sheen, half-lidded violet eyes, a wide-brimmed witch hat decorated with clock faces, a gothic dress with a high side slit, a staff as tall as a person shaped like a giant clock hand, small brass gears floating around her.',
     faces: { normal: 'composed, slight condescending smile, hand on hat brim', smile: 'amused laugh behind a gloved hand', serious: 'raising the clock-hand staff, glowing clock circles behind her' },
     cutin: 'close-up of her face with a giant glowing clock face behind her, the hands spinning backward',
     outfit: 'second outfit: a clocktower keeper coat in plum and brass, monocle, pocket watches on chains',
-    cards: { 'eleonore_arrow': 'a glowing second-hand shaped like an arrow flying', 'eleonore_midnight': 'all clock hands pointing to midnight in a silent violet sky' } },
+    fx: 'a giant clock-hand staff, glowing clock faces, brass gears, violet time ripples, clock hands spinning' },
   iris: { name: '아이리스', rarity: 4, accent: 'silver and pale blue',
     sheet: 'a cool, quiet swordswoman in her early 20s. Waist-length straight black hair, pale-blue eyes, a long silver coat styled as light armor, a slim longsword, an expressionless but kind face.',
     faces: { normal: 'calm, expressionless, sword at her side', smile: 'small rare smile, looking away', serious: 'sword raised in a ready stance, eyes sharp' },
     cutin: 'close-up of a single clean horizontal sword flash, her eyes narrowed, black hair flowing',
     outfit: 'second outfit: a dark-blue swordsman uniform with a high collar and a white sash',
-    cards: { 'iris_slash': 'a single silver sword slash across the dark', 'iris_issen': 'a blinding one-flash draw cut, a thin line of light' } },
+    fx: 'a slender silver longsword, sharp white slash arcs, a calm cold expression, long black hair flowing with the cut' },
   noel: { name: '노엘', rarity: 4, accent: 'pink and lavender',
     sheet: 'a sleepy sorceress woman in her early 20s. Long wavy pink hair, half-closed light-blue eyes, an off-shoulder robe that looks like pajamas, holding a huge pillow like a staff, a nightcap with a star tip.',
     faces: { normal: 'drowsy, half-asleep, hugging the pillow', smile: 'sleepy happy smile, yawning', serious: 'eyes suddenly wide open, magic circle glowing from the pillow' },
     cutin: 'close-up of her waking eyes snapping open, a shooting-star spell bursting from the pillow',
     outfit: 'second outfit: a cozy lavender sweater dress and a moon-shaped sleep mask on her forehead',
-    cards: { 'noel_sleep': 'curled up asleep on a floating pillow, little Z-shaped sparkles (no letters)', 'noel_star': 'a shooting star spell crashing down' } },
+    fx: 'a huge pillow, sleepy half-closed eyes, dreamy pink-lavender magic, shooting stars, floating sheep-shaped clouds and sparkles (never letters)' },
   raven: { name: '레이븐', rarity: 4, accent: 'black and violet',
     sheet: 'a cynical assassin man in his late 20s. Short silver hair, a crow-beak half mask covering the upper face, red eyes visible through the mask, a black feathered coat, a poison-needle device on his wrist.',
     faces: { normal: 'cold, arms crossed, slightly looking down', smile: 'faint crooked smile under the mask', serious: 'raising the wrist needle, feathers scattering' },
     cutin: 'close-up of the crow mask, red eyes glinting, black feathers flying',
     outfit: 'second outfit: a dark-violet long coat with a feather collar and a white crow mask',
-    cards: { 'raven_needle': 'a thin glowing poison needle flying through the dark', 'raven_feather': 'a storm of black feathers like blades' } },
+    fx: 'a crow-beak half mask, black feathers flying like blades, wrist poison needles, green-violet poison mist' },
   mimimomo: { name: '미미·모모', rarity: 4, accent: 'pink and sky blue',
     sheet: 'twin 12-year-old girls shown together. Mimi: pink bob hair with a ribbon on her RIGHT side. Momo: sky-blue bob hair with a ribbon on her LEFT side. Matching modest sailor-style dresses (knee length, covered shoulders) in mirrored colors, Mimi holds a small dagger, Momo holds an umbrella. Children, drawn modestly and age-appropriately.',
     faces: { normal: 'the twins side by side, Mimi cheerful and Momo calm', smile: 'both laughing, holding hands', serious: 'back to back, dagger and umbrella ready' },
     cutin: 'close-up of both faces mirrored left and right, pink and blue sparkles',
     outfit: 'second outfit: matching modest winter coats with fluffy hoods, one pink and one blue, long skirts and boots',
-    cards: { 'mimimomo_pierce': 'Mimi lunging with her small dagger, pink sparkle trail', 'mimimomo_guard': 'Momo opening her umbrella as a shield, blue sparkles' } },
+    fx: 'the twin girls: Mimi (pink hair, right ribbon, small dagger) and Momo (sky-blue hair, left ribbon, umbrella), mirrored symmetric poses, pink and blue sparkles' },
   sebas: { name: '세바스', rarity: 4, accent: 'black and silver',
     sheet: 'a dignified butler man in his 60s, clearly elderly (wrinkles, grey mustache). Slicked-back silver hair, a monocle, a black tailcoat, white gloves, a pocket watch on a chain and a cane that hides a sword.',
     faces: { normal: 'polite bow, hand on chest', smile: 'warm grandfatherly smile, offering a teacup', serious: 'drawing the cane sword, monocle glinting' },
     cutin: 'close-up of the opened pocket watch and the monocle, the sword half drawn',
     outfit: 'second outfit: a white summer butler suit with a silver tray',
-    cards: { 'sebas_tea': 'a perfect cup of tea on a silver tray, steam curling', 'sebas_watch': 'an opened pocket watch with its hands turning backward' } },
+    fx: 'an elegant old butler with a monocle, silver tea set, a pocket watch, a cane sword, impeccable white gloves' },
   mariana: { name: '마리아나', rarity: 4, accent: 'gold and deep red',
     sheet: 'a bold pirate queen woman in her late 20s. Long wavy brown hair, a feathered tricorn hat, a corset coat with short pants and tall boots, a gold coin necklace, a flintlock pistol.',
     faces: { normal: 'confident grin, hand on hat', smile: 'laughing loudly, tossing a gold coin', serious: 'aiming the flintlock pistol' },
     cutin: 'close-up of her grin and the pistol muzzle flash, gold coins flying',
     outfit: 'second outfit: a captain\'s long red coat with gold trim over a white blouse, a cutlass',
-    cards: { 'mariana_coin': 'gold coins thrown like bullets', 'mariana_cannon': 'a pirate ship broadside firing cannons at night' } },
+    fx: 'a pirate queen with a feathered tricorn, a flintlock pistol, gold coins flying, a ship\'s cannon or anchor' },
   tomori: { name: '토모리', rarity: 4, accent: 'yellow and warm orange',
     sheet: 'a cheerful 17-year-old girl, the lighthouse keeper\'s granddaughter. Long chestnut hair in a braid, a yellow raincoat, a modest dress below the knees, rain boots, holding a big glowing lantern. Drawn modestly and age-appropriately.',
     faces: { normal: 'bright smile, lantern raised', smile: 'laughing, waving', serious: 'determined, shining the lantern forward' },
     cutin: 'close-up of her face lit warmly from below by the lantern, a beam of light cutting the dark',
     outfit: 'second outfit: a modest navy sailor-style keeper uniform with a small lighthouse badge and a scarf',
-    cards: { 'tomori_lantern': 'a lantern beam pushing back shadows', 'tomori_signal': 'a lighthouse signal flashing across the night sea' } },
+    fx: 'a big warm lantern, a lighthouse beam, a yellow raincoat, warm light pushing shadows away' },
   sigrun: { name: '시그룬', rarity: 4, accent: 'silver and white',
     sheet: 'a noble knight woman in her late 20s. Long blond hair, silver armor with wing ornaments, a white feather cape, a long lance, a dignified expression.',
     faces: { normal: 'upright, lance held vertically', smile: 'small proud smile', serious: 'pointing the lance forward, wings of light behind her' },
     cutin: 'close-up diving from the sky, lance first, white feathers and wind streaks',
     outfit: 'second outfit: a light sky-blue cavalry uniform with a feather-trimmed short cape',
-    cards: { 'sigrun_dive': 'a knight diving from the clouds with a lance', 'sigrun_rise': 'soaring up with white feathered wings of light' } },
+    fx: 'a long silver lance, white feathered wings of light, a white feather cape, diving or soaring through clouds' },
   zeno: { name: '제노', rarity: 4, accent: 'black and dragon gold',
     sheet: 'a silent dark knight man in his late 20s. Long black hair, one eye a golden dragon eye, black armor with dragon scales, a huge greatsword on his back.',
     faces: { normal: 'stoic, arms folded', smile: 'very faint smile, looking down', serious: 'dragon eye glowing, gripping the greatsword' },
     cutin: 'close-up of the golden dragon eye and black flames',
     outfit: 'second outfit: a dark-crimson coat over scale mail with a torn black cape',
-    cards: { 'zeno_slash': 'a heavy black greatsword strike with dark flames', 'zeno_roar': 'a shadow of a dragon roaring behind the knight' } },
+    fx: 'a black dragon-scale greatsword, black flames, a dragon silhouette, one golden dragon eye glowing' },
   brick: { name: '브릭', rarity: 3, accent: 'red and brass',
     sheet: 'an energetic gunner woman in her mid 20s. Short red hair, goggles pushed up on her head, a huge hand cannon bigger than her body, a cropped work top that shows her shoulders and midriff, suspender shorts, work boots.',
     faces: { normal: 'big grin, cannon on shoulder', smile: 'laughing loudly, thumbs up', serious: 'aiming the cannon, goggles down' },
     cutin: 'close-up of the cannon muzzle flash and her grin behind the goggles',
     outfit: 'second outfit: an oil-stained mechanic jumpsuit tied at the waist and a tank top',
-    cards: { 'brick_load': 'loading glowing shells into the hand cannon', 'brick_fire': 'a huge cannon blast lighting up the night' } },
+    fx: 'a hand cannon bigger than her body, glowing shells, muzzle blasts, goggles on her head, a big grin' },
   marta: { name: '마르타', rarity: 3, accent: 'gold and white',
     sheet: 'a very tall, muscular nun woman in her 30s, about 2 meters tall. Long blond hair in a braid, a nun habit with a high side slit showing her legs, iron gauntlets, a gentle smile.',
     faces: { normal: 'gentle smile, hands together in prayer with gauntlets', smile: 'warm laugh', serious: 'raising an iron fist, a holy light shield behind her' },
     cutin: 'close-up of an iron fist and a glowing holy barrier',
     outfit: 'second outfit: a white battle-nun coat with a big rosary and armored boots',
-    cards: { 'marta_wall': 'a wall of golden holy light', 'marta_fist': 'an iron gauntlet punch' } },
+    fx: 'a very tall muscular nun with iron gauntlets, golden holy light barriers, church bells, a kind smile' },
   finn: { name: '핀', rarity: 3, accent: 'brown and red',
     sheet: 'a lively 14-year-old mail delivery boy. Curly brown hair, a mail cap, a huge mailbag bigger than his body, shorts with long socks, running shoes. Drawn modestly and age-appropriately.',
     faces: { normal: 'bright grin, holding a letter', smile: 'laughing, saluting', serious: 'running at full speed, letters flying' },
     cutin: 'close-up of him sprinting, letters fluttering around',
     outfit: 'second outfit: a winter postal coat with a red scarf',
-    cards: { 'finn_letter': 'a letter thrown like a dart', 'finn_express': 'a boy dashing across rooftops with a mailbag' } },
+    fx: 'a big mail bag, letters and parcels flying like darts, a postman cap, dashing over rooftops' },
   laila: { name: '라일라', rarity: 3, accent: 'sky blue and grey',
     sheet: 'a brusque deserter knight woman in her early 20s. Long sky-blue hair tied back, a torn knight cape, a short top and leg wraps, twin daggers.',
     faces: { normal: 'unimpressed, daggers twirling', smile: 'small smirk', serious: 'crouched low, wind swirling' },
     cutin: 'close-up of crossed daggers and wind blades',
     outfit: 'second outfit: a hooded traveling cloak over light leather armor',
-    cards: { 'laila_wind': 'twin dagger slashes riding a gust of wind', 'laila_storm': 'a whirlwind of blade flashes' } },
+    fx: 'twin short daggers, gusts of sky-blue wind, a torn knight\'s cape, fast afterimages' },
   dora: { name: '도라', rarity: 3, accent: 'brown and orange',
     sheet: 'a cheerful 19-year-old blacksmith woman. Long brown hair in a ponytail, tanned arms, a leather apron over a tank top, a big hammer on her shoulder.',
     faces: { normal: 'grin, hammer on shoulder', smile: 'laughing, wiping soot from her cheek', serious: 'hammering a glowing blade, sparks flying' },
     cutin: 'close-up of the hammer striking an anvil, a fountain of sparks',
     outfit: 'second outfit: a festival outfit with a short jacket and a tool belt',
-    cards: { 'dora_hammer': 'a hammer strike with sparks', 'dora_temper': 'a glowing blade quenched in water with steam' } },
+    fx: 'a big smith\'s hammer, sparks, a glowing anvil, red-hot metal and quenching steam' },
   gordon: { name: '고든', rarity: 3, accent: 'white and warm brown',
     sheet: 'a big burly cook man in his 40s. A bushy beard, a white chef uniform, a frying pan and a ladle, a kind face.',
     faces: { normal: 'kind smile, holding a ladle', smile: 'hearty laugh', serious: 'swinging the frying pan' },
     cutin: 'close-up of a frying pan swing and steam',
     outfit: 'second outfit: a night-market apron and a headband',
-    cards: { 'gordon_soup': 'a warm bowl of soup steaming', 'gordon_pan': 'a frying pan bonk' } },
+    fx: 'a frying pan and a ladle, steaming hearty food, a big friendly cook with a beard' },
   fukuro: { name: '후쿠로', rarity: 3, accent: 'brown and lantern orange',
     sheet: 'a mysterious night-market merchant man of unknown age. An owl mask covering his whole face, a huge bundle on his back hung with lanterns and trinkets, a patched robe.',
     faces: { normal: 'bowing like a merchant', smile: 'spreading his arms, offering goods', serious: 'throwing trinkets from his bundle' },
     cutin: 'close-up of the owl mask with glinting eyes and swinging lanterns',
     outfit: 'second outfit: a fancy festival robe with a golden owl mask',
-    cards: { 'fukuro_junk': 'random trinkets flying through the air', 'fukuro_charm': 'a glowing lucky charm' } },
+    fx: 'an owl mask, a huge bundle of junk on his back, lucky charms, random trinkets and lanterns flying' },
 };
 
 // 인연 듀오 컷인 (처음 8쌍)
@@ -257,6 +260,39 @@ export const RELICS = {
   star_crown: '별의 왕관 — a crown of stars',
 };
 
+// ── 카드 그림 장면 (js/data/cards.js에서 자동) ───────────
+const fileId = (cardId) => cardId.replace(/[^a-z0-9]+/gi, '_');
+// 카드 글의 {d0}·{b1}·{k0}·{n1} 자리를 수치로 채운다.
+function cardText(d) {
+  return String(d.text || '').replace(/\{[dbkn](\d)\}/g, (_, i) => (d.v && d.v[i] != null ? d.v[i] : '?')).replace(/[.\s]+$/, '');
+}
+function cardPose(d) {
+  const t = String(d.text || '');
+  const out = [];
+  if (d.time) out.push('a time-bending move: glowing clock faces and clock hands swirling behind, the night sky brightening slightly');
+  if (d.atk && d.target === 'all') out.push('a wide sweeping attack hitting several enemies (enemies only as dark silhouettes on the right)');
+  else if (d.atk) out.push('attacking toward the right, the target only as a dark silhouette, impact flash');
+  if (/방어/.test(t) && !d.atk) out.push('a strong defensive pose, a glowing barrier or shield');
+  if (/회복/.test(t)) out.push('healing an ally with warm light');
+  if (/독/.test(t)) out.push('poison mist or poison sparkles');
+  if (/화상/.test(t)) out.push('flames and burning embers');
+  if (/정령/.test(t)) out.push('little star spirits');
+  if (/장전/.test(t)) out.push('loading or firing glowing shells');
+  if (/잠/.test(t)) out.push('sleepy dream magic');
+  if (/카드 \d장|뽑/.test(t)) out.push('cards or papers fanning out');
+  if (/별빛/.test(t)) out.push('gold coins and starlight');
+  if (/공중/.test(t)) out.push('high in the air above clouds');
+  if (/달/.test(t)) out.push('a big moon behind');
+  if (!out.length) out.push('a confident skill-casting pose with the character\'s signature effect');
+  if (d.exhaust) out.push('a one-time all-out move, the most dramatic version');
+  return out.join('; ');
+}
+const RARITY_CARD = {
+  c: 'Common card: a clean, simple pose.',
+  u: 'Uncommon card: a stylish dynamic pose with a stronger effect.',
+  r: 'Rare card: the most dramatic angle and the biggest, most beautiful effect.',
+};
+
 // ── 목록 만들기 ──────────────────────────────────────────
 const join = (...xs) => xs.filter(Boolean).join('\n\n');
 const rarityStyle = (r) => STYLE['rarity' + r];
@@ -291,10 +327,34 @@ export function assetList() {
     out.push(item('outfit', `${id}_outfit2`, batch, `${id}_outfit2.png`,
       join(base, STYLE.onModel, `${who}\nSame person, same face and hair, but in a ${c.outfit}. Full-body standing pose facing slightly right, transparent background. Native resolution 128x192 pixels, upscaled exactly 8x to 1024x1536.`),
       { reference_images: ref }));
-    for (const [cid, scene] of Object.entries(c.cards)) {
-      out.push(item('card', cid, batch, `${cid}.png`,
-        join(STYLE.pixel, `Small card illustration for ${c.name}'s skill card: ${scene}. ${c.name} may appear small and ON-MODEL from the attached reference. Simple strong composition readable at a tiny size. Accent colors: ${c.accent}. Make it 1536x1024; it will be cropped to the center and reduced to 64x44 pixels, so keep the subject in the middle and big.`),
-        { reference_images: ref }));
+  }
+
+  // 스킬 카드 그림: 동료 카드 전부. 그 동료가 그 기술을 쓰는 장면.
+  for (const [id, c] of Object.entries(CHARS)) {
+    const batch = `cards-${id}`;
+    const list = Object.entries(CARDS).filter(([, d]) => d.ch === id);
+    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 카드 ${list.length}장` });
+    const base = join(STYLE.pixel, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
+    for (const [cardId, d] of list) {
+      const who = d.sub === 'mimi' ? 'Mimi (the pink-haired twin) alone' : d.sub === 'momo' ? 'Momo (the sky-blue-haired twin) alone' : d.sub === 'both' ? 'both twins Mimi and Momo together' : c.name;
+      out.push(item('card', `card_${fileId(cardId)}`, batch, `card_${fileId(cardId)}.png`,
+        join(base, `Skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${who === c.name ? c.name : `${who} (${c.name})`}, ON-MODEL from the attached references, performing this exact skill: ${cardPose(d)}. Visual motifs for this character: ${c.fx}. Accent colors: ${c.accent}.\n${RARITY_CARD[d.rarity] || ''}\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.`),
+        { reference_images: [`chars/${id}_normal.png`, `chars/${id}_stand.png`], must_show: `${c.name} 얼굴, 「${d.name}」 효과` }));
+    }
+  }
+
+  // 인연 듀오 카드 그림 44장(두 사람이 함께 기술을 쓰는 장면), 11장씩 4묶음
+  const duoList = Object.entries(CARD_DUOS);
+  for (let n = 0; n < 4; n++) {
+    const batch = `cards-duo-${n + 1}`;
+    const part = duoList.slice(n * 11, n * 11 + 11);
+    batches.push({ id: batch, title: `인연 듀오 카드 ${n * 11 + 1}~${n * 11 + part.length}` });
+    for (const [key, d] of part) {
+      const [a, b] = key.split('+');
+      const A = CHARS[a], B = CHARS[b];
+      out.push(item('card', `duocard_${a}_${b}`, batch, `duocard_${a}_${b}.png`,
+        join(STYLE.pixel, STYLE.character, STYLE.onModel, `Duo skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${A.name} and ${B.name} together, both ON-MODEL from the attached references, combining their skills in one move: ${cardPose(d)}. ${A.name}'s motifs: ${A.fx}. ${B.name}'s motifs: ${B.fx}. Accent colors: ${A.accent} meeting ${B.accent}.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576.`),
+        { reference_images: [`chars/${a}_normal.png`, `chars/${b}_normal.png`], must_show: '두 사람 얼굴 둘 다' }));
     }
   }
 
