@@ -11,6 +11,7 @@ import { RELICS } from './data/relics.js';
 import { RULES, NODE, SHOP } from './data/rules.js';
 import { hasRelic, relicSum, relicMul, rollRelic } from './relics.js';
 import { tutNode, rigHand } from './tutorial.js';
+import { setMoon } from './effects.js';
 
 // ---------- 지도 만들기 (docs/10_details.md §4) ----------
 // 층 i의 칸 n개를 층 i+1의 칸 m개에 겹치지 않게 잇는다 (갈렸다 합쳐짐, 교차 없음)
@@ -74,7 +75,8 @@ export function reachable(r) {
 // 칸 시간: 기본 + 도구(구리 나침반 강적 -10, 멈춘 시계탑 +5)
 // 핀(지름길): 전투 칸 −5분
 // 밤의 깊이 2: +5분
-export const nodeTime = t => Math.max(0, NODE[t].min + (t === 'elite' ? relicSum('eliteTime') : 0) + (t === 'fight' ? partySum('fightTime') : 0) + relicSum('nodeTimeAdd') + (depthRule('nodeTime') || 0));
+// 도구: 칸 종류별 '<종류>Time' 필드(구리 나침반 eliteTime, 막차표 restTime)
+export const nodeTime = t => Math.max(0, NODE[t].min + relicSum(t + 'Time') + (t === 'fight' ? partySum('fightTime') : 0) + relicSum('nodeTimeAdd') + (depthRule('nodeTime') || 0));
 
 export function goNode(r, i) {
   const G = S.G, t = G.map.rows[r]?.[i];
@@ -182,9 +184,29 @@ function openShop() {
     const id = rollRelic(rng, null, relics.map(x => x.id)); if (!id) continue;
     relics.push({ id, price: cut(SHOP.relicPrice[RELICS[id].tier]), sold: false });
   }
-  G.shop = { cards, relics, talk: rng.pick(SHOP.talk), off: Math.round((1 - shopMul()) * 100) };
+  G.shop = { cards, relics, talk: rng.pick(SHOP.talk), off: Math.round((1 - shopMul()) * 100), special: openSpecial(rng, relics.map(x => x.id)) };
   G.haggle = 0;
   G.screen = 'shop';
+}
+// 특별 노점: 모래시계 노점(밤 시계로 산다) · 짐꾼 노점(체력으로 산다). 카드 2장 + 도구 1개
+function openSpecial(rng, taken = []) {
+  const sp = SHOP.special; if (rng.next() >= sp.chance) return null;
+  const kind = rng.pick(Object.keys(sp.kinds)), k = sp.kinds[kind], G = S.G, items = [];
+  for (let n = 0; n < 2; n++) {
+    const p = rng.pick(G.party), rare = n === 1;
+    const pool = Object.keys(CARDS).filter(id => CARDS[id].ch === p && CARDS[id].rarity === (rare ? 'r' : 'u') && !G.locked?.has(id) && !items.some(x => x.id === id));
+    if (pool.length) items.push({ kind: 'card', id: rng.pick(pool), cost: rare ? k.cardRare : k.card, sold: false });
+  }
+  const r = rollRelic(rng, ['c', 'u'], taken); if (r) items.push({ kind: 'relic', id: r, cost: k.relic, sold: false });
+  return { key: kind, name: k.name, pay: k.pay, talk: k.talk, items };
+}
+// 특별 노점에서 사기: time = 밤 시계 +분, hp = 모든 동료 체력 −(1 아래로는 안 내려감)
+export function specialBuy(i) {
+  const G = S.G, sp = G.shop?.special, it = sp?.items[i]; if (!it || it.sold) return;
+  if (sp.pay === 'time') addTime(it.cost);
+  else for (const p of G.party) { const m = member(p); if (!m.down) m.hp = Math.max(1, m.hp - it.cost); }
+  it.sold = true;
+  if (it.kind === 'card') G.deck.push(it.id); else gainRelic(it.id);
 }
 export const removePrice = () => SHOP.remove + SHOP.removeStep * S.G.removes;
 export function shopBuy(kind, i) {
@@ -208,11 +230,15 @@ export function leaveShop() { S.G.shop = null; nextRow(); }
 // ---------- 사건 ----------
 function openEvent(id) {
   const G = S.G;
-  let pool = EVENTS.filter(e => !G.seenEvents.includes(e.id));
-  if (!pool.length) pool = EVENTS;
+  // 달 사건(moon)은 그 달일 때만, 막 사건(acts)은 그 막에서만
+  const fits = e => (!e.moon || e.moon === G.moon) && (!e.acts || e.acts.includes(G.act));
+  let pool = EVENTS.filter(e => fits(e) && !G.seenEvents.includes(e.id));
+  if (!pool.length) pool = EVENTS.filter(fits);
   const def = EVENTS.find(e => e.id === id) || G.rng.pick(pool);
   G.seenEvents.push(def.id);
-  G.event = { def, mate: G.rng.pick(G.party) };
+  // 동료 전용 선택지(need)는 그 동료가 파티에 있고 서 있을 때만 보인다
+  const opts = def.opts.filter(o => !o.need || (G.party.includes(o.need) && !member(o.need).down));
+  G.event = { def, opts, mate: G.rng.pick(G.party) };
   G.screen = 'event';
 }
 // 소금 주머니: 나쁜 결과(저주·체력 잃기)를 판마다 한 번 막는다
@@ -230,6 +256,17 @@ export function eventApi() {
     loseHpOne: (id, n) => { if (salted()) return; const m = member(id); if (m && !m.down) m.hp = Math.max(1, m.hp - n); },
     maxHp: n => { for (const p of G.party) { const m = member(p); m.max += n; if (!m.down) m.hp += n; } },
     addRandomCard: () => { G.deck.push(rewardCards()[0]); },
+    // 그 동료의 카드 1장 (희귀도 r·u·c를 주면 그중에서)
+    addCardOf: (ch, r) => {
+      const mine = Object.keys(CARDS).filter(id => CARDS[id].ch === ch && !G.locked?.has(id)), pool = r ? mine.filter(id => CARDS[id].rarity === r) : mine;
+      const id = G.rng.pick(pool.length ? pool : mine); if (id) G.deck.push(id);
+    },
+    healOne: (id, n) => healMember(id, n),
+    maxHpOne: (id, n) => { const m = member(id); if (!m) return; m.max += n; if (!m.down) m.hp += n; },
+    removeCurse: () => { const i = G.deck.findIndex(id => cardData(id).ch === 'curse'); if (i >= 0) { G.deck.splice(i, 1); return true; } return false; },
+    get hasCurse() { return G.deck.some(id => cardData(id).ch === 'curse'); },
+    relicTier: t => gainRelic(rollRelic(G.rng, [t]) || rollRelic(G.rng)),
+    get clock() { return G.clock; },
     removeCard: () => { G.back = null; G.screen = 'remove'; return true; },
     dupeCard: () => { G.screen = 'dupe'; return true; },
     addCurse: () => { if (!salted()) G.deck.push(G.rng.pick(CURSES)); },
@@ -257,7 +294,7 @@ export function eventApi() {
 }
 
 export function chooseOpt(i) {
-  const G = S.G, opt = G.event?.def.opts[i]; if (!opt) return;
+  const G = S.G, opt = G.event?.opts[i]; if (!opt) return;
   const x = eventApi();
   if (opt.can && !opt.can(x)) return;
   const stay = opt.f(x);
@@ -273,7 +310,7 @@ export function useRelic(id) {
   if (d.use === 'moon' && !S.C) return false;    // 달빛 병은 전투 중에만
   G.used[id] = true;
   if (d.use === 'rewind') rewind(d.v);
-  else if (d.use === 'moon') { const ks = Object.keys(MOONS); G.moon = ks[(ks.indexOf(G.moon) + 1) % ks.length]; if (S.C) S.C.moonBase = G.moon; }
+  else if (d.use === 'moon') { const ks = Object.keys(MOONS); setMoon(ks[(ks.indexOf(G.moon) + 1) % ks.length]); S.C.moonBase = G.moon; }
   return true;
 }
 export { endRun };

@@ -320,6 +320,12 @@ function foeActFx(e) {
   else if (e.t === 'buf') { for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: 0, vy: rnd(-1.4, -.6), g: 0, life: 24, col: '#ff7a6a', s: 1 }); num(r.cx, r.y, `힘 +${e.v}`, 'buf', 10); sfx('mana', { rate: .7 }); }
   else if (e.t === 'deb' || e.t === 'curse') { ring(r.cx, r.cy, '#b48ae8', 6, 30, 12); sfx('poison', { rate: .8 }); }
   else if (e.t === 'time') { /* 'time' 사건이 시계를 보여 준다 */ }
+  else if (e.t === 'aoe') { pulse(el, SET.shake ? 'jlunge' : 'jflash', 260); ring(r.cx, r.cy, '#ff9a6a', 8, 44, 14); }
+  else if (e.t === 'boom') { boomFx(r.cx, r.cy); sfx('cannon'); }
+  else if (e.t === 'gblk') { for (const f of document.querySelectorAll('.foe:not(.gone)')) { const q = rel(f); shieldIcon(q.cx, q.cy - 4, '#c9d2f0'); } sfx('block', { vol: .6 }); }
+  else if (e.t === 'mend') { ring(r.cx, r.cy, '#7dff9a', 6, 28, 12); sfx('heal', { vol: .6 }); }
+  else if (e.t === 'sum' || e.t === 'aim') { ring(r.cx, r.cy, '#f0d040', 6, 30, 12); }
+  else if (e.t === 'steal') { ring(r.cx, r.cy, '#b48ae8', 6, 30, 12); sfx('card', { rate: .8 }); }
 }
 function tickFx(e) {
   const el = foeEl(e.i); if (!el) return;

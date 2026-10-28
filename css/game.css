@@ -765,3 +765,6 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s steps
 #cut .bossband.phase .stripe{border-color:#ffb070;background:repeating-linear-gradient(135deg,#2a1a0a 0 10px,#1c1206 10px 20px)}
 #cut .bossband.phase .tx b{font-size:20px;text-shadow:3px 3px 0 #b0601a}
 #stage.calm #fx{display:none}
+.shopspecial{display:flex;flex-direction:column;gap:4px}
+.sphead{margin:0;font-size:10px;text-align:center}
+.sphead small{color:var(--dim)}

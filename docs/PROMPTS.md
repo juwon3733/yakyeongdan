@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 1 · 전체 471장 · 묶음 56개
+style_version 1 · 전체 483장 · 묶음 56개
 
 ## 묶음
 
@@ -54,9 +54,9 @@ style_version 1 · 전체 471장 · 묶음 56개
 | `cards-duo-4` | 인연 듀오 카드 34~44 | 11 |
 | `cg-star5` | ★5 전신 CG | 4 |
 | `duo` | 인연 듀오 컷인 (처음 8쌍) | 8 |
-| `enemy-act1` | 1막 적 | 6 |
-| `enemy-act2` | 2막 적 | 6 |
-| `enemy-act3` | 3막 적 | 6 |
+| `enemy-act1` | 1막 적 | 10 |
+| `enemy-act2` | 2막 적 | 10 |
+| `enemy-act3` | 3막 적 | 10 |
 | `boss-lighthouse` | 보스 등대지기 | 3 |
 | `boss-cloud_captain` | 보스 구름 기사단장 | 3 |
 | `boss-dawn` | 보스 새벽 | 3 |
@@ -1025,8 +1025,12 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `crab_soldier` | `assets/enemies/crab_soldier.png` | 768×768 투명 | — | — |
 | `dock_pirate` | `assets/enemies/dock_pirate.png` | 768×768 투명 | — | — |
 | `gulls` | `assets/enemies/gulls.png` | 768×768 투명 | — | — |
+| `lamp_eel` | `assets/enemies/lamp_eel.png` | 768×768 투명 | — | — |
+| `powder_sailor` | `assets/enemies/powder_sailor.png` | 768×768 투명 | — | — |
+| `captain_parrot` | `assets/enemies/captain_parrot.png` | 768×768 투명 | — | — |
 | `anchor_giant` | `assets/enemies/anchor_giant.png` | 1024×1024 투명 | — | — |
 | `fog_witch` | `assets/enemies/fog_witch.png` | 1024×1024 투명 | — | — |
+| `smuggler_boss` | `assets/enemies/smuggler_boss.png` | 1024×1024 투명 | — | — |
 
 ## `enemy-act2` — 2막 적
 
@@ -1036,8 +1040,12 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `feather_knight` | `assets/enemies/feather_knight.png` | 768×768 투명 | — | — |
 | `thunder_sheep` | `assets/enemies/thunder_sheep.png` | 768×768 투명 | — | — |
 | `vane_soldier` | `assets/enemies/vane_soldier.png` | 768×768 투명 | — | — |
+| `mist_jelly` | `assets/enemies/mist_jelly.png` | 768×768 투명 | — | — |
+| `kite_knight` | `assets/enemies/kite_knight.png` | 768×768 투명 | — | — |
+| `puff_bomber` | `assets/enemies/puff_bomber.png` | 768×768 투명 | — | — |
 | `thunderbird` | `assets/enemies/thunderbird.png` | 1024×1024 투명 | — | — |
 | `twin_vanes` | `assets/enemies/twin_vanes.png` | 1024×1024 투명 | — | — |
+| `storm_trumpeter` | `assets/enemies/storm_trumpeter.png` | 1024×1024 투명 | — | — |
 
 ## `enemy-act3` — 3막 적
 
@@ -1047,8 +1055,12 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `shadow_cat` | `assets/enemies/shadow_cat.png` | 768×768 투명 | — | — |
 | `meteor_archer` | `assets/enemies/meteor_archer.png` | 768×768 투명 | — | — |
 | `clock_angel` | `assets/enemies/clock_angel.png` | 768×768 투명 | — | — |
+| `tail_comet` | `assets/enemies/tail_comet.png` | 768×768 투명 | — | — |
+| `gear_knight` | `assets/enemies/gear_knight.png` | 768×768 투명 | — | — |
+| `star_thief` | `assets/enemies/star_thief.png` | 768×768 투명 | — | — |
 | `meteor_rider` | `assets/enemies/meteor_rider.png` | 1024×1024 투명 | — | — |
 | `moon_shadow` | `assets/enemies/moon_shadow.png` | 1024×1024 투명 | — | — |
+| `constellation_sage` | `assets/enemies/constellation_sage.png` | 1024×1024 투명 | — | — |
 
 ## `boss-lighthouse` — 보스 등대지기
 

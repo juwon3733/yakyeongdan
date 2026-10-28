@@ -182,30 +182,42 @@ export const ENEMIES = {
     crab_soldier: '게 갑옷병 — a soldier wearing a huge crab shell as armor, claws as weapons',
     dock_pirate: '부두 해적 — a sneaky dock pirate with a bandana and a hook, a cutlass',
     gulls: '갈매기 떼 — a flock of three mischievous seagulls with glowing eyes',
+    lamp_eel: '등불 장어 — a long eel with a glowing lantern lure, crackling with small sparks',
+    powder_sailor: '화약통 수병 — a stubby sailor whose body is a gunpowder barrel, a lit fuse on top of the head',
+    captain_parrot: '선장 앵무새 — a bossy red parrot in a tiny captain hat, squawking orders',
   },
   act1_elite: {
     anchor_giant: '닻 거인 — a huge rusty giant built from an anchor and chains',
     fog_witch: '안개 마녀 — an elegant adult witch woman wrapped in sea fog, a lantern on a long pole, a gacha-style outfit',
+    smuggler_boss: '밀수꾼 두목 — a broad-shouldered smuggler chief with a long coat full of stolen cards and trinkets, an eyepatch',
   },
   act2: {
     cloud_spirit: '구름 정령 — a puffy cloud spirit with a stormy face',
     feather_knight: '깃털 기사 — a small knight in feather armor with a winged helmet',
     thunder_sheep: '천둥 양 — a fluffy sheep crackling with lightning',
     vane_soldier: '바람개비 병사 — a soldier with a pinwheel shield spinning in the wind',
+    mist_jelly: '안개 해파리 — a floating pale violet jellyfish made of mist, healing glow in its tentacles',
+    kite_knight: '연 기사 — a small knight riding a diamond-shaped kite with a long ribbon tail',
+    puff_bomber: '뭉게 자폭병 — a round angry cloud puff with a fuse, about to burst',
   },
   act2_elite: {
     thunderbird: '번개새 — a large bird of crackling lightning',
     twin_vanes: '쌍둥이 풍향계 — two living weathervanes, a rooster and a fish, back to back (one image with both)',
+    storm_trumpeter: '폭풍 나팔수 — a cloud-knight herald blowing a huge brass trumpet that spills storm clouds',
   },
   act3: {
     star_statue: '별 조각상 — a stone statue embedded with glowing stars',
     shadow_cat: '그림자 고양이 — a sleek shadow cat with starry eyes',
     meteor_archer: '유성 사수 — an archer whose arrows are tiny meteors',
     clock_angel: '시계태엽 천사 — a clockwork angel with gear wings, a clock face for a halo',
+    tail_comet: '꼬리별 — a small grinning comet with a long sparkling tail',
+    gear_knight: '톱니 기사 — a knight whose armor is covered in spinning spiked gears',
+    star_thief: '별 도둑 — a nimble masked thief with a sack of stolen stars',
   },
   act3_elite: {
     meteor_rider: '유성 기수 — a rider on a flaming meteor steed, a crowned helmet',
     moon_shadow: '달의 그림자 — a shadowy figure shaped by moonlight, crescent blades',
+    constellation_sage: '성좌 마법사 — an adult woman astronomer-mage in a star-chart robe, a gacha-style outfit, drawing constellation lines with a wand',
   },
 };
 

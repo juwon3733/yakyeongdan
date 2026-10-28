@@ -1,5 +1,5 @@
 // 전투 엔진: 턴, 손패, 적 1~3마리(의도·노림·상태), 동료별 체력·방어·상태, 대열, 쓰러짐, 연계·듀오, 패시브, 저주.
-import { S, addTime, timeCost, logMsg, isDawn, depthRule, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll } from './run.js';
+import { S, addTime, rewind, timeCost, logMsg, isDawn, depthRule, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll } from './run.js';
 import { hasRelic, relicSum, relicFlag, rollRelic } from './relics.js';
 import { RELICS } from './data/relics.js';
 import { effects as E, draw } from './effects.js';
@@ -7,7 +7,7 @@ import { cardData, duoKey, DUOS, CARDS } from './data/cards.js';
 import { CHARACTERS } from './data/characters.js';
 import { FOE } from './data/enemies.js';
 import { MOONS } from './data/moons.js';
-import { RULES, REWARD } from './data/rules.js';
+import { RULES, REWARD, AIM_NAME } from './data/rules.js';
 
 let uid = 1;
 export const newInst = id => ({ uid: uid++, id });
@@ -35,13 +35,7 @@ export function startCombat(ids, kind) {
   const G = S.G;
   // 밤의 깊이: 강적·보스·일반 적 체력 +%
   const hpMul = 1 + (depthRule(kind === 'elite' ? 'eliteHp' : kind === 'boss' ? 'bossHp' : 'fightHp') || 0);
-  const foes = ids.map((k, i) => {
-    const d = FOE[k], hp = Math.round(d.hp * hpMul);
-    G.foesMet?.add(k);
-    // 6시 이후 들어간 전투: 적이 힘 +3으로 시작
-    return { key: k, i, ...d, hp, max: hp, pi: 0, block: 0, str: isDawn() ? RULES.dawnStartStr : 0, poison: 0, weak: 0, vuln: 0, bleed: 0, burn: 0,
-      armor: d.armor || 0, acts: d.acts || 1, p2: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null };
-  });
+  const foes = ids.map((k, i) => makeFoe(k, i, hpMul));
   const C = S.C = {
     kind, all: foes, tf: null, hover: null,
     draw: G.rng.shuffle(G.deck.map(id => ({ uid: uid++, id }))), hand: [], disc: [], exh: [],
@@ -72,11 +66,21 @@ export function startCombat(ids, kind) {
   // 보름달: 정령 피해 +1 등은 moons.js. 토모리 「등대 신호」: 다음 전투 시작 에너지·카드
   if (G.nextFight) { C.nextEnergy += G.nextFight.energy; C.nextDraw += G.nextFight.draw; G.nextFight = null; }
   G.screen = 'combat';
-  const line = foes.find(f => f.line)?.line;
-  if (line) logMsg(`<b>${foes.find(f => f.line).name}</b> ${line}`);
+  // 강적·보스 앞 한 줄 (lines면 그중 하나)
+  const sp = foes.find(f => f.line || f.lines);
+  const line = sp ? (sp.lines ? G.rng.pick(sp.lines) : sp.line) : '';
+  if (sp) logMsg(`<b>${sp.name}</b> ${line}`);
   S.fxq.length = 0;   // 지난 화면의 남은 연출은 버린다
-  pushFx({ kind: 'combat', type: kind, boss: kind === 'boss' ? foes[0].name : null, line: line || '' });
+  pushFx({ kind: 'combat', type: kind, boss: kind === 'boss' ? foes[0].name : null, line });
   startTurn();
+}
+
+// 적 하나 만들기 (전투 시작·부하 부르기). 6시 이후 들어간 전투: 적이 힘 +3으로 시작
+function makeFoe(k, i, hpMul = 1) {
+  const d = FOE[k], hp = Math.round(d.hp * hpMul);
+  S.G.foesMet?.add(k);
+  return { key: k, i, ...d, pat: d.pat.slice(), hp, max: hp, pi: 0, block: 0, str: isDawn() ? RULES.dawnStartStr : 0, poison: 0, weak: 0, vuln: 0, bleed: 0, burn: 0,
+    armor: d.armor || 0, acts: d.acts || 1, p2: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null, stolen: [] };
 }
 
 // 등대 불빛: 대열 자리 번호. 체력이 절반 아래면 불빛 둘.
@@ -99,6 +103,18 @@ function relicsAtStart() {
     if (d.poisonAll) for (const f of livingFoes()) f.poison += d.poisonAll;
     if (d.burnAll) for (const f of livingFoes()) f.burn += d.burnAll;
   }
+  // 달 도구: 그 달일 때만 (js/data/relics.js moonStart)
+  for (const id of S.G.relics) {
+    const m = RELICS[id].moonStart; if (!m || S.G.moon !== m.moon) continue;
+    if (m.energy) C.energy += m.energy;
+    if (m.chain) C.chain = Math.max(C.chain, m.chain);
+    if (m.blockAll) for (const p of L) C.blocks[p] += m.blockAll;
+    if (m.poisonAll) for (const f of livingFoes()) f.poison += m.poisonAll;
+  }
+  // 첫 턴 연계: 별자리 띠(3칸) · 붉은 실 매듭(인연 짝이 있으면)
+  if (relicSum('chainStart')) C.chain = Math.max(C.chain, Math.min(RULES.chainMax, relicSum('chainStart')));
+  if (relicSum('bondStart') && Object.keys(DUOS).some(k => k.split('+').every(p => S.G.party.includes(p))))
+    C.chain = Math.max(C.chain, relicSum('bondStart'));
   const gun = relicSum('pistol');
   if (gun) { const f = S.G.rng.pick(livingFoes()); if (f) { f.hp = Math.max(0, f.hp - gun); pushFx({ kind: 'hitFoe', i: f.i, dmg: gun, blocked: 0, bleed: 0, actor: null, gun: true }); logMsg(`권총: ${f.name}에게 피해 <b>${gun}</b>`); killCheck(f); } }
 }
@@ -119,6 +135,7 @@ function startTurn() {
   C.lostTurn = {}; C.reserve = 0; C.double = false; C.lastPlay = null;
   if (!first) C.moonPick = false;
   for (const p in C.nextBlock) if (alive(p)) C.blocks[p] += C.nextBlock[p];
+  if (relicSum('frontBlockTurn')) { const f0 = living()[0]; if (f0) C.blocks[f0] += relicSum('frontBlockTurn'); }   // 밀물 종
   C.nextBlock = {};
   if (C.asleep && alive('noel')) C.mana += RULES.sleepMana + E.dark();
   if (C.late) { C.mana *= 2; C.late = false; }
@@ -147,7 +164,7 @@ export function foeDmg(f, v, id) {
   return Math.max(0, Math.floor((v + f.str) * (f.weak ? RULES.weakMul : 1) * (ms?.vuln ? RULES.vulnMul : 1) * (1 - (f.dim || 0))));
 }
 export function intentText(f) {
-  const it = intentOf(f), id = intentHits(it) ? aimTarget(f) : null, v = foeDmg(f, it.v, id);
+  const it = intentOf(f), id = intentHits(it) ? aimTarget(f) : null, v = foeDmg(f, it.v || 0, id);
   const two = f.acts > 1 ? ` <span class="two">행동 ×${f.acts}</span>` : '';
   return one(it, v) + two;
 }
@@ -158,6 +175,13 @@ function one(it, v) {
   if (it.t === 'deb') return `${ST_NAME[it.s]} ${it.v}`;
   if (it.t === 'curse') return `저주 「${CARDS[it.card].name}」 ${it.n}장`;
   if (it.t === 'time') return `밤 시계 +${it.v}분`;
+  if (it.t === 'aoe') return `모두 공격 ${v}`;
+  if (it.t === 'boom') return `자폭 ${v} (모두)`;
+  if (it.t === 'gblk') return `모든 적 방어 ${it.v}`;
+  if (it.t === 'mend') return `적 회복 ${it.v}`;
+  if (it.t === 'sum') return `부르기: ${FOE[it.id].name}`;
+  if (it.t === 'steal') return `카드 훔치기`;
+  if (it.t === 'aim') return `노림 바꿈: ${AIM_NAME[it.a]}`;
   return `공격 ${v} · 방어 ${it.b}`;
 }
 
@@ -185,6 +209,8 @@ export function dmgToFoe(f, n, actor, pierceBlock = false) {
   let bleed = 0;
   if (f.bleed > 0) { bleed = f.bleed; f.hp = Math.max(0, f.hp - bleed); f.bleed--; }
   pushFx({ kind: 'hitFoe', i: f.i, dmg: d, blocked, bleed, actor, crit: f.vuln > 0, slash: !!C.curSlash });
+  // 가시(등불 장어·톱니 기사): 친 동료가 피해를 받는다
+  if (f.thorns && d + blocked > 0 && actor && alive(actor) && !C.spiritHit) hurtMember(actor, f.thorns, `${f.name}의 가시`);
   return { dealt: d, blocked, bleed };
 }
 // 보스 2단계: 체력이 phase2.at 비율 아래로 내려가면 한 번 바뀐다
@@ -201,6 +227,8 @@ export function killCheck(f) {
   if (f.hp <= 0 && !f.dead) {
     f.dead = true; pushFx({ kind: 'kill', i: f.i, boss: S.C.kind === 'boss' }); logMsg(`<b>${f.name}</b> 쓰러뜨림`); if (S.C.tf === f.i) S.C.tf = null;
     if (f.bounty) { gainGold(f.bounty); logMsg(`현상금: 별빛 <b>+${f.bounty}</b>`); }
+    if (f.stolen?.length) { S.C.disc.push(...f.stolen); logMsg(`훔쳐 간 카드 ${f.stolen.length}장을 되찾았다`); f.stolen = []; }
+    if (f.deathBoom) for (const p of living()) hurtMember(p, f.deathBoom, `${f.name}의 폭발`);
   }
 }
 
@@ -282,9 +310,11 @@ export function playCard(id, pick = {}) {
     // 엘레오노르: 매 턴 처음 쓴 시간 카드는 에너지를 돌려준다
     if (!C.timeUsedTurn) { const back = G.party.reduce((s, p) => s + (alive(p) ? CHARACTERS[p].passive?.firstTimeEnergy || 0 : 0), 0); if (back) C.energy += back; }
   }
-  if (d.time) C.timeUsedTurn++;
+  if (d.time) { C.timeUsedTurn++; if (relicSum('timeCardBlock') && who) C.blocks[who] += relicSum('timeCardBlock'); }   // 모래시계 펜던트
   let duo = null, bond = null;
   if (d.ch === 'duo' && !d.bond) G.duoSet.add(`${d.a}+${d.b}`);
+  // 맞춤 목도리·한 쌍의 방패: 듀오를 쓰면 두 사람에게
+  if (d.ch === 'duo') for (const p of [d.a, d.b]) if (alive(p)) { if (relicSum('duoBlock')) C.blocks[p] += relicSum('duoBlock'); if (relicSum('duoHeal')) healMember(p, relicSum('duoHeal')); }
   if (d.ch !== 'duo' && d.ch !== 'curse') {
     // 연계 열쇠: 쌍둥이는 미미·모모가 서로 다른 동료. 「둘 다」 카드와 핀의 카드(link)는 언제나 잇는다.
     const key = d.sub ? `${d.ch}:${d.sub}` : d.ch;
@@ -325,7 +355,7 @@ export function playCard(id, pick = {}) {
   C.bonus = 0; C.actor = null; C.target = null; C.tf = null; C.atkCard = false;
   if (d.exhaust || inst.ghost) C.exh.push(inst); else C.disc.push(inst);
   delete inst.disc;
-  if (duo) { C.hand.push({ uid: uid++, id: 'duo:' + duo }); G.duos++; }
+  if (duo) { C.hand.push({ uid: uid++, id: 'duo:' + duo }); G.duos++; if (relicSum('duoDraw')) draw(relicSum('duoDraw')); }   // 쌍별 펜던트
   if (bond) C.hand.push({ uid: uid++, id: 'bond:' + bond });
   if (!livingFoes().length) winCombat();
   return { duo, bond };
@@ -336,7 +366,8 @@ export function swapInCombat(i) {
   const C = S.C, F = S.G.formation;
   if (C.swaps >= swapLimit() || i < 0 || i + 1 >= F.length) return false;
   swapFormation(i, i + 1); C.swaps++;
-  if (!relicFlag('swapFree')) for (const p of [F[i], F[i + 1]]) C.blocks[p] = Math.max(0, C.blocks[p] - RULES.swapBlockCost);
+  if (relicSum('swapBlock')) for (const p of [F[i], F[i + 1]]) C.blocks[p] += relicSum('swapBlock');     // 묶음 밧줄
+  else if (!relicFlag('swapFree')) for (const p of [F[i], F[i + 1]]) C.blocks[p] = Math.max(0, C.blocks[p] - RULES.swapBlockCost);
   logMsg(`대열을 바꿨다: ${CHARACTERS[F[i]].name} ↔ ${CHARACTERS[F[i + 1]].name}`);
   return true;
 }
@@ -357,6 +388,30 @@ function foeAct(f) {
   else if (it.t === 'deb') { const id = aimTarget(f); if (id) { C.ms[id][it.s] += it.v; logMsg(`${f.name} → ${CHARACTERS[id].name}: ${ST_NAME[it.s]} ${it.v}`); } }
   else if (it.t === 'curse') { for (let k = 0; k < it.n; k++) C.draw.push({ uid: uid++, id: it.card }); logMsg(`${f.name}: 저주 「${CARDS[it.card].name}」 ${it.n}장이 뽑을 더미 위에`); }
   else if (it.t === 'time') { addTime(it.v); logMsg(`${f.name}이(가) 밤 시계를 <b>${it.v}분</b> 돌렸다`); }
+  else if (it.t === 'aoe') { for (const p of living()) hurtMember(p, foeDmg(f, it.v, p), f.name); }
+  else if (it.t === 'boom') {
+    for (const p of living()) hurtMember(p, foeDmg(f, it.v, p), `${f.name}의 자폭`);
+    f.hp = 0; f.deathBoom = 0; killCheck(f);
+  }
+  else if (it.t === 'gblk') { for (const g of livingFoes()) g.block += it.v; logMsg(`${f.name}: 모든 적 방어 ${it.v}`); }
+  else if (it.t === 'mend') {
+    const g = livingFoes().reduce((a, b) => (b.hp / b.max) < (a.hp / a.max) ? b : a);
+    g.hp = Math.min(g.max, g.hp + it.v); logMsg(`${f.name} → ${g.name}: 체력 ${it.v} 회복`);
+  }
+  else if (it.t === 'sum') {
+    if (livingFoes().length < 3 && C.all.length < 6) {
+      const g = makeFoe(it.id, C.all.length, 1 + (depthRule('fightHp') || 0)); g.str = Math.max(g.str, f.str > 0 ? 0 : g.str);
+      C.all.push(g); logMsg(`${f.name}이(가) <b>${g.name}</b>을(를) 불렀다`);
+    } else { f.block += 6; logMsg(`${f.name} 방어 6`); }
+  }
+  else if (it.t === 'steal') {
+    for (let k = 0; k < it.n; k++) {
+      const pile = C.draw.length ? C.draw : C.disc; if (!pile.length) break;
+      const j = S.G.rng.int(pile.length), [h] = pile.splice(j, 1); f.stolen.push(h);
+      logMsg(`${f.name}이(가) 「${cardDef(h).name}」을(를) 훔쳤다`);
+    }
+  }
+  else if (it.t === 'aim') { f.aim = it.a; logMsg(`${f.name}의 노림: ${AIM_NAME[it.a]}`); }
   else { enemyHit(f, it.v); f.block += it.b; }
 }
 
@@ -422,6 +477,8 @@ export function rewardCards(kind = 'fight', extra = 0) {
   }
   if (kind !== 'boss') G.pity = out.some(id => CARDS[id].rarity === 'r') ? 0 : G.pity + REWARD.pityStep;
   for (const id of out) G.offered?.add(id);
+  // 별자리 띠: 보상 카드가 한 장 적다 (보스 보상은 그대로)
+  if (kind !== 'boss' && relicSum('rewardLess')) out.length = Math.max(1, out.length - relicSum('rewardLess'));
   return out;
 }
 
@@ -444,6 +501,7 @@ function winCombat() {
   const x = { gold: n => gainGold(n), healAll: n => healAll(n) };
   for (const p of G.party) CHARACTERS[p].passive?.onWin?.(G, x);
   if (winGold) gainGold(winGold);
+  if (relicSum('winRewind')) rewind(relicSum('winRewind'));   // 시곗줄·거꾸로 도는 시계
   if (k === 'boss') {
     G.bossKills++;
     if (G.tutorial) { G.tutorial.won = true; G.screen = 'tutdone'; return; }   // 첫 실행 튜토리얼 끝 (js/tutorial.js)

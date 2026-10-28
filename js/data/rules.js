@@ -41,6 +41,11 @@ export const SHOP = {
   relicPrice: { c: 120, u: 160, r: 220 },
   remove: 75, removeStep: 25,
   upgrade: 50,
+  // 가끔 옆에 서는 특별 노점 (별빛 대신 다른 것으로 산다). chance: 야시장마다 나올 확률
+  special: { chance: .35, kinds: {
+    clock:  { name: '모래시계 노점', pay: 'time', talk: '"값은 별빛 말고, 밤 몇 분이면 돼."', card: 15, cardRare: 25, relic: 25 },
+    porter: { name: '짐꾼 노점', pay: 'hp', talk: '"짐 좀 들어 주면 하나 줄게. 무겁다고."', card: 5, cardRare: 8, relic: 6 },
+  } },
   talk: ['"손님, 오늘만 특별가."', '"탑 위에서 쓸 물건은 탑 위에서 사야지."', '"이 등불? 지난 야경단이 두고 간 거야."', '"값은 별빛으로. 외상은… 안 돼."', '"새벽이 오기 전에 문 닫는다고."'],
 };
 // 보상 카드 희귀도 확률 (docs/10_details.md §1). r 희귀, u 보통, 나머지 흔함. 희귀가 안 나온 보상마다 pityStep씩 희귀 확률 +

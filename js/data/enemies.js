@@ -3,11 +3,16 @@
 //   그 밖의 표시: noPoisonWhileBlock(방어가 남아 있으면 독이 안 듦), light(등대 불빛)
 //   armor: 공격 한 번마다 받는 피해 감소 · acts: 한 턴 행동 수 · turnClock: 내 턴 시작마다 밤 시계 +분
 //   phase2: 체력이 at 비율 아래가 되면 한 번 바뀜 { at, msg, clockOnce, ...바꿀 필드(armor·acts·aim·turnClock·pat) }
-//   line: 보스 앞 한 줄 대사
+//   line / lines: 강적·보스 앞 한 줄 대사 (lines면 그중 하나)
+//   thorns: 이 적을 친 동료가 받는 피해 · deathBoom: 쓰러질 때 모든 동료 피해
 //   ACTS[막]: easy(1층 전투), fights(그 위 전투), elites, boss — 각 항목은 적 id 배열(1~3마리)
 // 행동: A 공격(v, 횟수) · B 방어 · U 힘 · M 공격+방어 · W 동료에게 상태(약화·취약) · K 저주 카드를 뽑을 더미 위에 · T 밤 시계 +분
+//   R 모든 동료 공격 · X 자폭(모든 동료 피해 후 쓰러짐) · G 모든 적 방어 · H 가장 약한 적 회복 · Z 부하 부르기(살아 있는 적이 3 미만일 때)
+//   S 카드 훔치기(뽑을 더미에서 1장, 그 적을 쓰러뜨리면 버린 더미로 돌아옴) · N 노림 바꾸기
 const A = (v, n = 1) => ({ t: 'atk', v, n }), B = v => ({ t: 'blk', v }), U = v => ({ t: 'buf', v }), M = (v, b) => ({ t: 'mix', v, b });
 const W = (s, v) => ({ t: 'deb', s, v }), K = (card, n) => ({ t: 'curse', card, n }), T = v => ({ t: 'time', v });
+const R = v => ({ t: 'aoe', v }), X = v => ({ t: 'boom', v }), G = v => ({ t: 'gblk', v }), H = v => ({ t: 'mend', v });
+const Z = id => ({ t: 'sum', id }), S = (n = 1) => ({ t: 'steal', n }), N = a => ({ t: 'aim', a });
 
 export const FOE_PAL = {
   sea:    { h: '#6ad0e0', H: '#2a8aa0', e: '#ffffff', o: '#2a5a7a', O: '#163a52', a: '#a8f0ff' },
@@ -21,6 +26,14 @@ export const FOE_PAL = {
   star:   { h: '#1a1a3a', H: '#0a0a1e', e: '#ffe080', o: '#3a3a7a', O: '#22224a', a: '#ffe080', skin: '#c0c0d8' },
   cat:    { h: '#141418', H: '#08080a', e: '#a0ff80', o: '#202028', O: '#101014', a: '#a0ff80', skin: '#c0c0d8' },
   dawn:   { h: '#ffd0a0', H: '#e08a5a', e: '#ff5a3a', o: '#ffe8d0', O: '#e0b090', a: '#ff8a3a' },
+  eel:    { h: '#3a6a8a', H: '#1a3a5a', e: '#fff080', o: '#2a4a6a', O: '#14283e', a: '#fff080' },
+  powder: { h: '#5a3a2a', H: '#2a1a10', e: '#ff8040', o: '#8a5a3a', O: '#5a3420', a: '#ff6030' },
+  parrot: { h: '#e04040', H: '#a02020', e: '#ffe060', o: '#40a060', O: '#206a3a', a: '#4080e0' },
+  jelly:  { h: '#d8c8f8', H: '#9a88c8', e: '#7a5ae0', o: '#c0b0f0', O: '#8a78c0', a: '#f0e8ff' },
+  kite:   { h: '#e0c060', H: '#a08030', e: '#3a5a8a', o: '#e06a5a', O: '#a0403a', a: '#ffffff' },
+  comet:  { h: '#a0e0ff', H: '#4aa0e0', e: '#ffffff', o: '#3a6aa0', O: '#1e3a6a', a: '#ffe080', skin: '#c0d8f0' },
+  gear:   { h: '#b0a080', H: '#706040', e: '#ff8040', o: '#8a8070', O: '#5a5040', a: '#e0b84a', skin: '#c8c0b0' },
+  thief:  { h: '#2a2a4a', H: '#14142a', e: '#ffe080', o: '#4a3a6a', O: '#2a2040', a: '#ffe080', skin: '#c0c0d8' },
 };
 
 export const FOE = {
@@ -29,9 +42,17 @@ export const FOE = {
   crab:    { name: '게 갑옷병', hp: 34, pal: 'crab', noPoisonWhileBlock: true, pat: [B(8), A(12), M(8, 5)] },
   pirate:  { name: '부두 해적', hp: 26, pal: 'pirate', aim: 'back', pat: [A(8), U(2), A(4, 3)] },
   gull:    { name: '갈매기', hp: 10, pal: 'gull', aim: 'back', small: true, pat: [A(5)] },
-  anchor:  { name: '닻 거인', hp: 70, pal: 'pirate', pat: [A(18), B(10), A(8, 2), U(3)] },
-  witch:   { name: '안개 마녀', hp: 58, pal: 'witch', long: true, aim: 'weakest', pat: [W('weak', 2), A(12), K('curse.fog', 2), A(7, 2)] },
-  keeper:  { name: '등대지기', hp: 95, pal: 'keeper', long: true, crown: true, aim: 'light', line: '"불빛이 닿는 곳이 네 자리다."',
+  eel:     { name: '등불 장어', hp: 30, pal: 'eel', long: true, thorns: 2, pat: [A(9), A(4, 2), B(7)] },
+  powder:  { name: '화약통 수병', hp: 22, pal: 'powder', pat: [A(6), U(3), X(13)] },
+  parrot:  { name: '선장 앵무새', hp: 20, pal: 'parrot', small: true, aim: 'back', pat: [Z('gull'), A(6), A(3, 2)] },
+  anchor:  { name: '닻 거인', hp: 70, pal: 'pirate', pat: [A(18), B(10), A(8, 2), U(3)],
+             lines: ['"쿵. 쿵. …여기는 지나갈 수 없다."', '"사슬이 끊어질 때까지 붙잡아 주지."'] },
+  witch:   { name: '안개 마녀', hp: 58, pal: 'witch', long: true, aim: 'weakest', pat: [W('weak', 2), A(12), K('curse.fog', 2), A(7, 2)],
+             lines: ['"길을 잃는 건 순식간이란다."', '"안개 속에선 누가 누군지 모르지."'] },
+  smuggler:{ name: '밀수꾼 두목', hp: 64, pal: 'pirate', aim: 'last', pat: [S(1), G(8), A(14), A(6, 2)],
+             lines: ['"그 패, 좋아 보이는데. 잠깐 빌리지."', '"탑에서 파는 건 다 내 물건이야."'] },
+  keeper:  { name: '등대지기', hp: 95, pal: 'keeper', long: true, crown: true, aim: 'light',
+             lines: ['"불빛이 닿는 곳이 네 자리다."', '"오늘 밤도 올라왔나. 불을 켜 두마."', '"등대는 길을 비추지. 숨을 곳도 같이."'],
              light: { double: .5 },   // 불빛이 비춘 동료: 그 동료 카드 비용 +1, 단일 공격은 그 동료를 노림. 체력 절반이면 불빛 둘
              pat: [A(8), M(10, 8), A(5, 3), U(3)] },
   // 2막 구름층
@@ -39,11 +60,17 @@ export const FOE = {
   feather: { name: '깃털 기사', hp: 50, pal: 'knight', pat: [A(16), M(10, 7), U(3)] },
   sheep:   { name: '천둥 양', hp: 46, pal: 'cloud', aim: 'weakest', pat: [A(6, 3), A(16)] },
   vane:    { name: '바람개비 병사', hp: 42, pal: 'knight', aim: 'last', pat: [A(12), A(8)] },
-  bird:    { name: '번개새', hp: 84, pal: 'knight', long: true, aim: 'back', pat: [A(8, 3), U(3), A(24)] },
-  vaneL:   { name: '풍향계 동', hp: 45, pal: 'cloud', aim: 'weakest', pat: [A(12), B(12)] },
+  jelly:   { name: '안개 해파리', hp: 38, pal: 'jelly', long: true, aim: 'weakest', pat: [H(8), A(10), A(5, 2)] },
+  kite:    { name: '연 기사', hp: 40, pal: 'kite', pat: [A(11), N('back'), A(15), N('front')] },
+  puff:    { name: '뭉게 자폭병', hp: 26, pal: 'cloud', pat: [B(6), A(8), X(16)] },
+  bird:    { name: '번개새', hp: 84, pal: 'knight', long: true, aim: 'back', pat: [A(8, 3), U(3), A(24)],
+             lines: ['번개새가 날개를 펴자 공기가 찌릿하다.', '하늘이 갈라지는 소리. 번개새가 내려앉는다.'] },
+  trumpet: { name: '폭풍 나팔수', hp: 78, pal: 'knight', long: true, pat: [Z('puff'), R(7), U(3), A(16)],
+             lines: ['"나팔 소리가 들리면 구름이 모인다!"', '"기사단의 이름으로, 바람을 부른다."'] },
+  vaneL:   { name: '풍향계 동', hp: 45, pal: 'cloud', aim: 'weakest', pat: [A(12), B(12)], line: '삐걱, 삐걱. 두 풍향계가 서로를 등지고 돈다.' },
   vaneR:   { name: '풍향계 서', hp: 45, pal: 'cloud', aim: 'weakest', pat: [B(12), A(12)] },
   captain: { name: '구름 기사단장', hp: 120, pal: 'knight', long: true, crown: true, armor: 1, aim: 'front',
-             line: '"구름 기사단의 이름으로. 여기서 돌아가라."',
+             lines: ['"구름 기사단의 이름으로. 여기서 돌아가라."', '"높이 오를수록 떨어지는 것도 아프다."', '"…시그룬이 있었다면, 이 밤도 달랐을까."'],
              phase2: { at: .5, msg: '구름 기사단장이 갑옷을 벗어던졌다! 피해 감소가 사라지고 매 턴 두 번 움직인다.', armor: 0, acts: 2, aim: 'cycle',
                       pat: [A(10), A(4, 2), M(8, 8), U(2)] },
              pat: [M(12, 10), A(7, 3), U(3), A(20)] },
@@ -52,10 +79,17 @@ export const FOE = {
   cat:     { name: '그림자 고양이', hp: 40, pal: 'cat', long: true, aim: 'back', pat: [A(5, 4), U(3)] },
   archer:  { name: '유성 사수', hp: 48, pal: 'star', long: true, aim: 'back', pat: [A(9, 2), A(18)] },
   angel:   { name: '시계태엽 천사', hp: 40, pal: 'star', aim: 'last', pat: [A(10), T(10)] },
-  rider:   { name: '유성 기수', hp: 100, pal: 'star', crown: true, pat: [A(8, 3), M(14, 14), U(4)] },
-  shadow:  { name: '달의 그림자', hp: 90, pal: 'cat', long: true, aim: 'weakest', pat: [A(12), W('vuln', 2), A(6, 3)] },
-  dawn:    { name: '새벽', hp: 170, pal: 'dawn', long: true, crown: true, aim: 'dawn', turnClock: 2,
-             line: '"왜 매일 밤 올라오는 거야? …그냥 아침이 오게 두면 되잖아."',
+  comet:   { name: '꼬리별', hp: 30, pal: 'comet', aim: 'back', pat: [A(6, 2), A(8), X(18)] },
+  gear:    { name: '톱니 기사', hp: 52, pal: 'gear', thorns: 3, pat: [M(10, 10), A(16)] },
+  thief:   { name: '별 도둑', hp: 36, pal: 'thief', long: true, aim: 'last', pat: [S(1), A(9), T(8)] },
+  rider:   { name: '유성 기수', hp: 100, pal: 'star', crown: true, pat: [A(8, 3), M(14, 14), U(4)],
+             lines: ['"달려라! 새벽보다 먼저!"', '불타는 말발굽 소리가 유리 바닥을 울린다.'] },
+  shadow:  { name: '달의 그림자', hp: 90, pal: 'cat', long: true, aim: 'weakest', pat: [A(12), W('vuln', 2), A(6, 3)],
+             lines: ['"너희 그림자, 내가 가져가도 될까."', '달빛이 비틀리며 사람 모양이 된다.'] },
+  sage:    { name: '성좌 마법사', hp: 92, pal: 'thief', long: true, crown: true, pat: [G(10), R(8), Z('comet'), A(20)],
+             lines: ['"별자리는 내가 이어. 너희 자리는 없어."', '"떨어지는 별은 다 내 거야."'] },
+  dawn:    { name: '새벽', hp: 192, pal: 'dawn', long: true, crown: true, aim: 'dawn', turnClock: 2,
+             lines: ['"왜 매일 밤 올라오는 거야? …그냥 아침이 오게 두면 되잖아."', '"또 너희구나. 오늘은 몇 시에 왔어?"', '"밤은 끝나야 해. 그게 맞는 거야."'],
              phase2: { at: .5, msg: '해가 뜬다. 밤 시계 +10분, 이제 매 턴 +5분.', clockOnce: 10, turnClock: 5 },
              pat: [A(11), A(5, 4), M(14, 14), U(4), A(24)] },
   // 첫 실행 튜토리얼 (js/data/tutorial.js): 약하게
@@ -66,13 +100,16 @@ export const FOE = {
 };
 
 export const ACTS = {
-  1: { easy: [['ghost'], ['crab'], ['gull', 'gull', 'gull']],
-       fights: [['ghost'], ['crab'], ['pirate', 'pirate'], ['gull', 'gull', 'gull'], ['ghost', 'gull']],
-       elites: [['anchor'], ['witch']], boss: ['keeper'] },
-  2: { easy: [['cloud'], ['feather']],
-       fights: [['cloud'], ['feather'], ['sheep'], ['vane'], ['cloud', 'vane']],
-       elites: [['bird'], ['vaneL', 'vaneR']], boss: ['captain'] },
-  3: { easy: [['statue'], ['cat']],
-       fights: [['statue'], ['cat'], ['archer'], ['angel'], ['angel', 'cat']],
-       elites: [['rider'], ['shadow']], boss: ['dawn'] },
+  1: { easy: [['ghost'], ['crab'], ['gull', 'gull', 'gull'], ['eel']],
+       fights: [['ghost'], ['crab'], ['pirate', 'pirate'], ['gull', 'gull', 'gull'], ['ghost', 'gull'], ['eel'], ['powder', 'pirate'],
+                ['parrot', 'gull'], ['eel', 'gull'], ['crab', 'powder']],
+       elites: [['anchor'], ['witch'], ['smuggler', 'pirate']], boss: ['keeper'] },
+  2: { easy: [['cloud'], ['feather'], ['kite']],
+       fights: [['cloud'], ['feather'], ['sheep'], ['vane'], ['cloud', 'vane'], ['jelly', 'feather'], ['kite'], ['puff', 'puff'],
+                ['kite', 'jelly'], ['sheep', 'puff']],
+       elites: [['bird'], ['vaneL', 'vaneR'], ['trumpet']], boss: ['captain'] },
+  3: { easy: [['statue'], ['cat'], ['gear']],
+       fights: [['statue'], ['cat'], ['archer'], ['angel'], ['angel', 'cat'], ['comet', 'comet'], ['gear'], ['thief', 'cat'],
+                ['statue', 'comet'], ['gear', 'thief']],
+       elites: [['rider'], ['shadow'], ['sage']], boss: ['dawn'] },
 };

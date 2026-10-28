@@ -1,6 +1,6 @@
 // 입력과 화면 전환. 규칙은 run/map/combat/meta, 그리기는 render/.
 import { S, newRun, checkCollapse } from './run.js';
-import { goNode, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
+import { goNode, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, specialBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
 import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, devWin, pickCombatMoon } from './combat.js';
 import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw } from './meta.js';
 import { temperPick } from './effects.js';
@@ -161,6 +161,8 @@ app.addEventListener('click', e => {
   else if (D.dupe !== undefined) dupeCard(+D.dupe);
   else if (D.buycard !== undefined) shopBuy('card', +D.buycard);
   else if (D.buyrelic !== undefined) shopBuy('relic', +D.buyrelic);
+  else if (D.buysp !== undefined) specialBuy(+D.buysp);
+  else if (D.spview !== undefined) { const sh = S.G.shop; if (sh) sh.spView = !sh.spView; }
   else if (D.shop) shopBuy(D.shop);
   else if ('leave' in D) leaveShop();
   else if ('deck' in D) { modal.innerHTML = deckModal(); modal.hidden = false; return; }

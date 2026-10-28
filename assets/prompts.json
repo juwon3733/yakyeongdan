@@ -709,8 +709,12 @@
         "crab_soldier",
         "dock_pirate",
         "gulls",
+        "lamp_eel",
+        "powder_sailor",
+        "captain_parrot",
         "anchor_giant",
-        "fog_witch"
+        "fog_witch",
+        "smuggler_boss"
       ]
     },
     {
@@ -721,8 +725,12 @@
         "feather_knight",
         "thunder_sheep",
         "vane_soldier",
+        "mist_jelly",
+        "kite_knight",
+        "puff_bomber",
         "thunderbird",
-        "twin_vanes"
+        "twin_vanes",
+        "storm_trumpeter"
       ]
     },
     {
@@ -733,8 +741,12 @@
         "shadow_cat",
         "meteor_archer",
         "clock_angel",
+        "tail_comet",
+        "gear_knight",
+        "star_thief",
         "meteor_rider",
-        "moon_shadow"
+        "moon_shadow",
+        "constellation_sage"
       ]
     },
     {
@@ -7877,6 +7889,45 @@
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 갈매기 떼 — a flock of three mischievous seagulls with glowing eyes. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
     },
     {
+      "id": "lamp_eel",
+      "kind": "enemy",
+      "batch": "enemy-act1",
+      "file": "enemies/lamp_eel.png",
+      "width": 768,
+      "height": 768,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "96×96",
+      "note": "일반 적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 등불 장어 — a long eel with a glowing lantern lure, crackling with small sparks. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
+    },
+    {
+      "id": "powder_sailor",
+      "kind": "enemy",
+      "batch": "enemy-act1",
+      "file": "enemies/powder_sailor.png",
+      "width": 768,
+      "height": 768,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "96×96",
+      "note": "일반 적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 화약통 수병 — a stubby sailor whose body is a gunpowder barrel, a lit fuse on top of the head. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
+    },
+    {
+      "id": "captain_parrot",
+      "kind": "enemy",
+      "batch": "enemy-act1",
+      "file": "enemies/captain_parrot.png",
+      "width": 768,
+      "height": 768,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "96×96",
+      "note": "일반 적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 선장 앵무새 — a bossy red parrot in a tiny captain hat, squawking orders. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
+    },
+    {
       "id": "anchor_giant",
       "kind": "elite",
       "batch": "enemy-act1",
@@ -7901,6 +7952,19 @@
       "native": "128×128",
       "note": "강적 · 투명 배경",
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nElite enemy sprite: 안개 마녀 — an elegant adult witch woman wrapped in sea fog, a lantern on a long pole, a gacha-style outfit. Bigger and more imposing than normal enemies. Facing LEFT. Fully transparent background. Native resolution 128x128 pixels, upscaled exactly 8x to 1024x1024."
+    },
+    {
+      "id": "smuggler_boss",
+      "kind": "elite",
+      "batch": "enemy-act1",
+      "file": "enemies/smuggler_boss.png",
+      "width": 1024,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×128",
+      "note": "강적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nElite enemy sprite: 밀수꾼 두목 — a broad-shouldered smuggler chief with a long coat full of stolen cards and trinkets, an eyepatch. Bigger and more imposing than normal enemies. Facing LEFT. Fully transparent background. Native resolution 128x128 pixels, upscaled exactly 8x to 1024x1024."
     },
     {
       "id": "cloud_spirit",
@@ -7955,6 +8019,45 @@
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 바람개비 병사 — a soldier with a pinwheel shield spinning in the wind. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
     },
     {
+      "id": "mist_jelly",
+      "kind": "enemy",
+      "batch": "enemy-act2",
+      "file": "enemies/mist_jelly.png",
+      "width": 768,
+      "height": 768,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "96×96",
+      "note": "일반 적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 안개 해파리 — a floating pale violet jellyfish made of mist, healing glow in its tentacles. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
+    },
+    {
+      "id": "kite_knight",
+      "kind": "enemy",
+      "batch": "enemy-act2",
+      "file": "enemies/kite_knight.png",
+      "width": 768,
+      "height": 768,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "96×96",
+      "note": "일반 적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 연 기사 — a small knight riding a diamond-shaped kite with a long ribbon tail. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
+    },
+    {
+      "id": "puff_bomber",
+      "kind": "enemy",
+      "batch": "enemy-act2",
+      "file": "enemies/puff_bomber.png",
+      "width": 768,
+      "height": 768,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "96×96",
+      "note": "일반 적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 뭉게 자폭병 — a round angry cloud puff with a fuse, about to burst. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
+    },
+    {
       "id": "thunderbird",
       "kind": "elite",
       "batch": "enemy-act2",
@@ -7979,6 +8082,19 @@
       "native": "128×128",
       "note": "강적 · 투명 배경",
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nElite enemy sprite: 쌍둥이 풍향계 — two living weathervanes, a rooster and a fish, back to back (one image with both). Bigger and more imposing than normal enemies. Facing LEFT. Fully transparent background. Native resolution 128x128 pixels, upscaled exactly 8x to 1024x1024."
+    },
+    {
+      "id": "storm_trumpeter",
+      "kind": "elite",
+      "batch": "enemy-act2",
+      "file": "enemies/storm_trumpeter.png",
+      "width": 1024,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×128",
+      "note": "강적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nElite enemy sprite: 폭풍 나팔수 — a cloud-knight herald blowing a huge brass trumpet that spills storm clouds. Bigger and more imposing than normal enemies. Facing LEFT. Fully transparent background. Native resolution 128x128 pixels, upscaled exactly 8x to 1024x1024."
     },
     {
       "id": "star_statue",
@@ -8033,6 +8149,45 @@
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 시계태엽 천사 — a clockwork angel with gear wings, a clock face for a halo. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
     },
     {
+      "id": "tail_comet",
+      "kind": "enemy",
+      "batch": "enemy-act3",
+      "file": "enemies/tail_comet.png",
+      "width": 768,
+      "height": 768,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "96×96",
+      "note": "일반 적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 꼬리별 — a small grinning comet with a long sparkling tail. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
+    },
+    {
+      "id": "gear_knight",
+      "kind": "enemy",
+      "batch": "enemy-act3",
+      "file": "enemies/gear_knight.png",
+      "width": 768,
+      "height": 768,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "96×96",
+      "note": "일반 적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 톱니 기사 — a knight whose armor is covered in spinning spiked gears. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
+    },
+    {
+      "id": "star_thief",
+      "kind": "enemy",
+      "batch": "enemy-act3",
+      "file": "enemies/star_thief.png",
+      "width": 768,
+      "height": 768,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "96×96",
+      "note": "일반 적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 별 도둑 — a nimble masked thief with a sack of stolen stars. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
+    },
+    {
       "id": "meteor_rider",
       "kind": "elite",
       "batch": "enemy-act3",
@@ -8057,6 +8212,19 @@
       "native": "128×128",
       "note": "강적 · 투명 배경",
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nElite enemy sprite: 달의 그림자 — a shadowy figure shaped by moonlight, crescent blades. Bigger and more imposing than normal enemies. Facing LEFT. Fully transparent background. Native resolution 128x128 pixels, upscaled exactly 8x to 1024x1024."
+    },
+    {
+      "id": "constellation_sage",
+      "kind": "elite",
+      "batch": "enemy-act3",
+      "file": "enemies/constellation_sage.png",
+      "width": 1024,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×128",
+      "note": "강적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nElite enemy sprite: 성좌 마법사 — an adult woman astronomer-mage in a star-chart robe, a gacha-style outfit, drawing constellation lines with a wand. Bigger and more imposing than normal enemies. Facing LEFT. Fully transparent background. Native resolution 128x128 pixels, upscaled exactly 8x to 1024x1024."
     },
     {
       "id": "boss_lighthouse_1",

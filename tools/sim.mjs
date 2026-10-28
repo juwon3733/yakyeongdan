@@ -89,9 +89,10 @@ function incoming() {
   for (const f of livingFoes()) {
     const it = intentOf(f);
     for (let a = 0; a < (f.acts || 1); a++) {
-      const hits = it.t === 'atk' ? it.n : it.t === 'mix' ? 1 : 0;
+      const all = it.t === 'aoe' || it.t === 'boom';
+      const hits = it.t === 'atk' ? it.n : it.t === 'mix' ? 1 : all ? living().length : 0;
       for (let k = 0; k < hits; k++) {
-        const id = aimTarget(f, k); if (!id) continue;
+        const id = all ? living()[k] : aimTarget(f, k); if (!id) continue;
         let d = C.noDmg ? 0 : foeDmg(f, it.v, id);
         if (id === 'sigrun' && C.air) d = Math.ceil(d / 2);
         if (f.skip > 0) d = 0;
@@ -297,7 +298,7 @@ function doEvent() {
   const G = S.G, ev = G.event, x0 = runValue();
   let bi = 0, bs = -1e9;
   const x = eventApi();
-  ev.def.opts.forEach((o, i) => {
+  ev.opts.forEach((o, i) => {
     if (o.can && !o.can(x)) return;                                       // 못 고르는 선택지
     const s = snap();
     chooseOpt(i);

@@ -42,7 +42,7 @@ const val = (v, x) => typeof v === 'function' ? v(x) : v;
 export function eventView() {
   const e = S.G.event.def, x = eventApi();
   return `<div class="center"><h2>${e.title}</h2><p class="note evtext">${val(e.text, x)}</p>
-    <div class="acts col">${e.opts.map((o, i) => `<button type="button" data-opt="${i}" ${o.can && !o.can(x) ? 'disabled' : ''}>${val(o.t, x)}</button>`).join('')}</div></div>`;
+    <div class="acts col">${S.G.event.opts.map((o, i) => `<button type="button" data-opt="${i}" ${o.can && !o.can(x) ? 'disabled' : ''}>${val(o.t, x)}</button>`).join('')}</div></div>`;
 }
 export function upgradeView() {
   const G = S.G;
@@ -66,14 +66,22 @@ export function shopView() {
   const relics = sh.relics.map((r, i) => `<button type="button" class="ware relicware ${r.sold ? 'sold' : ''}" data-buyrelic="${i}" ${r.sold || G.gold < r.price ? 'disabled' : ''}>
     ${relicBox(r.id)}<span class="price">${r.sold ? '팔림' : `별빛 ${r.price}`}</span></button>`).join('');
   return `<div class="shopscr">
-    <div class="shophead"><span class="fukuro" aria-hidden="true">梟</span><span><b>후쿠로</b> ${sh.talk}</span>${sh.off ? `<span class="chip" style="color:var(--moon)">할인 ${sh.off}%</span>` : ''}<span class="grow"></span><span class="gold big">별빛 ${G.gold}</span></div>
-    <div class="wares">${cards}</div>
+    <div class="shophead"><span class="fukuro" aria-hidden="true">梟</span><span><b>후쿠로</b> ${sh.talk}</span>${sh.off ? `<span class="chip" style="color:var(--moon)">할인 ${sh.off}%</span>` : ''}<span class="grow"></span>${sh.special ? `<button type="button" class="mini ${sh.spView ? 'on' : ''}" data-spview>${sh.spView ? '◂ 후쿠로 노점' : `옆 노점: ${sh.special.name} ▸`}</button>` : ''}<span class="gold big">별빛 ${G.gold}</span></div>
+    ${sh.spView ? specialRow(sh.special) : `<div class="wares">${cards}</div>`}
     <div class="shoprow">${relics}
       <span class="services">
         <button type="button" data-shop="remove" ${G.gold >= removePrice() && !sh.removed ? '' : 'disabled'}>카드 지우기 · 별빛 ${removePrice()}${sh.removed ? ' (오늘은 끝)' : ''}</button>
         <button type="button" data-shop="upgrade" ${G.gold >= SHOP.upgrade && G.deck.some(canUpgrade) ? '' : 'disabled'}>카드 강화 · 별빛 ${SHOP.upgrade}</button>
         <button type="button" class="primary" data-leave>나간다</button></span>
     </div></div>`;
+}
+// 특별 노점: 별빛 대신 밤 시계(분)나 체력으로 산다
+function specialRow(sp) {
+  const unit = sp.pay === 'time' ? n => `밤 시계 +${n}분` : n => `모든 동료 체력 −${n}`;
+  const items = sp.items.map((it, i) => it.kind === 'card'
+    ? `<span class="ware ${it.sold ? 'sold' : ''}">${cardHTML(it.id, !it.sold, 'buysp', i)}<span class="price">${it.sold ? '팔림' : unit(it.cost)}</span></span>`
+    : `<button type="button" class="ware relicware ${it.sold ? 'sold' : ''}" data-buysp="${i}" ${it.sold ? 'disabled' : ''}>${relicBox(it.id)}<span class="price">${it.sold ? '팔림' : unit(it.cost)}</span></button>`).join('');
+  return `<div class="shopspecial"><p class="note sphead"><b>${sp.name}</b> ${sp.talk} <small>(별빛 대신 ${sp.pay === 'time' ? '밤 시계' : '체력'}로 산다)</small></p><div class="wares">${items}</div></div>`;
 }
 export function bossRelicView() {
   const G = S.G;

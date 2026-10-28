@@ -1,8 +1,12 @@
-// 도구 24개 (docs/10_details.md §3). 엔진(js/relics.js)은 아래 필드와 훅만 읽는다.
+// 도구 40개 (docs/10_details.md §3). 엔진(js/relics.js)은 아래 필드와 훅만 읽는다.
 //   tier: start · c 흔함 · u 보통 · r 희귀 · boss
 //   수치 필드: blockFront·blockBackFirst·winHealLowest·chain3Draw·eventGuard·winChainHeal·eliteTime·restHealAdd·winGold
 //     duoFree·swaps·swapFree·revivePct·pistol·firstEnergy·firstDraw·bond·goldFeather·noDawn·restHealMul
 //     timeCardFree·nodeTimeAdd·energy·handSize·hourglass·starMap
+//     frontBlockTurn 매 턴 앞줄 방어 · swapBlock 대열 바꾸면 바꾼 둘 방어 · timeCardBlock 시간 카드 쓰면 주인 방어 · restTime 휴식 칸 시간
+//     duoBlock·duoHeal 듀오를 쓰면 두 사람 · duoDraw 듀오가 생기면 카드 · bondStart 인연 짝이 있으면 첫 턴 연계 · chainStart 첫 턴 연계
+//     winRewind 이기면 시계 되돌리기 · timeCardAdd 시간 카드 비용 + · rewardLess 보상 카드 수 − · moonEnergy 달이 바뀌면 에너지
+//     moonStart { moon, energy·chain·blockAll·poisonAll } 그 달일 때 전투 시작
 //   use: 판마다 한 번 누르는 버튼 ('rewind' 시계 되돌리기, 'moon' 달 바꾸기)
 //   onGet: 얻는 순간 ('moonPick' 달 고르기 화면)
 export const RELICS = {
@@ -16,6 +20,12 @@ export const RELICS = {
   umbrella:      { name: '우산', tier: 'c', text: '첫 턴 뒷줄 동료 방어 8.', blockBackFirst: 8 },
   scarf:         { name: '따뜻한 목도리', tier: 'c', text: '휴식 칸 쉬기 회복 +10%.', restHealAdd: .1 },
   star_candy:    { name: '별사탕', tier: 'c', text: '전투에서 이기면 별빛 +5.', winGold: 5 },
+  tide_bell:     { name: '밀물 종', tier: 'c', text: '매 턴 앞줄 동료 방어 2.', frontBlockTurn: 2 },
+  rope:          { name: '묶음 밧줄', tier: 'c', text: '전투 중 대열을 바꾸면 바꾼 둘이 방어를 잃지 않고 방어 +3.', swapBlock: 3 },
+  crescent_pin:  { name: '초승 브로치', tier: 'c', text: '초승달이면 전투 첫 턴 에너지 +1.', moonStart: { moon: 'crescent', energy: 1 } },
+  half_ribbon:   { name: '반달 리본', tier: 'c', text: '반달이면 전투 첫 턴을 연계 1칸으로 시작.', moonStart: { moon: 'half', chain: 1 } },
+  full_mirror:   { name: '보름 손거울', tier: 'c', text: '보름달이면 전투 시작에 모든 동료 방어 5.', moonStart: { moon: 'full', blockAll: 5 } },
+  new_ink:       { name: '그믐 먹물', tier: 'c', text: '그믐달이면 전투 시작에 모든 적 독 4.', moonStart: { moon: 'new', poisonAll: 4 } },
   star_map:      { name: '별 지도', tier: 'u', text: '지도에서 다음 막 칸 종류가 미리 보인다.', starMap: 1 },
   hourglass:     { name: '깨진 모래시계', tier: 'u', text: '시간 카드를 에너지 1로도 쓸 수 있다(쓸 때 고름).', hourglass: 1 },
   whistle:       { name: '은 호루라기', tier: 'u', text: '듀오 카드 비용 0.', duoFree: 1 },
@@ -23,13 +33,23 @@ export const RELICS = {
   bandage:       { name: '붕대 묶음', tier: 'u', text: '쓰러진 동료가 전투 끝에 체력 1이 아니라 30%로 일어난다.', revivePct: .3 },
   moon_bottle:   { name: '달빛 병', tier: 'u', text: '판마다 한 번, 전투 중 달을 다음 모양으로(누르기).', use: 'moon' },
   pistol:        { name: '장전된 권총', tier: 'u', text: '전투 시작에 무작위 적 피해 8.', pistol: 8 },
+  duo_scarf:     { name: '맞춤 목도리', tier: 'u', text: '듀오 카드를 쓰면 두 사람 체력 3 회복.', duoHeal: 3 },
+  duo_shield:    { name: '한 쌍의 방패', tier: 'u', text: '듀오 카드를 쓰면 두 사람 방어 5.', duoBlock: 5 },
+  sand_pendant:  { name: '모래시계 펜던트', tier: 'u', text: '시간 카드를 쓰면 그 카드 주인 방어 6.', timeCardBlock: 6 },
+  last_ticket:   { name: '막차표', tier: 'u', text: '지도에서 휴식 칸 시간 -15분.', restTime: -15 },
+  red_knot:      { name: '붉은 실 매듭', tier: 'u', text: '파티에 인연 짝이 있으면 전투 첫 턴을 연계 1칸으로 시작.', bondStart: 1 },
   moon_shard:    { name: '달 조각', tier: 'r', text: '얻으면 달 모양을 고른다(판 시작에 가지고 있으면 그때).', onGet: 'moonPick' },
   armband:       { name: '야경단 완장', tier: 'r', text: '첫 턴 에너지 +1, 카드 +1.', firstEnergy: 1, firstDraw: 1 },
   bond_thread:   { name: '인연의 실', tier: 'r', text: '인연이 아닌 두 동료도 연계 3칸에서 이어 쓰면 「합동」 카드(피해 8, 방어 8, 비용 1, 소멸)가 생긴다.', bond: 1 },
   gold_feather:  { name: '금빛 깃털', tier: 'r', text: '동료가 처음 쓰러질 때 체력 10으로 버틴다(판마다 동료당 1번).', goldFeather: 10 },
+  watch_chain:   { name: '시곗줄', tier: 'r', text: '전투에서 이기면 밤 시계 4분 되돌리기.', winRewind: 4 },
+  moon_compass:  { name: '달 나침반', tier: 'r', text: '전투 중 달이 바뀔 때마다 에너지 +1.', moonEnergy: 1 },
+  twin_star:     { name: '쌍별 펜던트', tier: 'r', text: '듀오 카드가 생기면 카드 1장.', duoDraw: 1 },
   dawn_feather:  { name: '새벽의 깃털', tier: 'boss', text: '6시 이후 여명 효과가 없다. 대신 휴식 칸 회복 절반.', noDawn: 1, restHealMul: .5 },
   stopped_tower: { name: '멈춘 시계탑', tier: 'boss', text: '시간 카드 비용 0분. 대신 칸 시간 +5분.', timeCardFree: 1, nodeTimeAdd: 5 },
   star_crown:    { name: '별의 왕관', tier: 'boss', text: '매 턴 에너지 +1. 대신 손패 4장.', energy: 1, handSize: -1 },
+  reverse_clock: { name: '거꾸로 도는 시계', tier: 'boss', text: '전투에서 이기면 밤 시계 6분 되돌리기. 대신 시간 카드 비용 +10분.', winRewind: 6, timeCardAdd: 10 },
+  star_sash:     { name: '별자리 띠', tier: 'boss', text: '전투 첫 턴을 연계 3칸으로 시작. 대신 전투 보상 카드가 한 장 적다.', chainStart: 3, rewardLess: 1 },
   // 전용 도구 20개 (docs/10_details.md §3, 별자리 4). 주인(owner)이 파티에 있고 별자리 4일 때만 보통 등급 자리에 섞여 나온다.
   //   ownerBlock 전투 시작에 주인 방어 · poisonAll/burnAll 전투 시작에 모든 적 독/화상 · napAdd 낮잠 +분
   sig_sion:     { name: '첫 별의 모래', tier: 'sig', owner: 'sion', text: '첫 턴 카드 +1.', firstDraw: 1 },

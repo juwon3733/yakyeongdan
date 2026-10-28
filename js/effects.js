@@ -3,6 +3,7 @@
 // C.tf = 고른 적의 번호. 피해 계산은 combat.js의 dmgToFoe가 한다.
 import { S, pushFx, healMember, member, alive, living, logMsg, addTime as runAddTime, rewind as runRewind, gainGold } from './run.js';
 import { MOONS } from './data/moons.js';
+import { RELICS } from './data/relics.js';
 import { RULES } from './data/rules.js';
 import { CHARACTERS } from './data/characters.js';
 import { canUpgrade } from './data/cards.js';
@@ -152,15 +153,16 @@ export function dropSpirit() { const C = S.C; if (!C.spirits.length) return fals
 export const spiritDmg = s => s + passiveSum('spiritPlus') + (MOONS[S.G.moon].spiritBonus || 0);
 export function spiritsAct(times = 1) {
   const C = S.C; if (!C.spirits.length) return;
-  const prev = C.actor; C.actor = 'sion';
+  const prev = C.actor; C.actor = 'sion'; C.spiritHit = true;   // 정령은 가시에 안 다친다
   for (let t = 0; t < times; t++) for (const s of C.spirits) { if (!livingFoes().length) break; C.bonus = 0; hitRandom(spiritDmg(s)); }
-  C.actor = prev;
+  C.actor = prev; C.spiritHit = false;
 }
 // 달 (루나리아): 이번 전투의 달을 바꾼다. 바뀌면 루나리아 패시브(카드 1장, 방어 4)
 export function setMoon(k) {
   const G = S.G, C = S.C; if (!MOONS[k] || G.moon === k) return;
   G.moon = k; C.moonChanged = true;
   logMsg(`달이 <b>${MOONS[k].name}</b>로 바뀌었다`);
+  const me = (G.relics || []).reduce((t, id) => t + (RELICS[id].moonEnergy || 0), 0); if (me) C.energy += me;   // 달 나침반
   if (alive('lunaria') && G.party.includes('lunaria')) { draw(1); guard(3, 'lunaria'); }
 }
 export function nextMoon() { const ks = Object.keys(MOONS); setMoon(ks[(ks.indexOf(S.G.moon) + 1) % ks.length]); }
