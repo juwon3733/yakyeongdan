@@ -4,7 +4,8 @@ import { relicFlag } from '../relics.js';
 import { CHARACTERS } from '../data/characters.js';
 import { FOE_PAL } from '../data/enemies.js';
 import { RULES, AIM_NAME, ROW_NAME } from '../data/rules.js';
-import { sprite } from './sprites.js';
+import { MOONS } from '../data/moons.js';
+import { sprite, moonImg } from './sprites.js';
 import { esc, cardHTML, face, hpBar } from './common.js';
 
 // 동료별 고유 수치 표시
@@ -14,9 +15,22 @@ const STAT = {
   iris: C => [C.slashes ? `베기 ${C.slashes}` : '', C.sheath ? `다음 베기 +${C.sheath}` : ''].filter(Boolean).join(' · '),
   marta: C => [C.counter ? `반격 ${C.counter}` : '', C.taunt === 'marta' ? '대신 맞기' : ''].filter(Boolean).join(' · '),
   raven: C => C.garden ? `정원 +${C.garden}` : '',
+  sion: C => C.spirits.length ? `정령 ${C.spirits.length}${C.spiritExtra ? ` (행동 +${C.spiritExtra})` : ''}` : '',
+  lunaria: C => C.moonChanged ? '달 바뀜' : '',
+  akane: C => [C.flameGuard ? `불꽃 ${C.flameGuard}` : '', C.sheath ? `다음 베기 +${C.sheath}` : ''].filter(Boolean).join(' · '),
+  eleonore: C => C.timeUsedTurn ? `시간 카드 ${C.timeUsedTurn}` : '',
+  mimimomo: C => C.lastSub ? `직전 ${C.lastSub === 'mimi' ? '미미' : C.lastSub === 'momo' ? '모모' : '둘 다'}` : '',
+  sebas: C => [C.reserve ? `예약 ${C.reserve}` : '', C.double ? '두 번 쓰기' : ''].filter(Boolean).join(' · '),
+  sigrun: C => [C.air ? '공중' : '', C.sigCounter ? `반격 ${C.sigCounter}` : '', C.taunt === 'sigrun' ? '대신 맞기' : ''].filter(Boolean).join(' · '),
+  zeno: C => [C.zenoStr ? `공격 +${C.zenoStr}` : '', C.taunt === 'zeno' ? '대신 맞기' : ''].filter(Boolean).join(' · '),
+  finn: C => C.freeNext ? `다음 ${C.freeNext}장 0` : '',
+  laila: C => C.zeroBonus ? `0비용 +${C.zeroBonus}` : '',
+  dora: C => C.tempered ? `담금질 ${C.tempered}` : '',
+  gordon: C => C.nextAtk ? `다음 턴 공격 +${C.nextAtk}` : '',
+  fukuro: C => C.atkFree ? '공격 0비용' : '',
 };
 const chip = (v, nm, col) => v ? `<span class="chip" style="color:${col}">${nm} ${v}</span>` : '';
-const foeSt = f => chip(f.block, '방어', 'var(--moon)') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
+const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f.dim * 100) + '%' : 0, '빛 −', '#f0d040') + chip(f.bounty, '현상금', '#e0a050') + chip(f.block, '방어', 'var(--moon)') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
   + chip(f.str, '힘', '#ff9a8a') + chip(f.weak, '약화', '#f08ac0') + chip(f.vuln, '취약', '#ffd060');
 
 export function combatView() {
@@ -59,7 +73,7 @@ export function combatView() {
       <div class="party">${party}</div>
       <div class="foes ${many ? 'many' : ''}">${foes}</div>
     </div>
-    <div class="log" aria-live="polite">${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span>${relicFlag('hourglass')
+    <div class="log" aria-live="polite">${C.moonPick ? `<span class="cmoonpick">월광 · 이번 전투의 달: ${Object.keys(MOONS).map(k => `<button type="button" class="mini ${G.moon === k ? 'on' : ''}" data-cmoon="${k}" title="${esc(MOONS[k].text)}"><img class="px" src="${moonImg(k)}" alt="">${MOONS[k].name}</button>`).join('')}</span>` : ''}${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span>${relicFlag('hourglass')
       ? `<button type="button" class="mini hg ${C.payEnergy ? 'on' : ''}" data-hg aria-pressed="${C.payEnergy}" title="깨진 모래시계: 시간 카드를 시간 대신 에너지 1로">시간 카드: ${C.payEnergy ? '에너지 1' : '시간'}</button>` : ''}</div>
     <div class="bottom">
       <span class="energy" title="에너지">${pip(RULES.energy, C.energy)}<b>${C.energy}</b></span>
@@ -70,5 +84,6 @@ export function combatView() {
 
 export const combatTopExtra = () => {
   const C = S.C;
-  return `<span class="chip">연계</span><span class="chain">${Array.from({ length: RULES.chainMax }, (_, k) => `<i class="${k < C.chain ? 'on' : ''}"></i>`).join('')}</span><span class="note">${C.turn}턴</span>`;
+  const extra = [C.turnAtk ? `<span class="chip" style="color:#ff9a8a">이번 턴 공격 +${C.turnAtk}</span>` : '', C.noDmg ? '<span class="chip" style="color:#9ad0f0">숨바꼭질</span>' : ''].join('');
+  return extra + `<span class="chip">연계</span><span class="chain">${Array.from({ length: RULES.chainMax }, (_, k) => `<i class="${k < C.chain ? 'on' : ''}"></i>`).join('')}</span><span class="note">${C.turn}턴</span>`;
 };

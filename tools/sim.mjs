@@ -9,8 +9,9 @@
 //   이득 = 적 체력·상태 + 이번 턴 막을 피해 + 장전·마력·연계·듀오 + 밤 시계 비용(남은 시간에 따라 무게가 달라짐)
 //   지도: 체력·남은 시간·별빛을 보고 칸 고르기 / 보상: 희귀도·덱 크기 / 휴식: 체력이면 쉬기, 늦으면 낮잠, 아니면 손질
 import { S, newRun, checkCollapse, member, alive, living } from '../js/run.js';
-import { goNode, reachable, takeReward, rest, chooseOpt, removeCard, upgradeCard, dupeCard, shopBuy, leaveShop, pickBossRelic, pickMoon, useRelic, nodeTime, removePrice } from '../js/map.js';
-import { playCard, endTurn, usable, targetOf, livingFoes, foeTarget, intentOf, aimTarget, foeDmg, cardDef } from '../js/combat.js';
+import { goNode, reachable, takeReward, rest, chooseOpt, eventApi, removeCard, upgradeCard, dupeCard, shopBuy, leaveShop, pickBossRelic, pickMoon, useRelic, nodeTime, removePrice } from '../js/map.js';
+import { playCard, endTurn, usable, targetOf, livingFoes, foeTarget, intentOf, aimTarget, foeDmg, cardDef, pickCombatMoon } from '../js/combat.js';
+import { spiritDmg } from '../js/effects.js';
 import { CHARACTERS } from '../js/data/characters.js';
 import { CARDS, cardData, canUpgrade, DUOS } from '../js/data/cards.js';
 import { RULES, SHOP, NODE } from '../js/data/rules.js';
@@ -65,6 +66,7 @@ function restore(s) {
     Object.defineProperty(C, 'block', { get() { return C.actor ? C.blocks[C.actor] : 0; }, set(v) { if (C.actor) C.blocks[C.actor] = v; }, configurable: true });
     Object.defineProperty(C, 'foe', { get: foeTarget, configurable: true });
     Object.defineProperty(C, 'foes', { get: livingFoes, configurable: true });
+    Object.defineProperty(C, 'anyDown', { get: () => S.G.party.some(p => member(p).down), configurable: true });
     S.C = C;
   } else S.C = null;
   S.fxq.length = s.fx;
@@ -90,7 +92,9 @@ function incoming() {
       const hits = it.t === 'atk' ? it.n : it.t === 'mix' ? 1 : 0;
       for (let k = 0; k < hits; k++) {
         const id = aimTarget(f, k); if (!id) continue;
-        let d = foeDmg(f, it.v, id);
+        let d = C.noDmg ? 0 : foeDmg(f, it.v, id);
+        if (id === 'sigrun' && C.air) d = Math.ceil(d / 2);
+        if (f.skip > 0) d = 0;
         const b = Math.min(blk[id] || 0, d); blk[id] -= b; d -= b;
         dmg[id] = (dmg[id] || 0) + d;
       }
@@ -128,6 +132,12 @@ function combatValue(t0clock) {
   v += C.loaded * 3.5 + C.mana * 2.2 + (C.asleep && alive('noel') ? 6 : 0) + (C.late ? C.mana * 2 : 0);
   v += C.chain * 1.5 + C.sheath * 1 + C.garden * 6 + (C.retain ? 4 : 0) + C.nextEnergy * 5 + C.counter * 0.8;
   v += C.hand.filter(h => /^(duo|bond):/.test(h.id)).length * 5;
+  // 새 동료 상태: 정령(턴 끝 피해), 다음 턴 덕, 담금질, 남길 카드
+  if (alive('sion')) v += C.spirits.reduce((t, s) => t + spiritDmg(s), 0) * (1 + C.spiritExtra) * 1.3;
+  v += C.nextDraw * 2 + C.nextAtk * 3 + C.reserve * 2 + C.tempered * 1.5 + (C.double ? 6 : 0) + C.freeNext * 3 + C.zenoStr * 2 + C.spiritExtra * 4;
+  v += Object.values(C.nextBlock).reduce((t, x) => t + x, 0) * 0.6;
+  for (const f of C.all) if (!f.dead) v += f.bounty * 0.15;
+  v += G.gold * 0.05;
   v += C.hand.length * 0.6;
   v -= (G.clock - t0clock) * timeWeight();
   return v;
@@ -136,7 +146,15 @@ function combatValue(t0clock) {
 // 스냅숏을 되돌리면 S.C가 새 객체가 되므로, 같은 전투인지는 표식으로 본다
 let combatTag = 0;
 const sameCombat = tag => !!S.C && S.C._tag === tag;
+// 루나리아 「월광」: 파티에 맞는 달 고르기
+function chooseMoon() {
+  const P = S.G.party, has = k => P.includes(k);
+  const k = has('sion') || has('iris') || has('marta') ? 'full' : has('noel') || has('raven') || has('brick') ? 'new'
+    : has('mimimomo') ? 'half' : S.G.deck.some(id => cardData(id)?.time) ? 'crescent' : 'half';
+  pickCombatMoon(k);
+}
 function playTurn(stats) {
+  if (S.C.moonPick) chooseMoon();
   const tag = S.C._tag, turn = S.C.turn;
   for (let guard = 0; guard < 20 && sameCombat(tag) && S.C.turn === turn; guard++) {
     const t0 = S.G.clock;
@@ -278,11 +296,13 @@ function doShop() {
 function doEvent() {
   const G = S.G, ev = G.event, x0 = runValue();
   let bi = 0, bs = -1e9;
+  const x = eventApi();
   ev.def.opts.forEach((o, i) => {
+    if (o.can && !o.can(x)) return;                                       // 못 고르는 선택지
     const s = snap();
     chooseOpt(i);
     let v = runValue();
-    if (S.G.screen === 'event' && S.G.event?.def === ev.def) v = -1e9;   // 못 고른 선택지
+    if (S.G.screen === 'event' && S.G.event?.def.id === ev.def.id) v = -1e9;
     if (S.G.screen === 'remove') v += 8; else if (S.G.screen === 'dupe') v += 6;
     restore(s);
     if (v > bs) { bs = v; bi = i; }
@@ -334,6 +354,7 @@ function playRun(party, seed, stats) {
   const G = S.G;
   void G0;
   if (!G.won) stats.deathAt[(G.why === 'collapse' ? '7시 ' : '') + rec.lastFight] = (stats.deathAt[(G.why === 'collapse' ? '7시 ' : '') + rec.lastFight] || 0) + 1;
+  if (G.screen !== 'result') { rec.why = rec.why || `stuck:${G.screen}`; console.error(`멈춘 판: 시드 ${seed} ${party.join('·')} 화면 ${G.screen}${G.event ? ` 사건 ${G.event.def.id}` : ''}`); }
   rec.won = !!G.won; rec.why = rec.why || G.why; rec.clock = G.clock; rec.act = G.act; rec.duos = G.duoSet.size; rec.fights = G.fights;
   if (G.clock >= RULES.dawn) rec.over6 = true;
   if (rec.won) rec.bossClock[3] = G.clock;
@@ -360,8 +381,15 @@ if (opt('--fight', null)) {
 
 // ---------- 돌리기 ----------
 const IDS = Object.keys(CHARACTERS);
+// --stars 3 : 그 성급 동료만으로 짠 파티만 (성급별 밸런스 확인용)
+const ONLY = +opt('--stars', 0);
 const combos = [];
-for (let a = 0; a < IDS.length; a++) for (let b = a + 1; b < IDS.length; b++) for (let c = b + 1; c < IDS.length; c++) combos.push([IDS[a], IDS[b], IDS[c]]);
+for (let a = 0; a < IDS.length; a++) for (let b = a + 1; b < IDS.length; b++) for (let c = b + 1; c < IDS.length; c++) {
+  const p = [IDS[a], IDS[b], IDS[c]];
+  if (!ONLY || p.every(id => CHARACTERS[id].rarity === ONLY)) combos.push(p);
+}
+// 조합 순서를 시드로 섞어서 판 수가 적어도 동료가 고르게 나오게
+{ const r = rngFrom(SEED0 * 2654435761); r.shuffle(combos); }
 
 const stats = { deathAt: {}, plays: {}, offered: {}, taken: {}, duoMade: {}, duoPlayed: {}, duoRuns: {} };
 const recs = [];
@@ -415,14 +443,31 @@ for (const id of IDS) {
   out.chars[id] = { runs: rs.length, win: w / rs.length };
   console.log(`| ${CHARACTERS[id].name} | ★${CHARACTERS[id].rarity} | ${rs.length} | ${pct(w, rs.length)} | ${pct(rs.filter(r => r.bossReach[2]).length, rs.length)} |`);
 }
-console.log('\n조합별');
-console.log('| 조합 | 판 | 새벽 격파 |');
+// 성급별: ★5 포함 파티 / ★5 없는 파티 / ★3만 파티
+const RAR = id => CHARACTERS[id].rarity;
+const tier = (name, f) => { const rs = recs.filter(r => f(r.party)); return [name, rs.length, rs.filter(r => r.won).length]; };
+const tiers = [
+  tier('★5 포함', p => p.some(id => RAR(id) === 5)), tier('★5 없음', p => !p.some(id => RAR(id) === 5)),
+  tier('★3만', p => p.every(id => RAR(id) === 3)), tier('★4만', p => p.every(id => RAR(id) === 4)),
+];
+out.tiers = Object.fromEntries(tiers.map(([n, a, w]) => [n, { runs: a, win: w / a }]));
+console.log('\n성급별 파티');
+console.log('| 파티 | 판 | 새벽 격파 |');
 console.log('|---|---|---|');
-out.combos = {};
+for (const [n, a, w] of tiers) console.log(`| ${n} | ${a} | ${pct(w, a)} |`);
+for (const r of [5, 4, 3]) {
+  const ids = IDS.filter(id => RAR(id) === r), ws = ids.map(id => out.chars[id].win), m = avg(ws);
+  console.log(`★${r} 평균 ${(m * 100).toFixed(1)}% · 가장 낮음 ${CHARACTERS[ids[ws.indexOf(Math.min(...ws))]].name} ${(Math.min(...ws) * 100).toFixed(1)}% (${((Math.min(...ws) / m - 1) * 100).toFixed(0)}%) · 가장 높음 ${CHARACTERS[ids[ws.indexOf(Math.max(...ws))]].name} ${(Math.max(...ws) * 100).toFixed(1)}% (+${((Math.max(...ws) / m - 1) * 100).toFixed(0)}%)`);
+}
+if (!QUICK) {
+console.log('\n조합별 (상위·하위 10)');
+const cs = [];
 for (const c of combos) {
-  const k = c.join('+'), rs = recs.filter(r => r.party.join('+') === k), w = rs.filter(r => r.won).length;
-  out.combos[k] = w / rs.length;
-  console.log(`| ${c.map(x => CHARACTERS[x].name).join('·')} | ${rs.length} | ${pct(w, rs.length)} |`);
+  const k = c.join('+'), rs = recs.filter(r => r.party.join('+') === k); if (rs.length < 2) continue;
+  cs.push([c, rs.length, rs.filter(r => r.won).length / rs.length]);
+}
+cs.sort((a, b) => b[2] - a[2]);
+for (const [c, n, w] of [...cs.slice(0, 10), ...cs.slice(-10)]) console.log(`${c.map(x => CHARACTERS[x].name).join('·')} ${n}판 ${(w * 100).toFixed(0)}%`);
 }
 console.log('\n듀오 (그 짝이 파티에 있던 판 중 듀오를 한 번 이상 만든 비율, 쓴 횟수)');
 console.log('| 듀오 | 판 비율 | 쓴 횟수 |');

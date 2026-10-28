@@ -1,5 +1,5 @@
 // 지도 생성·이동·시간 계산, 보상·휴식·야시장·사건 처리.
-import { S, addTime, rewind, healAll, healMember, member, swapFormation, pickElite, gainRelic, gainGold, endRun } from './run.js';
+import { S, addTime, rewind, healAll, healMember, member, swapFormation, pickElite, gainRelic, gainGold, endRun, partySum } from './run.js';
 import { startCombat, rewardCards } from './combat.js';
 import { ACTS, FOE } from './data/enemies.js';
 import { CARDS, CURSES, canUpgrade, cardData } from './data/cards.js';
@@ -70,7 +70,8 @@ export function reachable(r) {
   return M.edges[r - 1][prev];
 }
 // 칸 시간: 기본 + 도구(구리 나침반 강적 -10, 멈춘 시계탑 +5)
-export const nodeTime = t => Math.max(0, NODE[t].min + (t === 'elite' ? relicSum('eliteTime') : 0) + relicSum('nodeTimeAdd'));
+// 핀(지름길): 전투 칸 −5분
+export const nodeTime = t => Math.max(0, NODE[t].min + (t === 'elite' ? relicSum('eliteTime') : 0) + (t === 'fight' ? partySum('fightTime') : 0) + relicSum('nodeTimeAdd'));
 
 export function goNode(r, i) {
   const G = S.G, t = G.map.rows[r]?.[i];
@@ -111,6 +112,7 @@ export function pickBossRelic(id) {
 }
 
 // ---------- 휴식: 쉬기 = 각자 최대 체력의 비율(쓰러졌던 동료는 더), 낮잠 = 시간 되찾기, 손질 = 카드 1장 강화 ----------
+export const napTime = () => RULES.rest.napTime + partySum('napBonus');   // 엘레오노르 +15분
 export const restPct = wasDown => ((wasDown ? RULES.rest.downHealPct : RULES.rest.healPct) + relicSum('restHealAdd')) * relicMul('restHealMul');
 export function rest(kind) {
   const R = RULES.rest, G = S.G;
@@ -119,8 +121,8 @@ export function rest(kind) {
     m.hp = Math.min(m.max, m.hp + Math.ceil(m.max * restPct(m.wasDown)));
     m.wasDown = false;
   }
-  else if (kind === 'smith') { G.back = null; G.screen = 'upgrade'; return; }
-  else rewind(R.napTime);
+  else if (kind === 'smith') { G.back = null; G.smithLeft = 1 + partySum('smithExtra'); G.screen = 'upgrade'; return; }   // 도라: 1장 더
+  else rewind(napTime());
   nextRow();
 }
 // 손질·지우기가 끝나면 돌아갈 곳 (야시장에서 왔으면 야시장)
@@ -135,6 +137,7 @@ export function upgradeCard(i) {
   const G = S.G;
   if (i >= 0 && canUpgrade(G.deck[i])) G.deck[i] += '+';
   else refund();
+  if (G.back !== 'shop' && --G.smithLeft > 0 && G.deck.some(canUpgrade) && i >= 0) return;   // 손질 한 장 더
   back();
 }
 export function removeCard(i) { const G = S.G; if (i >= 0 && G.deck[i]) G.deck.splice(i, 1); else refund(); back(); }
@@ -148,7 +151,10 @@ export function pickSlot(i) {
 }
 
 // ---------- 야시장 (docs/02_rules.md §8) ----------
-function priceOf(id) { return SHOP.cardPrice[CARDS[id].rarity] || SHOP.cardPrice.c; }
+// 할인: 후쿠로 패시브 + 흥정(다음 야시장 한 번)
+const shopMul = () => 1 - Math.min(.6, partySum('shopDiscount') + (S.G.haggle || 0));
+const cut = n => Math.ceil(n * shopMul());
+function priceOf(id) { return cut(SHOP.cardPrice[CARDS[id].rarity] || SHOP.cardPrice.c); }
 function openShop() {
   const G = S.G, rng = G.rng;
   const cards = [];
@@ -161,9 +167,10 @@ function openShop() {
   const relics = [];
   for (let k = 0; k < SHOP.relics; k++) {
     const id = rollRelic(rng, null, relics.map(x => x.id)); if (!id) continue;
-    relics.push({ id, price: SHOP.relicPrice[RELICS[id].tier], sold: false });
+    relics.push({ id, price: cut(SHOP.relicPrice[RELICS[id].tier]), sold: false });
   }
-  G.shop = { cards, relics, talk: rng.pick(SHOP.talk) };
+  G.shop = { cards, relics, talk: rng.pick(SHOP.talk), off: Math.round((1 - shopMul()) * 100) };
+  G.haggle = 0;
   G.screen = 'shop';
 }
 export const removePrice = () => SHOP.remove + SHOP.removeStep * S.G.removes;
@@ -253,7 +260,7 @@ export function useRelic(id) {
   if (d.use === 'moon' && !S.C) return false;    // 달빛 병은 전투 중에만
   G.used[id] = true;
   if (d.use === 'rewind') rewind(d.v);
-  else if (d.use === 'moon') { const ks = Object.keys(MOONS); G.moon = ks[(ks.indexOf(G.moon) + 1) % ks.length]; }
+  else if (d.use === 'moon') { const ks = Object.keys(MOONS); G.moon = ks[(ks.indexOf(G.moon) + 1) % ks.length]; if (S.C) S.C.moonBase = G.moon; }
   return true;
 }
 export { endRun };

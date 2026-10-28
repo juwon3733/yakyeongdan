@@ -412,3 +412,14 @@ button.relic.spent{opacity:.35}
 .eplog p{margin:0}.eplog .narr{color:var(--dim);font-style:italic}
 @keyframes blink{50%{opacity:0}}
 @media (prefers-reduced-motion:reduce){.epbox .more{animation:none}}
+/* M4: 인연 줄 · 휴식 대화 · 루나리아 달 고르기 */
+.bonds{display:flex;flex-wrap:wrap;gap:3px 6px;align-items:center;font-size:9px;margin:2px 0}
+.bond{color:var(--dim);border:1px solid var(--line);padding:0 4px;white-space:nowrap}
+.bond i{font-style:normal;color:var(--line);margin:0 2px}
+.bond.seen{color:var(--gold);border-color:var(--gold)}
+.talk{max-width:420px;margin:2px auto;text-align:left;font-size:9px;line-height:1.5;border:1px solid var(--line);background:#0b0b18;padding:3px 6px}
+.talk p{margin:0;display:flex;align-items:center;gap:4px}
+.talk b{color:var(--gold);font-weight:400;white-space:nowrap}
+.cmoonpick{display:flex;gap:3px;align-items:center;color:var(--moon)}
+.cmoonpick img{width:10px;height:10px;vertical-align:middle;margin-right:2px}
+.cmoonpick button.on{border-color:var(--gold);color:var(--gold)}

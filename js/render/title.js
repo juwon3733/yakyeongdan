@@ -1,9 +1,10 @@
 import { S } from '../run.js';
 import { CHARACTERS } from '../data/characters.js';
 import { ROSTER, ROSTER_IDS } from '../data/roster.js';
+import { DUOS, duoKey } from '../data/cards.js';
 import { P, owns } from '../meta.js';
 import { sprite } from './sprites.js';
-import { stars, palOf } from './common.js';
+import { stars, palOf, esc } from './common.js';
 
 // 타이틀: 키아트 자리(그림 없으면 밤하늘·탑) + 왼쪽 아래 메뉴
 export function titleView() {
@@ -19,6 +20,17 @@ export function titleView() {
       <span class="note small">별 조각 <b>${P.shards}</b> · 동료 ${Object.keys(P.owned).length}/${ROSTER_IDS.length}${S.dev ? ' · <span class="dev">개발판</span>' : ''}</span>
     </div>
   </div>`;
+}
+
+// 고른 동료 사이 인연 (듀오가 있는 짝). 찾은 듀오는 금색.
+function bondsOf(picked) {
+  const out = [];
+  for (let i = 0; i < picked.length; i++) for (let j = i + 1; j < picked.length; j++) {
+    const k = duoKey(picked[i], picked[j]), d = DUOS[k]; if (!d) continue;
+    const seen = P.seenDuos?.includes(k);
+    out.push(`<span class="bond ${seen ? 'seen' : ''}" title="${esc(seen ? d.text.replace(/\{[dbkn]\d\}/g, '…') : '아직 못 찾은 듀오')}">${ROSTER[picked[i]].name}<i>━</i>${ROSTER[picked[j]].name} 「${seen ? esc(d.name) : '?'}」</span>`);
+  }
+  return picked.length > 1 ? `<div class="bonds"><span class="note small">인연</span>${out.join('') || '<span class="note small">이 셋 사이엔 인연이 없다 (연계만 찬다)</span>'}</div>` : '';
 }
 
 // 파티 고르기: 가진 동료만 (개발판은 구현된 동료 전부). 아직 구현 안 된 동료는 「준비 중」.
@@ -43,6 +55,7 @@ export function partyView() {
     <div class="tright">
       <h2>동료 셋 (${S.picked.length}/3)</h2>
       <div class="chosenrow">${chosen}</div>
+      ${bondsOf(S.picked)}
       <p class="note">대열은 지도에서 바꿀 수 있다. 처음엔 체력이 높은 동료가 앞에 선다.</p>
       <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>출발</button>
       <p class="note small"><b>연계</b>: 서로 다른 동료 카드를 번갈아 쓰면 칸이 차고 공격이 세진다. 2칸 이상에서 인연 있는 둘을 이어 쓰면 <b>듀오 카드</b>.</p>

@@ -30,7 +30,7 @@ const browser = await chromium.launch();
 const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; };
 const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
-  ep1: false, epFight: false, epUnlock: false };
+  ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false };
 
 // 전투가 아닌 화면 한 걸음 (지도·보상·휴식·사건·야시장·보스 도구·달 고르기·카드 고르기)
 async function advance(page, tag) {
@@ -69,7 +69,8 @@ async function playOne(page) {
 const screenOf = page => page.evaluate(() => document.querySelector('[data-end]') ? 'combat' : document.querySelector('[data-take]') ? 'reward' : document.querySelector('[data-again]') ? 'result' : 'other');
 
 try {
-  for (const seed of [1, 2, 3]) {
+  // seed 4·5: M4 새 동료 (루나리아 달 고르기, 시온 정령, 쌍둥이, 인연 줄)
+  for (const seed of [1, 2, 3, 4, 5]) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[seed ${seed}] ${e.message}`));
     const isFont = u => /fonts\.(googleapis|gstatic)\.com/.test(u);
@@ -78,9 +79,10 @@ try {
     page.on('response', r => { if (r.status() >= 400 && !isFont(r.url())) errors.push(`[seed ${seed}] ${r.status()} ${r.url()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
     await page.goto(`http://127.0.0.1:${port}/?seed=${seed}`);
-    const party = [['iris', 'brick', 'marta'], ['noel', 'raven', 'marta'], ['brick', 'raven', 'noel']][seed - 1];
+    const party = [['iris', 'brick', 'marta'], ['noel', 'raven', 'marta'], ['brick', 'raven', 'noel'], ['lunaria', 'sion', 'mimimomo'], ['akane', 'iris', 'finn']][seed - 1];
     await openParty(page);
     for (const k of party) await page.click(`[data-pick="${k}"]`);
+    if (await page.$('.bond')) seen.bonds = true;
     await page.click('[data-start]');
     await page.waitForSelector('[data-node="0,0"]');
 
@@ -94,6 +96,8 @@ try {
     if (party.includes('marta')) await page.evaluate(() => { window.__yk.S.G.deck.push('marta.confess', 'marta.confess', 'marta.confess'); });
     await page.click('[data-node="0,0"]');
     await page.waitForSelector('[data-end]');
+    if (await page.$('[data-cmoon="full"]')) { await page.click('[data-cmoon="full"]'); if (await page.evaluate(() => window.__yk.S.G.moon) === 'full' && !(await page.$('[data-cmoon]'))) seen.moonPick = true; }
+    if (party.includes('sion') && await page.evaluate(() => window.__yk.S.C.spirits.length > 0)) seen.spirit = true;
     // 쓰러짐 확인용 (seed 1): 앞줄 동료 체력 1, 한 명이 쓰러질 때까지 카드 없이 턴만 넘긴다
     if (seed === 1) {
       await page.evaluate(() => { const G = window.__yk.S.G; G.members[G.formation[0]].hp = 1; });

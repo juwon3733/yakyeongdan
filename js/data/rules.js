@@ -15,7 +15,7 @@ export const RULES = {
   swapBlockCost: 2,     // 전투 중 대열 바꾸기: 바꾼 둘의 방어 감소
   swapsPerTurn: 1,
   reviveHp: 1,
-  sleepMana: 4,          // 노엘이 잠든 채 턴을 시작하면 마력
+  sleepMana: 5,          // 노엘이 잠든 채 턴을 시작하면 마력
   weakMul: .75,         // 약화: 주는 피해
   vulnMul: 1.5,         // 취약: 받는 피해
   lightCost: 1,         // 등대 불빛이 비춘 동료 카드 비용 +

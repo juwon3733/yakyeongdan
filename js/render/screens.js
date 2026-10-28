@@ -1,6 +1,7 @@
 // 보상·휴식·사건·야시장·카드 지우기/복제·보스 도구·달 고르기·결과
 import { S } from '../run.js';
-import { eventApi, restPct, removePrice } from '../map.js';
+import { eventApi, restPct, removePrice, napTime } from '../map.js';
+import { TALKS } from '../data/talks.js';
 import { MOONS } from '../data/moons.js';
 import { CHARACTERS } from '../data/characters.js';
 import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
@@ -28,12 +29,19 @@ export function restView() {
     const M = G.members[p], gain = Math.min(M.max - M.hp, Math.ceil(M.max * restPct(M.wasDown)));
     return `<span class="mt">${face(p)}<span>${CHARACTERS[p].name} ${M.hp}/${M.max} <b>+${gain}</b>${M.wasDown ? ' (쓰러졌던 동료)' : ''}</span></span>`;
   }).join('');
+  const talk = restTalk(G);
   return `<div class="center"><h2>휴식</h2><p class="note">탑의 계단참. 쉬거나, 잠깐 눈을 붙여 시간을 벌거나, 카드를 손질하거나.</p>
     <div class="restwho">${who}</div>
+    ${talk ? `<div class="talk">${talk.lines.map(([p, t]) => `<p>${face(p, 'sm')}<b>${CHARACTERS[p].name}</b> ${esc(t)}</p>`).join('')}</div>` : ''}
     <div class="acts">
       <button type="button" class="primary" data-rest="heal">쉬기: 각자 최대 체력의 ${Math.round(restPct(false) * 100)}% (쓰러졌던 동료 ${Math.round(restPct(true) * 100)}%)</button>
-      <button type="button" data-rest="nap">낮잠: ${R.napTime}분 되찾기</button>
+      <button type="button" data-rest="nap">낮잠: ${napTime()}분 되찾기</button>
       <button type="button" data-rest="smith" ${G.deck.some(canUpgrade) ? '' : 'disabled'}>손질: 카드 1장 강화</button></div></div>`;
+}
+// 휴식 대화: 파티에 두 사람이 다 있는 대화 중 하나 (인연 짝 우선, 층마다 바뀜)
+function restTalk(G) {
+  const L = TALKS.filter(t => G.party.includes(t.a) && G.party.includes(t.b));
+  return L.length ? L[(G.floors + G.act * 7) % L.length] : null;
 }
 const val = (v, x) => typeof v === 'function' ? v(x) : v;
 export function eventView() {
@@ -44,7 +52,8 @@ export function eventView() {
 export function upgradeView() {
   const G = S.G;
   const list = G.deck.map((id, i) => [id, i]).filter(([id]) => canUpgrade(id));
-  return `<div class="center"><h2>손질: 강화할 카드를 고르세요</h2><p class="note">위가 지금, 아래가 강화판.</p>
+  const more = G.back !== 'shop' && G.smithLeft > 1 ? ` (도라: ${G.smithLeft}장)` : '';
+  return `<div class="center"><h2>손질: 강화할 카드를 고르세요${more}</h2><p class="note">위가 지금, 아래가 강화판.</p>
     <div class="hand big scroll">${list.map(([id, i]) => `<span class="pair">${cardHTML(id, true, 'up', i)}${cardHTML(id + '+', true, 'up', i)}</span>`).join('')}</div>
     <div class="acts"><button type="button" data-up="-1">그만두기</button></div></div>`;
 }
@@ -62,7 +71,7 @@ export function shopView() {
   const relics = sh.relics.map((r, i) => `<button type="button" class="ware relicware ${r.sold ? 'sold' : ''}" data-buyrelic="${i}" ${r.sold || G.gold < r.price ? 'disabled' : ''}>
     ${relicBox(r.id)}<span class="price">${r.sold ? '팔림' : `별빛 ${r.price}`}</span></button>`).join('');
   return `<div class="shopscr">
-    <div class="shophead"><span class="fukuro" aria-hidden="true">梟</span><span><b>후쿠로</b> ${sh.talk}</span><span class="grow"></span><span class="gold big">별빛 ${G.gold}</span></div>
+    <div class="shophead"><span class="fukuro" aria-hidden="true">梟</span><span><b>후쿠로</b> ${sh.talk}</span>${sh.off ? `<span class="chip" style="color:var(--moon)">할인 ${sh.off}%</span>` : ''}<span class="grow"></span><span class="gold big">별빛 ${G.gold}</span></div>
     <div class="wares">${cards}</div>
     <div class="shoprow">${relics}
       <span class="services">

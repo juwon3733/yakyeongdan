@@ -1,5 +1,5 @@
 // 전투 엔진: 턴, 손패, 적 1~3마리(의도·노림·상태), 동료별 체력·방어·상태, 대열, 쓰러짐, 연계·듀오, 패시브, 저주.
-import { S, addTime, timeCost, logMsg, isDawn, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember } from './run.js';
+import { S, addTime, timeCost, logMsg, isDawn, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll } from './run.js';
 import { hasRelic, relicSum, relicFlag, rollRelic } from './relics.js';
 import { RELICS } from './data/relics.js';
 import { effects as E, draw } from './effects.js';
@@ -10,6 +10,7 @@ import { MOONS } from './data/moons.js';
 import { RULES, REWARD } from './data/rules.js';
 
 let uid = 1;
+export const newInst = id => ({ uid: uid++, id });
 
 // 쓰러진 동료의 패시브는 꺼진다. 훅 안의 효과는 그 동료 자신에게.
 function passives(hook, ...args) {
@@ -36,7 +37,7 @@ export function startCombat(ids, kind) {
     const d = FOE[k];
     // 6시 이후 들어간 전투: 적이 힘 +3으로 시작
     return { key: k, i, ...d, hp: d.hp, max: d.hp, pi: 0, block: 0, str: isDawn() ? RULES.dawnStartStr : 0, poison: 0, weak: 0, vuln: 0, bleed: 0, burn: 0,
-      armor: d.armor || 0, acts: d.acts || 1, p2: false, cyc: 0, dead: false, lastHitter: null };
+      armor: d.armor || 0, acts: d.acts || 1, p2: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null };
   });
   const C = S.C = {
     kind, all: foes, tf: null, hover: null,
@@ -50,6 +51,12 @@ export function startCombat(ids, kind) {
     nextEnergy: 0, retain: false, discount: 0, garden: 0, payEnergy: false,
     light: foes.some(f => f.light) ? 0 : null,
     turn: 0, log: [],
+    // 동료 20명의 고유 상태 (docs/03_characters.md)
+    spirits: [], spiritExtra: 0, lastKey: null, lastSub: null, pair: false, pairMul: 1, lastPlay: null,
+    turnAtk: 0, nextAtk: 0, zeroBonus: 0, zenoStr: 0, zenoAwake: 0, air: 0, noDmg: false, nextBlock: {}, nextDraw: 0,
+    double: false, freeNext: 0, atkFree: false, playedTurn: 0, turnChars: new Set(), tempered: 0, playedUp: false,
+    timeUsedTurn: 0, rewardExtra: 0, winGold: 0, swapsBonus: 0, moonBase: G.moon, moonChanged: false, moonPick: false,
+    lostTurn: {}, flameGuard: 0, sigCounter: 0, burnAll: 0, reserve: 0, keepCards: [], atkCard: false,
   };
   Object.defineProperty(C, 'block', {
     get() { return C.actor ? C.blocks[C.actor] : 0; },
@@ -58,6 +65,9 @@ export function startCombat(ids, kind) {
   // 데이터에서 c.foe = 고른 적, c.foes = 살아 있는 적 (C.all = 처음 나온 적 전부)
   Object.defineProperty(C, 'foe', { get: foeTarget });
   Object.defineProperty(C, 'foes', { get: livingFoes });
+  Object.defineProperty(C, 'anyDown', { get: () => G.party.some(p => member(p).down) });
+  // 보름달: 정령 피해 +1 등은 moons.js. 토모리 「등대 신호」: 다음 전투 시작 에너지·카드
+  if (G.nextFight) { C.nextEnergy += G.nextFight.energy; C.nextDraw += G.nextFight.draw; G.nextFight = null; }
   G.screen = 'combat';
   const line = foes.find(f => f.line)?.line;
   if (line) logMsg(`<b>${foes.find(f => f.line).name}</b> ${line}`);
@@ -90,7 +100,13 @@ function startTurn() {
   }
   const first = C.turn === 1;
   C.energy = RULES.energy + C.nextEnergy + relicSum('energy') + (first ? relicSum('firstEnergy') : 0); C.nextEnergy = 0;
-  C.chain = 0; C.last = null; C.slashes = 0; C.counter = 0; C.mirror = 0; C.taunt = null; C.swaps = 0; C.pending = null;
+  C.chain = 0; C.last = null; C.lastKey = null; C.lastSub = null; C.slashes = 0; C.counter = 0; C.mirror = 0; C.taunt = null; C.swaps = 0; C.pending = null;
+  C.turnAtk = C.nextAtk; C.nextAtk = 0; C.zeroBonus = 0; C.playedTurn = 0; C.turnChars = new Set(); C.playedUp = false; C.timeUsedTurn = 0;
+  C.moonChanged = false; C.flameGuard = 0; C.sigCounter = 0; C.burnAll = 0; C.swapsBonus = 0; C.atkFree = false; C.freeNext = 0; C.noDmg = false;
+  C.lostTurn = {}; C.reserve = 0; C.double = false; C.lastPlay = null;
+  if (!first) C.moonPick = false;
+  for (const p in C.nextBlock) if (alive(p)) C.blocks[p] += C.nextBlock[p];
+  C.nextBlock = {};
   if (C.asleep && alive('noel')) C.mana += RULES.sleepMana + E.dark();
   if (C.late) { C.mana *= 2; C.late = false; }
   if (C.garden) for (const f of livingFoes()) f.poison += C.garden;
@@ -101,7 +117,9 @@ function startTurn() {
   if (first) { passives('onCombatStart'); relicsAtStart(); }
   passives('onTurnStart');
   // 녹슨 열쇠: 손패에 있는 동안 1장 덜 뽑는다. 별의 왕관 -1, 야경단 완장 첫 턴 +1
-  const size = RULES.handSize + relicSum('handSize') + (first ? relicSum('firstDraw') : 0);
+  // 남긴 카드(세바스·예약)는 손으로 먼저, 뽑는 수와 따로
+  const kept = C.keepCards.length; C.hand.push(...C.keepCards); C.keepCards = [];
+  const size = RULES.handSize + relicSum('handSize') + (first ? relicSum('firstDraw') : 0) + C.nextDraw + kept; C.nextDraw = 0;
   const want = () => size - C.hand.filter(h => cardDef(h).drawLess).length;
   for (let k = 0; k < size + 3 && C.hand.length < want(); k++) {
     const before = C.hand.length; draw(1); if (C.hand.length === before) break;
@@ -113,7 +131,7 @@ const intentHits = it => it.t === 'atk' || it.t === 'mix';
 const ST_NAME = { weak: '약화', vuln: '취약' };
 export function foeDmg(f, v, id) {
   const ms = id && S.C.ms[id];
-  return Math.floor((v + f.str) * (f.weak ? RULES.weakMul : 1) * (ms?.vuln ? RULES.vulnMul : 1));
+  return Math.max(0, Math.floor((v + f.str) * (f.weak ? RULES.weakMul : 1) * (ms?.vuln ? RULES.vulnMul : 1) * (1 - (f.dim || 0))));
 }
 export function intentText(f) {
   const it = intentOf(f), id = intentHits(it) ? aimTarget(f) : null, v = foeDmg(f, it.v, id);
@@ -134,10 +152,10 @@ function one(it, v) {
 export function aimTarget(f, k = 0) {
   const C = S.C, L = living(); if (!L.length) return null;
   if (C.taunt && alive(C.taunt)) return C.taunt;
-  const a = f.aim || RULES.defaultAim;
+  const a = f.aimOverride || f.aim || RULES.defaultAim;
   if (a === 'cycle') return L[f.cyc % L.length];
   if (a === 'dawn') { const it = intentOf(f); return it.n > 1 ? L[k % L.length] : L.reduce((x, y) => member(y).hp > member(x).hp ? y : x); }
-  if (a === 'back') return L[L.length - 1];
+  if (a === 'back') { const B = L.filter(p => !(p === 'sigrun' && C.air)); return (B.length ? B : L)[(B.length ? B : L).length - 1]; }
   if (a === 'weakest') return L.reduce((x, y) => member(y).hp < member(x).hp ? y : x);
   if (a === 'last' && f.lastHitter && alive(f.lastHitter)) return f.lastHitter;
   if (a === 'light') { const lit = litMembers().find(alive); if (lit) return lit; }
@@ -147,10 +165,10 @@ export function aimTarget(f, k = 0) {
 export const aimShown = f => { const it = intentOf(f); return intentHits(it) || it.t === 'deb' ? aimTarget(f) : null; };
 
 // 동료가 적에게 주는 피해: (기본 + 연계·달 보너스) × 약화(동료) × 취약(적) → 방어 → 출혈
-export function dmgToFoe(f, n, actor) {
+export function dmgToFoe(f, n, actor, pierceBlock = false) {
   const C = S.C;
   let d = Math.max(0, Math.floor(n * (actor && C.ms[actor]?.weak ? RULES.weakMul : 1) * (f.vuln ? RULES.vulnMul : 1)) - f.armor);
-  const blocked = Math.min(f.block, d); f.block -= blocked; d -= blocked; f.hp = Math.max(0, f.hp - d);
+  const blocked = pierceBlock ? 0 : Math.min(f.block, d); f.block -= blocked; d -= blocked; f.hp = Math.max(0, f.hp - d);
   let bleed = 0;
   if (f.bleed > 0) { bleed = f.bleed; f.hp = Math.max(0, f.hp - bleed); f.bleed--; }
   return { dealt: d, blocked, bleed };
@@ -166,12 +184,19 @@ function enterPhase2(f) {
 }
 export function killCheck(f) {
   if (f.hp > 0 && f.phase2 && !f.p2 && f.hp <= f.max * f.phase2.at) enterPhase2(f);
-  if (f.hp <= 0 && !f.dead) { f.dead = true; logMsg(`<b>${f.name}</b> 쓰러뜨림`); if (S.C.tf === f.i) S.C.tf = null; }
+  if (f.hp <= 0 && !f.dead) {
+    f.dead = true; logMsg(`<b>${f.name}</b> 쓰러뜨림`); if (S.C.tf === f.i) S.C.tf = null;
+    if (f.bounty) { gainGold(f.bounty); logMsg(`현상금: 별빛 <b>+${f.bounty}</b>`); }
+  }
 }
 
 function hurtMember(id, d, src) {
   const C = S.C, m = member(id), nm = CHARACTERS[id].name;
-  const b = Math.min(C.blocks[id], d); C.blocks[id] -= b; d -= b; m.hp = Math.max(0, m.hp - d);
+  if (C.noDmg) d = 0;                                  // 숨바꼭질
+  if (id === 'sigrun' && C.air) d = Math.ceil(d / 2);  // 공중: 받는 피해 절반
+  const b = Math.min(C.blocks[id], d); C.blocks[id] -= b; d -= b;
+  const before = m.hp; m.hp = Math.max(0, m.hp - d);
+  m.lost = (m.lost || 0) + (before - m.hp); C.lostTurn[id] = (C.lostTurn[id] || 0) + (before - m.hp);
   logMsg(`${src} → ${nm}: 피해 <b>${d}</b>${b ? ` (방어 ${b} 막음)` : ''}`);
   // 금빛 깃털: 판마다 동료당 한 번 버틴다
   if (m.hp <= 0 && !m.down && hasRelic('gold_feather') && !m.feather) { m.feather = true; m.hp = RELICS.gold_feather.goldFeather; logMsg(`금빛 깃털: <b>${nm}</b>이(가) 버텼다`); }
@@ -182,6 +207,8 @@ function enemyHit(f, v, k = 0) {
   if (f.aim === 'cycle' && !C.taunt) f.cyc++;
   hurtMember(id, foeDmg(f, v, id), f.name);
   if (id === 'marta' && C.counter > 0 && !f.dead) { f.hp = Math.max(0, f.hp - C.counter); logMsg(`마르타의 반격 <b>${C.counter}</b>`); killCheck(f); }
+  if (id === 'sigrun' && C.sigCounter > 0 && !f.dead) { f.hp = Math.max(0, f.hp - C.sigCounter); logMsg(`창벽 반격 <b>${C.sigCounter}</b>`); killCheck(f); }
+  if (id === 'akane' && C.flameGuard > 0 && !f.dead) f.burn += C.flameGuard;
 }
 
 export const cardDef = inst => cardData(inst.id);
@@ -197,17 +224,21 @@ export function costOf(inst) {
   const C = S.C, d = cardDef(inst);
   if (d.unplayable) return null;
   let c = d.free && d.free(C) ? 0 : d.cost;
+  if (C.atkFree && d.atk) c = 0;                                   // 떨이
+  if (inst.disc) c = Math.max(0, c - inst.disc);                   // 등기·대리 응대·예약·잔상
   if (d.ch === 'duo' && relicFlag('duoFree')) c = 0;               // 은 호루라기
   if (d.time && C.payEnergy && relicFlag('hourglass')) c = Math.max(c, 1);   // 깨진 모래시계: 시간 대신 에너지 1
   const who = actorOf(d);
   if (who && litMembers().includes(who)) c += RULES.lightCost;
-  return Math.max(0, c - C.discount);
+  c = Math.max(0, c - C.discount);
+  return C.freeNext > 0 ? 0 : c;                                   // 속달
 }
 // 잠든 노엘은 깨우는 공격(wake)과 잠든 채 쓰는 카드(sleepOk)만
 const sleepBlocked = d => d.ch === 'noel' && S.C.asleep && d.atk && !d.wake && !d.sleepOk;
 export function usable(inst) {
   const d = cardDef(inst), cost = costOf(inst);
   if (cost == null || sleepBlocked(d)) return false;
+  if (d.need && !d.need(S.C)) return false;
   if (d.ch !== 'curse' && !actorOf(d)) return false;
   return S.C.energy >= cost;
 }
@@ -225,30 +256,57 @@ export function playCard(id, pick = {}) {
     if (pick.foe == null && L.length === 1) pick.foe = L[0].i;
     if (pick.foe == null || !C.all[pick.foe] || C.all[pick.foe].dead) return { needFoe: true };
   }
-  C.energy -= costOf(inst); C.discount = 0;
+  const paid = costOf(inst);
+  C.energy -= paid; C.discount = 0;
+  if (C.freeNext > 0) C.freeNext--;
   C.hand.splice(i, 1);
   C.pending = null;
-  if (d.time && !(C.payEnergy && relicFlag('hourglass'))) { const t = timeCost(d); if (t) { addTime(t); logMsg(`시간을 썼다: <b>+${t}분</b>`); } }
+  if (d.time && !(C.payEnergy && relicFlag('hourglass'))) {
+    const t = timeCost(d); if (t) { addTime(t); logMsg(`시간을 썼다: <b>+${t}분</b>`); }
+    // 엘레오노르: 매 턴 처음 쓴 시간 카드는 에너지를 돌려준다
+    if (!C.timeUsedTurn) { const back = G.party.reduce((s, p) => s + (alive(p) ? CHARACTERS[p].passive?.firstTimeEnergy || 0 : 0), 0); if (back) C.energy += back; }
+  }
+  if (d.time) C.timeUsedTurn++;
   let duo = null, bond = null;
   if (d.ch === 'duo' && !d.bond) G.duoSet.add(`${d.a}+${d.b}`);
   if (d.ch !== 'duo' && d.ch !== 'curse') {
-    if (C.last && C.last !== d.ch) {
+    // 연계 열쇠: 쌍둥이는 미미·모모가 서로 다른 동료. 「둘 다」 카드와 핀의 카드(link)는 언제나 잇는다.
+    const key = d.sub ? `${d.ch}:${d.sub}` : d.ch;
+    const differs = C.lastKey && (C.lastKey !== key || d.link || d.sub === 'both');
+    if (differs) {
       const before = C.chain;
       C.chain = Math.min(RULES.chainMax, C.chain + 1);
       if (before < RULES.chainMax && C.chain === RULES.chainMax && relicSum('chain3Draw')) draw(relicSum('chain3Draw'));   // 쌍둥이 리본
-      const k = duoKey(C.last, d.ch), need = MOONS[G.moon].duoNeed ?? RULES.duoNeed;
-      if (C.chain >= need && DUOS[k] && !C.duoUsed.has(k) && alive(C.last)) { C.duoUsed.add(k); duo = k; }
-      // 인연의 실: 인연이 아닌 짝도 연계 3칸에서 「합동」
-      else if (!DUOS[k] && relicFlag('bond') && C.chain >= RULES.chainMax && !C.duoUsed.has('bond:' + k) && alive(C.last)) { C.duoUsed.add('bond:' + k); bond = k; }
-    } else if (C.last === d.ch) C.chain = 0;
-    C.last = d.ch;
-  }
+      if (C.last !== d.ch) {
+        const k = duoKey(C.last, d.ch), need = MOONS[G.moon].duoNeed ?? RULES.duoNeed;
+        if (C.chain >= need && DUOS[k] && !C.duoUsed.has(k) && alive(C.last)) { C.duoUsed.add(k); duo = k; }
+        // 인연의 실: 인연이 아닌 짝도 연계 3칸에서 「합동」
+        else if (!DUOS[k] && relicFlag('bond') && C.chain >= RULES.chainMax && !C.duoUsed.has('bond:' + k) && alive(C.last)) { C.duoUsed.add('bond:' + k); bond = k; }
+      }
+    } else if (C.lastKey === key) C.chain = 0;
+    // 쌍: 직전이 반대쪽 쌍둥이 카드(또는 「둘 다」)
+    C.pair = !!d.sub && !!C.lastSub && (C.lastSub === 'both' || (d.sub !== 'both' && C.lastSub !== d.sub));
+    C.pairMul = MOONS[G.moon].twinMul || 1;
+    C.last = d.ch; C.lastKey = key; C.lastSub = d.sub || null;
+    C.turnChars.add(d.ch);
+  } else C.pair = false;
+  C.playedTurn++;
+  if (d.up) C.playedUp = true;
   C.actor = who; C.target = d.target === 'ally' ? pick.ally : who; C.tf = d.target === 'foe' ? pick.foe : null;
-  C.bonus = d.atk ? C.chain : 0;
+  // 공격 보너스: 연계 + 이번 턴 모든 동료 공격 + 비용 0 카드(각오) + 제노(포효·각성)
+  C.bonus = d.atk ? C.chain + C.turnAtk + (paid === 0 ? C.zeroBonus : 0)
+    + (who === 'zeno' ? C.zenoStr + (C.zenoAwake && E.low('zeno') ? C.zenoAwake : 0) : 0) : 0;
+  C.atkCard = !!d.atk;
   if (d.ch !== 'curse') passives('beforeCard', d);
+  const twice = C.double && d.ch !== 'curse' && !d.id.startsWith('seb.service'); if (twice) C.double = false;
+  const bonus = C.bonus;
   d.play?.(C, E, d.v, d.up);
-  C.bonus = 0; C.actor = null; C.target = null; C.tf = null;
-  if (d.exhaust) C.exh.push(inst); else C.disc.push(inst);
+  if (twice && livingFoes().length) { C.bonus = bonus; d.play?.(C, E, d.v, d.up); }
+  if (d.ch !== 'curse') passives('afterCard', d, pick);
+  C.lastPlay = { d, tf: C.tf, target: C.target, actor: C.actor, pair: C.pair };
+  C.bonus = 0; C.actor = null; C.target = null; C.tf = null; C.atkCard = false;
+  if (d.exhaust || inst.ghost) C.exh.push(inst); else C.disc.push(inst);
+  delete inst.disc;
   if (duo) { C.hand.push({ uid: uid++, id: 'duo:' + duo }); G.duos++; }
   if (bond) C.hand.push({ uid: uid++, id: 'bond:' + bond });
   if (!livingFoes().length) winCombat();
@@ -265,7 +323,12 @@ export function swapInCombat(i) {
   return true;
 }
 
-export const swapLimit = () => relicSum('swaps') || RULES.swapsPerTurn;
+// 루나리아 「월광」: 첫 턴에 이번 전투의 달을 고른다
+export function pickCombatMoon(k) {
+  const C = S.C; if (!C?.moonPick || !MOONS[k]) return false;
+  C.moonPick = false; E.setMoon(k); return true;
+}
+export const swapLimit = () => (relicSum('swaps') || RULES.swapsPerTurn) + (S.C?.swapsBonus || 0);
 
 function foeAct(f) {
   const C = S.C, it = intentOf(f);
@@ -287,17 +350,32 @@ export function endTurn() {
     if (x.hurt) { const L = living(); if (L.length) hurtMember(G.rng.pick(L), x.hurt, '안개'); }
     if (x.frontBlock) { const p = living()[0]; if (p) C.blocks[p] = Math.max(0, C.blocks[p] - x.frontBlock); }
   }
-  for (const h of C.hand) if (!/^(duo|bond):/.test(h.id)) C.disc.push(h);
+  // 남기기: 세바스 패시브(가장 비싼 1장) + 예약·전해 줄게(가장 비싼 카드, 다음 턴 비용 −1)
+  const keepN = (alive('sebas') ? CHARACTERS.sebas.passive.keepCard : 0) + C.reserve;
+  const keepable = C.hand.filter(h => !/^(duo|bond):/.test(h.id) && cardDef(h).ch !== 'curse' && !h.ghost)
+    .sort((a, b) => (cardDef(b).cost - cardDef(a).cost) || (b.uid - a.uid));
+  const keep = keepable.slice(0, keepN);
+  keep.forEach((h, k) => { if (k >= keepN - C.reserve) h.disc = (h.disc || 0) + 1; });
+  C.keepCards = keep;
+  for (const h of C.hand) if (!/^(duo|bond):/.test(h.id) && !keep.includes(h)) (h.ghost ? C.exh : C.disc).push(h);
   C.hand = []; C.pending = null;
+  // 정령: 내 턴 끝마다 (시온이 서 있을 때)
+  if (alive('sion') && C.spirits.length) { E.spiritsAct(1 + C.spiritExtra); if (!livingFoes().length) return winCombat(); }
   for (const f of C.all) {
     if (f.dead) continue;
     if (f.burn > 0) { f.hp = Math.max(0, f.hp - f.burn); logMsg(`${f.name} 화상 피해 <b>${f.burn}</b>`); f.burn = Math.floor(f.burn / 2); }
     if (f.poison > 0 && !(f.noPoisonWhileBlock && f.block > 0)) { f.hp = Math.max(0, f.hp - f.poison); logMsg(`${f.name} 독 피해 <b>${f.poison}</b>`); f.poison--; }
     killCheck(f); if (f.dead) continue;
     f.block = 0;
-    for (let a = 0; a < f.acts && !f.dead && living().length; a++) { foeAct(f); f.pi++; }
+    for (let a = 0; a < f.acts && !f.dead && living().length; a++) {
+      if (f.skip > 0) { f.skip--; logMsg(`${f.name}의 행동이 멈췄다`); }
+      else foeAct(f);
+      f.pi++;
+    }
+    f.dim = 0; f.aimOverride = null;
     if (f.weak > 0) f.weak--; if (f.vuln > 0) f.vuln--;
   }
+  if (C.air > 0) C.air--;
   for (const p in C.ms) { const s = C.ms[p]; if (s.weak > 0) s.weak--; if (s.vuln > 0) s.vuln--; }
   if (!livingFoes().length) return winCombat();
   if (!living().length) return endRun(false);
@@ -305,10 +383,12 @@ export function endTurn() {
 }
 
 // 보상 카드: 파티 셋에게서 한 장씩. 희귀도는 칸 종류별 확률 + 희귀가 안 나온 만큼 보정 (docs/10_details.md §1)
-export function rewardCards(kind = 'fight') {
+export function rewardCards(kind = 'fight', extra = 0) {
   const G = S.G, odds = REWARD.odds[kind] || REWARD.odds.fight;
   const out = [];
-  for (const p of G.rng.shuffle(G.party.slice())) {
+  const who = G.rng.shuffle(G.party.slice());
+  for (let k = 0; k < extra; k++) who.push(G.rng.pick(G.party));     // 보물 지도: 한 장 더
+  for (const p of who) {
     let x = G.rng.next(), r;
     const rare = odds.r + (kind === 'boss' ? 0 : G.pity);
     if (x < rare) r = 'r'; else if (x < rare + odds.u) r = 'u'; else r = 'c';
@@ -321,7 +401,8 @@ export function rewardCards(kind = 'fight') {
 }
 
 function winCombat() {
-  const G = S.G, C = S.C, k = C.kind, chain = C.chain;
+  const G = S.G, C = S.C, k = C.kind, chain = C.chain, extra = C.rewardExtra, winGold = C.winGold;
+  G.moon = C.moonBase;                       // 루나리아가 바꾼 달은 이번 전투만
   G.fights++; S.C = null;
   // 에피소드 특별 전투: 보상 없이 이야기로 돌아간다 (js/episodes.js)
   if (G.episode) { G.episode.won = true; G.screen = 'epdone'; return; }
@@ -333,12 +414,16 @@ function winCombat() {
   // 바다 유리: 남은 연계 칸마다 모두 회복 · 구급 가방: 가장 낮은 동료 회복
   if (relicSum('winChainHeal') && chain) for (const p of G.party) healMember(p, chain * relicSum('winChainHeal'));
   if (relicSum('winHealLowest')) { const p = G.party.reduce((x, y) => member(y).hp < member(x).hp ? y : x); healMember(p, relicSum('winHealLowest')); }
+  // 패시브 onWin (마리아나 별빛, 고든 회복) · 큰 손님
+  const x = { gold: n => gainGold(n), healAll: n => healAll(n) };
+  for (const p of G.party) CHARACTERS[p].passive?.onWin?.(G, x);
+  if (winGold) gainGold(winGold);
   if (k === 'boss') {
     G.bossKills++;
     if (G.act === 3) return endRun(true);
     for (const p of G.party) healMember(p, Math.ceil(member(p).max * RULES.bossHealPct));
-    G.reward = { cards: rewardCards('boss'), next: 'act', kind: k };
-  } else G.reward = { cards: rewardCards(k), next: 'map', kind: k, bonus: k === 'elite' ? RULES.eliteHeal : 0 };
+    G.reward = { cards: rewardCards('boss', extra), next: 'act', kind: k };
+  } else G.reward = { cards: rewardCards(k, extra), next: 'map', kind: k, bonus: k === 'elite' ? RULES.eliteHeal : 0 };
   if (G.reward.bonus) for (const p of G.party) healMember(p, G.reward.bonus);
   const [lo, hi] = RULES.gold[k] || RULES.gold.fight;
   G.reward.gold = lo + G.rng.int(hi - lo + 1) + relicSum('winGold');
@@ -355,9 +440,14 @@ export function devWin() { for (const f of S.C.all) { f.hp = 0; f.dead = true; }
 function predictedBonus(d) {
   const C = S.C; if (!C || !d.atk) return 0;
   let chain = C.chain;
-  if (d.ch !== 'duo' && d.ch !== 'curse') chain = C.last && C.last !== d.ch ? Math.min(RULES.chainMax, C.chain + 1) : C.last === d.ch ? 0 : C.chain;
-  let p = 0;
-  for (const m of S.G.party) if (alive(m)) p += CHARACTERS[m].passive?.preview?.(C, d) || 0;
+  if (d.ch !== 'duo' && d.ch !== 'curse') {
+    const key = d.sub ? `${d.ch}:${d.sub}` : d.ch;
+    chain = C.lastKey && (C.lastKey !== key || d.link || d.sub === 'both') ? Math.min(RULES.chainMax, C.chain + 1) : C.lastKey === key ? 0 : C.chain;
+  }
+  let p = C.turnAtk;
+  if (d.cost === 0) p += C.zeroBonus;
+  if (d.ch === 'zeno') p += C.zenoStr + (C.zenoAwake && E.low('zeno') ? C.zenoAwake : 0);
+  for (const m of S.G.party) if (alive(m)) p += CHARACTERS[m].passive?.preview?.(C, d, E) || 0;
   return chain + p;
 }
 // type: d 피해 · b 방어 · k 장전/마력/독 · n 그냥 수. first = 카드 글의 첫 피해 수(연계 보너스는 첫 타에만)

@@ -1,7 +1,7 @@
 // 입력과 화면 전환. 규칙은 run/map/combat/meta, 그리기는 render/.
 import { S, newRun, checkCollapse } from './run.js';
 import { goNode, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
-import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, devWin } from './combat.js';
+import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, devWin, pickCombatMoon } from './combat.js';
 import { summon, P, resetProfile, save } from './meta.js';
 import { render as draw } from './render/index.js';
 import { deckModal } from './render/screens.js';
@@ -107,6 +107,7 @@ app.addEventListener('click', e => {
   else if ('take' in D) takeReward(D.take);
   else if (D.brelic !== undefined) pickBossRelic(D.brelic);
   else if (D.moon) pickMoon(D.moon);
+  else if (D.cmoon) pickCombatMoon(D.cmoon);
   else if (D.rest) rest(D.rest);
   else if (D.opt) chooseOpt(+D.opt);
   else if (D.rm !== undefined) removeCard(+D.rm);

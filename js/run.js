@@ -14,7 +14,7 @@ export function newRun(party, seed = newSeed()) {
   const rng = makeRng(seed);
   const members = Object.fromEntries(party.map(p => {
     const max = CHARACTERS[p].maxHp;
-    return [p, { hp: max, max, down: false, wasDown: false, feather: false }];
+    return [p, { hp: max, max, down: false, wasDown: false, feather: false, lost: 0 }];
   }));
   const moon = rng.pick(Object.keys(MOONS));
   S.G = {
@@ -25,6 +25,7 @@ export function newRun(party, seed = newSeed()) {
     gold: RULES.startGold, relics: [START_RELIC], used: {}, salt: 0,
     duoSet: new Set(), stats: Object.fromEntries(party.map(p => [p, { dmg: 0, block: 0 }])),
     floors: 0, elites: 0, bossKills: 0, removes: 0, seenEvents: [], note: '', moonPick: false, shop: null,
+    haggle: 0, nextFight: null, smithLeft: 0,
   };
   S.G.map = makeMap(rng, moon);
   S.G.nextMap = makeMap(rng, moon);
@@ -64,8 +65,10 @@ export function addTime(m) {
   if (before < RULES.dawn && G.clock >= RULES.dawn && !relicFlag('noDawn')) logMsg('<b>6시. 해가 뜬다.</b> 탑이 무너지기 시작해 적이 매 턴 강해진다.');
 }
 export const rewind = m => { S.G.clock = Math.max(0, S.G.clock - m); };
-// 시간 카드 비용(분): 달(초승 15) · 멈춘 시계탑(0)
-export const timeCost = () => relicFlag('timeCardFree') ? 0 : MOONS[S.G.moon].timeCost ?? RULES.timeCard;
+// 파티 패시브 숫자 합 (서 있는 동료만)
+export const partySum = k => S.G.party.reduce((t, p) => t + (alive(p) ? CHARACTERS[p].passive?.[k] || 0 : 0), 0);
+// 시간 카드 비용(분): 달(초승 15) · 멈춘 시계탑(0) · 엘레오노르(−10)
+export const timeCost = () => relicFlag('timeCardFree') ? 0 : Math.max(0, (MOONS[S.G.moon].timeCost ?? RULES.timeCard) - partySum('timeMinus'));
 export const isDawn = () => S.G.clock >= RULES.dawn && !relicFlag('noDawn');
 
 // 7시가 되면 탑이 무너진다 (어떤 행동 뒤든 main.js가 부른다)
