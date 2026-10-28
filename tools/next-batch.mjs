@@ -14,8 +14,7 @@ const STAR5 = ['akane', 'sion', 'lunaria', 'eleonore', 'nerea'];
 const FIRST = ['iris', 'brick', 'marta'];
 const REST = ['noel', 'raven', 'mimimomo', 'sebas', 'mariana', 'tomori', 'sigrun', 'zeno', 'bertha', 'finn', 'laila', 'dora', 'gordon', 'fukuro'];
 const ORDER = [
-  'style2-akane', // 그림체 2차 시안(AI 티 줄이기) — 고르기 전엔 다른 묶음보다 먼저
-  ...STAR5.map((id) => `char-${id}`),
+  ...STAR5.flatMap((id) => [`char-${id}`, `pose-${id}`]),   // 모션은 서 있는 그림 바로 뒤에
   'cg-star5',
   ...FIRST.map((id) => `char-${id}`),
   'bg',
@@ -24,6 +23,7 @@ const ORDER = [
   'enemy-act2', 'boss-cloud_captain', 'boss-storm_whale', 'enemy-act3', 'boss-dawn',
   'summon', 'icons',
   ...REST.map((id) => `char-${id}`),
+  ...[...FIRST, ...REST].map((id) => `pose-${id}`),
   'duo',
   ...[...STAR5, ...FIRST, ...REST].map((id) => `cards-${id}`),
   'cards-duo-1', 'cards-duo-2', 'cards-duo-3', 'cards-duo-4', 'cards-duo-5',

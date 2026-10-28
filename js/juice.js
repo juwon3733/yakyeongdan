@@ -11,6 +11,8 @@ import { sfx as sfxRaw } from './audio.js';
 let hush = false;
 const sfx = (...a) => { if (!hush) sfxRaw(...a); };
 import { showPhase, showBoss, shake, showBurst } from './fx.js';
+import { charArt, POSES } from './art.js';
+import { wearing } from './meta.js';
 
 const stage = document.getElementById('stage');
 let layer = null, cv = null, g = null, sky = null;
@@ -117,10 +119,12 @@ export function afterRender(events = []) {
     switch (e.kind) {
       case 'combat':
         acc = 0; stopped = 0; at(t, () => setCounter(0, false));
+        preloadPoses();
         if (e.boss) { at(t, () => { showBoss(e.boss, e.line); sfx('dawn', { vol: .6 }); }); t += 1100; }
         break;
       case 'play':
         played = e;
+        at(t, () => actFx(e));
         flyCard(e, P, t); t += 170; break;
       case 'hitFoe': { const s = t; at(s, () => hitFoe(e, P)); mark('f:' + e.i, s); t += foePhase ? 90 : 75; if (!e.counter) t = addDmg((e.dmg || 0) + (e.bleed || 0), s, t); break; }
       case 'kill': { const s = t + 40; at(s, () => killFoe(e, P)); t += 160; break; }
@@ -242,6 +246,27 @@ function flyCard(e, P, t0) {
   const col = colOf(e.actor || e.a || e.ch);
   at(t0 + 180, () => { ring(to.cx, to.cy, col, 6, 22, 9); if (!e.atk) sparks(to.cx, to.cy, col, 8, 1.4); });
 }
+// 동료 모션: 카드를 쓴 동료는 공격(앞으로 내지름) 또는 스킬(힘 모음), 맞은 동료는 피격.
+// 모션 그림(chars/<id>_attack·hurt·skill.png)이 있으면 서 있는 그림과 잠깐 바꿔 끼우고, 없으면 움직임만.
+const poseSrc = (id, kind) => charArt(id, kind, wearing(id));
+function preloadPoses() {
+  for (const id of S.G?.party || []) for (const k of POSES) { const u = poseSrc(id, k); if (u) new Image().src = u; }
+}
+function pose(id, kind, ms) {
+  const img = allyEl(id)?.querySelector('img'), u = poseSrc(id, kind);
+  if (!img || !u) return;
+  const was = img.getAttribute('src');
+  img.src = u;
+  setTimeout(() => { if (img.isConnected && img.getAttribute('src') === u) img.src = was; }, ms);
+}
+function actFx(e) {
+  const who = e.ch === 'duo' ? [e.a, e.b] : [e.actor || e.ch];
+  for (const id of who) {
+    const img = allyEl(id)?.querySelector('img'); if (!img) continue;
+    if (e.atk) { pulse(img, SET.shake ? 'jatk' : 'jflash', 320); pose(id, 'attack', 340); }
+    else { pulse(img, 'jcast', 420); pose(id, 'skill', 440); }
+  }
+}
 function cloneAt(c, cls) {
   const wrap = document.createElement('div');
   wrap.className = `jghost ${cls}`;
@@ -352,7 +377,8 @@ function hurtFx(e) {
   if (e.blocked) shieldBreak(x, y - 4, e.dmg === 0);
   if (e.dmg > 0) {
     impactFx(x, y, '#ff6a7a');
-    pulse(el, SET.shake ? 'jhitA' : 'jflash', 240);
+    pulse(el.querySelector('img') || el, SET.shake ? 'jhitA' : 'jflash', 300);
+    if (!e.down) pose(e.id, 'hurt', 360);
     num(x, r.y + 4, String(e.dmg), 'hurt', e.dmg);
     if (e.dmg >= 10) shake();
   } else num(x, r.y + 4, '막음', 'blk', 8);

@@ -772,10 +772,15 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s steps
 .jhitF{animation:jhitF .24s steps(4)}
 @keyframes jhitF{0%{filter:brightness(3.2);transform:translateX(7px)}40%{filter:brightness(1.6);transform:translateX(3px)}100%{filter:none;transform:none}}
 .jhitA{animation:jhitA .24s steps(4)}
-@keyframes jhitA{0%{filter:brightness(3) sepia(1) hue-rotate(-40deg);transform:translateX(-7px)}40%{filter:brightness(1.5);transform:translateX(-3px)}100%{filter:none;transform:none}}
+@keyframes jhitA{0%{filter:brightness(3) sepia(1) hue-rotate(-40deg);transform:translateX(-12px)}40%{filter:brightness(1.5);transform:translateX(-6px)}100%{filter:none;transform:none}}
 .jflash{animation:jflash .2s steps(2)}
 @keyframes jflash{0%{filter:brightness(3)}100%{filter:none}}
 .jlunge{animation:jlunge .26s steps(5)}
+/* 동료 모션: 공격은 적 쪽(오른쪽)으로 내지름, 스킬은 떠오르며 빛남, 피격(jhitA)은 왼쪽으로 밀림 */
+.jatk{animation:jatk .32s steps(6)}
+@keyframes jatk{0%{transform:none}20%{transform:translateX(-4px)}45%{transform:translateX(18px) scale(1.06)}100%{transform:none}}
+.jcast{animation:jcast .42s steps(6)}
+@keyframes jcast{0%{transform:none;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.55))}40%{transform:translateY(-6px) scale(1.04);filter:brightness(1.35) drop-shadow(0 0 6px var(--c))}100%{transform:none;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.55))}}
 @keyframes jlunge{0%{transform:none}35%{transform:translateX(-14px) scale(1.05)}100%{transform:none}}
 .jdown{animation:jdown .6s steps(8)}
 @keyframes jdown{0%{transform:none;filter:brightness(2)}20%{transform:translateX(-4px)}40%{transform:translateX(4px) translateY(3px)}100%{transform:translateY(0);filter:grayscale(1)}}

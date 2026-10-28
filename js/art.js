@@ -10,9 +10,11 @@ export const hasArt = file => INDEX.has(file);
 export const artURL = file => (INDEX.has(file) ? `assets/${file}` : null);
 export const artCount = () => INDEX.size;
 
-// 동료 그림: kind = stand(전투 서 있는 그림) | normal | smile | serious (상반신) | cutin
-// 두 번째 의상을 입었으면 서 있는 그림은 _outfit2를 먼저 본다.
+// 동료 그림: kind = stand(전투 서 있는 그림) | normal | smile | serious (상반신) | cutin | attack | hurt | skill (전투 모션)
+// 두 번째 의상을 입었으면 서 있는 그림은 _outfit2를 먼저 본다. 모션 그림은 기본 의상뿐이라 의상을 입었으면 없음.
+export const POSES = ['attack', 'hurt', 'skill'];
 export function charArt(id, kind = 'stand', outfit = false) {
+  if (POSES.includes(kind)) return outfit ? null : artURL(`chars/${id}_${kind}.png`);
   if (kind === 'cutin') return artURL(`cutins/${id}_cutin.png`);
   if (kind === 'stand') return (outfit && artURL(`chars/${id}_outfit2.png`)) || artURL(`chars/${id}_stand.png`);
   return artURL(`chars/${id}_${kind}.png`) || artURL(`chars/${id}_normal.png`);

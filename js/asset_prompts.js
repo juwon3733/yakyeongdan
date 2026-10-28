@@ -4,14 +4,14 @@
 
 import { CARDS, DUOS as CARD_DUOS } from './data/cards.js';
 
-export const STYLE_VERSION = 3; // 3: 손으로 찍은 느낌(AI 티 줄이기 — 장식·반짝이 절제, 셀 음영, 얼굴 구분). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
+export const STYLE_VERSION = 3; // 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·피격·스킬). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
 
 // ── 공통 스타일 ──────────────────────────────────────────
 export const STYLE = {
   pixel: '이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.',
-  handmade: 'Make it look HAND-PIXELED by a skilled pixel artist, not AI-generated: deliberate pixel clusters, flat cel shading with only 2-3 hard-edged tones per material (no airbrushed or soft-gradient skin), one consistent light source from the upper left, a clear dark outline around the silhouette. Visual restraint: one signature prop plus at most two or three accessories — NO piles of tassels, bells, chains, beads or jewels, NO floating sparkles or random stars filling the empty space, NO noisy hair strands everywhere; hair is drawn as a few big readable locks. Big simple shapes and a strong silhouette first, small detail only on the face and the signature prop. Give each character a distinct face (eye shape, brows, mouth, face shape) instead of the same generic pretty face, and a natural pose with weight and intent instead of a generic glamour pose.',
-  character: 'Character design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with a few well-chosen accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.',
-  rarity5: 'This is a top-rarity (5-star) character: give the design the most care — a distinctive signature outfit, a striking weapon or prop, and one magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.',
+  distinct: 'Give each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.',
+  character: 'Character design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.',
+  rarity5: 'This is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.',
   rarity4: 'This is a 4-star character: one flashy signature prop or accessory, otherwise clean.',
   rarity3: 'This is a 3-star character: simple, friendly and approachable design, still cute or cool.',
   onModel: 'Draw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.',
@@ -22,6 +22,7 @@ export const STYLE = {
 export const SPEC = {
   stand:    { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백' },
   portrait: { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음' },
+  pose:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 모션 한 장(공격·피격·스킬) · 서 있는 그림과 같은 크기·같은 발 위치 · 투명 배경 · 바꿔 끼워 움직임을 만든다' },
   outfit:   { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '두 번째 의상 전신 · 투명 배경' },
   cutin:    { w: 1536, h: 576,  native: '384×144', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄' },
   duo:      { w: 1536, h: 768,  native: '384×192', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄' },
@@ -388,7 +389,7 @@ export function assetList() {
   const batches = [];
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `char-${id}`;
-    const base = join(STYLE.pixel, STYLE.handmade, STYLE.character, rarityStyle(c.rarity));
+    const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity));
     const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
     batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name}`,
       reference_sheet_prompt: join(base, `Character reference sheet of ${who} Full body front view plus a face close-up, plain background. Native resolution about 384x256, upscaled with nearest-neighbor.`) });
@@ -409,12 +410,30 @@ export function assetList() {
       { reference_images: ref }));
   }
 
+  // 전투 모션: 동료마다 공격·피격·스킬 세 장. 서 있는 그림과 바꿔 끼우므로 크기·발 위치·방향이 같아야 한다.
+  for (const [id, c] of Object.entries(CHARS)) {
+    const batch = `pose-${id}`;
+    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 전투 모션 3장` });
+    const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
+    const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
+    const frame = 'Same canvas framing as the attached battle-stance image: same character size, feet on the same spot near the bottom edge, facing RIGHT toward the enemies. Fully transparent background. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536.';
+    const POSES = {
+      attack: ['공격 — 오른쪽으로 내지르는 순간', `ATTACK pose: the peak moment of her basic attack, lunging or striking toward the RIGHT with her weapon, body leaning forward, motion smear made of pixels. Motifs: ${c.fx}.`],
+      hurt: ['피격 — 왼쪽으로 밀려나는 순간', 'HURT pose: just got hit, recoiling backward to the LEFT, knees bent, one arm up to guard, eyes squeezed or wincing, hair and clothes flung forward by the impact. No blood, no wounds.'],
+      skill: ['스킬 — 힘을 모아 쓰는 순간', `SKILL pose: casting her signature power, a confident focused expression, her magic effect glowing around her (${c.fx}), clearly different from the attack pose.`],
+    };
+    for (const [k, [label, txt]] of Object.entries(POSES)) {
+      out.push(item('pose', `${id}_${k}`, batch, `${id}_${k}.png`, join(base, `${who}\n${txt}\n${frame}`),
+        { must_show: label, reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
+    }
+  }
+
   // 스킬 카드 그림: 동료 카드 전부. 그 동료가 그 기술을 쓰는 장면.
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `cards-${id}`;
     const list = Object.entries(CARDS).filter(([, d]) => d.ch === id);
     batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 카드 ${list.length}장` });
-    const base = join(STYLE.pixel, STYLE.handmade, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
+    const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
     for (const [cardId, d] of list) {
       const who = d.sub === 'mimi' ? 'Mimi (the pink-haired twin) alone' : d.sub === 'momo' ? 'Momo (the sky-blue-haired twin) alone' : d.sub === 'both' ? 'both twins Mimi and Momo together' : c.name;
       out.push(item('card', `card_${fileId(cardId)}`, batch, `card_${fileId(cardId)}.png`,
@@ -433,7 +452,7 @@ export function assetList() {
       const [a, b] = key.split('+');
       const A = CHARS[a], B = CHARS[b];
       out.push(item('card', `duocard_${a}_${b}`, batch, `duocard_${a}_${b}.png`,
-        join(STYLE.pixel, STYLE.handmade, STYLE.character, STYLE.onModel, `Duo skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${A.name} and ${B.name} together, both ON-MODEL from the attached references, combining their skills in one move: ${cardPose(d)}. ${A.name}'s motifs: ${A.fx}. ${B.name}'s motifs: ${B.fx}. Accent colors: ${A.accent} meeting ${B.accent}.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 192x144 pixels and upscaled 4x to 768x576.`),
+        join(STYLE.pixel, STYLE.distinct, STYLE.character, STYLE.onModel, `Duo skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${A.name} and ${B.name} together, both ON-MODEL from the attached references, combining their skills in one move: ${cardPose(d)}. ${A.name}'s motifs: ${A.fx}. ${B.name}'s motifs: ${B.fx}. Accent colors: ${A.accent} meeting ${B.accent}.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 192x144 pixels and upscaled 4x to 768x576.`),
         { reference_images: [`chars/${a}_normal.png`, `chars/${b}_normal.png`], must_show: '두 사람 얼굴 둘 다' }));
     }
   }
@@ -456,23 +475,6 @@ export function assetList() {
     }
   }
 
-  // 2차 그림체 시안(AI 티 줄이기): 아카네를 손으로 찍은 느낌으로 3장. 고른 것이 새 기준이 된다(게임에 안 씀).
-  const STYLE2 = {
-    e: ['세밀·절제(256×384 4배, 48색)', 'Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. At most 48 colors.'],
-    f: ['중간 도트(128×192 8배, 32색)', 'Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536. At most 32 colors. Every pixel counts: clean clusters like a classic hand-made 16-bit era sprite, but with modern gacha-game face and fashion.'],
-    g: ['또렷한 셀 도트(160×240 6배 정도, 40색)', 'Native resolution about 170x256 pixels, upscaled exactly 6x with nearest-neighbor to 1020x1536 (pad to 1024x1536). At most 40 colors. Strong 1-pixel dark outlines inside and around the figure, flat cel colors, very clean shapes.'],
-  };
-  {
-    const id = 'akane', c = CHARS[id], batch = 'style2-akane';
-    batches.push({ id: batch, title: `그림체 2차 시안 ${c.name} — AI 티 줄이기 (3장, 게임에 안 씀)` });
-    const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
-    for (const [v, [label, res]] of Object.entries(STYLE2)) {
-      out.push(item('style', `style2_${id}_${v}`, batch, `${id}_${v}.png`,
-        join(STYLE.pixel.replace(/Match the attached style reference[^.]*\./, 'Use the attached image only to keep the same person (face, hair, colors, outfit idea); simplify its busy ornaments.'), STYLE.handmade, STYLE.character, STYLE.rarity5, `${who}\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, katana ready, one flame effect along the blade. Fully transparent background. ${res}\nThis is style test 「${v.toUpperCase()}」 — the three tests of this batch show the SAME character and pose, only the pixel size and color count change.`),
-        { must_show: `2차 시안 ${v.toUpperCase()} — ${label}`, reference_images: ['chars/akane_stand.png'] }));
-    }
-  }
-
   // ★5 전신 CG
   batches.push({ id: 'cg-star5', title: '★5 전신 CG' });
   for (const [id, c] of Object.entries(CHARS).filter(([, c]) => c.rarity === 5)) {
@@ -486,7 +488,7 @@ export function assetList() {
   for (const [id, d] of Object.entries(DUOS)) {
     const [a, b] = d.pair;
     out.push(item('duo', `duo_${id}`, 'duo', `duo_${id}.png`,
-      join(STYLE.pixel, STYLE.handmade, STYLE.character, STYLE.onModel, `Duo cut-in of ${CHARS[a].name} and ${CHARS[b].name}: ${d.scene}. Both characters ON-MODEL from the attached references, faces clearly visible. Wide horizontal composition; the top and bottom will be cropped to 1536x768. Speed lines made of pixels.`),
+      join(STYLE.pixel, STYLE.distinct, STYLE.character, STYLE.onModel, `Duo cut-in of ${CHARS[a].name} and ${CHARS[b].name}: ${d.scene}. Both characters ON-MODEL from the attached references, faces clearly visible. Wide horizontal composition; the top and bottom will be cropped to 1536x768. Speed lines made of pixels.`),
       { reference_images: [`chars/${a}_normal.png`, `chars/${b}_normal.png`], must_show: '두 사람 얼굴 둘 다' }));
   }
 
