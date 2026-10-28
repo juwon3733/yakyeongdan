@@ -99,7 +99,7 @@ export const CHARACTERS = {
       onCombatStart: c => { c.moonPick = true; } },
   },
   akane: {
-    name: '아카네', role: '홍련 검성', rarity: 5, maxHp: 36, col: '#ff6a4a', long: true, pal: pal('akane'),
+    name: '아카네', role: '홍련 검성', rarity: 5, maxHp: 38, col: '#ff6a4a', long: true, pal: pal('akane'),
     ds: '베면 불이 붙는다. 아이리스와 베기 횟수를 함께 센다.',
     start: ['akane.slash', 'akane.slash', 'akane.guard', 'akane.inferno'],
     passive: { name: '불꽃 칼날',

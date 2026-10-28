@@ -136,7 +136,8 @@ function combatValue(t0clock) {
   }
   v += C.loaded * 3.5 + C.mana * 2.2 + (C.asleep && alive('noel') ? 6 : 0) + (C.late ? C.mana * 2 : 0);
   v += C.chain * 1.5 + C.sheath * 1 + C.garden * 6 + (C.retain ? 4 : 0) + C.nextEnergy * 5 + C.counter * 0.8;
-  v += C.hand.filter(h => /^(duo|bond):/.test(h.id)).length * 5;
+  // 듀오 카드는 손패에 있어도, 써서 사라져도 같은 값(쓰면 손해로 보여 효과가 작은 듀오를 안 쓰던 것 방지)
+  v += [...C.hand, ...C.exh].filter(h => /^(duo|bond):/.test(h.id)).length * 5;
   // 새 동료 상태: 정령(턴 끝 피해), 다음 턴 덕, 담금질, 남길 카드
   if (alive('sion')) v += C.spirits.reduce((t, s) => t + spiritDmg(s), 0) * (1 + C.spiritExtra) * 1.3;
   // 별 고래(네레아): 턴 끝 물보라 기대 피해 × 적 수
@@ -205,7 +206,7 @@ function playTurn(stats) {
     const r = playCard(best.uid, best.pick);
     stats.cardMin = (stats.cardMin || 0) + (S.G ? S.G.clock - ck : 0);
     stats.plays[best.id.replace(/\++$/, '')] = (stats.plays[best.id.replace(/\++$/, '')] || 0) + 1;
-    if (r.duo) stats.duoMade[r.duo] = (stats.duoMade[r.duo] || 0) + 1;
+    if (r.duo) { stats.duoMade[r.duo] = (stats.duoMade[r.duo] || 0) + 1; runMade.add(r.duo); }
     if (/^duo:/.test(best.id)) stats.duoPlayed[best.id.slice(4)] = (stats.duoPlayed[best.id.slice(4)] || 0) + 1;
   }
   if (sameCombat(tag) && S.C.turn === turn) {
@@ -342,7 +343,9 @@ function chooseBossRelic() {
 }
 
 // ---------- 한 판 ----------
+let runMade = new Set();   // 이번 판에 생긴 듀오(짝)
 function playRun(party, seed, stats) {
+  runMade = new Set();
   newRun(party, seed, { depth: DEPTH });
   S.G.rng = rngFrom(S.G.rng.state);
   const rec = { party, seed, won: false, why: '', bossReach: [0, 0, 0, 0], bossClock: [null, null, null, null], over6: false, clock: 0, duos: 0, act: 1, fights: 0, boss: [null, null, null, null], bossKill: [0, 0, 0, 0] };
@@ -397,7 +400,7 @@ function finish(rec, stats, seed, party) {
   if (G.clock >= RULES.dawn) rec.over6 = true;
   if (rec.won) { rec.bossClock[3] = G.clock; rec.bossKill[3] = 1; }
   rec.noon = !!G.noonBeat;
-  for (const k of G.duoSet) stats.duoRuns[k] = (stats.duoRuns[k] || 0) + 1;
+  for (const k of runMade) stats.duoRuns[k] = (stats.duoRuns[k] || 0) + 1;
   // 끝없는 탑 (docs/05 §12): 「새벽」을 깬 판은 그대로 이어 올라 도달 층을 잰다 (--no-endless로 끔)
   if (rec.won && ENDLESS_ON) {
     enterEndless(false);
@@ -553,11 +556,11 @@ cs.sort((a, b) => b[2] - a[2]);
 for (const [c, n, w] of [...cs.slice(0, 10), ...cs.slice(-10)]) console.log(`${c.map(x => CHARACTERS[x].name).join('·')} ${n}판 ${(w * 100).toFixed(0)}%`);
 }
 console.log('\n듀오 (그 짝이 파티에 있던 판 중 듀오를 한 번 이상 만든 비율, 쓴 횟수)');
-console.log('| 듀오 | 판 비율 | 쓴 횟수 |');
-console.log('|---|---|---|');
+console.log('| 듀오 | 판 비율 | 생긴 횟수 | 쓴 횟수 |');
+console.log('|---|---|---|---|');
 for (const k of Object.keys(DUOS)) {
   const [a, b] = k.split('+'), rs = recs.filter(r => r.party.includes(a) && r.party.includes(b));
-  console.log(`| ${DUOS[k].name} (${CHARACTERS[a].name}·${CHARACTERS[b].name}) | ${pct(stats.duoRuns[k] || 0, rs.length)} | ${stats.duoPlayed[k] || 0} |`);
+  console.log(`| ${DUOS[k].name} (${CHARACTERS[a].name}·${CHARACTERS[b].name}) | ${pct(stats.duoRuns[k] || 0, rs.length)} | ${stats.duoMade[k] || 0} | ${stats.duoPlayed[k] || 0} |`);
 }
 if (!QUICK) {
   console.log('\n보상 카드 선택률 (나온 횟수 중 고른 비율, 높은 순 / 낮은 순 10개)');

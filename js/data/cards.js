@@ -124,7 +124,7 @@ export const CARDS = {
     play: (c, e, v) => { const keep = e.dream(); e.hit(c.mana * v[0]); e.spendMana(keep); } },
 
   // 레이븐 — 독·출혈
-  'raven.needle':{ ch: 'raven', name: '독침', cost: 1, atk: 1, rarity: 'c', v: [3, 2], up: { v: [4, 2] },
+  'raven.needle':{ ch: 'raven', name: '독침', cost: 1, atk: 1, rarity: 'c', v: [3, 3], up: { v: [4, 3] },
     text: '피해 {d0}, 독 {k1}.', play: (c, e, v) => { e.hit(v[0]); e.foeStatus('poison', v[1] + e.dark()); } },
   'raven.step':  { ch: 'raven', name: '그림자 걸음', cost: 1, rarity: 'c', v: [5], up: { v: [7] },
     text: '방어 {b0}, 카드 1장.', play: (c, e, v) => { e.guard(v[0]); e.draw(1); } },
@@ -207,7 +207,7 @@ export const CARDS = {
     text: '달을 두 번 바꾼다(다음 모양으로). 에너지 {n0}.', play: (c, e, v) => { e.nextMoon(); e.nextMoon(); c.energy += v[0]; } },
 
   // ===== ★5 아카네 — 베기 + 화상 (패시브: 베기마다 화상 3) =====
-  'akane.slash':  { ch: 'akane', name: '홍련 베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [8], up: { v: [11] },
+  'akane.slash':  { ch: 'akane', name: '홍련 베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [9], up: { v: [12] },
     text: '피해 {d0}. 베기.', play: (c, e, v) => { e.hit(v[0] + e.sheath()); e.slash(1); } },
   'akane.guard':  { ch: 'akane', name: '불꽃 막기', cost: 1, rarity: 'c', v: [7, 3], up: { v: [9, 4] },
     text: '방어 {b0}. 이번 턴 아카네를 친 적 화상 {n1}.', play: (c, e, v) => { e.guard(v[0]); c.flameGuard += v[1]; } },
