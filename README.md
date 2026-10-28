@@ -19,6 +19,7 @@
 | [docs/07_tech.md](docs/07_tech.md) | 폴더 구조, 데이터 모양, 시뮬레이션, 저장, CI |
 | [docs/08_roadmap.md](docs/08_roadmap.md) | 만드는 순서, 밸런스 목표, 미정 사항 |
 | [docs/09_episodes.md](docs/09_episodes.md) | 이야기 원칙, 동료 에피소드 3화씩, 휴식 대화 |
+| [docs/10_details.md](docs/10_details.md) | 카드 희귀도·보상, 저주, 도구 24개, 지도 만들기, 튜토리얼, 숫자 표시 |
 
 ## 로컬 실행
 빌드 없음. 저장소 폴더에서 정적 서버를 띄운다(ES 모듈이라 파일을 직접 열면 안 됨).
