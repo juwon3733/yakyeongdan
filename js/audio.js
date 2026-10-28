@@ -118,9 +118,10 @@ function snap() {
     hp: sum(Object.fromEntries(G.party.map(p => [p, G.members[p].hp]))),
     down: G.party.filter(p => G.members[p].down).length,
     c: C ? {
-      turn: C.turn, hand: C.hand.length, foeHp: C.foe.hp, poison: C.foe.poison || 0, block: sum(C.blocks),
+      turn: C.turn, hand: C.hand.length, foeHp: C.all.reduce((t, f) => t + f.hp, 0), poison: C.all.reduce((t, f) => t + f.poison, 0),
+      dead: C.all.filter(f => f.dead).length, block: sum(C.blocks),
       chain: C.chain, loaded: C.loaded, mana: C.mana, asleep: C.asleep, slashes: C.slashes,
-      duos: C.duoUsed.size, pending: C.pending, foe: C.foe,
+      duos: C.duoUsed.size, pending: C.pending, foe: C.all,
     } : null,
   };
 }
@@ -147,7 +148,7 @@ function sounds(a, b) {
   let loud = false;
   if (y.foeHp < x.foeHp) {
     loud = true;
-    if (y.foeHp <= 0) sfx('foe_down');
+    if (y.dead > x.dead) sfx('foe_down');
     else if (y.loaded < x.loaded) sfx('cannon');
     else if (y.slashes > x.slashes) sfx('slash');
     else sfx('hit');
