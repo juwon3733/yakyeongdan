@@ -1,27 +1,43 @@
 import { S } from '../run.js';
-import { CHARACTERS, STARTER_OWNED, PREVIEW } from '../data/characters.js';
+import { CHARACTERS } from '../data/characters.js';
+import { ROSTER, ROSTER_IDS } from '../data/roster.js';
+import { P, owns } from '../meta.js';
 import { sprite } from './sprites.js';
-import { stars } from './common.js';
+import { stars, palOf } from './common.js';
 
-// 파티 고르기: 왼쪽 동료 격자, 오른쪽 고른 셋과 출발
+// 타이틀: 키아트 자리(그림 없으면 밤하늘·탑) + 왼쪽 아래 메뉴
 export function titleView() {
-  const owned = S.dev ? Object.keys(CHARACTERS) : STARTER_OWNED;
-  const mates = Object.entries(CHARACTERS).map(([k, c]) => {
-    const has = owned.includes(k), on = S.picked.includes(k);
-    return `<button type="button" class="mate r${c.rarity} ${on ? 'on' : ''} ${has ? '' : 'locked'}" style="--c:${c.col}" ${has ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'}>
-      <img class="px" src="${sprite(c.pal, c.long)}" alt=""><span class="tx"><span class="nm">${c.name}</span> <span class="stars">${stars(c.rarity)}</span>
-      <span class="rl">${c.role} · 체력 ${c.maxHp}</span>
-      <span class="ps">${has ? `<b>${c.passive.name}</b> ${c.passive.text}` : '별 소환으로 얻는 동료'}</span></span></button>`;
-  }).join('') + PREVIEW.map(c => `<button type="button" class="mate r${c.rarity} locked" style="--c:${c.col}" disabled>
-      <img class="px" src="${sprite(c.pal, c.long)}" alt=""><span class="tx"><span class="nm">${c.name}</span> <span class="stars">${stars(c.rarity)}</span>
-      <span class="rl">${c.role}</span><span class="ps">준비 중</span></span></button>`).join('');
+  const three = ['iris', 'brick', 'marta'].map(k => `<img class="px" src="${sprite(palOf(k), ROSTER[k].long)}" alt="">`).join('');
+  return `<div class="titlescr">
+    <div class="sky" aria-hidden="true"><span class="tower"></span><span class="moonbig"></span></div>
+    <div class="trio" aria-hidden="true">${three}</div>
+    <div class="tmenu">
+      <h1>야경단</h1>
+      <p class="note">0시에 솟는 탑을 <b>6시 해 뜨기 전에</b> 오른다</p>
+      <button type="button" class="primary" data-view="party">밤 오르기</button>
+      <button type="button" data-view="base">본부</button>
+      <span class="note small">별 조각 <b>${P.shards}</b> · 동료 ${Object.keys(P.owned).length}/${ROSTER_IDS.length}${S.dev ? ' · <span class="dev">개발판</span>' : ''}</span>
+    </div>
+  </div>`;
+}
+
+// 파티 고르기: 가진 동료만 (개발판은 구현된 동료 전부). 아직 구현 안 된 동료는 「준비 중」.
+export function partyView() {
+  const can = k => !!CHARACTERS[k] && (S.dev || owns(k));
+  const mates = ROSTER_IDS.filter(k => owns(k) || (S.dev && CHARACTERS[k])).map(k => {
+    const r = ROSTER[k], c = CHARACTERS[k], on = S.picked.includes(k), ok = can(k);
+    return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'}>
+      <img class="px" src="${sprite(palOf(k), r.long)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
+      <span class="rl">${r.role}${c ? ` · 체력 ${c.maxHp}` : ''}</span>
+      <span class="ps">${c ? `<b>${c.passive.name}</b> ${c.passive.text}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
+  }).join('');
   const chosen = [0, 1, 2].map(i => {
-    const k = S.picked[i], c = k && CHARACTERS[k];
-    return c ? `<span class="chosen" style="--c:${c.col}"><img class="px" src="${sprite(c.pal, c.long)}" alt=""><span>${c.name}</span></span>` : '<span class="chosen empty">?</span>';
+    const k = S.picked[i], r = k && ROSTER[k];
+    return r ? `<span class="chosen" style="--c:${r.col}"><img class="px" src="${sprite(palOf(k), r.long)}" alt=""><span>${r.name}</span></span>` : '<span class="chosen empty">?</span>';
   }).join('');
   return `<div class="title">
     <div class="tleft">
-      <div class="thead"><h1>야경단</h1><span class="note">0시에 솟는 탑을 <b>6시 해 뜨기 전에</b> 오른다 · 그림은 임시</span>${S.dev ? '<span class="dev">개발판</span>' : ''}</div>
+      <div class="thead"><button type="button" class="mini" data-view="title">‹ 타이틀</button><h2>동료 셋을 고른다</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
       <div class="pick">${mates}</div>
     </div>
     <div class="tright">

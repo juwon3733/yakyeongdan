@@ -161,13 +161,18 @@ export const DUOS = {
   'noel+raven':  { name: '악몽', target: 'foe', text: '적의 독 2배, 약화 1.', play: (c, e) => { c.foe.poison *= 2; e.foeStatus('weak', 1); } },
 };
 export const duoKey = (a, b) => [a, b].sort().join('+');
+export const BOND = { name: '합동', atk: 1, text: '피해 {d0}, 방어 {b1}.', v: [8, 8], play: (c, e, v) => { e.hit(v[0]); e.guard(v[1]); } };
 
 // 카드 정의 (강화판 'id+'면 up을 덮어씀). 듀오·저주도 같은 모양으로.
 const cache = new Map();
 export function cardData(id) {
   if (cache.has(id)) return cache.get(id);
   let d;
-  if (id.startsWith('duo:')) {
+  if (id.startsWith('bond:')) {
+    // 인연의 실(도구): 인연이 아닌 짝의 「합동」 카드
+    const [a, b] = id.slice(5).split('+');
+    d = { ...BOND, id, ch: 'duo', bond: true, a, b, cost: 1, exhaust: 1, rarity: 'duo' };
+  } else if (id.startsWith('duo:')) {
     const k = id.slice(4), D = DUOS[k], [a, b] = k.split('+');
     d = { ...D, id, ch: 'duo', a, b, cost: 1, exhaust: 1, rarity: 'duo', v: D.v || [] };
   } else {

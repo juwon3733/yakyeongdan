@@ -92,7 +92,7 @@ export function sfx(name, { vol = 1, rate = 1 } = {}) {
 // ---------- 화면 → 곡 ----------
 function pickBgm() {
   const G = S.G;
-  if (!G) return 'title';
+  if (!G || S.view !== 'run') return ['base', 'summon', 'reveal'].includes(S.view) ? 'base' : 'title';
   if (G.screen === 'result') return G.won ? 'victory' : 'result';
   if (G.screen === 'combat' && S.C) {
     if (S.C.kind === 'boss') return G.act >= 3 ? 'dawn' : `boss${G.act}`;
@@ -169,7 +169,7 @@ function sounds(a, b) {
 // ---------- 소리 버튼 (위 띠, 파티 고르기 화면) ----------
 function placeButton() {
   if (document.querySelector('[data-sound]')) return;
-  const host = document.querySelector('.topbar [data-deck]') || document.querySelector('.thead');
+  const host = document.querySelector('.topbar [data-deck]') || document.querySelector('.thead, .bhead, .tmenu');
   if (!host) return;
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'mini'; b.dataset.sound = ''; b.textContent = LABELS[level];

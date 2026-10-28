@@ -1,15 +1,21 @@
-// 입력과 화면 전환. 규칙은 run/map/combat, 그리기는 render/.
-import { S, newRun } from './run.js';
-import { goNode, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard } from './map.js';
-import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes } from './combat.js';
+// 입력과 화면 전환. 규칙은 run/map/combat/meta, 그리기는 render/.
+import { S, newRun, checkCollapse } from './run.js';
+import { goNode, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
+import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, devWin } from './combat.js';
+import { summon, P, resetProfile, save } from './meta.js';
 import { render as draw } from './render/index.js';
 import { deckModal } from './render/screens.js';
-import { showCut } from './fx.js';
+import { showCut, showPhase } from './fx.js';
+import { sfx } from './audio.js';
 
 const qs = new URLSearchParams(location.search);
 S.dev = /^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname) || location.protocol === 'file:' || qs.has('dev');
-// 개발판: 점검 도구(tools/smoke.mjs)가 상태를 들여다보고, 원하는 적과 바로 싸울 수 있다
-if (S.dev) window.__yk = { S, render: () => render(), fight: (ids, kind = 'fight') => { startCombat(ids, kind); render(); } };
+// 개발판: 점검 도구(tools/smoke.mjs)가 상태를 들여다보고, 원하는 적과 바로 싸우고, 전투를 바로 이길 수 있다
+if (S.dev) window.__yk = {
+  S, P: () => P, render: () => render(), fight: (ids, kind = 'fight') => { startCombat(ids, kind); render(); },
+  win: () => { if (S.C) { devWin(); after(); render(); } }, reset: () => { resetProfile(); render(); },
+  shards: n => { P.shards += n; save(); render(); },
+};
 const seedParam = qs.has('seed') ? Number(qs.get('seed')) >>> 0 : undefined;
 
 const stage = document.getElementById('stage');
@@ -29,16 +35,36 @@ fit();
 function play(uid, pick) {
   const r = playCard(uid, pick);
   if (r.duo) showCut(r.duo);
+  else if (r.bond) showCut(r.bond, true);
+}
+// 행동 뒤: 7시 붕괴, 쌓인 연출 띄우기
+function after() {
+  checkCollapse();
+  const fx = S.fxq.splice(0);
+  for (const f of fx) if (f.kind === 'phase') showPhase(f.name, f.text);
 }
 
 app.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b || b.disabled) return;
   const D = b.dataset, C = S.C;
-  if (D.pick) {
+  if (D.view) {
+    S.view = D.view;
+    if (D.view === 'party') { S.G = null; S.C = null; S.picked = S.picked.filter(k => k); }
+  }
+  else if (D.pick) {
     const k = D.pick;
     S.picked = S.picked.includes(k) ? S.picked.filter(x => x !== k) : S.picked.length < 3 ? [...S.picked, k] : S.picked;
   }
   else if ('start' in D) newRun(S.picked.slice(), seedParam);
+  else if ('home' in D) { S.G = null; S.C = null; S.view = 'base'; }
+  // 별 소환
+  else if (D.summon) {
+    const list = summon(+D.summon); if (!list) return;
+    S.reveal = { list, open: list.map(() => false) }; S.view = 'reveal';
+  }
+  else if (D.reveal !== undefined) { S.reveal.open[+D.reveal] = true; sfx('star', { rate: [1, 1, 1, .9, 1.1, 1.25][S.reveal.list[+D.reveal].rarity] }); }
+  else if ('revealall' in D) { S.reveal.open = S.reveal.open.map(() => true); sfx('star'); }
+  // 판
   else if (D.node) { const [r, i] = D.node.split(',').map(Number); goNode(r, i); }
   // 카드: 누르면 고르고, 대상(적 또는 동료)을 누르면 쓴다. 적을 치는 카드는 한 번 더 눌러도 쓴다.
   else if (D.play) {
@@ -61,14 +87,23 @@ app.addEventListener('click', e => {
   else if (D.swap !== undefined) swapInCombat(+D.swap);
   else if (D.slot !== undefined) pickSlot(+D.slot);
   else if ('end' in D) endTurn();
+  else if ('hg' in D) C.payEnergy = !C.payEnergy;
+  else if (D.relic) useRelic(D.relic);
   else if ('take' in D) takeReward(D.take);
+  else if (D.brelic !== undefined) pickBossRelic(D.brelic);
+  else if (D.moon) pickMoon(D.moon);
   else if (D.rest) rest(D.rest);
   else if (D.opt) chooseOpt(+D.opt);
   else if (D.rm !== undefined) removeCard(+D.rm);
   else if (D.up !== undefined) upgradeCard(+D.up);
+  else if (D.dupe !== undefined) dupeCard(+D.dupe);
+  else if (D.buycard !== undefined) shopBuy('card', +D.buycard);
+  else if (D.buyrelic !== undefined) shopBuy('relic', +D.buyrelic);
+  else if (D.shop) shopBuy(D.shop);
+  else if ('leave' in D) leaveShop();
   else if ('deck' in D) { modal.innerHTML = deckModal(); modal.hidden = false; return; }
-  else if ('again' in D) { S.G = null; S.picked = []; }
   else return;
+  after();
   render();
 });
 modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('[data-close]')) modal.hidden = true; });

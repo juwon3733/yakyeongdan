@@ -32,13 +32,15 @@ npx serve .
 python3 -m http.server 8000   # → http://localhost:8000
 ```
 
-- localhost나 주소 끝 `?dev`로 열면 개발판: 동료 5명을 다 고를 수 있다(공개판은 아이리스·브릭·마르타만).
+- 흐름: 타이틀 → [밤 오르기] 파티 고르기 → 0시~새벽 한 판(3막, 야시장·사건·휴식·도구) → 결과(별 조각) → 본부 → 별 소환.
+- localhost나 주소 끝 `?dev`로 열면 개발판: 구현된 동료 5명을 다 고를 수 있다(공개판은 가진 동료만: 처음엔 아이리스·브릭·마르타, 나머지는 별 소환).
+- 가진 동료·별 조각·소환 천장은 브라우저에 저장된다(`yk-profile`).
 - `?seed=123`으로 지도·달·셔플을 고정할 수 있다.
-- 검사: `node tools/smoke.mjs` (Playwright 필요. 가로 1280×720으로 파티 고르기 → 대열 바꾸기 → 전투(노림·전투 중 자리 바꾸기·쓰러짐·동료 고르는 카드) → 보상 → 지도, 세로 화면 안내까지).
-- 조작: 카드를 누르고 대상(적 또는 동료)을 누른다. 적이 하나뿐이거나 대상이 없는 카드(모든 적·기술)는 한 번 더 눌러도 쓴다. 개발판에선 `window.__yk.S`로 상태를 보고, `window.__yk.fight(["gull","gull","gull"])`처럼 원하는 적과 바로 싸울 수 있다(적 id는 `js/data/enemies.js`).
+- 검사: `node tools/smoke.mjs` (Playwright 필요. 가로 1280×720으로 파티 고르기 → 대열 바꾸기 → 전투(노림·전투 중 자리 바꾸기·쓰러짐·동료 고르는 카드) → 보상 → 지도, 1막 끝까지, 한 판 끝까지(→ 결과 → 본부 → 10연 소환), 기사단장 2단계·「새벽」 밤 시계·7시 붕괴, 세로 화면 안내까지).
+- 조작: 카드를 누르고 대상(적 또는 동료)을 누른다. 적이 하나뿐이거나 대상이 없는 카드(모든 적·기술)는 한 번 더 눌러도 쓴다. 개발판에선 `window.__yk.S`로 상태를 보고, `window.__yk.fight(["gull","gull","gull"])`처럼 원하는 적과 바로 싸울 수 있다(적 id는 `js/data/enemies.js`). `__yk.win()` 지금 전투 바로 이기기, `__yk.shards(100)` 별 조각 더하기, `__yk.reset()` 저장 지우기.
 
 ## 코드 구조
-`docs/07_tech.md` 참고. 규칙 데이터는 `js/data/`, 엔진은 `js/run.js`·`map.js`·`combat.js`·`effects.js`, 화면은 `js/render/`.
+`docs/07_tech.md` 참고. 규칙 데이터는 `js/data/`(동료 명단 `roster.js`, 도구 `relics.js`, 소환 `gacha.js`, 사건 `events.js`, 야시장·지도 수치 `rules.js`), 엔진은 `js/run.js`·`map.js`·`combat.js`·`effects.js`·`relics.js`, 판 바깥(저장·소환·별 조각)은 `js/meta.js`, 화면은 `js/render/`.
 
 ## 프로토타입
 `prototype/index.html` — 처음 만든 한 파일 프로토타입(동료 5명, 3막, 연계·듀오, 달). 브라우저로 열면 바로 된다.

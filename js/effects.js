@@ -12,10 +12,12 @@ const boost = () => MOONS[S.G.moon].boost?.[S.C.actor] || 0;
 export function hit(n, f = foeTarget()) {
   const C = S.C; if (!f) return;
   const d = dmgToFoe(f, n + C.bonus + boost(), C.actor); C.bonus = 0;
-  if (C.actor) f.lastHitter = C.actor;
+  if (C.actor) { f.lastHitter = C.actor; stat(C.actor, 'dmg', d.dealt); }
   logMsg(`${f.name}에게 피해 <b>${d.dealt}</b>${d.blocked ? ` (방어 ${d.blocked} 막힘)` : ''}${d.bleed ? ` · 출혈 ${d.bleed}` : ''}`);
   killCheck(f);
 }
+// 결과 화면 MVP용: 동료마다 준 피해·쌓은 방어
+function stat(id, k, n) { const st = S.G.stats[id]; if (st && n > 0) st[k] += n; }
 export function hitAll(n) {
   const C = S.C, b = C.bonus;
   for (const f of livingFoes()) { C.bonus = b; hit(n, f); }
@@ -25,9 +27,13 @@ export function hitRandom(n) { const L = livingFoes(); if (L.length) hit(n, S.G.
 // 방어 무시 피해 (독 터뜨리기 등)
 export function pierce(f, n) {
   if (!f || f.dead || n <= 0) return;
-  f.hp = Math.max(0, f.hp - n); logMsg(`${f.name}에게 피해 <b>${n}</b>`); killCheck(f);
+  f.hp = Math.max(0, f.hp - n); logMsg(`${f.name}에게 피해 <b>${n}</b>`); if (S.C.actor) stat(S.C.actor, 'dmg', n); killCheck(f);
 }
-export function guard(n, who = S.C.actor) { const C = S.C; if (who) C.blocks[who] += Math.max(0, n + (who === C.actor ? boost() : 0)); }
+export function guard(n, who = S.C.actor) {
+  const C = S.C; if (!who) return;
+  const v = Math.max(0, n + (who === C.actor ? boost() : 0));
+  C.blocks[who] += v; stat(C.actor || who, 'block', v);
+}
 // 'ally' 카드면 고른 동료에게, 아니면 카드 주인에게
 export function guardTarget(n) { guard(n, S.C.target || S.C.actor); }
 export function heal(n) { const C = S.C, id = C.target || C.actor; if (id) healMember(id, n); }

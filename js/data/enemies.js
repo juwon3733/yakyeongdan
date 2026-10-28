@@ -1,6 +1,9 @@
 // 적 (docs/04_enemies.md).
 //   FOE[id]: name, hp, pal, pat(행동 순환), aim(단일 공격 노림, rules.js AIM_NAME, 없으면 앞줄)
 //   그 밖의 표시: noPoisonWhileBlock(방어가 남아 있으면 독이 안 듦), light(등대 불빛)
+//   armor: 공격 한 번마다 받는 피해 감소 · acts: 한 턴 행동 수 · turnClock: 내 턴 시작마다 밤 시계 +분
+//   phase2: 체력이 at 비율 아래가 되면 한 번 바뀜 { at, msg, clockOnce, ...바꿀 필드(armor·acts·aim·turnClock·pat) }
+//   line: 보스 앞 한 줄 대사
 //   ACTS[막]: easy(1층 전투), fights(그 위 전투), elites, boss — 각 항목은 적 id 배열(1~3마리)
 // 행동: A 공격(v, 횟수) · B 방어 · U 힘 · M 공격+방어 · W 동료에게 상태(약화·취약) · K 저주 카드를 뽑을 더미 위에 · T 밤 시계 +분
 const A = (v, n = 1) => ({ t: 'atk', v, n }), B = v => ({ t: 'blk', v }), U = v => ({ t: 'buf', v }), M = (v, b) => ({ t: 'mix', v, b });
@@ -28,7 +31,7 @@ export const FOE = {
   gull:    { name: '갈매기', hp: 8, pal: 'gull', aim: 'back', small: true, pat: [A(3)] },
   anchor:  { name: '닻 거인', hp: 60, pal: 'pirate', pat: [A(14), B(10), A(6, 2), U(3)] },
   witch:   { name: '안개 마녀', hp: 50, pal: 'witch', long: true, aim: 'weakest', pat: [W('weak', 2), A(8), K('curse.fog', 2)] },
-  keeper:  { name: '등대지기', hp: 95, pal: 'keeper', long: true, crown: true, aim: 'light',
+  keeper:  { name: '등대지기', hp: 95, pal: 'keeper', long: true, crown: true, aim: 'light', line: '"불빛이 닿는 곳이 네 자리다."',
              light: { double: .5 },   // 불빛이 비춘 동료: 그 동료 카드 비용 +1, 단일 공격은 그 동료를 노림. 체력 절반이면 불빛 둘
              pat: [A(8), M(10, 8), A(5, 3), U(3)] },
   // 2막 구름층
@@ -39,7 +42,10 @@ export const FOE = {
   bird:    { name: '번개새', hp: 80, pal: 'knight', long: true, aim: 'back', pat: [A(6, 3), U(3), A(18)] },
   vaneL:   { name: '풍향계 동', hp: 45, pal: 'cloud', aim: 'weakest', pat: [A(9), B(12)] },
   vaneR:   { name: '풍향계 서', hp: 45, pal: 'cloud', aim: 'weakest', pat: [B(12), A(9)] },
-  captain: { name: '구름 기사단장', hp: 140, pal: 'knight', long: true, crown: true, pat: [M(12, 12), A(7, 3), U(4), A(22)] },
+  captain: { name: '구름 기사단장', hp: 140, pal: 'knight', long: true, crown: true, armor: 3, aim: 'front',
+             line: '"구름 기사단의 이름으로. 여기서 돌아가라."',
+             phase2: { at: .5, msg: '구름 기사단장이 갑옷을 벗어던졌다! 피해 감소가 사라지고 매 턴 두 번 움직인다.', armor: 0, acts: 2, aim: 'cycle' },
+             pat: [M(12, 12), A(7, 3), U(4), A(22)] },
   // 3막 별층
   statue:  { name: '별 조각상', hp: 50, pal: 'star', pat: [B(15), A(16)] },
   cat:     { name: '그림자 고양이', hp: 44, pal: 'cat', long: true, aim: 'back', pat: [A(5, 4), U(3)] },
@@ -47,7 +53,10 @@ export const FOE = {
   angel:   { name: '시계태엽 천사', hp: 40, pal: 'star', aim: 'last', pat: [A(10), T(10)] },
   rider:   { name: '유성 기수', hp: 100, pal: 'star', crown: true, pat: [A(8, 3), M(14, 14), U(4)] },
   shadow:  { name: '달의 그림자', hp: 90, pal: 'cat', long: true, aim: 'weakest', pat: [A(12), W('vuln', 2), A(6, 3)] },
-  dawn:    { name: '새벽', hp: 190, pal: 'dawn', long: true, crown: true, aim: 'weakest', pat: [A(12), A(6, 4), M(16, 16), U(5), A(28)] },
+  dawn:    { name: '새벽', hp: 190, pal: 'dawn', long: true, crown: true, aim: 'dawn', turnClock: 10,
+             line: '"왜 매일 밤 올라오는 거야? …그냥 아침이 오게 두면 되잖아."',
+             phase2: { at: .5, msg: '해가 뜬다. 밤 시계 +30분, 이제 매 턴 +15분.', clockOnce: 30, turnClock: 15 },
+             pat: [A(12), A(6, 4), M(16, 16), U(5), A(28)] },
 };
 
 export const ACTS = {

@@ -1,5 +1,6 @@
 import { S } from '../run.js';
-import { cardDef, intentText, aimShown, targetOf, usable, litMembers } from '../combat.js';
+import { cardDef, intentText, aimShown, targetOf, usable, litMembers, swapLimit } from '../combat.js';
+import { relicFlag } from '../relics.js';
 import { CHARACTERS } from '../data/characters.js';
 import { FOE_PAL } from '../data/enemies.js';
 import { RULES, AIM_NAME, ROW_NAME } from '../data/rules.js';
@@ -29,7 +30,7 @@ export function combatView() {
     const p = G.formation[fi], c = CHARACTERS[p], M = G.members[p], ms = C.ms[p];
     const s = [STAT[p] ? STAT[p](C) : '', ms.weak ? `약화 ${ms.weak}` : '', ms.vuln ? `취약 ${ms.vuln}` : ''].filter(Boolean).join(' · ');
     const blk = C.blocks[p];
-    const swap = k < 2 ? `<button type="button" class="swap" data-swap="${fi - 1}" ${C.swaps >= RULES.swapsPerTurn ? 'disabled' : ''} title="자리 바꾸기 (바꾼 둘 방어 -${RULES.swapBlockCost})">⇄</button>` : '';
+    const swap = k < 2 ? `<button type="button" class="swap" data-swap="${fi - 1}" ${C.swaps >= swapLimit() ? 'disabled' : ''} title="자리 바꾸기 (바꾼 둘 방어 -${RULES.swapBlockCost})">⇄</button>` : '';
     return `<button type="button" class="pm ${M.down ? 'down' : ''} ${aims.has(p) ? 'aimed' : ''} ${lit.includes(p) ? 'lit' : ''} ${wantAlly && !M.down ? 'tg' : ''} ${C.last === p ? 'last' : ''}" style="--c:${c.col}" data-ally="${p}" ${wantAlly && !M.down ? '' : 'tabindex="-1"'}>
         <span class="row">${ROW_NAME[fi]}${lit.includes(p) ? ' · <b class="litnm">불빛 +1</b>' : ''}</span>
         <img class="px" src="${sprite(c.pal, c.long)}" alt="">
@@ -58,7 +59,8 @@ export function combatView() {
       <div class="party">${party}</div>
       <div class="foes ${many ? 'many' : ''}">${foes}</div>
     </div>
-    <div class="log" aria-live="polite">${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span></div>
+    <div class="log" aria-live="polite">${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span>${relicFlag('hourglass')
+      ? `<button type="button" class="mini hg ${C.payEnergy ? 'on' : ''}" data-hg aria-pressed="${C.payEnergy}" title="깨진 모래시계: 시간 카드를 시간 대신 에너지 1로">시간 카드: ${C.payEnergy ? '에너지 1' : '시간'}</button>` : ''}</div>
     <div class="bottom">
       <span class="energy" title="에너지">${pip(RULES.energy, C.energy)}<b>${C.energy}</b></span>
       <div class="hand">${hand || '<p class="note">손패가 비었다.</p>'}</div>

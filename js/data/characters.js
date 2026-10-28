@@ -19,7 +19,7 @@ export const CHARACTERS = {
   brick: {
     name: '브릭', role: '대포', rarity: 3, maxHp: 34, col: '#ef6352', long: false,
     ds: '장전을 쌓았다가 한 번에 쏜다.',
-    pal: { h: '#d0463a', H: '#902a24', e: '#ffd060', o: '#3a3030', O: '#201818', a: '#e0b84a' },
+    pal: { h: '#d0463a', H: '#902a24', e: '#ffd060', o: '#5a4a3a', O: '#3a2e24', a: '#e0b84a' },   // 붉은 단발, 작업복
     start: ['brick.load', 'brick.load', 'brick.fire', 'brick.over'],
     passive: { name: '여분 탄약', text: '전투 시작에 장전 1.',
       onCombatStart: c => { c.loaded += 1; } },
@@ -27,7 +27,7 @@ export const CHARACTERS = {
   marta: {
     name: '마르타', role: '수녀', rarity: 3, maxHp: 46, col: '#e0b84a', long: true,
     ds: '막고, 맞으면 되받아친다.',
-    pal: { h: '#24242e', H: '#121218', e: '#5a7ab0', o: '#1e1e28', O: '#0e0e16', a: '#f0f0f0' },
+    pal: { h: '#ecc860', H: '#b08a30', e: '#5a7ab0', o: '#1e1e28', O: '#0e0e16', a: '#f0f0f0' },   // 금발 땋은 장발, 수녀복
     start: ['marta.wall', 'marta.wall', 'marta.fist', 'marta.confess'],
     passive: { name: '수호', text: '전투 시작에 방어 4.',
       onCombatStart: (c, e) => { e.guard(4); } },
@@ -43,19 +43,12 @@ export const CHARACTERS = {
   raven: {
     name: '레이븐', role: '암살자', rarity: 4, maxHp: 30, col: '#9a86d8', long: false,
     ds: '독을 쌓고 목을 긋는다.',
-    pal: { h: '#2a2a38', H: '#141420', e: '#e04a4a', o: '#2a2238', O: '#16121e', a: '#9a86d8' },
+    pal: { h: '#d0d4e0', H: '#8a8ea4', e: '#e04a4a', o: '#1e1a28', O: '#0e0c16', a: '#9a86d8' },   // 은색 단발, 검은 깃털 코트
     start: ['raven.needle', 'raven.needle', 'raven.step', 'raven.venom'],
     passive: { name: '독 묻은 깃', text: '전투 시작에 모든 적 독 2.',
       onCombatStart: (c, e) => { e.foeStatusAll('poison', 2); } },
   },
 };
 
-// 처음부터 가진 동료. 나머지는 별 소환으로 (M5). 개발판(DEV)에선 전부 고를 수 있다.
+// 처음부터 가진 동료. 나머지는 별 소환으로 (js/meta.js). 개발판(DEV)에선 구현된 동료를 전부 고를 수 있다.
 export const STARTER_OWNED = ['iris', 'brick', 'marta'];
-
-// 아직 구현 안 된 동료 미리보기 (고를 수 없음)
-export const PREVIEW = [
-  { name: '미미·모모', role: '쌍둥이', rarity: 4, col: '#ffb0a0', long: false, pal: { h: '#ffb0a0', H: '#c07a6a', e: '#5a5ab0', o: '#ffffff', O: '#c8c8d8', a: '#ff8a8a' } },
-  { name: '시온', role: '별 소환사', rarity: 5, col: '#7ab0d8', long: true, pal: { h: '#9ab8e0', H: '#5a78a8', e: '#e0e8ff', o: '#2a3a6a', O: '#18224a', a: '#e0c860' } },
-  { name: '세바스', role: '집사', rarity: 4, col: '#c0c0c0', long: false, pal: { h: '#d8d8d8', H: '#9a9a9a', e: '#3a3a3a', o: '#1a1a1a', O: '#0a0a0a', a: '#ffffff' } },
-];

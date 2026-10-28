@@ -1,0 +1,42 @@
+// 동료 명단 20명 (docs/03_characters.md 「동료 20명 한눈에」). 별 소환·본부·파티 고르기가 쓴다.
+// 실제로 싸울 수 있는 동료는 characters.js의 CHARACTERS에 있는 동료뿐(나머지는 「준비 중」).
+// id는 그림 프롬프트(js/asset_prompts.js CHARS)와 같다. pal = 그림이 없을 때 쓰는 임시 도트 색(외형 문서대로).
+export const ROSTER = {
+  sion:     { name: '시온', role: '별 소환사', rarity: 5, col: '#7ab0d8', long: true,
+              pal: { h: '#a8c4ec', H: '#6a88b8', e: '#e0e8ff', o: '#24305e', O: '#141c3e', a: '#e0c860' } },
+  lunaria:  { name: '루나리아', role: '달의 무희', rarity: 5, col: '#d8d0f8', long: true,
+              pal: { h: '#eceef8', H: '#a8acc8', e: '#9a8ae0', o: '#d8d0f0', O: '#9a90c0', a: '#ffe8a0' } },
+  akane:    { name: '아카네', role: '홍련 검성', rarity: 5, col: '#ff6a4a', long: true,
+              pal: { h: '#d8382a', H: '#8a1e18', e: '#ffc040', o: '#b02a24', O: '#6a1410', a: '#ffb040' } },
+  eleonore: { name: '엘레오노르', role: '시계탑의 마녀', rarity: 5, col: '#b48ae8', long: true,
+              pal: { h: '#2e2244', H: '#160e24', e: '#d0a0ff', o: '#3a2858', O: '#1e1432', a: '#e0c060' } },
+  iris:     { name: '아이리스', role: '검사', rarity: 4, col: '#c8d4f0', long: true, pal: null },
+  noel:     { name: '노엘', role: '마술사', rarity: 4, col: '#f08ac0', long: true, pal: null },
+  raven:    { name: '레이븐', role: '암살자', rarity: 4, col: '#9a86d8', long: false, pal: null },
+  mimimomo: { name: '미미·모모', role: '쌍둥이', rarity: 4, col: '#ffb0a0', long: false,
+              pal: { h: '#ffb0c8', H: '#9ad0f0', e: '#5a5ab0', o: '#ffffff', O: '#c8c8e0', a: '#ff8aa0' } },
+  sebas:    { name: '세바스', role: '집사', rarity: 4, col: '#c0c0c0', long: false,
+              pal: { h: '#dcdcdc', H: '#9a9a9a', e: '#3a3a3a', o: '#1a1a1e', O: '#0a0a0e', a: '#ffffff', skin: '#ecc8b0' } },
+  mariana:  { name: '마리아나', role: '해적 여왕', rarity: 4, col: '#e0a050', long: true,
+              pal: { h: '#7a4a2a', H: '#4a2a14', e: '#60a0e0', o: '#7a2a2a', O: '#4a1414', a: '#e0b84a' } },
+  tomori:   { name: '토모리', role: '등대지기의 손녀', rarity: 4, col: '#f0d040', long: true,
+              pal: { h: '#6a3a20', H: '#3a1e10', e: '#5a8a5a', o: '#f0d040', O: '#b09820', a: '#ffffff' } },
+  sigrun:   { name: '시그룬', role: '하늘 창기사', rarity: 4, col: '#f0e0a0', long: true,
+              pal: { h: '#f0d880', H: '#b0985a', e: '#4a7ac0', o: '#d0d8e8', O: '#8a92a8', a: '#ffffff' } },
+  zeno:     { name: '제노', role: '용의 피 흑기사', rarity: 4, col: '#8a6ae0', long: true,
+              pal: { h: '#18141c', H: '#08060a', e: '#e0b030', o: '#24202c', O: '#100e16', a: '#8a2a2a' } },
+  brick:    { name: '브릭', role: '대포', rarity: 3, col: '#ef6352', long: false, pal: null },
+  marta:    { name: '마르타', role: '수녀', rarity: 3, col: '#e0b84a', long: true, pal: null },
+  finn:     { name: '핀', role: '우편배달부', rarity: 3, col: '#7aa0d0', long: false,
+              pal: { h: '#7a5030', H: '#4a2e18', e: '#3a6a3a', o: '#3a5a8a', O: '#22385a', a: '#e0c060' } },
+  laila:    { name: '라일라', role: '구름 기사단 탈영병', rarity: 3, col: '#9ad0f0', long: true,
+              pal: { h: '#9ad0f0', H: '#5a8ab0', e: '#3a5a8a', o: '#4a6a9a', O: '#2a3e60', a: '#e0e0e8' } },
+  dora:     { name: '도라', role: '대장장이', rarity: 3, col: '#d08a4a', long: true,
+              pal: { h: '#8a5a30', H: '#5a3618', e: '#3a3a3a', o: '#7a5a3a', O: '#4a3420', a: '#e0e0e0', skin: '#e8b890' } },
+  gordon:   { name: '고든', role: '요리사', rarity: 3, col: '#e0d0b0', long: false,
+              pal: { h: '#5a3a2a', H: '#3a2418', e: '#2a2a2a', o: '#f0f0f0', O: '#b8b8c0', a: '#c04a3a', skin: '#e8b890' } },
+  fukuro:   { name: '후쿠로', role: '야시장 상인', rarity: 3, col: '#c8a060', long: false,
+              pal: { h: '#6a5a4a', H: '#3a3024', e: '#ffd040', o: '#5a4a3a', O: '#3a3024', a: '#e0b84a', skin: '#8a7a6a' } },
+};
+export const ROSTER_IDS = Object.keys(ROSTER);
+export const byRarity = r => ROSTER_IDS.filter(k => ROSTER[k].rarity === r);
