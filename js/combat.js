@@ -74,6 +74,8 @@ export function startCombat(ids, kind) {
   G.screen = 'combat';
   const line = foes.find(f => f.line)?.line;
   if (line) logMsg(`<b>${foes.find(f => f.line).name}</b> ${line}`);
+  S.fxq.length = 0;   // 지난 화면의 남은 연출은 버린다
+  pushFx({ kind: 'combat', type: kind, boss: kind === 'boss' ? foes[0].name : null, line: line || '' });
   startTurn();
 }
 
@@ -98,12 +100,13 @@ function relicsAtStart() {
     if (d.burnAll) for (const f of livingFoes()) f.burn += d.burnAll;
   }
   const gun = relicSum('pistol');
-  if (gun) { const f = S.G.rng.pick(livingFoes()); if (f) { f.hp = Math.max(0, f.hp - gun); logMsg(`권총: ${f.name}에게 피해 <b>${gun}</b>`); killCheck(f); } }
+  if (gun) { const f = S.G.rng.pick(livingFoes()); if (f) { f.hp = Math.max(0, f.hp - gun); pushFx({ kind: 'hitFoe', i: f.i, dmg: gun, blocked: 0, bleed: 0, actor: null, gun: true }); logMsg(`권총: ${f.name}에게 피해 <b>${gun}</b>`); killCheck(f); } }
 }
 
 function startTurn() {
   const C = S.C;
   C.turn++;
+  pushFx({ kind: 'turn', n: C.turn });
   for (const p in C.blocks) {
     if (C.keep[p]) { delete C.keep[p]; continue; }
     C.blocks[p] = C.retain ? Math.floor(C.blocks[p] / 2) : 0;
@@ -181,6 +184,7 @@ export function dmgToFoe(f, n, actor, pierceBlock = false) {
   const blocked = pierceBlock ? 0 : Math.min(f.block, d); f.block -= blocked; d -= blocked; f.hp = Math.max(0, f.hp - d);
   let bleed = 0;
   if (f.bleed > 0) { bleed = f.bleed; f.hp = Math.max(0, f.hp - bleed); f.bleed--; }
+  pushFx({ kind: 'hitFoe', i: f.i, dmg: d, blocked, bleed, actor, crit: f.vuln > 0, slash: !!C.curSlash });
   return { dealt: d, blocked, bleed };
 }
 // 보스 2단계: 체력이 phase2.at 비율 아래로 내려가면 한 번 바뀐다
@@ -195,12 +199,12 @@ function enterPhase2(f) {
 export function killCheck(f) {
   if (f.hp > 0 && f.phase2 && !f.p2 && f.hp <= f.max * f.phase2.at) enterPhase2(f);
   if (f.hp <= 0 && !f.dead) {
-    f.dead = true; logMsg(`<b>${f.name}</b> 쓰러뜨림`); if (S.C.tf === f.i) S.C.tf = null;
+    f.dead = true; pushFx({ kind: 'kill', i: f.i, boss: S.C.kind === 'boss' }); logMsg(`<b>${f.name}</b> 쓰러뜨림`); if (S.C.tf === f.i) S.C.tf = null;
     if (f.bounty) { gainGold(f.bounty); logMsg(`현상금: 별빛 <b>+${f.bounty}</b>`); }
   }
 }
 
-function hurtMember(id, d, src) {
+function hurtMember(id, d, src, fi = null) {
   const C = S.C, m = member(id), nm = CHARACTERS[id].name;
   if (C.noDmg) d = 0;                                  // 숨바꼭질
   if (id === 'sigrun' && C.air) d = Math.ceil(d / 2);  // 공중: 받는 피해 절반
@@ -211,13 +215,14 @@ function hurtMember(id, d, src) {
   // 금빛 깃털: 판마다 동료당 한 번 버틴다
   if (m.hp <= 0 && !m.down && hasRelic('gold_feather') && !m.feather) { m.feather = true; m.hp = RELICS.gold_feather.goldFeather; logMsg(`금빛 깃털: <b>${nm}</b>이(가) 버텼다`); }
   if (m.hp <= 0 && !m.down) { m.down = true; m.wasDown = true; logMsg(`<b>${nm} 쓰러짐</b> · 카드를 쓸 수 없다`); }
+  pushFx({ kind: 'hurt', id, dmg: before - m.hp, blocked: b, foe: fi, down: m.down && before > 0 && m.hp <= 0, air: id === 'sigrun' && C.air > 0 });
 }
 function enemyHit(f, v, k = 0) {
   const C = S.C, id = aimTarget(f, k); if (!id) return;
   if (f.aim === 'cycle' && !C.taunt) f.cyc++;
-  hurtMember(id, foeDmg(f, v, id), f.name);
-  if (id === 'marta' && C.counter > 0 && !f.dead) { f.hp = Math.max(0, f.hp - C.counter); logMsg(`마르타의 반격 <b>${C.counter}</b>`); killCheck(f); }
-  if (id === 'sigrun' && C.sigCounter > 0 && !f.dead) { f.hp = Math.max(0, f.hp - C.sigCounter); logMsg(`창벽 반격 <b>${C.sigCounter}</b>`); killCheck(f); }
+  hurtMember(id, foeDmg(f, v, id), f.name, f.i);
+  if (id === 'marta' && C.counter > 0 && !f.dead) { f.hp = Math.max(0, f.hp - C.counter); pushFx({ kind: 'hitFoe', i: f.i, dmg: C.counter, blocked: 0, bleed: 0, actor: 'marta', counter: true }); logMsg(`마르타의 반격 <b>${C.counter}</b>`); killCheck(f); }
+  if (id === 'sigrun' && C.sigCounter > 0 && !f.dead) { f.hp = Math.max(0, f.hp - C.sigCounter); pushFx({ kind: 'hitFoe', i: f.i, dmg: C.sigCounter, blocked: 0, bleed: 0, actor: 'sigrun', counter: true }); logMsg(`창벽 반격 <b>${C.sigCounter}</b>`); killCheck(f); }
   if (id === 'akane' && C.flameGuard > 0 && !f.dead) f.burn += C.flameGuard;
 }
 
@@ -309,12 +314,14 @@ export function playCard(id, pick = {}) {
     + (who === 'zeno' ? C.zenoStr + (C.zenoAwake && E.low('zeno') ? C.zenoAwake : 0) : 0) : 0;
   C.atkCard = !!d.atk;
   if (d.ch !== 'curse') passives('beforeCard', d);
+  pushFx({ kind: 'play', uid: inst.uid, id: inst.id, ch: d.ch, a: d.a, b: d.b, actor: who, target: d.target, foe: d.target === 'foe' ? pick.foe : null, ally: d.target === 'ally' ? pick.ally : null, time: !!d.time, atk: !!d.atk, chain: C.chain });
+  C.curSlash = !!d.slash || /slash/.test(d.tags || '');
   const twice = C.double && d.ch !== 'curse' && !d.id.startsWith('seb.service'); if (twice) C.double = false;
   const bonus = C.bonus;
   d.play?.(C, E, d.v, d.up);
   if (twice && livingFoes().length) { C.bonus = bonus; d.play?.(C, E, d.v, d.up); }
   if (d.ch !== 'curse') passives('afterCard', d, pick);
-  C.lastPlay = { d, tf: C.tf, target: C.target, actor: C.actor, pair: C.pair };
+  C.lastPlay = { d, tf: C.tf, target: C.target, actor: C.actor, pair: C.pair }; C.curSlash = false;
   C.bonus = 0; C.actor = null; C.target = null; C.tf = null; C.atkCard = false;
   if (d.exhaust || inst.ghost) C.exh.push(inst); else C.disc.push(inst);
   delete inst.disc;
@@ -343,6 +350,7 @@ export const swapLimit = () => (relicSum('swaps') || RULES.swapsPerTurn) + (S.C?
 
 function foeAct(f) {
   const C = S.C, it = intentOf(f);
+  pushFx({ kind: 'foeAct', i: f.i, t: it.t, v: it.v, n: it.n || 1 });
   if (it.t === 'atk') for (let k = 0; k < it.n && living().length; k++) enemyHit(f, it.v, k);
   else if (it.t === 'blk') { f.block += it.v; logMsg(`${f.name} 방어 ${it.v}`); }
   else if (it.t === 'buf') { f.str += it.v; logMsg(`${f.name}의 힘 +${it.v}`); }
@@ -373,12 +381,13 @@ export function endTurn() {
   C.keepCards = keep;
   for (const h of C.hand) if (!/^(duo|bond):/.test(h.id) && !keep.includes(h)) (h.ghost ? C.exh : C.disc).push(h);
   C.hand = []; C.pending = null;
+  pushFx({ kind: 'foeTurn', keep: keep.map(h => h.uid) });
   // 정령: 내 턴 끝마다 (시온이 서 있을 때)
   if (alive('sion') && C.spirits.length) { E.spiritsAct(1 + C.spiritExtra); if (!livingFoes().length) return winCombat(); }
   for (const f of C.all) {
     if (f.dead) continue;
-    if (f.burn > 0) { f.hp = Math.max(0, f.hp - f.burn); logMsg(`${f.name} 화상 피해 <b>${f.burn}</b>`); f.burn = Math.floor(f.burn / 2); }
-    if (f.poison > 0 && !(f.noPoisonWhileBlock && f.block > 0)) { f.hp = Math.max(0, f.hp - f.poison); logMsg(`${f.name} 독 피해 <b>${f.poison}</b>`); f.poison--; }
+    if (f.burn > 0) { f.hp = Math.max(0, f.hp - f.burn); pushFx({ kind: 'tick', i: f.i, dmg: f.burn, what: 'burn' }); logMsg(`${f.name} 화상 피해 <b>${f.burn}</b>`); f.burn = Math.floor(f.burn / 2); }
+    if (f.poison > 0 && !(f.noPoisonWhileBlock && f.block > 0)) { f.hp = Math.max(0, f.hp - f.poison); pushFx({ kind: 'tick', i: f.i, dmg: f.poison, what: 'poison' }); logMsg(`${f.name} 독 피해 <b>${f.poison}</b>`); f.poison--; }
     killCheck(f); if (f.dead) continue;
     f.block = 0;
     for (let a = 0; a < f.acts && !f.dead && living().length; a++) {

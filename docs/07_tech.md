@@ -17,7 +17,8 @@ js/
   combat.js      전투 엔진 (턴, 손패, 의도, 상태, 연계·듀오)
   effects.js     카드 효과 기본 동작(피해, 방어, 상태, 뽑기, 시계)
   render/        화면별 그리기 (map, combat, reward, shop, rest, event, result)
-  fx.js          컷인, 흔들림, 숫자 튀기기
+  fx.js          컷인(듀오·보스 등장·2단계 띠), 판 흔들림
+  juice.js       손맛·연출: 연출 사건을 순서대로 (카드 날기·타격·숫자·입자·배너·막 사이 장면)
   audio.js       곡·효과음·환경음 (설정 음량)
   settings.js    설정 (음량·흔들림·애니메이션 줄이기·글자 크기, localStorage yk-settings)
   tutorial.js    첫 실행 튜토리얼 (정해진 지도·손패·도움말 줄, 데이터는 data/tutorial.js)

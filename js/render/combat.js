@@ -55,10 +55,12 @@ export function combatView() {
   }).join('');
   const many = C.all.length > 1;
   const foes = C.all.map(f => {
-    if (f.dead) return `<span class="foe gone ${many ? 'sm' : ''}"><span class="nm">${esc(f.name)}</span><span class="note">쓰러짐</span></span>`;
-    const aim = aimShown(f);
-    return `<button type="button" class="foe ${many ? 'sm' : ''} ${wantFoe ? 'tg' : ''}" data-foe="${f.i}">
-        <span class="intent">${intentText(f)}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[C.taunt ? 'taunt' : f.aim || RULES.defaultAim]}</span>`}` : ''}</span>
+    if (f.dead) return `<span class="foe gone ${many ? 'sm' : ''}" data-fi="${f.i}"><span class="nm">${esc(f.name)}</span><span class="note">쓰러짐</span></span>`;
+    const aim = aimShown(f), it = intentText(f), atk = /^공격 (\d+)(?:×(\d+))?/.exec(it);
+    // 공격 의도는 흔들리고, 센 공격(한 번에 15 이상)은 붉게 빨리 (js/juice.js가 공격 직전 강조)
+    const ic = atk ? `atk ${+atk[1] * (+atk[2] || 1) >= 15 ? 'big' : ''}` : '';
+    return `<button type="button" class="foe ${many ? 'sm' : ''} ${wantFoe ? 'tg' : ''}" data-foe="${f.i}" data-fi="${f.i}">
+        <span class="intent ${ic}">${it}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[C.taunt ? 'taunt' : f.aim || RULES.defaultAim]}</span>`}` : ''}</span>
         <img class="px" src="${sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
         <span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span>

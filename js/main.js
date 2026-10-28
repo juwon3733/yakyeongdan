@@ -6,9 +6,10 @@ import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOption
 import { temperPick } from './effects.js';
 import { render as draw } from './render/index.js';
 import { deckModal } from './render/screens.js';
-import { showCut, showPhase, shake } from './fx.js';
+import { showCut } from './fx.js';
+import { beforeRender, afterRender } from './juice.js';
 import { sfx, applyVolumes } from './audio.js';
-import { SET, applySettings, setOption } from './settings.js';
+import { SET, applySettings, setOption, calmNow } from './settings.js';
 import { startTutorial, skipTutorial, finishTutorial, tutorialPending } from './tutorial.js';
 import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epNext, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
@@ -39,7 +40,8 @@ const seedParam = qs.has('seed') ? Number(qs.get('seed')) >>> 0 : undefined;
 const stage = document.getElementById('stage');
 const app = document.getElementById('app');
 const modal = document.getElementById('modal');
-const render = () => draw(app);
+// 그리기 전후로 연출 층(js/juice.js)이 카드·체력 막대 자리를 재고, 엔진이 쌓은 연출 사건을 순서대로 보여 준다
+const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); };
 
 // 논리 640×360을 창에 맞춰 키운다. 2배 이상 들어가면 정수배, 그보다 작으면 맞춤 배율.
 // 폰처럼 16:9보다 옆으로 긴 화면(2:1 등)이면 판 폭을 최대 800까지 늘려 남는 옆자리를 쓴다(높이 360은 그대로).
@@ -55,24 +57,22 @@ function fit() {
 addEventListener('resize', fit);
 fit();
 
-// 동료 체력 합: 행동 전후로 비교해 맞았으면 화면을 흔든다 (설정에서 끔)
-const partyHp = () => S.G && S.C ? S.G.party.reduce((t, p) => t + S.G.members[p].hp, 0) : null;
+// 듀오 컷인: 카드가 날아가 맞은 뒤에 띄운다 (애니메이션 줄이기면 바로)
 function play(uid, pick) {
   const r = playCard(uid, pick);
-  if (r.duo) showCut(r.duo);
-  else if (r.bond) showCut(r.bond, true);
+  const k = r.duo || r.bond; if (!k || !S.C) return;   // 이 카드로 전투가 끝났으면 컷인 없이
+  const cut = () => showCut(k, !r.duo);
+  if (calmNow()) cut(); else setTimeout(cut, 380);
 }
-// 행동 뒤: 7시 붕괴, 쌓인 연출 띄우기
+// 행동 뒤: 7시 붕괴, 에피소드 특별 전투 끝 (흔들림·보스 띠 등 연출은 render()의 js/juice.js가)
 function after() {
   if (S.G?.screen === 'epdone') epFightDone();   // 에피소드 특별 전투가 끝남
   checkCollapse();
-  const fx = S.fxq.splice(0);
-  for (const f of fx) if (f.kind === 'phase') showPhase(f.name, f.text);
 }
 
 app.addEventListener('click', e => {
   const b = e.target.closest('button'); if (!b || b.disabled) return;
-  const D = b.dataset, C = S.C, hp0 = partyHp();
+  const D = b.dataset, C = S.C;
   if ('settings' in D) { S.wipeArm = false; openSettings(); return; }
   // 첫 실행 튜토리얼
   if ('tutstart' in D) { startTutorial(); render(); return; }
@@ -167,8 +167,6 @@ app.addEventListener('click', e => {
   else return;
   after();
   render();
-  const hp1 = partyHp();
-  if (hp0 != null && hp1 != null && hp1 < hp0) shake();
 });
 // ---------- 카드 끌어 놓기: 손패 카드를 적·동료 위(대상 없는 카드는 손패 위쪽 아무 데나)에 놓으면 쓴다 ----------
 // 누르기 방식(카드 → 대상)은 그대로. 8px 넘게 움직였을 때만 끌기로 보고, 그 뒤의 click은 무시한다.
@@ -214,14 +212,13 @@ function endDrag(e, cancel) {
   document.querySelectorAll('.dropover').forEach(x => x.classList.remove('dropover'));
   markTargets(false);
   if (!d.ghost) return;   // 끌지 않았으면 보통 click
+  S.drop = { uid: d.uid, r: d.ghost.getBoundingClientRect() };   // 연출: 놓은 자리에서 대상으로 날아간다
   d.ghost.remove(); d.el.classList.remove('dragging');
   eatClick = true; setTimeout(() => { eatClick = false; }, 0);
   const tgt = cancel ? null : dropAt(e.clientX, e.clientY, d.uid);
-  if (!tgt) { render(); return; }
-  const hp0 = partyHp();
+  if (!tgt) { S.drop = null; render(); return; }
   play(d.uid, tgt.pick);
   after(); render();
-  const hp1 = partyHp(); if (hp0 != null && hp1 != null && hp1 < hp0) shake();
 }
 addEventListener('pointerup', e => endDrag(e, false));
 addEventListener('pointercancel', e => endDrag(e, true));

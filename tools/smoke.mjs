@@ -367,7 +367,8 @@ try {
     await page.click('[data-tutstart]');
     const tip0 = await ev(() => document.querySelector('.tutbar .tx')?.textContent || '');
     await page.click('[data-node="0,0"]');
-    // 끌어 놓기: 첫 카드를 적 위에 놓는다
+    // 끌어 놓기: 첫 카드를 적 위에 놓는다 (손패가 덱에서 날아와 자리 잡은 뒤)
+    await page.waitForFunction(() => document.querySelector('.hand .card[data-play]') && !document.querySelector('.hand .card.jdraw'));
     const c = await page.$('.hand .card[data-play]:not(.no)'), f = await page.$('.foe[data-foe]');
     const cb = await c.boundingBox(), fb = await f.boundingBox();
     const hp0 = await ev(() => window.__yk.S.C.all[0].hp);

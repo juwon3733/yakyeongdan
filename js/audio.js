@@ -175,10 +175,12 @@ function snap() {
 let prev = null;
 function sounds(a, b) {
   if (!b) return;
-  if (!a) { if (b.screen === 'combat') sfx('turn'); return; }
+  // 화면 연출(js/juice.js)이 있으면 전투의 타격·피해·방어·시계·턴·승리 소리는 연출 시간에 맞춰 그쪽에서 낸다
+  const fx = !!S.fxDriven;
+  if (!a) { if (b.screen === 'combat' && !fx) sfx('turn'); return; }
   if (a.clock < RULES.dawn && b.clock >= RULES.dawn) sfx('dawn');
   if (a.screen !== b.screen) {
-    if (a.screen === 'combat' && b.screen === 'reward') sfx('win');
+    if (a.screen === 'combat' && b.screen === 'reward') { if (!fx) sfx('win'); }
     else if (b.screen === 'result') sfx(b.won ? 'win' : 'lose');
     else if (a.screen === 'map') sfx('move');
   }
@@ -187,11 +189,19 @@ function sounds(a, b) {
   const inCombat = x && y && x.foe === y.foe;
   if (!inCombat) {
     if (b.hp > a.hp) sfx('heal');
-    if (y && b.screen === 'combat' && a.screen !== 'combat') sfx('turn');
+    if (y && b.screen === 'combat' && a.screen !== 'combat' && !fx) sfx('turn');
+    return;
+  }
+  let loud = false;
+  if (fx) {   // 고르기·연계·듀오·마력·카드 내기만 바로
+    if (y.duos > x.duos) { sfx('duo'); loud = true; }
+    else if (y.chain > x.chain) sfx(`chain${Math.min(3, y.chain)}`);
+    if (y.mana > x.mana || (y.asleep && !x.asleep)) { sfx('mana'); loud = true; }
+    if (y.hand < x.hand && y.turn === x.turn && !loud) sfx('card');
+    else if (y.pending && y.pending !== x.pending) sfx('select');
     return;
   }
   if (y.turn > x.turn) sfx('turn');
-  let loud = false;
   if (y.foeHp < x.foeHp) {
     loud = true;
     if (y.dead > x.dead) sfx('foe_down');

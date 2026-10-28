@@ -62,7 +62,9 @@ export const swapFormation = (i, j) => { const F = S.G.formation; [F[i], F[j]] =
 
 export function healMember(id, n) {
   const m = member(id); if (!m || m.down) return 0;
-  const before = m.hp; m.hp = Math.min(m.max, m.hp + n); return m.hp - before;
+  const before = m.hp; m.hp = Math.min(m.max, m.hp + n);
+  if (m.hp > before) pushFx({ kind: 'heal', id, n: m.hp - before });
+  return m.hp - before;
 }
 export const healAll = n => S.G.party.forEach(id => healMember(id, n));
 
@@ -71,7 +73,9 @@ export function logMsg(s) {
   C.log.push(s); if (C.log.length > 3) C.log.shift();
 }
 // 화면에 띄울 연출 (main.js가 꺼내 보여 준다): { kind: 'phase' | 'duo' | 'note', text }
-export const pushFx = fx => { S.fxq.push(fx); };
+// 화면에서 하는 판(S.ui, main.js)일 때만 쌓는다. 시뮬레이션·점검 엔진은 연출 사건을 모으지 않는다.
+// 연출 사건(js/juice.js가 순서대로 보여 준다): play hitFoe kill hurt tick block heal foeAct foeTurn turn time rewind combat phase
+export const pushFx = fx => { if (S.ui) S.fxq.push(fx); };
 
 // 밤의 깊이 규칙 (js/data/depth.js)
 export const depthRule = k => depthRuleAt(S.G?.depth || 0, k);
@@ -79,9 +83,10 @@ export const depthRule = k => depthRuleAt(S.G?.depth || 0, k);
 export const dawnAt = () => depthRule('dawnAt') ?? RULES.dawn;
 export function addTime(m) {
   const G = S.G, before = G.clock; G.clock += m;
+  if (m > 0) pushFx({ kind: 'time', m, dawn: before < dawnAt() && G.clock >= dawnAt() });
   if (before < dawnAt() && G.clock >= dawnAt() && !relicFlag('noDawn')) logMsg('<b>해가 뜬다.</b> 탑이 무너지기 시작해 적이 매 턴 강해진다.');
 }
-export const rewind = m => { S.G.clock = Math.max(0, S.G.clock - m); };
+export const rewind = m => { S.G.clock = Math.max(0, S.G.clock - m); pushFx({ kind: 'rewind', m }); };
 // 파티 패시브 숫자 합 (서 있는 동료만)
 export const partySum = k => S.G.party.reduce((t, p) => t + (alive(p) ? CHARACTERS[p].passive?.[k] || 0 : 0), 0);
 // 시간 카드 비용(분): 달(초승 15) · 멈춘 시계탑(0) · 엘레오노르(−10)

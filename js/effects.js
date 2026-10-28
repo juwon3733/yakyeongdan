@@ -1,7 +1,7 @@
 // 카드·패시브가 쓰는 효과 도우미. 데이터는 이 함수들만 부른다.
 // C.actor = 지금 효과를 내는 동료(카드 주인, 패시브 주인), C.target = 'ally' 카드에서 고른 동료,
 // C.tf = 고른 적의 번호. 피해 계산은 combat.js의 dmgToFoe가 한다.
-import { S, healMember, member, alive, living, logMsg, addTime as runAddTime, rewind as runRewind, gainGold } from './run.js';
+import { S, pushFx, healMember, member, alive, living, logMsg, addTime as runAddTime, rewind as runRewind, gainGold } from './run.js';
 import { MOONS } from './data/moons.js';
 import { RULES } from './data/rules.js';
 import { CHARACTERS } from './data/characters.js';
@@ -33,12 +33,13 @@ export function hitRandom(n) { const L = livingFoes(); if (L.length) hit(n, S.G.
 // 방어 무시 피해 (독 터뜨리기 등)
 export function pierce(f, n) {
   if (!f || f.dead || n <= 0) return;
-  f.hp = Math.max(0, f.hp - n); logMsg(`${f.name}에게 피해 <b>${n}</b>`); if (S.C.actor) stat(S.C.actor, 'dmg', n); killCheck(f);
+  f.hp = Math.max(0, f.hp - n); pushFx({ kind: 'hitFoe', i: f.i, dmg: n, blocked: 0, bleed: 0, actor: S.C.actor, pierce: true }); logMsg(`${f.name}에게 피해 <b>${n}</b>`); if (S.C.actor) stat(S.C.actor, 'dmg', n); killCheck(f);
 }
 export function guard(n, who = S.C.actor) {
   const C = S.C; if (!who || !alive(who)) return;
   const v = Math.max(0, n + (who === C.actor ? boost() : 0));
   C.blocks[who] += v; stat(C.actor || who, 'block', v);
+  if (v > 0) pushFx({ kind: 'block', id: who, n: v });
 }
 // 'ally' 카드면 고른 동료에게, 아니면 카드 주인에게
 export function guardTarget(n) { guard(n, S.C.target || S.C.actor); }
