@@ -4,7 +4,7 @@
 
 import { CARDS, DUOS as CARD_DUOS } from './data/cards.js';
 
-export const STYLE_VERSION = 3; // 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·피격·스킬). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
+export const STYLE_VERSION = 3; // 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
 
 // ── 공통 스타일 ──────────────────────────────────────────
 export const STYLE = {
@@ -22,7 +22,7 @@ export const STYLE = {
 export const SPEC = {
   stand:    { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백' },
   portrait: { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음' },
-  pose:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 모션 한 장(공격·피격·스킬) · 서 있는 그림과 같은 크기·같은 발 위치 · 투명 배경 · 바꿔 끼워 움직임을 만든다' },
+  pose:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 모션 한 장(공격·스킬·방어·피격) · 서 있는 그림과 같은 크기·같은 발 위치 · 투명 배경 · 바꿔 끼워 움직임을 만든다' },
   outfit:   { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '두 번째 의상 전신 · 투명 배경' },
   cutin:    { w: 1536, h: 576,  native: '384×144', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄' },
   duo:      { w: 1536, h: 768,  native: '384×192', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄' },
@@ -410,15 +410,16 @@ export function assetList() {
       { reference_images: ref }));
   }
 
-  // 전투 모션: 동료마다 공격·피격·스킬 세 장. 서 있는 그림과 바꿔 끼우므로 크기·발 위치·방향이 같아야 한다.
+  // 전투 모션: 동료마다 공격·스킬·방어·피격 네 장. 카드 종류에 따라 골라 쓴다(js/juice.js MOTION). 서 있는 그림과 바꿔 끼우므로 크기·발 위치·방향이 같아야 한다.
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `pose-${id}`;
-    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 전투 모션 3장` });
+    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 전투 모션 4장` });
     const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
     const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
     const frame = 'Same canvas framing as the attached battle-stance image: same character size, feet on the same spot near the bottom edge, facing RIGHT toward the enemies. Fully transparent background. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536.';
     const POSES = {
       attack: ['공격 — 오른쪽으로 내지르는 순간', `ATTACK pose: the peak moment of her basic attack, lunging or striking toward the RIGHT with her weapon, body leaning forward, motion smear made of pixels. Motifs: ${c.fx}.`],
+      guard: ['방어 — 웅크려 막는 순간', 'GUARD pose: bracing defensively with knees bent, weapon or arm raised in front like a shield, determined expression, a faint protective barrier glow in her accent color.'],
       hurt: ['피격 — 왼쪽으로 밀려나는 순간', 'HURT pose: just got hit, recoiling backward to the LEFT, knees bent, one arm up to guard, eyes squeezed or wincing, hair and clothes flung forward by the impact. No blood, no wounds.'],
       skill: ['스킬 — 힘을 모아 쓰는 순간', `SKILL pose: casting her signature power, a confident focused expression, her magic effect glowing around her (${c.fx}), clearly different from the attack pose.`],
     };

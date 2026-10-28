@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 3 · 전체 668장 · 묶음 92개
+style_version 3 · 전체 690장 · 묶음 92개
 
 ## 묶음
 
@@ -30,28 +30,28 @@ style_version 3 · 전체 668장 · 묶음 92개
 | `char-dora` | ★★★ 도라 | 6 |
 | `char-gordon` | ★★★ 고든 | 6 |
 | `char-fukuro` | ★★★ 후쿠로 | 6 |
-| `pose-sion` | ★★★★★ 시온 전투 모션 3장 | 3 |
-| `pose-lunaria` | ★★★★★ 루나리아 전투 모션 3장 | 3 |
-| `pose-akane` | ★★★★★ 아카네 전투 모션 3장 | 3 |
-| `pose-eleonore` | ★★★★★ 엘레오노르 전투 모션 3장 | 3 |
-| `pose-nerea` | ★★★★★ 네레아 전투 모션 3장 | 3 |
-| `pose-iris` | ★★★★ 아이리스 전투 모션 3장 | 3 |
-| `pose-noel` | ★★★★ 노엘 전투 모션 3장 | 3 |
-| `pose-raven` | ★★★★ 레이븐 전투 모션 3장 | 3 |
-| `pose-mimimomo` | ★★★★ 미미·모모 전투 모션 3장 | 3 |
-| `pose-sebas` | ★★★★ 세바스 전투 모션 3장 | 3 |
-| `pose-mariana` | ★★★★ 마리아나 전투 모션 3장 | 3 |
-| `pose-tomori` | ★★★★ 토모리 전투 모션 3장 | 3 |
-| `pose-sigrun` | ★★★★ 시그룬 전투 모션 3장 | 3 |
-| `pose-zeno` | ★★★★ 제노 전투 모션 3장 | 3 |
-| `pose-bertha` | ★★★★ 베르타 전투 모션 3장 | 3 |
-| `pose-brick` | ★★★ 브릭 전투 모션 3장 | 3 |
-| `pose-marta` | ★★★ 마르타 전투 모션 3장 | 3 |
-| `pose-finn` | ★★★ 핀 전투 모션 3장 | 3 |
-| `pose-laila` | ★★★ 라일라 전투 모션 3장 | 3 |
-| `pose-dora` | ★★★ 도라 전투 모션 3장 | 3 |
-| `pose-gordon` | ★★★ 고든 전투 모션 3장 | 3 |
-| `pose-fukuro` | ★★★ 후쿠로 전투 모션 3장 | 3 |
+| `pose-sion` | ★★★★★ 시온 전투 모션 4장 | 4 |
+| `pose-lunaria` | ★★★★★ 루나리아 전투 모션 4장 | 4 |
+| `pose-akane` | ★★★★★ 아카네 전투 모션 4장 | 4 |
+| `pose-eleonore` | ★★★★★ 엘레오노르 전투 모션 4장 | 4 |
+| `pose-nerea` | ★★★★★ 네레아 전투 모션 4장 | 4 |
+| `pose-iris` | ★★★★ 아이리스 전투 모션 4장 | 4 |
+| `pose-noel` | ★★★★ 노엘 전투 모션 4장 | 4 |
+| `pose-raven` | ★★★★ 레이븐 전투 모션 4장 | 4 |
+| `pose-mimimomo` | ★★★★ 미미·모모 전투 모션 4장 | 4 |
+| `pose-sebas` | ★★★★ 세바스 전투 모션 4장 | 4 |
+| `pose-mariana` | ★★★★ 마리아나 전투 모션 4장 | 4 |
+| `pose-tomori` | ★★★★ 토모리 전투 모션 4장 | 4 |
+| `pose-sigrun` | ★★★★ 시그룬 전투 모션 4장 | 4 |
+| `pose-zeno` | ★★★★ 제노 전투 모션 4장 | 4 |
+| `pose-bertha` | ★★★★ 베르타 전투 모션 4장 | 4 |
+| `pose-brick` | ★★★ 브릭 전투 모션 4장 | 4 |
+| `pose-marta` | ★★★ 마르타 전투 모션 4장 | 4 |
+| `pose-finn` | ★★★ 핀 전투 모션 4장 | 4 |
+| `pose-laila` | ★★★ 라일라 전투 모션 4장 | 4 |
+| `pose-dora` | ★★★ 도라 전투 모션 4장 | 4 |
+| `pose-gordon` | ★★★ 고든 전투 모션 4장 | 4 |
+| `pose-fukuro` | ★★★ 후쿠로 전투 모션 4장 | 4 |
 | `cards-sion` | ★★★★★ 시온 카드 13장 | 13 |
 | `cards-lunaria` | ★★★★★ 루나리아 카드 13장 | 13 |
 | `cards-akane` | ★★★★★ 아카네 카드 13장 | 13 |
@@ -107,7 +107,7 @@ style_version 3 · 전체 668장 · 묶음 92개
 |---|---|---|---|---|---|
 | 서 있는 그림 (`stand`) | 1024×1536 | 256×384 | 예 | 256 | 전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백 |
 | 상반신 (`portrait`) | 1024×1536 | 256×384 | 예 | 256 | 허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음 |
-| pose (`pose`) | 1024×1536 | 256×384 | 예 | 256 | 전투 모션 한 장(공격·피격·스킬) · 서 있는 그림과 같은 크기·같은 발 위치 · 투명 배경 · 바꿔 끼워 움직임을 만든다 |
+| pose (`pose`) | 1024×1536 | 256×384 | 예 | 256 | 전투 모션 한 장(공격·스킬·방어·피격) · 서 있는 그림과 같은 크기·같은 발 위치 · 투명 배경 · 바꿔 끼워 움직임을 만든다 |
 | 두 번째 의상 (`outfit`) | 1024×1536 | 256×384 | 예 | 256 | 두 번째 의상 전신 · 투명 배경 |
 | 컷인 (`cutin`) | 1536×576 | 384×144 | 아니오 | 256 | 가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄 |
 | 인연 듀오 컷인 (`duo`) | 1536×768 | 384×192 | 아니오 | 256 | 인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄 |
@@ -740,179 +740,201 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `fukuro_cutin` | `assets/cutins/fukuro_cutin.png` | 1536×576 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
 | `fukuro_outfit2` | `assets/chars/fukuro_outfit2.png` | 1024×1536 투명 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | — |
 
-## `pose-sion` — ★★★★★ 시온 전투 모션 3장
+## `pose-sion` — ★★★★★ 시온 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `sion_attack` | `assets/chars/sion_attack.png` | 1024×1536 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `sion_guard` | `assets/chars/sion_guard.png` | 1024×1536 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `sion_hurt` | `assets/chars/sion_hurt.png` | 1024×1536 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `sion_skill` | `assets/chars/sion_skill.png` | 1024×1536 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-lunaria` — ★★★★★ 루나리아 전투 모션 3장
+## `pose-lunaria` — ★★★★★ 루나리아 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `lunaria_attack` | `assets/chars/lunaria_attack.png` | 1024×1536 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `lunaria_guard` | `assets/chars/lunaria_guard.png` | 1024×1536 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `lunaria_hurt` | `assets/chars/lunaria_hurt.png` | 1024×1536 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `lunaria_skill` | `assets/chars/lunaria_skill.png` | 1024×1536 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-akane` — ★★★★★ 아카네 전투 모션 3장
+## `pose-akane` — ★★★★★ 아카네 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `akane_attack` | `assets/chars/akane_attack.png` | 1024×1536 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `akane_guard` | `assets/chars/akane_guard.png` | 1024×1536 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `akane_hurt` | `assets/chars/akane_hurt.png` | 1024×1536 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `akane_skill` | `assets/chars/akane_skill.png` | 1024×1536 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-eleonore` — ★★★★★ 엘레오노르 전투 모션 3장
+## `pose-eleonore` — ★★★★★ 엘레오노르 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `eleonore_attack` | `assets/chars/eleonore_attack.png` | 1024×1536 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `eleonore_guard` | `assets/chars/eleonore_guard.png` | 1024×1536 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `eleonore_hurt` | `assets/chars/eleonore_hurt.png` | 1024×1536 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `eleonore_skill` | `assets/chars/eleonore_skill.png` | 1024×1536 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-nerea` — ★★★★★ 네레아 전투 모션 3장
+## `pose-nerea` — ★★★★★ 네레아 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `nerea_attack` | `assets/chars/nerea_attack.png` | 1024×1536 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `nerea_guard` | `assets/chars/nerea_guard.png` | 1024×1536 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `nerea_hurt` | `assets/chars/nerea_hurt.png` | 1024×1536 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `nerea_skill` | `assets/chars/nerea_skill.png` | 1024×1536 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-iris` — ★★★★ 아이리스 전투 모션 3장
+## `pose-iris` — ★★★★ 아이리스 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `iris_attack` | `assets/chars/iris_attack.png` | 1024×1536 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `iris_guard` | `assets/chars/iris_guard.png` | 1024×1536 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `iris_hurt` | `assets/chars/iris_hurt.png` | 1024×1536 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `iris_skill` | `assets/chars/iris_skill.png` | 1024×1536 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-noel` — ★★★★ 노엘 전투 모션 3장
+## `pose-noel` — ★★★★ 노엘 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `noel_attack` | `assets/chars/noel_attack.png` | 1024×1536 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `noel_guard` | `assets/chars/noel_guard.png` | 1024×1536 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `noel_hurt` | `assets/chars/noel_hurt.png` | 1024×1536 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `noel_skill` | `assets/chars/noel_skill.png` | 1024×1536 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-raven` — ★★★★ 레이븐 전투 모션 3장
+## `pose-raven` — ★★★★ 레이븐 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `raven_attack` | `assets/chars/raven_attack.png` | 1024×1536 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `raven_guard` | `assets/chars/raven_guard.png` | 1024×1536 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `raven_hurt` | `assets/chars/raven_hurt.png` | 1024×1536 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `raven_skill` | `assets/chars/raven_skill.png` | 1024×1536 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-mimimomo` — ★★★★ 미미·모모 전투 모션 3장
+## `pose-mimimomo` — ★★★★ 미미·모모 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `mimimomo_attack` | `assets/chars/mimimomo_attack.png` | 1024×1536 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `mimimomo_guard` | `assets/chars/mimimomo_guard.png` | 1024×1536 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `mimimomo_hurt` | `assets/chars/mimimomo_hurt.png` | 1024×1536 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `mimimomo_skill` | `assets/chars/mimimomo_skill.png` | 1024×1536 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-sebas` — ★★★★ 세바스 전투 모션 3장
+## `pose-sebas` — ★★★★ 세바스 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `sebas_attack` | `assets/chars/sebas_attack.png` | 1024×1536 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `sebas_guard` | `assets/chars/sebas_guard.png` | 1024×1536 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `sebas_hurt` | `assets/chars/sebas_hurt.png` | 1024×1536 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `sebas_skill` | `assets/chars/sebas_skill.png` | 1024×1536 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-mariana` — ★★★★ 마리아나 전투 모션 3장
+## `pose-mariana` — ★★★★ 마리아나 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `mariana_attack` | `assets/chars/mariana_attack.png` | 1024×1536 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `mariana_guard` | `assets/chars/mariana_guard.png` | 1024×1536 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `mariana_hurt` | `assets/chars/mariana_hurt.png` | 1024×1536 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `mariana_skill` | `assets/chars/mariana_skill.png` | 1024×1536 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-tomori` — ★★★★ 토모리 전투 모션 3장
+## `pose-tomori` — ★★★★ 토모리 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `tomori_attack` | `assets/chars/tomori_attack.png` | 1024×1536 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `tomori_guard` | `assets/chars/tomori_guard.png` | 1024×1536 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `tomori_hurt` | `assets/chars/tomori_hurt.png` | 1024×1536 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `tomori_skill` | `assets/chars/tomori_skill.png` | 1024×1536 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-sigrun` — ★★★★ 시그룬 전투 모션 3장
+## `pose-sigrun` — ★★★★ 시그룬 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `sigrun_attack` | `assets/chars/sigrun_attack.png` | 1024×1536 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `sigrun_guard` | `assets/chars/sigrun_guard.png` | 1024×1536 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `sigrun_hurt` | `assets/chars/sigrun_hurt.png` | 1024×1536 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `sigrun_skill` | `assets/chars/sigrun_skill.png` | 1024×1536 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-zeno` — ★★★★ 제노 전투 모션 3장
+## `pose-zeno` — ★★★★ 제노 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `zeno_attack` | `assets/chars/zeno_attack.png` | 1024×1536 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `zeno_guard` | `assets/chars/zeno_guard.png` | 1024×1536 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `zeno_hurt` | `assets/chars/zeno_hurt.png` | 1024×1536 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `zeno_skill` | `assets/chars/zeno_skill.png` | 1024×1536 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-bertha` — ★★★★ 베르타 전투 모션 3장
+## `pose-bertha` — ★★★★ 베르타 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `bertha_attack` | `assets/chars/bertha_attack.png` | 1024×1536 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `bertha_guard` | `assets/chars/bertha_guard.png` | 1024×1536 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `bertha_hurt` | `assets/chars/bertha_hurt.png` | 1024×1536 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `bertha_skill` | `assets/chars/bertha_skill.png` | 1024×1536 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-brick` — ★★★ 브릭 전투 모션 3장
+## `pose-brick` — ★★★ 브릭 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `brick_attack` | `assets/chars/brick_attack.png` | 1024×1536 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `brick_guard` | `assets/chars/brick_guard.png` | 1024×1536 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `brick_hurt` | `assets/chars/brick_hurt.png` | 1024×1536 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `brick_skill` | `assets/chars/brick_skill.png` | 1024×1536 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-marta` — ★★★ 마르타 전투 모션 3장
+## `pose-marta` — ★★★ 마르타 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `marta_attack` | `assets/chars/marta_attack.png` | 1024×1536 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `marta_guard` | `assets/chars/marta_guard.png` | 1024×1536 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `marta_hurt` | `assets/chars/marta_hurt.png` | 1024×1536 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `marta_skill` | `assets/chars/marta_skill.png` | 1024×1536 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-finn` — ★★★ 핀 전투 모션 3장
+## `pose-finn` — ★★★ 핀 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `finn_attack` | `assets/chars/finn_attack.png` | 1024×1536 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `finn_guard` | `assets/chars/finn_guard.png` | 1024×1536 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `finn_hurt` | `assets/chars/finn_hurt.png` | 1024×1536 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `finn_skill` | `assets/chars/finn_skill.png` | 1024×1536 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-laila` — ★★★ 라일라 전투 모션 3장
+## `pose-laila` — ★★★ 라일라 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `laila_attack` | `assets/chars/laila_attack.png` | 1024×1536 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `laila_guard` | `assets/chars/laila_guard.png` | 1024×1536 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `laila_hurt` | `assets/chars/laila_hurt.png` | 1024×1536 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `laila_skill` | `assets/chars/laila_skill.png` | 1024×1536 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-dora` — ★★★ 도라 전투 모션 3장
+## `pose-dora` — ★★★ 도라 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `dora_attack` | `assets/chars/dora_attack.png` | 1024×1536 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `dora_guard` | `assets/chars/dora_guard.png` | 1024×1536 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `dora_hurt` | `assets/chars/dora_hurt.png` | 1024×1536 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `dora_skill` | `assets/chars/dora_skill.png` | 1024×1536 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-gordon` — ★★★ 고든 전투 모션 3장
+## `pose-gordon` — ★★★ 고든 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `gordon_attack` | `assets/chars/gordon_attack.png` | 1024×1536 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `gordon_guard` | `assets/chars/gordon_guard.png` | 1024×1536 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `gordon_hurt` | `assets/chars/gordon_hurt.png` | 1024×1536 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `gordon_skill` | `assets/chars/gordon_skill.png` | 1024×1536 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `pose-fukuro` — ★★★ 후쿠로 전투 모션 3장
+## `pose-fukuro` — ★★★ 후쿠로 전투 모션 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `fukuro_attack` | `assets/chars/fukuro_attack.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
+| `fukuro_guard` | `assets/chars/fukuro_guard.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
 | `fukuro_hurt` | `assets/chars/fukuro_hurt.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `fukuro_skill` | `assets/chars/fukuro_skill.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 

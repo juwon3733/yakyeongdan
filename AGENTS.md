@@ -67,8 +67,8 @@
 
 
 ## 전투 모션 (`pose-<id>`)
-- 공격·피격·스킬 세 장. `chars/<id>_stand.png`를 첨부하고 **같은 크기·같은 발 위치·오른쪽을 향함**을 지킨다(게임이 서 있는 그림과 바꿔 끼운다).
-- 파일은 `assets/chars/<id>_attack.png`, `_hurt.png`, `_skill.png`.
+- 공격·스킬·방어·피격 네 장. `chars/<id>_stand.png`를 첨부하고 **같은 크기·같은 발 위치·오른쪽을 향함**을 지킨다(게임이 서 있는 그림과 바꿔 끼운다).
+- 파일은 `assets/chars/<id>_attack.png`, `_skill.png`, `_guard.png`, `_hurt.png`.
 
 
 ## 그림체 시안 (`style-<id>`)

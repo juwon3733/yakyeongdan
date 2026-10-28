@@ -12,6 +12,7 @@ let hush = false;
 const sfx = (...a) => { if (!hush) sfxRaw(...a); };
 import { showPhase, showBoss, shake, showBurst } from './fx.js';
 import { charArt, POSES } from './art.js';
+import { cardData } from './data/cards.js';
 import { wearing } from './meta.js';
 
 const stage = document.getElementById('stage');
@@ -254,18 +255,50 @@ function preloadPoses() {
 }
 function pose(id, kind, ms) {
   const img = allyEl(id)?.querySelector('img'), u = poseSrc(id, kind);
-  if (!img || !u) return;
+  if (!img || !u) return false;
   const was = img.getAttribute('src');
   img.src = u;
   setTimeout(() => { if (img.isConnected && img.getAttribute('src') === u) img.src = was; }, ms);
+  return true;
 }
+// 카드마다 모션 (다키스트 던전처럼 기술마다 자세 + 움직임): 근접 베기·원거리 사격·휩쓸기·필살·방어·회복·시간·뽑기·시전
+const RANGED = new Set(['boom', 'star', 'magic']);
+export function motionOf(d, actor) {
+  if (!d) return 'cast';
+  const t = String(d.text || '');
+  if (d.time) return 'time';
+  if (d.atk && d.target === 'all') return 'sweep';
+  if (d.atk && d.exhaust) return 'finisher';
+  if (d.atk) return RANGED.has(STYLE[actor]) ? 'shot' : 'slash';
+  if (/방어/.test(t)) return 'guard';
+  if (/회복/.test(t)) return 'heal';
+  if (/뽑|카드 \d장/.test(t)) return 'draw';
+  return 'cast';
+}
+// 모션 → [움직임 class, 시간, 바꿔 끼울 자세 그림]
+const MOTION = {
+  slash: ['jatk', 520, 'attack'], shot: ['jshot', 520, 'attack'], sweep: ['jsweep', 640, 'attack'], finisher: ['jfin', 760, 'attack'],
+  guard: ['jguard', 560, 'guard'], heal: ['jheal', 700, 'skill'], time: ['jtime', 700, 'skill'], draw: ['jdraw2', 460, 'skill'], cast: ['jcast', 640, 'skill'],
+};
 function actFx(e) {
+  const d = cardData(e.id);
   const who = e.ch === 'duo' ? [e.a, e.b] : [e.actor || e.ch];
   for (const id of who) {
     const img = allyEl(id)?.querySelector('img'); if (!img) continue;
-    if (e.atk) { pulse(img, SET.shake ? 'jatk' : 'jflash', 520); pose(id, 'attack', 480); }
-    else { pulse(img, 'jcast', 640); pose(id, 'skill', 600); }
+    const [cls, ms, p] = MOTION[e.ch === 'duo' ? (e.atk ? 'finisher' : 'cast') : motionOf(d, id)];
+    pulse(img, SET.shake || !/atk|shot|sweep|fin/.test(cls) ? cls : 'jflash', ms);
+    pose(id, p, ms - 40) || (p === 'guard' && pose(id, 'skill', ms - 40));
+    if (cls === 'jfin' && SET.shake) zoomIn(id, ms);
   }
+}
+// 필살: 판이 그 동료 쪽으로 살짝 다가감 (다키스트 던전식 확대)
+function zoomIn(id, ms) {
+  const field = root()?.querySelector('.field'), el = allyEl(id); if (!field || !el) return;
+  const f = rel(field), r = rel(el);
+  field.animate([{ transform: 'none' }, { transform: 'scale(1.06)', offset: .35 }, { transform: 'scale(1.06)', offset: .7 }, { transform: 'none' }],
+    { duration: ms + 200, easing: 'ease-in-out' });
+  field.style.transformOrigin = `${r.cx - f.x}px ${r.cy - f.y}px`;
+  setTimeout(() => { field.style.transformOrigin = ''; }, ms + 220);
 }
 function cloneAt(c, cls) {
   const wrap = document.createElement('div');

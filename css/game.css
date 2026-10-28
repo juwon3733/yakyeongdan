@@ -787,6 +787,21 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s steps
 @keyframes jatk{0%{transform:none}25%{transform:translateX(-7px) rotate(-2deg)}45%{transform:translateX(24px) rotate(3deg) scale(1.05)}70%{transform:translateX(10px) rotate(1deg)}100%{transform:none}}
 .jcast{animation:jcast .62s ease-in-out;transform-origin:50% 100%}
 @keyframes jcast{0%{transform:none}45%{transform:translateY(-9px) scale(1.04);filter:brightness(1.35) drop-shadow(0 0 6px var(--c))}100%{transform:none}}
+/* 원거리: 쏘는 반동으로 뒤로 · 휩쓸기: 크게 돌며 앞으로 · 필살: 높이 뛰어 내려찍기 · 방어: 웅크려 버팀 · 회복: 둥실 · 시간: 흔들리며 빛 · 뽑기: 가볍게 깡충 */
+.jshot{animation:jshot .5s cubic-bezier(.2,.8,.3,1);transform-origin:50% 100%}
+@keyframes jshot{0%{transform:none}15%{transform:translateX(4px)}30%{transform:translateX(-12px) rotate(-3deg);filter:brightness(1.6)}100%{transform:none}}
+.jsweep{animation:jsweep .62s cubic-bezier(.3,0,.2,1);transform-origin:50% 90%}
+@keyframes jsweep{0%{transform:none}25%{transform:translateX(-8px) rotate(-8deg)}50%{transform:translateX(26px) rotate(10deg) scale(1.06)}75%{transform:translateX(12px) rotate(-3deg)}100%{transform:none}}
+.jfin{animation:jfin .74s cubic-bezier(.3,0,.2,1);transform-origin:50% 100%}
+@keyframes jfin{0%{transform:none}25%{transform:translate(-6px,4px) scaleY(.92)}50%{transform:translate(18px,-26px) rotate(6deg) scale(1.08);filter:brightness(1.4) drop-shadow(0 0 8px var(--c))}65%{transform:translate(30px,2px) rotate(-2deg) scaleY(.95)}100%{transform:none}}
+.jguard{animation:jguard .55s ease-out;transform-origin:50% 100%}
+@keyframes jguard{0%{transform:none}30%{transform:translateX(-4px) scaleY(.93) scaleX(1.04);filter:brightness(1.3) drop-shadow(0 0 5px #c9d2f0)}70%{transform:scaleY(.96);filter:drop-shadow(0 0 4px #c9d2f0)}100%{transform:none}}
+.jheal{animation:jheal .7s ease-in-out;transform-origin:50% 100%}
+@keyframes jheal{0%{transform:none}50%{transform:translateY(-7px);filter:brightness(1.25) drop-shadow(0 0 7px #b8ffc8)}100%{transform:none}}
+.jtime{animation:jtime .7s ease-in-out;transform-origin:50% 100%}
+@keyframes jtime{0%{transform:none}30%{transform:rotate(-3deg) translateY(-3px);filter:brightness(1.3) drop-shadow(0 0 6px #ffe7a0)}60%{transform:rotate(3deg) translateY(-5px)}100%{transform:none}}
+.jdraw2{animation:jdraw2 .45s cubic-bezier(.3,.7,.4,1);transform-origin:50% 100%}
+@keyframes jdraw2{0%{transform:none}40%{transform:translateY(-8px) scaleY(1.04)}70%{transform:translateY(1px) scaleY(.97)}100%{transform:none}}
 /* 적 공격: 살짝 물러났다 왼쪽(동료 쪽)으로 */
 .jlunge{animation:jlunge .5s cubic-bezier(.3,0,.2,1);transform-origin:50% 100%}
 @keyframes jlunge{0%{transform:none}25%{transform:translateX(7px) rotate(2deg)}45%{transform:translateX(-24px) rotate(-3deg) scale(1.05)}70%{transform:translateX(-10px)}100%{transform:none}}
