@@ -26,7 +26,6 @@ const ORDER = [
   ...[...FIRST, ...REST].map((id) => `pose-${id}`),
   'duo',
   ...[...STAR5, ...FIRST, ...REST].map((id) => `cards-${id}`),
-  'cards-duo-1', 'cards-duo-2', 'cards-duo-3', 'cards-duo-4', 'cards-duo-5',
   'icons-sig', 'app',
 ];
 for (const b of P.batches) if (!ORDER.includes(b.id) && !b.id.startsWith('style')) ORDER.push(b.id);

@@ -261,7 +261,7 @@ function pose(id, kind, ms) {
   setTimeout(() => { if (img.isConnected && img.getAttribute('src') === u) img.src = was; }, ms);
   return true;
 }
-// 카드마다 모션 (다키스트 던전처럼 기술마다 자세 + 움직임): 근접 베기·원거리 사격·휩쓸기·필살·방어·회복·시간·뽑기·시전
+// 카드마다 모션: 슬레이 더 스파이어처럼 짧고 또렷하게, 기술 종류마다 자세 + 움직임: 근접 베기·원거리 사격·휩쓸기·필살·방어·회복·시간·뽑기·시전
 const RANGED = new Set(['boom', 'star', 'magic']);
 export function motionOf(d, actor) {
   if (!d) return 'cast';
@@ -277,8 +277,8 @@ export function motionOf(d, actor) {
 }
 // 모션 → [움직임 class, 시간, 바꿔 끼울 자세 그림]
 const MOTION = {
-  slash: ['jatk', 520, 'attack'], shot: ['jshot', 520, 'attack'], sweep: ['jsweep', 640, 'attack'], finisher: ['jfin', 760, 'attack'],
-  guard: ['jguard', 560, 'guard'], heal: ['jheal', 700, 'skill'], time: ['jtime', 700, 'skill'], draw: ['jdraw2', 460, 'skill'], cast: ['jcast', 640, 'skill'],
+  slash: ['jatk', 400, 'attack'], shot: ['jshot', 400, 'attack'], sweep: ['jsweep', 500, 'attack'], finisher: ['jfin', 620, 'attack'],
+  guard: ['jguard', 470, 'guard'], heal: ['jheal', 570, 'skill'], time: ['jtime', 570, 'skill'], draw: ['jdraw2', 380, 'skill'], cast: ['jcast', 520, 'skill'],
 };
 function actFx(e) {
   const d = cardData(e.id);
@@ -382,7 +382,7 @@ function hitFoe(e, P) {
   else if (st === 'magic') { ring(x, y, col, 4, 24, 12); sparks(x, y, col, 12, 1.8); }
   else impactFx(x, y, col);
   if (e.blocked) shieldBreak(x, y - 6, e.dmg === 0);
-  if (el) pulse(el.querySelector('img') || el, SET.shake ? 'jhitF' : 'jflash', 460);
+  if (el) pulse(el.querySelector('img') || el, SET.shake ? 'jhitF' : 'jflash', 380);
   if (e.dmg > 0) num(x, ir.y + 6, String(e.dmg), e.crit ? 'crit' : '', e.dmg);
   else if (e.blocked) num(x, ir.y + 6, '막음', 'blk', 8);
   if (e.bleed) at(110, () => num(x + 14, ir.y + 16, String(e.bleed), 'bleed', e.bleed));
@@ -410,8 +410,8 @@ function hurtFx(e) {
   if (e.blocked) shieldBreak(x, y - 4, e.dmg === 0);
   if (e.dmg > 0) {
     impactFx(x, y, '#ff6a7a');
-    pulse(el.querySelector('img') || el, SET.shake ? 'jhitA' : 'jflash', 460);
-    if (!e.down) pose(e.id, 'hurt', 440);
+    pulse(el.querySelector('img') || el, SET.shake ? 'jhitA' : 'jflash', 380);
+    if (!e.down) pose(e.id, 'hurt', 380);
     num(x, r.y + 4, String(e.dmg), 'hurt', e.dmg);
     if (e.dmg >= 10) shake();
   } else num(x, r.y + 4, '막음', 'blk', 8);
@@ -423,12 +423,12 @@ function hurtFx(e) {
 function foeActFx(e) {
   const el = foeEl(e.i); if (!el) return;
   const img = el.querySelector('img'), r = img ? rel(img) : rel(el);
-  if (e.t === 'atk' || e.t === 'mix') { pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 520); pulse(el.querySelector('.intent'), 'jfire', 300); }
+  if (e.t === 'atk' || e.t === 'mix') { pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 400); pulse(el.querySelector('.intent'), 'jfire', 300); }
   else if (e.t === 'blk') { shieldIcon(r.cx, r.cy - 4, '#c9d2f0'); sfx('block', { vol: .6 }); }
   else if (e.t === 'buf') { for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: 0, vy: rnd(-1.4, -.6), g: 0, life: 24, col: '#ff7a6a', s: 1 }); num(r.cx, r.y, `힘 +${e.v}`, 'buf', 10); sfx('mana', { rate: .7 }); }
   else if (e.t === 'deb' || e.t === 'curse') { ring(r.cx, r.cy, '#b48ae8', 6, 30, 12); sfx('poison', { rate: .8 }); }
   else if (e.t === 'time') { /* 'time' 사건이 시계를 보여 준다 */ }
-  else if (e.t === 'aoe') { pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 520); ring(r.cx, r.cy, '#ff9a6a', 8, 44, 14); }
+  else if (e.t === 'aoe') { pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 400); ring(r.cx, r.cy, '#ff9a6a', 8, 44, 14); }
   else if (e.t === 'boom') { boomFx(r.cx, r.cy); sfx('boom'); }
   else if (e.t === 'gblk') { for (const f of document.querySelectorAll('.foe:not(.gone)')) { const q = rel(f); shieldIcon(q.cx, q.cy - 4, '#c9d2f0'); } sfx('block', { vol: .6 }); }
   else if (e.t === 'mend') { ring(r.cx, r.cy, '#7dff9a', 6, 28, 12); sfx('foe_heal', { vol: .7 }); }

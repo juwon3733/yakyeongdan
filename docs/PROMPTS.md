@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 3 · 전체 690장 · 묶음 92개
+style_version 3 · 전체 471장 · 묶음 87개
 
 ## 묶음
 
@@ -52,33 +52,28 @@ style_version 3 · 전체 690장 · 묶음 92개
 | `pose-dora` | ★★★ 도라 전투 모션 4장 | 4 |
 | `pose-gordon` | ★★★ 고든 전투 모션 4장 | 4 |
 | `pose-fukuro` | ★★★ 후쿠로 전투 모션 4장 | 4 |
-| `cards-sion` | ★★★★★ 시온 카드 13장 | 13 |
-| `cards-lunaria` | ★★★★★ 루나리아 카드 13장 | 13 |
-| `cards-akane` | ★★★★★ 아카네 카드 13장 | 13 |
-| `cards-eleonore` | ★★★★★ 엘레오노르 카드 13장 | 13 |
-| `cards-nerea` | ★★★★★ 네레아 카드 13장 | 13 |
-| `cards-iris` | ★★★★ 아이리스 카드 12장 | 12 |
-| `cards-noel` | ★★★★ 노엘 카드 11장 | 11 |
-| `cards-raven` | ★★★★ 레이븐 카드 11장 | 11 |
-| `cards-mimimomo` | ★★★★ 미미·모모 카드 12장 | 12 |
-| `cards-sebas` | ★★★★ 세바스 카드 12장 | 12 |
-| `cards-mariana` | ★★★★ 마리아나 카드 11장 | 11 |
-| `cards-tomori` | ★★★★ 토모리 카드 11장 | 11 |
-| `cards-sigrun` | ★★★★ 시그룬 카드 12장 | 12 |
-| `cards-zeno` | ★★★★ 제노 카드 13장 | 13 |
-| `cards-bertha` | ★★★★ 베르타 카드 12장 | 12 |
-| `cards-brick` | ★★★ 브릭 카드 12장 | 12 |
-| `cards-marta` | ★★★ 마르타 카드 12장 | 12 |
-| `cards-finn` | ★★★ 핀 카드 10장 | 10 |
-| `cards-laila` | ★★★ 라일라 카드 10장 | 10 |
-| `cards-dora` | ★★★ 도라 카드 10장 | 10 |
-| `cards-gordon` | ★★★ 고든 카드 10장 | 10 |
-| `cards-fukuro` | ★★★ 후쿠로 카드 11장 | 11 |
-| `cards-duo-1` | 인연 듀오 카드 1~11 | 11 |
-| `cards-duo-2` | 인연 듀오 카드 12~22 | 11 |
-| `cards-duo-3` | 인연 듀오 카드 23~33 | 11 |
-| `cards-duo-4` | 인연 듀오 카드 34~44 | 11 |
-| `cards-duo-5` | 인연 듀오 카드 45~50 | 6 |
+| `cards-sion` | ★★★★★ 시온 카드 그림 4장 | 4 |
+| `cards-lunaria` | ★★★★★ 루나리아 카드 그림 4장 | 4 |
+| `cards-akane` | ★★★★★ 아카네 카드 그림 4장 | 4 |
+| `cards-eleonore` | ★★★★★ 엘레오노르 카드 그림 4장 | 4 |
+| `cards-nerea` | ★★★★★ 네레아 카드 그림 4장 | 4 |
+| `cards-iris` | ★★★★ 아이리스 카드 그림 4장 | 4 |
+| `cards-noel` | ★★★★ 노엘 카드 그림 4장 | 4 |
+| `cards-raven` | ★★★★ 레이븐 카드 그림 4장 | 4 |
+| `cards-mimimomo` | ★★★★ 미미·모모 카드 그림 4장 | 4 |
+| `cards-sebas` | ★★★★ 세바스 카드 그림 4장 | 4 |
+| `cards-mariana` | ★★★★ 마리아나 카드 그림 4장 | 4 |
+| `cards-tomori` | ★★★★ 토모리 카드 그림 4장 | 4 |
+| `cards-sigrun` | ★★★★ 시그룬 카드 그림 4장 | 4 |
+| `cards-zeno` | ★★★★ 제노 카드 그림 4장 | 4 |
+| `cards-bertha` | ★★★★ 베르타 카드 그림 4장 | 4 |
+| `cards-brick` | ★★★ 브릭 카드 그림 4장 | 4 |
+| `cards-marta` | ★★★ 마르타 카드 그림 4장 | 4 |
+| `cards-finn` | ★★★ 핀 카드 그림 4장 | 4 |
+| `cards-laila` | ★★★ 라일라 카드 그림 4장 | 4 |
+| `cards-dora` | ★★★ 도라 카드 그림 4장 | 4 |
+| `cards-gordon` | ★★★ 고든 카드 그림 4장 | 4 |
+| `cards-fukuro` | ★★★ 후쿠로 카드 그림 4장 | 4 |
 | `style-sion` | 그림체 시안 시온 (4장, 게임에 안 씀) | 4 |
 | `style-lunaria` | 그림체 시안 루나리아 (4장, 게임에 안 씀) | 4 |
 | `style-akane` | 그림체 시안 아카네 (4장, 게임에 안 씀) | 4 |
@@ -122,7 +117,7 @@ style_version 3 · 전체 690장 · 묶음 92개
 | 도구 아이콘 (`icon`) | 192×192 | 24×24 | 예 | 64 | 도구 아이콘 · 투명 배경 · 24×24 도트를 8배 |
 | appicon (`appicon`) | 1024×1024 | 64×64 | 아니오 | 64 | 앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다 |
 | style (`style`) | 1024×1536 | 시안마다 다름 | 예 | 제한 없음 | 그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다 |
-| 카드 그림 (`card`) | 768×576 | 192×144 | 아니오 | 256 | 스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배 |
+| 카드 그림 (`card`) | 768×576 | 192×144 | 아니오 | 256 | 카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배 |
 
 ## `char-sion` — ★★★★★ 시온
 
@@ -938,447 +933,203 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `fukuro_hurt` | `assets/chars/fukuro_hurt.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
 | `fukuro_skill` | `assets/chars/fukuro_skill.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
 
-## `cards-sion` — ★★★★★ 시온 카드 13장
+## `cards-sion` — ★★★★★ 시온 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_sion_call` | `assets/cards/card_sion_call.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「별 정령 부르기」 효과 |
-| `card_sion_shield` | `assets/cards/card_sion_shield.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「별빛 방패」 효과 |
-| `card_sion_link` | `assets/cards/card_sion_link.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「별자리 잇기」 효과 |
-| `card_sion_relay` | `assets/cards/card_sion_relay.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「정령 교대」 효과 |
-| `card_sion_bear` | `assets/cards/card_sion_bear.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「큰곰자리」 효과 |
-| `card_sion_sacrifice` | `assets/cards/card_sion_sacrifice.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「정령 희생」 효과 |
-| `card_sion_galaxy` | `assets/cards/card_sion_galaxy.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「은하수」 효과 |
-| `card_sion_polaris` | `assets/cards/card_sion_polaris.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「북극성」 효과 |
-| `card_sion_nebula` | `assets/cards/card_sion_nebula.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「성운 망토」 효과 |
-| `card_sion_shower` | `assets/cards/card_sion_shower.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「별똥 소나기」 효과 |
-| `card_sion_complete` | `assets/cards/card_sion_complete.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「별자리 완성」 효과 |
-| `card_sion_gemini` | `assets/cards/card_sion_gemini.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「쌍둥이자리」 효과 |
-| `card_sion_guide` | `assets/cards/card_sion_guide.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 「유성 인도」 효과 |
+| `sion_card_atk` | `assets/cards/sion_atk.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 공격 장면 |
+| `sion_card_guard` | `assets/cards/sion_guard.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 방어 장면 |
+| `sion_card_skill` | `assets/cards/sion_skill.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 스킬 장면 |
+| `sion_card_special` | `assets/cards/sion_special.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 필살 장면 |
 
-## `cards-lunaria` — ★★★★★ 루나리아 카드 13장
+## `cards-lunaria` — ★★★★★ 루나리아 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_luna_crescent` | `assets/cards/card_luna_crescent.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「초승의 춤」 효과 |
-| `card_luna_full` | `assets/cards/card_luna_full.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「보름의 춤」 효과 |
-| `card_luna_new` | `assets/cards/card_luna_new.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「그믐의 춤」 효과 |
-| `card_luna_step` | `assets/cards/card_luna_step.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「달그림자 스텝」 효과 |
-| `card_luna_half` | `assets/cards/card_luna_half.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「반달 베일」 효과 |
-| `card_luna_eclipse` | `assets/cards/card_luna_eclipse.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「월식」 효과 |
-| `card_luna_grace` | `assets/cards/card_luna_grace.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「만월의 가호」 효과 |
-| `card_luna_swap` | `assets/cards/card_luna_swap.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「달빛 교대」 효과 |
-| `card_luna_halo` | `assets/cards/card_luna_halo.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「달무리」 효과 |
-| `card_luna_veil` | `assets/cards/card_luna_veil.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「그믐 베일」 효과 |
-| `card_luna_spin` | `assets/cards/card_luna_spin.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「은빛 회전」 효과 |
-| `card_luna_song` | `assets/cards/card_luna_song.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「달의 노래」 효과 |
-| `card_luna_wax` | `assets/cards/card_luna_wax.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 「차고 기우는 달」 효과 |
+| `lunaria_card_atk` | `assets/cards/lunaria_atk.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 공격 장면 |
+| `lunaria_card_guard` | `assets/cards/lunaria_guard.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 방어 장면 |
+| `lunaria_card_skill` | `assets/cards/lunaria_skill.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 스킬 장면 |
+| `lunaria_card_special` | `assets/cards/lunaria_special.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 필살 장면 |
 
-## `cards-akane` — ★★★★★ 아카네 카드 13장
+## `cards-akane` — ★★★★★ 아카네 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_akane_slash` | `assets/cards/card_akane_slash.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「홍련 베기」 효과 |
-| `card_akane_guard` | `assets/cards/card_akane_guard.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「불꽃 막기」 효과 |
-| `card_akane_inferno` | `assets/cards/card_akane_inferno.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「업화 일섬」 효과 |
-| `card_akane_draw` | `assets/cards/card_akane_draw.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「발도」 효과 |
-| `card_akane_twin` | `assets/cards/card_akane_twin.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「쌍염」 효과 |
-| `card_akane_wind` | `assets/cards/card_akane_wind.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「불꽃 바람」 효과 |
-| `card_akane_ember` | `assets/cards/card_akane_ember.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「잔불」 효과 |
-| `card_akane_veil` | `assets/cards/card_akane_veil.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「화염 장막」 효과 |
-| `card_akane_chain` | `assets/cards/card_akane_chain.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「홍염 연참」 효과 |
-| `card_akane_coal` | `assets/cards/card_akane_coal.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「숯불」 효과 |
-| `card_akane_phoenix` | `assets/cards/card_akane_phoenix.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「불사조 자세」 효과 |
-| `card_akane_forge` | `assets/cards/card_akane_forge.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「대장간의 불」 효과 |
-| `card_akane_redmoon` | `assets/cards/card_akane_redmoon.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 「붉은 달」 효과 |
+| `akane_card_atk` | `assets/cards/akane_atk.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 공격 장면 |
+| `akane_card_guard` | `assets/cards/akane_guard.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 방어 장면 |
+| `akane_card_skill` | `assets/cards/akane_skill.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 스킬 장면 |
+| `akane_card_special` | `assets/cards/akane_special.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 필살 장면 |
 
-## `cards-eleonore` — ★★★★★ 엘레오노르 카드 13장
+## `cards-eleonore` — ★★★★★ 엘레오노르 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_eleo_second` | `assets/cards/card_eleo_second.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「초침 화살」 효과 |
-| `card_eleo_wall` | `assets/cards/card_eleo_wall.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「태엽 방벽」 효과 |
-| `card_eleo_stop` | `assets/cards/card_eleo_stop.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「정지된 순간」 효과 |
-| `card_eleo_rewind` | `assets/cards/card_eleo_rewind.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「되감기」 효과 |
-| `card_eleo_minute` | `assets/cards/card_eleo_minute.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「분침 베기」 효과 |
-| `card_eleo_alarm` | `assets/cards/card_eleo_alarm.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「알람」 효과 |
-| `card_eleo_lag` | `assets/cards/card_eleo_lag.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「시차」 효과 |
-| `card_eleo_wind` | `assets/cards/card_eleo_wind.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「태엽 감기」 효과 |
-| `card_eleo_noon` | `assets/cards/card_eleo_noon.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「정오의 종」 효과 |
-| `card_eleo_sand` | `assets/cards/card_eleo_sand.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「모래시계 방패」 효과 |
-| `card_eleo_hand` | `assets/cards/card_eleo_hand.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「시곗바늘 찌르기」 효과 |
-| `card_eleo_echo` | `assets/cards/card_eleo_echo.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「과거의 잔상」 효과 |
-| `card_eleo_midnight` | `assets/cards/card_eleo_midnight.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 「자정의 정적」 효과 |
+| `eleonore_card_atk` | `assets/cards/eleonore_atk.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 공격 장면 |
+| `eleonore_card_guard` | `assets/cards/eleonore_guard.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 방어 장면 |
+| `eleonore_card_skill` | `assets/cards/eleonore_skill.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 스킬 장면 |
+| `eleonore_card_special` | `assets/cards/eleonore_special.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 필살 장면 |
 
-## `cards-nerea` — ★★★★★ 네레아 카드 13장
+## `cards-nerea` — ★★★★★ 네레아 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_nerea_harpoon` | `assets/cards/card_nerea_harpoon.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「별 작살」 효과 |
-| `card_nerea_song` | `assets/cards/card_nerea_song.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「고래의 노래」 효과 |
-| `card_nerea_tide` | `assets/cards/card_nerea_tide.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「밀물」 효과 |
-| `card_nerea_spout` | `assets/cards/card_nerea_spout.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「분수」 효과 |
-| `card_nerea_ride` | `assets/cards/card_nerea_ride.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「고래 등 타기」 효과 |
-| `card_nerea_dive` | `assets/cards/card_nerea_dive.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「깊은 잠수」 효과 |
-| `card_nerea_krill` | `assets/cards/card_nerea_krill.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「크릴 떼」 효과 |
-| `card_nerea_current` | `assets/cards/card_nerea_current.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「해류」 효과 |
-| `card_nerea_lullaby` | `assets/cards/card_nerea_lullaby.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「고래 자장가」 효과 |
-| `card_nerea_chorus` | `assets/cards/card_nerea_chorus.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「고래의 합창」 효과 |
-| `card_nerea_wave` | `assets/cards/card_nerea_wave.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「파도 가르기」 효과 |
-| `card_nerea_breach` | `assets/cards/card_nerea_breach.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「수면 돌파」 효과 |
-| `card_nerea_starsea` | `assets/cards/card_nerea_starsea.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 「별바다」 효과 |
+| `nerea_card_atk` | `assets/cards/nerea_atk.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 공격 장면 |
+| `nerea_card_guard` | `assets/cards/nerea_guard.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 방어 장면 |
+| `nerea_card_skill` | `assets/cards/nerea_skill.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 스킬 장면 |
+| `nerea_card_special` | `assets/cards/nerea_special.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 필살 장면 |
 
-## `cards-iris` — ★★★★ 아이리스 카드 12장
+## `cards-iris` — ★★★★ 아이리스 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_iris_slash` | `assets/cards/card_iris_slash.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「베기」 효과 |
-| `card_iris_parry` | `assets/cards/card_iris_parry.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「흘려 베기」 효과 |
-| `card_iris_issen` | `assets/cards/card_iris_issen.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「일섬」 효과 |
-| `card_iris_twin` | `assets/cards/card_iris_twin.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「연속 베기」 효과 |
-| `card_iris_sheath` | `assets/cards/card_iris_sheath.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「칼집 치기」 효과 |
-| `card_iris_moon` | `assets/cards/card_iris_moon.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「달빛 칼날」 효과 |
-| `card_iris_wind` | `assets/cards/card_iris_wind.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「바람 가르기」 효과 |
-| `card_iris_mirror` | `assets/cards/card_iris_mirror.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「거울 자세」 효과 |
-| `card_iris_dance` | `assets/cards/card_iris_dance.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「검무」 효과 |
-| `card_iris_final` | `assets/cards/card_iris_final.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「마지막 일격」 효과 |
-| `card_iris_edge` | `assets/cards/card_iris_edge.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「칼끝 세우기」 효과 |
-| `card_iris_thousand` | `assets/cards/card_iris_thousand.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 「천 번 베기」 효과 |
+| `iris_card_atk` | `assets/cards/iris_atk.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 공격 장면 |
+| `iris_card_guard` | `assets/cards/iris_guard.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 방어 장면 |
+| `iris_card_skill` | `assets/cards/iris_skill.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 스킬 장면 |
+| `iris_card_special` | `assets/cards/iris_special.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 필살 장면 |
 
-## `cards-noel` — ★★★★ 노엘 카드 11장
+## `cards-noel` — ★★★★ 노엘 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_noel_sleep` | `assets/cards/card_noel_sleep.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「잠들기」 효과 |
-| `card_noel_star` | `assets/cards/card_noel_star.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「별똥 마법」 효과 |
-| `card_noel_pillow` | `assets/cards/card_noel_pillow.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「베개 방어」 효과 |
-| `card_noel_deep` | `assets/cards/card_noel_deep.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「깊은 잠」 효과 |
-| `card_noel_yawn` | `assets/cards/card_noel_yawn.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「하품」 효과 |
-| `card_noel_lull` | `assets/cards/card_noel_lull.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「자장가」 효과 |
-| `card_noel_walk` | `assets/cards/card_noel_walk.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「몽유」 효과 |
-| `card_noel_talk` | `assets/cards/card_noel_talk.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「잠꼬대」 효과 |
-| `card_noel_hate` | `assets/cards/card_noel_hate.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「아침이 싫어」 효과 |
-| `card_noel_late` | `assets/cards/card_noel_late.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「늦잠」 효과 |
-| `card_noel_burst` | `assets/cards/card_noel_burst.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 「꿈 폭발」 효과 |
+| `noel_card_atk` | `assets/cards/noel_atk.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 공격 장면 |
+| `noel_card_guard` | `assets/cards/noel_guard.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 방어 장면 |
+| `noel_card_skill` | `assets/cards/noel_skill.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 스킬 장면 |
+| `noel_card_special` | `assets/cards/noel_special.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 필살 장면 |
 
-## `cards-raven` — ★★★★ 레이븐 카드 11장
+## `cards-raven` — ★★★★ 레이븐 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_raven_needle` | `assets/cards/card_raven_needle.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「독침」 효과 |
-| `card_raven_step` | `assets/cards/card_raven_step.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「그림자 걸음」 효과 |
-| `card_raven_venom` | `assets/cards/card_raven_venom.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「맹독」 효과 |
-| `card_raven_feather` | `assets/cards/card_raven_feather.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「깃털 비」 효과 |
-| `card_raven_bleed` | `assets/cards/card_raven_bleed.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「출혈」 효과 |
-| `card_raven_smoke` | `assets/cards/card_raven_smoke.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「연막」 효과 |
-| `card_raven_crow` | `assets/cards/card_raven_crow.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「까마귀 눈」 효과 |
-| `card_raven_fog` | `assets/cards/card_raven_fog.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「독 안개」 효과 |
-| `card_raven_throat` | `assets/cards/card_raven_throat.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「목 긋기」 효과 |
-| `card_raven_garden` | `assets/cards/card_raven_garden.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「독의 정원」 효과 |
-| `card_raven_last` | `assets/cards/card_raven_last.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 「마지막 깃」 효과 |
+| `raven_card_atk` | `assets/cards/raven_atk.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 공격 장면 |
+| `raven_card_guard` | `assets/cards/raven_guard.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 방어 장면 |
+| `raven_card_skill` | `assets/cards/raven_skill.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 스킬 장면 |
+| `raven_card_special` | `assets/cards/raven_special.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 필살 장면 |
 
-## `cards-mimimomo` — ★★★★ 미미·모모 카드 12장
+## `cards-mimimomo` — ★★★★ 미미·모모 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_mm_stab` | `assets/cards/card_mm_stab.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「미미 찌르기」 효과 |
-| `card_mm_block` | `assets/cards/card_mm_block.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「모모 막기」 효과 |
-| `card_mm_clap` | `assets/cards/card_mm_clap.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「손뼉 맞추기」 효과 |
-| `card_mm_hide` | `assets/cards/card_mm_hide.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「숨바꼭질」 효과 |
-| `card_mm_spin` | `assets/cards/card_mm_spin.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「미미 회전」 효과 |
-| `card_mm_umbrella` | `assets/cards/card_mm_umbrella.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「모모 우산」 효과 |
-| `card_mm_mirror` | `assets/cards/card_mm_mirror.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「거울 춤」 효과 |
-| `card_mm_swap` | `assets/cards/card_mm_swap.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「바꿔치기」 효과 |
-| `card_mm_ribbon` | `assets/cards/card_mm_ribbon.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「리본 묶기」 효과 |
-| `card_mm_cake` | `assets/cards/card_mm_cake.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「생일 케이크」 효과 |
-| `card_mm_one` | `assets/cards/card_mm_one.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「둘이서 하나」 효과 |
-| `card_mm_star` | `assets/cards/card_mm_star.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 「쌍둥이 별」 효과 |
+| `mimimomo_card_atk` | `assets/cards/mimimomo_atk.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 공격 장면 |
+| `mimimomo_card_guard` | `assets/cards/mimimomo_guard.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 방어 장면 |
+| `mimimomo_card_skill` | `assets/cards/mimimomo_skill.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 스킬 장면 |
+| `mimimomo_card_special` | `assets/cards/mimimomo_special.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 필살 장면 |
 
-## `cards-sebas` — ★★★★ 세바스 카드 12장
+## `cards-sebas` — ★★★★ 세바스 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_seb_tea` | `assets/cards/card_seb_tea.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「차 준비」 효과 |
-| `card_seb_tray` | `assets/cards/card_seb_tray.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「은쟁반」 효과 |
-| `card_seb_cane` | `assets/cards/card_seb_cane.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「지팡이 칼」 효과 |
-| `card_seb_watch` | `assets/cards/card_seb_watch.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「예비 찻잔」 효과 |
-| `card_seb_tidy` | `assets/cards/card_seb_tidy.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「정리 정돈」 효과 |
-| `card_seb_afternoon` | `assets/cards/card_seb_afternoon.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「오후의 홍차」 효과 |
-| `card_seb_polite` | `assets/cards/card_seb_polite.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「정중한 일격」 효과 |
-| `card_seb_reserve` | `assets/cards/card_seb_reserve.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「예약」 효과 |
-| `card_seb_proxy` | `assets/cards/card_seb_proxy.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「대리 응대」 효과 |
-| `card_seb_silver` | `assets/cards/card_seb_silver.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「은식기 투척」 효과 |
-| `card_seb_service` | `assets/cards/card_seb_service.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「마지막 서비스」 효과 |
-| `card_seb_clock` | `assets/cards/card_seb_clock.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 「만찬 준비」 효과 |
+| `sebas_card_atk` | `assets/cards/sebas_atk.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 공격 장면 |
+| `sebas_card_guard` | `assets/cards/sebas_guard.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 방어 장면 |
+| `sebas_card_skill` | `assets/cards/sebas_skill.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 스킬 장면 |
+| `sebas_card_special` | `assets/cards/sebas_special.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 필살 장면 |
 
-## `cards-mariana` — ★★★★ 마리아나 카드 11장
+## `cards-mariana` — ★★★★ 마리아나 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_mari_coin` | `assets/cards/card_mari_coin.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「금화 던지기」 효과 |
-| `card_mari_loot` | `assets/cards/card_mari_loot.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「약탈」 효과 |
-| `card_mari_rum` | `assets/cards/card_mari_rum.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「럼 한 모금」 효과 |
-| `card_mari_cannon` | `assets/cards/card_mari_cannon.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「함포 지원」 효과 |
-| `card_mari_map` | `assets/cards/card_mari_map.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「보물 지도」 효과 |
-| `card_mari_bounty` | `assets/cards/card_mari_bounty.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「현상금」 효과 |
-| `card_mari_flag` | `assets/cards/card_mari_flag.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「해적 깃발」 효과 |
-| `card_mari_anchor` | `assets/cards/card_mari_anchor.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「닻 던지기」 효과 |
-| `card_mari_deck` | `assets/cards/card_mari_deck.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「갑판 청소」 효과 |
-| `card_mari_coinshield` | `assets/cards/card_mari_coinshield.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「금화 방패」 효과 |
-| `card_mari_order` | `assets/cards/card_mari_order.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 「선장의 명령」 효과 |
+| `mariana_card_atk` | `assets/cards/mariana_atk.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 공격 장면 |
+| `mariana_card_guard` | `assets/cards/mariana_guard.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 방어 장면 |
+| `mariana_card_skill` | `assets/cards/mariana_skill.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 스킬 장면 |
+| `mariana_card_special` | `assets/cards/mariana_special.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 필살 장면 |
 
-## `cards-tomori` — ★★★★ 토모리 카드 11장
+## `cards-tomori` — ★★★★ 토모리 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_tomo_light` | `assets/cards/card_tomo_light.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「등불 비추기」 효과 |
-| `card_tomo_glare` | `assets/cards/card_tomo_glare.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「눈부심」 효과 |
-| `card_tomo_arrow` | `assets/cards/card_tomo_arrow.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「빛의 화살」 효과 |
-| `card_tomo_signal` | `assets/cards/card_tomo_signal.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「등대 신호」 효과 |
-| `card_tomo_spin` | `assets/cards/card_tomo_spin.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「회전하는 빛」 효과 |
-| `card_tomo_home` | `assets/cards/card_tomo_home.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「귀갓길」 효과 |
-| `card_tomo_flash` | `assets/cards/card_tomo_flash.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「손전등 깜빡」 효과 |
-| `card_tomo_warm` | `assets/cards/card_tomo_warm.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「따뜻한 불빛」 효과 |
-| `card_tomo_chase` | `assets/cards/card_tomo_chase.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「그림자 몰기」 효과 |
-| `card_tomo_flagsig` | `assets/cards/card_tomo_flagsig.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「신호 깃발」 효과 |
-| `card_tomo_grand` | `assets/cards/card_tomo_grand.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 「할아버지의 등불」 효과 |
+| `tomori_card_atk` | `assets/cards/tomori_atk.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 공격 장면 |
+| `tomori_card_guard` | `assets/cards/tomori_guard.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 방어 장면 |
+| `tomori_card_skill` | `assets/cards/tomori_skill.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 스킬 장면 |
+| `tomori_card_special` | `assets/cards/tomori_special.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 필살 장면 |
 
-## `cards-sigrun` — ★★★★ 시그룬 카드 12장
+## `cards-sigrun` — ★★★★ 시그룬 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_sig_thrust` | `assets/cards/card_sig_thrust.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「창 찌르기」 효과 |
-| `card_sig_rise` | `assets/cards/card_sig_rise.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「날아오르기」 효과 |
-| `card_sig_dive` | `assets/cards/card_sig_dive.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「급강하」 효과 |
-| `card_sig_feather` | `assets/cards/card_sig_feather.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「깃털 방패」 효과 |
-| `card_sig_whirl` | `assets/cards/card_sig_whirl.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「회오리 창」 효과 |
-| `card_sig_glide` | `assets/cards/card_sig_glide.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「활공」 효과 |
-| `card_sig_oath` | `assets/cards/card_sig_oath.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「기사의 맹세」 효과 |
-| `card_sig_valhalla` | `assets/cards/card_sig_valhalla.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「발할라 낙하」 효과 |
-| `card_sig_wall` | `assets/cards/card_sig_wall.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「창벽」 효과 |
-| `card_sig_sky` | `assets/cards/card_sig_sky.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「하늘 가르기」 효과 |
-| `card_sig_up` | `assets/cards/card_sig_up.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「깃털 비상」 효과 |
-| `card_sig_charge` | `assets/cards/card_sig_charge.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 「돌격 명령」 효과 |
+| `sigrun_card_atk` | `assets/cards/sigrun_atk.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 공격 장면 |
+| `sigrun_card_guard` | `assets/cards/sigrun_guard.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 방어 장면 |
+| `sigrun_card_skill` | `assets/cards/sigrun_skill.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 스킬 장면 |
+| `sigrun_card_special` | `assets/cards/sigrun_special.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 필살 장면 |
 
-## `cards-zeno` — ★★★★ 제노 카드 13장
+## `cards-zeno` — ★★★★ 제노 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_zeno_slash` | `assets/cards/card_zeno_slash.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「흑룡 베기」 효과 |
-| `card_zeno_scale` | `assets/cards/card_zeno_scale.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「비늘 갑옷」 효과 |
-| `card_zeno_roar` | `assets/cards/card_zeno_roar.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「용의 포효」 효과 |
-| `card_zeno_pact` | `assets/cards/card_zeno_pact.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「피의 계약」 효과 |
-| `card_zeno_rage` | `assets/cards/card_zeno_rage.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「역린」 효과 |
-| `card_zeno_breath` | `assets/cards/card_zeno_breath.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「용의 숨결」 효과 |
-| `card_zeno_awaken` | `assets/cards/card_zeno_awaken.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「용혈 각성」 효과 |
-| `card_zeno_release` | `assets/cards/card_zeno_release.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「흑룡 해방」 효과 |
-| `card_zeno_shield` | `assets/cards/card_zeno_shield.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「용린 방패」 효과 |
-| `card_zeno_thirst` | `assets/cards/card_zeno_thirst.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「피의 갈증」 효과 |
-| `card_zeno_flame` | `assets/cards/card_zeno_flame.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「흑염」 효과 |
-| `card_zeno_threat` | `assets/cards/card_zeno_threat.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「위협」 효과 |
-| `card_zeno_eye` | `assets/cards/card_zeno_eye.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 「용의 눈」 효과 |
+| `zeno_card_atk` | `assets/cards/zeno_atk.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 공격 장면 |
+| `zeno_card_guard` | `assets/cards/zeno_guard.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 방어 장면 |
+| `zeno_card_skill` | `assets/cards/zeno_skill.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 스킬 장면 |
+| `zeno_card_special` | `assets/cards/zeno_special.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 필살 장면 |
 
-## `cards-bertha` — ★★★★ 베르타 카드 12장
+## `cards-bertha` — ★★★★ 베르타 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_bertha_lantern` | `assets/cards/card_bertha_lantern.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「랜턴 지팡이」 효과 |
-| `card_bertha_skip` | `assets/cards/card_bertha_skip.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「이쪽이에요」 효과 |
-| `card_bertha_back` | `assets/cards/card_bertha_back.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「되돌아가요」 효과 |
-| `card_bertha_book` | `assets/cards/card_bertha_book.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「안내 책자」 효과 |
-| `card_bertha_tea` | `assets/cards/card_bertha_tea.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「보온병 차」 효과 |
-| `card_bertha_shortcut` | `assets/cards/card_bertha_shortcut.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「지름길」 효과 |
-| `card_bertha_map` | `assets/cards/card_bertha_map.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「낡은 탑 지도」 효과 |
-| `card_bertha_cane` | `assets/cards/card_bertha_cane.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「지팡이 일격」 효과 |
-| `card_bertha_stories` | `assets/cards/card_bertha_stories.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「옛날이야기」 효과 |
-| `card_bertha_keys` | `assets/cards/card_bertha_keys.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「탑 열쇠 꾸러미」 효과 |
-| `card_bertha_lastcall` | `assets/cards/card_bertha_lastcall.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「마지막 안내」 효과 |
-| `card_bertha_detour` | `assets/cards/card_bertha_detour.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 「돌아가는 길」 효과 |
+| `bertha_card_atk` | `assets/cards/bertha_atk.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 공격 장면 |
+| `bertha_card_guard` | `assets/cards/bertha_guard.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 방어 장면 |
+| `bertha_card_skill` | `assets/cards/bertha_skill.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 스킬 장면 |
+| `bertha_card_special` | `assets/cards/bertha_special.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 필살 장면 |
 
-## `cards-brick` — ★★★ 브릭 카드 12장
+## `cards-brick` — ★★★ 브릭 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_brick_load` | `assets/cards/card_brick_load.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「장전」 효과 |
-| `card_brick_fire` | `assets/cards/card_brick_fire.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「발사」 효과 |
-| `card_brick_over` | `assets/cards/card_brick_over.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「과적재」 효과 |
-| `card_brick_quick` | `assets/cards/card_brick_quick.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「급히 쏘기」 효과 |
-| `card_brick_mount` | `assets/cards/card_brick_mount.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「대포 받침」 효과 |
-| `card_brick_smell` | `assets/cards/card_brick_smell.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「화약 냄새」 효과 |
-| `card_brick_flare` | `assets/cards/card_brick_flare.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「신호탄」 효과 |
-| `card_brick_shot` | `assets/cards/card_brick_shot.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「산탄」 효과 |
-| `card_brick_recoil` | `assets/cards/card_brick_recoil.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「반동 이동」 효과 |
-| `card_brick_volley` | `assets/cards/card_brick_volley.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「일제 사격」 효과 |
-| `card_brick_last` | `assets/cards/card_brick_last.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「최후의 포탄」 효과 |
-| `card_brick_belt` | `assets/cards/card_brick_belt.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 「탄띠」 효과 |
+| `brick_card_atk` | `assets/cards/brick_atk.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 공격 장면 |
+| `brick_card_guard` | `assets/cards/brick_guard.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 방어 장면 |
+| `brick_card_skill` | `assets/cards/brick_skill.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 스킬 장면 |
+| `brick_card_special` | `assets/cards/brick_special.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 필살 장면 |
 
-## `cards-marta` — ★★★ 마르타 카드 12장
+## `cards-marta` — ★★★ 마르타 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_marta_wall` | `assets/cards/card_marta_wall.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「기도의 벽」 효과 |
-| `card_marta_fist` | `assets/cards/card_marta_fist.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「철권」 효과 |
-| `card_marta_confess` | `assets/cards/card_marta_confess.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「고해」 효과 |
-| `card_marta_counter` | `assets/cards/card_marta_counter.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「반격 자세」 효과 |
-| `card_marta_taunt` | `assets/cards/card_marta_taunt.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「대신 맞기」 효과 |
-| `card_marta_bless` | `assets/cards/card_marta_bless.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「축복」 효과 |
-| `card_marta_bell` | `assets/cards/card_marta_bell.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「종소리」 효과 |
-| `card_marta_judge` | `assets/cards/card_marta_judge.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「심판」 효과 |
-| `card_marta_martyr` | `assets/cards/card_marta_martyr.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「순교자의 결의」 효과 |
-| `card_marta_rampart` | `assets/cards/card_marta_rampart.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「성벽」 효과 |
-| `card_marta_hymn` | `assets/cards/card_marta_hymn.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「철의 성가」 효과 |
-| `card_marta_sanct` | `assets/cards/card_marta_sanct.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 「성소」 효과 |
+| `marta_card_atk` | `assets/cards/marta_atk.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 공격 장면 |
+| `marta_card_guard` | `assets/cards/marta_guard.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 방어 장면 |
+| `marta_card_skill` | `assets/cards/marta_skill.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 스킬 장면 |
+| `marta_card_special` | `assets/cards/marta_special.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 필살 장면 |
 
-## `cards-finn` — ★★★ 핀 카드 10장
+## `cards-finn` — ★★★ 핀 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_finn_letter` | `assets/cards/card_finn_letter.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 「편지 던지기」 효과 |
-| `card_finn_fast` | `assets/cards/card_finn_fast.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 「빠른 배달」 효과 |
-| `card_finn_parcel` | `assets/cards/card_finn_parcel.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 「소포 막기」 효과 |
-| `card_finn_express` | `assets/cards/card_finn_express.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 「속달」 효과 |
-| `card_finn_pass` | `assets/cards/card_finn_pass.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 「전해 줄게」 효과 |
-| `card_finn_bag` | `assets/cards/card_finn_bag.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 「우편 가방 휘두르기」 효과 |
-| `card_finn_return` | `assets/cards/card_finn_return.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 「반송」 효과 |
-| `card_finn_reg` | `assets/cards/card_finn_reg.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 「등기」 효과 |
-| `card_finn_run` | `assets/cards/card_finn_run.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 「지름길 달리기」 효과 |
-| `card_finn_last` | `assets/cards/card_finn_last.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 「마지막 편지」 효과 |
+| `finn_card_atk` | `assets/cards/finn_atk.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 공격 장면 |
+| `finn_card_guard` | `assets/cards/finn_guard.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 방어 장면 |
+| `finn_card_skill` | `assets/cards/finn_skill.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 스킬 장면 |
+| `finn_card_special` | `assets/cards/finn_special.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 필살 장면 |
 
-## `cards-laila` — ★★★ 라일라 카드 10장
+## `cards-laila` — ★★★ 라일라 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_laila_blade` | `assets/cards/card_laila_blade.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 「바람 칼」 효과 |
-| `card_laila_gust` | `assets/cards/card_laila_gust.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 「돌풍」 효과 |
-| `card_laila_step` | `assets/cards/card_laila_step.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 「구름 걸음」 효과 |
-| `card_laila_storm` | `assets/cards/card_laila_storm.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 「폭풍 연참」 효과 |
-| `card_laila_tail` | `assets/cards/card_laila_tail.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 「순풍」 효과 |
-| `card_laila_whirl` | `assets/cards/card_laila_whirl.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 「회오리」 효과 |
-| `card_laila_read` | `assets/cards/card_laila_read.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 「바람 읽기」 효과 |
-| `card_laila_resolve` | `assets/cards/card_laila_resolve.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 「탈영병의 각오」 효과 |
-| `card_laila_empty` | `assets/cards/card_laila_empty.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 「빈손」 효과 |
-| `card_laila_gale` | `assets/cards/card_laila_gale.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 「칼바람」 효과 |
+| `laila_card_atk` | `assets/cards/laila_atk.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 공격 장면 |
+| `laila_card_guard` | `assets/cards/laila_guard.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 방어 장면 |
+| `laila_card_skill` | `assets/cards/laila_skill.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 스킬 장면 |
+| `laila_card_special` | `assets/cards/laila_special.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 필살 장면 |
 
-## `cards-dora` — ★★★ 도라 카드 10장
+## `cards-dora` — ★★★ 도라 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_dora_hammer` | `assets/cards/card_dora_hammer.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 「망치질」 효과 |
-| `card_dora_temper` | `assets/cards/card_dora_temper.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 「담금질」 효과 |
-| `card_dora_repair` | `assets/cards/card_dora_repair.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 「방패 수리」 효과 |
-| `card_dora_forge` | `assets/cards/card_dora_forge.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 「명검 단조」 효과 |
-| `card_dora_spark` | `assets/cards/card_dora_spark.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 「불티」 효과 |
-| `card_dora_anvil` | `assets/cards/card_dora_anvil.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 「모루 막기」 효과 |
-| `card_dora_edge` | `assets/cards/card_dora_edge.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 「벼린 칼」 효과 |
-| `card_dora_awl` | `assets/cards/card_dora_awl.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 「불꽃 송곳」 효과 |
-| `card_dora_tidy` | `assets/cards/card_dora_tidy.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 「공방 정리」 효과 |
-| `card_dora_master` | `assets/cards/card_dora_master.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 「걸작」 효과 |
+| `dora_card_atk` | `assets/cards/dora_atk.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 공격 장면 |
+| `dora_card_guard` | `assets/cards/dora_guard.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 방어 장면 |
+| `dora_card_skill` | `assets/cards/dora_skill.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 스킬 장면 |
+| `dora_card_special` | `assets/cards/dora_special.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 필살 장면 |
 
-## `cards-gordon` — ★★★ 고든 카드 10장
+## `cards-gordon` — ★★★ 고든 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_gord_soup` | `assets/cards/card_gord_soup.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 「따뜻한 수프」 효과 |
-| `card_gord_pan` | `assets/cards/card_gord_pan.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 「프라이팬」 효과 |
-| `card_gord_meat` | `assets/cards/card_gord_meat.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 「든든한 고기」 효과 |
-| `card_gord_feast` | `assets/cards/card_gord_feast.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 「만찬」 효과 |
-| `card_gord_snack` | `assets/cards/card_gord_snack.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 「간식」 효과 |
-| `card_gord_ladle` | `assets/cards/card_gord_ladle.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 「국자 치기」 효과 |
-| `card_gord_pot` | `assets/cards/card_gord_pot.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 「큰 냄비 방패」 효과 |
-| `card_gord_spicy` | `assets/cards/card_gord_spicy.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 「매운 볶음」 효과 |
-| `card_gord_lunch` | `assets/cards/card_gord_lunch.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 「도시락」 효과 |
-| `card_gord_ration` | `assets/cards/card_gord_ration.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 「비상식량」 효과 |
+| `gordon_card_atk` | `assets/cards/gordon_atk.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 공격 장면 |
+| `gordon_card_guard` | `assets/cards/gordon_guard.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 방어 장면 |
+| `gordon_card_skill` | `assets/cards/gordon_skill.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 스킬 장면 |
+| `gordon_card_special` | `assets/cards/gordon_special.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 필살 장면 |
 
-## `cards-fukuro` — ★★★ 후쿠로 카드 11장
+## `cards-fukuro` — ★★★ 후쿠로 카드 그림 4장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `card_fuku_junk` | `assets/cards/card_fuku_junk.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「잡동사니 던지기」 효과 |
-| `card_fuku_haggle` | `assets/cards/card_fuku_haggle.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「흥정」 효과 |
-| `card_fuku_charm` | `assets/cards/card_fuku_charm.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「행운 부적」 효과 |
-| `card_fuku_clear` | `assets/cards/card_fuku_clear.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「떨이」 효과 |
-| `card_fuku_mask` | `assets/cards/card_fuku_mask.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「가면 속」 효과 |
-| `card_fuku_lottery` | `assets/cards/card_fuku_lottery.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「복권」 효과 |
-| `card_fuku_fake` | `assets/cards/card_fuku_fake.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「짝퉁 부적」 효과 |
-| `card_fuku_bundle` | `assets/cards/card_fuku_bundle.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「보따리 던지기」 효과 |
-| `card_fuku_credit` | `assets/cards/card_fuku_credit.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「외상」 효과 |
-| `card_fuku_lamp` | `assets/cards/card_fuku_lamp.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「등불 장수」 효과 |
-| `card_fuku_big` | `assets/cards/card_fuku_big.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 「큰 손님」 효과 |
-
-## `cards-duo-1` — 인연 듀오 카드 1~11
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `duocard_brick_iris` | `assets/cards/duocard_brick_iris.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_iris_marta` | `assets/cards/duocard_iris_marta.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_iris_noel` | `assets/cards/duocard_iris_noel.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_iris_raven` | `assets/cards/duocard_iris_raven.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_brick_marta` | `assets/cards/duocard_brick_marta.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_brick_noel` | `assets/cards/duocard_brick_noel.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_brick_raven` | `assets/cards/duocard_brick_raven.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_marta_noel` | `assets/cards/duocard_marta_noel.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_marta_raven` | `assets/cards/duocard_marta_raven.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_noel_raven` | `assets/cards/duocard_noel_raven.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_iris_mimimomo` | `assets/cards/duocard_iris_mimimomo.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-
-## `cards-duo-2` — 인연 듀오 카드 12~22
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `duocard_iris_sion` | `assets/cards/duocard_iris_sion.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_iris_sebas` | `assets/cards/duocard_iris_sebas.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_brick_mimimomo` | `assets/cards/duocard_brick_mimimomo.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_brick_sion` | `assets/cards/duocard_brick_sion.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_brick_sebas` | `assets/cards/duocard_brick_sebas.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_marta_mimimomo` | `assets/cards/duocard_marta_mimimomo.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_marta_sion` | `assets/cards/duocard_marta_sion.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_marta_sebas` | `assets/cards/duocard_marta_sebas.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_mimimomo_noel` | `assets/cards/duocard_mimimomo_noel.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_noel_sion` | `assets/cards/duocard_noel_sion.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_noel_sebas` | `assets/cards/duocard_noel_sebas.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-
-## `cards-duo-3` — 인연 듀오 카드 23~33
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `duocard_mimimomo_raven` | `assets/cards/duocard_mimimomo_raven.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_raven_sion` | `assets/cards/duocard_raven_sion.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_raven_sebas` | `assets/cards/duocard_raven_sebas.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_mimimomo_sion` | `assets/cards/duocard_mimimomo_sion.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_mimimomo_sebas` | `assets/cards/duocard_mimimomo_sebas.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_sebas_sion` | `assets/cards/duocard_sebas_sion.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_akane_iris` | `assets/cards/duocard_akane_iris.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_laila_sigrun` | `assets/cards/duocard_laila_sigrun.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_brick_mariana` | `assets/cards/duocard_brick_mariana.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_lunaria_sion` | `assets/cards/duocard_lunaria_sion.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_eleonore_sebas` | `assets/cards/duocard_eleonore_sebas.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-
-## `cards-duo-4` — 인연 듀오 카드 34~44
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `duocard_marta_zeno` | `assets/cards/duocard_marta_zeno.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_akane_zeno` | `assets/cards/duocard_akane_zeno.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_lunaria_tomori` | `assets/cards/duocard_lunaria_tomori.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_gordon_noel` | `assets/cards/duocard_gordon_noel.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_brick_dora` | `assets/cards/duocard_brick_dora.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_finn_mimimomo` | `assets/cards/duocard_finn_mimimomo.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_fukuro_mariana` | `assets/cards/duocard_fukuro_mariana.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_sigrun_zeno` | `assets/cards/duocard_sigrun_zeno.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_laila_raven` | `assets/cards/duocard_laila_raven.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_marta_tomori` | `assets/cards/duocard_marta_tomori.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_eleonore_iris` | `assets/cards/duocard_eleonore_iris.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-
-## `cards-duo-5` — 인연 듀오 카드 45~50
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `duocard_nerea_tomori` | `assets/cards/duocard_nerea_tomori.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_nerea_sion` | `assets/cards/duocard_nerea_sion.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_mariana_nerea` | `assets/cards/duocard_mariana_nerea.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_bertha_eleonore` | `assets/cards/duocard_bertha_eleonore.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_bertha_finn` | `assets/cards/duocard_bertha_finn.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
-| `duocard_bertha_nerea` | `assets/cards/duocard_bertha_nerea.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
+| `fukuro_card_atk` | `assets/cards/fukuro_atk.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 공격 장면 |
+| `fukuro_card_guard` | `assets/cards/fukuro_guard.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 방어 장면 |
+| `fukuro_card_skill` | `assets/cards/fukuro_skill.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 스킬 장면 |
+| `fukuro_card_special` | `assets/cards/fukuro_special.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 필살 장면 |
 
 ## `style-sion` — 그림체 시안 시온 (4장, 게임에 안 씀)
 

@@ -1,6 +1,7 @@
 // 그림 로더. assets/art.json(= tools/art-index.mjs가 만든 "실제로 있는 그림" 목록)에 있는 파일만 쓰고,
 // 없으면 null을 돌려준다. 부르는 쪽은 null이면 임시 도트(js/render/sprites.js, js/render/cardart.js)를 그린다.
 // 파일 이름 규칙은 js/asset_prompts.js·AGENTS.md와 같다.
+import { cardArtKind } from './cardkind.js';
 let INDEX = new Set();
 export const artReady = (typeof fetch === 'function' && typeof location !== 'undefined' && location.protocol !== 'file:'
   ? fetch('assets/art.json').then(r => (r.ok ? r.json() : [])).catch(() => [])
@@ -37,10 +38,12 @@ export function foeArt(f) {
   return FOE_FILE[f.key] ? artURL(`enemies/${FOE_FILE[f.key]}.png`) : null;
 }
 
-// 카드 그림: 동료 카드 cards/card_<id>.png (점 등은 _), 인연 듀오 cards/duocard_<a>_<b>.png. 강화판(+)은 원래 카드 그림.
-const fileId = id => id.replace(/[^a-z0-9]+/gi, '_');
+// 카드 그림: 동료마다 종류별 4장 cards/<동료>_<atk|guard|skill|special>.png (js/cardkind.js). 그 종류가 아직 없으면 같은 동료의 다른 종류.
+// 인연 듀오·저주 카드는 그림 파일 없이 임시 일러스트(js/render/cardart.js).
+const KIND_FALLBACK = { atk: ['atk', 'special', 'skill', 'guard'], guard: ['guard', 'skill', 'atk', 'special'], skill: ['skill', 'special', 'guard', 'atk'], special: ['special', 'atk', 'skill', 'guard'] };
 export function cardArtFile(d) {
-  if (d.ch === 'curse' || d.bond) return null;
-  if (d.ch === 'duo') return `cards/duocard_${d.a}_${d.b}.png`;
-  return `cards/card_${fileId(String(d.id).replace(/\+$/, ''))}.png`;
+  if (d.ch === 'curse' || d.ch === 'duo' || d.bond) return null;
+  const ch = d.sub && d.ch === 'mimimomo' ? d.ch : d.ch;
+  for (const k of KIND_FALLBACK[cardArtKind(d)]) { const f = `cards/${ch}_${k}.png`; if (INDEX.has(f)) return f; }
+  return `cards/${ch}_${cardArtKind(d)}.png`;
 }

@@ -2,7 +2,8 @@
 // 고친 뒤에는 `node tools/export-prompts.mjs`로 assets/prompts.json, docs/PROMPTS.md를 다시 만든다.
 // 캐릭터 외형은 docs/03_characters.md, 적은 docs/04_enemies.md, 그림 목록은 docs/06_art_ui_sound.md를 따른다.
 
-import { CARDS, DUOS as CARD_DUOS } from './data/cards.js';
+import { CARDS } from './data/cards.js';
+import { cardArtKind } from './cardkind.js';
 
 export const STYLE_VERSION = 3; // 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
 
@@ -37,7 +38,7 @@ export const SPEC = {
   icon:     { w: 192,  h: 192,  native: '24×24',   scale: 8, transparent: true,  colors: 64,  folder: 'icons', note: '도구 아이콘 · 투명 배경 · 24×24 도트를 8배' },
   appicon:  { w: 1024, h: 1024, native: '64×64',   scale: 16, transparent: false, colors: 64, folder: 'app', note: '앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다' },
   style:    { w: 1024, h: 1536, native: '시안마다 다름', scale: 0, transparent: true, colors: Infinity, folder: 'style', note: '그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다' },
-  card:     { w: 768,  h: 576,  native: '192×144', scale: 4, transparent: false, colors: 256, folder: 'cards', note: '스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
+  card:     { w: 768,  h: 576,  native: '192×144', scale: 4, transparent: false, colors: 256, folder: 'cards', note: '카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
 };
 
 // ── 동료 22명 ────────────────────────────────────────────
@@ -335,41 +336,6 @@ export const RELICS = {
   star_sash: '별자리 띠 — a sash embroidered with a constellation',
 };
 
-// ── 카드 그림 장면 (js/data/cards.js에서 자동) ───────────
-const fileId = (cardId) => cardId.replace(/[^a-z0-9]+/gi, '_');
-// 카드 글의 {d0}·{b1}·{k0}·{n1} 자리를 수치로 채운다.
-function cardText(d) {
-  return String(d.text || '').replace(/\{[dbkn](\d)\}/g, (_, i) => (d.v && d.v[i] != null ? d.v[i] : '?')).replace(/[.\s]+$/, '');
-}
-function cardPose(d) {
-  const t = String(d.text || '');
-  const out = [];
-  if (d.time) out.push('a time-bending move: glowing clock faces and clock hands swirling behind, the night sky brightening slightly');
-  if (d.atk && d.target === 'all') out.push('a wide sweeping attack hitting several enemies (enemies only as dark silhouettes on the right)');
-  else if (d.atk) out.push('attacking toward the right, the target only as a dark silhouette, impact flash');
-  if (/방어/.test(t) && !d.atk) out.push('a strong defensive pose, a glowing barrier or shield');
-  if (/회복/.test(t)) out.push('healing an ally with warm light');
-  if (/독/.test(t)) out.push('poison mist or poison sparkles');
-  if (/화상/.test(t)) out.push('flames and burning embers');
-  if (/정령/.test(t)) out.push('little star spirits');
-  if (/장전/.test(t)) out.push('loading or firing glowing shells');
-  if (/잠/.test(t)) out.push('sleepy dream magic');
-  if (/카드 \d장|뽑/.test(t)) out.push('cards or papers fanning out');
-  if (/별빛/.test(t)) out.push('gold coins and starlight');
-  if (/공중/.test(t)) out.push('high in the air above clouds');
-  if (/달/.test(t)) out.push('a big moon behind');
-  if (/고래|물보라/.test(t)) out.push('the giant star whale made of constellations, sprays of starlight water');
-  if (/행동을/.test(t)) out.push('a guiding lantern light turning enemy silhouettes around, glowing arrows');
-  if (!out.length) out.push('a confident skill-casting pose with the character\'s signature effect');
-  if (d.exhaust) out.push('a one-time all-out move, the most dramatic version');
-  return out.join('; ');
-}
-const RARITY_CARD = {
-  c: 'Common card: a clean, simple pose.',
-  u: 'Uncommon card: a stylish dynamic pose with a stronger effect.',
-  r: 'Rare card: the most dramatic angle and the biggest, most beautiful effect.',
-};
-
 // ── 목록 만들기 ──────────────────────────────────────────
 const join = (...xs) => xs.filter(Boolean).join('\n\n');
 const rarityStyle = (r) => STYLE['rarity' + r];
@@ -429,32 +395,23 @@ export function assetList() {
     }
   }
 
-  // 스킬 카드 그림: 동료 카드 전부. 그 동료가 그 기술을 쓰는 장면.
+  // 카드 그림: 동료마다 종류별 4장(공격·방어·스킬·필살). 같은 종류 카드가 같이 쓴다(js/cardkind.js). 인연 듀오 카드는 임시 일러스트.
+  const KIND_SCENE = {
+    atk: ['공격', 'attacking toward the right with her weapon, the target only as a dark silhouette, a bright impact flash'],
+    guard: ['방어', 'a strong defensive pose protecting her allies, a glowing barrier or shield in her accent color'],
+    skill: ['스킬', 'casting her signature power, the effect swirling around her'],
+    special: ['필살', 'her most dramatic all-out signature move, the effect at full power filling the frame'],
+  };
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `cards-${id}`;
-    const list = Object.entries(CARDS).filter(([, d]) => d.ch === id);
-    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 카드 ${list.length}장` });
+    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 카드 그림 4장` });
     const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
-    for (const [cardId, d] of list) {
-      const who = d.sub === 'mimi' ? 'Mimi (the pink-haired twin) alone' : d.sub === 'momo' ? 'Momo (the sky-blue-haired twin) alone' : d.sub === 'both' ? 'both twins Mimi and Momo together' : c.name;
-      out.push(item('card', `card_${fileId(cardId)}`, batch, `card_${fileId(cardId)}.png`,
-        join(base, `Skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${who === c.name ? c.name : `${who} (${c.name})`}, ON-MODEL from the attached references, performing this exact skill: ${cardPose(d)}. Visual motifs for this character: ${c.fx}. Accent colors: ${c.accent}.\n${RARITY_CARD[d.rarity] || ''}\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 192x144 pixels and upscaled 4x to 768x576 — use big readable shapes.`),
-        { reference_images: [`chars/${id}_normal.png`, `chars/${id}_stand.png`], must_show: `${c.name} 얼굴, 「${d.name}」 효과` }));
-    }
-  }
-
-  // 인연 듀오 카드 그림(두 사람이 함께 기술을 쓰는 장면), 11장씩 묶음
-  const duoList = Object.entries(CARD_DUOS);
-  for (let n = 0; n * 11 < duoList.length; n++) {
-    const batch = `cards-duo-${n + 1}`;
-    const part = duoList.slice(n * 11, n * 11 + 11);
-    batches.push({ id: batch, title: `인연 듀오 카드 ${n * 11 + 1}~${n * 11 + part.length}` });
-    for (const [key, d] of part) {
-      const [a, b] = key.split('+');
-      const A = CHARS[a], B = CHARS[b];
-      out.push(item('card', `duocard_${a}_${b}`, batch, `duocard_${a}_${b}.png`,
-        join(STYLE.pixel, STYLE.distinct, STYLE.character, STYLE.onModel, `Duo skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${A.name} and ${B.name} together, both ON-MODEL from the attached references, combining their skills in one move: ${cardPose(d)}. ${A.name}'s motifs: ${A.fx}. ${B.name}'s motifs: ${B.fx}. Accent colors: ${A.accent} meeting ${B.accent}.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 192x144 pixels and upscaled 4x to 768x576.`),
-        { reference_images: [`chars/${a}_normal.png`, `chars/${b}_normal.png`], must_show: '두 사람 얼굴 둘 다' }));
+    const mine = Object.values(CARDS).filter((d) => d.ch === id);
+    for (const [k, [label, scene]] of Object.entries(KIND_SCENE)) {
+      const names = mine.filter((d) => cardArtKind(d) === k).map((d) => `「${d.name}」`).slice(0, 6).join(', ');
+      out.push(item('card', `${id}_card_${k}`, batch, `${id}_${k}.png`,
+        join(base, `Skill card illustration (${label} cards${names ? ` such as ${names}, Korean titles — NEVER write any text in the image` : ''}).\nShow ${c.name}, ON-MODEL from the attached references, ${scene}. Visual motifs for this character: ${c.fx}. Accent colors: ${c.accent}.\nComposition: the character and the effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 192x144 pixels and upscaled 4x to 768x576 — use big readable shapes.`),
+        { reference_images: [`chars/${id}_normal.png`, `chars/${id}_stand.png`], must_show: `${c.name} 얼굴, ${label} 장면` }));
     }
   }
 
