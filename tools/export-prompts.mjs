@@ -17,13 +17,13 @@ const json = JSON.stringify({
   items,
 }, null, 2) + '\n';
 
-const kindName = { stand: '서 있는 그림', portrait: '상반신', outfit: '두 번째 의상', cutin: '컷인', duo: '인연 듀오 컷인', cg: '★5 전신 CG', enemy: '일반 적', elite: '강적', boss: '보스', bg: '배경', title: '타이틀', summon: '소환 배경', meteor: '별똥별', icon: '도구 아이콘', card: '카드 그림' };
+const kindName = { stand: '서 있는 그림', portrait: '상반신', outfit: '두 번째 의상', cutin: '컷인', duo: '인연 듀오 컷인', cg: '★5 전신 CG', enemy: '일반 적', elite: '강적', boss: '보스', bg: '배경', title: '타이틀', summon: '소환 배경', meteor: '별똥별', icon: '도구 아이콘', card: '카드 그림', pose: '전투 자세', posesheet: '자세 시트', cardsheet: '카드 시트', foesheet: '적 시트', iconsheet: '아이콘 시트' };
 const md = [];
 md.push('# 그림 프롬프트 목록');
 md.push('');
 md.push('> 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.');
 md.push('');
-md.push(`style_version ${P.STYLE_VERSION} · 전체 ${items.length}장 · 묶음 ${batches.length}개`);
+md.push(`style_version ${P.STYLE_VERSION} · GPT가 그릴 그림 ${items.length}장(시트 포함, 잘라 내면 ${items.filter((i) => !i.cells).length + items.reduce((n, i) => n + (i.cells?.length || 0), 0)}장) · 묶음 ${batches.length}개`);
 md.push('');
 md.push('## 묶음');
 md.push('');
@@ -51,7 +51,7 @@ for (const b of batches) {
   md.push('| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |');
   md.push('|---|---|---|---|---|');
   for (const i of items.filter((x) => x.batch === b.id)) {
-    md.push(`| \`${i.id}\` | \`assets/${i.file}\` | ${i.width}×${i.height}${i.transparent ? ' 투명' : ''} | ${(i.reference_images || []).map((r) => '`assets/' + r + '`').join(' ') || '—'} | ${i.must_show || '—'} |`);
+    md.push(`| \`${i.id}\` | \`assets/${i.file}\`${i.cells ? ` → ${i.cells.map((c) => '`' + c.file.split('/')[1] + '`').join(' ')}` : ''} | ${i.width}×${i.height}${i.transparent ? ' 투명' : ''} | ${(i.reference_images || []).map((r) => '`assets/' + r + '`').join(' ') || '—'} | ${i.must_show || '—'} |`);
   }
   md.push('');
 }

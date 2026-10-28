@@ -25,5 +25,5 @@
 - `main`은 항상 플레이 가능. 작업은 `feat/` `fix/` `chore/` `docs/` 브랜치 → main 병합. 병합한 브랜치·안 쓰는 브랜치는 바로 지운다.
 - 수치를 바꾸면 `node tools/sim.mjs`로 승률을 확인한다(도구가 생긴 뒤).
 - 그림 파이프라인: 사용자가 GPT 에이전트에게 `AGENTS.md`대로 묶음 id를 맡김(요청 글·추천 순서 `docs/GPT_REQUEST.md`) → `assets/…` 브랜치 → Claude가 이미지를 열어 보고 게임 화면에서 확인 후 병합.
-- 그림 프롬프트는 `js/asset_prompts.js`만 고친다 → `node tools/export-prompts.mjs` → 커밋. `assets/prompts.json`, `docs/PROMPTS.md`는 자동 생성. 커밋 전에 `npm run check`(프롬프트 동기화 + `tools/check-assets.mjs` + 그림 목록 `assets/art.json`). 그림을 넣거나 빼면 `npm run art`.
+- 그림 프롬프트는 `js/asset_prompts.js`만 고친다 → `node tools/export-prompts.mjs` → 커밋. `assets/prompts.json`, `docs/PROMPTS.md`는 자동 생성. 커밋 전에 `npm run check`(프롬프트 동기화 + `tools/check-assets.mjs` + 그림 목록 `assets/art.json`). 그림을 넣거나 빼면 `npm run art`(시트 자르기 + 목록). 자세·카드·적·아이콘은 GPT가 시트 한 장(2×2·3×2·4×4)에 여러 개 그리고 `tools/slice-sheets.mjs`가 자른다.
 - 카드는 `cardHTML` 하나(위 4:3 일러스트·비용 보석·이름 띠·효과·얼굴, 희귀도 테두리). 카드 그림은 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀(`js/cardkind.js`), 인연 듀오·저주와 그림 없는 카드는 `js/render/cardart.js` 임시 일러스트. 동료·적 그림은 `charSrc`·`foeArt`(`js/art.js`)로만 부른다.

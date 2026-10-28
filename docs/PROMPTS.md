@@ -2,78 +2,100 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 3 · 전체 471장 · 묶음 87개
+style_version 4 · GPT가 그릴 그림 257장(시트 포함, 잘라 내면 471장) · 묶음 109개
 
 ## 묶음
 
 | 묶음 id | 이름 | 장 수 |
 |---|---|---|
-| `char-sion` | ★★★★★ 시온 | 6 |
-| `char-lunaria` | ★★★★★ 루나리아 | 6 |
-| `char-akane` | ★★★★★ 아카네 | 6 |
-| `char-eleonore` | ★★★★★ 엘레오노르 | 6 |
-| `char-nerea` | ★★★★★ 네레아 | 6 |
-| `char-iris` | ★★★★ 아이리스 | 6 |
-| `char-noel` | ★★★★ 노엘 | 6 |
-| `char-raven` | ★★★★ 레이븐 | 6 |
-| `char-mimimomo` | ★★★★ 미미·모모 | 6 |
-| `char-sebas` | ★★★★ 세바스 | 6 |
-| `char-mariana` | ★★★★ 마리아나 | 6 |
-| `char-tomori` | ★★★★ 토모리 | 6 |
-| `char-sigrun` | ★★★★ 시그룬 | 6 |
-| `char-zeno` | ★★★★ 제노 | 6 |
-| `char-bertha` | ★★★★ 베르타 | 6 |
-| `char-brick` | ★★★ 브릭 | 6 |
-| `char-marta` | ★★★ 마르타 | 6 |
-| `char-finn` | ★★★ 핀 | 6 |
-| `char-laila` | ★★★ 라일라 | 6 |
-| `char-dora` | ★★★ 도라 | 6 |
-| `char-gordon` | ★★★ 고든 | 6 |
-| `char-fukuro` | ★★★ 후쿠로 | 6 |
-| `pose-sion` | ★★★★★ 시온 전투 모션 4장 | 4 |
-| `pose-lunaria` | ★★★★★ 루나리아 전투 모션 4장 | 4 |
-| `pose-akane` | ★★★★★ 아카네 전투 모션 4장 | 4 |
-| `pose-eleonore` | ★★★★★ 엘레오노르 전투 모션 4장 | 4 |
-| `pose-nerea` | ★★★★★ 네레아 전투 모션 4장 | 4 |
-| `pose-iris` | ★★★★ 아이리스 전투 모션 4장 | 4 |
-| `pose-noel` | ★★★★ 노엘 전투 모션 4장 | 4 |
-| `pose-raven` | ★★★★ 레이븐 전투 모션 4장 | 4 |
-| `pose-mimimomo` | ★★★★ 미미·모모 전투 모션 4장 | 4 |
-| `pose-sebas` | ★★★★ 세바스 전투 모션 4장 | 4 |
-| `pose-mariana` | ★★★★ 마리아나 전투 모션 4장 | 4 |
-| `pose-tomori` | ★★★★ 토모리 전투 모션 4장 | 4 |
-| `pose-sigrun` | ★★★★ 시그룬 전투 모션 4장 | 4 |
-| `pose-zeno` | ★★★★ 제노 전투 모션 4장 | 4 |
-| `pose-bertha` | ★★★★ 베르타 전투 모션 4장 | 4 |
-| `pose-brick` | ★★★ 브릭 전투 모션 4장 | 4 |
-| `pose-marta` | ★★★ 마르타 전투 모션 4장 | 4 |
-| `pose-finn` | ★★★ 핀 전투 모션 4장 | 4 |
-| `pose-laila` | ★★★ 라일라 전투 모션 4장 | 4 |
-| `pose-dora` | ★★★ 도라 전투 모션 4장 | 4 |
-| `pose-gordon` | ★★★ 고든 전투 모션 4장 | 4 |
-| `pose-fukuro` | ★★★ 후쿠로 전투 모션 4장 | 4 |
-| `cards-sion` | ★★★★★ 시온 카드 그림 4장 | 4 |
-| `cards-lunaria` | ★★★★★ 루나리아 카드 그림 4장 | 4 |
-| `cards-akane` | ★★★★★ 아카네 카드 그림 4장 | 4 |
-| `cards-eleonore` | ★★★★★ 엘레오노르 카드 그림 4장 | 4 |
-| `cards-nerea` | ★★★★★ 네레아 카드 그림 4장 | 4 |
-| `cards-iris` | ★★★★ 아이리스 카드 그림 4장 | 4 |
-| `cards-noel` | ★★★★ 노엘 카드 그림 4장 | 4 |
-| `cards-raven` | ★★★★ 레이븐 카드 그림 4장 | 4 |
-| `cards-mimimomo` | ★★★★ 미미·모모 카드 그림 4장 | 4 |
-| `cards-sebas` | ★★★★ 세바스 카드 그림 4장 | 4 |
-| `cards-mariana` | ★★★★ 마리아나 카드 그림 4장 | 4 |
-| `cards-tomori` | ★★★★ 토모리 카드 그림 4장 | 4 |
-| `cards-sigrun` | ★★★★ 시그룬 카드 그림 4장 | 4 |
-| `cards-zeno` | ★★★★ 제노 카드 그림 4장 | 4 |
-| `cards-bertha` | ★★★★ 베르타 카드 그림 4장 | 4 |
-| `cards-brick` | ★★★ 브릭 카드 그림 4장 | 4 |
-| `cards-marta` | ★★★ 마르타 카드 그림 4장 | 4 |
-| `cards-finn` | ★★★ 핀 카드 그림 4장 | 4 |
-| `cards-laila` | ★★★ 라일라 카드 그림 4장 | 4 |
-| `cards-dora` | ★★★ 도라 카드 그림 4장 | 4 |
-| `cards-gordon` | ★★★ 고든 카드 그림 4장 | 4 |
-| `cards-fukuro` | ★★★ 후쿠로 카드 그림 4장 | 4 |
+| `char-sion` | ★★★★★ 시온 | 2 |
+| `extra-sion` | 시온 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-lunaria` | ★★★★★ 루나리아 | 2 |
+| `extra-lunaria` | 루나리아 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-akane` | ★★★★★ 아카네 | 2 |
+| `extra-akane` | 아카네 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-eleonore` | ★★★★★ 엘레오노르 | 2 |
+| `extra-eleonore` | 엘레오노르 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-nerea` | ★★★★★ 네레아 | 2 |
+| `extra-nerea` | 네레아 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-iris` | ★★★★ 아이리스 | 2 |
+| `extra-iris` | 아이리스 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-noel` | ★★★★ 노엘 | 2 |
+| `extra-noel` | 노엘 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-raven` | ★★★★ 레이븐 | 2 |
+| `extra-raven` | 레이븐 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-mimimomo` | ★★★★ 미미·모모 | 2 |
+| `extra-mimimomo` | 미미·모모 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-sebas` | ★★★★ 세바스 | 2 |
+| `extra-sebas` | 세바스 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-mariana` | ★★★★ 마리아나 | 2 |
+| `extra-mariana` | 마리아나 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-tomori` | ★★★★ 토모리 | 2 |
+| `extra-tomori` | 토모리 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-sigrun` | ★★★★ 시그룬 | 2 |
+| `extra-sigrun` | 시그룬 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-zeno` | ★★★★ 제노 | 2 |
+| `extra-zeno` | 제노 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-bertha` | ★★★★ 베르타 | 2 |
+| `extra-bertha` | 베르타 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-brick` | ★★★ 브릭 | 2 |
+| `extra-brick` | 브릭 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-marta` | ★★★ 마르타 | 2 |
+| `extra-marta` | 마르타 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-finn` | ★★★ 핀 | 2 |
+| `extra-finn` | 핀 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-laila` | ★★★ 라일라 | 2 |
+| `extra-laila` | 라일라 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-dora` | ★★★ 도라 | 2 |
+| `extra-dora` | 도라 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-gordon` | ★★★ 고든 | 2 |
+| `extra-gordon` | 고든 나중(표정·컷인·두 번째 의상) | 4 |
+| `char-fukuro` | ★★★ 후쿠로 | 2 |
+| `extra-fukuro` | 후쿠로 나중(표정·컷인·두 번째 의상) | 4 |
+| `pose-sion` | ★★★★★ 시온 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-lunaria` | ★★★★★ 루나리아 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-akane` | ★★★★★ 아카네 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-eleonore` | ★★★★★ 엘레오노르 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-nerea` | ★★★★★ 네레아 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-iris` | ★★★★ 아이리스 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-noel` | ★★★★ 노엘 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-raven` | ★★★★ 레이븐 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-mimimomo` | ★★★★ 미미·모모 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-sebas` | ★★★★ 세바스 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-mariana` | ★★★★ 마리아나 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-tomori` | ★★★★ 토모리 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-sigrun` | ★★★★ 시그룬 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-zeno` | ★★★★ 제노 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-bertha` | ★★★★ 베르타 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-brick` | ★★★ 브릭 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-marta` | ★★★ 마르타 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-finn` | ★★★ 핀 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-laila` | ★★★ 라일라 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-dora` | ★★★ 도라 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-gordon` | ★★★ 고든 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-fukuro` | ★★★ 후쿠로 전투 자세 (시트 1장 → 4장) | 1 |
+| `cards-sion` | ★★★★★ 시온 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-lunaria` | ★★★★★ 루나리아 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-akane` | ★★★★★ 아카네 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-eleonore` | ★★★★★ 엘레오노르 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-nerea` | ★★★★★ 네레아 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-iris` | ★★★★ 아이리스 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-noel` | ★★★★ 노엘 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-raven` | ★★★★ 레이븐 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-mimimomo` | ★★★★ 미미·모모 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-sebas` | ★★★★ 세바스 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-mariana` | ★★★★ 마리아나 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-tomori` | ★★★★ 토모리 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-sigrun` | ★★★★ 시그룬 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-zeno` | ★★★★ 제노 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-bertha` | ★★★★ 베르타 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-brick` | ★★★ 브릭 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-marta` | ★★★ 마르타 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-finn` | ★★★ 핀 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-laila` | ★★★ 라일라 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-dora` | ★★★ 도라 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-gordon` | ★★★ 고든 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-fukuro` | ★★★ 후쿠로 카드 그림 (시트 1장 → 4장) | 1 |
 | `style-sion` | 그림체 시안 시온 (4장, 게임에 안 씀) | 4 |
 | `style-lunaria` | 그림체 시안 루나리아 (4장, 게임에 안 씀) | 4 |
 | `style-akane` | 그림체 시안 아카네 (4장, 게임에 안 씀) | 4 |
@@ -81,9 +103,9 @@ style_version 3 · 전체 471장 · 묶음 87개
 | `style-nerea` | 그림체 시안 네레아 (4장, 게임에 안 씀) | 4 |
 | `cg-star5` | ★5 전신 CG | 5 |
 | `duo` | 인연 듀오 컷인 10쌍 | 10 |
-| `enemy-act1` | 1막 적 | 11 |
-| `enemy-act2` | 2막 적 | 10 |
-| `enemy-act3` | 3막 적 | 10 |
+| `enemy-act1` | 1막 적 (시트 → 한 마리씩) | 2 |
+| `enemy-act2` | 2막 적 (시트 → 한 마리씩) | 2 |
+| `enemy-act3` | 3막 적 (시트 → 한 마리씩) | 2 |
 | `boss-lighthouse` | 보스 등대지기 | 3 |
 | `boss-cloud_captain` | 보스 구름 기사단장 | 3 |
 | `boss-fog_queen` | 보스 안개 마녀 여왕 | 3 |
@@ -93,8 +115,8 @@ style_version 3 · 전체 471장 · 묶음 87개
 | `title` | 타이틀 키아트 | 1 |
 | `summon` | 별 소환 연출 | 4 |
 | `app` | 앱 아이콘 | 1 |
-| `icons` | 도구 아이콘 40 | 40 |
-| `icons-sig` | 동료 전용 도구 아이콘 22 | 22 |
+| `icons` | 도구 아이콘 40 (시트 → 한 개씩) | 3 |
+| `icons-sig` | 동료 전용 도구 아이콘 22 (시트 → 한 개씩) | 2 |
 
 ## 종류별 크기
 
@@ -102,22 +124,26 @@ style_version 3 · 전체 471장 · 묶음 87개
 |---|---|---|---|---|---|
 | 서 있는 그림 (`stand`) | 1024×1536 | 256×384 | 예 | 256 | 전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백 |
 | 상반신 (`portrait`) | 1024×1536 | 256×384 | 예 | 256 | 허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음 |
-| pose (`pose`) | 1024×1536 | 256×384 | 예 | 256 | 전투 모션 한 장(공격·스킬·방어·피격) · 서 있는 그림과 같은 크기·같은 발 위치 · 투명 배경 · 바꿔 끼워 움직임을 만든다 |
+| 전투 자세 (`pose`) | 1024×1536 | 128×192 | 예 | 256 | 전투 자세 한 장(공격·스킬·방어·피격) · 자세 시트(posesheet)에서 잘라 냄 · 서 있는 그림과 바꿔 끼운다 |
 | 두 번째 의상 (`outfit`) | 1024×1536 | 256×384 | 예 | 256 | 두 번째 의상 전신 · 투명 배경 |
 | 컷인 (`cutin`) | 1536×576 | 384×144 | 아니오 | 256 | 가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄 |
 | 인연 듀오 컷인 (`duo`) | 1536×768 | 384×192 | 아니오 | 256 | 인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄 |
 | ★5 전신 CG (`cg`) | 1536×864 | — | 아니오 | 제한 없음 | ★5 전신 CG · 16:9 · 화질 우선, 색 제한 없음 |
-| 일반 적 (`enemy`) | 768×768 | 192×192 | 예 | 256 | 일반 적 · 투명 배경 |
-| 강적 (`elite`) | 1024×1024 | 256×256 | 예 | 256 | 강적 · 투명 배경 |
+| 일반 적 (`enemy`) | 768×768 | 128×128 | 예 | 256 | 일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경 |
+| 강적 (`elite`) | 1024×1024 | 128×128 | 예 | 256 | 강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경 |
 | 보스 (`boss`) | 1024×1536 | 256×384 | 예 | 256 | 보스 · 투명 배경 |
 | 배경 (`bg`) | 1280×720 | 640×360 | 아니오 | 256 | 배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리) |
 | 타이틀 (`title`) | 1536×864 | — | 아니오 | 제한 없음 | 타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지 |
 | 소환 배경 (`summon`) | 1536×864 | — | 아니오 | 제한 없음 | 소환 화면 밤하늘 16:9 |
 | 별똥별 (`meteor`) | 512×512 | 64×64 | 예 | 256 | 별똥별 효과 · 투명 배경 |
-| 도구 아이콘 (`icon`) | 192×192 | 24×24 | 예 | 64 | 도구 아이콘 · 투명 배경 · 24×24 도트를 8배 |
+| 도구 아이콘 (`icon`) | 192×192 | 32×32 | 예 | 64 | 도구 아이콘 · 아이콘 시트(iconsheet)에서 잘라 냄 · 투명 배경 |
 | appicon (`appicon`) | 1024×1024 | 64×64 | 아니오 | 64 | 앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다 |
 | style (`style`) | 1024×1536 | 시안마다 다름 | 예 | 제한 없음 | 그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다 |
-| 카드 그림 (`card`) | 768×576 | 192×144 | 아니오 | 256 | 카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배 |
+| 카드 그림 (`card`) | 768×576 | 128×96 | 아니오 | 256 | 카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배 |
+| 자세 시트 (`posesheet`) | 1024×1536 | 256×384 (칸 128×192 × 4) | 예 | 제한 없음 | 전투 자세 2×2 — 왼쪽 위 공격·오른쪽 위 스킬·왼쪽 아래 방어·오른쪽 아래 피격, 칸 512×768 |
+| 카드 시트 (`cardsheet`) | 1024×1024 | 256×256 (칸 128×128 × 4) | 아니오 | 제한 없음 | 카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀 |
+| 적 시트 (`foesheet`) | 1536×1024 | 384×256 (칸 128×128 × 6) | 예 | 제한 없음 | 적 3×2, 칸 512×512 |
+| 아이콘 시트 (`iconsheet`) | 1024×1024 | 128×128 (칸 32×32 × 16) | 예 | 제한 없음 | 아이콘 4×4, 칸 256×256 |
 
 ## `char-sion` — ★★★★★ 시온
 
@@ -142,6 +168,11 @@ Character reference sheet of 시온 (sion): a calm, beautiful woman in her late 
 |---|---|---|---|---|
 | `sion_stand` | `assets/chars/sion_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `sion_normal` | `assets/chars/sion_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-sion` — 시온 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `sion_smile` | `assets/chars/sion_smile.png` | 1024×1536 투명 | `assets/chars/sion_normal.png` `assets/style/akane_c.png` | — |
 | `sion_serious` | `assets/chars/sion_serious.png` | 1024×1536 투명 | `assets/chars/sion_normal.png` `assets/style/akane_c.png` | — |
 | `sion_cutin` | `assets/cutins/sion_cutin.png` | 1536×576 | `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -170,6 +201,11 @@ Character reference sheet of 루나리아 (lunaria): a graceful dancer woman in 
 |---|---|---|---|---|
 | `lunaria_stand` | `assets/chars/lunaria_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `lunaria_normal` | `assets/chars/lunaria_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-lunaria` — 루나리아 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `lunaria_smile` | `assets/chars/lunaria_smile.png` | 1024×1536 투명 | `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | — |
 | `lunaria_serious` | `assets/chars/lunaria_serious.png` | 1024×1536 투명 | `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | — |
 | `lunaria_cutin` | `assets/cutins/lunaria_cutin.png` | 1536×576 | `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -198,6 +234,11 @@ Character reference sheet of 아카네 (akane): a confident swordswoman in her m
 |---|---|---|---|---|
 | `akane_stand` | `assets/chars/akane_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `akane_normal` | `assets/chars/akane_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-akane` — 아카네 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `akane_smile` | `assets/chars/akane_smile.png` | 1024×1536 투명 | `assets/chars/akane_normal.png` `assets/style/akane_c.png` | — |
 | `akane_serious` | `assets/chars/akane_serious.png` | 1024×1536 투명 | `assets/chars/akane_normal.png` `assets/style/akane_c.png` | — |
 | `akane_cutin` | `assets/cutins/akane_cutin.png` | 1536×576 | `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -226,6 +267,11 @@ Character reference sheet of 엘레오노르 (eleonore): an elegant, haughty wit
 |---|---|---|---|---|
 | `eleonore_stand` | `assets/chars/eleonore_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `eleonore_normal` | `assets/chars/eleonore_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-eleonore` — 엘레오노르 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `eleonore_smile` | `assets/chars/eleonore_smile.png` | 1024×1536 투명 | `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | — |
 | `eleonore_serious` | `assets/chars/eleonore_serious.png` | 1024×1536 투명 | `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | — |
 | `eleonore_cutin` | `assets/cutins/eleonore_cutin.png` | 1536×576 | `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -254,6 +300,11 @@ Character reference sheet of 네레아 (nerea): a free-spirited star-whale rider
 |---|---|---|---|---|
 | `nerea_stand` | `assets/chars/nerea_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `nerea_normal` | `assets/chars/nerea_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-nerea` — 네레아 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `nerea_smile` | `assets/chars/nerea_smile.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | — |
 | `nerea_serious` | `assets/chars/nerea_serious.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | — |
 | `nerea_cutin` | `assets/cutins/nerea_cutin.png` | 1536×576 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -282,6 +333,11 @@ Character reference sheet of 아이리스 (iris): a cool, quiet swordswoman in h
 |---|---|---|---|---|
 | `iris_stand` | `assets/chars/iris_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `iris_normal` | `assets/chars/iris_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-iris` — 아이리스 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `iris_smile` | `assets/chars/iris_smile.png` | 1024×1536 투명 | `assets/chars/iris_normal.png` `assets/style/akane_c.png` | — |
 | `iris_serious` | `assets/chars/iris_serious.png` | 1024×1536 투명 | `assets/chars/iris_normal.png` `assets/style/akane_c.png` | — |
 | `iris_cutin` | `assets/cutins/iris_cutin.png` | 1536×576 | `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -310,6 +366,11 @@ Character reference sheet of 노엘 (noel): a sleepy sorceress woman in her earl
 |---|---|---|---|---|
 | `noel_stand` | `assets/chars/noel_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `noel_normal` | `assets/chars/noel_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-noel` — 노엘 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `noel_smile` | `assets/chars/noel_smile.png` | 1024×1536 투명 | `assets/chars/noel_normal.png` `assets/style/akane_c.png` | — |
 | `noel_serious` | `assets/chars/noel_serious.png` | 1024×1536 투명 | `assets/chars/noel_normal.png` `assets/style/akane_c.png` | — |
 | `noel_cutin` | `assets/cutins/noel_cutin.png` | 1536×576 | `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -338,6 +399,11 @@ Character reference sheet of 레이븐 (raven): a cynical assassin man in his la
 |---|---|---|---|---|
 | `raven_stand` | `assets/chars/raven_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `raven_normal` | `assets/chars/raven_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-raven` — 레이븐 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `raven_smile` | `assets/chars/raven_smile.png` | 1024×1536 투명 | `assets/chars/raven_normal.png` `assets/style/akane_c.png` | — |
 | `raven_serious` | `assets/chars/raven_serious.png` | 1024×1536 투명 | `assets/chars/raven_normal.png` `assets/style/akane_c.png` | — |
 | `raven_cutin` | `assets/cutins/raven_cutin.png` | 1536×576 | `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -366,6 +432,11 @@ Character reference sheet of 미미·모모 (mimimomo): twin 12-year-old girls s
 |---|---|---|---|---|
 | `mimimomo_stand` | `assets/chars/mimimomo_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `mimimomo_normal` | `assets/chars/mimimomo_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-mimimomo` — 미미·모모 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `mimimomo_smile` | `assets/chars/mimimomo_smile.png` | 1024×1536 투명 | `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | — |
 | `mimimomo_serious` | `assets/chars/mimimomo_serious.png` | 1024×1536 투명 | `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | — |
 | `mimimomo_cutin` | `assets/cutins/mimimomo_cutin.png` | 1536×576 | `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -394,6 +465,11 @@ Character reference sheet of 세바스 (sebas): a dignified butler man in his 60
 |---|---|---|---|---|
 | `sebas_stand` | `assets/chars/sebas_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `sebas_normal` | `assets/chars/sebas_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-sebas` — 세바스 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `sebas_smile` | `assets/chars/sebas_smile.png` | 1024×1536 투명 | `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | — |
 | `sebas_serious` | `assets/chars/sebas_serious.png` | 1024×1536 투명 | `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | — |
 | `sebas_cutin` | `assets/cutins/sebas_cutin.png` | 1536×576 | `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -422,6 +498,11 @@ Character reference sheet of 마리아나 (mariana): a bold pirate queen woman i
 |---|---|---|---|---|
 | `mariana_stand` | `assets/chars/mariana_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `mariana_normal` | `assets/chars/mariana_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-mariana` — 마리아나 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `mariana_smile` | `assets/chars/mariana_smile.png` | 1024×1536 투명 | `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | — |
 | `mariana_serious` | `assets/chars/mariana_serious.png` | 1024×1536 투명 | `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | — |
 | `mariana_cutin` | `assets/cutins/mariana_cutin.png` | 1536×576 | `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -450,6 +531,11 @@ Character reference sheet of 토모리 (tomori): a cheerful 17-year-old girl, th
 |---|---|---|---|---|
 | `tomori_stand` | `assets/chars/tomori_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `tomori_normal` | `assets/chars/tomori_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-tomori` — 토모리 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `tomori_smile` | `assets/chars/tomori_smile.png` | 1024×1536 투명 | `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | — |
 | `tomori_serious` | `assets/chars/tomori_serious.png` | 1024×1536 투명 | `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | — |
 | `tomori_cutin` | `assets/cutins/tomori_cutin.png` | 1536×576 | `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -478,6 +564,11 @@ Character reference sheet of 시그룬 (sigrun): a noble knight woman in her lat
 |---|---|---|---|---|
 | `sigrun_stand` | `assets/chars/sigrun_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `sigrun_normal` | `assets/chars/sigrun_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-sigrun` — 시그룬 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `sigrun_smile` | `assets/chars/sigrun_smile.png` | 1024×1536 투명 | `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | — |
 | `sigrun_serious` | `assets/chars/sigrun_serious.png` | 1024×1536 투명 | `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | — |
 | `sigrun_cutin` | `assets/cutins/sigrun_cutin.png` | 1536×576 | `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -506,6 +597,11 @@ Character reference sheet of 제노 (zeno): a silent dark knight man in his late
 |---|---|---|---|---|
 | `zeno_stand` | `assets/chars/zeno_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `zeno_normal` | `assets/chars/zeno_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-zeno` — 제노 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `zeno_smile` | `assets/chars/zeno_smile.png` | 1024×1536 투명 | `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | — |
 | `zeno_serious` | `assets/chars/zeno_serious.png` | 1024×1536 투명 | `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | — |
 | `zeno_cutin` | `assets/cutins/zeno_cutin.png` | 1536×576 | `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -534,6 +630,11 @@ Character reference sheet of 베르타 (bertha): a gentle but sharp retired towe
 |---|---|---|---|---|
 | `bertha_stand` | `assets/chars/bertha_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `bertha_normal` | `assets/chars/bertha_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-bertha` — 베르타 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `bertha_smile` | `assets/chars/bertha_smile.png` | 1024×1536 투명 | `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | — |
 | `bertha_serious` | `assets/chars/bertha_serious.png` | 1024×1536 투명 | `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | — |
 | `bertha_cutin` | `assets/cutins/bertha_cutin.png` | 1536×576 | `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -562,6 +663,11 @@ Character reference sheet of 브릭 (brick): an energetic gunner woman in her mi
 |---|---|---|---|---|
 | `brick_stand` | `assets/chars/brick_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `brick_normal` | `assets/chars/brick_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-brick` — 브릭 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `brick_smile` | `assets/chars/brick_smile.png` | 1024×1536 투명 | `assets/chars/brick_normal.png` `assets/style/akane_c.png` | — |
 | `brick_serious` | `assets/chars/brick_serious.png` | 1024×1536 투명 | `assets/chars/brick_normal.png` `assets/style/akane_c.png` | — |
 | `brick_cutin` | `assets/cutins/brick_cutin.png` | 1536×576 | `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -590,6 +696,11 @@ Character reference sheet of 마르타 (marta): a very tall, muscular nun woman 
 |---|---|---|---|---|
 | `marta_stand` | `assets/chars/marta_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `marta_normal` | `assets/chars/marta_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-marta` — 마르타 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `marta_smile` | `assets/chars/marta_smile.png` | 1024×1536 투명 | `assets/chars/marta_normal.png` `assets/style/akane_c.png` | — |
 | `marta_serious` | `assets/chars/marta_serious.png` | 1024×1536 투명 | `assets/chars/marta_normal.png` `assets/style/akane_c.png` | — |
 | `marta_cutin` | `assets/cutins/marta_cutin.png` | 1536×576 | `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -618,6 +729,11 @@ Character reference sheet of 핀 (finn): a lively 14-year-old mail delivery boy.
 |---|---|---|---|---|
 | `finn_stand` | `assets/chars/finn_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `finn_normal` | `assets/chars/finn_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-finn` — 핀 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `finn_smile` | `assets/chars/finn_smile.png` | 1024×1536 투명 | `assets/chars/finn_normal.png` `assets/style/akane_c.png` | — |
 | `finn_serious` | `assets/chars/finn_serious.png` | 1024×1536 투명 | `assets/chars/finn_normal.png` `assets/style/akane_c.png` | — |
 | `finn_cutin` | `assets/cutins/finn_cutin.png` | 1536×576 | `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -646,6 +762,11 @@ Character reference sheet of 라일라 (laila): a brusque deserter knight woman 
 |---|---|---|---|---|
 | `laila_stand` | `assets/chars/laila_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `laila_normal` | `assets/chars/laila_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-laila` — 라일라 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `laila_smile` | `assets/chars/laila_smile.png` | 1024×1536 투명 | `assets/chars/laila_normal.png` `assets/style/akane_c.png` | — |
 | `laila_serious` | `assets/chars/laila_serious.png` | 1024×1536 투명 | `assets/chars/laila_normal.png` `assets/style/akane_c.png` | — |
 | `laila_cutin` | `assets/cutins/laila_cutin.png` | 1536×576 | `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -674,6 +795,11 @@ Character reference sheet of 도라 (dora): a cheerful 19-year-old blacksmith wo
 |---|---|---|---|---|
 | `dora_stand` | `assets/chars/dora_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `dora_normal` | `assets/chars/dora_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-dora` — 도라 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `dora_smile` | `assets/chars/dora_smile.png` | 1024×1536 투명 | `assets/chars/dora_normal.png` `assets/style/akane_c.png` | — |
 | `dora_serious` | `assets/chars/dora_serious.png` | 1024×1536 투명 | `assets/chars/dora_normal.png` `assets/style/akane_c.png` | — |
 | `dora_cutin` | `assets/cutins/dora_cutin.png` | 1536×576 | `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -702,6 +828,11 @@ Character reference sheet of 고든 (gordon): a big burly cook man in his 40s. A
 |---|---|---|---|---|
 | `gordon_stand` | `assets/chars/gordon_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `gordon_normal` | `assets/chars/gordon_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-gordon` — 고든 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `gordon_smile` | `assets/chars/gordon_smile.png` | 1024×1536 투명 | `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | — |
 | `gordon_serious` | `assets/chars/gordon_serious.png` | 1024×1536 투명 | `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | — |
 | `gordon_cutin` | `assets/cutins/gordon_cutin.png` | 1536×576 | `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
@@ -730,406 +861,279 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 |---|---|---|---|---|
 | `fukuro_stand` | `assets/chars/fukuro_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
 | `fukuro_normal` | `assets/chars/fukuro_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-fukuro` — 후쿠로 나중(표정·컷인·두 번째 의상)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
 | `fukuro_smile` | `assets/chars/fukuro_smile.png` | 1024×1536 투명 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | — |
 | `fukuro_serious` | `assets/chars/fukuro_serious.png` | 1024×1536 투명 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | — |
 | `fukuro_cutin` | `assets/cutins/fukuro_cutin.png` | 1536×576 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
 | `fukuro_outfit2` | `assets/chars/fukuro_outfit2.png` | 1024×1536 투명 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | — |
 
-## `pose-sion` — ★★★★★ 시온 전투 모션 4장
+## `pose-sion` — ★★★★★ 시온 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sion_attack` | `assets/chars/sion_attack.png` | 1024×1536 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `sion_guard` | `assets/chars/sion_guard.png` | 1024×1536 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `sion_hurt` | `assets/chars/sion_hurt.png` | 1024×1536 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `sion_skill` | `assets/chars/sion_skill.png` | 1024×1536 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `sion_poses` | `assets/sheets/sion_poses.png` → `sion_attack.png` `sion_skill.png` `sion_guard.png` `sion_hurt.png` | 1024×1536 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-lunaria` — ★★★★★ 루나리아 전투 모션 4장
+## `pose-lunaria` — ★★★★★ 루나리아 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `lunaria_attack` | `assets/chars/lunaria_attack.png` | 1024×1536 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `lunaria_guard` | `assets/chars/lunaria_guard.png` | 1024×1536 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `lunaria_hurt` | `assets/chars/lunaria_hurt.png` | 1024×1536 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `lunaria_skill` | `assets/chars/lunaria_skill.png` | 1024×1536 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `lunaria_poses` | `assets/sheets/lunaria_poses.png` → `lunaria_attack.png` `lunaria_skill.png` `lunaria_guard.png` `lunaria_hurt.png` | 1024×1536 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-akane` — ★★★★★ 아카네 전투 모션 4장
+## `pose-akane` — ★★★★★ 아카네 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `akane_attack` | `assets/chars/akane_attack.png` | 1024×1536 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `akane_guard` | `assets/chars/akane_guard.png` | 1024×1536 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `akane_hurt` | `assets/chars/akane_hurt.png` | 1024×1536 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `akane_skill` | `assets/chars/akane_skill.png` | 1024×1536 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `akane_poses` | `assets/sheets/akane_poses.png` → `akane_attack.png` `akane_skill.png` `akane_guard.png` `akane_hurt.png` | 1024×1536 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-eleonore` — ★★★★★ 엘레오노르 전투 모션 4장
+## `pose-eleonore` — ★★★★★ 엘레오노르 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `eleonore_attack` | `assets/chars/eleonore_attack.png` | 1024×1536 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `eleonore_guard` | `assets/chars/eleonore_guard.png` | 1024×1536 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `eleonore_hurt` | `assets/chars/eleonore_hurt.png` | 1024×1536 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `eleonore_skill` | `assets/chars/eleonore_skill.png` | 1024×1536 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `eleonore_poses` | `assets/sheets/eleonore_poses.png` → `eleonore_attack.png` `eleonore_skill.png` `eleonore_guard.png` `eleonore_hurt.png` | 1024×1536 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-nerea` — ★★★★★ 네레아 전투 모션 4장
+## `pose-nerea` — ★★★★★ 네레아 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `nerea_attack` | `assets/chars/nerea_attack.png` | 1024×1536 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `nerea_guard` | `assets/chars/nerea_guard.png` | 1024×1536 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `nerea_hurt` | `assets/chars/nerea_hurt.png` | 1024×1536 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `nerea_skill` | `assets/chars/nerea_skill.png` | 1024×1536 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `nerea_poses` | `assets/sheets/nerea_poses.png` → `nerea_attack.png` `nerea_skill.png` `nerea_guard.png` `nerea_hurt.png` | 1024×1536 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-iris` — ★★★★ 아이리스 전투 모션 4장
+## `pose-iris` — ★★★★ 아이리스 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `iris_attack` | `assets/chars/iris_attack.png` | 1024×1536 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `iris_guard` | `assets/chars/iris_guard.png` | 1024×1536 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `iris_hurt` | `assets/chars/iris_hurt.png` | 1024×1536 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `iris_skill` | `assets/chars/iris_skill.png` | 1024×1536 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `iris_poses` | `assets/sheets/iris_poses.png` → `iris_attack.png` `iris_skill.png` `iris_guard.png` `iris_hurt.png` | 1024×1536 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-noel` — ★★★★ 노엘 전투 모션 4장
+## `pose-noel` — ★★★★ 노엘 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `noel_attack` | `assets/chars/noel_attack.png` | 1024×1536 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `noel_guard` | `assets/chars/noel_guard.png` | 1024×1536 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `noel_hurt` | `assets/chars/noel_hurt.png` | 1024×1536 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `noel_skill` | `assets/chars/noel_skill.png` | 1024×1536 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `noel_poses` | `assets/sheets/noel_poses.png` → `noel_attack.png` `noel_skill.png` `noel_guard.png` `noel_hurt.png` | 1024×1536 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-raven` — ★★★★ 레이븐 전투 모션 4장
+## `pose-raven` — ★★★★ 레이븐 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `raven_attack` | `assets/chars/raven_attack.png` | 1024×1536 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `raven_guard` | `assets/chars/raven_guard.png` | 1024×1536 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `raven_hurt` | `assets/chars/raven_hurt.png` | 1024×1536 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `raven_skill` | `assets/chars/raven_skill.png` | 1024×1536 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `raven_poses` | `assets/sheets/raven_poses.png` → `raven_attack.png` `raven_skill.png` `raven_guard.png` `raven_hurt.png` | 1024×1536 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-mimimomo` — ★★★★ 미미·모모 전투 모션 4장
+## `pose-mimimomo` — ★★★★ 미미·모모 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `mimimomo_attack` | `assets/chars/mimimomo_attack.png` | 1024×1536 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `mimimomo_guard` | `assets/chars/mimimomo_guard.png` | 1024×1536 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `mimimomo_hurt` | `assets/chars/mimimomo_hurt.png` | 1024×1536 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `mimimomo_skill` | `assets/chars/mimimomo_skill.png` | 1024×1536 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `mimimomo_poses` | `assets/sheets/mimimomo_poses.png` → `mimimomo_attack.png` `mimimomo_skill.png` `mimimomo_guard.png` `mimimomo_hurt.png` | 1024×1536 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-sebas` — ★★★★ 세바스 전투 모션 4장
+## `pose-sebas` — ★★★★ 세바스 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sebas_attack` | `assets/chars/sebas_attack.png` | 1024×1536 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `sebas_guard` | `assets/chars/sebas_guard.png` | 1024×1536 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `sebas_hurt` | `assets/chars/sebas_hurt.png` | 1024×1536 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `sebas_skill` | `assets/chars/sebas_skill.png` | 1024×1536 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `sebas_poses` | `assets/sheets/sebas_poses.png` → `sebas_attack.png` `sebas_skill.png` `sebas_guard.png` `sebas_hurt.png` | 1024×1536 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-mariana` — ★★★★ 마리아나 전투 모션 4장
+## `pose-mariana` — ★★★★ 마리아나 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `mariana_attack` | `assets/chars/mariana_attack.png` | 1024×1536 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `mariana_guard` | `assets/chars/mariana_guard.png` | 1024×1536 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `mariana_hurt` | `assets/chars/mariana_hurt.png` | 1024×1536 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `mariana_skill` | `assets/chars/mariana_skill.png` | 1024×1536 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `mariana_poses` | `assets/sheets/mariana_poses.png` → `mariana_attack.png` `mariana_skill.png` `mariana_guard.png` `mariana_hurt.png` | 1024×1536 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-tomori` — ★★★★ 토모리 전투 모션 4장
+## `pose-tomori` — ★★★★ 토모리 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `tomori_attack` | `assets/chars/tomori_attack.png` | 1024×1536 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `tomori_guard` | `assets/chars/tomori_guard.png` | 1024×1536 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `tomori_hurt` | `assets/chars/tomori_hurt.png` | 1024×1536 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `tomori_skill` | `assets/chars/tomori_skill.png` | 1024×1536 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `tomori_poses` | `assets/sheets/tomori_poses.png` → `tomori_attack.png` `tomori_skill.png` `tomori_guard.png` `tomori_hurt.png` | 1024×1536 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-sigrun` — ★★★★ 시그룬 전투 모션 4장
+## `pose-sigrun` — ★★★★ 시그룬 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sigrun_attack` | `assets/chars/sigrun_attack.png` | 1024×1536 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `sigrun_guard` | `assets/chars/sigrun_guard.png` | 1024×1536 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `sigrun_hurt` | `assets/chars/sigrun_hurt.png` | 1024×1536 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `sigrun_skill` | `assets/chars/sigrun_skill.png` | 1024×1536 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `sigrun_poses` | `assets/sheets/sigrun_poses.png` → `sigrun_attack.png` `sigrun_skill.png` `sigrun_guard.png` `sigrun_hurt.png` | 1024×1536 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-zeno` — ★★★★ 제노 전투 모션 4장
+## `pose-zeno` — ★★★★ 제노 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `zeno_attack` | `assets/chars/zeno_attack.png` | 1024×1536 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `zeno_guard` | `assets/chars/zeno_guard.png` | 1024×1536 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `zeno_hurt` | `assets/chars/zeno_hurt.png` | 1024×1536 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `zeno_skill` | `assets/chars/zeno_skill.png` | 1024×1536 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `zeno_poses` | `assets/sheets/zeno_poses.png` → `zeno_attack.png` `zeno_skill.png` `zeno_guard.png` `zeno_hurt.png` | 1024×1536 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-bertha` — ★★★★ 베르타 전투 모션 4장
+## `pose-bertha` — ★★★★ 베르타 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `bertha_attack` | `assets/chars/bertha_attack.png` | 1024×1536 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `bertha_guard` | `assets/chars/bertha_guard.png` | 1024×1536 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `bertha_hurt` | `assets/chars/bertha_hurt.png` | 1024×1536 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `bertha_skill` | `assets/chars/bertha_skill.png` | 1024×1536 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `bertha_poses` | `assets/sheets/bertha_poses.png` → `bertha_attack.png` `bertha_skill.png` `bertha_guard.png` `bertha_hurt.png` | 1024×1536 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-brick` — ★★★ 브릭 전투 모션 4장
+## `pose-brick` — ★★★ 브릭 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `brick_attack` | `assets/chars/brick_attack.png` | 1024×1536 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `brick_guard` | `assets/chars/brick_guard.png` | 1024×1536 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `brick_hurt` | `assets/chars/brick_hurt.png` | 1024×1536 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `brick_skill` | `assets/chars/brick_skill.png` | 1024×1536 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `brick_poses` | `assets/sheets/brick_poses.png` → `brick_attack.png` `brick_skill.png` `brick_guard.png` `brick_hurt.png` | 1024×1536 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-marta` — ★★★ 마르타 전투 모션 4장
+## `pose-marta` — ★★★ 마르타 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `marta_attack` | `assets/chars/marta_attack.png` | 1024×1536 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `marta_guard` | `assets/chars/marta_guard.png` | 1024×1536 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `marta_hurt` | `assets/chars/marta_hurt.png` | 1024×1536 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `marta_skill` | `assets/chars/marta_skill.png` | 1024×1536 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `marta_poses` | `assets/sheets/marta_poses.png` → `marta_attack.png` `marta_skill.png` `marta_guard.png` `marta_hurt.png` | 1024×1536 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-finn` — ★★★ 핀 전투 모션 4장
+## `pose-finn` — ★★★ 핀 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `finn_attack` | `assets/chars/finn_attack.png` | 1024×1536 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `finn_guard` | `assets/chars/finn_guard.png` | 1024×1536 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `finn_hurt` | `assets/chars/finn_hurt.png` | 1024×1536 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `finn_skill` | `assets/chars/finn_skill.png` | 1024×1536 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `finn_poses` | `assets/sheets/finn_poses.png` → `finn_attack.png` `finn_skill.png` `finn_guard.png` `finn_hurt.png` | 1024×1536 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-laila` — ★★★ 라일라 전투 모션 4장
+## `pose-laila` — ★★★ 라일라 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `laila_attack` | `assets/chars/laila_attack.png` | 1024×1536 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `laila_guard` | `assets/chars/laila_guard.png` | 1024×1536 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `laila_hurt` | `assets/chars/laila_hurt.png` | 1024×1536 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `laila_skill` | `assets/chars/laila_skill.png` | 1024×1536 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `laila_poses` | `assets/sheets/laila_poses.png` → `laila_attack.png` `laila_skill.png` `laila_guard.png` `laila_hurt.png` | 1024×1536 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-dora` — ★★★ 도라 전투 모션 4장
+## `pose-dora` — ★★★ 도라 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `dora_attack` | `assets/chars/dora_attack.png` | 1024×1536 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `dora_guard` | `assets/chars/dora_guard.png` | 1024×1536 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `dora_hurt` | `assets/chars/dora_hurt.png` | 1024×1536 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `dora_skill` | `assets/chars/dora_skill.png` | 1024×1536 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `dora_poses` | `assets/sheets/dora_poses.png` → `dora_attack.png` `dora_skill.png` `dora_guard.png` `dora_hurt.png` | 1024×1536 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-gordon` — ★★★ 고든 전투 모션 4장
+## `pose-gordon` — ★★★ 고든 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `gordon_attack` | `assets/chars/gordon_attack.png` | 1024×1536 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `gordon_guard` | `assets/chars/gordon_guard.png` | 1024×1536 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `gordon_hurt` | `assets/chars/gordon_hurt.png` | 1024×1536 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `gordon_skill` | `assets/chars/gordon_skill.png` | 1024×1536 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `gordon_poses` | `assets/sheets/gordon_poses.png` → `gordon_attack.png` `gordon_skill.png` `gordon_guard.png` `gordon_hurt.png` | 1024×1536 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `pose-fukuro` — ★★★ 후쿠로 전투 모션 4장
+## `pose-fukuro` — ★★★ 후쿠로 전투 자세 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `fukuro_attack` | `assets/chars/fukuro_attack.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 공격 — 오른쪽으로 내지르는 순간 |
-| `fukuro_guard` | `assets/chars/fukuro_guard.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 방어 — 웅크려 막는 순간 |
-| `fukuro_hurt` | `assets/chars/fukuro_hurt.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 피격 — 왼쪽으로 밀려나는 순간 |
-| `fukuro_skill` | `assets/chars/fukuro_skill.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 스킬 — 힘을 모아 쓰는 순간 |
+| `fukuro_poses` | `assets/sheets/fukuro_poses.png` → `fukuro_attack.png` `fukuro_skill.png` `fukuro_guard.png` `fukuro_hurt.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
 
-## `cards-sion` — ★★★★★ 시온 카드 그림 4장
+## `cards-sion` — ★★★★★ 시온 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sion_card_atk` | `assets/cards/sion_atk.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 공격 장면 |
-| `sion_card_guard` | `assets/cards/sion_guard.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 방어 장면 |
-| `sion_card_skill` | `assets/cards/sion_skill.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 스킬 장면 |
-| `sion_card_special` | `assets/cards/sion_special.png` | 768×576 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 시온 얼굴, 필살 장면 |
+| `sion_cards` | `assets/sheets/sion_cards.png` → `sion_atk.png` `sion_guard.png` `sion_skill.png` `sion_special.png` | 1024×1024 | `assets/chars/sion_normal.png` `assets/chars/sion_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 시온 얼굴과 화려한 기술 |
 
-## `cards-lunaria` — ★★★★★ 루나리아 카드 그림 4장
+## `cards-lunaria` — ★★★★★ 루나리아 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `lunaria_card_atk` | `assets/cards/lunaria_atk.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 공격 장면 |
-| `lunaria_card_guard` | `assets/cards/lunaria_guard.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 방어 장면 |
-| `lunaria_card_skill` | `assets/cards/lunaria_skill.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 스킬 장면 |
-| `lunaria_card_special` | `assets/cards/lunaria_special.png` | 768×576 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 루나리아 얼굴, 필살 장면 |
+| `lunaria_cards` | `assets/sheets/lunaria_cards.png` → `lunaria_atk.png` `lunaria_guard.png` `lunaria_skill.png` `lunaria_special.png` | 1024×1024 | `assets/chars/lunaria_normal.png` `assets/chars/lunaria_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 루나리아 얼굴과 화려한 기술 |
 
-## `cards-akane` — ★★★★★ 아카네 카드 그림 4장
+## `cards-akane` — ★★★★★ 아카네 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `akane_card_atk` | `assets/cards/akane_atk.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 공격 장면 |
-| `akane_card_guard` | `assets/cards/akane_guard.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 방어 장면 |
-| `akane_card_skill` | `assets/cards/akane_skill.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 스킬 장면 |
-| `akane_card_special` | `assets/cards/akane_special.png` | 768×576 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 아카네 얼굴, 필살 장면 |
+| `akane_cards` | `assets/sheets/akane_cards.png` → `akane_atk.png` `akane_guard.png` `akane_skill.png` `akane_special.png` | 1024×1024 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 아카네 얼굴과 화려한 기술 |
 
-## `cards-eleonore` — ★★★★★ 엘레오노르 카드 그림 4장
+## `cards-eleonore` — ★★★★★ 엘레오노르 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `eleonore_card_atk` | `assets/cards/eleonore_atk.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 공격 장면 |
-| `eleonore_card_guard` | `assets/cards/eleonore_guard.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 방어 장면 |
-| `eleonore_card_skill` | `assets/cards/eleonore_skill.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 스킬 장면 |
-| `eleonore_card_special` | `assets/cards/eleonore_special.png` | 768×576 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 엘레오노르 얼굴, 필살 장면 |
+| `eleonore_cards` | `assets/sheets/eleonore_cards.png` → `eleonore_atk.png` `eleonore_guard.png` `eleonore_skill.png` `eleonore_special.png` | 1024×1024 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 엘레오노르 얼굴과 화려한 기술 |
 
-## `cards-nerea` — ★★★★★ 네레아 카드 그림 4장
+## `cards-nerea` — ★★★★★ 네레아 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `nerea_card_atk` | `assets/cards/nerea_atk.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 공격 장면 |
-| `nerea_card_guard` | `assets/cards/nerea_guard.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 방어 장면 |
-| `nerea_card_skill` | `assets/cards/nerea_skill.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 스킬 장면 |
-| `nerea_card_special` | `assets/cards/nerea_special.png` | 768×576 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 네레아 얼굴, 필살 장면 |
+| `nerea_cards` | `assets/sheets/nerea_cards.png` → `nerea_atk.png` `nerea_guard.png` `nerea_skill.png` `nerea_special.png` | 1024×1024 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 네레아 얼굴과 화려한 기술 |
 
-## `cards-iris` — ★★★★ 아이리스 카드 그림 4장
+## `cards-iris` — ★★★★ 아이리스 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `iris_card_atk` | `assets/cards/iris_atk.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 공격 장면 |
-| `iris_card_guard` | `assets/cards/iris_guard.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 방어 장면 |
-| `iris_card_skill` | `assets/cards/iris_skill.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 스킬 장면 |
-| `iris_card_special` | `assets/cards/iris_special.png` | 768×576 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 아이리스 얼굴, 필살 장면 |
+| `iris_cards` | `assets/sheets/iris_cards.png` → `iris_atk.png` `iris_guard.png` `iris_skill.png` `iris_special.png` | 1024×1024 | `assets/chars/iris_normal.png` `assets/chars/iris_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 아이리스 얼굴과 화려한 기술 |
 
-## `cards-noel` — ★★★★ 노엘 카드 그림 4장
+## `cards-noel` — ★★★★ 노엘 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `noel_card_atk` | `assets/cards/noel_atk.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 공격 장면 |
-| `noel_card_guard` | `assets/cards/noel_guard.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 방어 장면 |
-| `noel_card_skill` | `assets/cards/noel_skill.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 스킬 장면 |
-| `noel_card_special` | `assets/cards/noel_special.png` | 768×576 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 노엘 얼굴, 필살 장면 |
+| `noel_cards` | `assets/sheets/noel_cards.png` → `noel_atk.png` `noel_guard.png` `noel_skill.png` `noel_special.png` | 1024×1024 | `assets/chars/noel_normal.png` `assets/chars/noel_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 노엘 얼굴과 화려한 기술 |
 
-## `cards-raven` — ★★★★ 레이븐 카드 그림 4장
+## `cards-raven` — ★★★★ 레이븐 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `raven_card_atk` | `assets/cards/raven_atk.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 공격 장면 |
-| `raven_card_guard` | `assets/cards/raven_guard.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 방어 장면 |
-| `raven_card_skill` | `assets/cards/raven_skill.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 스킬 장면 |
-| `raven_card_special` | `assets/cards/raven_special.png` | 768×576 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 레이븐 얼굴, 필살 장면 |
+| `raven_cards` | `assets/sheets/raven_cards.png` → `raven_atk.png` `raven_guard.png` `raven_skill.png` `raven_special.png` | 1024×1024 | `assets/chars/raven_normal.png` `assets/chars/raven_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 레이븐 얼굴과 화려한 기술 |
 
-## `cards-mimimomo` — ★★★★ 미미·모모 카드 그림 4장
+## `cards-mimimomo` — ★★★★ 미미·모모 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `mimimomo_card_atk` | `assets/cards/mimimomo_atk.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 공격 장면 |
-| `mimimomo_card_guard` | `assets/cards/mimimomo_guard.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 방어 장면 |
-| `mimimomo_card_skill` | `assets/cards/mimimomo_skill.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 스킬 장면 |
-| `mimimomo_card_special` | `assets/cards/mimimomo_special.png` | 768×576 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 미미·모모 얼굴, 필살 장면 |
+| `mimimomo_cards` | `assets/sheets/mimimomo_cards.png` → `mimimomo_atk.png` `mimimomo_guard.png` `mimimomo_skill.png` `mimimomo_special.png` | 1024×1024 | `assets/chars/mimimomo_normal.png` `assets/chars/mimimomo_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 미미·모모 얼굴과 화려한 기술 |
 
-## `cards-sebas` — ★★★★ 세바스 카드 그림 4장
+## `cards-sebas` — ★★★★ 세바스 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sebas_card_atk` | `assets/cards/sebas_atk.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 공격 장면 |
-| `sebas_card_guard` | `assets/cards/sebas_guard.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 방어 장면 |
-| `sebas_card_skill` | `assets/cards/sebas_skill.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 스킬 장면 |
-| `sebas_card_special` | `assets/cards/sebas_special.png` | 768×576 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 세바스 얼굴, 필살 장면 |
+| `sebas_cards` | `assets/sheets/sebas_cards.png` → `sebas_atk.png` `sebas_guard.png` `sebas_skill.png` `sebas_special.png` | 1024×1024 | `assets/chars/sebas_normal.png` `assets/chars/sebas_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 세바스 얼굴과 화려한 기술 |
 
-## `cards-mariana` — ★★★★ 마리아나 카드 그림 4장
+## `cards-mariana` — ★★★★ 마리아나 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `mariana_card_atk` | `assets/cards/mariana_atk.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 공격 장면 |
-| `mariana_card_guard` | `assets/cards/mariana_guard.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 방어 장면 |
-| `mariana_card_skill` | `assets/cards/mariana_skill.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 스킬 장면 |
-| `mariana_card_special` | `assets/cards/mariana_special.png` | 768×576 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 마리아나 얼굴, 필살 장면 |
+| `mariana_cards` | `assets/sheets/mariana_cards.png` → `mariana_atk.png` `mariana_guard.png` `mariana_skill.png` `mariana_special.png` | 1024×1024 | `assets/chars/mariana_normal.png` `assets/chars/mariana_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 마리아나 얼굴과 화려한 기술 |
 
-## `cards-tomori` — ★★★★ 토모리 카드 그림 4장
+## `cards-tomori` — ★★★★ 토모리 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `tomori_card_atk` | `assets/cards/tomori_atk.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 공격 장면 |
-| `tomori_card_guard` | `assets/cards/tomori_guard.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 방어 장면 |
-| `tomori_card_skill` | `assets/cards/tomori_skill.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 스킬 장면 |
-| `tomori_card_special` | `assets/cards/tomori_special.png` | 768×576 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 토모리 얼굴, 필살 장면 |
+| `tomori_cards` | `assets/sheets/tomori_cards.png` → `tomori_atk.png` `tomori_guard.png` `tomori_skill.png` `tomori_special.png` | 1024×1024 | `assets/chars/tomori_normal.png` `assets/chars/tomori_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 토모리 얼굴과 화려한 기술 |
 
-## `cards-sigrun` — ★★★★ 시그룬 카드 그림 4장
+## `cards-sigrun` — ★★★★ 시그룬 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sigrun_card_atk` | `assets/cards/sigrun_atk.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 공격 장면 |
-| `sigrun_card_guard` | `assets/cards/sigrun_guard.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 방어 장면 |
-| `sigrun_card_skill` | `assets/cards/sigrun_skill.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 스킬 장면 |
-| `sigrun_card_special` | `assets/cards/sigrun_special.png` | 768×576 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 시그룬 얼굴, 필살 장면 |
+| `sigrun_cards` | `assets/sheets/sigrun_cards.png` → `sigrun_atk.png` `sigrun_guard.png` `sigrun_skill.png` `sigrun_special.png` | 1024×1024 | `assets/chars/sigrun_normal.png` `assets/chars/sigrun_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 시그룬 얼굴과 화려한 기술 |
 
-## `cards-zeno` — ★★★★ 제노 카드 그림 4장
+## `cards-zeno` — ★★★★ 제노 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `zeno_card_atk` | `assets/cards/zeno_atk.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 공격 장면 |
-| `zeno_card_guard` | `assets/cards/zeno_guard.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 방어 장면 |
-| `zeno_card_skill` | `assets/cards/zeno_skill.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 스킬 장면 |
-| `zeno_card_special` | `assets/cards/zeno_special.png` | 768×576 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 제노 얼굴, 필살 장면 |
+| `zeno_cards` | `assets/sheets/zeno_cards.png` → `zeno_atk.png` `zeno_guard.png` `zeno_skill.png` `zeno_special.png` | 1024×1024 | `assets/chars/zeno_normal.png` `assets/chars/zeno_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 제노 얼굴과 화려한 기술 |
 
-## `cards-bertha` — ★★★★ 베르타 카드 그림 4장
+## `cards-bertha` — ★★★★ 베르타 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `bertha_card_atk` | `assets/cards/bertha_atk.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 공격 장면 |
-| `bertha_card_guard` | `assets/cards/bertha_guard.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 방어 장면 |
-| `bertha_card_skill` | `assets/cards/bertha_skill.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 스킬 장면 |
-| `bertha_card_special` | `assets/cards/bertha_special.png` | 768×576 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 베르타 얼굴, 필살 장면 |
+| `bertha_cards` | `assets/sheets/bertha_cards.png` → `bertha_atk.png` `bertha_guard.png` `bertha_skill.png` `bertha_special.png` | 1024×1024 | `assets/chars/bertha_normal.png` `assets/chars/bertha_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 베르타 얼굴과 화려한 기술 |
 
-## `cards-brick` — ★★★ 브릭 카드 그림 4장
+## `cards-brick` — ★★★ 브릭 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `brick_card_atk` | `assets/cards/brick_atk.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 공격 장면 |
-| `brick_card_guard` | `assets/cards/brick_guard.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 방어 장면 |
-| `brick_card_skill` | `assets/cards/brick_skill.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 스킬 장면 |
-| `brick_card_special` | `assets/cards/brick_special.png` | 768×576 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 브릭 얼굴, 필살 장면 |
+| `brick_cards` | `assets/sheets/brick_cards.png` → `brick_atk.png` `brick_guard.png` `brick_skill.png` `brick_special.png` | 1024×1024 | `assets/chars/brick_normal.png` `assets/chars/brick_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 브릭 얼굴과 화려한 기술 |
 
-## `cards-marta` — ★★★ 마르타 카드 그림 4장
+## `cards-marta` — ★★★ 마르타 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `marta_card_atk` | `assets/cards/marta_atk.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 공격 장면 |
-| `marta_card_guard` | `assets/cards/marta_guard.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 방어 장면 |
-| `marta_card_skill` | `assets/cards/marta_skill.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 스킬 장면 |
-| `marta_card_special` | `assets/cards/marta_special.png` | 768×576 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 마르타 얼굴, 필살 장면 |
+| `marta_cards` | `assets/sheets/marta_cards.png` → `marta_atk.png` `marta_guard.png` `marta_skill.png` `marta_special.png` | 1024×1024 | `assets/chars/marta_normal.png` `assets/chars/marta_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 마르타 얼굴과 화려한 기술 |
 
-## `cards-finn` — ★★★ 핀 카드 그림 4장
+## `cards-finn` — ★★★ 핀 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `finn_card_atk` | `assets/cards/finn_atk.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 공격 장면 |
-| `finn_card_guard` | `assets/cards/finn_guard.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 방어 장면 |
-| `finn_card_skill` | `assets/cards/finn_skill.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 스킬 장면 |
-| `finn_card_special` | `assets/cards/finn_special.png` | 768×576 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 핀 얼굴, 필살 장면 |
+| `finn_cards` | `assets/sheets/finn_cards.png` → `finn_atk.png` `finn_guard.png` `finn_skill.png` `finn_special.png` | 1024×1024 | `assets/chars/finn_normal.png` `assets/chars/finn_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 핀 얼굴과 화려한 기술 |
 
-## `cards-laila` — ★★★ 라일라 카드 그림 4장
+## `cards-laila` — ★★★ 라일라 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `laila_card_atk` | `assets/cards/laila_atk.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 공격 장면 |
-| `laila_card_guard` | `assets/cards/laila_guard.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 방어 장면 |
-| `laila_card_skill` | `assets/cards/laila_skill.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 스킬 장면 |
-| `laila_card_special` | `assets/cards/laila_special.png` | 768×576 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 라일라 얼굴, 필살 장면 |
+| `laila_cards` | `assets/sheets/laila_cards.png` → `laila_atk.png` `laila_guard.png` `laila_skill.png` `laila_special.png` | 1024×1024 | `assets/chars/laila_normal.png` `assets/chars/laila_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 라일라 얼굴과 화려한 기술 |
 
-## `cards-dora` — ★★★ 도라 카드 그림 4장
+## `cards-dora` — ★★★ 도라 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `dora_card_atk` | `assets/cards/dora_atk.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 공격 장면 |
-| `dora_card_guard` | `assets/cards/dora_guard.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 방어 장면 |
-| `dora_card_skill` | `assets/cards/dora_skill.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 스킬 장면 |
-| `dora_card_special` | `assets/cards/dora_special.png` | 768×576 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 도라 얼굴, 필살 장면 |
+| `dora_cards` | `assets/sheets/dora_cards.png` → `dora_atk.png` `dora_guard.png` `dora_skill.png` `dora_special.png` | 1024×1024 | `assets/chars/dora_normal.png` `assets/chars/dora_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 도라 얼굴과 화려한 기술 |
 
-## `cards-gordon` — ★★★ 고든 카드 그림 4장
+## `cards-gordon` — ★★★ 고든 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `gordon_card_atk` | `assets/cards/gordon_atk.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 공격 장면 |
-| `gordon_card_guard` | `assets/cards/gordon_guard.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 방어 장면 |
-| `gordon_card_skill` | `assets/cards/gordon_skill.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 스킬 장면 |
-| `gordon_card_special` | `assets/cards/gordon_special.png` | 768×576 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 고든 얼굴, 필살 장면 |
+| `gordon_cards` | `assets/sheets/gordon_cards.png` → `gordon_atk.png` `gordon_guard.png` `gordon_skill.png` `gordon_special.png` | 1024×1024 | `assets/chars/gordon_normal.png` `assets/chars/gordon_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 고든 얼굴과 화려한 기술 |
 
-## `cards-fukuro` — ★★★ 후쿠로 카드 그림 4장
+## `cards-fukuro` — ★★★ 후쿠로 카드 그림 (시트 1장 → 4장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `fukuro_card_atk` | `assets/cards/fukuro_atk.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 공격 장면 |
-| `fukuro_card_guard` | `assets/cards/fukuro_guard.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 방어 장면 |
-| `fukuro_card_skill` | `assets/cards/fukuro_skill.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 스킬 장면 |
-| `fukuro_card_special` | `assets/cards/fukuro_special.png` | 768×576 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 후쿠로 얼굴, 필살 장면 |
+| `fukuro_cards` | `assets/sheets/fukuro_cards.png` → `fukuro_atk.png` `fukuro_guard.png` `fukuro_skill.png` `fukuro_special.png` | 1024×1024 | `assets/chars/fukuro_normal.png` `assets/chars/fukuro_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 후쿠로 얼굴과 화려한 기술 |
 
 ## `style-sion` — 그림체 시안 시온 (4장, 게임에 안 씀)
 
@@ -1201,51 +1205,26 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `duo_nerea_tomori` | `assets/cutins/duo_nerea_tomori.png` | 1536×768 | `assets/chars/nerea_normal.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
 | `duo_bertha_nerea` | `assets/cutins/duo_bertha_nerea.png` | 1536×768 | `assets/chars/bertha_normal.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
 
-## `enemy-act1` — 1막 적
+## `enemy-act1` — 1막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sea_ghost` | `assets/enemies/sea_ghost.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `crab_soldier` | `assets/enemies/crab_soldier.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `dock_pirate` | `assets/enemies/dock_pirate.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `gulls` | `assets/enemies/gulls.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `lamp_eel` | `assets/enemies/lamp_eel.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `powder_sailor` | `assets/enemies/powder_sailor.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `captain_parrot` | `assets/enemies/captain_parrot.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `mistling` | `assets/enemies/mistling.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `anchor_giant` | `assets/enemies/anchor_giant.png` | 1024×1024 투명 | `assets/style/akane_c.png` | — |
-| `fog_witch` | `assets/enemies/fog_witch.png` | 1024×1024 투명 | `assets/style/akane_c.png` | — |
-| `smuggler_boss` | `assets/enemies/smuggler_boss.png` | 1024×1024 투명 | `assets/style/akane_c.png` | — |
+| `act1_foes_1` | `assets/sheets/act1_foes_1.png` → `sea_ghost.png` `crab_soldier.png` `dock_pirate.png` `gulls.png` `lamp_eel.png` `powder_sailor.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 sea_ghost·crab_soldier·dock_pirate·gulls·lamp_eel·powder_sailor |
+| `act1_foes_2` | `assets/sheets/act1_foes_2.png` → `captain_parrot.png` `mistling.png` `anchor_giant.png` `fog_witch.png` `smuggler_boss.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 captain_parrot·mistling·anchor_giant·fog_witch·smuggler_boss |
 
-## `enemy-act2` — 2막 적
+## `enemy-act2` — 2막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `cloud_spirit` | `assets/enemies/cloud_spirit.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `feather_knight` | `assets/enemies/feather_knight.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `thunder_sheep` | `assets/enemies/thunder_sheep.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `vane_soldier` | `assets/enemies/vane_soldier.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `mist_jelly` | `assets/enemies/mist_jelly.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `kite_knight` | `assets/enemies/kite_knight.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `puff_bomber` | `assets/enemies/puff_bomber.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `thunderbird` | `assets/enemies/thunderbird.png` | 1024×1024 투명 | `assets/style/akane_c.png` | — |
-| `twin_vanes` | `assets/enemies/twin_vanes.png` | 1024×1024 투명 | `assets/style/akane_c.png` | — |
-| `storm_trumpeter` | `assets/enemies/storm_trumpeter.png` | 1024×1024 투명 | `assets/style/akane_c.png` | — |
+| `act2_foes_1` | `assets/sheets/act2_foes_1.png` → `cloud_spirit.png` `feather_knight.png` `thunder_sheep.png` `vane_soldier.png` `mist_jelly.png` `kite_knight.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 cloud_spirit·feather_knight·thunder_sheep·vane_soldier·mist_jelly·kite_knight |
+| `act2_foes_2` | `assets/sheets/act2_foes_2.png` → `puff_bomber.png` `thunderbird.png` `twin_vanes.png` `storm_trumpeter.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 puff_bomber·thunderbird·twin_vanes·storm_trumpeter |
 
-## `enemy-act3` — 3막 적
+## `enemy-act3` — 3막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `star_statue` | `assets/enemies/star_statue.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `shadow_cat` | `assets/enemies/shadow_cat.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `meteor_archer` | `assets/enemies/meteor_archer.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `clock_angel` | `assets/enemies/clock_angel.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `tail_comet` | `assets/enemies/tail_comet.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `gear_knight` | `assets/enemies/gear_knight.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `star_thief` | `assets/enemies/star_thief.png` | 768×768 투명 | `assets/style/akane_c.png` | — |
-| `meteor_rider` | `assets/enemies/meteor_rider.png` | 1024×1024 투명 | `assets/style/akane_c.png` | — |
-| `moon_shadow` | `assets/enemies/moon_shadow.png` | 1024×1024 투명 | `assets/style/akane_c.png` | — |
-| `constellation_sage` | `assets/enemies/constellation_sage.png` | 1024×1024 투명 | `assets/style/akane_c.png` | — |
+| `act3_foes_1` | `assets/sheets/act3_foes_1.png` → `star_statue.png` `shadow_cat.png` `meteor_archer.png` `clock_angel.png` `tail_comet.png` `gear_knight.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 star_statue·shadow_cat·meteor_archer·clock_angel·tail_comet·gear_knight |
+| `act3_foes_2` | `assets/sheets/act3_foes_2.png` → `star_thief.png` `meteor_rider.png` `moon_shadow.png` `constellation_sage.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 star_thief·meteor_rider·moon_shadow·constellation_sage |
 
 ## `boss-lighthouse` — 보스 등대지기
 
@@ -1327,74 +1306,17 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 |---|---|---|---|---|
 | `app_icon` | `assets/app/icon.png` | 1024×1024 | `assets/style/akane_c.png` | — |
 
-## `icons` — 도구 아이콘 40
+## `icons` — 도구 아이콘 40 (시트 → 한 개씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `relic_old_watch` | `assets/icons/relic_old_watch.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_lantern` | `assets/icons/relic_lantern.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_first_aid` | `assets/icons/relic_first_aid.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_twin_ribbon` | `assets/icons/relic_twin_ribbon.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_salt_pouch` | `assets/icons/relic_salt_pouch.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sea_glass` | `assets/icons/relic_sea_glass.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_compass` | `assets/icons/relic_compass.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_umbrella` | `assets/icons/relic_umbrella.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_scarf` | `assets/icons/relic_scarf.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_star_candy` | `assets/icons/relic_star_candy.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_star_map` | `assets/icons/relic_star_map.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_hourglass` | `assets/icons/relic_hourglass.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_whistle` | `assets/icons/relic_whistle.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_banner` | `assets/icons/relic_banner.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_bandage` | `assets/icons/relic_bandage.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_moon_bottle` | `assets/icons/relic_moon_bottle.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_pistol` | `assets/icons/relic_pistol.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_moon_shard` | `assets/icons/relic_moon_shard.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_armband` | `assets/icons/relic_armband.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_bond_thread` | `assets/icons/relic_bond_thread.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_gold_feather` | `assets/icons/relic_gold_feather.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_dawn_feather` | `assets/icons/relic_dawn_feather.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_stopped_tower` | `assets/icons/relic_stopped_tower.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_star_crown` | `assets/icons/relic_star_crown.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_tide_bell` | `assets/icons/relic_tide_bell.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_rope` | `assets/icons/relic_rope.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_crescent_pin` | `assets/icons/relic_crescent_pin.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_half_ribbon` | `assets/icons/relic_half_ribbon.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_full_mirror` | `assets/icons/relic_full_mirror.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_new_ink` | `assets/icons/relic_new_ink.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_duo_scarf` | `assets/icons/relic_duo_scarf.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_duo_shield` | `assets/icons/relic_duo_shield.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sand_pendant` | `assets/icons/relic_sand_pendant.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_last_ticket` | `assets/icons/relic_last_ticket.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_red_knot` | `assets/icons/relic_red_knot.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_watch_chain` | `assets/icons/relic_watch_chain.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_moon_compass` | `assets/icons/relic_moon_compass.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_twin_star` | `assets/icons/relic_twin_star.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_reverse_clock` | `assets/icons/relic_reverse_clock.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_star_sash` | `assets/icons/relic_star_sash.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
+| `icons_1` | `assets/sheets/icons_1.png` → `relic_old_watch.png` `relic_lantern.png` `relic_first_aid.png` `relic_twin_ribbon.png` `relic_salt_pouch.png` `relic_sea_glass.png` `relic_compass.png` `relic_umbrella.png` `relic_scarf.png` `relic_star_candy.png` `relic_star_map.png` `relic_hourglass.png` `relic_whistle.png` `relic_banner.png` `relic_bandage.png` `relic_moon_bottle.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 16개 |
+| `icons_2` | `assets/sheets/icons_2.png` → `relic_pistol.png` `relic_moon_shard.png` `relic_armband.png` `relic_bond_thread.png` `relic_gold_feather.png` `relic_dawn_feather.png` `relic_stopped_tower.png` `relic_star_crown.png` `relic_tide_bell.png` `relic_rope.png` `relic_crescent_pin.png` `relic_half_ribbon.png` `relic_full_mirror.png` `relic_new_ink.png` `relic_duo_scarf.png` `relic_duo_shield.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 16개 |
+| `icons_3` | `assets/sheets/icons_3.png` → `relic_sand_pendant.png` `relic_last_ticket.png` `relic_red_knot.png` `relic_watch_chain.png` `relic_moon_compass.png` `relic_twin_star.png` `relic_reverse_clock.png` `relic_star_sash.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 8개 |
 
-## `icons-sig` — 동료 전용 도구 아이콘 22
+## `icons-sig` — 동료 전용 도구 아이콘 22 (시트 → 한 개씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `relic_sig_sion` | `assets/icons/relic_sig_sion.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_lunaria` | `assets/icons/relic_sig_lunaria.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_akane` | `assets/icons/relic_sig_akane.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_eleonore` | `assets/icons/relic_sig_eleonore.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_iris` | `assets/icons/relic_sig_iris.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_noel` | `assets/icons/relic_sig_noel.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_raven` | `assets/icons/relic_sig_raven.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_mimimomo` | `assets/icons/relic_sig_mimimomo.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_sebas` | `assets/icons/relic_sig_sebas.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_mariana` | `assets/icons/relic_sig_mariana.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_tomori` | `assets/icons/relic_sig_tomori.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_sigrun` | `assets/icons/relic_sig_sigrun.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_zeno` | `assets/icons/relic_sig_zeno.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_brick` | `assets/icons/relic_sig_brick.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_marta` | `assets/icons/relic_sig_marta.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_finn` | `assets/icons/relic_sig_finn.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_laila` | `assets/icons/relic_sig_laila.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_dora` | `assets/icons/relic_sig_dora.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_gordon` | `assets/icons/relic_sig_gordon.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_nerea` | `assets/icons/relic_sig_nerea.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_bertha` | `assets/icons/relic_sig_bertha.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
-| `relic_sig_fukuro` | `assets/icons/relic_sig_fukuro.png` | 192×192 투명 | `assets/style/akane_c.png` | — |
+| `icons-sig_1` | `assets/sheets/icons-sig_1.png` → `relic_sig_sion.png` `relic_sig_lunaria.png` `relic_sig_akane.png` `relic_sig_eleonore.png` `relic_sig_iris.png` `relic_sig_noel.png` `relic_sig_raven.png` `relic_sig_mimimomo.png` `relic_sig_sebas.png` `relic_sig_mariana.png` `relic_sig_tomori.png` `relic_sig_sigrun.png` `relic_sig_zeno.png` `relic_sig_brick.png` `relic_sig_marta.png` `relic_sig_finn.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 16개 |
+| `icons-sig_2` | `assets/sheets/icons-sig_2.png` → `relic_sig_laila.png` `relic_sig_dora.png` `relic_sig_gordon.png` `relic_sig_nerea.png` `relic_sig_bertha.png` `relic_sig_fukuro.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 6개 |

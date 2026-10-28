@@ -7,7 +7,7 @@
     "check": "node tools/export-prompts.mjs --check && node tools/check-assets.mjs && node tools/art-index.mjs --check && node tools/gen-docs.mjs --check && node tools/make-icons.mjs --check",
     "icons": "node tools/make-icons.mjs",
     "docs": "node tools/gen-docs.mjs",
-    "art": "node tools/art-index.mjs",
+    "art": "node tools/slice-sheets.mjs && node tools/art-index.mjs",
     "prompts": "node tools/export-prompts.mjs",
     "smoke": "node tools/smoke.mjs",
     "sim": "node tools/sim.mjs",

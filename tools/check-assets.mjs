@@ -8,7 +8,9 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const P = await import(pathToFileURL(path.join(root, 'js/asset_prompts.js')).href);
-const { items } = P.assetList();
+// items = GPT가 그리는 그림(시트 포함), outputs = 시트에서 잘라 낸 그림(tools/slice-sheets.mjs). 둘 다 검사한다.
+const { items: drawn, outputs } = P.assetList();
+const items = [...drawn, ...outputs];
 const byPath = new Map(items.map((i) => [i.file, i]));
 const folders = [...new Set(Object.values(P.SPEC).map((s) => s.folder))];
 

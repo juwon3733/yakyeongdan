@@ -5,7 +5,7 @@
 import { CARDS } from './data/cards.js';
 import { cardArtKind } from './cardkind.js';
 
-export const STYLE_VERSION = 3; // 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
+export const STYLE_VERSION = 4; // 4: 여러 장을 한 시트에(자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
 
 // ── 공통 스타일 ──────────────────────────────────────────
 export const STYLE = {
@@ -23,22 +23,27 @@ export const STYLE = {
 export const SPEC = {
   stand:    { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백' },
   portrait: { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음' },
-  pose:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 모션 한 장(공격·스킬·방어·피격) · 서 있는 그림과 같은 크기·같은 발 위치 · 투명 배경 · 바꿔 끼워 움직임을 만든다' },
+  pose:     { w: 1024, h: 1536, native: '128×192', scale: 8, transparent: true,  colors: 256, folder: 'chars', note: '전투 자세 한 장(공격·스킬·방어·피격) · 자세 시트(posesheet)에서 잘라 냄 · 서 있는 그림과 바꿔 끼운다' },
   outfit:   { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '두 번째 의상 전신 · 투명 배경' },
   cutin:    { w: 1536, h: 576,  native: '384×144', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄' },
   duo:      { w: 1536, h: 768,  native: '384×192', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄' },
   cg:       { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'cg', note: '★5 전신 CG · 16:9 · 화질 우선, 색 제한 없음' },
-  enemy:    { w: 768,  h: 768,  native: '192×192', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 투명 배경' },
-  elite:    { w: 1024, h: 1024, native: '256×256', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 투명 배경' },
+  enemy:    { w: 768,  h: 768,  native: '128×128', scale: 6, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
+  elite:    { w: 1024, h: 1024, native: '128×128', scale: 8, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
   boss:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '보스 · 투명 배경' },
   bg:       { w: 1280, h: 720,  native: '640×360', scale: 2, transparent: false, colors: 256, folder: 'bg', note: '배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)' },
   title:    { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'title', note: '타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지' },
   summon:   { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'summon', note: '소환 화면 밤하늘 16:9' },
   meteor:   { w: 512,  h: 512,  native: '64×64',   scale: 8, transparent: true,  colors: 256, folder: 'summon', note: '별똥별 효과 · 투명 배경' },
-  icon:     { w: 192,  h: 192,  native: '24×24',   scale: 8, transparent: true,  colors: 64,  folder: 'icons', note: '도구 아이콘 · 투명 배경 · 24×24 도트를 8배' },
+  icon:     { w: 192,  h: 192,  native: '32×32',   scale: 6, transparent: true,  colors: 64,  folder: 'icons', note: '도구 아이콘 · 아이콘 시트(iconsheet)에서 잘라 냄 · 투명 배경' },
   appicon:  { w: 1024, h: 1024, native: '64×64',   scale: 16, transparent: false, colors: 64, folder: 'app', note: '앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다' },
   style:    { w: 1024, h: 1536, native: '시안마다 다름', scale: 0, transparent: true, colors: Infinity, folder: 'style', note: '그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다' },
-  card:     { w: 768,  h: 576,  native: '192×144', scale: 4, transparent: false, colors: 256, folder: 'cards', note: '카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
+  card:     { w: 768,  h: 576,  native: '128×96', scale: 6, transparent: false, colors: 256, folder: 'cards', note: '카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
+  // 시트: GPT가 한 장에 여러 개를 그리고, tools/slice-sheets.mjs가 칸마다 잘라 위 종류의 파일로 만든다(npm run art).
+  posesheet: { w: 1024, h: 1536, native: '256×384 (칸 128×192 × 4)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '전투 자세 2×2 — 왼쪽 위 공격·오른쪽 위 스킬·왼쪽 아래 방어·오른쪽 아래 피격, 칸 512×768' },
+  cardsheet: { w: 1024, h: 1024, native: '256×256 (칸 128×128 × 4)', scale: 4, transparent: false, colors: Infinity, folder: 'sheets', note: '카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀' },
+  foesheet:  { w: 1536, h: 1024, native: '384×256 (칸 128×128 × 6)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '적 3×2, 칸 512×512' },
+  iconsheet: { w: 1024, h: 1024, native: '128×128 (칸 32×32 × 16)', scale: 8, transparent: true, colors: Infinity, folder: 'sheets', note: '아이콘 4×4, 칸 256×256' },
 };
 
 // ── 동료 22명 ────────────────────────────────────────────
@@ -350,9 +355,26 @@ function item(kind, id, batch, file, prompt, extra = {}) {
     max_colors: s.colors === Infinity ? null : s.colors, native: s.native, note: s.note, prompt, ...extra };
 }
 
+// 시트 한 장 + 잘라 낼 칸들. cells: [[종류, id, 파일, 열, 행, 칸 안에서 쓸 영역(없으면 칸 전체)], …]
+// 잘라 낸 그림(outputs)은 GPT가 그리지 않고 tools/slice-sheets.mjs가 만든다. 검사 도구는 outputs도 같이 본다.
+const outputs = [];
+function sheet(kind, id, batch, file, prompt, grid, cells, extra = {}) {
+  const s = SPEC[kind], [cols, rows] = grid, cw = s.w / cols, ch = s.h / rows;
+  const it = item(kind, id, batch, file, prompt, extra);
+  it.cells = cells.map(([k, cid, cfile, col, row, area]) => {
+    const [ax, ay, aw, ah] = area || [0, 0, cw, ch], t = SPEC[k];
+    const o = { id: cid, kind: k, batch, file: `${t.folder}/${cfile}`, width: t.w, height: t.h, transparent: t.transparent,
+      max_colors: t.colors === Infinity ? null : t.colors, native: t.native, note: t.note, from: it.file };
+    outputs.push(o);
+    return { file: o.file, x: col * cw + ax, y: row * ch + ay, w: aw, h: ah, native: t.native.split('×').map(Number), out: [t.w, t.h] };
+  });
+  return it;
+}
+
 export function assetList() {
   const out = [];
   const batches = [];
+  outputs.length = 0;
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `char-${id}`;
     const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity));
@@ -364,35 +386,35 @@ export function assetList() {
       join(base, STYLE.onModel, `${who}\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT (toward enemies), weapon ready. Fully transparent background, nothing behind the character. Feet near the bottom edge, empty margin above the head. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric.`),
       { must_show: '전신, 오른쪽을 향한 전투 자세, 무기' }));
     for (const [face, expr] of Object.entries(c.faces)) {
-      out.push(item('portrait', `${id}_${face}`, batch, `${id}_${face}.png`,
+      // 웃음·진지 표정은 아직 게임에서 안 써서 나중 묶음(extra-<id>)으로
+      out.push(item('portrait', `${id}_${face}`, face === 'normal' ? batch : `extra-${id}`, `${id}_${face}.png`,
         join(base, STYLE.onModel, `${who}\nWaist-up portrait facing slightly to the side. Expression and pose: ${expr}. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric.`),
         { followup_prompt: `Same character, same style. Waist-up portrait, transparent background. Expression and pose: ${expr}.`, reference_images: face === 'normal' ? [] : ref }));
     }
-    out.push(item('cutin', `${id}_cutin`, batch, `${id}_cutin.png`,
+    batches.push({ id: `extra-${id}`, title: `${c.name} 나중(표정·컷인·두 번째 의상)` });
+    out.push(item('cutin', `${id}_cutin`, `extra-${id}`, `${id}_cutin.png`,
       join(base, STYLE.onModel, `${who}\nDramatic cut-in panel for a special move: ${c.cutin}. Wide horizontal composition, the face and action inside the middle horizontal band (the top and bottom will be cropped to 1536x576). Speed lines made of pixels, strong accent colors (${c.accent}).`),
       { reference_images: ref, must_show: '얼굴이 가운데 띠 안' }));
-    out.push(item('outfit', `${id}_outfit2`, batch, `${id}_outfit2.png`,
+    out.push(item('outfit', `${id}_outfit2`, `extra-${id}`, `${id}_outfit2.png`,
       join(base, STYLE.onModel, `${who}\nSame person, same face and hair, but in a ${c.outfit}. Full-body standing pose facing slightly right, transparent background. Native resolution 256x384 pixels, upscaled exactly 4x to 1024x1536.`),
       { reference_images: ref }));
   }
 
-  // 전투 모션: 동료마다 공격·스킬·방어·피격 네 장. 카드 종류에 따라 골라 쓴다(js/juice.js MOTION). 서 있는 그림과 바꿔 끼우므로 크기·발 위치·방향이 같아야 한다.
+  // 전투 자세: 동료마다 공격·스킬·방어·피격 네 장을 한 장(2×2 시트)에. 카드 종류에 따라 골라 쓴다(js/juice.js MOTION). 서 있는 그림과 바꿔 끼우므로 크기·발 위치·방향이 같아야 한다.
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `pose-${id}`;
-    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 전투 모션 4장` });
+    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 전투 자세 (시트 1장 → 4장)` });
     const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
     const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
-    const frame = 'Same canvas framing as the attached battle-stance image: same character size, feet on the same spot near the bottom edge, facing RIGHT toward the enemies. Fully transparent background. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536.';
-    const POSES = {
-      attack: ['공격 — 오른쪽으로 내지르는 순간', `ATTACK pose: the peak moment of her basic attack, lunging or striking toward the RIGHT with her weapon, body leaning forward, motion smear made of pixels. Motifs: ${c.fx}.`],
-      guard: ['방어 — 웅크려 막는 순간', 'GUARD pose: bracing defensively with knees bent, weapon or arm raised in front like a shield, determined expression, a faint protective barrier glow in her accent color.'],
-      hurt: ['피격 — 왼쪽으로 밀려나는 순간', 'HURT pose: just got hit, recoiling backward to the LEFT, knees bent, one arm up to guard, eyes squeezed or wincing, hair and clothes flung forward by the impact. No blood, no wounds.'],
-      skill: ['스킬 — 힘을 모아 쓰는 순간', `SKILL pose: casting her signature power, a confident focused expression, her magic effect glowing around her (${c.fx}), clearly different from the attack pose.`],
-    };
-    for (const [k, [label, txt]] of Object.entries(POSES)) {
-      out.push(item('pose', `${id}_${k}`, batch, `${id}_${k}.png`, join(base, `${who}\n${txt}\n${frame}`),
-        { must_show: label, reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
-    }
+    out.push(sheet('posesheet', `${id}_poses`, batch, `${id}_poses.png`, join(base, `${who}
+A 2x2 sprite sheet of FOUR battle poses of this same character on one 1024x1536 canvas, split into four equal cells of 512x768 (2 columns x 2 rows). No borders, no grid lines, no gutters, no labels or text.
+- Top-left cell — ATTACK: the peak moment of her basic attack, lunging or striking toward the RIGHT with her weapon, body leaning forward, motion smear made of pixels. Motifs: ${c.fx}.
+- Top-right cell — SKILL: casting her signature power, confident focused expression, her magic effect glowing around her (${c.fx}).
+- Bottom-left cell — GUARD: bracing defensively with knees bent, weapon or arm raised in front like a shield, determined expression, a faint protective barrier glow in her accent color.
+- Bottom-right cell — HURT: just got hit, recoiling backward to the LEFT, wincing, one arm up, hair and clothes flung by the impact. No blood, no wounds.
+In every cell: the same character size as the attached battle-stance image, feet on the same line near the bottom of the cell, facing RIGHT toward the enemies, the whole body and effect fully inside its own cell. Fully transparent background. Native resolution 128x192 pixels per cell (256x384 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
+      [2, 2], [['pose', `${id}_attack`, `${id}_attack.png`, 0, 0], ['pose', `${id}_skill`, `${id}_skill.png`, 1, 0], ['pose', `${id}_guard`, `${id}_guard.png`, 0, 1], ['pose', `${id}_hurt`, `${id}_hurt.png`, 1, 1]],
+      { must_show: '2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치', reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
   }
 
   // 카드 그림: 동료마다 종류별 4장(공격·방어·스킬·필살). 같은 종류 카드가 같이 쓴다(js/cardkind.js). 인연 듀오 카드는 임시 일러스트.
@@ -404,15 +426,16 @@ export function assetList() {
   };
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `cards-${id}`;
-    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 카드 그림 4장` });
+    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 카드 그림 (시트 1장 → 4장)` });
     const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
     const mine = Object.values(CARDS).filter((d) => d.ch === id);
-    for (const [k, [label, scene]] of Object.entries(KIND_SCENE)) {
-      const names = mine.filter((d) => cardArtKind(d) === k).map((d) => `「${d.name}」`).slice(0, 6).join(', ');
-      out.push(item('card', `${id}_card_${k}`, batch, `${id}_${k}.png`,
-        join(base, `Skill card illustration (${label} cards${names ? ` such as ${names}, Korean titles — NEVER write any text in the image` : ''}).\nShow ${c.name}, ON-MODEL from the attached references, ${scene}. Visual motifs for this character: ${c.fx}. Accent colors: ${c.accent}.\nComposition: the character and the effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 192x144 pixels and upscaled 4x to 768x576 — use big readable shapes.`),
-        { reference_images: [`chars/${id}_normal.png`, `chars/${id}_stand.png`], must_show: `${c.name} 얼굴, ${label} 장면` }));
-    }
+    const names = (k) => mine.filter((d) => cardArtKind(d) === k).map((d) => `「${d.name}」`).slice(0, 5).join(', ');
+    const pos = { atk: ['Top-left', 0, 0], guard: ['Top-right', 1, 0], skill: ['Bottom-left', 0, 1], special: ['Bottom-right', 1, 1] };
+    out.push(sheet('cardsheet', `${id}_cards`, batch, `${id}_cards.png`, join(base, `Four flashy skill card illustrations of ${c.name} on one 1024x1024 canvas, split into four equal square cells of 512x512 (2x2). No borders, no grid lines, no gutters, NO text anywhere (card titles below are Korean and must NOT be written).
+${Object.entries(KIND_SCENE).map(([k, [label, scene]]) => `- ${pos[k][0]} cell — ${label.toUpperCase()} (${label === '필살' ? 'rare' : label} cards${names(k) ? ` such as ${names(k)}` : ''}): ${c.name} ${scene}.`).join('\n')}
+${c.name} is ON-MODEL from the attached references in every cell. Visual motifs: ${c.fx}. Accent colors: ${c.accent}. Each cell is a complete, spectacular scene with its own dark night background, the face clearly visible and attractive, dynamic angle, big readable shapes. Keep everything important inside the middle 512x384 band of each cell — the top 64 and bottom 64 pixels of every cell will be cut off. Native resolution 128x128 pixels per cell (256x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
+      [2, 2], Object.entries(pos).map(([k, [, col, row]]) => ['card', `${id}_card_${k}`, `${id}_${k}.png`, col, row, [0, 64, 512, 384]]),
+      { reference_images: [`chars/${id}_normal.png`, `chars/${id}_stand.png`], must_show: `2×2: 공격·방어 / 스킬·필살, 칸마다 ${c.name} 얼굴과 화려한 기술` }));
   }
 
   // 그림체 시안: ★5 한 명을 도트 굵기만 다르게 4장. 사용자가 고른 시안이 STYLE의 기준이 된다(게임에 안 씀).
@@ -450,15 +473,19 @@ export function assetList() {
       { reference_images: [`chars/${a}_normal.png`, `chars/${b}_normal.png`], must_show: '두 사람 얼굴 둘 다' }));
   }
 
-  // 적
+  // 적: 막마다 일반 적 + 강적을 3×2 시트(6마리씩)로
   for (const act of ['act1', 'act2', 'act3']) {
     const batch = `enemy-${act}`;
-    batches.push({ id: batch, title: `${act.slice(-1)}막 적` });
-    for (const [id, desc] of Object.entries(ENEMIES[act])) {
-      out.push(item('enemy', id, batch, `${id}.png`, join(STYLE.pixel, `Enemy sprite: ${desc}. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 192x192 pixels, upscaled exactly 4x to 768x768.`)));
-    }
-    for (const [id, desc] of Object.entries(ENEMIES[act + '_elite'])) {
-      out.push(item('elite', id, batch, `${id}.png`, join(STYLE.pixel, /woman/.test(desc) ? STYLE.character : '', `Elite enemy sprite: ${desc}. Bigger and more imposing than normal enemies. Facing LEFT. Fully transparent background. Native resolution 256x256 pixels, upscaled exactly 4x to 1024x1024.`)));
+    batches.push({ id: batch, title: `${act.slice(-1)}막 적 (시트 → 한 마리씩)` });
+    const list = [...Object.entries(ENEMIES[act]).map(([id, d]) => ['enemy', id, d]), ...Object.entries(ENEMIES[act + '_elite']).map(([id, d]) => ['elite', id, d])];
+    for (let n = 0; n * 6 < list.length; n++) {
+      const part = list.slice(n * 6, n * 6 + 6);
+      out.push(sheet('foesheet', `${act}_foes_${n + 1}`, batch, `${act}_foes_${n + 1}.png`, join(STYLE.pixel, part.some(([, , d]) => /woman/.test(d)) ? STYLE.character : '',
+        `An enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.
+${part.map(([k, , d], i) => `- Cell ${i + 1}: ${k === 'elite' ? 'ELITE (bigger and more imposing, fills more of the cell): ' : ''}${d}`).join('\n')}
+${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transparent).\n` : ''}Fully transparent background. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
+        [3, 2], part.map(([k, id], i) => [k, id, `${id}.png`, i % 3, Math.floor(i / 3)]),
+        { must_show: `3×2 칸에 ${part.map(([, id]) => id).join('·')}` }));
     }
   }
   for (const [id, b] of Object.entries(BOSSES)) {
@@ -488,10 +515,20 @@ export function assetList() {
   }
   batches.push({ id: 'app', title: '앱 아이콘' });
   out.push(item('appicon', 'app_icon', 'app', 'icon.png', join(STYLE.pixel, 'App icon for the game 「야경단」 (Night Watch): a tall dark tower rising from the night sea with a single warm lantern glowing at its top, a gold crescent moon, a few stars, deep navy sky. Bold, simple silhouette that still reads at 48x48. Fill the whole square edge to edge with the night background (no transparent corners, no border, no text); keep the tower and moon inside the central 80%. Native resolution 64x64 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1024.')));
-  batches.push({ id: 'icons', title: '도구 아이콘 40' });
-  const icon = (batch, id, desc) => out.push(item('icon', `relic_${id}`, batch, `relic_${id}.png`, join(STYLE.pixel, `A single item icon: ${desc}. Centered, readable at 24x24 pixels, bold outline, fully transparent background. Native resolution 24x24 pixels, upscaled exactly 8x to 192x192.`)));
-  for (const [id, desc] of Object.entries(RELICS)) icon('icons', id, desc);
-  batches.push({ id: 'icons-sig', title: `동료 전용 도구 아이콘 ${Object.keys(SIG_RELICS).length}` });
-  for (const [id, desc] of Object.entries(SIG_RELICS)) icon('icons-sig', id, desc);
-  return { batches, items: out };
+  // 아이콘: 4×4 시트(16개씩)
+  const iconSheets = (batch, title, entries) => {
+    batches.push({ id: batch, title: `${title} ${entries.length} (시트 → 한 개씩)` });
+    for (let n = 0; n * 16 < entries.length; n++) {
+      const part = entries.slice(n * 16, n * 16 + 16);
+      out.push(sheet('iconsheet', `${batch}_${n + 1}`, batch, `${batch}_${n + 1}.png`, join(STYLE.pixel,
+        `An item icon sheet on one 1024x1024 canvas, split into sixteen equal square cells of 256x256 (4x4), reading order left to right, top to bottom. No borders, no grid lines, no gutters, no labels or text. One icon per cell, centered, readable at small size, bold dark outline, consistent style across all icons.
+${part.map(([, d], i) => `- Cell ${i + 1}: ${d}`).join('\n')}
+${part.length < 16 ? `Cells ${part.length + 1}-16 stay completely empty (transparent).\n` : ''}Fully transparent background. Native resolution 32x32 pixels per cell (128x128 for the whole sheet), upscaled exactly 8x with nearest-neighbor.`),
+        [4, 4], part.map(([id], i) => ['icon', `relic_${id}`, `relic_${id}.png`, i % 4, Math.floor(i / 4)]),
+        { must_show: `4×4 칸에 아이콘 ${part.length}개` }));
+    }
+  };
+  iconSheets('icons', '도구 아이콘', Object.entries(RELICS));
+  iconSheets('icons-sig', '동료 전용 도구 아이콘', Object.entries(SIG_RELICS));
+  return { batches, items: out, outputs: [...outputs] };
 }
