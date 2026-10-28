@@ -5,7 +5,11 @@
 //   phase2: 체력이 at 비율 아래가 되면 한 번 바뀜 { at, msg, clockOnce, ...바꿀 필드(armor·acts·aim·turnClock·pat) }
 //   line / lines: 강적·보스 앞 한 줄 대사 (lines면 그중 하나) · burstClock: 내 턴 피해가 RULES.bigTurn 이상이면 밤 시계 +분 (턴당 1번)
 //   thorns: 이 적을 친 동료가 받는 피해 · deathBoom: 쓰러질 때 모든 동료 피해
-//   ACTS[막]: easy(1층 전투), fights(그 위 전투), elites, boss — 각 항목은 적 id 배열(1~3마리)
+//   ACTS[막]: easy(1층 전투), fights(그 위 전투), elites — 각 항목은 적 id 배열(1~3마리)
+//   boss: 그 막 보스 후보 id (판마다 지도를 만들 때 하나를 고른다, js/map.js makeMap → map.boss)
+//   phase3: phase2와 같은 모양, 2단계 뒤 at 비율 아래에서 한 번 (depth: 밤의 깊이 그 이상에서만)
+//   mistVeil { block, vuln }: 내 턴 시작마다 방어 block, 그 턴 ③이 처음 터지면 장막이 걷혀 방어 0·취약 vuln
+//   stagger: 내 턴 피해가 RULES.bigTurn 이상이면 다음 행동 하나를 건너뜀
 // 행동: A 공격(v, 횟수) · B 방어 · U 힘 · M 공격+방어 · W 동료에게 상태(약화·취약) · K 저주 카드를 뽑을 더미 위에 · T 밤 시계 +분
 //   R 모든 동료 공격 · X 자폭(모든 동료 피해 후 쓰러짐) · G 모든 적 방어 · H 가장 약한 적 회복 · Z 부하 부르기(살아 있는 적이 3 미만일 때)
 //   S 카드 훔치기(뽑을 더미에서 1장, 그 적을 쓰러뜨리면 버린 더미로 돌아옴) · N 노림 바꾸기
@@ -34,6 +38,9 @@ export const FOE_PAL = {
   comet:  { h: '#a0e0ff', H: '#4aa0e0', e: '#ffffff', o: '#3a6aa0', O: '#1e3a6a', a: '#ffe080', skin: '#c0d8f0' },
   gear:   { h: '#b0a080', H: '#706040', e: '#ff8040', o: '#8a8070', O: '#5a5040', a: '#e0b84a', skin: '#c8c0b0' },
   thief:  { h: '#2a2a4a', H: '#14142a', e: '#ffe080', o: '#4a3a6a', O: '#2a2040', a: '#ffe080', skin: '#c0c0d8' },
+  queen:  { h: '#d8ccf4', H: '#8e7cc8', e: '#b6ff9a', o: '#4a3878', O: '#2a1e4a', a: '#e8e0ff' },
+  mist:   { h: '#c8c4dc', H: '#8a86a8', e: '#b6ff9a', o: '#9a94b8', O: '#6a6488', a: '#e8e4f4', skin: '#d0ccdc' },
+  whale:  { h: '#3a5a8a', H: '#1e3458', e: '#ffe680', o: '#5a7ab0', O: '#2a4270', a: '#c8e4ff', skin: '#9ab8dc' },
 };
 
 export const FOE = {
@@ -55,6 +62,13 @@ export const FOE = {
              lines: ['"불빛이 닿는 곳이 네 자리다."', '"오늘 밤도 올라왔나. 불을 켜 두마."', '"등대는 길을 비추지. 숨을 곳도 같이."'],
              light: { double: .5 },   // 불빛이 비춘 동료: 그 동료 카드 비용 +1, 단일 공격은 그 동료를 노림. 체력 절반이면 불빛 둘
              pat: [A(9), M(11, 8), A(6, 3), U(3)] },
+  // 1막 보스 변형 (판 시드로 등대지기와 둘 중 하나): 안개 마녀 여왕 — 저주·약한 동료 노림, 「안개 장막」
+  queen:   { name: '안개 마녀 여왕', hp: 92, pal: 'queen', long: true, crown: true, aim: 'weakest',
+             lines: ['"안개가 짙은 밤엔 다들 길을 잃지. 너희도."', '"내 딸들이 신세를 졌다지? 이번엔 내가 상대해 주마."', '"장막 너머가 보이니? …보일 리가 없지."'],
+             phase2: { at: .5, msg: '안개 마녀 여왕이 왕관을 높이 들었다. 안개 그림자가 몰려온다.', aim: 'back',
+                       pat: [Z('mistling'), R(8), A(17), K('curse.fog', 1)] },
+             pat: [K('curse.fog', 2), A(13), W('weak', 2), A(7, 2)] },
+  mistling:{ name: '안개 그림자', hp: 14, pal: 'mist', long: true, small: true, aim: 'back', pat: [A(6), W('weak', 1)] },
   // 2막 구름층
   cloud:   { name: '구름 정령', hp: 44, pal: 'cloud', long: true, pat: [A(13, 2), B(10), A(28)] },
   feather: { name: '깃털 기사', hp: 50, pal: 'knight', pat: [A(24), M(15, 7), U(3)] },
@@ -74,6 +88,12 @@ export const FOE = {
              phase2: { at: .5, msg: '구름 기사단장이 갑옷을 벗어던졌다! 피해 감소가 사라지고 매 턴 두 번 움직인다.', armor: 0, acts: 2, aim: 'cycle',
                       pat: [A(10), A(4, 2), M(8, 8), U(2)] },
              pat: [M(12, 10), A(7, 3), U(3), A(20)] },
+  // 2막 보스 변형 (판 시드로 구름 기사단장과 둘 중 하나): 폭풍 고래 — 밤 시계 압박·모두 공격, 터지는 턴에 비틀거림
+  whale:   { name: '폭풍 고래', hp: 136, pal: 'whale', long: true, crown: true, aim: 'front',
+             lines: ['구름 바다가 갈라지고, 번개를 두른 거대한 고래가 떠오른다.', '노랫소리 같은 울음이 탑 전체를 흔든다.', '고래 등의 폭풍이 밤 시계 바늘을 밀어낸다.'],
+             phase2: { at: .5, msg: '폭풍 고래가 폭풍의 눈으로 들어갔다! 매 턴 밤 시계 +1분, 모두를 휩쓴다.', turnClock: 1, aim: 'weakest',
+                       pat: [R(11), A(10, 2), A(20), R(15)] },
+             pat: [R(10), A(23), A(9, 2), A(7, 3)] },
   // 3막 별층
   statue:  { name: '별 조각상', hp: 46, pal: 'star', pat: [B(15), A(16)] },
   cat:     { name: '그림자 고양이', hp: 40, pal: 'cat', long: true, aim: 'back', pat: [A(5, 4), U(3)] },
@@ -91,6 +111,10 @@ export const FOE = {
   dawn:    { name: '새벽', hp: 176, pal: 'dawn', long: true, crown: true, aim: 'dawn', turnClock: 1, burstClock: 3,
              lines: ['"왜 매일 밤 올라오는 거야? …그냥 아침이 오게 두면 되잖아."', '"또 너희구나. 오늘은 몇 시에 왔어?"', '"밤은 끝나야 해. 그게 맞는 거야."'],
              phase2: { at: .5, msg: '해가 뜬다. 밤 시계 +5분.', clockOnce: 5, turnClock: 1 },
+             // 밤의 깊이 5 이상에서만: 체력 20% 아래 「한낮」 3단계
+             phase3: { at: .2, depth: 5, msg: '한낮. 「새벽」이 해를 등에 지고 날아올랐다. 매 턴 모두 공격, 밤 시계 +2분. 대신 한 턴 100+ 벌칙은 사라진다.',
+                       line: '"…아직도 서 있어? 그럼 끝까지 보여 줄게. 한낮을."', clockOnce: 3, turnClock: 2, burstClock: 0, aim: 'dawn',
+                       pat: [R(9), A(13), A(5, 4), R(12), U(3)] },
              pat: [A(11), A(5, 4), M(14, 14), U(4), A(24)] },
   // 첫 실행 튜토리얼 (js/data/tutorial.js): 약하게
   tut_ghost: { name: '아기 바다 유령', hp: 24, pal: 'sea', long: true, pat: [A(4), A(2, 2), A(5)] },
@@ -103,11 +127,11 @@ export const ACTS = {
   1: { easy: [['ghost'], ['crab'], ['gull', 'gull', 'gull'], ['eel']],
        fights: [['ghost'], ['crab'], ['pirate', 'pirate'], ['gull', 'gull', 'gull'], ['ghost', 'gull'], ['eel'], ['powder', 'pirate'],
                 ['parrot', 'gull'], ['eel', 'gull'], ['crab', 'powder']],
-       elites: [['anchor'], ['witch'], ['smuggler', 'pirate']], boss: ['keeper'] },
+       elites: [['anchor'], ['witch'], ['smuggler', 'pirate']], boss: ['keeper', 'queen'] },
   2: { easy: [['cloud'], ['feather'], ['kite']],
        fights: [['cloud'], ['feather'], ['sheep'], ['vane'], ['cloud', 'vane'], ['jelly', 'feather'], ['kite'], ['puff', 'puff'],
                 ['kite', 'jelly'], ['sheep', 'puff']],
-       elites: [['bird'], ['vaneL', 'vaneR'], ['trumpet']], boss: ['captain'] },
+       elites: [['bird'], ['vaneL', 'vaneR'], ['trumpet']], boss: ['captain', 'whale'] },
   3: { easy: [['statue'], ['cat'], ['gear']],
        fights: [['statue'], ['cat'], ['archer'], ['angel'], ['angel', 'cat'], ['comet', 'comet'], ['gear'], ['thief', 'cat'],
                 ['statue', 'comet'], ['gear', 'thief']],
@@ -121,4 +145,7 @@ Object.assign(FOE.witch, { huntBurst: true });
 Object.assign(FOE.angel, { heavyTime: { over: 60, add: 5 } });
 Object.assign(FOE.vaneL, { twinRage: 5 });
 Object.assign(FOE.vaneR, { twinRage: 5 });
+// 안개 마녀 여왕: ③을 먼저 터뜨려 장막을 걷고 몰아칠지, 아껴 둘지. 폭풍 고래: 터지는 턴을 만들면 한 번 비틀거린다(대신 시계가 계속 돈다).
+Object.assign(FOE.queen, { mistVeil: { block: 12, vuln: 2 } });
+Object.assign(FOE.whale, { stagger: true });
 Object.assign(FOE.captain.phase2, { aim: 'top', duel: 5, msg: '구름 기사단장이 갑옷을 벗어던졌다! 「도전」: 가장 많이 친 동료를 노리고, 그 동료에게 맞으면 반격한다. 매 턴 두 번 움직인다.' });

@@ -846,6 +846,7 @@
         "lamp_eel",
         "powder_sailor",
         "captain_parrot",
+        "mistling",
         "anchor_giant",
         "fog_witch",
         "smuggler_boss"
@@ -902,11 +903,30 @@
       ]
     },
     {
+      "id": "boss-fog_queen",
+      "title": "보스 안개 마녀 여왕",
+      "items": [
+        "boss_fog_queen_1",
+        "boss_fog_queen_2",
+        "boss_fog_queen_cutin"
+      ]
+    },
+    {
+      "id": "boss-storm_whale",
+      "title": "보스 폭풍 고래",
+      "items": [
+        "boss_storm_whale_1",
+        "boss_storm_whale_2",
+        "boss_storm_whale_cutin"
+      ]
+    },
+    {
       "id": "boss-dawn",
       "title": "보스 새벽",
       "items": [
         "boss_dawn_1",
         "boss_dawn_2",
+        "boss_dawn_3",
         "boss_dawn_cutin"
       ]
     },
@@ -9354,6 +9374,19 @@
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 선장 앵무새 — a bossy red parrot in a tiny captain hat, squawking orders. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
     },
     {
+      "id": "mistling",
+      "kind": "enemy",
+      "batch": "enemy-act1",
+      "file": "enemies/mistling.png",
+      "width": 768,
+      "height": 768,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "96×96",
+      "note": "일반 적 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nEnemy sprite: 안개 그림자 — a small wisp of lavender sea fog shaped like a veiled girl-silhouette with glowing green eyes, summoned by the Fog Witch Queen. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768."
+    },
+    {
       "id": "anchor_giant",
       "kind": "elite",
       "batch": "enemy-act1",
@@ -9743,6 +9776,96 @@
       ]
     },
     {
+      "id": "boss_fog_queen_1",
+      "kind": "boss",
+      "batch": "boss-fog_queen",
+      "file": "enemies/boss_fog_queen_1.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nBoss sprite, 안개 마녀 여왕: act-1 alternate boss: the queen of the sea-fog witches — an elegant tall adult woman with very long flowing lavender hair that dissolves into mist at the tips, pale green glowing eyes, a crown of frosted sea-glass and pearls, a fitted gown of layered translucent fog-silk with bare shoulders and a high slit, a lantern-scepter whose green flame drips fog, a veil of mist curtaining around her like a stage. Facing LEFT, imposing. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x to 1024x1536."
+    },
+    {
+      "id": "boss_fog_queen_2",
+      "kind": "boss",
+      "batch": "boss-fog_queen",
+      "file": "enemies/boss_fog_queen_2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 안개 마녀 여왕, second phase: she raises the scepter high, the mist veil tears open into swirling fog-shadow silhouettes around her, her hair whipping upward, eyes blazing green, the crown glowing. Same person as the attached first-phase sprite. Facing LEFT. Fully transparent background. 1024x1536.",
+      "reference_images": [
+        "enemies/boss_fog_queen_1.png"
+      ]
+    },
+    {
+      "id": "boss_fog_queen_cutin",
+      "kind": "cutin",
+      "batch": "boss-fog_queen",
+      "file": "cutins/boss_fog_queen_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "256×96",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss cut-in: close-up of her half-veiled face, one green eye visible through parting fog, a sly smile, pearls and sea-glass catching the lantern light. Wide horizontal composition, face in the middle band (cropped to 1536x576).",
+      "reference_images": [
+        "enemies/boss_fog_queen_1.png"
+      ]
+    },
+    {
+      "id": "boss_storm_whale_1",
+      "kind": "boss",
+      "batch": "boss-storm_whale",
+      "file": "enemies/boss_storm_whale_1.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nBoss sprite, 폭풍 고래: act-2 alternate boss: a colossal sky whale swimming through a sea of clouds, deep navy hide with glowing pale-blue constellation-like markings, a crackling thundercloud riding on its back like a mane, small clock-gear barnacles along its jaw, huge calm golden eye (draw the head and front half large, the tail fading into cloud). Facing LEFT, imposing. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x to 1024x1536."
+    },
+    {
+      "id": "boss_storm_whale_2",
+      "kind": "boss",
+      "batch": "boss-storm_whale",
+      "file": "enemies/boss_storm_whale_2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 폭풍 고래, second phase \"eye of the storm\": the whale rears up as a cyclone wraps around it, lightning arcing between its markings, the thundercloud mane blazing white, rain and wind lines. Same person as the attached first-phase sprite. Facing LEFT. Fully transparent background. 1024x1536.",
+      "reference_images": [
+        "enemies/boss_storm_whale_1.png"
+      ]
+    },
+    {
+      "id": "boss_storm_whale_cutin",
+      "kind": "cutin",
+      "batch": "boss-storm_whale",
+      "file": "cutins/boss_storm_whale_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "256×96",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss cut-in: extreme close-up of the giant golden eye reflecting the tiny night-watch party, lightning crackling across the navy hide. Wide horizontal composition, face in the middle band (cropped to 1536x576).",
+      "reference_images": [
+        "enemies/boss_storm_whale_1.png"
+      ]
+    },
+    {
       "id": "boss_dawn_1",
       "kind": "boss",
       "batch": "boss-dawn",
@@ -9767,6 +9890,22 @@
       "native": "128×192",
       "note": "보스 · 투명 배경",
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 새벽, second phase \"the sun rises\": her dress blazes with sunrise orange and gold, a halo of dawn light, the clock hand glowing. Same person as the attached first-phase sprite. Facing LEFT. Fully transparent background. 1024x1536.",
+      "reference_images": [
+        "enemies/boss_dawn_1.png"
+      ]
+    },
+    {
+      "id": "boss_dawn_3",
+      "kind": "boss",
+      "batch": "boss-dawn",
+      "file": "enemies/boss_dawn_3.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 새벽, third phase \"high noon\" (only on deep difficulty): she soars above the tower with the full sun behind her like great wings of light, white hair turned to gold flame, the clock hand now a blazing spear, the dress pure white and gold, overwhelming radiance but the same face. Same person as the attached first-phase sprite. Facing LEFT. Fully transparent background. 1024x1536.",
       "reference_images": [
         "enemies/boss_dawn_1.png"
       ]

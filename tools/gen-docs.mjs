@@ -46,6 +46,9 @@ function traits(f) {
   if (f.deathBoom) t.push(`쓰러질 때 모든 동료 피해 ${f.deathBoom}`);
   if (f.light) t.push(`불빛(비춘 동료 카드 비용 +1)${f.light.double ? `, 체력 ${Math.round(f.light.double * 100)}% 아래면 불빛 둘` : ''}`);
   if (f.small) t.push('작은 적');
+  if (f.mistVeil) t.push(`**안개 장막**(내 턴마다 방어 ${f.mistVeil.block}, ③이 터지면 걷혀 방어 0·취약 ${f.mistVeil.vuln})`);
+  if (f.stagger) t.push('**비틀거림**(내 턴 피해 100+면 다음 행동 건너뜀)');
+  if (f.burstClock) t.push(`한 턴 피해 100+면 밤 시계 +${f.burstClock}분`);
   if (f.phase2) {
     const p = f.phase2, ch = [];
     if (p.armor != null && p.armor !== f.armor) ch.push(`갑옷 ${p.armor}`);
@@ -55,6 +58,14 @@ function traits(f) {
     if (p.turnClock) ch.push(`이후 매 턴 +${p.turnClock}분`);
     if (p.pat) ch.push(`순환 ${cycle(p.pat)}`);
     t.push(`체력 ${Math.round(p.at * 100)}%에서 2단계: ${ch.join(', ')}`);
+  }
+  if (f.phase3) {
+    const p = f.phase3, ch = [];
+    if (p.clockOnce) ch.push(`밤 시계 +${p.clockOnce}분 한 번`);
+    if (p.turnClock) ch.push(`이후 매 턴 +${p.turnClock}분`);
+    if (p.burstClock === 0) ch.push('100+ 벌칙 없음');
+    if (p.pat) ch.push(`순환 ${cycle(p.pat)}`);
+    t.push(`밤의 깊이 ${p.depth}+, 체력 ${Math.round(p.at * 100)}%에서 3단계: ${ch.join(', ')}`);
   }
   return t.join(' · ');
 }
@@ -71,6 +82,9 @@ export function build() {
     const common = new Set(uniq([...A.easy, ...A.fights]));   // 강적과 같이 나오는 일반 적은 위 표에
     out.push('**강적**', '', HEAD, ...uniq(A.elites).filter(id => !common.has(id)).map(row), '');
     out.push('**보스**', '', HEAD, ...uniq([A.boss]).map(row), '');
+    const summ = uniq([...uniq([...A.easy, ...A.fights, ...A.elites]), ...[A.boss].flat()].map(id => [...FOE[id].pat, ...(FOE[id].phase2?.pat || [])].filter(x => x.t === 'sum').map(x => x.id)))
+      .filter(id => !uniq([...A.easy, ...A.fights, ...A.elites]).includes(id));
+    if (summ.length) out.push('**불려 나오는 적**', '', HEAD, ...summ.map(row), '');
     out.push(`무리 — 1층(쉬운 전투): ${A.easy.map(names).join(' · ')}`, '',
       `무리 — 그 위 전투: ${A.fights.map(names).join(' · ')}`, '',
       `무리 — 강적: ${A.elites.map(names).join(' · ')}`, '');

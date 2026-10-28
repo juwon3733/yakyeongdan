@@ -7,7 +7,7 @@ import { DAILY_RULES } from './daily.js';
 export const ENDLESS = {
   seg: 5,              // 층 묶음 하나의 층 수 (지도 4층 + 관문)
   bossEvery: 10,       // 이 층마다 관문이 보스
-  bosses: ['keeper', 'captain', 'dawn'],   // 돌아가며 나오는 보스
+  bosses: ['keeper', 'queen', 'captain', 'whale', 'dawn'],   // 돌아가며 나오는 보스 (보스 변형 포함)
   // 적 강화: 체력 배수 = 3막 배수 × (1 + 층 × hpPerFloor), 힘 = 층 × strPerFloor(내림) + 여명 쌓임
   baseHp: { fight: 2.6, elite: 2.9, boss: 3.2 },   // 0층 기준 체력 배수 (3막보다 강적·보스가 조금 약하다: 층마다 커지므로)
   hpPerFloor: .03,

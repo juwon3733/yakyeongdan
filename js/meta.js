@@ -424,6 +424,7 @@ function recordLife(G) {
   L.bigTurns = (L.bigTurns || 0) + (G.bigTurns || 0);
   L.bossKills = (L.bossKills || 0) + (G.bossKills || 0);
   if ((G.bossKills || 0) >= 2) F.add('act2');
+  if (G.noonBeat) F.add('noon');
   if ((G.bigTurns || 0) >= 5) F.add('big5');
   if ((G.duoSet?.size || 0) >= 3) F.add('duo3');
   if ((G.elites || 0) >= 3) F.add('elite3');

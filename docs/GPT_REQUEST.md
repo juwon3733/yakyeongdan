@@ -24,11 +24,11 @@ juwon3733/yakyeongdan 최신 main을 받고 AGENTS.md대로 그림을 만들어�
 | 0 | `style-akane` (또는 `style-sion` `style-lunaria` `style-eleonore`) | **그림체 시안**. ★5 한 명을 도트 굵기만 바꿔 4장(A 기준·B 굵게·C 세밀·D 고화질). 사용자가 고른 시안으로 공통 스타일을 고정한 뒤 나머지를 뽑는다. 게임엔 안 씀 |
 | 1 | `char-iris` `char-brick` `char-marta` | 처음부터 가진 동료 셋. 매 판 보임 |
 | 2 | `bg` | 전투·지도·본부 배경 13장 |
-| 3 | `enemy-act1` `boss-lighthouse` | 1막 적과 보스 |
+| 3 | `enemy-act1` `boss-lighthouse` `boss-fog_queen` | 1막 적과 보스 둘(판마다 하나) |
 | 4 | `title` | 타이틀 키아트(동료 셋 상반신이 있어야 함) |
 | 5 | `char-noel` `char-raven` | 첫 10연 확정 후보 |
 | 6 | `char-sion` `char-lunaria` `char-akane` `char-eleonore` → `cg-star5` | ★5 넷과 전신 CG |
-| 7 | `enemy-act2` `boss-cloud_captain` `enemy-act3` `boss-dawn` | 2·3막 |
+| 7 | `enemy-act2` `boss-cloud_captain` `boss-storm_whale` `enemy-act3` `boss-dawn` | 2·3막 (「새벽」은 3단계 그림까지) |
 | 8 | `summon` `icons` | 소환 화면, 도구 아이콘 |
 | 9 | 나머지 `char-…` 11명 → `duo` | 듀오는 두 사람 상반신이 다 있어야 함 |
 | 10 | `cards-iris` `cards-brick` `cards-marta` → 나머지 `cards-…` | 스킬 카드 그림. 그 동료 `char-…`가 main에 들어온 뒤에. 한 묶음 9~13장 |

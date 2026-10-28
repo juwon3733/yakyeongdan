@@ -32,7 +32,7 @@ const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false
   migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, affix: false, ach: false, history: false, endless: false, climbOn: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
   ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false, whale: false, guide: false,
-  tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false, pwa: false, backup: false };
+  tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false, pwa: false, backup: false, bossVar: false };
 
 // 전투가 아닌 화면 한 걸음 (지도·보상·휴식·사건·야시장·보스 도구·달 고르기·카드 고르기)
 async function advance(page, tag) {
@@ -167,6 +167,7 @@ try {
       const G = window.__yk.S.G;
       for (const p of G.party) { G.members[p].max = 400; G.members[p].hp = 400; }
       G.deck.push('iris.wind', 'raven.fog', 'curse.fog', 'curse.drowsy', 'curse.key', 'curse.lamp', 'curse.lost');
+      G.map.boss = 'keeper';   // 1막 보스 변형 중 불빛을 보는 등대지기로
       G.screen = 'rest'; window.__yk.render();
     });
     // 손질(강화)
@@ -578,6 +579,44 @@ try {
     const bar = await ev(() => !!document.querySelector('.runbar .fill') && !!document.querySelector('.countup'));
     if (pace && scenes.every(Boolean) && bar) { seen.qaTop = true; console.log('qa-top: 빠른 사용(켬 한 번 · 끔 두 번), 시간 페이스, 사건·휴식 무대, 결과 진행 막대'); }
     else fail(`qa-top ${JSON.stringify({ pace, scenes, bar })}`);
+    await page.close();
+  }
+  {
+    // 보스 변형 (docs/13 3단계): 지도 보스 칸 이름, 안개 마녀 여왕 「안개 장막」이 ③에 걷힘, 폭풍 고래 비틀거림·곡, 「새벽」 3단계(밤의 깊이 5+)·곡
+    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    page.on('pageerror', e => errors.push(`[boss-var] ${e.message}`));
+    await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+    await page.goto(`http://127.0.0.1:${port}/?notut&seed=9`);
+    const ev = f => page.evaluate(f);
+    await openParty(page);
+    for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
+    await page.click('[data-start]'); await page.waitForSelector('[data-node="0,0"]');
+    const mapOk = await ev(() => {
+      const G = window.__yk.S.G, lab = [...document.querySelectorAll('.node.k-boss .t')].map(x => x.textContent).join('');
+      return ['keeper', 'queen'].includes(G.map.boss) && ['captain', 'whale'].includes(G.nextMap.boss) && lab.length > 0 && lab !== '보스';
+    });
+    const queen = await ev(async () => {
+      const Y = window.__yk; Y.fight(['queen'], 'boss'); const f = Y.S.C.all[0]; const veil = f.block >= 12;
+      const chip = document.body.innerHTML.includes('안개 장막');
+      const { burst } = await import('./js/effects.js'); burst('iris', '무한일섬');
+      return { veil, chip, broke: f.block === 0 && f.vuln >= 2 };
+    });
+    const whale = await ev(async () => {
+      const Y = window.__yk; Y.fight(['whale'], 'boss'); const C = Y.S.C, f = C.all[0];
+      const hpSum = () => Y.S.G.party.reduce((t, p) => t + Y.S.G.members[p].hp, 0), hp0 = hpSum();
+      C.dmgTurn = 150; const { endTurn } = await import('./js/combat.js'); endTurn(); Y.render();
+      return { still: hpSum() === hp0 && f.skip === 0, song: Y.audio?.().bgm };
+    });
+    const dawn3 = await ev(async () => {
+      const Y = window.__yk; Y.S.G.depth = 5; Y.fight(['dawn'], 'boss'); const f = Y.S.C.all[0];
+      const { killCheck } = await import('./js/combat.js');
+      f.hp = Math.floor(f.max * .4); killCheck(f); const p2 = f.p2;
+      f.hp = Math.floor(f.max * .15); killCheck(f); Y.render();
+      return { p2, p3: f.p3, song: Y.audio?.().bgm };
+    });
+    const ok = mapOk && queen.veil && queen.chip && queen.broke && whale.still && whale.song === 'boss_whale' && dawn3.p2 && dawn3.p3 && dawn3.song === 'dawn3';
+    if (ok) { seen.bossVar = true; console.log('boss-var: 지도 보스 이름, 안개 장막(방어 → ③에 걷힘·취약), 폭풍 고래 비틀거림·곡, 「새벽」 3단계 「한낮」·dawn3'); }
+    else fail(`보스 변형 ${JSON.stringify({ mapOk, queen, whale, dawn3 })}`);
     await page.close();
   }
   {

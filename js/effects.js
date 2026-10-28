@@ -329,6 +329,11 @@ export function burst(id, name) {
   C.burstTurn.add(id);
   logMsg(`<b>${CHARACTERS[id].name} 「${name}」</b>`);
   pushFx({ kind: 'burst', who: id, name });
+  // 안개 마녀 여왕 「안개 장막」: 그 턴 ③이 처음 터지면 걷힌다 (방어 0, 취약)
+  for (const f of livingFoes()) if (f.mistVeil && f.veilUp) {
+    f.veilUp = false; f.block = 0; f.vuln += f.mistVeil.vuln;
+    logMsg(`<b>${f.name}</b>의 안개 장막이 걷혔다 — 방어 0, 취약 ${f.mistVeil.vuln}`); pushFx({ kind: 'veil', i: f.i });
+  }
   const G = S.G; G.burstLog = G.burstLog || {}; G.burstLog[id] = (G.burstLog[id] || 0) + 1;
   for (const p of C.burstTurn) {
     if (p === id) continue;

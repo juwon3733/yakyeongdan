@@ -14,6 +14,7 @@ import { tutNode, rigHand } from './tutorial.js';
 import { setMoon } from './effects.js';
 import { nextSegment } from './endless.js';
 import { endlessBoss } from './data/endless.js';
+import { makeRng } from './rng.js';
 
 // ---------- 지도 만들기 (docs/10_details.md §4) ----------
 // 층 i의 칸 n개를 층 i+1의 칸 m개에 겹치지 않게 잇는다 (갈렸다 합쳐짐, 교차 없음)
@@ -49,7 +50,8 @@ function valid(rows, edges) {
   for (const p of paths(rows, edges)) for (let k = 2; k < p.length; k++) if (p[k] === p[k - 1] && p[k] === p[k - 2]) return false;
   return true;
 }
-export function makeMap(rng, moon) {
+// act: 그 막 보스 후보(ACTS[act].boss) 중 하나를 고른다 → map.boss
+export function makeMap(rng, moon, act = 1) {
   const weights = RULES.mapWeights.map(([k, w]) => [k, k === 'event' && MOONS[moon]?.darkBonus ? RULES.newMoonEvent : w]);
   const tot = weights.reduce((t, [, w]) => t + w, 0), norm = weights.map(([k, w]) => [k, w / tot]);
   const [lo, hi] = RULES.mapWidth;
@@ -64,6 +66,8 @@ export function makeMap(rng, moon) {
     best = { rows: [...rows, ['boss']], edges: [...edges, [[]]] };
     if (valid(rows, edges)) break;
   }
+  // 보스는 판 난수를 쓰지 않고 지금 상태에서 따로 굴린다 (지도·셔플 순서를 바꾸지 않게)
+  best.boss = makeRng((rng.state ^ Math.imul(act, 0x9e3779b1)) >>> 0).pick([ACTS[act]?.boss || ['keeper']].flat());
   return best;
 }
 // 이 층에서 갈 수 있는 칸 번호
@@ -92,7 +96,7 @@ export function goNode(r, i) {
   else if (tn?.event) openEvent(tn.event);
   else if (t === 'fight') startCombat(G.rng.pick(r === 0 ? pool.easy : pool.fights), 'fight');
   else if (t === 'elite') { const e = G.nextElite; G.nextElite = pickElite(); startCombat(e, 'elite'); }
-  else if (t === 'boss') startCombat(G.endless ? [endlessBoss(G.endless.floor)] : pool.boss, 'boss');
+  else if (t === 'boss') startCombat(G.endless ? [endlessBoss(G.endless.floor)] : [G.map.boss || [pool.boss].flat()[0]], 'boss');
   else if (t === 'rest') { G.restTalk = restTalk(G); if (G.restTalk != null) G.talks?.add(G.restTalk); G.screen = 'rest'; }
   else if (t === 'shop') openShop();
   else openEvent();
@@ -106,7 +110,7 @@ export function nextAct() {
   const G = S.G;
   if (G.endless) { G.endless.bosses++; return nextSegment(); }   // 끝없는 탑: 보스 관문 뒤
   G.act++; G.row = 0; G.took = [];
-  G.map = G.nextMap; G.nextMap = G.act < 3 ? makeMap(G.rng, G.moon) : null;
+  G.map = G.nextMap; G.nextMap = G.act < 3 ? makeMap(G.rng, G.moon, G.act + 1) : null;
   G.nextElite = pickElite(); G.screen = 'map';
 }
 
@@ -115,8 +119,10 @@ export function takeReward(id) {
   const G = S.G;
   if (id) G.deck.push(id);
   if (G.reward.next !== 'act') return nextRow();
-  const left = Object.keys(RELICS).filter(k => RELICS[k].tier === 'boss' && !G.relics.includes(k));
-  if (left.length) { G.bossRelics = G.rng.pickN(left, 3); G.screen = 'bossrelic'; }
+  // 보스 전용 도구(from)는 그 보스를 쓰러뜨렸을 때만, 셋 중 하나로 꼭 나온다
+  const left = Object.keys(RELICS).filter(k => RELICS[k].tier === 'boss' && !RELICS[k].from && !G.relics.includes(k));
+  const own = Object.keys(RELICS).find(k => RELICS[k].from && RELICS[k].from === G.lastBoss && !G.relics.includes(k));
+  if (left.length || own) { G.bossRelics = own ? [own, ...G.rng.pickN(left, 2)] : G.rng.pickN(left, 3); G.screen = 'bossrelic'; }
   else nextAct();
 }
 export function pickBossRelic(id) {

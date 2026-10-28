@@ -49,6 +49,9 @@ export const RELICS = {
   stopped_tower: { name: '멈춘 시계탑', tier: 'boss', text: '시간 카드 비용 0분. 대신 칸 시간 +5분.', timeCardFree: 1, nodeTimeAdd: 5 },
   star_crown:    { name: '별의 왕관', tier: 'boss', text: '매 턴 에너지 +1. 대신 손패 4장.', energy: 1, handSize: -1 },
   reverse_clock: { name: '거꾸로 도는 시계', tier: 'boss', text: '전투에서 이기면 밤 시계 6분 되돌리기. 대신 시간 카드 비용 +10분.', winRewind: 6, timeCardAdd: 10 },
+  // 보스 전용: from 보스를 쓰러뜨렸을 때만 보스 도구 셋 중 하나로 나온다 (js/map.js takeReward)
+  fog_crown:     { name: '안개 왕관', tier: 'boss', from: 'queen', text: '전투 시작에 모든 적 독 6. 대신 휴식 칸 회복 절반.', poisonAll: 6, restHealMul: .5 },
+  whale_song:    { name: '고래의 노래', tier: 'boss', from: 'whale', text: '매 턴 앞줄 동료 방어 4. 대신 칸 시간 +3분.', frontBlockTurn: 4, nodeTimeAdd: 3 },
   star_sash:     { name: '별자리 띠', tier: 'boss', text: '전투 첫 턴을 연계 3칸으로 시작. 대신 전투 보상 카드가 한 장 적다.', chainStart: 3, rewardLess: 1 },
   // 전용 도구 20개 (docs/10_details.md §3, 별자리 4). 주인(owner)이 파티에 있고 별자리 4일 때만 보통 등급 자리에 섞여 나온다.
   //   ownerBlock 전투 시작에 주인 방어 · poisonAll/burnAll 전투 시작에 모든 적 독/화상 · napAdd 낮잠 +분

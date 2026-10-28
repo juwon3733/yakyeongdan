@@ -17,6 +17,7 @@ import { CARDS, cardData, canUpgrade, DUOS } from '../js/data/cards.js';
 import { RULES, SHOP, NODE } from '../js/data/rules.js';
 import { RELICS } from '../js/data/relics.js';
 import { enterEndless } from '../js/endless.js';
+import { FOE } from '../js/data/enemies.js';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : d; };
@@ -342,9 +343,9 @@ function chooseBossRelic() {
 
 // ---------- 한 판 ----------
 function playRun(party, seed, stats) {
-  newRun(party, seed);
+  newRun(party, seed, { depth: DEPTH });
   S.G.rng = rngFrom(S.G.rng.state);
-  const rec = { party, seed, won: false, why: '', bossReach: [0, 0, 0, 0], bossClock: [null, null, null, null], over6: false, clock: 0, duos: 0, act: 1, fights: 0 };
+  const rec = { party, seed, won: false, why: '', bossReach: [0, 0, 0, 0], bossClock: [null, null, null, null], over6: false, clock: 0, duos: 0, act: 1, fights: 0, boss: [null, null, null, null], bossKill: [0, 0, 0, 0] };
   drive(rec, stats, 4000);
   return finish(rec, stats, seed, party);
 }
@@ -357,7 +358,7 @@ function drive(rec, stats, maxSteps) {
     if (G.moonPick && G.screen !== 'combat') { pickMoon(G.deck.some(id => cardData(id).time) ? 'crescent' : 'half'); continue; }
     const sc = G.screen;
     if (sc === 'map') {
-      if (G.map.rows[G.row]?.[0] === 'boss') rec.bossReach[G.act] = 1;
+      if (G.map.rows[G.row]?.[0] === 'boss' && !G.endless) { rec.bossReach[G.act] = 1; rec.boss[G.act] = G.map.boss; }
       chooseNode(stats);
     }
     else if (sc === 'combat') {
@@ -368,7 +369,7 @@ function drive(rec, stats, maxSteps) {
       while (sameCombat(tag) && S.G.screen === 'combat' && turns++ < 60) { playTurn(stats); if (checkCollapse()) break; }
       if (sameCombat(tag) && turns >= 60) { rec.why = 'stall'; S.G.screen = 'result'; S.G.won = false; break; }
       { const key = `${G.act}막 ${rec.lastFight.split(' ')[1]}`; const ft = stats.fightTurns[key] ||= [0, 0]; ft[0] += turns; ft[1]++; }
-      if (S.G.screen === 'reward' && S.G.reward?.next === 'act') rec.bossClock[S.G.act] = S.G.clock;
+      if (S.G.screen === 'reward' && S.G.reward?.next === 'act' && !S.G.endless) { rec.bossClock[S.G.act] = S.G.clock; rec.bossKill[S.G.act] = 1; }
     }
     else if (sc === 'reward') chooseReward(stats);
     else if (sc === 'bossrelic') chooseBossRelic();
@@ -394,7 +395,8 @@ function finish(rec, stats, seed, party) {
   rec.won = !!G.won; rec.why = rec.why || G.why; rec.clock = G.clock; rec.act = G.act; rec.duos = G.duoSet.size; rec.fights = G.fights;
   rec.big = G.bigTurns || 0; rec.best = G.bestTurn?.dmg || 0; rec.bursts = { ...(G.burstLog || {}) };
   if (G.clock >= RULES.dawn) rec.over6 = true;
-  if (rec.won) rec.bossClock[3] = G.clock;
+  if (rec.won) { rec.bossClock[3] = G.clock; rec.bossKill[3] = 1; }
+  rec.noon = !!G.noonBeat;
   for (const k of G.duoSet) stats.duoRuns[k] = (stats.duoRuns[k] || 0) + 1;
   // 끝없는 탑 (docs/05 §12): 「새벽」을 깬 판은 그대로 이어 올라 도달 층을 잰다 (--no-endless로 끔)
   if (rec.won && ENDLESS_ON) {
@@ -425,6 +427,8 @@ if (opt('--fight', null)) {
 }
 
 // ---------- 돌리기 ----------
+// --depth N : 밤의 깊이 (「새벽」 3단계는 5 이상)
+const DEPTH = +opt('--depth', 0);
 const IDS = Object.keys(CHARACTERS);
 // --stars 3 : 그 성급 동료만으로 짠 파티만 (성급별 밸런스 확인용)
 const ONLY = +opt('--stars', 0);
@@ -497,6 +501,14 @@ console.log(`| 패시브 ③ 폭발 (판당, 턴 기준) | ${out.bursts.toFixed(
   if (es.length) console.log(`| 끝없는 탑에서 멈춘 곳 (상위 3) | ${Object.entries(ends).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, v]) => `${k} ${v}`).join(', ')} | |`);
   if (es.length) console.log(`| 끝없는 탑 도달 층 (이긴 판 ${es.length}개: 평균 / 중앙 / 최고) | ${out.endlessAvg.toFixed(1)} / ${out.endlessMedian} / ${es[es.length - 1]} | 10~20 |`); }
 
+console.log('\n보스별 (그 보스를 만난 판 중 격파 비율)');
+console.log('| 막 | 보스 | 만남 | 격파 | 그 판 6시 넘음 | 그 판 「새벽」 격파 |');
+console.log('|---|---|---|---|---|---|');
+for (const a of [1, 2, 3]) {
+  const met = {}; for (const r of recs) if (r.boss[a]) { const m = met[r.boss[a]] ||= [0, 0, 0, 0]; m[0]++; m[1] += r.bossKill[a]; m[2] += r.over6 ? 1 : 0; m[3] += r.won ? 1 : 0; }
+  for (const [k, [n, w, o, v]] of Object.entries(met)) console.log(`| ${a}막 | ${FOE[k].name} | ${n} | ${pct(w, n)} | ${pct(o, n)} | ${pct(v, n)} |`);
+}
+if (DEPTH >= 5) console.log(`「새벽」 3단계 「한낮」을 넘어 이긴 판: ${pct(recs.filter(r => r.noon).length, N)}`);
 console.log('\n막별 전투 길이 (평균 턴)');
 console.log(Object.entries(stats.fightTurns).sort().map(([k, [t, n]]) => `${k} ${(t / n).toFixed(1)}턴(${n})`).join(' · '));
 console.log('\n어디서 졌나 (진 판 중 비율, 상위 15)');

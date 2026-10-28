@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 1 · 전체 594장 · 묶음 68개
+style_version 1 · 전체 602장 · 묶음 70개
 
 ## 묶음
 
@@ -64,12 +64,14 @@ style_version 1 · 전체 594장 · 묶음 68개
 | `style-nerea` | 그림체 시안 네레아 (4장, 게임에 안 씀) | 4 |
 | `cg-star5` | ★5 전신 CG | 5 |
 | `duo` | 인연 듀오 컷인 10쌍 | 10 |
-| `enemy-act1` | 1막 적 | 10 |
+| `enemy-act1` | 1막 적 | 11 |
 | `enemy-act2` | 2막 적 | 10 |
 | `enemy-act3` | 3막 적 | 10 |
 | `boss-lighthouse` | 보스 등대지기 | 3 |
 | `boss-cloud_captain` | 보스 구름 기사단장 | 3 |
-| `boss-dawn` | 보스 새벽 | 3 |
+| `boss-fog_queen` | 보스 안개 마녀 여왕 | 3 |
+| `boss-storm_whale` | 보스 폭풍 고래 | 3 |
+| `boss-dawn` | 보스 새벽 | 4 |
 | `bg` | 배경 | 13 |
 | `title` | 타이틀 키아트 | 1 |
 | `summon` | 별 소환 연출 | 4 |
@@ -1194,6 +1196,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `lamp_eel` | `assets/enemies/lamp_eel.png` | 768×768 투명 | — | — |
 | `powder_sailor` | `assets/enemies/powder_sailor.png` | 768×768 투명 | — | — |
 | `captain_parrot` | `assets/enemies/captain_parrot.png` | 768×768 투명 | — | — |
+| `mistling` | `assets/enemies/mistling.png` | 768×768 투명 | — | — |
 | `anchor_giant` | `assets/enemies/anchor_giant.png` | 1024×1024 투명 | — | — |
 | `fog_witch` | `assets/enemies/fog_witch.png` | 1024×1024 투명 | — | — |
 | `smuggler_boss` | `assets/enemies/smuggler_boss.png` | 1024×1024 투명 | — | — |
@@ -1244,12 +1247,29 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `boss_cloud_captain_2` | `assets/enemies/boss_cloud_captain_2.png` | 1024×1536 투명 | `assets/enemies/boss_cloud_captain_1.png` | — |
 | `boss_cloud_captain_cutin` | `assets/cutins/boss_cloud_captain_cutin.png` | 1536×576 | `assets/enemies/boss_cloud_captain_1.png` | — |
 
+## `boss-fog_queen` — 보스 안개 마녀 여왕
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `boss_fog_queen_1` | `assets/enemies/boss_fog_queen_1.png` | 1024×1536 투명 | — | — |
+| `boss_fog_queen_2` | `assets/enemies/boss_fog_queen_2.png` | 1024×1536 투명 | `assets/enemies/boss_fog_queen_1.png` | — |
+| `boss_fog_queen_cutin` | `assets/cutins/boss_fog_queen_cutin.png` | 1536×576 | `assets/enemies/boss_fog_queen_1.png` | — |
+
+## `boss-storm_whale` — 보스 폭풍 고래
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `boss_storm_whale_1` | `assets/enemies/boss_storm_whale_1.png` | 1024×1536 투명 | — | — |
+| `boss_storm_whale_2` | `assets/enemies/boss_storm_whale_2.png` | 1024×1536 투명 | `assets/enemies/boss_storm_whale_1.png` | — |
+| `boss_storm_whale_cutin` | `assets/cutins/boss_storm_whale_cutin.png` | 1536×576 | `assets/enemies/boss_storm_whale_1.png` | — |
+
 ## `boss-dawn` — 보스 새벽
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `boss_dawn_1` | `assets/enemies/boss_dawn_1.png` | 1024×1536 투명 | — | — |
 | `boss_dawn_2` | `assets/enemies/boss_dawn_2.png` | 1024×1536 투명 | `assets/enemies/boss_dawn_1.png` | — |
+| `boss_dawn_3` | `assets/enemies/boss_dawn_3.png` | 1024×1536 투명 | `assets/enemies/boss_dawn_1.png` | — |
 | `boss_dawn_cutin` | `assets/cutins/boss_dawn_cutin.png` | 1536×576 | `assets/enemies/boss_dawn_1.png` | — |
 
 ## `bg` — 배경

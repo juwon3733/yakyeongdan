@@ -4,6 +4,7 @@ import { hasRelic } from '../relics.js';
 import { MOONS } from '../data/moons.js';
 import { CHARACTERS } from '../data/characters.js';
 import { RULES, NODE, ACT_NAME, ROW_NAME } from '../data/rules.js';
+import { FOE } from '../data/enemies.js';
 import { fmt, face, paceOf } from './common.js';
 import { endlessHead } from './endless.js';
 import { segStart } from '../endless.js';
@@ -23,7 +24,7 @@ export function mapView() {
   const nodes = M.rows.map((row, r) => row.map((t, j) => {
     const p = P[r][j], ok = r === G.row && can.includes(j), cls = r < G.row ? 'past' : ok ? 'now' : 'future';
     return `<button type="button" class="node k-${t} ${cls} ${G.took[r] === j ? 'took' : ''}" style="left:${p.x}px;top:${p.y}px" ${ok ? `data-node="${r},${j}"` : 'disabled'}>
-      <span class="t">${NODE[t].name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → <b class="pace ${G.tutorial ? '' : G.endless ? '' : paceOf(G, G.clock + nodeTime(t), 1)}">${fmt(G.clock + nodeTime(t))}</b>` : ''}</span></button>`;
+      <span class="t">${t === 'boss' && M.boss && !G.tutorial && !G.endless ? FOE[M.boss].name : NODE[t].name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → <b class="pace ${G.tutorial ? '' : G.endless ? '' : paceOf(G, G.clock + nodeTime(t), 1)}">${fmt(G.clock + nodeTime(t))}</b>` : ''}</span></button>`;
   }).join('')).join('');
   const labels = M.rows.map((row, r) => `<span class="rowlabel" style="left:${P[r][0].x}px">${r === cols - 1 ? (G.endless ? '관문' : '꼭대기') : `${G.endless ? segStart() + r : r + 1}층`}</span>`).join('');
   // 대열 칸: 왼쪽→오른쪽 = 뒤·가운데·앞
@@ -33,7 +34,7 @@ export function mapView() {
       <span class="row">${ROW_NAME[fi]}</span>${face(p)}<span class="nm">${c.name}</span><span class="hp">${Mb.hp}/${Mb.max}</span></button>`;
   }).join('');
   const peek = hasRelic('star_map') && G.nextMap
-    ? `<span class="note peek">별 지도 · 다음 막: ${G.nextMap.rows.slice(0, -1).map(row => row.map(t => NODE[t].name).join('·')).join(' / ')}</span>` : '';
+    ? `<span class="note peek">별 지도 · 다음 막: ${G.nextMap.rows.slice(0, -1).map(row => row.map(t => NODE[t].name).join('·')).join(' / ')}${G.nextMap.boss ? ` / 보스 <b>${FOE[G.nextMap.boss].name}</b>` : ''}</span>` : '';
   const head = G.note ? `<span class="banner ok">${G.note}</span>`
     : G.endless ? `<span class="note">탑은 무너지지 않는다 · 대신 층마다 적이 강해지고, 밤 시계가 흐를수록 여명이 짙어진다</span>`
     : isDawn() ? `<span class="banner">해가 떴다 · 적이 힘 +${RULES.dawnStartStr}으로 시작, 매 턴 +${RULES.dawnStrPerTurn} · ${fmt(RULES.collapse)}에 탑이 무너진다</span>`

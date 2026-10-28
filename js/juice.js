@@ -138,6 +138,8 @@ export function afterRender(events = []) {
       case 'tick': { const s = t; at(s, () => tickFx(e)); mark('f:' + e.i, s); t += 200; t = addDmg(e.dmg || 0, s, t); break; }
       // 적 쪽 연출 (짝 잃음·도전 반격·회복·부르기·훔치기·노림 바꾸기)
       case 'rage': at(t, () => rageFx(e)); t += 220; break;
+      case 'veil': at(t, () => veilFx(e)); t += 240; break;
+      case 'stagger': at(t, () => staggerFx(e)); t += 200; break;
       case 'duel': at(t, () => duelFx(e)); t += 160; break;
       case 'mend': at(t, () => mendFx(e)); t += 200; break;
       case 'affix': at(t, () => affixFx(e)); t += e.ax === 'haste' ? 160 : 220; break;
@@ -512,6 +514,23 @@ let freeze = 0;
 
 // ---------- 적 쪽 연출 ----------
 const foeR = i => { const el = foeEl(i); if (!el) return null; const img = el.querySelector('img'); return { el, r: img ? rel(img) : rel(el) }; };
+// 안개 마녀 여왕: 장막이 걷힘 (흰 안개가 흩어지고 「취약」)
+function veilFx(e) {
+  const q = foeR(e.i); if (!q) return;
+  pulse(q.el, 'jrage', 400);
+  for (let k = 0; k < 24; k++) add({ k: 'dot', x: rnd(q.r.x, q.r.x + q.r.w), y: rnd(q.r.y, q.r.y + q.r.h), vx: rnd(-1.6, 1.6), vy: rnd(-1, .4), g: 0, life: rnd(16, 26), col: k % 3 ? '#e8e4f4' : '#b6ff9a', s: 2 });
+  ring(q.r.cx, q.r.cy, '#e8e4f4', 6, 48, 16);
+  num(q.r.cx, q.r.y, '장막이 걷혔다', 'buf', 12);
+  sfx('flip', { rate: .7 });
+}
+// 폭풍 고래: 터지는 턴에 비틀거림
+function staggerFx(e) {
+  const q = foeR(e.i); if (!q) return;
+  pulse(q.el, 'jrage', 500);
+  ring(q.r.cx, q.r.cy, '#ffe680', 10, 56, 18);
+  num(q.r.cx, q.r.y, '비틀!', 'buf', 15);
+  sfx('hit', { rate: .6 });
+}
 function rageFx(e) {
   const q = foeR(e.i); if (!q) return;
   pulse(q.el, 'jrage', 500);

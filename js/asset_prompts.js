@@ -201,6 +201,7 @@ export const ENEMIES = {
     lamp_eel: '등불 장어 — a long eel with a glowing lantern lure, crackling with small sparks',
     powder_sailor: '화약통 수병 — a stubby sailor whose body is a gunpowder barrel, a lit fuse on top of the head',
     captain_parrot: '선장 앵무새 — a bossy red parrot in a tiny captain hat, squawking orders',
+    mistling: '안개 그림자 — a small wisp of lavender sea fog shaped like a veiled girl-silhouette with glowing green eyes, summoned by the Fog Witch Queen',
   },
   act1_elite: {
     anchor_giant: '닻 거인 — a huge rusty giant built from an anchor and chains',
@@ -240,7 +241,9 @@ export const ENEMIES = {
 export const BOSSES = {
   lighthouse: { name: '등대지기', p1: 'a huge burly old lighthouse keeper with a white beard, a raincoat, carrying a rotating lighthouse lamp that shoots a beam of light', p2: 'second phase: the lamp splits into two beams, his coat torn by the wind, eyes glowing', cutin: 'close-up of the old keeper and the blinding lighthouse beam sweeping across' },
   cloud_captain: { name: '구름 기사단장', p1: 'an adult woman knight commander in heavy cloud-white armor, long silver hair, a long lance, a plumed helmet', p2: 'second phase: she has thrown off the heavy armor, now in a sleek fitted battle suit, silver hair loose, lance crackling with wind', cutin: 'close-up of her casting off the heavy armor, plates flying, silver hair whipping' },
-  dawn: { name: '새벽', p1: 'the master of the tower: an adult woman with long white hair and gold eyes, a sky-blue dress the color of a sunrise, holding a giant clock hand as a weapon, faint sunlight behind her', p2: 'second phase "the sun rises": her dress blazes with sunrise orange and gold, a halo of dawn light, the clock hand glowing', cutin: 'close-up of her golden eyes as the sun rises behind her, the night sky splitting' },
+  fog_queen: { name: '안개 마녀 여왕', p1: 'act-1 alternate boss: the queen of the sea-fog witches — an elegant tall adult woman with very long flowing lavender hair that dissolves into mist at the tips, pale green glowing eyes, a crown of frosted sea-glass and pearls, a fitted gown of layered translucent fog-silk with bare shoulders and a high slit, a lantern-scepter whose green flame drips fog, a veil of mist curtaining around her like a stage', p2: 'second phase: she raises the scepter high, the mist veil tears open into swirling fog-shadow silhouettes around her, her hair whipping upward, eyes blazing green, the crown glowing', cutin: 'close-up of her half-veiled face, one green eye visible through parting fog, a sly smile, pearls and sea-glass catching the lantern light' },
+  storm_whale: { name: '폭풍 고래', beast: true, p1: 'act-2 alternate boss: a colossal sky whale swimming through a sea of clouds, deep navy hide with glowing pale-blue constellation-like markings, a crackling thundercloud riding on its back like a mane, small clock-gear barnacles along its jaw, huge calm golden eye (draw the head and front half large, the tail fading into cloud)', p2: 'second phase "eye of the storm": the whale rears up as a cyclone wraps around it, lightning arcing between its markings, the thundercloud mane blazing white, rain and wind lines', cutin: 'extreme close-up of the giant golden eye reflecting the tiny night-watch party, lightning crackling across the navy hide' },
+  dawn: { name: '새벽', p1: 'the master of the tower: an adult woman with long white hair and gold eyes, a sky-blue dress the color of a sunrise, holding a giant clock hand as a weapon, faint sunlight behind her', p2: 'second phase "the sun rises": her dress blazes with sunrise orange and gold, a halo of dawn light, the clock hand glowing', cutin: 'close-up of her golden eyes as the sun rises behind her, the night sky splitting', p3: 'third phase "high noon" (only on deep difficulty): she soars above the tower with the full sun behind her like great wings of light, white hair turned to gold flame, the clock hand now a blazing spear, the dress pure white and gold, overwhelming radiance but the same face' },
 };
 
 // ── 배경 ─────────────────────────────────────────────────
@@ -479,9 +482,10 @@ export function assetList() {
   for (const [id, b] of Object.entries(BOSSES)) {
     const batch = `boss-${id}`;
     batches.push({ id: batch, title: `보스 ${b.name}` });
-    const human = join(STYLE.pixel, STYLE.character);
+    const human = join(STYLE.pixel, b.beast ? '' : STYLE.character);
     out.push(item('boss', `boss_${id}_1`, batch, `boss_${id}_1.png`, join(human, `Boss sprite, ${b.name}: ${b.p1}. Facing LEFT, imposing. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x to 1024x1536.`)));
     out.push(item('boss', `boss_${id}_2`, batch, `boss_${id}_2.png`, join(human, STYLE.onModel, `Boss sprite, ${b.name}, ${b.p2}. Same person as the attached first-phase sprite. Facing LEFT. Fully transparent background. 1024x1536.`), { reference_images: [`enemies/boss_${id}_1.png`] }));
+    if (b.p3) out.push(item('boss', `boss_${id}_3`, batch, `boss_${id}_3.png`, join(human, STYLE.onModel, `Boss sprite, ${b.name}, ${b.p3}. Same person as the attached first-phase sprite. Facing LEFT. Fully transparent background. 1024x1536.`), { reference_images: [`enemies/boss_${id}_1.png`] }));
     out.push(item('cutin', `boss_${id}_cutin`, batch, `boss_${id}_cutin.png`, join(human, STYLE.onModel, `Boss cut-in: ${b.cutin}. Wide horizontal composition, face in the middle band (cropped to 1536x576).`), { reference_images: [`enemies/boss_${id}_1.png`] }));
   }
 

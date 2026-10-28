@@ -53,7 +53,10 @@ const foeTraits = f => (f.affixes || []).map(axChip).join('') + [
   f.heavyTime ? ['시계 감기', `내 턴 피해가 ${f.heavyTime.over} 이상이면 밤 시계를 ${f.heavyTime.add}분 더 돌린다.`] : null,
   f.twinRage ? ['짝', `짝이 쓰러지면 남은 쪽 힘 +${f.twinRage}.`] : null,
   f.duel ? [`도전 ${f.duel}`, `가장 많이 친 동료를 노리고, 그 동료에게 맞으면 ${f.duel} 반격.`] : null,
+  f.mistVeil ? [`안개 장막 ${f.mistVeil.block}`, `내 턴 시작마다 방어 ${f.mistVeil.block}. 그 턴 ③이 처음 터지면 장막이 걷혀 방어 0, 취약 ${f.mistVeil.vuln}.`] : null,
+  f.stagger ? ['비틀거림', '내 턴 피해가 100 이상이면 다음 행동 하나를 건너뛴다.'] : null,
   f.phase2 && !f.p2 ? ['2단계', `체력이 ${Math.round(f.phase2.at * 100)}% 아래가 되면 모습이 바뀐다.`] : null,
+  f.phase3 && f.p2 && !f.p3 && (S.G.depth || 0) >= (f.phase3.depth || 0) ? ['3단계', `체력이 ${Math.round(f.phase3.at * 100)}% 아래가 되면 「한낮」.`] : null,
 ].filter(Boolean).map(([n, t]) => `<span class="chip trait" data-tip="${esc(`${n}: ${t}`)}">${n}</span>`).join('');
 const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f.dim * 100) + '%' : 0, '빛 −', '#f0d040') + chip(f.bounty, '현상금', '#e0a050') + chip(f.block, '방어', 'var(--moon)') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
   + chip(f.str, '힘', '#ff9a8a') + chip(f.weak, '약화', '#f08ac0') + chip(f.vuln, '취약', '#ffd060');

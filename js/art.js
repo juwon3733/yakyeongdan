@@ -26,12 +26,12 @@ const FOE_FILE = {
   jelly: 'mist_jelly', kite: 'kite_knight', puff: 'puff_bomber', trumpet: 'storm_trumpeter',
   statue: 'star_statue', cat: 'shadow_cat', archer: 'meteor_archer', angel: 'clock_angel', rider: 'meteor_rider', shadow: 'moon_shadow',
   comet: 'tail_comet', gear: 'gear_knight', thief: 'star_thief', sage: 'constellation_sage',
-  tut_ghost: 'sea_ghost', tut_gull: 'gulls',
+  mistling: 'mistling', tut_ghost: 'sea_ghost', tut_gull: 'gulls',
 };
-const BOSS_FILE = { keeper: 'lighthouse', captain: 'cloud_captain', dawn: 'dawn' };
+const BOSS_FILE = { keeper: 'lighthouse', queen: 'fog_queen', captain: 'cloud_captain', whale: 'storm_whale', dawn: 'dawn' };
 export function foeArt(f) {
   const b = BOSS_FILE[f.key];
-  if (b) return (f.p2 && artURL(`enemies/boss_${b}_2.png`)) || artURL(`enemies/boss_${b}_1.png`);
+  if (b) return (f.p3 && artURL(`enemies/boss_${b}_3.png`)) || (f.p2 && artURL(`enemies/boss_${b}_2.png`)) || artURL(`enemies/boss_${b}_1.png`);
   return FOE_FILE[f.key] ? artURL(`enemies/${FOE_FILE[f.key]}.png`) : null;
 }
 

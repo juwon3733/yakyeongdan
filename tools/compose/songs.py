@@ -462,7 +462,76 @@ def dawn2():
     return tr
 
 
+# ---------- 보스 변형 ----------
+
+def boss_queen():
+    """1막 보스 변형 「안개 마녀 여왕」: 안개 낀 왈츠 느낌(3박 걸음), 하프와 플루트, 낮게 깔린 오르간"""
+    tr = Track(132, 16)
+    prog = ['Bm', 'Bm', 'G', 'G', 'Em', 'F#7', 'Bm', 'F#7',
+            'G', 'A', 'F#m', 'Bm', 'Em', 'G', 'C#m7b5', 'F#7']
+    tr.bus('harp', 0.35, 0.34, 0.5); tr.bus('fl', -0.15, 0.4, 0.45); tr.bus('org', 0, 0.24, 0.45)
+    tr.bus('bass', 0, 0.72, 0.08); tr.bus('dr', 0, 0.5, 0.2)
+    arp(tr, 'harp', harp, prog, [0, 2, 4, 2, 1, 2], step=0.5, octave=4, vel=0.32, dur=0.6)
+    block(tr, 'org', pad, prog, [(0, 3.9)], octave=3, vel=0.5)
+    basses(tr, 'bass', bass, prog, [(0, 1.4, 0), (1.5, 0.4, 7), (3, 0.9, 12)], vel=0.75)
+    melody(tr, 'fl', flute, 0, ['f#^:3 d^', 'c#^:2 b:2', 'b^:3 g^', 'f#^:2 d^:2',
+                                 'e^:1.5 g^:.5 b^ a^', 'a#^:3 f#^', 'b^:2 d^^:2', 'c#^^:4',
+                                 'd^^:3 b^', 'c#^^:2 a^:2', 'a^:3 f#^', 'f#^:2 d^:2',
+                                 'g^ b^ e^^ d^^', 'b^:2 g^:2', 'g^:2 e^:2', 'a#^:4'], octave=4, vel=0.55)
+    drums(tr, 'dr', {'kick': [0, (2.5, 0.4)], 'brush': [1, 2, 3], 'timp': [(0, 0.35)]}, 16)
+    for b in (7, 15):
+        roll(tr, 'dr', b, 0.4, 3.0)
+    return tr
+
+
+def boss_whale():
+    """2막 보스 변형 「폭풍 고래」: 느리고 거대한 금관 울음 위로 몰아치는 폭풍 현악·북"""
+    tr = Track(144, 16)
+    prog = ['Dm', 'Bb', 'C', 'Am', 'Dm', 'Bb', 'Gm A7', 'Dm',
+            'Bb', 'C', 'F', 'Dm', 'Gm', 'Bb', 'Gm A7', 'A7']
+    tr.bus('br', 0.05, 0.55, 0.32); tr.bus('str', -0.3, 0.3, 0.35); tr.bus('bell', 0.4, 0.22, 0.5)
+    tr.bus('bass', 0, 0.78, 0.06); tr.bus('dr', 0, 0.62, 0.15)
+    basses(tr, 'bass', bass, prog, EIGHTS, vel=0.76)
+    arp(tr, 'str', strings, prog, [0, 1, 2, 1, 2, 3, 2, 1], step=0.25, octave=4, vel=0.3, dur=0.22)
+    arp(tr, 'bell', bell, prog, [0, 4], step=2, octave=5, vel=0.28)
+    melody(tr, 'br', brass, 0, ['d^:3 a', 'f^:2 d^:2', 'e^:3 c^', 'a^:4',
+                                 'd^^:2 a^ f^', 'f^:2 d^ bb', 'bb^ a^ g^ c#^', 'd^:4',
+                                 'f^:2 bb^:2', 'g^:2 e^ c^', 'a^:2 c^^ a^', 'f^:3 d^',
+                                 'g^ bb^ d^^ bb^', 'f^:2 d^:2', 'e^ g^ c#^^ e^', 'e^:4'], octave=4, vel=0.62)
+    drums(tr, 'dr', {'kick': [0, 1.5, 2, 3.5], 'snare': [1, 3], 'timp': [(0, 0.55), (2, 0.35)], 'hat': [x * 0.5 for x in range(8)]}, 16)
+    for b in (3, 7, 11, 15):
+        roll(tr, 'dr', b, 0.55, 3.0)
+    tr.drum('dr', 'cym', 0, 0.65)
+    tr.drum('dr', 'cym', 32, 0.55)
+    return tr
+
+
+def dawn3():
+    """「새벽」 3단계 「한낮」(밤의 깊이 5+): 주제를 한 음 더 올려 가장 빠르게, 종소리와 몰아치는 사각파"""
+    tp = 3
+    tr = Track(168, 16)
+    prog = transpose(['F#m', 'D', 'E', 'C#7', 'F#m', 'D', 'Bm C#7', 'F#m',
+                      'D', 'E', 'A', 'F#m', 'Bm', 'D', 'E', 'C#7'], tp)
+    tr.bus('br', 0.05, 0.56, 0.26); tr.bus('sq', 0.4, 0.22, 0.18); tr.bus('bell', -0.35, 0.3, 0.45)
+    tr.bus('bass', 0, 0.8, 0.05); tr.bus('dr', 0, 0.64, 0.1); tr.bus('clk', 0.2, 0.42, 0.06)
+    basses(tr, 'bass', bass, prog, [(i * 0.5, 0.42, 12 if i % 2 else 0) for i in range(8)], vel=0.8)
+    arp(tr, 'sq', square, prog, [0, 2, 1, 2, 0, 3, 1, 2], step=0.25, octave=5, vel=0.24, dur=0.14)
+    arp(tr, 'bell', bell, prog, [0, 2, 4], step=1, octave=5, vel=0.3)
+    melody(tr, 'br', brass, 0, ['c#^:1.5 f#^:.5 a^ g#^', 'f#^:2 d^:2', 'e^:1.5 g#^:.5 b^ e^', 'f^:3 c#^',
+                                 'c#^:1.5 f#^:.5 a^ c#^^', 'd^^:2 a^ f#^', 'd^ f#^ f^ g#^', 'f#^:3 -',
+                                 'a^:1.5 f#^:.5 d^ f#^', 'g#^:1.5 b^:.5 e^ g#^', 'a^:2 c#^^ e^^', 'f#^:3 c#^',
+                                 'd^ f#^ b^ d^^', 'a^:2 f#^ d^', 'g#^ b^ e^^ b^', 'f^:2 g#^:2'], octave=4, vel=0.64, tp=tp)
+    drums(tr, 'dr', {'kick': [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5], 'snare': [1, 3, (2.75, 0.4), (3.75, 0.45)], 'ohat': [0.5, 1.5, 2.5, 3.5]}, 16)
+    drums(tr, 'clk', {'tick': [x * 0.25 for x in range(16)]}, 16, vel=0.5)
+    for b in (3, 7, 11, 15):
+        roll(tr, 'dr', b, 0.6, 2.5)
+    for b in (0, 16, 32, 48):
+        tr.drum('dr', 'cym', b, 0.6)
+    return tr
+
+
 SONGS = {'title': title, 'base': base, 'map1': map1, 'map2': map2, 'map3': map3, 'battle': battle, 'elite': elite,
          'boss1': boss1, 'boss2': boss2, 'dawn': dawn, 'victory': victory, 'result': result,
          'rest': rest, 'event': event, 'ep_daily': ep_daily, 'ep_warm': ep_warm, 'ep_tense': ep_tense,
-         'tutorial': tutorial, 'dawn2': dawn2}
+         'tutorial': tutorial, 'dawn2': dawn2,
+         'boss_queen': boss_queen, 'boss_whale': boss_whale, 'dawn3': dawn3}

@@ -96,7 +96,7 @@ function makeFoe(k, i, hpMul = 1) {
   const d = FOE[k], hp = Math.round(d.hp * hpMul);
   S.G.foesMet?.add(k);
   return { key: k, i, ...d, pat: d.pat.slice(), hp, max: hp, pi: 0, block: 0, str: (isDawn() ? RULES.dawnStartStr : 0) + (S.G.endless ? endlessStr() : 0), poison: 0, weak: 0, vuln: 0, bleed: 0, burn: 0,
-    armor: d.armor || 0, acts: d.acts || 1, affixes: [], ax: null, baseName: d.name, p2: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null, aimedTurn: false, stolen: [] };
+    armor: d.armor || 0, acts: d.acts || 1, affixes: [], ax: null, baseName: d.name, p2: false, p3: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null, aimedTurn: false, stolen: [] };
 }
 
 // 적 속성 (js/data/affixes.js): 강적은 첫 적에 1개(밤의 깊이 affix2면 2개), 2막 이후 일반 전투는 확률로 하나에 1개
@@ -191,7 +191,9 @@ function startTurn() {
   if (C.garden) for (const f of livingFoes()) f.poison += C.garden;
   if (isDawn()) { for (const f of livingFoes()) f.str += RULES.dawnStrPerTurn; logMsg(`<b>새벽</b>: 적의 힘 +${RULES.dawnStrPerTurn}`); }
   // 「새벽」: 내 턴 시작마다 밤 시계가 돈다
-  for (const f of livingFoes()) if (f.turnClock) { const t = f.turnClock + (depthRule('dawnClock') || 0); addTime(t); logMsg(`${f.name}: 밤 시계 <b>+${t}분</b>`); }
+  // 안개 마녀 여왕 「안개 장막」: 내 턴 시작마다 방어 (그 턴 ③이 처음 터지면 걷힌다, effects.js burst)
+  for (const f of livingFoes()) if (f.mistVeil) { f.block += f.mistVeil.block; f.veilUp = true; logMsg(`${f.name}: 안개 장막 <b>방어 ${f.mistVeil.block}</b>`); }
+  for (const f of livingFoes()) if (f.turnClock) { const t = f.turnClock + (f.key === 'dawn' ? depthRule('dawnClock') || 0 : 0); addTime(t); logMsg(`${f.name}: 밤 시계 <b>+${t}분</b>`); }
   if (first) { passives('onCombatStart'); relicsAtStart(); }
   passives('onTurnStart');
   // 녹슨 열쇠: 손패에 있는 동안 1장 덜 뽑는다. 별의 왕관 -1, 야경단 완장 첫 턴 +1
@@ -274,17 +276,20 @@ export function dmgToFoe(f, n, actor, pierceBlock = false) {
   }
   return { dealt: d, blocked, bleed };
 }
-// 보스 2단계: 체력이 phase2.at 비율 아래로 내려가면 한 번 바뀐다
-function enterPhase2(f) {
-  const p = f.phase2; f.p2 = true;
-  for (const k of ['armor', 'acts', 'aim', 'turnClock', 'duel']) if (k in p) f[k] = p[k];
+// 보스 2단계·3단계: 체력이 phase.at 비율 아래로 내려가면 한 번씩 바뀐다 (3단계는 2단계 뒤, phase3.depth 밤의 깊이 이상에서만)
+function enterPhase(f, p, n) {
+  f['p' + n] = true;
+  for (const k of ['armor', 'acts', 'aim', 'turnClock', 'duel', 'burstClock']) if (k in p) f[k] = p[k];
   if (p.pat) { f.pat = p.pat; f.pi = 0; }
   if (p.clockOnce) addTime(p.clockOnce);
   logMsg(`<b>${p.msg}</b>`);
-  pushFx({ kind: 'phase', name: f.name, text: p.msg });
+  if (p.line) logMsg(`<b>${f.name}</b> ${p.line}`);
+  pushFx({ kind: 'phase', name: f.name, text: p.msg, n, line: p.line || '' });
 }
+const phase3On = f => f.phase3 && f.p2 && !f.p3 && (S.G.depth || 0) >= (f.phase3.depth || 0);
 export function killCheck(f) {
-  if (f.hp > 0 && f.phase2 && !f.p2 && f.hp <= f.max * f.phase2.at) enterPhase2(f);
+  if (f.hp > 0 && f.phase2 && !f.p2 && f.hp <= f.max * f.phase2.at) enterPhase(f, f.phase2, 2);
+  if (f.hp > 0 && phase3On(f) && f.hp <= f.max * f.phase3.at) enterPhase(f, f.phase3, 3);
   // 「성난」: 체력 절반 아래면 한 번 힘 +
   if (f.hp > 0 && f.ax?.enrage && !f.enraged && f.hp <= f.max / 2) { f.enraged = true; f.str += f.ax.enrage; logMsg(`${f.name}이(가) 성났다: 힘 +${f.ax.enrage}`); pushFx({ kind: 'rage', i: f.i, v: f.ax.enrage }); }
   if (f.hp <= 0 && !f.dead) {
@@ -666,6 +671,8 @@ function finishTurnDamage() {
   if (d < RULES.bigTurn) return;
   G.bigTurns = (G.bigTurns || 0) + 1;
   pushFx({ kind: 'bigturn', dmg: d });
+  // 폭풍 고래: 터지는 턴이면 다음 행동 하나를 건너뛴다
+  for (const g of livingFoes()) if (g.stagger) { g.skip = Math.max(g.skip, 1); logMsg(`<b>${g.name}</b>이(가) 비틀거린다 — 다음 행동 건너뜀`); pushFx({ kind: 'stagger', i: g.i }); }
   if (C.burstTurn.has('eleonore')) return;
   const f = livingFoes().find(x => x.burstClock);
   if (f) { addTime(f.burstClock); logMsg(`${f.name}: 한 턴 피해 ${d} — 밤 시계 <b>+${f.burstClock}분</b>`); }
@@ -719,6 +726,7 @@ function winCombat() {
   if (relicSum('winRewind')) rewind(relicSum('winRewind'));   // 시곗줄·거꾸로 도는 시계
   if (k === 'boss') {
     G.bossKills++;
+    const bk = C.all[0]; G.lastBoss = bk.key; if (bk.p3) G.noonBeat = true;
     if (G.tutorial) { G.tutorial.won = true; G.screen = 'tutdone'; return; }   // 첫 실행 튜토리얼 끝 (js/tutorial.js)
     if (G.act === 3) return endRun(true);
     for (const p of G.party) healMember(p, Math.ceil(member(p).max * RULES.bossHealPct));

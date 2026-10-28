@@ -40,8 +40,8 @@ export function newRun(party, seed = newSeed(), opts = {}) {
     // 도감·기록용 (meta.js grantRun이 모은다)
     offered: new Set(), played: new Set(), foesMet: new Set(), foesBeat: new Set(), affixSeen: new Set(), talks: new Set(),
   };
-  S.G.map = makeMap(rng, moon);
-  S.G.nextMap = makeMap(rng, moon);
+  S.G.map = makeMap(rng, moon, 1);
+  S.G.nextMap = makeMap(rng, moon, 2);
   S.G.nextElite = pickElite();
   S.view = 'run';
 }

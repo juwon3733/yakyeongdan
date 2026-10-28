@@ -16,7 +16,7 @@ export const relicFlag = field => (S.G?.relics || []).some(id => RELICS[id][fiel
 const sigOk = id => { const d = RELICS[id], G = S.G; return d.tier === 'sig' && G.party.includes(d.owner) && (G.sigs || []).includes(d.owner); };
 export function rollRelic(rng, tiers, exclude = []) {
   const have = new Set([...S.G.relics, ...exclude]);
-  const free = t => Object.keys(RELICS).filter(id => (RELICS[id].tier === t || (t === 'u' && sigOk(id))) && !have.has(id));
+  const free = t => Object.keys(RELICS).filter(id => (RELICS[id].tier === t || (t === 'u' && sigOk(id))) && !RELICS[id].from && !have.has(id));
   if (tiers) { const pool = tiers.flatMap(free); return pool.length ? rng.pick(pool) : null; }
   let x = rng.next(), t = 'c';
   for (const [k, w] of Object.entries(RELIC_ODDS)) { if (x < w) { t = k; break; } x -= w; }

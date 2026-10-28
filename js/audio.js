@@ -137,6 +137,8 @@ function epBgm() {
   if (E.bgm && EP_SONGS.includes(E.bgm)) return E.bgm;
   return E.kind === 'bond' || E.n === 2 ? 'ep_warm' : 'ep_daily';
 }
+// 보스별 곡 (막 보스 변형: 안개 마녀 여왕·폭풍 고래)
+const BOSS_SONG = { keeper: 'boss1', queen: 'boss_queen', captain: 'boss2', whale: 'boss_whale' };
 function pickBgm() {
   const G = S.G;
   if (S.view === 'ep') return epBgm();
@@ -146,9 +148,9 @@ function pickBgm() {
   if (G.episode) return 'battle';                        // 에피소드 특별 전투
   if (G.screen === 'combat' && S.C) {
     if (S.C.kind === 'boss') {
-      if (G.endless) { const k = S.C.all[0]?.key; if (k === 'keeper') return 'boss1'; if (k === 'captain') return 'boss2'; }   // 끝없는 탑: 보스마다 원래 곡
-      if (G.act >= 3) return S.C.all.some(f => f.p2 && !f.dead) ? 'dawn2' : 'dawn';
-      return `boss${G.act}`;
+      const b = S.C.all[0];
+      if (b?.key === 'dawn') return b.p3 ? 'dawn3' : b.p2 ? 'dawn2' : 'dawn';
+      return BOSS_SONG[b?.key] || `boss${Math.min(2, G.act)}`;
     }
     if (G.tutorial) return 'tutorial';
     return S.C.kind === 'elite' ? 'elite' : 'battle';
