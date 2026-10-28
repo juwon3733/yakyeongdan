@@ -6,7 +6,7 @@ import { ENDLESS, isBossGate } from '../data/endless.js';
 import { endlessFloor, dawnStacks, endlessRules, endlessStr } from '../endless.js';
 import { P, grantEndless, endlessOpen } from '../meta.js';
 import { SUMMON } from '../data/gacha.js';
-import { fmt, face, esc } from './common.js';
+import { fmt, face, esc, charSrc } from './common.js';
 
 // 위 띠: 페이스 칩 대신 층·적 강화·쌓인 규칙
 export function endlessChip(G) {
@@ -29,7 +29,7 @@ export function endlessResultView() {
   const rules = endlessRules().map(r => `<span class="chip" title="${esc(r.text)}">${esc(r.name)}</span>`).join('') || '<span class="note">없음</span>';
   const ach = R.ach?.length ? `<p class="note"><span class="chip">업적</span> ${R.ach.map(a => `「${esc(a.name)}」`).join(' ')} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b></p>` : '';
   return `<div class="resultscr endresult">
-    <div class="mvp" style="--c:${mc.col}">${face(mvp, 'big')}<span class="nm">MVP · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}</span></div>
+    <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">MVP · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}</span></div>
     <div class="rinfo">
       <h2 style="font-size:20px">끝없는 탑에서 멈췄다</h2>
       <p class="clockbig endfloor">${E.floor}<small>층</small></p>

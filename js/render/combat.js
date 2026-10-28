@@ -82,9 +82,9 @@ export function combatView() {
     return `<button type="button" class="pm ${M.down ? 'down' : ''} ${aims.has(p) ? 'aimed' : ''} ${lit.includes(p) ? 'lit' : ''} ${wantAlly && !M.down ? 'tg' : ''} ${C.last === p ? 'last' : ''}" style="--c:${c.col}" data-ally="${p}" ${wantAlly && !M.down ? '' : 'tabindex="-1"'}>
         <span class="row">${ROW_NAME[fi]}${lit.includes(p) ? ' · <b class="litnm">불빛 +1</b>' : ''}</span>
         <img class="px" src="${charSrc(p)}" alt="">
-        <span class="nm">${c.name}</span>
+        <span class="lab"><span class="nm">${c.name}</span>
         ${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : `${M.hp}/${M.max}`}${blk ? ` <b class="blk">방어 ${blk}</b>` : ''}</span>
-        <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span>${M.down ? '' : burstProgHTML(p)}</button>${swap}`;
+        <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span>${M.down ? '' : burstProgHTML(p)}</span></button>${swap}`;
   }).join('');
   const many = C.all.length > 1;
   const foes = C.all.map(f => {
@@ -98,10 +98,10 @@ export function combatView() {
     return `<button type="button" class="foe ${many ? 'sm' : ''} ${wantFoe && !hid ? 'tg' : ''} ${hid ? 'hidden' : ''}${ax}" ${hid ? 'aria-disabled="true" title="숨어 있어 이번 턴에는 고를 수 없다"' : `data-foe="${f.i}"`} data-fi="${f.i}">
         <span class="intent ${ic}" data-tip="${esc(`다음 행동. ${aim ? `노림: ${AIM_NAME[aimKey(f)]} (얼굴이 맞을 동료).` : ''}`)}">${it}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[aimKey(f)]}</span>`}` : ''}</span>
         <img class="px" src="${foeArt(f) || sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
-        <span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
+        <span class="lab"><span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
         <span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span>
         <span class="hp">${f.hp}/${f.max}</span>
-        <span class="st">${foeTraits(f)}${foeSt(f)}</span>
+        <span class="st">${foeTraits(f)}${foeSt(f)}</span></span>
       </button>`;
   }).join('');
   // 담금질 고르기 중이면 강화할 수 있는 카드만 누를 수 있다. 세바스·예약: 남길 카드 표시.

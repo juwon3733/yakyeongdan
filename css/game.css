@@ -995,3 +995,82 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 .backup .bmsg.err{color:#ff9aaa}
 #stage.bigtext .backup textarea{font-size:10.5px}
 #stage.bigtext .backup .bmsg{font-size:11px}
+
+/* ---- 실제 그림 크기 (그림체 시안 C: 서 있는 그림 256×384 원본 4배) ----
+   전투 동료는 논리 100×150(2:3)으로 크게, 이름·체력은 그림 아래 두 줄로 줄였다.
+   그림 파일(assets/…)은 원본보다 작게 보일 때 부드럽게 줄이고(#stage[data-art="smooth"]),
+   원본의 1.5배 넘게 커질 때만 계단(pixelated)으로 키운다. 임시 도트(data:)는 늘 계단. (js/main.js fit) */
+#stage[data-art="smooth"] img.px[src^="assets/"]{image-rendering:auto}
+.field{gap:2px;padding:0 4px;justify-content:space-between;align-items:flex-end}
+.party{align-items:flex-end;gap:0}
+.pm{position:relative;width:94px;padding:0 0 3px;gap:0;border-bottom-width:3px;justify-content:flex-end}
+.pm .row{position:absolute;top:2px;left:2px;z-index:2;font-size:8px;text-shadow:1px 1px 0 #000}
+.pm img{width:100px;height:150px;margin:0 -3px}
+.pm .lab{display:flex;flex-direction:column;align-items:center;gap:1px;width:100%;margin-top:-2px}
+.pm .lab .nm{font-size:9.5px;line-height:1.1}
+.pm .lab .hpbar{width:72px;height:4px}
+.pm .lab .hp{font-size:8.5px;line-height:1.1}
+.pm .lab .s{font-size:8px;min-height:0;line-height:1.1;max-width:94px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pm .lab .s:empty{display:none}
+.pm .lab .bprog{margin-top:1px}
+.swap{position:relative;z-index:3;margin:0 -7px 64px;padding:1px 2px;font-size:10px}
+.foes{gap:2px;align-items:flex-end}
+.foe{position:relative;min-width:96px;padding:0 2px 3px;gap:0}
+.foe .intent{position:relative;z-index:2;font-size:9px;line-height:1.2;white-space:nowrap}
+.foe img{width:92px;height:138px}
+.foe.sm{min-width:84px}
+.foe.sm img{width:76px;height:114px}
+.foe .lab{display:flex;flex-direction:column;align-items:center;gap:1px;width:100%}
+.foe .lab .nm{font-size:10px;line-height:1.1}
+.foe .lab .foehp{width:80px;height:4px}
+.foe .lab .hp{font-size:8.5px;line-height:1.1}
+.foe .lab .st{min-height:0;gap:2px}
+.foe.sm .lab .nm{font-size:9px;max-width:84px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#stage.bigtext .pm{width:92px}
+#stage.bigtext .pm img{width:96px;height:144px}
+#stage.bigtext .foe img{width:88px;height:132px}
+#stage.bigtext .foe.sm img{width:72px;height:108px}
+#app.tut[data-screen="combat"] .pm img,#stage #app.tut[data-screen="combat"] .pm img{width:84px;height:126px}
+#app.tut[data-screen="combat"] .foe img,#stage #app.tut[data-screen="combat"] .foe img{width:80px;height:120px}
+/* 이름·체력 한 줄, 체력 막대, 상태·③ 한 줄 → 그림 150이 판(179) 안에 들어간다 */
+.pm .lab{flex-direction:row;flex-wrap:wrap;justify-content:center;column-gap:4px;row-gap:1px;margin-top:-3px}
+.pm .lab .hpbar{flex:0 0 76px;order:3}
+.pm .lab .nm{order:1}.pm .lab .hp{order:2}
+.pm .lab .s{order:4;max-width:60px}.pm .lab .bprog{order:5;margin-top:0}
+.pm .lab .s:empty+.bprog{margin-left:0}
+.swap{margin:0 -7px 30px}
+.foe .lab{flex-direction:row;flex-wrap:wrap;justify-content:center;column-gap:4px;row-gap:1px}
+.foe .lab .nm{order:1;flex:0 0 100%;text-align:center}.foe .lab .foehp{order:2;flex:0 0 80px}.foe .lab .hp{order:3}.foe .lab .st{order:4;flex:0 0 100%}
+.foe .lab .st:empty{display:none}
+.pm img,.foe img{max-width:none;flex:none}
+/* 임시 도트(그림 없음)는 같은 자리에서 조금 작게 — 실제 그림의 몸 크기와 비슷하게, 이름 줄을 가리지 않게 */
+.pm img[src^="data:"]{width:84px;height:112px;margin:38px 5px 0}
+.foe img[src^="data:"]{width:78px;height:104px;margin-top:34px}
+.foe.sm img[src^="data:"]{width:66px;height:88px;margin-top:26px}
+.pm .lab .nm,.pm .lab .hp{white-space:nowrap}
+.pm .lab .blk{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);font-family:var(--f-disp);font-size:8.5px;color:var(--moon);background:rgba(7,8,26,.82);border:1px solid var(--moon);padding:0 3px;z-index:2}
+.swap{margin:0 -7px 26px}
+/* 결과 MVP: 서 있는 그림을 크게 (그림 없으면 임시 도트를 조금 작게) */
+.mvp{justify-content:flex-end;padding-bottom:6px;overflow:hidden}
+.mvp img.mvpart{width:112px;height:168px;object-fit:contain;object-position:50% 100%;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6))}
+.mvp img.mvpart[src^="data:"]{width:84px;height:112px}
+/* 파티 고르기 대열: 2:3 그림 자리로 크게 */
+.formation .chosen img{width:64px;height:96px;max-width:none}
+.formation .chosen:nth-child(3) img{width:70px;height:105px}
+.formation .chosen img[src^="data:"]{width:54px;height:72px}
+.formation .chosen:nth-child(3) img[src^="data:"]{width:60px;height:80px}
+/* 본부에서 쉬는 동료 */
+.rester img{width:72px;height:108px;object-fit:contain;object-position:50% 100%}
+.rester img[src^="data:"]{width:60px;height:80px}
+/* ★5 등장: 그림이 있으면 크게 */
+.s5focus img.big{width:150px;height:225px;object-fit:contain}
+.s5focus img.big[src^="data:"]{width:120px;height:160px}
+.pm img[src^="data:"]{width:72px;height:96px;margin:54px 11px 0}
+.pm .lab{margin-top:0}
+.formation .chosen img{width:52px;height:78px}
+.formation .chosen:nth-child(3) img{width:58px;height:87px}
+.formation .chosen img[src^="data:"]{width:44px;height:58px}
+.formation .chosen:nth-child(3) img[src^="data:"]{width:48px;height:64px}
+#stage.bigtext .pm img[src^="data:"]{width:68px;height:90px;margin:54px 12px 0}
+#stage.bigtext .foe img[src^="data:"]{width:74px;height:98px;margin-top:34px}
+#stage.bigtext .foe.sm img[src^="data:"]{width:62px;height:82px;margin-top:26px}

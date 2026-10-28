@@ -72,6 +72,8 @@ function fit() {
   const s = Math.min(aw / w, ah / H);
   const k = s >= 2 ? Math.floor(s) : Math.max(s, .5);
   stage.style.setProperty('--s', k);
+  // 그림 파일 축소·확대 방식: 전투 동료(논리 높이 150)가 원본 384의 1.5배 넘게 커지면 계단, 아니면 부드럽게 (css/game.css)
+  stage.dataset.art = 150 * k >= 384 * 1.5 ? 'px' : 'smooth';
   applySettings(k);   // 작은 화면이면 글자 크게(설정 「자동」)
 }
 addEventListener('resize', fit);
