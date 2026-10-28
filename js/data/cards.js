@@ -87,10 +87,10 @@ export const CARDS = {
 
   // 노엘 — 잠·마력 (잠든 동안 노엘의 공격 카드는 wake·sleepOk 카드만)
   'noel.sleep':  { ch: 'noel', name: '잠들기', cost: 1, rarity: 'c', v: [], up: { cost: 0 },
-    text: '잠든다. 잠든 동안 턴 시작마다 마력 +3.', play: c => { c.asleep = true; } },
+    text: '잠든다. 잠든 동안 턴 시작마다 마력 +4.', play: c => { c.asleep = true; } },
   'noel.star':   { ch: 'noel', name: '별똥 마법', cost: 1, atk: 1, wake: 1, rarity: 'c', v: [3], up: { v: [4] },
-    text: '피해 마력×{n0} (최소 4). 마력 0, 깨어난다.', play: (c, e, v) => { e.hit(Math.max(4, c.mana * v[0])); c.mana = 0; c.asleep = false; } },
-  'noel.pillow': { ch: 'noel', name: '베개 방어', cost: 1, rarity: 'c', v: [6, 5], up: { v: [8, 7] },
+    text: '피해 마력×{n0} (최소 6). 마력 0, 깨어난다.', play: (c, e, v) => { e.hit(Math.max(6, c.mana * v[0])); c.mana = 0; c.asleep = false; } },
+  'noel.pillow': { ch: 'noel', name: '베개 방어', cost: 1, rarity: 'c', v: [7, 5], up: { v: [9, 7] },
     text: '방어 {b0}. 잠들어 있으면 +{n1}.', play: (c, e, v) => e.guard(v[0] + (c.asleep ? v[1] : 0)) },
   'noel.deep':   { ch: 'noel', name: '깊은 잠', cost: 0, time: 1, rarity: 'u', v: [5], up: { v: [8] },
     text: '잠든다. 마력 +{k0}.', play: (c, e, v) => { c.asleep = true; c.mana += v[0] + e.dark(); } },
@@ -110,7 +110,7 @@ export const CARDS = {
     text: '피해 마력×{n0}. 마력 0, 깨어난다.', play: (c, e, v) => { e.hit(c.mana * v[0]); c.mana = 0; c.asleep = false; } },
 
   // 레이븐 — 독·출혈
-  'raven.needle':{ ch: 'raven', name: '독침', cost: 1, atk: 1, rarity: 'c', v: [3, 3], up: { v: [4, 4] },
+  'raven.needle':{ ch: 'raven', name: '독침', cost: 1, atk: 1, rarity: 'c', v: [3, 2], up: { v: [4, 3] },
     text: '피해 {d0}, 독 {k1}.', play: (c, e, v) => { e.hit(v[0]); e.foeStatus('poison', v[1] + e.dark()); } },
   'raven.step':  { ch: 'raven', name: '그림자 걸음', cost: 1, rarity: 'c', v: [5], up: { v: [7] },
     text: '방어 {b0}, 카드 1장.', play: (c, e, v) => { e.guard(v[0]); e.draw(1); } },

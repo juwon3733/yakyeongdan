@@ -37,8 +37,8 @@ export const CHARACTERS = {
     ds: '자는 동안 마력이 쌓인다.',
     pal: { h: '#f08ac0', H: '#b05a88', e: '#a0d0ff', o: '#f0e0f0', O: '#c0a8d0', a: '#ffd0e8' },
     start: ['noel.sleep', 'noel.star', 'noel.pillow', 'noel.deep'],
-    passive: { name: '잠버릇', text: '잠든 채로 턴을 시작하면 방어 3.',
-      onTurnStart: (c, e) => { if (c.asleep) e.guard(3); } },
+    passive: { name: '잠버릇', text: '잠든 채로 턴을 시작하면 방어 5.',
+      onTurnStart: (c, e) => { if (c.asleep) e.guard(5); } },
   },
   raven: {
     name: '레이븐', role: '암살자', rarity: 4, maxHp: 30, col: '#9a86d8', long: false,

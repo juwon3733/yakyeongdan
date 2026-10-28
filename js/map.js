@@ -124,13 +124,20 @@ export function rest(kind) {
   nextRow();
 }
 // 손질·지우기가 끝나면 돌아갈 곳 (야시장에서 왔으면 야시장)
-function back() { const G = S.G; if (G.back === 'shop') { G.back = null; G.screen = 'shop'; } else nextRow(); }
+function back() { const G = S.G; G.paid = null; if (G.back === 'shop') { G.back = null; G.screen = 'shop'; } else nextRow(); }
+// 야시장에서 돈을 내고 들어왔다가 그만두면 돌려준다
+function refund() {
+  const G = S.G, p = G.paid; if (!p || G.back !== 'shop') return;
+  G.gold += p.price;
+  if (p.kind === 'remove') { G.removes--; if (G.shop) G.shop.removed = false; }
+}
 export function upgradeCard(i) {
   const G = S.G;
   if (i >= 0 && canUpgrade(G.deck[i])) G.deck[i] += '+';
+  else refund();
   back();
 }
-export function removeCard(i) { const G = S.G; if (i >= 0) G.deck.splice(i, 1); back(); }
+export function removeCard(i) { const G = S.G; if (i >= 0 && G.deck[i]) G.deck.splice(i, 1); else refund(); back(); }
 export function dupeCard(i) { const G = S.G; if (i >= 0 && G.deck[i]) G.deck.push(G.deck[i]); nextRow(); }
 
 // 지도에서 대열 바꾸기: 한 칸 누르고 다른 칸 누르면 자리를 맞바꾼다 (자유)
@@ -170,10 +177,10 @@ export function shopBuy(kind, i) {
     G.gold -= r.price; r.sold = true; gainRelic(r.id); sh.talk = '"잘 써. 탑 꼭대기까지."';
   } else if (kind === 'remove') {
     const p = removePrice(); if (G.gold < p || sh.removed) return;
-    G.gold -= p; G.removes++; sh.removed = true; G.back = 'shop'; G.screen = 'remove';
+    G.gold -= p; G.removes++; sh.removed = true; G.back = 'shop'; G.paid = { kind: 'remove', price: p }; G.screen = 'remove';
   } else if (kind === 'upgrade') {
     if (G.gold < SHOP.upgrade || !G.deck.some(canUpgrade)) return;
-    G.gold -= SHOP.upgrade; G.back = 'shop'; G.screen = 'upgrade';
+    G.gold -= SHOP.upgrade; G.back = 'shop'; G.paid = { kind: 'upgrade', price: SHOP.upgrade }; G.screen = 'upgrade';
   }
 }
 export function leaveShop() { S.G.shop = null; nextRow(); }

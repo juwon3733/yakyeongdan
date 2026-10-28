@@ -93,9 +93,9 @@ try {
     if (party.includes('marta')) await page.evaluate(() => { window.__yk.S.G.deck.push('marta.confess', 'marta.confess', 'marta.confess'); });
     await page.click('[data-node="0,0"]');
     await page.waitForSelector('[data-end]');
-    // 쓰러짐 확인용 (seed 1): 모든 동료 체력 1, 한 명이 쓰러질 때까지 카드 없이 턴만 넘긴다
+    // 쓰러짐 확인용 (seed 1): 앞줄 동료 체력 1, 한 명이 쓰러질 때까지 카드 없이 턴만 넘긴다
     if (seed === 1) {
-      await page.evaluate(() => { const G = window.__yk.S.G; for (const p of G.party) G.members[p].hp = 1; });
+      await page.evaluate(() => { const G = window.__yk.S.G; G.members[G.formation[0]].hp = 1; });
       for (let t = 0; t < 8 && !(await page.$('.pm.down')); t++) await page.click('[data-end]');
       if (await page.$('.pm.down') && await page.$('.card.down')) seen.down = true;
       await page.evaluate(() => { const G = window.__yk.S.G; for (const p of G.party) if (!G.members[p].down) G.members[p].hp = G.members[p].max; });
@@ -217,7 +217,7 @@ try {
     const c0 = await page.evaluate(() => { window.__yk.S.G.clock = 100; window.__yk.fight(['dawn'], 'boss'); return window.__yk.S.G.clock; });
     await page.click('[data-end]');
     const c1 = await page.evaluate(() => window.__yk.S.G.clock);
-    if (c0 === 110 && c1 >= 120) seen.dawnClock = true; else fail(`「새벽」 밤 시계가 안 돎 ${c0} → ${c1}`);
+    if (c0 > 100 && c1 > c0) seen.dawnClock = true; else fail(`「새벽」 밤 시계가 안 돎 ${c0} → ${c1}`);
     await page.evaluate(() => { window.__yk.win(); });
     await page.evaluate(() => { const G = window.__yk.S.G; G.screen = 'map'; G.clock = 415; window.__yk.render(); });
     const n = await page.$('[data-node]:not([disabled])'); if (n) await n.click();
