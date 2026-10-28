@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 1 · 전체 483장 · 묶음 56개
+style_version 1 · 전체 499장 · 묶음 56개
 
 ## 묶음
 
@@ -63,7 +63,7 @@ style_version 1 · 전체 483장 · 묶음 56개
 | `bg` | 배경 | 13 |
 | `title` | 타이틀 키아트 | 1 |
 | `summon` | 별 소환 연출 | 4 |
-| `icons` | 도구 아이콘 24 | 24 |
+| `icons` | 도구 아이콘 40 | 40 |
 
 ## 종류별 크기
 
@@ -1119,7 +1119,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `meteor_4` | `assets/summon/meteor_4.png` | 512×512 투명 | — | — |
 | `meteor_5` | `assets/summon/meteor_5.png` | 512×512 투명 | — | — |
 
-## `icons` — 도구 아이콘 24
+## `icons` — 도구 아이콘 40
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -1147,3 +1147,19 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `relic_dawn_feather` | `assets/icons/relic_dawn_feather.png` | 192×192 투명 | — | — |
 | `relic_stopped_tower` | `assets/icons/relic_stopped_tower.png` | 192×192 투명 | — | — |
 | `relic_star_crown` | `assets/icons/relic_star_crown.png` | 192×192 투명 | — | — |
+| `relic_tide_bell` | `assets/icons/relic_tide_bell.png` | 192×192 투명 | — | — |
+| `relic_rope` | `assets/icons/relic_rope.png` | 192×192 투명 | — | — |
+| `relic_crescent_pin` | `assets/icons/relic_crescent_pin.png` | 192×192 투명 | — | — |
+| `relic_half_ribbon` | `assets/icons/relic_half_ribbon.png` | 192×192 투명 | — | — |
+| `relic_full_mirror` | `assets/icons/relic_full_mirror.png` | 192×192 투명 | — | — |
+| `relic_new_ink` | `assets/icons/relic_new_ink.png` | 192×192 투명 | — | — |
+| `relic_duo_scarf` | `assets/icons/relic_duo_scarf.png` | 192×192 투명 | — | — |
+| `relic_duo_shield` | `assets/icons/relic_duo_shield.png` | 192×192 투명 | — | — |
+| `relic_sand_pendant` | `assets/icons/relic_sand_pendant.png` | 192×192 투명 | — | — |
+| `relic_last_ticket` | `assets/icons/relic_last_ticket.png` | 192×192 투명 | — | — |
+| `relic_red_knot` | `assets/icons/relic_red_knot.png` | 192×192 투명 | — | — |
+| `relic_watch_chain` | `assets/icons/relic_watch_chain.png` | 192×192 투명 | — | — |
+| `relic_moon_compass` | `assets/icons/relic_moon_compass.png` | 192×192 투명 | — | — |
+| `relic_twin_star` | `assets/icons/relic_twin_star.png` | 192×192 투명 | — | — |
+| `relic_reverse_clock` | `assets/icons/relic_reverse_clock.png` | 192×192 투명 | — | — |
+| `relic_star_sash` | `assets/icons/relic_star_sash.png` | 192×192 투명 | — | — |

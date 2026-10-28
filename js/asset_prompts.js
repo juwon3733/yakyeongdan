@@ -244,7 +244,7 @@ export const BGS = {
   ep_harbor: '에피소드 장소: 항구 거리 — a sloped harbor town street at night, the tower visible far out at sea',
 };
 
-// ── 도구 아이콘 24 ───────────────────────────────────────
+// ── 도구 아이콘 40 ───────────────────────────────────────
 export const RELICS = {
   old_watch: '낡은 회중시계 — an old brass pocket watch',
   lantern: '야경단 등불 — a night-watch lantern',
@@ -270,6 +270,22 @@ export const RELICS = {
   dawn_feather: '새벽의 깃털 — a sunrise-colored feather',
   stopped_tower: '멈춘 시계탑 — a tiny stopped clocktower',
   star_crown: '별의 왕관 — a crown of stars',
+  tide_bell: '밀물 종 — a small brass bell with sea foam',
+  rope: '묶음 밧줄 — a coiled rope tied in a sailor knot',
+  crescent_pin: '초승 브로치 — a silver crescent moon brooch',
+  half_ribbon: '반달 리본 — a ribbon shaped like a half moon',
+  full_mirror: '보름 손거울 — a round hand mirror reflecting a full moon',
+  new_ink: '그믐 먹물 — a small bottle of black ink with no moon reflection',
+  duo_scarf: '맞춤 목도리 — two matching scarves knotted together',
+  duo_shield: '한 쌍의 방패 — two small shields overlapping',
+  sand_pendant: '모래시계 펜던트 — a tiny hourglass on a chain',
+  last_ticket: '막차표 — a last-train ticket stub',
+  red_knot: '붉은 실 매듭 — a red string tied in a bow',
+  watch_chain: '시곗줄 — a gold watch chain without the watch',
+  moon_compass: '달 나침반 — a compass whose needle is a crescent moon',
+  twin_star: '쌍별 펜던트 — a pendant with two stars side by side',
+  reverse_clock: '거꾸로 도는 시계 — a clock face with hands spinning backward',
+  star_sash: '별자리 띠 — a sash embroidered with a constellation',
 };
 
 // ── 카드 그림 장면 (js/data/cards.js에서 자동) ───────────
@@ -422,7 +438,7 @@ export function assetList() {
   for (const [r, col] of Object.entries(meteors)) {
     out.push(item('meteor', `meteor_${r}`, 'summon', `meteor_${r}.png`, join(STYLE.pixel, `A single shooting star effect, ${col}, falling diagonally from top-right to bottom-left with a pixel trail. Fully transparent background. Native 64x64, upscaled 8x to 512x512.`)));
   }
-  batches.push({ id: 'icons', title: '도구 아이콘 24' });
+  batches.push({ id: 'icons', title: '도구 아이콘 40' });
   for (const [id, desc] of Object.entries(RELICS)) {
     out.push(item('icon', `relic_${id}`, 'icons', `relic_${id}.png`, join(STYLE.pixel, `A single item icon: ${desc}. Centered, readable at 24x24 pixels, bold outline, fully transparent background. Native resolution 24x24 pixels, upscaled exactly 8x to 192x192.`)));
   }
