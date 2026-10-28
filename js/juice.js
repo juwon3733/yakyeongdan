@@ -336,12 +336,22 @@ function actFx(e, special = false) {
     if (special || m === 'finisher') dim(special ? 900 : 600);
   }
 }
+// 공용 이펙트(불꽃색으로 그려짐)를 그 동료 색으로 물들인다: 색상만 돌리고, 흰빛 도는 색이면 채도를 낮춘다
+const FX_BASE_HUE = 20;
+function tintTo(hex) {
+  const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i.exec(hex || ''); if (!m) return '';
+  const [r, g, b] = m.slice(1).map(v => parseInt(v, 16) / 255), mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
+  if (d < .12) return 'saturate(.25) brightness(1.15)';
+  let h = mx === r ? ((g - b) / d) % 6 : mx === g ? (b - r) / d + 2 : (r - g) / d + 4; h = (h * 60 + 360) % 360;
+  return `hue-rotate(${Math.round(h - FX_BASE_HUE)}deg)`;
+}
 // 그림 이펙트 재생: 프레임을 차례로 바꾸고 마지막에 사라진다. 그림이 없으면 아무것도 안 함(코드 입자만)
 const FX_OF = { slash: 'slash', boom: 'explode', pierce: 'pierce', star: 'magic', magic: 'magic', mist: 'magic', impact: 'explode' };
-function playFx(name, x, y, size = 72, step = 55, behind = false) {
+function playFx(name, x, y, size = 72, step = 55, behind = false, tint = '') {
   const fr = fxFrames(name); if (!fr.length || !layer) return false;
   const el = document.createElement('img'); el.className = 'px jfx' + (behind ? ' back' : ''); el.alt = '';
   Object.assign(el.style, { left: `${x - size / 2}px`, top: `${y - size / 2}px`, width: `${size}px`, height: `${size}px` });
+  if (tint) el.style.filter = tint;
   el.src = fr[0]; layer.insertBefore(el, cv.nextSibling);
   fr.forEach((u, i) => { if (i) at(i * step, () => { el.src = u; }); });
   el.animate([{ opacity: 1, transform: 'scale(.9)' }, { opacity: 1, transform: 'scale(1.05)', offset: .5 }, { opacity: 0, transform: 'scale(1.12)' }],
@@ -516,7 +526,8 @@ function hitFoe(e, P) {
   }
   // 그림 이펙트: 그 동료 시그니처 공격 이펙트 → 없으면 공용(베기·폭발·찌르기·마법). 코드 입자는 그 위에 계속 얹는다
   const big = e.dmg >= 15 || e.crit;
-  playFx(e.actor && fxFrames(`${e.actor}_atk`).length ? `${e.actor}_atk` : FX_OF[st] || 'explode', x, y, big ? 96 : 72);
+  const own = e.actor && fxFrames(`${e.actor}_atk`).length;
+  playFx(own ? `${e.actor}_atk` : FX_OF[st] || 'explode', x, y, big ? 96 : 72, 55, false, own ? '' : tintTo(col));
   if (st === 'slash') slashFx(x, y, col);
   else if (st === 'boom') { const from = e.actor && allyEl(e.actor); if (from) tracer(rel(from).cx, rel(from).y + 20, x, y, '#ffd890'); boomFx(x, y); }
   else if (st === 'star') { const from = allyEl('sion'); if (from) starTrail(rel(from).cx, rel(from).y + 14, x, y, col); sparks(x, y, '#fff6c8', 10, 1.6); }
