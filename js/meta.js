@@ -5,6 +5,7 @@ import { ROSTER, byRarity } from './data/roster.js';
 import { STARTER_OWNED } from './data/characters.js';
 import { SUMMON, SUMMON_ITEMS, SHARDS } from './data/gacha.js';
 import { RULES } from './data/rules.js';
+import { EPISODES, BOND_SCENES } from './data/episodes.js';
 
 const KEY = 'yk-profile';
 const VERSION = 1;
@@ -15,6 +16,8 @@ function fresh() {
     shards: SUMMON.firstGift, dust: 0, items: [],
     pulls: 0, pity5: 0, pity4: 0, firstTen: false, got5: false,
     seenDuos: [], runs: 0, wins: 0, best: null, sseed: newSeed(),
+    // 에피소드 (docs/09): 동료별 진행 · 다 본 화 · 열린 인연 장면 · 본 인연 장면
+    epProg: {}, epSeen: {}, bondOpen: [], bondSeen: [],
   };
 }
 export let P = load();
@@ -115,6 +118,34 @@ export function runShards(G) {
   if (!G.won) add(`오른 층 ${G.floors || 0}칸`, Math.max(SHARDS.lossMin, G.floors || 0));
   return { lines, total: lines.reduce((t, [, v]) => t + v, 0), newDuos };
 }
+// ---------- 에피소드 (docs/09_episodes.md) ----------
+// 화 n(0~2)이 열렸나: 그 동료를 데리고 판 1번 끝냄 / 2막 보스 격파 / 「새벽」 격파
+export function epOpen(cid, n) {
+  const g = P.epProg[cid]; if (!g || !EPISODES[cid]?.[n]) return false;
+  return n === 0 ? g.runs >= 1 : n === 1 ? !!g.act2 : !!g.dawn;
+}
+export const epKey = (cid, n) => `${cid}:${n}`;
+// 열렸는데 아직 안 본 화 수 (본부 메뉴 알림)
+export function epNewCount() {
+  let k = 0;
+  for (const cid in EPISODES) for (let n = 0; n < EPISODES[cid].length; n++) if (epOpen(cid, n) && !P.epSeen[epKey(cid, n)]) k++;
+  return k + P.bondOpen.filter(b => !P.bondSeen.includes(b)).length;
+}
+// 판이 끝나면 데려간 동료마다 진행을 올리고, 새로 열린 화를 돌려준다
+function epProgress(G) {
+  const before = new Set();
+  for (const cid of G.party) for (let n = 0; n < 3; n++) if (epOpen(cid, n)) before.add(epKey(cid, n));
+  for (const cid of G.party) {
+    const g = P.epProg[cid] ||= { runs: 0, act2: false, dawn: false };
+    g.runs++;
+    if ((G.bossKills || 0) >= 2) g.act2 = true;
+    if (G.won) g.dawn = true;
+  }
+  const out = [];
+  for (const cid of G.party) for (let n = 0; n < 3; n++) if (epOpen(cid, n) && !before.has(epKey(cid, n))) out.push({ cid, n });
+  return out;
+}
+
 // 결과 화면에서 한 번만
 export function grantRun(G) {
   if (G.granted) return G.granted;
@@ -122,6 +153,10 @@ export function grantRun(G) {
   P.shards += r.total; P.runs++;
   if (G.won) { P.wins++; if (P.best == null || G.clock < P.best) P.best = G.clock; }
   for (const k of r.newDuos) P.seenDuos.push(k);
+  r.newEps = epProgress(G);
+  // 인연 듀오를 처음 썼으면 인연 장면이 열린다
+  r.newBonds = [...(G.duoSet || [])].filter(k => BOND_SCENES[k] && !P.bondOpen.includes(k));
+  for (const k of r.newBonds) P.bondOpen.push(k);
   save();
   G.granted = r;
   return r;

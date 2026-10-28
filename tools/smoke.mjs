@@ -29,7 +29,8 @@ const errors = [];
 const browser = await chromium.launch();
 const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; };
 const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false,
-  fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false };
+  fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
+  ep1: false, epFight: false, epUnlock: false };
 
 // 전투가 아닌 화면 한 걸음 (지도·보상·휴식·사건·야시장·보스 도구·달 고르기·카드 고르기)
 async function advance(page, tag) {
@@ -223,6 +224,47 @@ try {
     const n = await page.$('[data-node]:not([disabled])'); if (n) await n.click();
     const why = await page.evaluate(() => window.__yk.S.G.screen === 'result' && window.__yk.S.G.why);
     if (why === 'collapse') seen.collapse = true; else fail(`7시가 지나도 탑이 안 무너짐 (${why})`);
+    await page.close();
+  }
+  // 에피소드: 판을 끝내면 1화가 열리고 → 본부 [에피소드] → 1화를 끝까지 넘기기(별 조각 +10). 2화 특별 전투 → 이겨서 끝까지.
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    page.on('pageerror', e => errors.push(`[ep] ${e.message}`));
+    page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[ep] ${m.text()}`); });
+    await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+    await page.goto(`http://127.0.0.1:${port}/?seed=5`);
+    await page.evaluate(() => window.__yk.reset());
+    await openParty(page);
+    for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
+    await page.click('[data-start]');
+    await page.waitForSelector('[data-node="0,0"]');
+    // 바로 지게 해서 결과 화면 → 1화가 열림
+    await page.evaluate(() => { const S = window.__yk.S; S.G.clock = 420; window.__yk.render(); });
+    const n0 = await page.$('[data-node]:not([disabled])'); if (n0) await n0.click();
+    if (await page.$('.epnew') && await page.evaluate(() => window.__yk.P().epProg.iris?.runs === 1)) seen.epUnlock = true;
+    else fail('판이 끝났는데 1화가 안 열림');
+    await page.click('[data-home]');
+    await page.click('[data-view="episodes"]');
+    const before = await page.evaluate(() => window.__yk.P().shards);
+    await page.click('[data-ep="iris:0"]');
+    for (let k = 0; k < 80 && await page.$('[data-epnext]'); k++) await page.click('[data-epnext]');
+    const r1 = await page.evaluate(() => ({ ph: window.__yk.S.ep.phase, sh: window.__yk.P().shards, seen: !!window.__yk.P().epSeen['iris:0'] }));
+    if (r1.ph === 'end' && r1.seen && r1.sh === before + 10) { seen.ep1 = true; console.log('ep: 아이리스 1화를 끝까지 넘김 (별 조각 +10)'); }
+    else fail(`1화를 끝까지 못 넘김 ${JSON.stringify(r1)}`);
+    await page.click('[data-eplog]'); await page.click('[data-close]');
+    // 2화 특별 전투
+    await page.evaluate(() => window.__yk.epUnlock('iris'));
+    await page.click('[data-view="episodes"]');
+    await page.click('[data-ep="iris:1"]');
+    await page.click('[data-epskip]');
+    await page.click('[data-epfight]');
+    const inFight = await page.evaluate(() => window.__yk.S.G?.screen === 'combat' && !!window.__yk.S.G.episode);
+    await playOne(page);
+    await page.evaluate(() => window.__yk.win());
+    await page.click('[data-epskip]');
+    const r2 = await page.evaluate(() => ({ view: window.__yk.S.view, ph: window.__yk.S.ep.phase, G: !!window.__yk.S.G }));
+    if (inFight && r2.view === 'ep' && r2.ph === 'end' && !r2.G) { seen.epFight = true; console.log('ep: 아이리스 2화 특별 전투 → 이겨서 끝까지'); }
+    else fail(`특별 전투가 이상함 ${JSON.stringify({ inFight, ...r2 })}`);
     await page.close();
   }
   // 세로 폰: 돌려 달라는 안내

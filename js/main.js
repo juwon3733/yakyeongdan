@@ -7,6 +7,8 @@ import { render as draw } from './render/index.js';
 import { deckModal } from './render/screens.js';
 import { showCut, showPhase } from './fx.js';
 import { sfx } from './audio.js';
+import { openEp, openBond, epNext, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
+import { epLogModal } from './render/episodes.js';
 
 const qs = new URLSearchParams(location.search);
 S.dev = /^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname) || location.protocol === 'file:' || qs.has('dev');
@@ -15,6 +17,9 @@ if (S.dev) window.__yk = {
   S, P: () => P, render: () => render(), fight: (ids, kind = 'fight') => { startCombat(ids, kind); render(); },
   win: () => { if (S.C) { devWin(); after(); render(); } }, reset: () => { resetProfile(); render(); },
   shards: n => { P.shards += n; save(); render(); },
+  // 에피소드: 동료의 3화를 모두 연다 / 바로 재생
+  epUnlock: cid => { P.epProg[cid] = { runs: 1, act2: true, dawn: true }; save(); render(); },
+  ep: (cid, n) => { openEp(cid, n); render(); },
 };
 const seedParam = qs.has('seed') ? Number(qs.get('seed')) >>> 0 : undefined;
 
@@ -39,6 +44,7 @@ function play(uid, pick) {
 }
 // 행동 뒤: 7시 붕괴, 쌓인 연출 띄우기
 function after() {
+  if (S.G?.screen === 'epdone') epFightDone();   // 에피소드 특별 전투가 끝남
   checkCollapse();
   const fx = S.fxq.splice(0);
   for (const f of fx) if (f.kind === 'phase') showPhase(f.name, f.text);
@@ -57,6 +63,15 @@ app.addEventListener('click', e => {
   }
   else if ('start' in D) newRun(S.picked.slice(), seedParam);
   else if ('home' in D) { S.G = null; S.C = null; S.view = 'base'; }
+  // 에피소드
+  else if (D.ep) { const [cid, n] = D.ep.split(':'); openEp(cid, +n); }
+  else if (D.bond) openBond(D.bond);
+  else if ('epnext' in D) epNext();
+  else if ('epskip' in D) epSkip();
+  else if ('epauto' in D) S.ep.auto = !S.ep.auto;
+  else if ('epfight' in D) epStartFight();
+  else if ('epskipfight' in D) epSkipFight();
+  else if ('eplog' in D) { modal.innerHTML = epLogModal(); modal.hidden = false; return; }
   // 별 소환
   else if (D.summon) {
     const list = summon(+D.summon); if (!list) return;
@@ -107,6 +122,12 @@ app.addEventListener('click', e => {
   render();
 });
 modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('[data-close]')) modal.hidden = true; });
-addEventListener('keydown', e => { if (e.key === 'Escape' && S.C?.pending) { S.C.pending = null; render(); } });
+addEventListener('keydown', e => {
+  if (e.key === 'Escape' && S.C?.pending) { S.C.pending = null; render(); }
+  // 에피소드: 스페이스·엔터로 다음 줄
+  else if (S.view === 'ep' && S.ep?.phase === 'read' && modal.hidden && (e.key === ' ' || e.key === 'Enter') && !e.target.closest?.('button')) { e.preventDefault(); epNext(); render(); }
+});
+// 에피소드 [자동]: 1.8초마다 다음 줄
+setInterval(() => { if (S.view === 'ep' && S.ep?.auto && S.ep.phase === 'read' && modal.hidden) { epNext(); render(); } }, 1800);
 
 render();

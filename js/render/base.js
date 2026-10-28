@@ -2,7 +2,7 @@
 import { S } from '../run.js';
 import { ROSTER, ROSTER_IDS } from '../data/roster.js';
 import { SUMMON } from '../data/gacha.js';
-import { P, nextRate5 } from '../meta.js';
+import { P, nextRate5, epNewCount } from '../meta.js';
 import { sprite } from './sprites.js';
 import { stars, palOf, fmt } from './common.js';
 
@@ -19,7 +19,8 @@ export function baseView() {
     <div class="bmenu">
       <div class="bhead"><button type="button" class="mini" data-view="title">‹ 타이틀</button>${wallet()}</div>
       <button type="button" class="primary" data-view="summon">별 소환</button>
-      ${soon('교환소')}${soon('동료')}${soon('에피소드')}${soon('도감')}
+      ${soon('교환소')}${soon('동료')}
+      <button type="button" data-view="episodes">에피소드${epNewCount() ? ` <b class="newt">NEW ${epNewCount()}</b>` : ''}</button>${soon('도감')}
       <button type="button" data-view="party">밤 오르기</button>
       <p class="note small">동료 ${own.length}/${ROSTER_IDS.length} · 판 ${P.runs} · 이긴 판 ${P.wins}${P.best != null ? ` · 가장 빠른 도착 ${fmt(P.best)}` : ''}</p>
     </div>

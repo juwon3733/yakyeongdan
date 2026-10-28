@@ -323,6 +323,8 @@ export function rewardCards(kind = 'fight') {
 function winCombat() {
   const G = S.G, C = S.C, k = C.kind, chain = C.chain;
   G.fights++; S.C = null;
+  // 에피소드 특별 전투: 보상 없이 이야기로 돌아간다 (js/episodes.js)
+  if (G.episode) { G.episode.won = true; G.screen = 'epdone'; return; }
   const lost = G.deck.filter(id => cardData(id).inDeckWin);
   for (const id of lost) addTime(cardData(id).inDeckWin.time);
   // 쓰러진 동료는 전투가 끝나면 체력 1로(붕대 묶음이면 30%로) 일어난다

@@ -25,6 +25,7 @@ js/
     enemies.js     적·강적·보스 (체력, 행동 순환, 특수)
     relics.js      도구
     events.js      사건
+    episodes.js    동료 에피소드 대본(3화씩)·특별 전투·인연 장면·여는 조건 (재생은 js/episodes.js, 화면은 js/render/episodes.js)
     moons.js       달
     talks.js       휴식 대화
     gacha.js       소환 확률·천장·픽업·별자리·교환소 가격

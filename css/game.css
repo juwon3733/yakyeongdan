@@ -353,3 +353,62 @@ button.relic.spent{opacity:.35}
 .shards tr.sum td{border-top:1px solid var(--line);color:var(--ink)}
 #cut .band.phase{background:#2a1410;border-color:#ff8a4a}
 @media (prefers-reduced-motion:reduce){.drop,.got.crack{animation:none}}
+
+/* 에피소드 (docs/06 「에피소드」): 배경 전면 + 상반신 좌우 + 아래 대화창. 배경 그림이 오기 전엔 .bg-<키> 임시 그림 */
+.newt{font-family:var(--f-disp);font-weight:400;font-size:8px;color:var(--bg);background:var(--gold);padding:0 3px;margin-left:3px}
+.epsel{display:flex;flex-direction:column;gap:5px;height:100%;padding:8px;overflow:auto}
+.eplist{display:flex;flex-direction:column;gap:4px}
+.eprow{display:grid;grid-template-columns:22px 62px repeat(3,minmax(0,1fr));gap:5px;align-items:stretch;background:var(--panel);border:2px solid var(--line);border-left-color:var(--c);padding:4px}
+.eprow .face{width:22px;height:22px;align-self:center}.eprow .face img{width:22px;height:29px}
+.eprow .nm{font-family:var(--f-disp);font-size:11px;align-self:center;display:flex;flex-direction:column}
+.eprow .nm small{font-family:var(--f-body);font-size:7.5px;color:var(--dim)}
+.eprow.notown{opacity:.75}
+.epslot{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;padding:3px 5px;min-width:0}
+.epslot b{font-family:var(--f-disp);font-weight:400;font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.epslot small{font-size:7.5px;color:var(--dim);line-height:1.3}
+.epslot.new{border-color:var(--gold)}
+.epslot.lock b{color:var(--dim)}
+.bondlist{display:flex;flex-wrap:wrap;gap:5px}
+.bondlist .epslot{width:150px}
+.epscr{position:relative;height:100%;overflow:hidden}
+.epbg{position:absolute;inset:0;background:linear-gradient(180deg,#141632,#22203e 70%,#2e2232)}
+.epbg i{position:absolute;inset:auto 0 0 0;height:34%;background:#1a1830;border-top:3px solid #2e2c50}
+.epbg .place{position:absolute;left:8px;top:34px;font-family:var(--f-disp);font-size:9px;color:var(--dim);background:rgba(6,6,18,.6);padding:1px 5px}
+.bg-roof .epbg{background:linear-gradient(180deg,#2a3a7a,#d08a6a 62%,#f0c890 72%,#1c2448 72%)}
+.bg-roof .epbg i{background:#2a2840;height:22%}
+.bg-harbor .epbg{background:linear-gradient(180deg,#0e1430,#1c2a5a 55%,#0c2a40 55%,#08182a)}
+.bg-harbor .epbg i{background:#3a2e24;border-top-color:#5a4a36;height:20%}
+.bg-clock .epbg{background:radial-gradient(circle at 50% 34%,#e8dcb0 0 14%,#8a7a50 14.5% 16%,transparent 16.5%),linear-gradient(180deg,#141030,#2a2048)}
+.bg-convent .epbg{background:linear-gradient(180deg,#3a4a8a,#e0a070 70%,#3a2a30 70%)}
+.bg-convent .epbg i{background:#4a3a34;border-top-color:#6a5446}
+.bg-forge .epbg{background:radial-gradient(circle at 70% 70%,#ff8a3a 0 10%,transparent 26%),linear-gradient(180deg,#1a1210,#3a2418)}
+.bg-forge .epbg i{background:#2a1c14;border-top-color:#4a3020}
+.bg-dream .epbg{background:radial-gradient(circle at 70% 26%,#fff6d0 0 8%,transparent 9%),linear-gradient(180deg,#2a2060,#6a5aa0 60%,#e8d8f0 60%,#c8b8e0)}
+.bg-dream .epbg i{display:none}
+.bg-stair .epbg{background:repeating-linear-gradient(160deg,#1a1c3a 0 18px,#22244a 18px 36px)}
+.bg-attic .epbg{background:linear-gradient(135deg,#2a1e18 0 30%,transparent 30%),linear-gradient(225deg,#2a1e18 0 30%,transparent 30%),linear-gradient(180deg,#3a2c24,#1e1612)}
+.bg-rest .epbg{background:radial-gradient(circle at 50% 78%,#ff9a4a 0 6%,#a04a20 6.5% 9%,transparent 22%),linear-gradient(180deg,#0e1030,#1e1c3a)}
+.epfig{position:absolute;bottom:62px;width:120px;height:160px;filter:brightness(.55);transition:filter .1s steps(2)}
+.epfig img{width:120px;height:160px;display:block}
+.epfig.L{left:70px}.epfig.R{right:70px}
+.epfig.R img{transform:scaleX(-1)}
+.epfig.on{filter:none}
+.eptop{position:absolute;left:0;right:0;top:0;display:flex;align-items:center;gap:4px;padding:4px 6px;background:rgba(6,6,18,.75);border-bottom:2px solid var(--line)}
+.eptop .ttl{font-family:var(--f-disp);font-size:10px;color:var(--gold)}
+.eptop .grow{flex:1}
+.eptop .mini.on{border-color:var(--gold);color:var(--gold)}
+.epbox{position:absolute;left:8px;right:8px;bottom:8px;min-height:62px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;
+  background:var(--paper);color:var(--paper-ink);border:2px solid var(--shadow);box-shadow:3px 3px 0 var(--shadow);padding:6px 10px;cursor:pointer}
+.epbox .who{font-family:var(--f-disp);font-size:11px;-webkit-text-stroke:.3px var(--paper-ink)}
+.epbox .tx{font-size:11px;line-height:1.55}
+.epbox.narr .tx{color:#4a4656;font-style:italic}
+.epbox .more{position:absolute;right:8px;bottom:4px;font-size:8px;animation:blink 1s steps(2) infinite}
+.epbox.act{cursor:default}
+.epbox .btns{display:flex;gap:6px;margin-top:2px}
+.epbox .btns button{color:var(--ink)}
+.epnew{font-size:9.5px;margin:0;color:var(--ink)}
+.eplog{width:520px}
+.eplog .loglines{display:flex;flex-direction:column;gap:3px;font-size:10px;line-height:1.5}
+.eplog p{margin:0}.eplog .narr{color:var(--dim);font-style:italic}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.epbox .more{animation:none}}

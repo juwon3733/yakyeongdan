@@ -9,6 +9,7 @@ import { RULES, ACT_NAME, SHOP } from '../data/rules.js';
 import { grantRun, P } from '../meta.js';
 import { cardHTML, fmt, face, esc } from './common.js';
 import { moonImg } from './sprites.js';
+import { EPISODES, BOND_SCENES } from '../data/episodes.js';
 
 const relicBox = (id, extra = '') => { const d = RELICS[id]; return `<span class="rbox t-${d.tier}"><span class="relic t-${d.tier}">${esc(d.name.slice(0, 1))}</span><span><b>${esc(d.name)}</b> <small>${RELIC_TIER_NAME[d.tier]}</small><br>${esc(d.text)}${extra}</span></span>`; };
 
@@ -88,6 +89,10 @@ export function resultView() {
   const mc = CHARACTERS[mvp], st = G.stats[mvp];
   const duos = [...G.duoSet].map(k => `<span class="chip">${DUOS[k]?.name || k}</span>`).join('') || '<span class="note">없음</span>';
   const lines = R.lines.map(([t, v]) => `<tr><td>${t}</td><td>+${v}</td></tr>`).join('');
+  // 새로 열린 에피소드 · 인연 장면 (본부 [에피소드]에서 본다)
+  const opened = [...(R.newEps || []).map(e => `${CHARACTERS[e.cid]?.name || e.cid} ${e.n + 1}화 「${EPISODES[e.cid][e.n].title}」`),
+    ...(R.newBonds || []).map(k => `인연 장면 「${BOND_SCENES[k].title}」`)];
+  const epNote = opened.length ? `<p class="epnew"><b class="newt">새 에피소드</b> ${opened.map(esc).join(' · ')}</p>` : '';
   return `<div class="resultscr">
     <div class="mvp" style="--c:${mc.col}">${face(mvp, 'big')}<span class="nm">MVP · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}</span></div>
     <div class="rinfo">
@@ -95,6 +100,7 @@ export function resultView() {
       <p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</p>
       <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`} · 싸움 ${G.fights}번 · 달 ${MOONS[G.moon].name} · 시드 ${G.seed}</p>
       <p class="note">쓴 듀오 ${duos}</p>
+      ${epNote}
       <table class="shards">${lines}<tr class="sum"><td>얻은 별 조각</td><td>+${R.total}</td></tr></table>
       <p class="note">지금 별 조각 <b>${P.shards}</b></p>
       <div class="acts"><button type="button" class="primary" data-home>본부로</button><button type="button" data-view="party">다시 오르기</button></div>

@@ -92,7 +92,7 @@ export function sfx(name, { vol = 1, rate = 1 } = {}) {
 // ---------- 화면 → 곡 ----------
 function pickBgm() {
   const G = S.G;
-  if (!G || S.view !== 'run') return ['base', 'summon', 'reveal'].includes(S.view) ? 'base' : 'title';
+  if (!G || S.view !== 'run') return ['base', 'summon', 'reveal', 'episodes', 'ep'].includes(S.view) ? 'base' : 'title';
   if (G.screen === 'result') return G.won ? 'victory' : 'result';
   if (G.screen === 'combat' && S.C) {
     if (S.C.kind === 'boss') return G.act >= 3 ? 'dawn' : `boss${G.act}`;
