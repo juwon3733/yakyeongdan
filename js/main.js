@@ -17,6 +17,7 @@ import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDon
 import { epLogModal } from './render/episodes.js';
 import { artReady } from './art.js';
 import './cardzoom.js';
+import { setHallTime } from './render/base.js';
 
 const qs = new URLSearchParams(location.search);
 // 처음 켜면 타이틀 전에 튜토리얼 들어가기 화면 (주소에 ?notut 이면 건너뜀: 점검 도구용)
@@ -137,13 +138,17 @@ app.addEventListener('click', e => {
   else if (D.depth !== undefined) S.depth = +D.depth;
   else if (D.srelic) S.startRelic = D.srelic;
   // 판 바깥: 초심자 ★5 · 교환소 · 동료 · 도감
-  else if (D.choose5) { const r = choose5(D.choose5); if (r) { S.reveal = { list: [r], open: [true] }; S.view = 'reveal'; sfx('fanfare5'); } }
+  else if (D.choose5) { const r = choose5(D.choose5); if (r) { S.reveal = { list: [r], open: [true], focus: 0 }; S.view = 'reveal'; sfx('fanfare5'); } }
   else if (D.ex) { const [k, a] = D.ex.split(':'); S.exMsg = exchange(k, a || null) || ''; }
   else if (D.mate) S.mate = D.mate;
   else if (D.costume) { const [k, on] = D.costume.split(':'); setCostume(k, on === '1'); }
   else if (D.ctab) S.codexTab = D.ctab;
   else if (D.replay) { showCut(D.replay, false, true); return; }
-  else if ('home' in D) { S.G = null; S.C = null; S.view = 'base'; }
+  else if ('home' in D) { setHallTime(!!S.G?.won); S.G = null; S.C = null; S.view = 'base'; S.baseTrio = null; }
+  else if (D.restline) {   // 본부: 쉬는 동료에게 말 걸기 → 다음 대사
+    const L = S.restLine?.k === D.restline ? S.restLine.i + 1 : Math.floor(Math.random() * 3);
+    S.restLine = { k: D.restline, i: L }; sfx('select');
+  }
   // 에피소드
   else if (D.ep) { const [cid, n] = D.ep.split(':'); openEp(cid, +n); }
   else if (D.bond) openBond(D.bond);
@@ -157,9 +162,24 @@ app.addEventListener('click', e => {
   else if (D.summon) {
     const list = summon(+D.summon); if (!list) return;
     S.reveal = { list, open: list.map(() => false) }; S.view = 'reveal';
+    // 별똥이 떨어져 닿는 순간에 맞춰 소리 (가장 높은 등급 별똥이 마지막에 한 번 더)
+    if (!calmNow()) {
+      const top = Math.max(...list.map(r => r.rarity));
+      setTimeout(() => sfx('star', { rate: .9 }), 420);
+      if (top >= 4) setTimeout(() => sfx('star', { rate: top === 5 ? 1.25 : 1.1 }), 420 + list.length * 70);
+    }
   }
-  else if (D.reveal !== undefined) { S.reveal.open[+D.reveal] = true; revealSound(S.reveal.list[+D.reveal]); }
-  else if ('revealall' in D) { S.reveal.open = S.reveal.open.map(() => true); const top = S.reveal.list.reduce((a, r) => (r.rarity > a.rarity ? r : a), S.reveal.list[0]); revealSound(top); }
+  else if (D.reveal !== undefined) {
+    const i = +D.reveal, r = S.reveal.list[i];
+    S.reveal.open[i] = true; revealSound(r);
+    if (r.kind === 'char' && r.rarity === 5) S.reveal.focus = i;   // ★5 등장 연출
+  }
+  else if ('revealall' in D) {
+    S.reveal.open = S.reveal.open.map(() => true);
+    const top = S.reveal.list.reduce((a, r) => (r.rarity > a.rarity ? r : a), S.reveal.list[0]); revealSound(top);
+    const i5 = S.reveal.list.findIndex(r => r.kind === 'char' && r.rarity === 5);
+    if (i5 >= 0) S.reveal.focus = i5;
+  }
   // 판
   else if (D.node) { const [r, i] = D.node.split(',').map(Number); goNode(r, i); }
   // 카드: 누르면 고르고, 대상(적 또는 동료)을 누르면 쓴다. 적을 치는 카드는 한 번 더 눌러도 쓴다.

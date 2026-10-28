@@ -6,17 +6,31 @@ import { P, owns, duoSpecial, depthOpen, depthMax, startPickOpen, startRelicChoi
 import { RELICS } from '../data/relics.js';
 import { DEPTH } from '../data/depth.js';
 import { stars, palOf, esc, charSrc } from './common.js';
+import { artURL } from '../art.js';
 
-// 타이틀: 키아트 자리(그림 없으면 밤하늘·탑) + 왼쪽 아래 메뉴
+// 타이틀: 키아트 그림(title/key.png)이 있으면 그림, 없으면 살아 있는 밤 항구(별·달·탑 꼭대기 빛·등불·파도·동료 셋 실루엣)
+const rnd = (n => () => (n = (n * 1103515245 + 12345) >>> 0) / 4294967296)(7);
+const STARS = Array.from({ length: 46 }, () => [rnd() * 100, rnd() * 58, rnd() < .2 ? 2 : 1, Math.floor(rnd() * 8)]);
+const LAMPS = [[40, 0], [46, 1], [53, 2], [61, 0], [68, 1], [90, 2], [96, 0]];
 export function titleView() {
-  const three = ['iris', 'brick', 'marta'].map(k => `<img class="px" src="${charSrc(k)}" alt="">`).join('');
-  return `<div class="titlescr">
-    <div class="sky" aria-hidden="true"><span class="tower"></span><span class="moonbig"></span></div>
-    <div class="trio" aria-hidden="true">${three}</div>
+  const key = artURL('title/key.png');
+  const three = ['iris', 'brick', 'marta'].map((k, i) => `<img class="px sil s${i}" src="${charSrc(k)}" alt="">`).join('');
+  const scene = key ? `<img class="keyart" src="${key}" alt="">` : `<div class="harbor" aria-hidden="true">
+      ${STARS.map(([x, y, z, d]) => `<i class="tw d${d}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;width:${z}px;height:${z}px"></i>`).join('')}
+      <span class="moonbig"></span>
+      <span class="tower"><span class="beam"></span><span class="lamp"></span></span>
+      <span class="town"></span>
+      ${LAMPS.map(([x, d]) => `<i class="lantern d${d}" style="left:${x}%"></i>`).join('')}
+      <span class="sea"><span class="wave w1"></span><span class="wave w2"></span></span>
+      <div class="trio">${three}</div>
+    </div>`;
+  const first = !P.runs;
+  return `<div class="titlescr ${key ? 'hasart' : ''}">
+    ${scene}
     <div class="tmenu">
-      <h1>야경단</h1>
+      <h1><span>야</span><span>경</span><span>단</span></h1>
       <p class="note">0시에 솟는 탑을 <b>6시 해 뜨기 전에</b> 오른다</p>
-      <button type="button" class="primary" data-view="party">밤 오르기</button>
+      <button type="button" class="primary ${first ? 'firstgo' : ''}" data-view="party">밤 오르기</button>
       <button type="button" data-view="base">본부</button>
       <button type="button" data-settings>설정</button>
       <span class="note small">별 조각 <b>${P.shards}</b> · 동료 ${Object.keys(P.owned).length}/${ROSTER_IDS.length}${S.dev ? ' · <span class="dev">개발판</span>' : ''}</span>
@@ -62,9 +76,15 @@ export function partyView() {
       <span class="rl">${r.role}${c ? ` · 체력 ${c.maxHp}` : ''}</span>
       <span class="ps" ${c ? `title="${c.passive.name}: ${c.passive.text}"` : ''}>${c ? `<b>${c.passive.name}</b> ${c.passive.short}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
   }).join('');
+  // 고른 셋: 전투처럼 대열로 크게 선다(왼쪽 뒤 → 오른쪽 앞, 처음엔 체력이 높은 동료가 앞). 인연이 있는 동료는 빛난다.
+  const bonded = new Set();
+  S.picked.forEach(a => S.picked.forEach(b => { if (a !== b && DUOS[duoKey(a, b)]) { bonded.add(a); bonded.add(b); } }));
+  const order = S.picked.slice().sort((a, b) => (CHARACTERS[a]?.maxHp || 0) - (CHARACTERS[b]?.maxHp || 0));
+  const slots = ['뒤', '가운데', '앞'];
   const chosen = [0, 1, 2].map(i => {
-    const k = S.picked[i], r = k && ROSTER[k];
-    return r ? `<span class="chosen" style="--c:${r.col}"><img class="px" src="${charSrc(k)}" alt=""><span>${r.name}</span></span>` : '<span class="chosen empty">?</span>';
+    const k = order[i - (3 - order.length)], r = k && ROSTER[k];
+    return r ? `<span class="chosen r${r.rarity} ${bonded.has(k) ? 'bonded' : ''} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}"><small>${slots[i]}</small><img class="px" src="${charSrc(k)}" alt=""><span>${r.name} <i class="stars">${stars(r.rarity)}</i></span></span>`
+      : `<span class="chosen empty"><small>${slots[i]}</small>?</span>`;
   }).join('');
   return `<div class="title">
     <div class="tleft">
@@ -73,7 +93,7 @@ export function partyView() {
     </div>
     <div class="tright">
       <h2>동료 셋 (${S.picked.length}/3)</h2>
-      <div class="chosenrow">${chosen}</div>
+      <div class="chosenrow formation">${chosen}</div>
       ${runSetup()}
       <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>출발</button>
       ${bondsOf(S.picked)}

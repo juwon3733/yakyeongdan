@@ -12,6 +12,8 @@ import { DEPTH, DEPTH_MAX } from '../data/depth.js';
 import { P, nextRate5, epNewCount, pickupNow, starsOf, costumeOpen, wearing, packCards, packsOpen, startUp, sigOpen, sigOf, duoSpecial,
   canExchange, exchangePrice, depthOpen, startPickOpen } from '../meta.js';
 import { stars, palOf, fmt, esc, cardHTML, charSrc } from './common.js';
+import { REST_LINES, FIRST_LINES } from '../data/hublines.js';
+import { artURL } from '../art.js';
 
 const pct = x => `${Math.round(x * 1000) / 10}%`;
 const wallet = () => `<span class="wallet"><b>별 조각 ${P.shards}</b> · 별가루 ${P.dust}</span>`;
@@ -19,19 +21,49 @@ const head = (back = 'base', label = '본부') => `<div class="bhead"><button ty
 const img = (id, alt) => `<img class="px" src="${charSrc(id, 'stand', alt)}" alt="">`;
 const starRing = id => duoSpecial(id) ? 'star5' : '';
 
+// 본부에서 쉬는 셋: 들어올 때마다 가진 동료 중 무작위 셋(같은 방문 동안은 그대로), 하나가 말풍선으로 한 줄.
+const ls = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } return null; };
+function restTrio(own) {
+  if (!S.baseTrio || S.baseTrio.some(k => !P.owned[k]) || S.baseTrio.length < Math.min(3, own.length)) {
+    const pool = own.slice(); S.baseTrio = [];
+    while (pool.length && S.baseTrio.length < 3) S.baseTrio.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+    const who = S.baseTrio[Math.floor(Math.random() * S.baseTrio.length)];
+    S.restLine = { k: who, i: Math.floor(Math.random() * (REST_LINES[who]?.length || 1)) };
+  }
+  return S.baseTrio;
+}
+// 별 조각·별가루가 지난번 본부보다 늘었으면 숫자가 튀어 오른다
+function walletBump() {
+  const prev = S.walletSeen || { s: P.shards, d: P.dust };
+  const ds = P.shards - prev.s, dd = P.dust - prev.d;
+  S.walletSeen = { s: P.shards, d: P.dust };
+  return `<span class="wallet ${ds > 0 || dd > 0 ? 'bump' : ''}"><b>별 조각 ${P.shards}</b>${ds > 0 ? `<i class="plus">+${ds}</i>` : ''} · 별가루 ${P.dust}${dd > 0 ? `<i class="plus">+${dd}</i>` : ''}</span>`;
+}
+export const hallTime = () => ls('yk-hall') === 'dawn' ? 'dawn' : 'night';
+export const setHallTime = won => ls('yk-hall', won ? 'dawn' : 'night');
+const dot = on => on ? '<i class="ndot" aria-label="새 소식"></i>' : '';
+
 export function baseView() {
   const own = ROSTER_IDS.filter(k => P.owned[k]);
-  const rest3 = own.slice(-3).map((k, i) => `<img class="px rest${i}" src="${charSrc(k)}" alt="${ROSTER[k].name}">`).join('');
+  const trio = restTrio(own), L = S.restLine;
+  const rest3 = trio.map((k, i) => {
+    const lines = REST_LINES[k] || [ROSTER[k].role];
+    const say = L && L.k === k ? `<span class="bubble">${esc(lines[L.i % lines.length])}</span>` : '';
+    return `<button type="button" class="rester r${i}" style="--c:${ROSTER[k].col}" data-restline="${k}" aria-label="${ROSTER[k].name}에게 말 걸기">${say}<img class="px" src="${charSrc(k)}" alt="${ROSTER[k].name}"><small>${ROSTER[k].name}</small></button>`;
+  }).join('');
   const titles = P.titles.length ? `<p class="note small">칭호 ${P.titles.map(c => `「${esc(ROSTER[c]?.name || c)}의 새벽」`).join(' ')}</p>` : '';
+  const tm = hallTime();
+  const matesNew = own.length > (+ls('yk-mates-seen') || 3);
   return `<div class="basescr">
-    <div class="hall"><span class="hallwin" aria-hidden="true"></span><div class="resting">${rest3}</div>
-      <p class="note">야경단 본부 · 등대 아래. 해가 뜨면 모두 여기서 잠든다.</p></div>
+    <div class="hall tm-${tm}"><span class="hallwin" aria-hidden="true"><i></i></span><span class="hlamp l1" aria-hidden="true"></span><span class="hlamp l2" aria-hidden="true"></span>
+      <div class="resting">${rest3}</div>
+      <p class="note">야경단 본부 · 등대 아래. ${tm === 'dawn' ? '창밖이 밝아 온다. 지난밤은 무사히 넘겼다.' : '창밖은 아직 밤. 탑이 다시 솟을 시간이다.'} <span class="dim">(누르면 말을 건다)</span></p></div>
     <div class="bmenu">
-      <div class="bhead"><button type="button" class="mini" data-view="title">‹ 타이틀</button>${wallet()}<button type="button" class="mini" data-settings>설정</button></div>
-      <button type="button" class="primary ${S.hint === 'summon' ? 'hint' : ''}" data-view="summon">별 소환${P.pick5 ? ' <b class="newt">★5 고르기</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">여기서 10연</b>' : ''}</button>
-      <button type="button" data-view="exchange">교환소</button>
-      <button type="button" data-view="mates">동료 <small>${own.length}/${ROSTER_IDS.length}</small></button>
-      <button type="button" data-view="episodes">에피소드${epNewCount() ? ` <b class="newt">NEW ${epNewCount()}</b>` : ''}</button>
+      <div class="bhead"><button type="button" class="mini" data-view="title">‹ 타이틀</button>${walletBump()}<button type="button" class="mini" data-settings>설정</button></div>
+      <button type="button" class="primary ${S.hint === 'summon' ? 'hint' : ''}" data-view="summon">${dot(P.shards >= SUMMON.cost || P.pick5)}별 소환${P.pick5 ? ' <b class="newt">★5 고르기</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">여기서 10연</b>' : ''}</button>
+      <button type="button" data-view="exchange">${dot(P.dust >= Math.min(EXCHANGE.char[3], EXCHANGE.talk))}교환소</button>
+      <button type="button" data-view="mates">${dot(matesNew)}동료 <small>${own.length}/${ROSTER_IDS.length}</small></button>
+      <button type="button" data-view="episodes">${dot(epNewCount())}에피소드${epNewCount() ? ` <b class="newt">NEW ${epNewCount()}</b>` : ''}</button>
       <button type="button" data-view="codex">도감</button>
       <button type="button" data-view="records">기록</button>
       <button type="button" data-view="party">밤 오르기</button>
@@ -99,26 +131,43 @@ export function oddsView() {
 // 소환 결과: 별똥(등급 색)이 떨어지고, 누르면 하나씩 펼친다
 export function revealView() {
   const R = S.reveal, top = Math.max(...R.list.map(r => r.rarity));
+  const done0 = R.open.every(Boolean);
+  // 다 펼치면 등급 높은 것부터 앞에 (data-reveal 번호는 그대로, 보이는 순서만 CSS order로)
+  const ord = r => done0 && R.list.length > 1 ? ` order:${(5 - r.rarity) * 2 + (r.kind === 'char' ? 0 : 1)};` : '';
   const items = R.list.map((r, i) => {
-    if (!R.open[i]) return `<button type="button" class="drop g${r.rarity}" data-reveal="${i}" style="--d:${i * 60}ms" aria-label="펼치기"><span class="tail"></span><span class="head"></span></button>`;
-    if (r.kind === 'choose5') return `<div class="got g5 crack choose" style="--c:var(--gold)"><span class="ico">?</span><span class="nm">★5 동료</span><span class="stars">${stars(5)}</span><span class="tag">직접 고른다</span></div>`;
+    if (!R.open[i]) return `<button type="button" class="drop g${r.rarity}" data-reveal="${i}" style="--d:${i * 70}ms;--x:${(i % 5) * 7 - 14}px" aria-label="펼치기"><span class="tail"></span><span class="head"></span><span class="spark"></span></button>`;
+    if (r.kind === 'choose5') return `<div class="got g5 crack choose" style="--c:var(--gold);${ord(r)}"><span class="ico">?</span><span class="nm">★5 동료</span><span class="stars">${stars(5)}</span><span class="tag">직접 고른다</span></div>`;
     if (r.kind === 'char') {
       const c = ROSTER[r.id];
+      // 겹침: 별자리 칸 5개 중 이번에 찬 칸이 차오른다
+      const cells = r.stars ? `<span class="stcells">${Array.from({ length: SUMMON.maxStars }, (_, n) => `<i class="${n < r.stars ? 'on' : ''} ${n === r.stars - 1 ? 'fill' : ''}"></i>`).join('')}</span>` : '';
       const tag = r.isNew ? '<b class="new">NEW</b>' : r.stars ? `별자리 ${r.stars}` : `별가루 +${r.dust}`;
-      return `<div class="got g${r.rarity} ${r.rarity === 5 ? 'crack' : ''}" style="--c:${c.col}">${img(r.id)}
-        <span class="nm">${c.name}</span><span class="stars">${stars(r.rarity)}</span><span class="tag">${tag}</span></div>`;
+      return `<div class="got g${r.rarity} ${r.rarity === 5 ? 'crack' : ''} ${r.isNew ? 'isnew' : ''}" style="--c:${c.col};${ord(r)}">${img(r.id)}
+        <span class="nm">${c.name}</span><span class="stars">${stars(r.rarity)}</span>${cells}<span class="tag">${tag}</span></div>`;
     }
     // 물건 이름(「…」)을 크게, 종류(흔한 도구·의상 등)는 아래 작게
     const m = /「(.+?)」/.exec(r.text || ''), nm = m ? m[1] : r.name;
-    return `<div class="got g${r.rarity} item"><span class="ico">${esc(nm.slice(0, 1))}</span><span class="nm">${esc(nm)}</span><span class="stars">${stars(r.rarity)}</span>
+    return `<div class="got g${r.rarity} item" style="${ord(r)}"><span class="ico">${esc(nm.slice(0, 1))}</span><span class="nm">${esc(nm)}</span><span class="stars">${stars(r.rarity)}</span>
       <span class="tag" title="${esc(r.text || '')}">${r.dust ? (/^별가루/.test(nm) ? '교환소에서 쓴다' : `이미 있음 → 별가루 +${r.dust}`) : esc(m ? r.text.replace(m[0], '').trim() || r.name : r.text || '보관함에')}</span></div>`;
   }).join('');
   const done = R.open.every(Boolean);
   const next = P.pick5 ? '<button type="button" class="primary" data-view="pick5">★5 동료 고르기</button>' : '<button type="button" class="primary" data-view="summon">확인</button>';
-  return `<div class="revealscr ${top === 5 && R.open.some((o, i) => o && R.list[i].rarity === 5) ? 'sky5' : ''}">
-    <h2>${R.list.length === 10 ? '10연 소환' : '소환'} ${top === 5 ? '· 하늘이 갈라진다' : ''}</h2>
+  // ★5 동료를 펼친 순간: 하늘이 갈라지고 전신 CG(없으면 큰 임시 도트 + 빛)와 이름·첫 대사. 클릭은 가로막지 않고 저절로 사라진다.
+  let focus = '';
+  const f = R.focus != null ? R.list[R.focus] : null;
+  if (f && f.kind === 'char' && f.rarity === 5) {
+    const c = ROSTER[f.id], cg = artURL(`cg/star5_${f.id}.png`);
+    focus = `<div class="s5focus" style="--c:${c.col}" aria-hidden="true"><span class="rift"></span>
+      ${cg ? `<img class="cg" src="${cg}" alt="">` : `<span class="rays"></span><img class="px big" src="${charSrc(f.id, 'stand')}" alt="">`}
+      <span class="s5name"><b>${c.name}</b> <i>${stars(5)}</i><small>${c.role}</small></span>
+      <span class="s5line">「${esc(FIRST_LINES[f.id] || '')}」</span></div>`;
+    R.focus = null;   // 한 번만
+  }
+  return `<div class="revealscr ${top === 5 && R.open.some((o, i) => o && R.list[i].rarity === 5) ? 'sky5' : ''} ${done ? 'done' : ''}">
+    <h2>${R.list.length === 10 ? '10연 소환' : '소환'} ${top === 5 ? '· 하늘이 갈라진다' : top === 4 ? '· 보랏빛 별똥' : ''}</h2>
     <div class="drops n${R.list.length}">${items}</div>
     <div class="acts">${done ? next : '<button type="button" data-revealall>모두 넘기기</button>'}</div>
+    ${focus}
   </div>`;
 }
 
@@ -162,6 +211,7 @@ export function exchangeView() {
 // 동료 화면: 목록 + 고른 동료의 별자리·의상·패시브·카드
 export function matesView() {
   const sel = S.mate && P.owned[S.mate] ? S.mate : ROSTER_IDS.find(k => P.owned[k]);
+  ls('yk-mates-seen', String(Object.keys(P.owned).length));   // 본부 [동료] 새 소식 점 끄기
   const grid = ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k];
     return `<button type="button" class="mcell r${r.rarity} ${k === sel ? 'on' : ''} ${own ? '' : 'none'} ${starRing(k)}" style="--c:${r.col}" ${own ? `data-mate="${k}"` : 'disabled'} title="${esc(r.name)}">
