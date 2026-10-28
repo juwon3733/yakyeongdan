@@ -177,6 +177,30 @@ img.moon{width:15px;height:15px}
 .card.down{filter:grayscale(1)}
 .card.sel{transform:translateY(-10px);box-shadow:2px 2px 0 var(--shadow),0 0 0 2px var(--gold)}
 
+/* 적 여럿 */
+.foes{display:flex;gap:4px;align-items:flex-end}
+.foe.sm{width:104px;padding:3px 4px}
+.foe.sm img{width:42px;height:56px}
+.foe.sm .foehp{width:80px}
+.foe.sm .nm{font-size:10px}
+.foe.sm .intent{font-size:9.5px}
+.foe.gone{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;opacity:.4;border:2px dashed var(--line);min-height:60px}
+.pm.lit{background:#2a2614;outline:2px solid #ffe060;outline-offset:-4px}
+.pm .litnm{color:#ffe060;font-weight:400}
+/* 카드 수 표시: 원래보다 오르면 초록, 내리면 빨강 */
+.card .bd b.up,.card .cost.up{color:#13803a;font-weight:700}
+.card .bd b.dn{color:#b02a2a;font-weight:700}
+.card .cost.up{color:#7dff9a}.card .cost.dn{color:#ff7a7a}
+.card .rar{float:right;font-size:7.5px;color:#8a8496}
+.card.r-u .rar{color:#4a7ac0}.card.r-r .rar{color:#b8860b}
+.card.r-r{border-color:#8a6a1a}
+.card.upg .nm{color:#0a5a2a}
+.card .tg.all{background:#4a1e2a;color:#ffd0d8}
+.card.curse{background:#d8d4dc}
+.card.curse .hd{background:#4a4458;color:#ece8f6}
+.pair{display:inline-flex;flex-direction:column;gap:3px}
+.pair .card{height:100px}
+
 /* 보상·휴식·사건·결과 */
 .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
 .restwho{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}

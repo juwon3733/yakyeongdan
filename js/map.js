@@ -1,7 +1,8 @@
 // 지도 생성·이동·시간 계산, 사건·휴식 처리.
 import { S, addTime, rewind, healAll, member, swapFormation } from './run.js';
 import { startCombat, rewardCards } from './combat.js';
-import { FOES } from './data/enemies.js';
+import { ACTS } from './data/enemies.js';
+import { CURSES, canUpgrade } from './data/cards.js';
 import { EVENTS } from './data/events.js';
 import { RULES, NODE } from './data/rules.js';
 
@@ -25,9 +26,9 @@ export function goNode(r, i) {
   if (r !== G.row) return;
   G.took[r] = i;
   addTime(NODE[t].min);
-  const pool = FOES[G.act];
-  if (t === 'fight') startCombat(G.rng.pick(pool.fight), 'fight');
-  else if (t === 'elite') startCombat(pool.elite, 'elite');
+  const pool = ACTS[G.act];
+  if (t === 'fight') startCombat(G.rng.pick(r === 0 ? pool.easy : pool.fights), 'fight');
+  else if (t === 'elite') startCombat(G.rng.pick(pool.elites), 'elite');
   else if (t === 'boss') startCombat(pool.boss, 'boss');
   else if (t === 'rest') G.screen = 'rest';
   else { G.event = G.rng.pick(EVENTS); G.screen = 'event'; }
@@ -42,7 +43,7 @@ export function takeReward(id) {
   G.reward.next === 'act' ? nextAct() : nextRow();
 }
 
-// 휴식: 쉬기 = 각자 최대 체력의 일정 비율(쓰러졌던 동료는 더), 낮잠 = 시간 되찾기
+// 휴식: 쉬기 = 각자 최대 체력의 일정 비율(쓰러졌던 동료는 더), 낮잠 = 시간 되찾기, 손질 = 카드 1장 강화
 export function rest(kind) {
   const R = RULES.rest, G = S.G;
   if (kind === 'heal') for (const p of G.party) {
@@ -50,7 +51,14 @@ export function rest(kind) {
     m.hp = Math.min(m.max, m.hp + Math.ceil(m.max * (m.wasDown ? R.downHealPct : R.healPct)));
     m.wasDown = false;
   }
+  else if (kind === 'smith') { G.screen = 'upgrade'; return; }
   else rewind(R.napTime);
+  nextRow();
+}
+// 손질: 덱의 카드 하나를 강화판('id+')으로
+export function upgradeCard(i) {
+  const G = S.G;
+  if (i >= 0 && canUpgrade(G.deck[i])) G.deck[i] += '+';
   nextRow();
 }
 
@@ -67,9 +75,13 @@ const eventApi = {
   maxHp: n => { for (const p of S.G.party) { const m = member(p); m.max += n; if (!m.down) m.hp += n; } },
   addRandomCard: () => { S.G.deck.push(rewardCards()[0]); },
   removeCard: () => { S.G.screen = 'remove'; return true; },
+  addCurse: () => { S.G.deck.push(S.G.rng.pick(CURSES)); },
+  chance: p => S.G.rng.next() < p,
+  upgradeRandom: () => { const G = S.G, ix = G.deck.map((id, i) => i).filter(i => canUpgrade(G.deck[i])); if (ix.length) G.deck[G.rng.pick(ix)] += '+'; },
 };
 export function chooseOpt(i) {
-  const stay = S.G.event.opts[i].f(eventApi);
+  const opt = S.G.event.opts[i]; if (!opt) return;
+  const stay = opt.f(eventApi);
   if (!stay) nextRow();
 }
 export function removeCard(i) { S.G.deck.splice(i, 1); nextRow(); }

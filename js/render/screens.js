@@ -4,10 +4,11 @@ import { MOONS } from '../data/moons.js';
 import { CHARACTERS } from '../data/characters.js';
 import { RULES, ACT_NAME } from '../data/rules.js';
 import { cardHTML, fmt, face } from './common.js';
+import { canUpgrade } from '../data/cards.js';
 
 export function rewardView() {
   const G = S.G;
-  return `<div class="center"><h2>보상: 카드 한 장</h2>
+  return `<div class="center"><h2>보상: 카드 한 장${G.reward.kind === 'boss' ? ' (희귀)' : ''}</h2>
     ${G.reward.bonus ? `<p class="note">강적을 쓰러뜨려 모든 동료 체력 +${G.reward.bonus}.</p>` : ''}
     <div class="hand big">${G.reward.cards.map(id => cardHTML(id, true, 'take')).join('')}</div>
     <div class="acts"><button type="button" data-take="">건너뛰기</button></div></div>`;
@@ -22,12 +23,19 @@ export function restView() {
     <div class="restwho">${who}</div>
     <div class="acts">
       <button type="button" class="primary" data-rest="heal">쉬기: 각자 최대 체력의 ${R.healPct * 100}% (쓰러졌던 동료 ${R.downHealPct * 100}%)</button>
-      <button type="button" data-rest="nap">낮잠: ${R.napTime}분 되찾기</button></div></div>`;
+      <button type="button" data-rest="nap">낮잠: ${R.napTime}분 되찾기</button>
+      <button type="button" data-rest="smith" ${G.deck.some(canUpgrade) ? '' : 'disabled'}>손질: 카드 1장 강화</button></div></div>`;
 }
 export function eventView() {
   const e = S.G.event;
   return `<div class="center"><h2>${e.title}</h2><p class="note">${e.text}</p>
     <div class="acts col">${e.opts.map((o, i) => `<button type="button" data-opt="${i}">${o.t}</button>`).join('')}</div></div>`;
+}
+export function upgradeView() {
+  const G = S.G;
+  const list = G.deck.map((id, i) => [id, i]).filter(([id]) => canUpgrade(id));
+  return `<div class="center"><h2>손질: 강화할 카드를 고르세요</h2><p class="note">위가 지금, 아래가 강화판.</p>
+    <div class="hand big scroll">${list.map(([id, i]) => `<span class="pair">${cardHTML(id, true, 'up', i)}${cardHTML(id + '+', true, 'up', i)}</span>`).join('')}</div></div>`;
 }
 export function removeView() {
   return `<div class="center"><h2>지울 카드를 고르세요</h2><div class="hand big scroll">${S.G.deck.map((id, i) => cardHTML(id, true, 'rm', i)).join('')}</div></div>`;

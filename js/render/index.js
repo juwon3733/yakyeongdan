@@ -3,10 +3,10 @@ import { topbar } from './common.js';
 import { titleView } from './title.js';
 import { mapView } from './map.js';
 import { combatView, combatTopExtra } from './combat.js';
-import { rewardView, restView, eventView, removeView, resultView } from './screens.js';
+import { rewardView, restView, eventView, removeView, upgradeView, resultView } from './screens.js';
 import { sync as syncSound } from '../audio.js';
 
-const VIEWS = { map: mapView, combat: combatView, reward: rewardView, rest: restView, event: eventView, remove: removeView };
+const VIEWS = { map: mapView, combat: combatView, reward: rewardView, rest: restView, event: eventView, remove: removeView, upgrade: upgradeView };
 
 export function render(app) {
   const s = S.G ? S.G.screen : 'title';

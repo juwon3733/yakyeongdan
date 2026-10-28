@@ -1,14 +1,15 @@
 // 입력과 화면 전환. 규칙은 run/map/combat, 그리기는 render/.
 import { S, newRun } from './run.js';
-import { goNode, takeReward, rest, chooseOpt, removeCard, pickSlot } from './map.js';
-import { playCard, endTurn, swapInCombat, needsAlly, usable } from './combat.js';
+import { goNode, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard } from './map.js';
+import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes } from './combat.js';
 import { render as draw } from './render/index.js';
 import { deckModal } from './render/screens.js';
 import { showCut } from './fx.js';
 
 const qs = new URLSearchParams(location.search);
 S.dev = /^(localhost|127\.|0\.0\.0\.0|\[::1\])/.test(location.hostname) || location.protocol === 'file:' || qs.has('dev');
-if (S.dev) window.__yk = { S };   // 개발판: 점검 도구(tools/smoke.mjs)가 상태를 들여다본다
+// 개발판: 점검 도구(tools/smoke.mjs)가 상태를 들여다보고, 원하는 적과 바로 싸울 수 있다
+if (S.dev) window.__yk = { S, render: () => render(), fight: (ids, kind = 'fight') => { startCombat(ids, kind); render(); } };
 const seedParam = qs.has('seed') ? Number(qs.get('seed')) >>> 0 : undefined;
 
 const stage = document.getElementById('stage');
@@ -25,8 +26,8 @@ function fit() {
 addEventListener('resize', fit);
 fit();
 
-function play(uid, ally) {
-  const r = playCard(uid, ally);
+function play(uid, pick) {
+  const r = playCard(uid, pick);
   if (r.duo) showCut(r.duo);
 }
 
@@ -43,16 +44,19 @@ app.addEventListener('click', e => {
   else if (D.play) {
     const uid = +D.play, inst = C.hand.find(h => h.uid === uid);
     if (!inst || !usable(inst)) return;
-    if (C.pending === uid && !needsAlly(inst)) play(uid);
+    const tk = targetOf(inst), once = tk === 'none' || tk === 'all' || (tk === 'foe' && livingFoes().length === 1);
+    if (C.pending === uid && once) play(uid);
     else C.pending = uid;
   }
-  else if ('foe' in D) {
-    const inst = C.hand.find(h => h.uid === C.pending);
-    if (inst && !needsAlly(inst)) play(C.pending);
+  else if (D.foe !== undefined) {
+    const inst = C.hand.find(h => h.uid === C.pending); if (!inst) return;
+    const tk = targetOf(inst);
+    if (tk === 'foe') play(C.pending, { foe: +D.foe });
+    else if (tk !== 'ally') play(C.pending);
   }
   else if (D.ally) {
     const inst = C.hand.find(h => h.uid === C.pending);
-    if (inst && needsAlly(inst)) play(C.pending, D.ally);
+    if (inst && targetOf(inst) === 'ally') play(C.pending, { ally: D.ally });
   }
   else if (D.swap !== undefined) swapInCombat(+D.swap);
   else if (D.slot !== undefined) pickSlot(+D.slot);
@@ -61,6 +65,7 @@ app.addEventListener('click', e => {
   else if (D.rest) rest(D.rest);
   else if (D.opt) chooseOpt(+D.opt);
   else if (D.rm !== undefined) removeCard(+D.rm);
+  else if (D.up !== undefined) upgradeCard(+D.up);
   else if ('deck' in D) { modal.innerHTML = deckModal(); modal.hidden = false; return; }
   else if ('again' in D) { S.G = null; S.picked = []; }
   else return;

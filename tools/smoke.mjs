@@ -1,4 +1,5 @@
 // 게임을 가로 화면으로 띄워 파티 고르기 → 대열 바꾸기 → 전투(노림·대열 바꾸기·쓰러짐) → 보상 → 지도까지 오류 없이 도는지 본다.
+// 그리고 한 판은 1막 보스(등대지기)까지 끝까지 간다(개발용 치트로 체력 크게): 적 여럿·저주·강화·수 표시·상태·불빛 확인.
 // 실행: node tools/smoke.mjs   (Playwright 필요)
 import http from 'node:http';
 import { readFile } from 'node:fs/promises';
@@ -25,7 +26,7 @@ const port = server.address().port;
 const errors = [];
 const browser = await chromium.launch();
 const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; };
-const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false };
+const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false };
 
 // 카드 한 장 쓰기: 누르고 → 대상(동료/적) 누르기, 대상이 없으면 카드를 한 번 더
 async function playOne(page) {
@@ -34,7 +35,7 @@ async function playOne(page) {
   const uid = await card.getAttribute('data-play');
   await card.click();
   if (await page.$('.pm.tg')) { seen.ally = true; await page.click('.pm.tg'); }
-  else if (await page.$('.foe.tg')) await page.click('.foe.tg');
+  else if (await page.$('.foe.tg')) { const fs = await page.$$('.foe.tg'); await fs[fs.length - 1].click(); }
   else if (await page.$(`[data-play="${uid}"]`)) await page.click(`[data-play="${uid}"]`);
   return true;
 }
@@ -93,6 +94,54 @@ try {
     await page.click('[data-deck]');
     await page.click('[data-close]');
     console.log(`seed ${seed}: ${party.join('·')} 대열 → 전투 → 보상 → 2층 지도 OK`);
+    await page.close();
+  }
+  // 1막 끝까지: 개발용 치트(체력 크게)로 등대지기까지. 적 여럿·저주·강화·수 표시·상태·불빛도 여기서 본다.
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    page.on('pageerror', e => errors.push(`[act1] ${e.message}`));
+    page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[act1] ${m.text()}`); });
+    await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+    await page.goto(`http://127.0.0.1:${port}/?seed=7`);
+    for (const k of ['iris', 'marta', 'raven']) await page.click(`[data-pick="${k}"]`);
+    await page.click('[data-start]');
+    await page.waitForSelector('[data-node="0,0"]');
+    await page.evaluate(() => {
+      const G = window.__yk.S.G;
+      for (const p of G.party) { G.members[p].max = 400; G.members[p].hp = 400; }
+      G.deck.push('iris.wind', 'raven.fog', 'curse.fog', 'curse.drowsy', 'curse.key', 'curse.lamp', 'curse.lost');
+      G.screen = 'rest'; window.__yk.render();
+    });
+    // 손질(강화)
+    await page.click('[data-rest="smith"]');
+    await page.click('[data-up]');
+    if (await page.evaluate(() => window.__yk.S.G.deck.some(id => id.endsWith('+')))) seen.upgrade = true;
+    // 갈매기 셋과 먼저 한 판 (적 여럿)
+    await page.evaluate(() => window.__yk.fight(['gull', 'gull', 'gull']));
+    const look = async () => {
+      if ((await page.$$('.foe.sm')).length >= 3) seen.multi = true;
+      if (await page.$('.card.curse')) seen.curse = true;
+      if (await page.$('.card .bd b.up, .card .bd b.dn')) seen.num = true;
+      if (await page.$('.foe .st .chip')) seen.status = true;
+      if (await page.$('.pm.lit')) seen.light = true;
+    };
+    for (let step = 0; step < 6000; step++) {
+      const sc = await page.evaluate(() => { const S = window.__yk.S; return S.G.screen + ':' + S.G.act; });
+      const [screen, act] = sc.split(':');
+      if (act === '2') { seen.act1 = true; break; }
+      if (screen === 'combat') {
+        await look();
+        if (!(await playOne(page))) await page.click('[data-end]');
+      } else if (screen === 'reward') await page.click('[data-take]:not([data-take=""])');
+      else if (screen === 'map') { const n = await page.$('[data-node]:not([disabled])'); await n.click(); }
+      else if (screen === 'rest') await page.click('[data-rest="heal"]');
+      else if (screen === 'event') await page.click('[data-opt="0"]');
+      else if (screen === 'remove') await page.click('[data-rm]');
+      else if (screen === 'upgrade') await page.click('[data-up]');
+      else { fail(`act1: 모르는 화면 ${screen}`); break; }
+    }
+    if (seen.act1) console.log('act1: 1막 보스 「등대지기」까지 깨고 2막 지도 OK');
+    else fail('1막을 끝까지 못 감');
     await page.close();
   }
   // 세로 폰: 돌려 달라는 안내

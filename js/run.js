@@ -17,7 +17,7 @@ export function newRun(party, seed = newSeed()) {
     seed, rng, screen: 'map', party, moon: rng.pick(Object.keys(MOONS)),
     clock: 0, members, formation: defaultFormation(party), fsel: null,
     deck: party.flatMap(p => CHARACTERS[p].start),
-    act: 1, row: 0, map: null, took: [], duos: 0, fights: 0,
+    act: 1, row: 0, map: null, took: [], duos: 0, fights: 0, pity: 0,
   };
   S.G.map = makeMap(rng);
 }
