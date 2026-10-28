@@ -39,6 +39,9 @@ const foeTraits = f => [
   f.acts > 1 ? [`행동 ×${f.acts}`, `한 턴에 ${f.acts}번 움직인다.`] : null,
   f.turnClock ? [`시계 +${f.turnClock}분`, `내 턴이 시작될 때마다 밤 시계가 ${f.turnClock}분 간다.`] : null,
   f.light ? ['불빛', kwOne('불빛')] : null,
+  f.thorns ? [`가시 ${f.thorns}`, `이 적을 친 동료가 ${f.thorns} 피해를 받는다.`] : null,
+  f.deathBoom ? ['쓰러지며 폭발', `쓰러질 때 모든 동료에게 ${f.deathBoom} 피해.`] : null,
+  f.stolen?.length ? [`훔친 카드 ${f.stolen.length}`, '이 적을 쓰러뜨리면 훔친 카드가 버린 더미로 돌아온다.'] : null,
   f.phase2 && !f.p2 ? ['2단계', `체력이 ${Math.round(f.phase2.at * 100)}% 아래가 되면 모습이 바뀐다.`] : null,
 ].filter(Boolean).map(([n, t]) => `<span class="chip trait" data-tip="${esc(`${n}: ${t}`)}">${n}</span>`).join('');
 const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f.dim * 100) + '%' : 0, '빛 −', '#f0d040') + chip(f.bounty, '현상금', '#e0a050') + chip(f.block, '방어', 'var(--moon)') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
