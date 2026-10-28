@@ -263,8 +263,8 @@ function actFx(e) {
   const who = e.ch === 'duo' ? [e.a, e.b] : [e.actor || e.ch];
   for (const id of who) {
     const img = allyEl(id)?.querySelector('img'); if (!img) continue;
-    if (e.atk) { pulse(img, SET.shake ? 'jatk' : 'jflash', 320); pose(id, 'attack', 340); }
-    else { pulse(img, 'jcast', 420); pose(id, 'skill', 440); }
+    if (e.atk) { pulse(img, SET.shake ? 'jatk' : 'jflash', 520); pose(id, 'attack', 480); }
+    else { pulse(img, 'jcast', 640); pose(id, 'skill', 600); }
   }
 }
 function cloneAt(c, cls) {
@@ -349,7 +349,7 @@ function hitFoe(e, P) {
   else if (st === 'magic') { ring(x, y, col, 4, 24, 12); sparks(x, y, col, 12, 1.8); }
   else impactFx(x, y, col);
   if (e.blocked) shieldBreak(x, y - 6, e.dmg === 0);
-  if (el) pulse(el, SET.shake ? 'jhitF' : 'jflash', 240);
+  if (el) pulse(el.querySelector('img') || el, SET.shake ? 'jhitF' : 'jflash', 460);
   if (e.dmg > 0) num(x, ir.y + 6, String(e.dmg), e.crit ? 'crit' : '', e.dmg);
   else if (e.blocked) num(x, ir.y + 6, '막음', 'blk', 8);
   if (e.bleed) at(110, () => num(x + 14, ir.y + 16, String(e.bleed), 'bleed', e.bleed));
@@ -364,7 +364,7 @@ function killFoe(e, P) {
     { filter: 'brightness(4)', transform: 'translateX(4px)', opacity: 1, offset: .15 },
     { filter: 'brightness(2.5) grayscale(1)', transform: 'translateY(4px) scaleY(.9)', opacity: .8, offset: .5 },
     { filter: 'brightness(1) grayscale(1)', transform: 'translateY(14px) scaleY(.2)', opacity: 0 },
-  ], { duration: 560, easing: 'steps(9)' }).onfinish = () => ghost.remove();
+  ], { duration: 640, easing: 'cubic-bezier(.3,.6,.4,1)' }).onfinish = () => ghost.remove();
   const img = ghost.querySelector('img'), r = img ? rel(img) : c.r;
   for (let k = 0; k < 26; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: rnd(r.y, r.y + r.h), vx: rnd(-.6, .6), vy: rnd(-1.6, -.2), g: .05, life: rnd(18, 34), col: k % 3 ? '#ece8f6' : '#8a86b8', s: 1 });
   ring(r.cx, r.cy, '#ffffff', 6, 40, 14);
@@ -377,25 +377,25 @@ function hurtFx(e) {
   if (e.blocked) shieldBreak(x, y - 4, e.dmg === 0);
   if (e.dmg > 0) {
     impactFx(x, y, '#ff6a7a');
-    pulse(el.querySelector('img') || el, SET.shake ? 'jhitA' : 'jflash', 300);
-    if (!e.down) pose(e.id, 'hurt', 360);
+    pulse(el.querySelector('img') || el, SET.shake ? 'jhitA' : 'jflash', 460);
+    if (!e.down) pose(e.id, 'hurt', 440);
     num(x, r.y + 4, String(e.dmg), 'hurt', e.dmg);
     if (e.dmg >= 10) shake();
   } else num(x, r.y + 4, '막음', 'blk', 8);
   if (e.down) {
-    at(160, () => { pulse(el, 'jdown', 600); num(x, r.y + 18, '쓰러짐', 'down', 12); for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: rnd(-1, 1), vy: rnd(-1, -.2), g: .06, life: 22, col: '#6a6688', s: 1 }); });
+    at(160, () => { pulse(el.querySelector('img') || el, 'jdown', 820); num(x, r.y + 18, '쓰러짐', 'down', 12); for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: rnd(-1, 1), vy: rnd(-1, -.2), g: .06, life: 22, col: '#6a6688', s: 1 }); });
     sfx('down');
   } else sfx(e.dmg ? 'hurt' : 'block');
 }
 function foeActFx(e) {
   const el = foeEl(e.i); if (!el) return;
   const img = el.querySelector('img'), r = img ? rel(img) : rel(el);
-  if (e.t === 'atk' || e.t === 'mix') { pulse(el, SET.shake ? 'jlunge' : 'jflash', 260); pulse(el.querySelector('.intent'), 'jfire', 300); }
+  if (e.t === 'atk' || e.t === 'mix') { pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 520); pulse(el.querySelector('.intent'), 'jfire', 300); }
   else if (e.t === 'blk') { shieldIcon(r.cx, r.cy - 4, '#c9d2f0'); sfx('block', { vol: .6 }); }
   else if (e.t === 'buf') { for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: 0, vy: rnd(-1.4, -.6), g: 0, life: 24, col: '#ff7a6a', s: 1 }); num(r.cx, r.y, `힘 +${e.v}`, 'buf', 10); sfx('mana', { rate: .7 }); }
   else if (e.t === 'deb' || e.t === 'curse') { ring(r.cx, r.cy, '#b48ae8', 6, 30, 12); sfx('poison', { rate: .8 }); }
   else if (e.t === 'time') { /* 'time' 사건이 시계를 보여 준다 */ }
-  else if (e.t === 'aoe') { pulse(el, SET.shake ? 'jlunge' : 'jflash', 260); ring(r.cx, r.cy, '#ff9a6a', 8, 44, 14); }
+  else if (e.t === 'aoe') { pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 520); ring(r.cx, r.cy, '#ff9a6a', 8, 44, 14); }
   else if (e.t === 'boom') { boomFx(r.cx, r.cy); sfx('boom'); }
   else if (e.t === 'gblk') { for (const f of document.querySelectorAll('.foe:not(.gone)')) { const q = rel(f); shieldIcon(q.cx, q.cy - 4, '#c9d2f0'); } sfx('block', { vol: .6 }); }
   else if (e.t === 'mend') { ring(r.cx, r.cy, '#7dff9a', 6, 28, 12); sfx('foe_heal', { vol: .7 }); }
