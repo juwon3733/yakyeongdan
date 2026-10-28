@@ -11,15 +11,17 @@ export const hasArt = file => INDEX.has(file);
 export const artURL = file => (INDEX.has(file) ? `assets/${file}` : null);
 export const artCount = () => INDEX.size;
 
-// 동료 그림: kind = stand(전투 서 있는 그림) | normal | smile | serious (상반신) | cutin | attack | skill | guard | hurt (전투 모션)
-// 두 번째 의상을 입었으면 서 있는 그림은 _outfit2를 먼저 본다. 모션 그림은 기본 의상뿐이라 의상을 입었으면 없음.
-export const POSES = ['attack', 'skill', 'guard', 'hurt'];
+// 동료 그림(일러스트): kind = stand(서 있는 그림) | normal | smile | serious (상반신) | cutin
+// 두 번째 의상을 입었으면 서 있는 그림은 _outfit2를 먼저 본다.
 export function charArt(id, kind = 'stand', outfit = false) {
-  if (POSES.includes(kind)) return outfit ? null : artURL(`chars/${id}_${kind}.png`);
   if (kind === 'cutin') return artURL(`cutins/${id}_cutin.png`);
   if (kind === 'stand') return (outfit && artURL(`chars/${id}_outfit2.png`)) || artURL(`chars/${id}_stand.png`);
   return artURL(`chars/${id}_${kind}.png`) || artURL(`chars/${id}_normal.png`);
 }
+
+// 전투 스프라이트(전투 화면 전용 저해상도 도트): sprites/<id>_<frame>.png. 기본 의상만.
+export const FRAMES = ['idle', 'idle2', 'attack', 'skill', 'guard', 'hurt', 'down', 'win'];
+export const battleArt = (id, frame = 'idle') => artURL(`sprites/${id}_${frame}.png`);
 
 // 적 그림: 전투 데이터의 적 키 → 그림 파일 이름 (js/asset_prompts.js ENEMIES·BOSSES)
 const FOE_FILE = {

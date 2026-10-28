@@ -11,9 +11,8 @@ import { sfx as sfxRaw } from './audio.js';
 let hush = false;
 const sfx = (...a) => { if (!hush) sfxRaw(...a); };
 import { showPhase, showBoss, shake, showBurst } from './fx.js';
-import { charArt, POSES } from './art.js';
+import { battleArt, FRAMES } from './art.js';
 import { cardData } from './data/cards.js';
-import { wearing } from './meta.js';
 
 const stage = document.getElementById('stage');
 let layer = null, cv = null, g = null, sky = null;
@@ -165,7 +164,7 @@ export function afterRender(events = []) {
   chainPop(P);
   // 화면 넘어감: 전투 → 보상(승리), 막이 바뀜(올라가는 장면)
   const G = S.G;
-  if (P && G && P.screen === 'combat' && G.screen === 'reward') { at(t + 120, () => { banner('승리', 'win'); sfx('win'); }); dealReward(t + 420); }
+  if (P && G && P.screen === 'combat' && G.screen === 'reward') { at(t + 120, () => { banner('승리', 'win'); sfx('win'); winPose(); }); dealReward(t + 420); }
   if (G && G.screen === 'result' && P && P.screen !== 'result') countUp(frozen ? t + 650 : 0);
   if (G && S.view === 'run' && G.screen === 'map' && !G.tutorial && P && (P.seed !== G.seed || P.act !== G.act)) at(P.seed !== G.seed ? 0 : t + 200, () => climb(G.act));
   if (G && S.view === 'run') { shown.seed = G.seed; shown.act = G.act; }
@@ -247,19 +246,34 @@ function flyCard(e, P, t0) {
   const col = colOf(e.actor || e.a || e.ch);
   at(t0 + 180, () => { ring(to.cx, to.cy, col, 6, 22, 9); if (!e.atk) sparks(to.cx, to.cy, col, 8, 1.4); });
 }
-// 동료 모션: 카드를 쓴 동료는 공격(앞으로 내지름) 또는 스킬(힘 모음), 맞은 동료는 피격.
-// 모션 그림(chars/<id>_attack·hurt·skill.png)이 있으면 서 있는 그림과 잠깐 바꿔 끼우고, 없으면 움직임만.
-const poseSrc = (id, kind) => charArt(id, kind, wearing(id));
+// 동료 모션: 카드를 쓴 동료는 공격·스킬·방어, 맞은 동료는 피격. 전투 스프라이트(sprites/<id>_<frame>.png)가 있으면
+// 그 동작 칸으로 잠깐 바꿔 끼우고, 없으면 움직임만. 가만히 있을 때는 서기·숨쉬기 두 칸을 번갈아(슬레이 더 스파이어식 숨쉬기).
+const busy = new WeakSet();
 function preloadPoses() {
-  for (const id of S.G?.party || []) for (const k of POSES) { const u = poseSrc(id, k); if (u) new Image().src = u; }
+  for (const id of S.G?.party || []) for (const k of FRAMES) { const u = battleArt(id, k); if (u) new Image().src = u; }
 }
 function pose(id, kind, ms) {
-  const img = allyEl(id)?.querySelector('img'), u = poseSrc(id, kind);
+  const img = allyEl(id)?.querySelector('img'), u = battleArt(id, kind);
   if (!img || !u) return false;
   const was = img.getAttribute('src');
-  img.src = u;
-  setTimeout(() => { if (img.isConnected && img.getAttribute('src') === u) img.src = was; }, ms);
+  img.src = u; busy.add(img);
+  setTimeout(() => { busy.delete(img); if (img.isConnected && img.getAttribute('src') === u) img.src = was; }, ms);
   return true;
+}
+// 숨쉬기 두 칸 번갈아
+setInterval(() => {
+  if (calmNow() || !S.C) return;
+  for (const img of document.querySelectorAll('#app [data-ally]:not(.down) > img')) {
+    if (busy.has(img)) continue;
+    const id = img.closest('[data-ally]').dataset.ally, a = battleArt(id, 'idle'), b = battleArt(id, 'idle2');
+    if (!a || !b) continue;
+    const src = img.getAttribute('src');
+    if (src === a) img.src = b; else if (src === b) img.src = a;
+  }
+}, 650);
+// 승리: 살아 있는 동료가 승리 동작
+function winPose() {
+  for (const id of S.G?.party || []) if (!S.G.members[id]?.down) pose(id, 'win', 1400);
 }
 // 카드마다 모션: 슬레이 더 스파이어처럼 짧고 또렷하게, 기술 종류마다 자세 + 움직임: 근접 베기·원거리 사격·휩쓸기·필살·방어·회복·시간·뽑기·시전
 const RANGED = new Set(['boom', 'star', 'magic']);

@@ -5,11 +5,12 @@
 import { CARDS } from './data/cards.js';
 import { cardArtKind } from './cardkind.js';
 
-export const STYLE_VERSION = 4; // 4: 여러 장을 한 시트에(칸은 2배 도트라 한 장짜리와 같은 세밀함, 자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
+export const STYLE_VERSION = 5; // 5: 전투는 일러스트 대신 저해상도 전투 스프라이트(동료 4×2 시트 8동작, 적 128×128). 4: 여러 장을 한 시트에(칸은 2배 도트라 한 장짜리와 같은 세밀함, 자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
 
 // ── 공통 스타일 ──────────────────────────────────────────
 export const STYLE = {
   pixel: '이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.',
+  sprite: '이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.',
   distinct: 'Give each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.',
   character: 'Character design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.',
   rarity5: 'This is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.',
@@ -23,13 +24,13 @@ export const STYLE = {
 export const SPEC = {
   stand:    { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백' },
   portrait: { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음' },
-  pose:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 자세 한 장(공격·스킬·방어·피격) · 자세 시트(posesheet)에서 잘라 냄 · 서 있는 그림과 바꿔 끼운다' },
+  sprite:   { w: 384,  h: 512,  native: '96×128',  scale: 4, transparent: true,  colors: 64,  folder: 'sprites', note: '전투용 도트 캐릭터(일러스트보다 굵은 도트) · 전투 스프라이트 시트에서 잘라 냄 · 발이 칸 아래 근처' },
   outfit:   { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '두 번째 의상 전신 · 투명 배경' },
   cutin:    { w: 1536, h: 576,  native: '384×144', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄' },
   duo:      { w: 1536, h: 768,  native: '384×192', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄' },
   cg:       { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'cg', note: '★5 전신 CG · 16:9 · 화질 우선, 색 제한 없음' },
-  enemy:    { w: 768,  h: 768,  native: '256×256', scale: 3, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
-  elite:    { w: 1024, h: 1024, native: '256×256', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
+  enemy:    { w: 512,  h: 512,  native: '128×128', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
+  elite:    { w: 512,  h: 512,  native: '128×128', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
   boss:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '보스 · 투명 배경' },
   bg:       { w: 1280, h: 720,  native: '640×360', scale: 2, transparent: false, colors: 256, folder: 'bg', note: '배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)' },
   title:    { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'title', note: '타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지' },
@@ -40,9 +41,9 @@ export const SPEC = {
   style:    { w: 1024, h: 1536, native: '시안마다 다름', scale: 0, transparent: true, colors: Infinity, folder: 'style', note: '그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다' },
   card:     { w: 768,  h: 576,  native: '256×192', scale: 3, transparent: false, colors: 256, folder: 'cards', note: '카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
   // 시트: GPT가 한 장에 여러 개를 그리고, tools/slice-sheets.mjs가 칸마다 잘라 위 종류의 파일로 만든다(npm run art).
-  posesheet: { w: 1024, h: 1536, native: '512×768 (칸 256×384 × 4)', scale: 2, transparent: true, colors: Infinity, folder: 'sheets', note: '전투 자세 2×2 — 왼쪽 위 공격·오른쪽 위 스킬·왼쪽 아래 방어·오른쪽 아래 피격, 칸 512×768' },
+  battlesheet: { w: 1536, h: 1024, native: '384×256 (칸 96×128 × 8)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '전투 스프라이트 4×2 — 위: 서 있기·숨쉬기·공격·스킬 / 아래: 방어·피격·쓰러짐·승리, 칸 384×512' },
   cardsheet: { w: 1024, h: 1024, native: '512×512 (칸 256×256 × 4)', scale: 2, transparent: false, colors: Infinity, folder: 'sheets', note: '카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀' },
-  foesheet:  { w: 1536, h: 1024, native: '768×512 (칸 256×256 × 6)', scale: 2, transparent: true, colors: Infinity, folder: 'sheets', note: '적 3×2, 칸 512×512' },
+  foesheet:  { w: 1536, h: 1024, native: '384×256 (칸 128×128 × 6)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '적 3×2, 칸 512×512' },
   iconsheet: { w: 1024, h: 1024, native: '128×128 (칸 32×32 × 16)', scale: 8, transparent: true, colors: Infinity, folder: 'sheets', note: '아이콘 4×4, 칸 256×256' },
 };
 
@@ -400,21 +401,27 @@ export function assetList() {
       { reference_images: ref }));
   }
 
-  // 전투 자세: 동료마다 공격·스킬·방어·피격 네 장을 한 장(2×2 시트)에. 카드 종류에 따라 골라 쓴다(js/juice.js MOTION). 서 있는 그림과 바꿔 끼우므로 크기·발 위치·방향이 같아야 한다.
+  // 전투 스프라이트: 동료마다 시트 한 장(4×2)에 8동작. 전투 화면은 일러스트 대신 이 저해상도 도트를 쓴다(js/art.js battleArt).
+  const FRAMES = [
+    ['idle', 'IDLE: standing in a ready battle stance'],
+    ['idle2', 'IDLE 2: the same stance a moment later, breathing in (shoulders and hair raised by one or two pixels) — used to loop with IDLE'],
+    ['attack', `ATTACK: the peak of her basic attack, lunging or striking toward the RIGHT with her weapon, motion smear (${'${c.fx}'})`],
+    ['skill', 'SKILL: casting her signature power, the effect glowing around her'],
+    ['guard', 'GUARD: bracing defensively, knees bent, weapon or arm raised in front like a shield, faint barrier glow'],
+    ['hurt', 'HURT: just got hit, recoiling back to the LEFT, wincing, no blood'],
+    ['down', 'DOWN: knocked out, kneeling or collapsed on the ground, eyes closed, no blood'],
+    ['win', 'VICTORY: a confident, stylish win pose fitting her personality'],
+  ];
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `pose-${id}`;
-    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 전투 자세 (시트 1장 → 4장)` });
-    const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
+    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 전투 스프라이트 (시트 1장 → 8동작)` });
     const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
-    out.push(sheet('posesheet', `${id}_poses`, batch, `${id}_poses.png`, join(base, `${who}
-A 2x2 sprite sheet of FOUR battle poses of this same character on one 1024x1536 canvas, split into four equal cells of 512x768 (2 columns x 2 rows). No borders, no grid lines, no gutters, no labels or text.
-- Top-left cell — ATTACK: the peak moment of her basic attack, lunging or striking toward the RIGHT with her weapon, body leaning forward, motion smear made of pixels. Motifs: ${c.fx}.
-- Top-right cell — SKILL: casting her signature power, confident focused expression, her magic effect glowing around her (${c.fx}).
-- Bottom-left cell — GUARD: bracing defensively with knees bent, weapon or arm raised in front like a shield, determined expression, a faint protective barrier glow in her accent color.
-- Bottom-right cell — HURT: just got hit, recoiling backward to the LEFT, wincing, one arm up, hair and clothes flung by the impact. No blood, no wounds.
-In every cell: the same character size as the attached battle-stance image, feet on the same line near the bottom of the cell, facing RIGHT toward the enemies, the whole body and effect fully inside its own cell. Fully transparent background. Fine, detailed pixel art at the SAME pixel size and detail as the attached battle-stance image: native resolution 256x384 pixels per cell (512x768 for the whole sheet), upscaled exactly 2x with nearest-neighbor. Up to about 96 colors per cell.`),
-      [2, 2], [['pose', `${id}_attack`, `${id}_attack.png`, 0, 0], ['pose', `${id}_skill`, `${id}_skill.png`, 1, 0], ['pose', `${id}_guard`, `${id}_guard.png`, 0, 1], ['pose', `${id}_hurt`, `${id}_hurt.png`, 1, 1]],
-      { must_show: '2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치', reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
+    out.push(sheet('battlesheet', `${id}_battle`, batch, `${id}_battle.png`, join(STYLE.sprite, STYLE.distinct, rarityStyle(c.rarity), `${who}
+A battle sprite sheet of this ONE character: eight poses on one 1536x1024 canvas, split into eight equal cells of 384x512 (4 columns x 2 rows), reading order left to right, top to bottom. No borders, no grid lines, no gutters, no labels or text.
+${FRAMES.map(([, t], i) => `- Cell ${i + 1} — ${t.replace('${c.fx}', c.fx)}`).join('\n')}
+In every cell: exactly the same character size and proportions (adult about 1:6.5 head-to-body, NOT chibi), feet on the same line near the bottom of the cell, facing RIGHT toward the enemies (except HURT recoiling), the whole body and effect inside its own cell. Fully transparent background. Native resolution 96x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
+      [4, 2], FRAMES.map(([f], i) => ['sprite', `${id}_sp_${f}`, `${id}_${f}.png`, i % 4, Math.floor(i / 4)]),
+      { must_show: '4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트', reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
   }
 
   // 카드 그림: 동료마다 종류별 4장(공격·방어·스킬·필살). 같은 종류 카드가 같이 쓴다(js/cardkind.js). 인연 듀오 카드는 임시 일러스트.
@@ -483,7 +490,7 @@ ${c.name} is ON-MODEL from the attached references in every cell. Visual motifs:
       out.push(sheet('foesheet', `${act}_foes_${n + 1}`, batch, `${act}_foes_${n + 1}.png`, join(STYLE.pixel, part.some(([, , d]) => /woman/.test(d)) ? STYLE.character : '',
         `An enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.
 ${part.map(([k, , d], i) => `- Cell ${i + 1}: ${k === 'elite' ? 'ELITE (bigger and more imposing, fills more of the cell): ' : ''}${d}`).join('\n')}
-${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transparent).\n` : ''}Fully transparent background. Fine, detailed pixel art: native resolution 256x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.`),
+${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transparent).\n` : ''}Fully transparent background. Low-resolution battle sprites (chunkier pixels than character illustrations, like premium 16-bit era RPG battle sprites, about 32 colors each, clean dark outline): native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
         [3, 2], part.map(([k, id], i) => [k, id, `${id}.png`, i % 3, Math.floor(i / 3)]),
         { must_show: `3×2 칸에 ${part.map(([, id]) => id).join('·')}` }));
     }

@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 4 · GPT가 그릴 그림 257장(시트 포함, 잘라 내면 471장) · 묶음 109개
+style_version 5 · GPT가 그릴 그림 257장(시트 포함, 잘라 내면 559장) · 묶음 109개
 
 ## 묶음
 
@@ -52,28 +52,28 @@ style_version 4 · GPT가 그릴 그림 257장(시트 포함, 잘라 내면 471�
 | `extra-gordon` | 고든 나중(표정·컷인·두 번째 의상) | 4 |
 | `char-fukuro` | ★★★ 후쿠로 | 2 |
 | `extra-fukuro` | 후쿠로 나중(표정·컷인·두 번째 의상) | 4 |
-| `pose-sion` | ★★★★★ 시온 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-lunaria` | ★★★★★ 루나리아 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-akane` | ★★★★★ 아카네 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-eleonore` | ★★★★★ 엘레오노르 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-nerea` | ★★★★★ 네레아 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-iris` | ★★★★ 아이리스 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-noel` | ★★★★ 노엘 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-raven` | ★★★★ 레이븐 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-mimimomo` | ★★★★ 미미·모모 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-sebas` | ★★★★ 세바스 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-mariana` | ★★★★ 마리아나 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-tomori` | ★★★★ 토모리 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-sigrun` | ★★★★ 시그룬 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-zeno` | ★★★★ 제노 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-bertha` | ★★★★ 베르타 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-brick` | ★★★ 브릭 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-marta` | ★★★ 마르타 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-finn` | ★★★ 핀 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-laila` | ★★★ 라일라 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-dora` | ★★★ 도라 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-gordon` | ★★★ 고든 전투 자세 (시트 1장 → 4장) | 1 |
-| `pose-fukuro` | ★★★ 후쿠로 전투 자세 (시트 1장 → 4장) | 1 |
+| `pose-sion` | ★★★★★ 시온 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-lunaria` | ★★★★★ 루나리아 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-akane` | ★★★★★ 아카네 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-eleonore` | ★★★★★ 엘레오노르 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-nerea` | ★★★★★ 네레아 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-iris` | ★★★★ 아이리스 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-noel` | ★★★★ 노엘 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-raven` | ★★★★ 레이븐 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-mimimomo` | ★★★★ 미미·모모 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-sebas` | ★★★★ 세바스 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-mariana` | ★★★★ 마리아나 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-tomori` | ★★★★ 토모리 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-sigrun` | ★★★★ 시그룬 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-zeno` | ★★★★ 제노 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-bertha` | ★★★★ 베르타 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-brick` | ★★★ 브릭 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-marta` | ★★★ 마르타 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-finn` | ★★★ 핀 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-laila` | ★★★ 라일라 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-dora` | ★★★ 도라 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-gordon` | ★★★ 고든 전투 스프라이트 (시트 1장 → 8동작) | 1 |
+| `pose-fukuro` | ★★★ 후쿠로 전투 스프라이트 (시트 1장 → 8동작) | 1 |
 | `cards-sion` | ★★★★★ 시온 카드 그림 (시트 1장 → 4장) | 1 |
 | `cards-lunaria` | ★★★★★ 루나리아 카드 그림 (시트 1장 → 4장) | 1 |
 | `cards-akane` | ★★★★★ 아카네 카드 그림 (시트 1장 → 4장) | 1 |
@@ -124,13 +124,13 @@ style_version 4 · GPT가 그릴 그림 257장(시트 포함, 잘라 내면 471�
 |---|---|---|---|---|---|
 | 서 있는 그림 (`stand`) | 1024×1536 | 256×384 | 예 | 256 | 전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백 |
 | 상반신 (`portrait`) | 1024×1536 | 256×384 | 예 | 256 | 허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음 |
-| 전투 자세 (`pose`) | 1024×1536 | 256×384 | 예 | 256 | 전투 자세 한 장(공격·스킬·방어·피격) · 자세 시트(posesheet)에서 잘라 냄 · 서 있는 그림과 바꿔 끼운다 |
+| 전투 스프라이트 (`sprite`) | 384×512 | 96×128 | 예 | 64 | 전투용 도트 캐릭터(일러스트보다 굵은 도트) · 전투 스프라이트 시트에서 잘라 냄 · 발이 칸 아래 근처 |
 | 두 번째 의상 (`outfit`) | 1024×1536 | 256×384 | 예 | 256 | 두 번째 의상 전신 · 투명 배경 |
 | 컷인 (`cutin`) | 1536×576 | 384×144 | 아니오 | 256 | 가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄 |
 | 인연 듀오 컷인 (`duo`) | 1536×768 | 384×192 | 아니오 | 256 | 인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄 |
 | ★5 전신 CG (`cg`) | 1536×864 | — | 아니오 | 제한 없음 | ★5 전신 CG · 16:9 · 화질 우선, 색 제한 없음 |
-| 일반 적 (`enemy`) | 768×768 | 256×256 | 예 | 256 | 일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경 |
-| 강적 (`elite`) | 1024×1024 | 256×256 | 예 | 256 | 강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경 |
+| 일반 적 (`enemy`) | 512×512 | 128×128 | 예 | 256 | 일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경 |
+| 강적 (`elite`) | 512×512 | 128×128 | 예 | 256 | 강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경 |
 | 보스 (`boss`) | 1024×1536 | 256×384 | 예 | 256 | 보스 · 투명 배경 |
 | 배경 (`bg`) | 1280×720 | 640×360 | 아니오 | 256 | 배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리) |
 | 타이틀 (`title`) | 1536×864 | — | 아니오 | 제한 없음 | 타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지 |
@@ -140,9 +140,9 @@ style_version 4 · GPT가 그릴 그림 257장(시트 포함, 잘라 내면 471�
 | appicon (`appicon`) | 1024×1024 | 64×64 | 아니오 | 64 | 앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다 |
 | style (`style`) | 1024×1536 | 시안마다 다름 | 예 | 제한 없음 | 그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다 |
 | 카드 그림 (`card`) | 768×576 | 256×192 | 아니오 | 256 | 카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배 |
-| 자세 시트 (`posesheet`) | 1024×1536 | 512×768 (칸 256×384 × 4) | 예 | 제한 없음 | 전투 자세 2×2 — 왼쪽 위 공격·오른쪽 위 스킬·왼쪽 아래 방어·오른쪽 아래 피격, 칸 512×768 |
+| 전투 스프라이트 시트 (`battlesheet`) | 1536×1024 | 384×256 (칸 96×128 × 8) | 예 | 제한 없음 | 전투 스프라이트 4×2 — 위: 서 있기·숨쉬기·공격·스킬 / 아래: 방어·피격·쓰러짐·승리, 칸 384×512 |
 | 카드 시트 (`cardsheet`) | 1024×1024 | 512×512 (칸 256×256 × 4) | 아니오 | 제한 없음 | 카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀 |
-| 적 시트 (`foesheet`) | 1536×1024 | 768×512 (칸 256×256 × 6) | 예 | 제한 없음 | 적 3×2, 칸 512×512 |
+| 적 시트 (`foesheet`) | 1536×1024 | 384×256 (칸 128×128 × 6) | 예 | 제한 없음 | 적 3×2, 칸 512×512 |
 | 아이콘 시트 (`iconsheet`) | 1024×1024 | 128×128 (칸 32×32 × 16) | 예 | 제한 없음 | 아이콘 4×4, 칸 256×256 |
 
 ## `char-sion` — ★★★★★ 시온
@@ -871,137 +871,137 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `fukuro_cutin` | `assets/cutins/fukuro_cutin.png` | 1536×576 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
 | `fukuro_outfit2` | `assets/chars/fukuro_outfit2.png` | 1024×1536 투명 | `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | — |
 
-## `pose-sion` — ★★★★★ 시온 전투 자세 (시트 1장 → 4장)
+## `pose-sion` — ★★★★★ 시온 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sion_poses` | `assets/sheets/sion_poses.png` → `sion_attack.png` `sion_skill.png` `sion_guard.png` `sion_hurt.png` | 1024×1536 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `sion_battle` | `assets/sheets/sion_battle.png` → `sion_idle.png` `sion_idle2.png` `sion_attack.png` `sion_skill.png` `sion_guard.png` `sion_hurt.png` `sion_down.png` `sion_win.png` | 1536×1024 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-lunaria` — ★★★★★ 루나리아 전투 자세 (시트 1장 → 4장)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `lunaria_poses` | `assets/sheets/lunaria_poses.png` → `lunaria_attack.png` `lunaria_skill.png` `lunaria_guard.png` `lunaria_hurt.png` | 1024×1536 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
-
-## `pose-akane` — ★★★★★ 아카네 전투 자세 (시트 1장 → 4장)
+## `pose-lunaria` — ★★★★★ 루나리아 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `akane_poses` | `assets/sheets/akane_poses.png` → `akane_attack.png` `akane_skill.png` `akane_guard.png` `akane_hurt.png` | 1024×1536 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `lunaria_battle` | `assets/sheets/lunaria_battle.png` → `lunaria_idle.png` `lunaria_idle2.png` `lunaria_attack.png` `lunaria_skill.png` `lunaria_guard.png` `lunaria_hurt.png` `lunaria_down.png` `lunaria_win.png` | 1536×1024 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-eleonore` — ★★★★★ 엘레오노르 전투 자세 (시트 1장 → 4장)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `eleonore_poses` | `assets/sheets/eleonore_poses.png` → `eleonore_attack.png` `eleonore_skill.png` `eleonore_guard.png` `eleonore_hurt.png` | 1024×1536 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
-
-## `pose-nerea` — ★★★★★ 네레아 전투 자세 (시트 1장 → 4장)
+## `pose-akane` — ★★★★★ 아카네 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `nerea_poses` | `assets/sheets/nerea_poses.png` → `nerea_attack.png` `nerea_skill.png` `nerea_guard.png` `nerea_hurt.png` | 1024×1536 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `akane_battle` | `assets/sheets/akane_battle.png` → `akane_idle.png` `akane_idle2.png` `akane_attack.png` `akane_skill.png` `akane_guard.png` `akane_hurt.png` `akane_down.png` `akane_win.png` | 1536×1024 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-iris` — ★★★★ 아이리스 전투 자세 (시트 1장 → 4장)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `iris_poses` | `assets/sheets/iris_poses.png` → `iris_attack.png` `iris_skill.png` `iris_guard.png` `iris_hurt.png` | 1024×1536 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
-
-## `pose-noel` — ★★★★ 노엘 전투 자세 (시트 1장 → 4장)
+## `pose-eleonore` — ★★★★★ 엘레오노르 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `noel_poses` | `assets/sheets/noel_poses.png` → `noel_attack.png` `noel_skill.png` `noel_guard.png` `noel_hurt.png` | 1024×1536 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `eleonore_battle` | `assets/sheets/eleonore_battle.png` → `eleonore_idle.png` `eleonore_idle2.png` `eleonore_attack.png` `eleonore_skill.png` `eleonore_guard.png` `eleonore_hurt.png` `eleonore_down.png` `eleonore_win.png` | 1536×1024 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-raven` — ★★★★ 레이븐 전투 자세 (시트 1장 → 4장)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `raven_poses` | `assets/sheets/raven_poses.png` → `raven_attack.png` `raven_skill.png` `raven_guard.png` `raven_hurt.png` | 1024×1536 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
-
-## `pose-mimimomo` — ★★★★ 미미·모모 전투 자세 (시트 1장 → 4장)
+## `pose-nerea` — ★★★★★ 네레아 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `mimimomo_poses` | `assets/sheets/mimimomo_poses.png` → `mimimomo_attack.png` `mimimomo_skill.png` `mimimomo_guard.png` `mimimomo_hurt.png` | 1024×1536 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `nerea_battle` | `assets/sheets/nerea_battle.png` → `nerea_idle.png` `nerea_idle2.png` `nerea_attack.png` `nerea_skill.png` `nerea_guard.png` `nerea_hurt.png` `nerea_down.png` `nerea_win.png` | 1536×1024 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-sebas` — ★★★★ 세바스 전투 자세 (시트 1장 → 4장)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `sebas_poses` | `assets/sheets/sebas_poses.png` → `sebas_attack.png` `sebas_skill.png` `sebas_guard.png` `sebas_hurt.png` | 1024×1536 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
-
-## `pose-mariana` — ★★★★ 마리아나 전투 자세 (시트 1장 → 4장)
+## `pose-iris` — ★★★★ 아이리스 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `mariana_poses` | `assets/sheets/mariana_poses.png` → `mariana_attack.png` `mariana_skill.png` `mariana_guard.png` `mariana_hurt.png` | 1024×1536 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `iris_battle` | `assets/sheets/iris_battle.png` → `iris_idle.png` `iris_idle2.png` `iris_attack.png` `iris_skill.png` `iris_guard.png` `iris_hurt.png` `iris_down.png` `iris_win.png` | 1536×1024 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-tomori` — ★★★★ 토모리 전투 자세 (시트 1장 → 4장)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `tomori_poses` | `assets/sheets/tomori_poses.png` → `tomori_attack.png` `tomori_skill.png` `tomori_guard.png` `tomori_hurt.png` | 1024×1536 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
-
-## `pose-sigrun` — ★★★★ 시그룬 전투 자세 (시트 1장 → 4장)
+## `pose-noel` — ★★★★ 노엘 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sigrun_poses` | `assets/sheets/sigrun_poses.png` → `sigrun_attack.png` `sigrun_skill.png` `sigrun_guard.png` `sigrun_hurt.png` | 1024×1536 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `noel_battle` | `assets/sheets/noel_battle.png` → `noel_idle.png` `noel_idle2.png` `noel_attack.png` `noel_skill.png` `noel_guard.png` `noel_hurt.png` `noel_down.png` `noel_win.png` | 1536×1024 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-zeno` — ★★★★ 제노 전투 자세 (시트 1장 → 4장)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `zeno_poses` | `assets/sheets/zeno_poses.png` → `zeno_attack.png` `zeno_skill.png` `zeno_guard.png` `zeno_hurt.png` | 1024×1536 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
-
-## `pose-bertha` — ★★★★ 베르타 전투 자세 (시트 1장 → 4장)
+## `pose-raven` — ★★★★ 레이븐 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `bertha_poses` | `assets/sheets/bertha_poses.png` → `bertha_attack.png` `bertha_skill.png` `bertha_guard.png` `bertha_hurt.png` | 1024×1536 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `raven_battle` | `assets/sheets/raven_battle.png` → `raven_idle.png` `raven_idle2.png` `raven_attack.png` `raven_skill.png` `raven_guard.png` `raven_hurt.png` `raven_down.png` `raven_win.png` | 1536×1024 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-brick` — ★★★ 브릭 전투 자세 (시트 1장 → 4장)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `brick_poses` | `assets/sheets/brick_poses.png` → `brick_attack.png` `brick_skill.png` `brick_guard.png` `brick_hurt.png` | 1024×1536 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
-
-## `pose-marta` — ★★★ 마르타 전투 자세 (시트 1장 → 4장)
+## `pose-mimimomo` — ★★★★ 미미·모모 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `marta_poses` | `assets/sheets/marta_poses.png` → `marta_attack.png` `marta_skill.png` `marta_guard.png` `marta_hurt.png` | 1024×1536 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `mimimomo_battle` | `assets/sheets/mimimomo_battle.png` → `mimimomo_idle.png` `mimimomo_idle2.png` `mimimomo_attack.png` `mimimomo_skill.png` `mimimomo_guard.png` `mimimomo_hurt.png` `mimimomo_down.png` `mimimomo_win.png` | 1536×1024 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-finn` — ★★★ 핀 전투 자세 (시트 1장 → 4장)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `finn_poses` | `assets/sheets/finn_poses.png` → `finn_attack.png` `finn_skill.png` `finn_guard.png` `finn_hurt.png` | 1024×1536 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
-
-## `pose-laila` — ★★★ 라일라 전투 자세 (시트 1장 → 4장)
+## `pose-sebas` — ★★★★ 세바스 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `laila_poses` | `assets/sheets/laila_poses.png` → `laila_attack.png` `laila_skill.png` `laila_guard.png` `laila_hurt.png` | 1024×1536 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `sebas_battle` | `assets/sheets/sebas_battle.png` → `sebas_idle.png` `sebas_idle2.png` `sebas_attack.png` `sebas_skill.png` `sebas_guard.png` `sebas_hurt.png` `sebas_down.png` `sebas_win.png` | 1536×1024 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-dora` — ★★★ 도라 전투 자세 (시트 1장 → 4장)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `dora_poses` | `assets/sheets/dora_poses.png` → `dora_attack.png` `dora_skill.png` `dora_guard.png` `dora_hurt.png` | 1024×1536 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
-
-## `pose-gordon` — ★★★ 고든 전투 자세 (시트 1장 → 4장)
+## `pose-mariana` — ★★★★ 마리아나 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `gordon_poses` | `assets/sheets/gordon_poses.png` → `gordon_attack.png` `gordon_skill.png` `gordon_guard.png` `gordon_hurt.png` | 1024×1536 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `mariana_battle` | `assets/sheets/mariana_battle.png` → `mariana_idle.png` `mariana_idle2.png` `mariana_attack.png` `mariana_skill.png` `mariana_guard.png` `mariana_hurt.png` `mariana_down.png` `mariana_win.png` | 1536×1024 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
-## `pose-fukuro` — ★★★ 후쿠로 전투 자세 (시트 1장 → 4장)
+## `pose-tomori` — ★★★★ 토모리 전투 스프라이트 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `fukuro_poses` | `assets/sheets/fukuro_poses.png` → `fukuro_attack.png` `fukuro_skill.png` `fukuro_guard.png` `fukuro_hurt.png` | 1024×1536 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치 |
+| `tomori_battle` | `assets/sheets/tomori_battle.png` → `tomori_idle.png` `tomori_idle2.png` `tomori_attack.png` `tomori_skill.png` `tomori_guard.png` `tomori_hurt.png` `tomori_down.png` `tomori_win.png` | 1536×1024 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
+
+## `pose-sigrun` — ★★★★ 시그룬 전투 스프라이트 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `sigrun_battle` | `assets/sheets/sigrun_battle.png` → `sigrun_idle.png` `sigrun_idle2.png` `sigrun_attack.png` `sigrun_skill.png` `sigrun_guard.png` `sigrun_hurt.png` `sigrun_down.png` `sigrun_win.png` | 1536×1024 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
+
+## `pose-zeno` — ★★★★ 제노 전투 스프라이트 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `zeno_battle` | `assets/sheets/zeno_battle.png` → `zeno_idle.png` `zeno_idle2.png` `zeno_attack.png` `zeno_skill.png` `zeno_guard.png` `zeno_hurt.png` `zeno_down.png` `zeno_win.png` | 1536×1024 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
+
+## `pose-bertha` — ★★★★ 베르타 전투 스프라이트 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `bertha_battle` | `assets/sheets/bertha_battle.png` → `bertha_idle.png` `bertha_idle2.png` `bertha_attack.png` `bertha_skill.png` `bertha_guard.png` `bertha_hurt.png` `bertha_down.png` `bertha_win.png` | 1536×1024 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
+
+## `pose-brick` — ★★★ 브릭 전투 스프라이트 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `brick_battle` | `assets/sheets/brick_battle.png` → `brick_idle.png` `brick_idle2.png` `brick_attack.png` `brick_skill.png` `brick_guard.png` `brick_hurt.png` `brick_down.png` `brick_win.png` | 1536×1024 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
+
+## `pose-marta` — ★★★ 마르타 전투 스프라이트 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `marta_battle` | `assets/sheets/marta_battle.png` → `marta_idle.png` `marta_idle2.png` `marta_attack.png` `marta_skill.png` `marta_guard.png` `marta_hurt.png` `marta_down.png` `marta_win.png` | 1536×1024 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
+
+## `pose-finn` — ★★★ 핀 전투 스프라이트 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `finn_battle` | `assets/sheets/finn_battle.png` → `finn_idle.png` `finn_idle2.png` `finn_attack.png` `finn_skill.png` `finn_guard.png` `finn_hurt.png` `finn_down.png` `finn_win.png` | 1536×1024 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
+
+## `pose-laila` — ★★★ 라일라 전투 스프라이트 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `laila_battle` | `assets/sheets/laila_battle.png` → `laila_idle.png` `laila_idle2.png` `laila_attack.png` `laila_skill.png` `laila_guard.png` `laila_hurt.png` `laila_down.png` `laila_win.png` | 1536×1024 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
+
+## `pose-dora` — ★★★ 도라 전투 스프라이트 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `dora_battle` | `assets/sheets/dora_battle.png` → `dora_idle.png` `dora_idle2.png` `dora_attack.png` `dora_skill.png` `dora_guard.png` `dora_hurt.png` `dora_down.png` `dora_win.png` | 1536×1024 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
+
+## `pose-gordon` — ★★★ 고든 전투 스프라이트 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `gordon_battle` | `assets/sheets/gordon_battle.png` → `gordon_idle.png` `gordon_idle2.png` `gordon_attack.png` `gordon_skill.png` `gordon_guard.png` `gordon_hurt.png` `gordon_down.png` `gordon_win.png` | 1536×1024 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
+
+## `pose-fukuro` — ★★★ 후쿠로 전투 스프라이트 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fukuro_battle` | `assets/sheets/fukuro_battle.png` → `fukuro_idle.png` `fukuro_idle2.png` `fukuro_attack.png` `fukuro_skill.png` `fukuro_guard.png` `fukuro_hurt.png` `fukuro_down.png` `fukuro_win.png` | 1536×1024 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트 |
 
 ## `cards-sion` — ★★★★★ 시온 카드 그림 (시트 1장 → 4장)
 

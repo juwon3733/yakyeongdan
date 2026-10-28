@@ -10,7 +10,7 @@ import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
 import { moonImg, sprite } from './sprites.js';
 import { kwTip } from '../data/keywords.js';
 import { wearing } from '../meta.js';
-import { charArt } from '../art.js';
+import { charArt, battleArt } from '../art.js';
 import { cardArtSrc } from './cardart.js';
 import { endlessChip } from './endless.js';
 
@@ -109,6 +109,11 @@ export function charSrc(id, kind = 'stand', alt) {
   const r = ROSTER[id] || CHARACTERS[id];
   const outfit = alt ?? wearing(id);
   return charArt(id, kind, outfit) || (kind !== 'stand' && charArt(id, 'stand', outfit)) || sprite(palOf(id, alt), r?.long);
+}
+// 전투 화면의 동료: 전투 스프라이트(저해상도 도트). 없으면 임시 도트 — 일러스트는 전투에 쓰지 않는다.
+export function battleSrc(id, frame = 'idle') {
+  const r = ROSTER[id] || CHARACTERS[id];
+  return battleArt(id, frame) || battleArt(id, 'idle') || sprite(palOf(id), r?.long);
 }
 const pals = new Proxy({}, { get: (_, id) => palOf(id) });
 const longs = new Proxy({}, { get: (_, id) => (ROSTER[id] || CHARACTERS[id])?.long });

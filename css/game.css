@@ -773,8 +773,12 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s steps
 :where(.pm:not(.down), .foe:not(.gone)) > img{animation:jidle 2.8s ease-in-out infinite;transform-origin:50% 100%}
 :where(.pm:nth-of-type(2n)) > img{animation-delay:-.9s;animation-duration:3.1s}
 :where(.foe:nth-child(2n)) > img{animation-delay:-1.4s;animation-duration:2.5s}
+/* 적은 숨쉬기에 좌우로 살짝 흔들림을 더한다 */
+:where(.foe:not(.gone)) > img{animation:jidleF 2.2s ease-in-out infinite;transform-origin:50% 100%}
+@keyframes jidleF{0%,100%{transform:none}30%{transform:translateY(-2px) scaleY(1.03) rotate(-1deg)}70%{transform:translateY(-1px) scaleY(1.015) rotate(1deg)}}
+:where(.foe:nth-child(2n)) > img{animation-delay:-1.1s;animation-duration:2.6s}
 @media (prefers-reduced-motion:reduce){:where(.pm, .foe) > img{animation:none}}
-@keyframes jidle{0%,100%{transform:none}50%{transform:translateY(-1.5px) scaleY(1.015)}}
+@keyframes jidle{0%,100%{transform:none}50%{transform:translateY(-2px) scaleY(1.035) scaleX(.99)}}
 /* 맞음: 번쩍임 + 뒤로 밀렸다 돌아옴 (흔들림 끔이면 번쩍임만) */
 .jhitF{animation:jhitF .36s cubic-bezier(.2,.7,.3,1);transform-origin:50% 100%}
 @keyframes jhitF{0%{filter:brightness(3.2);transform:none}18%{filter:brightness(2);transform:translateX(16px) rotate(4deg)}55%{filter:none;transform:translateX(-3px) rotate(-1deg)}100%{transform:none}}
@@ -1103,3 +1107,37 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 #stage.bigtext .pm img[src^="data:"]{width:68px;height:90px;margin:54px 12px 0}
 #stage.bigtext .foe img[src^="data:"]{width:74px;height:98px;margin-top:34px}
 #stage.bigtext .foe.sm img[src^="data:"]{width:62px;height:82px;margin-top:26px}
+
+/* ---- 슬레이 더 스파이어처럼 (docs/06): 무대가 넓게 보이고 캐릭터·카드는 작게, 카드는 겹친 부채꼴 — 커서를 대거나 고르면 크게 ---- */
+/* 전투 캐릭터는 일러스트가 아니라 전투 스프라이트(원본 96×128 = 판 1:1, 적 128×128) */
+.field{padding:0 28px 6px;justify-content:space-between;align-items:flex-end}
+.party{gap:2px}
+.pm{width:96px}
+.pm img,#stage.bigtext .pm img,#app.tut[data-screen="combat"] .pm img,#stage #app.tut[data-screen="combat"] .pm img{width:96px;height:128px;margin:0;image-rendering:pixelated}
+.pm .lab{margin-top:-6px}
+.pm .lab .hpbar{flex-basis:60px;width:60px}
+.pm .lab .s{max-width:96px}
+.pm img[src^="data:"],#stage.bigtext .pm img[src^="data:"]{width:60px;height:80px;margin:48px 18px 0}
+.swap{margin:0 -8px 28px}
+.foes{gap:6px}
+.foe{min-width:96px}
+.foe img,#stage.bigtext .foe img,#app.tut[data-screen="combat"] .foe img,#stage #app.tut[data-screen="combat"] .foe img{width:128px;height:128px;image-rendering:pixelated}
+.foe.sm{min-width:80px}
+.foe.sm img,#stage.bigtext .foe.sm img{width:96px;height:96px}
+.foe img[src^="data:"],#stage.bigtext .foe img[src^="data:"]{width:60px;height:80px;margin-top:48px}
+.foe.sm img[src^="data:"],#stage.bigtext .foe.sm img[src^="data:"]{width:48px;height:64px;margin-top:32px}
+.foe .lab .foehp{flex-basis:64px;width:64px}
+/* 손패: 작은 카드가 겹쳐 놓이고, 커서를 대거나 고른 카드만 위로 올라오며 크게 */
+.bottom{height:84px}
+.bottom .hand{gap:0;padding:0 8px}
+.bottom .hand .card,#stage.bigtext .bottom .hand .card{flex:none;width:68px;height:92px;--ah:32px;margin:0 -5px 0;transform-origin:50% 100%;
+  transition:transform .14s cubic-bezier(.2,.8,.3,1)}
+.bottom .hand .card .hd{font-size:8px}
+.bottom .hand .card .bd{font-size:7px;line-height:1.25}
+.bottom .hand .card .who{font-size:6.5px}
+.bottom .hand .card:not(.no):hover,.bottom .hand .card.sel{transform:translateY(-4px) rotate(0deg) scale(1.6);z-index:6}
+.bottom .hand .card.sel{box-shadow:2px 2px 0 var(--shadow),0 0 0 1px var(--gold)}
+.energy b{font-size:12px}
+.endcol button{font-size:11px;padding:6px 8px}
+.topbar button{font-size:11px;padding:3px 7px}
+.topbar .clock{font-size:14px}

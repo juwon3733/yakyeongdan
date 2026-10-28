@@ -87,9 +87,20 @@ function showTip(el) {
   tipFor = el; tipEl.textContent = t; tipEl.hidden = false;
   const s = parseFloat(getComputedStyle(stage).getPropertyValue('--s')) || 1;
   tipEl.style.setProperty('--ts', Math.max(1, s));
+  placeTip(el);
+  // 손패 카드는 커지며 올라오므로(슬레이 더 스파이어식) 다 커진 뒤 카드 옆에 다시 놓는다
+  if (el.closest('.bottom .hand')) setTimeout(() => { if (tipFor === el) placeTip(el); }, 170);
+}
+function placeTip(el) {
   const r = el.getBoundingClientRect(), w = tipEl.offsetWidth, h = tipEl.offsetHeight;
-  let x = Math.min(Math.max(4, r.left + r.width / 2 - w / 2), innerWidth - w - 4);
-  let y = r.top - h - 6; if (y < 4) y = Math.min(innerHeight - h - 4, r.bottom + 6);
+  let x, y;
+  if (el.closest('.bottom .hand')) {
+    x = r.right + 6 + w <= innerWidth - 4 ? r.right + 6 : Math.max(4, r.left - w - 6);
+    y = Math.min(Math.max(4, r.top), innerHeight - h - 4);
+  } else {
+    x = Math.min(Math.max(4, r.left + r.width / 2 - w / 2), innerWidth - w - 4);
+    y = r.top - h - 6; if (y < 4) y = Math.min(innerHeight - h - 4, r.bottom + 6);
+  }
   tipEl.style.left = `${x}px`; tipEl.style.top = `${y}px`;
 }
 function hideTip() { tipFor = null; tipEl.hidden = true; }
