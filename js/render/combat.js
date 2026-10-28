@@ -95,7 +95,7 @@ export function combatView() {
     // 「숨은」 속성: 첫 턴에는 고를 수 없다(다른 적이 있을 때). 속성 붙은 적은 색 오라
     const hid = f.hidden && C.all.some(g => !g.dead && !g.hidden);
     const ax = f.affixes?.length ? ` affixed" style="--ax:${AFFIX[f.affixes[0]].col}` : '';
-    return `<button type="button" class="foe ${many ? 'sm' : ''} ${wantFoe && !hid ? 'tg' : ''} ${hid ? 'hidden' : ''}${ax}" ${hid ? 'aria-disabled="true" title="숨어 있어 이번 턴에는 고를 수 없다"' : `data-foe="${f.i}"`} data-fi="${f.i}">
+    return `<button type="button" class="foe ${many ? 'sm' : ''} ${C.kind === 'boss' && f.i === 0 ? 'boss' : ''} ${wantFoe && !hid ? 'tg' : ''} ${hid ? 'hidden' : ''}${ax}" ${hid ? 'aria-disabled="true" title="숨어 있어 이번 턴에는 고를 수 없다"' : `data-foe="${f.i}"`} data-fi="${f.i}">
         <span class="intent ${ic}" data-tip="${esc(`다음 행동. ${aim ? `노림: ${AIM_NAME[aimKey(f)]} (얼굴이 맞을 동료).` : ''}`)}">${it}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[aimKey(f)]}</span>`}` : ''}</span>
         <img class="px" src="${foeArt(f) || sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="lab"><span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>

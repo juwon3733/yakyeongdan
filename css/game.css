@@ -1141,3 +1141,4 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 .endcol button{font-size:11px;padding:6px 8px}
 .topbar button{font-size:11px;padding:3px 7px}
 .topbar .clock{font-size:14px}
+.foe.boss img,#stage.bigtext .foe.boss img{width:128px;height:192px}

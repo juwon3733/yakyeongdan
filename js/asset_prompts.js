@@ -31,7 +31,7 @@ export const SPEC = {
   cg:       { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'cg', note: '★5 전신 CG · 16:9 · 화질 우선, 색 제한 없음' },
   enemy:    { w: 512,  h: 512,  native: '128×128', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
   elite:    { w: 512,  h: 512,  native: '128×128', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
-  boss:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '보스 · 투명 배경' },
+  boss:     { w: 1024, h: 1536, native: '128×192', scale: 8, transparent: true,  colors: 256, folder: 'enemies', note: '보스 전투 스프라이트(저해상도 도트) · 투명 배경' },
   bg:       { w: 1280, h: 720,  native: '640×360', scale: 2, transparent: false, colors: 256, folder: 'bg', note: '배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)' },
   title:    { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'title', note: '타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지' },
   summon:   { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'summon', note: '소환 화면 밤하늘 16:9' },
@@ -498,11 +498,11 @@ ${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transpare
   for (const [id, b] of Object.entries(BOSSES)) {
     const batch = `boss-${id}`;
     batches.push({ id: batch, title: `보스 ${b.name}` });
-    const human = join(STYLE.pixel, b.beast ? '' : STYLE.character);
-    out.push(item('boss', `boss_${id}_1`, batch, `boss_${id}_1.png`, join(human, `Boss sprite, ${b.name}: ${b.p1}. Facing LEFT, imposing. Fully transparent background. Native resolution 256x384 pixels, upscaled exactly 4x to 1024x1536.`)));
-    out.push(item('boss', `boss_${id}_2`, batch, `boss_${id}_2.png`, join(human, STYLE.onModel, `Boss sprite, ${b.name}, ${b.p2}. Same person as the attached first-phase sprite. Facing LEFT. Fully transparent background. 1024x1536.`), { reference_images: [`enemies/boss_${id}_1.png`] }));
-    if (b.p3) out.push(item('boss', `boss_${id}_3`, batch, `boss_${id}_3.png`, join(human, STYLE.onModel, `Boss sprite, ${b.name}, ${b.p3}. Same person as the attached first-phase sprite. Facing LEFT. Fully transparent background. 1024x1536.`), { reference_images: [`enemies/boss_${id}_1.png`] }));
-    out.push(item('cutin', `boss_${id}_cutin`, batch, `boss_${id}_cutin.png`, join(human, STYLE.onModel, `Boss cut-in: ${b.cutin}. Wide horizontal composition, face in the middle band (cropped to 1536x576).`), { reference_images: [`enemies/boss_${id}_1.png`] }));
+    const human = join(STYLE.sprite, b.beast ? '' : STYLE.character);
+    out.push(item('boss', `boss_${id}_1`, batch, `boss_${id}_1.png`, join(human, `Boss sprite, ${b.name}: ${b.p1}. Facing LEFT, imposing, a big low-resolution battle sprite. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.`)));
+    out.push(item('boss', `boss_${id}_2`, batch, `boss_${id}_2.png`, join(human, STYLE.onModel, `Boss sprite, ${b.name}, ${b.p2}. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.`), { reference_images: [`enemies/boss_${id}_1.png`] }));
+    if (b.p3) out.push(item('boss', `boss_${id}_3`, batch, `boss_${id}_3.png`, join(human, STYLE.onModel, `Boss sprite, ${b.name}, ${b.p3}. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.`), { reference_images: [`enemies/boss_${id}_1.png`] }));
+    out.push(item('cutin', `boss_${id}_cutin`, batch, `boss_${id}_cutin.png`, join(STYLE.pixel, b.beast ? '' : STYLE.character, STYLE.onModel, `Boss cut-in: ${b.cutin}. Wide horizontal composition, face in the middle band (cropped to 1536x576).`), { reference_images: [`enemies/boss_${id}_1.png`] }));
   }
 
   // 배경·타이틀·소환·아이콘
