@@ -7,12 +7,13 @@ import { ROSTER } from '../data/roster.js';
 import { CHARACTERS } from '../data/characters.js';
 import { FOE } from '../data/enemies.js';
 import { sprite } from './sprites.js';
-import { esc, palOf } from './common.js';
+import { esc, palOf, charSrc } from './common.js';
 
 // 말하는 사람 (명단 → 조연 → 이름만)
 export function who(id) {
   const r = ROSTER[id] || CAST[id];
   if (!r) return { name: id, col: '#9a97bb', img: '' };
+  if (ROSTER[id]) return { name: r.name, col: r.col, img: charSrc(id, 'normal') };
   const pal = r.pal || palOf(id), long = r.long ?? CHARACTERS[id]?.long;
   return { name: r.name, col: r.col, img: pal ? sprite(pal, long) : '' };
 }

@@ -5,12 +5,11 @@ import { DUOS, duoKey } from '../data/cards.js';
 import { P, owns, duoSpecial, depthOpen, depthMax, startPickOpen, startRelicChoices } from '../meta.js';
 import { RELICS } from '../data/relics.js';
 import { DEPTH } from '../data/depth.js';
-import { sprite } from './sprites.js';
-import { stars, palOf, esc } from './common.js';
+import { stars, palOf, esc, charSrc } from './common.js';
 
 // 타이틀: 키아트 자리(그림 없으면 밤하늘·탑) + 왼쪽 아래 메뉴
 export function titleView() {
-  const three = ['iris', 'brick', 'marta'].map(k => `<img class="px" src="${sprite(palOf(k), ROSTER[k].long)}" alt="">`).join('');
+  const three = ['iris', 'brick', 'marta'].map(k => `<img class="px" src="${charSrc(k)}" alt="">`).join('');
   return `<div class="titlescr">
     <div class="sky" aria-hidden="true"><span class="tower"></span><span class="moonbig"></span></div>
     <div class="trio" aria-hidden="true">${three}</div>
@@ -59,13 +58,13 @@ export function partyView() {
   const mates = ROSTER_IDS.filter(k => owns(k) || (S.dev && CHARACTERS[k])).map(k => {
     const r = ROSTER[k], c = CHARACTERS[k], on = S.picked.includes(k), ok = can(k);
     return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'} title="${c ? esc(`${c.passive.name}: ${c.passive.text}`) : ''}">
-      <img class="px" src="${sprite(palOf(k), r.long)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
+      <img class="px" src="${charSrc(k)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
       <span class="rl">${r.role}${c ? ` · 체력 ${c.maxHp}` : ''}</span>
       <span class="ps">${c ? `<b>${c.passive.name}</b> ${c.passive.text}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
   }).join('');
   const chosen = [0, 1, 2].map(i => {
     const k = S.picked[i], r = k && ROSTER[k];
-    return r ? `<span class="chosen" style="--c:${r.col}"><img class="px" src="${sprite(palOf(k), r.long)}" alt=""><span>${r.name}</span></span>` : '<span class="chosen empty">?</span>';
+    return r ? `<span class="chosen" style="--c:${r.col}"><img class="px" src="${charSrc(k)}" alt=""><span>${r.name}</span></span>` : '<span class="chosen empty">?</span>';
   }).join('');
   return `<div class="title">
     <div class="tleft">

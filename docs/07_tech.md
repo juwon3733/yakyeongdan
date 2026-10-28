@@ -75,9 +75,17 @@ prototype/index.html  처음 프로토타입 (참고용, 손대지 않음)
 - `prefers-reduced-motion`이면 흔들림·컷인 짧게.
 - 키보드: 1~5 카드, E 턴 끝, Esc 메뉴.
 
-## 그림 로더 (아직 안 넣음, M1 뒤에)
-- `js/assets.js`: `assetList()`(js/asset_prompts.js)로 파일 목록을 알고, 화면이 그림을 요청하면 `assets/<file>`을 `Image`로 불러 본다. 있으면 그 그림, 없거나 실패하면 지금의 임시 도트(`js/render/sprites.js`)를 그대로 쓴다. 한 번 실패한 파일은 다시 요청하지 않는다(404 반복 방지).
-- 동료: `chars/<id>_stand.png`(전투·대열), `_normal/_smile/_serious`(휴식 대화·도감·대사 얼굴), `cutins/<id>_cutin.png`(듀오 컷인 대체), `cutins/duo_<a>_<b>.png`(인연 듀오, 없으면 두 컷인을 반씩 붙임).
-- 적: `enemies/<id>.png`, 보스 `boss_<id>_1/2`(체력 절반에서 바꿈). 데이터 적에 `art: 'sea_ghost'` 같은 키를 붙여 연결한다.
-- 그리기는 원본 도트 크기로 줄여 `image-rendering: pixelated`로 키운다. 배경은 320×180 원본을 640×360 판에 정확히 2배.
+## 그림 로더 (`js/art.js`)
+- `assets/art.json` = 실제로 있는 그림 목록. `node tools/art-index.mjs`(= `npm run art`)가 assets/ 폴더를 훑어 만든다. **그림을 넣거나 빼면 다시 돌릴 것** — CI(`npm run check`)가 `--check`로 맞는지 본다. 게임은 이 목록에 있는 파일만 부르므로 없는 그림을 요청해 404가 쌓이지 않는다.
+- 목록이 오면(그림이 하나라도 있으면) 한 번 다시 그린다. 목록에 없으면 임시 도트(`js/render/sprites.js`)·임시 카드 일러스트(`js/render/cardart.js`) 그대로.
+- 동료 `charSrc(id, kind)`(`js/render/common.js`): `chars/<id>_stand.png`(전투·파티·본부·타이틀, 두 번째 의상이면 `_outfit2` 먼저), `_normal/_smile/_serious`(얼굴·에피소드). 전투·파티·본부·에피소드·듀오 컷인·카드 얼굴이 다 이걸 쓴다.
+- 적 `foeArt(f)`: 전투 데이터 적 키 → `enemies/<파일>.png`(이름 표는 `js/art.js`의 FOE_FILE), 보스 `boss_<id>_1/2`(2단계면 _2).
+- 카드 `cardArtFile(d)`: `cards/card_<카드id의 점을 _로>.png`, 인연 듀오 `cards/duocard_<a>_<b>.png`. 강화판(+)은 원래 카드 그림. 저주·인연의 실 합동 카드는 임시 일러스트만.
+- 그림 파일(assets/chars, assets/enemies)은 `object-fit: contain`으로 비율을 지키고, 카드 일러스트는 칸을 채운다(손패는 가운데 띠, 큰 카드·확대 보기는 4:3 전부).
 - `tools/smoke.mjs`는 그림이 없어도 통과해야 한다(임시 도트).
+
+## 카드 컴포넌트 (`cardHTML`, `js/render/common.js`)
+- 위 4:3 일러스트 · 왼쪽 위 비용 보석(시간 카드는 시계 모양) · 이름 띠(동료 색, 듀오는 반반) · 효과 글 · 아래 동료 얼굴·이름·희귀도.
+- 테두리 = 희귀도(흔함 은 / 보통 보라 / 희귀 금 + 깜빡이는 안쪽 빛), 듀오 금, 저주 검붉은 깨진 틀. 크기는 CSS 변수 `--ah`(일러스트 높이)와 자리별 너비로만 바꾼다(손패·큰 카드·야시장·덱·동료 화면·확대).
+- 임시 일러스트(`js/render/cardart.js`): 원본 96×72에 밤하늘 디더 배경 + 그 동료 임시 도트 + 카드 글에서 고른 이펙트(베기 궤적, 포격, 방패, 독 안개, 화상, 정령, 잠, 회복, 별빛, 카드 뽑기, 공중, 달, 시간 카드 시계 바늘, 공격 대상 실루엣). 카드 id·의상 색마다 한 번만 그려 캐시.
+- 확대 보기(`js/cardzoom.js`): 카드를 0.45초 길게 누르거나 오른쪽 클릭 → 크게 + 소멸·시간 카드 설명. 길게 누른 뒤의 클릭은 삼켜서 카드가 쓰이지 않는다.

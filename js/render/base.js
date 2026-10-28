@@ -11,18 +11,17 @@ import { TALKS } from '../data/talks.js';
 import { DEPTH, DEPTH_MAX } from '../data/depth.js';
 import { P, nextRate5, epNewCount, pickupNow, starsOf, costumeOpen, wearing, packCards, packsOpen, startUp, sigOpen, sigOf, duoSpecial,
   canExchange, exchangePrice, depthOpen, startPickOpen } from '../meta.js';
-import { sprite } from './sprites.js';
-import { stars, palOf, fmt, esc, cardHTML } from './common.js';
+import { stars, palOf, fmt, esc, cardHTML, charSrc } from './common.js';
 
 const pct = x => `${Math.round(x * 1000) / 10}%`;
 const wallet = () => `<span class="wallet"><b>별 조각 ${P.shards}</b> · 별가루 ${P.dust}</span>`;
 const head = (back = 'base', label = '본부') => `<div class="bhead"><button type="button" class="mini" data-view="${back}">‹ ${label}</button>${wallet()}</div>`;
-const img = (id, alt) => `<img class="px" src="${sprite(palOf(id, alt), ROSTER[id].long)}" alt="">`;
+const img = (id, alt) => `<img class="px" src="${charSrc(id, 'stand', alt)}" alt="">`;
 const starRing = id => duoSpecial(id) ? 'star5' : '';
 
 export function baseView() {
   const own = ROSTER_IDS.filter(k => P.owned[k]);
-  const rest3 = own.slice(-3).map((k, i) => `<img class="px rest${i}" src="${sprite(palOf(k), ROSTER[k].long)}" alt="${ROSTER[k].name}">`).join('');
+  const rest3 = own.slice(-3).map((k, i) => `<img class="px rest${i}" src="${charSrc(k)}" alt="${ROSTER[k].name}">`).join('');
   const titles = P.titles.length ? `<p class="note small">칭호 ${P.titles.map(c => `「${esc(ROSTER[c]?.name || c)}의 새벽」`).join(' ')}</p>` : '';
   return `<div class="basescr">
     <div class="hall"><span class="hallwin" aria-hidden="true"></span><div class="resting">${rest3}</div>

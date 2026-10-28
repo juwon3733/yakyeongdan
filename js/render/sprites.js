@@ -7,6 +7,14 @@ const TPL = [
   'ksOooooooOsk', '.kOOOaaOOOk.', '..kok..kok..', '..kkk..kkk..',
 ];
 const cache = new Map();
+// 임시 도트를 캔버스에 바로 그린다(카드 임시 일러스트용). (x, y)는 왼쪽 위, Z는 한 칸 크기.
+export function drawSprite(g, pal, long, x, y, Z = 3) {
+  const rows = TPL.map(r => r.split(''));
+  rows[8][11] = '.';
+  if (long) for (let yy = 7; yy <= 12; yy++) { rows[yy][0] = 'H'; rows[yy][11] = 'H'; }
+  const P = Object.assign({ k: K, s: pal.skin || '#f6d5c0', w: '#ffffff' }, pal);
+  rows.forEach((r, yy) => r.forEach((ch, xx) => { if (ch !== '.') { g.fillStyle = P[ch]; g.fillRect(x + xx * Z, y + yy * Z, Z, Z); } }));
+}
 export function sprite(pal, long, crown) {
   const key = JSON.stringify([pal, long, crown]);
   if (cache.has(key)) return cache.get(key);

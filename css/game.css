@@ -15,6 +15,8 @@ body{margin:0;overflow:hidden;font-size:10px;color:var(--ink);font-family:var(--
 img{max-width:100%}
 [hidden]{display:none!important}
 img.px{image-rendering:pixelated}
+/* 그림 파일(assets/…, js/art.js)은 큰 원본을 줄여 보여 주므로 비율을 지킨다 (카드 일러스트는 칸을 채움) */
+img.px[src^="assets/chars"],img.px[src^="assets/enemies"]{object-fit:contain;object-position:50% 100%}
 h1,h2,h3{font-family:var(--f-disp);font-weight:400;margin:0;text-wrap:balance}
 h1{font-size:22px;letter-spacing:.04em}
 h2{font-size:14px;color:var(--gold)}
@@ -163,21 +165,62 @@ img.moon{width:15px;height:15px}
 .hand{flex:1;min-width:0;display:flex;gap:4px;justify-content:center;align-items:flex-end}
 .hand.big{flex-wrap:wrap;flex:none}
 .hand.scroll{max-height:250px;overflow-y:auto}
-.card{background:var(--paper);color:var(--paper-ink);border:2px solid var(--shadow);box-shadow:2px 2px 0 var(--shadow);padding:0;text-align:left;display:flex;flex-direction:column;width:80px;min-width:48px;flex:0 1 80px;height:104px}
-.hand.big .card{flex:none;width:96px;height:118px}
-.card .hd{background:var(--c);color:#111;display:flex;align-items:center;gap:3px;padding:2px 3px;font-family:var(--f-disp);font-size:10px}
-.card .cost{background:#111;color:var(--gold);min-width:12px;text-align:center;font-size:10px;padding:0 1px}
+/* 카드: 위 4:3 일러스트(그림 파일 또는 임시 일러스트, js/render/cardart.js) · 왼쪽 위 비용 보석(시간 카드는 시계) ·
+   이름 띠(동료 색) · 효과 글 · 아래 동료 얼굴·이름·희귀도. 테두리 = 희귀도(흔함 은 / 보통 보라 / 희귀 금, 희귀는 깜빡이는 안쪽 빛).
+   --ah = 일러스트 높이. 손패는 가운데 띠만, 보상·덱·확대는 4:3 전부. */
+.card{--rim:#b8bcc8;--ah:38px;position:relative;background:var(--paper);color:var(--paper-ink);border:2px solid var(--rim);outline:1px solid var(--shadow);box-shadow:2px 2px 0 var(--shadow);padding:0;text-align:left;display:flex;flex-direction:column;width:84px;min-width:48px;flex:0 1 84px;height:108px;overflow:hidden;-webkit-touch-callout:none;-webkit-user-select:none;user-select:none}
+.card.r-u{--rim:#9a6ae0}
+.card.r-r{--rim:#e0b84a}
+.card.r-r::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 0 1px #fff2b0;animation:rimglow 1.6s steps(2) infinite}
+@keyframes rimglow{50%{box-shadow:inset 0 0 0 1px #a07a1a}}
+.card .art{flex:none;display:block;position:relative;height:var(--ah);background:#0b0b20;border-bottom:2px solid var(--shadow);overflow:hidden}
+.card .art img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 38%;image-rendering:pixelated;pointer-events:none}
+.card.time .art{border-bottom-color:var(--moon)}
+.card .cost{position:absolute;z-index:1;left:2px;top:2px;width:16px;height:16px;display:flex;align-items:center;justify-content:center;font-family:var(--f-disp);font-size:10px;color:#141018;
+  filter:drop-shadow(1px 0 0 #000) drop-shadow(-1px 0 0 #000) drop-shadow(0 1px 0 #000) drop-shadow(0 -1px 0 #000) drop-shadow(1px 1px 0 #000)}
+.card .cost::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--gold);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}
+.card .cost.clock::before{background:var(--moon);clip-path:polygon(30% 0,70% 0,100% 30%,100% 70%,70% 100%,30% 100%,0 70%,0 30%)}
+.card .cost.clock::after{content:"";position:absolute;left:50%;top:2px;width:1px;height:5px;background:#24284e;opacity:.55}
+.card .hd{flex:none;display:flex;align-items:center;gap:3px;background:var(--c);color:#111;padding:1px 3px 1px 4px;font-family:var(--f-disp);font-size:9.5px;border-bottom:1px solid var(--shadow)}
 .card .nm{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.card .bd{padding:3px 4px;font-size:8.5px;line-height:1.35;flex:1;overflow:hidden}
-.card .who{font-size:8px;color:#6a6478;padding:0 4px 3px}
-.card .tm,.card .tg{display:inline-block;font-family:var(--f-disp);font-size:8px;padding:0 3px;margin-right:3px}
+.card .bd{padding:2px 3px;font-size:8px;line-height:1.3;flex:1;min-height:0;overflow:hidden}
+.card .who{flex:none;display:flex;align-items:center;gap:2px;font-size:7.5px;color:#6a6478;padding:1px 3px 2px;border-top:1px solid #d4ccb8;white-space:nowrap}
+.card .who .fc{display:flex;flex:none}
+.card .who .fc img{width:10px;height:10px;object-fit:cover;object-position:50% 0;background:#0b0b18;border:1px solid var(--c);image-rendering:pixelated}
+.card .who .fc img+img{border-color:var(--c2);margin-left:-2px}
+.card .who .wn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.card .tm,.card .tg{display:inline-block;font-family:var(--f-disp);font-size:7.5px;padding:0 2px;margin-right:2px}
 .card .tm{background:#24284e;color:var(--moon)}
 .card .tg{background:#1e4a3a;color:#bff0d8}
-.card.duo{background:#fff4d8;border-color:var(--gold)}
-.card.duo .hd{background:linear-gradient(90deg,var(--c),var(--c2))}
+.card.duo{--rim:var(--gold);background:#fff4d8}
+.card.duo .hd{background:linear-gradient(90deg,var(--c) 0 50%,var(--c2) 50% 100%)}
+.card.duo .art{border-bottom-color:var(--gold)}
 .card.no{opacity:.45}
 .card.down{filter:grayscale(1)}
 .card.sel{transform:translateY(-10px);box-shadow:2px 2px 0 var(--shadow),0 0 0 2px var(--gold)}
+/* 큰 카드: 보상·덱 보기·강화·지우기 (일러스트 4:3 전부) */
+.hand.big .card{flex:none;width:112px;height:162px;--ah:81px}
+.hand.big .card .hd{font-size:10.5px}
+.hand.big .card .bd{font-size:8.5px;line-height:1.35}
+.hand.big .card .cost{width:18px;height:18px;font-size:11px}
+/* 확대 보기 (길게 누르기·오른쪽 클릭, js/cardzoom.js) */
+#cardzoom{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;gap:14px;background:rgba(4,4,14,.82)}
+#stage #cardzoom .card.zoom{flex:none;width:200px;height:296px;--ah:148px;border-width:3px;box-shadow:4px 4px 0 var(--shadow);cursor:default}
+#stage #cardzoom .card.zoom .cost{width:28px;height:28px;font-size:16px;left:4px;top:4px}
+#stage #cardzoom .card.zoom .hd{font-size:15px;padding:3px 6px}
+#stage #cardzoom .card.zoom .bd{font-size:12px;line-height:1.45;padding:5px 7px}
+#stage #cardzoom .card.zoom .tm,#stage #cardzoom .card.zoom .tg{font-size:10px;padding:1px 4px}
+#stage #cardzoom .card.zoom .who{font-size:10px;padding:3px 6px 4px;gap:4px}
+#stage #cardzoom .card.zoom .who .fc img{width:18px;height:18px}
+.zinfo{max-width:180px;display:flex;flex-direction:column;gap:6px;background:var(--panel);border:2px solid var(--line);box-shadow:3px 3px 0 var(--shadow);padding:8px 10px;font-size:10.5px}
+.zinfo b{font-family:var(--f-disp);font-weight:400;font-size:13px;color:var(--gold)}
+.zinfo ul{margin:0;padding-left:14px;line-height:1.5}
+/* 저주: 검붉은 깨진 틀 */
+.card.curse{--rim:#7a1a2a;background:#241018;color:#e8c8d0}
+.card.curse .hd{background:#4a0e1c;color:#f0d0d8}
+.card.curse .who{color:#b07080;border-top-color:#4a1a26}
+.card.curse::before{content:"";position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(115deg,transparent 47%,#9a2a3a 47% 48.5%,transparent 48.5%),linear-gradient(62deg,transparent 72%,#7a1a2a 72% 73.5%,transparent 73.5%)}
 
 /* 적 여럿 */
 .foes{display:flex;gap:4px;align-items:flex-end}
@@ -190,18 +233,15 @@ img.moon{width:15px;height:15px}
 .pm.lit{background:#2a2614;outline:2px solid #ffe060;outline-offset:-4px}
 .pm .litnm{color:#ffe060;font-weight:400}
 /* 카드 수 표시: 원래보다 오르면 초록, 내리면 빨강 */
-.card .bd b.up,.card .cost.up{color:#13803a;font-weight:700}
+.card .bd b.up{color:#13803a;font-weight:700}
 .card .bd b.dn{color:#b02a2a;font-weight:700}
-.card .cost.up{color:#7dff9a}.card .cost.dn{color:#ff7a7a}
-.card .rar{float:right;font-size:7.5px;color:#8a8496}
-.card.r-u .rar{color:#4a7ac0}.card.r-r .rar{color:#b8860b}
-.card.r-r{border-color:#8a6a1a}
-.card.upg .nm{color:#0a5a2a}
+.card .cost.up{color:#0a6a22}.card .cost.dn{color:#a01414}
+.card .cost.up::before{background:#7dff9a}.card .cost.dn::before{background:#ffb0a8}
+.card .rar{flex:none;font-size:7px;color:#8a8496}
+.card.r-u .rar{color:#7a4ac0}.card.r-r .rar{color:#a8780b}.card.duo .rar{color:#a8780b}
+.card.upg .nm::after{content:"";display:inline-block;width:4px;height:4px;margin-left:2px;vertical-align:middle;background:#fff2b0;box-shadow:1px 1px 0 #000}
 .card .tg.all{background:#4a1e2a;color:#ffd0d8}
-.card.curse{background:#d8d4dc}
-.card.curse .hd{background:#4a4458;color:#ece8f6}
 .pair{display:inline-flex;flex-direction:column;gap:3px}
-.pair .card{height:100px}
 
 /* 보상·휴식·사건·결과 */
 .center{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
@@ -322,7 +362,7 @@ button.relic.spent{opacity:.35}
 .shophead .grow{flex:1}
 .wares{display:flex;gap:6px;justify-content:center}
 .ware{display:flex;flex-direction:column;align-items:center;gap:2px}
-.ware .card{width:92px;height:112px;flex:none}
+.ware .card{width:104px;height:150px;flex:none;--ah:74px}
 .ware.sold{opacity:.35}
 .price{font-family:var(--f-disp);font-size:9.5px;color:var(--gold)}
 .price.short{color:var(--dim)}
@@ -472,7 +512,7 @@ button.mini.on{border-color:var(--gold);color:var(--gold)}
 .steps small{font-size:8px;color:var(--dim)}.steps small.dim{opacity:.6}
 h3.sub{font-family:var(--f-disp);font-weight:400;font-size:11px;color:var(--gold);margin:2px 0 0}
 .hand.mini{flex:none;flex-wrap:wrap;justify-content:flex-start;align-items:flex-start}
-.hand.mini .card{width:70px;flex:none;height:92px;font-size:8px}
+.hand.mini .card{width:76px;flex:none;height:104px;--ah:36px}
 .hand.mini.scroll{max-height:none}
 .lockcard{width:70px;height:92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:2px dashed var(--line);color:var(--dim);font-size:9px;text-align:center;padding:2px}
 .lockcard small{font-size:8px}
@@ -576,7 +616,9 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s steps
 #stage.bigtext .mt{font-size:10.5px}
 /* 전투 */
 #stage.bigtext .bottom{height:124px}
-#stage.bigtext .card{width:94px;flex:0 1 94px;height:118px}
+#stage.bigtext .card{width:96px;flex:0 1 96px;height:116px;--ah:38px}
+#stage.bigtext .hand.big .card{width:122px;flex:none;height:178px;--ah:88px}
+#stage.bigtext .ware .card{width:112px;height:162px;--ah:80px}
 #stage.bigtext .card .hd{font-size:11.5px}
 #stage.bigtext .card .cost{font-size:11.5px}
 #stage.bigtext .card .bd{font-size:10px;line-height:1.3}

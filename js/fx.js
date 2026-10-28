@@ -1,8 +1,7 @@
 // 연출: 듀오 컷인, 보스 2단계 띠
 import { CHARACTERS } from './data/characters.js';
 import { DUOS, BOND } from './data/cards.js';
-import { sprite } from './render/sprites.js';
-import { palOf } from './render/common.js';
+import { charSrc } from './render/common.js';
 import { duoSpecial } from './meta.js';
 
 const cutEl = document.getElementById('cut');
@@ -20,7 +19,7 @@ export function showCut(k, bond = false, replay = false) {
   const sp = !bond && (duoSpecial(a) || duoSpecial(b));
   show(`<div class="duocut ${sp ? 'sp' : ''}" style="--ca:${A.col};--cb:${B.col}">
       <i class="stripe"></i><i class="stripe s2"></i>
-      <img class="px l" src="${sprite(palOf(a), A.long)}" alt=""><img class="px r" src="${sprite(palOf(b), B.long)}" alt="">
+      <img class="px l" src="${charSrc(a)}" alt=""><img class="px r" src="${charSrc(b)}" alt="">
       <div class="tx"><span>${A.name} + ${B.name} · ${bond ? '인연의 실 · ' : ''}${replay ? '인연 듀오' : '듀오 카드가 손에 들어왔다'}${sp ? ' · <i>별자리 특별판</i>' : ''}</span><b>${bond ? BOND.name : DUOS[k].name}</b></div></div>`, sp ? 1700 : 1350);
 }
 // 보스 2단계 (갑옷 벗기, 해가 뜬다)

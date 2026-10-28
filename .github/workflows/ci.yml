@@ -12,6 +12,7 @@ jobs:
           node-version: 20
       - run: node tools/export-prompts.mjs --check
       - run: node tools/check-assets.mjs
+      - run: node tools/art-index.mjs --check
       - run: node tools/sim.mjs --quick
       - run: npm install --no-save playwright@1.48.2
       - run: npx playwright install --with-deps chromium

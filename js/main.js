@@ -14,6 +14,8 @@ import { startTutorial, skipTutorial, finishTutorial, tutorialPending } from './
 import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epNext, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
+import { artReady } from './art.js';
+import './cardzoom.js';
 
 const qs = new URLSearchParams(location.search);
 // 처음 켜면 타이틀 전에 튜토리얼 들어가기 화면 (주소에 ?notut 이면 건너뜀: 점검 도구용)
@@ -282,3 +284,5 @@ addEventListener('keydown', e => {
 setInterval(() => { if (S.view === 'ep' && S.ep?.auto && S.ep.phase === 'read' && modal.hidden) { epNext(); render(); } }, 1800);
 
 render();
+// 그림 목록(assets/art.json)이 오면, 그림이 하나라도 있을 때만 다시 그린다 (없으면 임시 도트 그대로)
+artReady.then(n => { if (n) render(); });

@@ -10,6 +10,8 @@ import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
 import { moonImg, sprite } from './sprites.js';
 import { kwTip } from '../data/keywords.js';
 import { wearing } from '../meta.js';
+import { charArt } from '../art.js';
+import { cardArtSrc } from './cardart.js';
 
 export const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
 export const fmt = m => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
@@ -30,7 +32,7 @@ export function relicChip(id, G) {
 // 동료 얼굴 (서 있는 그림의 윗부분을 잘라 보여 줌)
 export function face(id, cls = '') {
   const c = CHARACTERS[id];
-  return `<span class="face ${cls}" style="--c:${c.col}"><img class="px" src="${sprite(palOf(id), c.long)}" alt="${esc(c.name)}"></span>`;
+  return `<span class="face ${cls}" style="--c:${c.col}"><img class="px" src="${charSrc(id, 'normal')}" alt="${esc(c.name)}"></span>`;
 }
 export function hpBar(m) {
   return `<span class="hpbar ${m.down ? 'down' : ''}"><i style="width:${m.hp / m.max * 100}%"></i></span>`;
@@ -78,10 +80,23 @@ export function cardText(d) {
   });
 }
 
-// inst: 카드 id 문자열(덱·보상) 또는 손패 인스턴스 { uid, id }
+// 동료 그림 주소: 그림 파일이 있으면 그것(assets/…), 없으면 임시 도트.
+// kind: stand | normal | smile | serious. 두 번째 의상을 입었으면 서 있는 그림은 _outfit2.
+export function charSrc(id, kind = 'stand', alt) {
+  const r = ROSTER[id] || CHARACTERS[id];
+  const outfit = alt ?? wearing(id);
+  return charArt(id, kind, outfit) || (kind !== 'stand' && charArt(id, 'stand', outfit)) || sprite(palOf(id, alt), r?.long);
+}
+const pals = new Proxy({}, { get: (_, id) => palOf(id) });
+const longs = new Proxy({}, { get: (_, id) => (ROSTER[id] || CHARACTERS[id])?.long });
+
+// 카드 한 장: 위 4:3 일러스트(그림 파일 또는 임시 일러스트) · 비용 보석(시간 카드는 시계) · 이름 띠 · 효과 글 · 아래 동료 얼굴·이름·희귀도.
+// 희귀도 테두리: 흔함 은 / 보통 보라 / 희귀 금(빛). 듀오는 두 사람 반반 + 금, 저주는 검붉은 깨진 틀.
+// inst: 카드 id 문자열(덱·보상) 또는 손패 인스턴스 { uid, id }. data-cid는 확대 보기(길게 누르기·오른쪽 클릭)가 쓴다.
 export function cardHTML(inst, playable, act = 'play', idOverride, sel = false) {
   const isStr = typeof inst === 'string';
-  const d = cardData(isStr ? inst : inst.id);
+  const cid = isStr ? inst : inst.id;
+  const d = cardData(cid);
   const id = idOverride ?? (isStr ? inst : inst.uid);
   const duo = d.ch === 'duo', curse = d.ch === 'curse';
   const col = duo ? CHARACTERS[d.a].col : curse ? '#6a6478' : CHARACTERS[d.ch].col, col2 = duo ? CHARACTERS[d.b].col : col;
@@ -93,8 +108,13 @@ export function cardHTML(inst, playable, act = 'play', idOverride, sel = false) 
     d.target === 'all' ? '<span class="tg all">모든 적</span>' : ''].join('');
   const dn = !isStr && S.C && playable && act === 'play' ? duoPreview(inst) : null;
   const tip = (dn ? `지금 쓰면 듀오 「${dn}」 카드가 손에 들어온다.\n` : '') + kwTip(`${d.text || ''} ${d.time ? '시간 카드' : ''} ${d.exhaust ? '소멸' : ''} ${duo ? '듀오' : ''} ${curse ? '저주' : ''} ${(d.tags || []).includes('slash') ? '베기' : ''}`);
-  return `<button type="button" class="card r-${d.rarity} ${duo ? 'duo' : ''} ${curse ? 'curse' : ''} ${d.up ? 'upg' : ''} ${playable ? '' : 'no'} ${down ? 'down' : ''} ${sel ? 'sel' : ''} ${dn ? 'duonext' : ''}" style="--c:${col};--c2:${col2}" data-${act}="${id}"${tip ? ` data-tip="${esc(tip)}"` : ''}>
-    <span class="hd"><span class="cost ${cc}">${cost}</span><span class="nm ${d.name.length >= 6 ? 'long' : ''}">${esc(d.name)}</span></span>
+  const faces = duo ? [d.a, d.b] : curse ? [] : [d.ch];
+  const fc = faces.map(k => `<img class="px" src="${charSrc(k)}" alt="">`).join('');
+  const rar = duo ? '듀오' : RARITY_NAME[d.rarity] || '';
+  return `<button type="button" class="card r-${d.rarity} ${duo ? 'duo' : ''} ${curse ? 'curse' : ''} ${d.time ? 'time' : ''} ${d.up ? 'upg' : ''} ${playable ? '' : 'no'} ${down ? 'down' : ''} ${sel ? 'sel' : ''} ${dn ? 'duonext' : ''}" style="--c:${col};--c2:${col2}" data-${act}="${id}" data-cid="${esc(cid)}"${tip ? ` data-tip="${esc(tip)}"` : ''}>
+    <span class="art"><img class="px" src="${cardArtSrc(d, pals, longs)}" alt="" draggable="false"></span>
+    <span class="cost ${d.time ? 'clock' : 'gem'} ${cc}">${cost}</span>
+    <span class="hd"><span class="nm ${d.name.length >= 6 ? 'long' : ''}">${esc(d.name)}</span></span>
     <span class="bd">${tags}${cardText(d)}</span>
-    <span class="who">${down ? '쓰러짐' : who}${duo ? ' · 듀오' : ''}<span class="rar">${RARITY_NAME[d.rarity] || ''}${d.exhaust && !duo ? ' · 소멸' : ''}</span></span></button>`;
+    <span class="who"><span class="fc">${fc}</span><span class="wn">${down ? '쓰러짐' : who}</span><span class="rar">${rar}${d.exhaust && !duo ? '·소멸' : ''}</span></span></button>`;
 }

@@ -3,8 +3,7 @@ import { S } from '../run.js';
 import { SET, calmNow, bigTextNow } from '../settings.js';
 import { tutTip } from '../tutorial.js';
 import { ROSTER } from '../data/roster.js';
-import { sprite } from './sprites.js';
-import { palOf, esc } from './common.js';
+import { palOf, esc, charSrc } from './common.js';
 
 const pct = v => `${Math.round(v * 100)}%`;
 const seg = (k, opts, cur) => `<span class="seg" role="group">${opts.map(([v, label]) =>
@@ -27,7 +26,7 @@ export function settingsModal() {
 
 // 처음 켰을 때: 짧은 첫 밤으로 하는 법을 익힌다
 export function tutIntroView() {
-  const trio = ['iris', 'brick', 'marta'].map(k => `<img class="px" src="${sprite(palOf(k), ROSTER[k].long)}" alt="">`).join('');
+  const trio = ['iris', 'brick', 'marta'].map(k => `<img class="px" src="${charSrc(k)}" alt="">`).join('');
   return `<div class="tutintro">
     <div class="sky" aria-hidden="true"><span class="tower"></span><span class="moonbig"></span></div>
     <div class="tbox">
