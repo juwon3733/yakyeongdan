@@ -4,12 +4,12 @@
 
 import { CARDS, DUOS as CARD_DUOS } from './data/cards.js';
 
-export const STYLE_VERSION = 1;
+export const STYLE_VERSION = 2; // 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출 조금 더
 
 // ── 공통 스타일 ──────────────────────────────────────────
 export const STYLE = {
-  pixel: '이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Shading only with flat colors and a little checkerboard dithering. Clean dark 1-pixel outlines. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.',
-  character: 'Character design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) may wear slightly alluring gacha-style fashion (fitted clothes, bare shoulders or midriff, short skirts or shorts, side slits, thigh-high boots) — stylish, never explicit, no nudity, no underwear, no suggestive poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.',
+  pixel: '이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.',
+  character: 'Character design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are drawn glamorous and alluring in gacha-game fashion: an emphasized curvy figure, fitted outfits with deeper necklines that show some cleavage, bare shoulders or midriff, short skirts or shorts, high side slits, thigh-high boots — confident and sexy but never explicit: no nudity, no nipples, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.',
   rarity5: 'This is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable.',
   rarity4: 'This is a 4-star character: one flashy signature prop or accessory, otherwise clean.',
   rarity3: 'This is a 3-star character: simple, friendly and approachable design, still cute or cool.',
@@ -19,23 +19,23 @@ export const STYLE = {
 
 // 종류별 크기. native = 게임 안 원본 도트 크기, w×h = 올릴 PNG 크기(정수배).
 export const SPEC = {
-  stand:    { w: 1024, h: 1536, native: '128×192', scale: 8, transparent: true,  colors: 256, folder: 'chars', note: '전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백' },
-  portrait: { w: 1024, h: 1536, native: '128×192', scale: 8, transparent: true,  colors: 256, folder: 'chars', note: '허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음' },
-  outfit:   { w: 1024, h: 1536, native: '128×192', scale: 8, transparent: true,  colors: 256, folder: 'chars', note: '두 번째 의상 전신 · 투명 배경' },
-  cutin:    { w: 1536, h: 576,  native: '256×96',  scale: 6, transparent: false, colors: 256, folder: 'cutins', note: '가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄' },
-  duo:      { w: 1536, h: 768,  native: '256×128', scale: 6, transparent: false, colors: 256, folder: 'cutins', note: '인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄' },
+  stand:    { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백' },
+  portrait: { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음' },
+  outfit:   { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '두 번째 의상 전신 · 투명 배경' },
+  cutin:    { w: 1536, h: 576,  native: '384×144', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄' },
+  duo:      { w: 1536, h: 768,  native: '384×192', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄' },
   cg:       { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'cg', note: '★5 전신 CG · 16:9 · 화질 우선, 색 제한 없음' },
-  enemy:    { w: 768,  h: 768,  native: '96×96',   scale: 8, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 투명 배경' },
-  elite:    { w: 1024, h: 1024, native: '128×128', scale: 8, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 투명 배경' },
-  boss:     { w: 1024, h: 1536, native: '128×192', scale: 8, transparent: true,  colors: 256, folder: 'enemies', note: '보스 · 투명 배경' },
-  bg:       { w: 1280, h: 720,  native: '320×180', scale: 4, transparent: false, colors: 256, folder: 'bg', note: '배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)' },
+  enemy:    { w: 768,  h: 768,  native: '192×192', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 투명 배경' },
+  elite:    { w: 1024, h: 1024, native: '256×256', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 투명 배경' },
+  boss:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '보스 · 투명 배경' },
+  bg:       { w: 1280, h: 720,  native: '640×360', scale: 2, transparent: false, colors: 256, folder: 'bg', note: '배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)' },
   title:    { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'title', note: '타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지' },
   summon:   { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'summon', note: '소환 화면 밤하늘 16:9' },
   meteor:   { w: 512,  h: 512,  native: '64×64',   scale: 8, transparent: true,  colors: 256, folder: 'summon', note: '별똥별 효과 · 투명 배경' },
   icon:     { w: 192,  h: 192,  native: '24×24',   scale: 8, transparent: true,  colors: 64,  folder: 'icons', note: '도구 아이콘 · 투명 배경 · 24×24 도트를 8배' },
   appicon:  { w: 1024, h: 1024, native: '64×64',   scale: 16, transparent: false, colors: 64, folder: 'app', note: '앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다' },
   style:    { w: 1024, h: 1536, native: '시안마다 다름', scale: 0, transparent: true, colors: Infinity, folder: 'style', note: '그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다' },
-  card:     { w: 768,  h: 576,  native: '96×72',   scale: 8, transparent: false, colors: 256, folder: 'cards', note: '스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 96×72로 줄이고 8배' },
+  card:     { w: 768,  h: 576,  native: '192×144', scale: 4, transparent: false, colors: 256, folder: 'cards', note: '스킬 카드 그림(카드 위쪽 일러스트, 4:3) · 그 동료가 기술을 쓰는 장면 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
 };
 
 // ── 동료 22명 ────────────────────────────────────────────
@@ -372,8 +372,12 @@ const RARITY_CARD = {
 const join = (...xs) => xs.filter(Boolean).join('\n\n');
 const rarityStyle = (r) => STYLE['rarity' + r];
 
+// 그림체 기준 그림(사용자가 고른 시안 C). 시안 묶음 말고는 모든 그림에 첨부한다.
+export const STYLE_REF = 'style/akane_c.png';
+
 function item(kind, id, batch, file, prompt, extra = {}) {
   const s = SPEC[kind];
+  if (kind !== 'style') extra = { ...extra, reference_images: [...(extra.reference_images || []), STYLE_REF] };
   return { id, kind, batch, file: `${s.folder}/${file}`, width: s.w, height: s.h, transparent: s.transparent,
     max_colors: s.colors === Infinity ? null : s.colors, native: s.native, note: s.note, prompt, ...extra };
 }
@@ -386,21 +390,21 @@ export function assetList() {
     const base = join(STYLE.pixel, STYLE.character, rarityStyle(c.rarity));
     const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
     batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name}`,
-      reference_sheet_prompt: join(base, `Character reference sheet of ${who} Full body front view plus a face close-up, plain background. Native resolution about 256x170, upscaled with nearest-neighbor.`) });
+      reference_sheet_prompt: join(base, `Character reference sheet of ${who} Full body front view plus a face close-up, plain background. Native resolution about 384x256, upscaled with nearest-neighbor.`) });
     const ref = [`chars/${id}_normal.png`];
     out.push(item('stand', `${id}_stand`, batch, `${id}_stand.png`,
-      join(base, STYLE.onModel, `${who}\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT (toward enemies), weapon ready. Fully transparent background, nothing behind the character. Feet near the bottom edge, empty margin above the head. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.`),
+      join(base, STYLE.onModel, `${who}\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT (toward enemies), weapon ready. Fully transparent background, nothing behind the character. Feet near the bottom edge, empty margin above the head. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric.`),
       { must_show: '전신, 오른쪽을 향한 전투 자세, 무기' }));
     for (const [face, expr] of Object.entries(c.faces)) {
       out.push(item('portrait', `${id}_${face}`, batch, `${id}_${face}.png`,
-        join(base, STYLE.onModel, `${who}\nWaist-up portrait facing slightly to the side. Expression and pose: ${expr}. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.`),
+        join(base, STYLE.onModel, `${who}\nWaist-up portrait facing slightly to the side. Expression and pose: ${expr}. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric.`),
         { followup_prompt: `Same character, same style. Waist-up portrait, transparent background. Expression and pose: ${expr}.`, reference_images: face === 'normal' ? [] : ref }));
     }
     out.push(item('cutin', `${id}_cutin`, batch, `${id}_cutin.png`,
       join(base, STYLE.onModel, `${who}\nDramatic cut-in panel for a special move: ${c.cutin}. Wide horizontal composition, the face and action inside the middle horizontal band (the top and bottom will be cropped to 1536x576). Speed lines made of pixels, strong accent colors (${c.accent}).`),
       { reference_images: ref, must_show: '얼굴이 가운데 띠 안' }));
     out.push(item('outfit', `${id}_outfit2`, batch, `${id}_outfit2.png`,
-      join(base, STYLE.onModel, `${who}\nSame person, same face and hair, but in a ${c.outfit}. Full-body standing pose facing slightly right, transparent background. Native resolution 128x192 pixels, upscaled exactly 8x to 1024x1536.`),
+      join(base, STYLE.onModel, `${who}\nSame person, same face and hair, but in a ${c.outfit}. Full-body standing pose facing slightly right, transparent background. Native resolution 256x384 pixels, upscaled exactly 4x to 1024x1536.`),
       { reference_images: ref }));
   }
 
@@ -413,7 +417,7 @@ export function assetList() {
     for (const [cardId, d] of list) {
       const who = d.sub === 'mimi' ? 'Mimi (the pink-haired twin) alone' : d.sub === 'momo' ? 'Momo (the sky-blue-haired twin) alone' : d.sub === 'both' ? 'both twins Mimi and Momo together' : c.name;
       out.push(item('card', `card_${fileId(cardId)}`, batch, `card_${fileId(cardId)}.png`,
-        join(base, `Skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${who === c.name ? c.name : `${who} (${c.name})`}, ON-MODEL from the attached references, performing this exact skill: ${cardPose(d)}. Visual motifs for this character: ${c.fx}. Accent colors: ${c.accent}.\n${RARITY_CARD[d.rarity] || ''}\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576 — use big readable shapes.`),
+        join(base, `Skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${who === c.name ? c.name : `${who} (${c.name})`}, ON-MODEL from the attached references, performing this exact skill: ${cardPose(d)}. Visual motifs for this character: ${c.fx}. Accent colors: ${c.accent}.\n${RARITY_CARD[d.rarity] || ''}\nComposition: the character and the skill effect fill the frame, face clearly visible and attractive, dynamic angle, simple dark night background. Keep everything important inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 192x144 pixels and upscaled 4x to 768x576 — use big readable shapes.`),
         { reference_images: [`chars/${id}_normal.png`, `chars/${id}_stand.png`], must_show: `${c.name} 얼굴, 「${d.name}」 효과` }));
     }
   }
@@ -428,14 +432,14 @@ export function assetList() {
       const [a, b] = key.split('+');
       const A = CHARS[a], B = CHARS[b];
       out.push(item('card', `duocard_${a}_${b}`, batch, `duocard_${a}_${b}.png`,
-        join(STYLE.pixel, STYLE.character, STYLE.onModel, `Duo skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${A.name} and ${B.name} together, both ON-MODEL from the attached references, combining their skills in one move: ${cardPose(d)}. ${A.name}'s motifs: ${A.fx}. ${B.name}'s motifs: ${B.fx}. Accent colors: ${A.accent} meeting ${B.accent}.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 96x72 pixels and upscaled 8x to 768x576.`),
+        join(STYLE.pixel, STYLE.character, STYLE.onModel, `Duo skill card illustration. Card: 「${d.name}」 (Korean title; NEVER write any text in the image). Effect: ${cardText(d)}.\nShow ${A.name} and ${B.name} together, both ON-MODEL from the attached references, combining their skills in one move: ${cardPose(d)}. ${A.name}'s motifs: ${A.fx}. ${B.name}'s motifs: ${B.fx}. Accent colors: ${A.accent} meeting ${B.accent}.\nComposition: both faces clearly visible, a dramatic shared pose, the two effects merging in the middle. Keep everything inside the central 4:3 area: make it 1536x1024, it will be cropped to the center 4:3, reduced to 192x144 pixels and upscaled 4x to 768x576.`),
         { reference_images: [`chars/${a}_normal.png`, `chars/${b}_normal.png`], must_show: '두 사람 얼굴 둘 다' }));
     }
   }
 
   // 그림체 시안: ★5 한 명을 도트 굵기만 다르게 4장. 사용자가 고른 시안이 STYLE의 기준이 된다(게임에 안 씀).
   const STYLE_VARIANTS = {
-    a: ['기준(128×192 도트 8배)', 'Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536. Up to about 48 colors.'],
+    a: ['기준(128×192 도트 8배)', 'Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric. Up to about 48 colors.'],
     b: ['굵은 도트(64×96 도트 16배)', 'Very chunky retro pixel art: native resolution only 64x96 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1536. About 24 colors. Big readable pixel clusters, iconic shapes.'],
     c: ['세밀한 도트(256×384 도트 4배)', 'Fine, detailed pixel art: native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric, still no anti-aliasing.'],
     d: ['고화질 픽셀 일러스트(색 제한 없음)', 'Premium high-detail pixel-art illustration like a modern HD pixel gacha game splash: crisp pixel detail, rich lighting and glow effects, no color limit, still visibly pixel-based (no smooth airbrush).'],
@@ -473,17 +477,17 @@ export function assetList() {
     const batch = `enemy-${act}`;
     batches.push({ id: batch, title: `${act.slice(-1)}막 적` });
     for (const [id, desc] of Object.entries(ENEMIES[act])) {
-      out.push(item('enemy', id, batch, `${id}.png`, join(STYLE.pixel, `Enemy sprite: ${desc}. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 96x96 pixels, upscaled exactly 8x to 768x768.`)));
+      out.push(item('enemy', id, batch, `${id}.png`, join(STYLE.pixel, `Enemy sprite: ${desc}. Facing LEFT (toward the party). Cute-but-menacing gacha-game monster design. Fully transparent background. Native resolution 192x192 pixels, upscaled exactly 4x to 768x768.`)));
     }
     for (const [id, desc] of Object.entries(ENEMIES[act + '_elite'])) {
-      out.push(item('elite', id, batch, `${id}.png`, join(STYLE.pixel, /woman/.test(desc) ? STYLE.character : '', `Elite enemy sprite: ${desc}. Bigger and more imposing than normal enemies. Facing LEFT. Fully transparent background. Native resolution 128x128 pixels, upscaled exactly 8x to 1024x1024.`)));
+      out.push(item('elite', id, batch, `${id}.png`, join(STYLE.pixel, /woman/.test(desc) ? STYLE.character : '', `Elite enemy sprite: ${desc}. Bigger and more imposing than normal enemies. Facing LEFT. Fully transparent background. Native resolution 256x256 pixels, upscaled exactly 4x to 1024x1024.`)));
     }
   }
   for (const [id, b] of Object.entries(BOSSES)) {
     const batch = `boss-${id}`;
     batches.push({ id: batch, title: `보스 ${b.name}` });
     const human = join(STYLE.pixel, b.beast ? '' : STYLE.character);
-    out.push(item('boss', `boss_${id}_1`, batch, `boss_${id}_1.png`, join(human, `Boss sprite, ${b.name}: ${b.p1}. Facing LEFT, imposing. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x to 1024x1536.`)));
+    out.push(item('boss', `boss_${id}_1`, batch, `boss_${id}_1.png`, join(human, `Boss sprite, ${b.name}: ${b.p1}. Facing LEFT, imposing. Fully transparent background. Native resolution 256x384 pixels, upscaled exactly 4x to 1024x1536.`)));
     out.push(item('boss', `boss_${id}_2`, batch, `boss_${id}_2.png`, join(human, STYLE.onModel, `Boss sprite, ${b.name}, ${b.p2}. Same person as the attached first-phase sprite. Facing LEFT. Fully transparent background. 1024x1536.`), { reference_images: [`enemies/boss_${id}_1.png`] }));
     if (b.p3) out.push(item('boss', `boss_${id}_3`, batch, `boss_${id}_3.png`, join(human, STYLE.onModel, `Boss sprite, ${b.name}, ${b.p3}. Same person as the attached first-phase sprite. Facing LEFT. Fully transparent background. 1024x1536.`), { reference_images: [`enemies/boss_${id}_1.png`] }));
     out.push(item('cutin', `boss_${id}_cutin`, batch, `boss_${id}_cutin.png`, join(human, STYLE.onModel, `Boss cut-in: ${b.cutin}. Wide horizontal composition, face in the middle band (cropped to 1536x576).`), { reference_images: [`enemies/boss_${id}_1.png`] }));
@@ -492,7 +496,7 @@ export function assetList() {
   // 배경·타이틀·소환·아이콘
   batches.push({ id: 'bg', title: '배경' });
   for (const [id, desc] of Object.entries(BGS)) {
-    out.push(item('bg', `bg_${id}`, 'bg', `${id}.png`, join(STYLE.pixel, `Background: ${desc}. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 320x180 pixels, full color, limited palette of about 32 colors, upscaled exactly 4x with nearest-neighbor to 1280x720.`)));
+    out.push(item('bg', `bg_${id}`, 'bg', `${id}.png`, join(STYLE.pixel, `Background: ${desc}. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 pixels, full color, limited palette of about 64 colors, upscaled exactly 2x with nearest-neighbor to 1280x720.`)));
   }
   batches.push({ id: 'title', title: '타이틀 키아트' });
   out.push(item('title', 'title_key', 'title', 'key.png',
