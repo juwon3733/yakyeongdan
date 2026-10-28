@@ -71,3 +71,13 @@
 /* 본부 메뉴: 두 버튼 한 줄 */
 .bmenu .brow{display:grid;grid-template-columns:1fr 1fr;gap:5px}
 .bmenu .brow button{min-width:0}
+
+/* 끝없는 탑 (js/render/endless.js) */
+.endchip{color:#b8a0ff}
+.endchip b{color:#fff}
+.endrules{color:#9a8fc8}
+.clockbig.endfloor{color:#b8a0ff}
+.clockbig.endfloor small{font-size:14px;margin-left:2px}
+.endgo{border-color:#b8a0ff;color:#d8c8ff}
+.endnote{color:#c8b8ff}
+.k-elite.now, .maphead small{font-weight:normal}

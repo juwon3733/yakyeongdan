@@ -19,6 +19,7 @@ import { epLogModal } from './render/episodes.js';
 import { artReady } from './art.js';
 import './cardzoom.js';
 import { setHallTime } from './render/base.js';
+import { enterEndless } from './endless.js';
 
 const qs = new URLSearchParams(location.search);
 // 처음 켜면 타이틀 전에 튜토리얼 들어가기 화면 (주소에 ?notut 이면 건너뜀: 점검 도구용)
@@ -135,6 +136,7 @@ app.addEventListener('click', e => {
   if (D.view) {
     if (D.view === 'summon') S.hint = null;
     S.view = D.view;
+    if (D.view === 'party') S.mode = D.mode || null;   // 끝없는 탑: 동료 고르기 → 바로 탑 위로
     if (D.view === 'party') { S.G = null; S.C = null; S.picked = S.picked.filter(k => k && P.owned[k] || S.dev); }
     if (D.view === 'exchange') S.exMsg = '';
   }
@@ -142,7 +144,12 @@ app.addEventListener('click', e => {
     const k = D.pick;
     S.picked = S.picked.includes(k) ? S.picked.filter(x => x !== k) : S.picked.length < 3 ? [...S.picked, k] : S.picked;
   }
-  else if ('start' in D) newRun(S.picked.slice(), seedParam, runOptions(S.picked, S.depth || 0, S.startRelic));
+  else if ('start' in D) {
+    if (S.mode === 'endless') { newRun(S.picked.slice(), seedParam, runOptions(S.picked, 0)); enterEndless(true); }
+    else newRun(S.picked.slice(), seedParam, runOptions(S.picked, S.depth || 0, S.startRelic));
+  }
+  // 「새벽」을 깬 결과 화면에서 [더 오르기]: 같은 판 그대로 끝없는 탑으로 (그 판 보상은 이미 받음)
+  else if ('endless' in D) { if (S.G?.won && !S.G.endless) enterEndless(false); }
   else if (D.depth !== undefined) S.depth = +D.depth;
   else if (D.srelic) S.startRelic = D.srelic;
   // 매일의 밤: 후보 여섯 중 셋 → 오늘의 시드로 판, 규칙은 S.G.mods (js/relics.js가 도구처럼 더한다)

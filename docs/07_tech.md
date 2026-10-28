@@ -11,6 +11,7 @@ index.html
 css/game.css
 js/
   main.js        화면 전환, 저장
+  endless.js     끝없는 탑: 들어가기(이어 오르기/새로 시작)·층 묶음·적 강화 (map.js goNode·nextRow·nextAct, combat.js 체력·힘, run.js 붕괴 없음이 부른다)
   rng.js         시드 난수 (판마다 시드 → 지도·보상·달 재현 가능)
   run.js         한 판 상태: 파티, 덱, 체력, 밤 시계, 달, 도구
   map.js         지도 생성·이동·시간 계산
@@ -34,6 +35,7 @@ js/
     gacha.js       소환 확률·천장·픽업·별자리·교환소 가격·카드 묶음
     depth.js       밤의 깊이 1~10 규칙
     daily.js       매일의 밤: 날짜 시드·변칙 규칙 14개(도구 필드 → S.G.mods, js/relics.js가 더함)
+    endless.js     끝없는 탑 수치(층 묶음·관문·적 강화·여명 게이지·보상), 적 무리 ACTS[4], 규칙 합치기
     achievements.js 업적 53개(저장 P만 보고 판정)
     mastery.js     동료 숙련도 단계 점수·보상(꾸미기)
   asset_prompts.js 그림 프롬프트 원본 (→ assets/prompts.json, docs/PROMPTS.md)

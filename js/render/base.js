@@ -18,6 +18,7 @@ import { artURL } from '../art.js';
 import { achTab, historyBlock, masteryLine } from './daily.js';
 import { dailyToday, mastery, masteryTitles, backOpen } from '../meta.js';
 import { MASTERY_REWARDS } from '../data/mastery.js';
+import { endlessMenu, endlessRecords } from './endless.js';
 
 const pct = x => `${Math.round(x * 1000) / 10}%`;
 const wallet = () => `<span class="wallet"><b>별 조각 ${P.shards}</b> · 별가루 ${P.dust}</span>`;
@@ -73,6 +74,7 @@ export function baseView() {
       <button type="button" data-view="records">기록</button></div>
       <button type="button" data-view="daily">${dot(!dailyToday().rec?.won)}매일의 밤 <small>${esc(dailyToday().rule.name)}</small></button>
       <button type="button" data-view="party">밤 오르기</button>
+      ${endlessMenu()}
       <p class="note small">판 ${P.runs} · 이긴 판 ${P.wins}${P.best != null ? ` · 가장 빠른 도착 ${fmt(P.best)}` : ''}${depthOpen() ? ` · 밤의 깊이 최고 ${P.rec.depthBest}` : ''}</p>
       ${titles}
     </div>
@@ -311,6 +313,7 @@ export function recordsView() {
       <div><h3 class="sub">조합별 가장 빠른 도착</h3><table class="odds big">${combos}</table></div>
       <div><h3 class="sub">달별 승리</h3><table class="odds big">${moons}</table>
         <h3 class="sub">밤의 깊이</h3>${depth}
+        ${endlessRecords()}
         <p class="note small">판 ${P.runs} · 이긴 판 ${P.wins}${P.best != null ? ` · 가장 빠른 도착 ${fmt(P.best)}` : ''}${startPickOpen() ? '' : ' · 첫 판을 끝내면 시작 도구 고르기가 열린다'}</p>
         <p class="note small">최고의 한 턴 ${P.life.bestTurn} · 피해 100+ 턴 ${P.life.bigTurns}번 · 업적 ${P.achDone.length}</p></div>
     </div>

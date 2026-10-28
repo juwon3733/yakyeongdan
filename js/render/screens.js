@@ -14,6 +14,7 @@ import { SUMMON } from '../data/gacha.js';
 import { dawnAt } from '../run.js';
 import { moonImg } from './sprites.js';
 import { EPISODES, BOND_SCENES } from '../data/episodes.js';
+import { endlessResultView, climbOnButton } from './endless.js';
 
 const relicBox = (id, extra = '') => { const d = RELICS[id]; return `<span class="rbox t-${d.tier}"><span class="relic t-${d.tier}">${esc(d.name.slice(0, 1))}</span><span><b>${esc(d.name)}</b> <small>${RELIC_TIER_NAME[d.tier]}</small><br>${esc(d.text)}${extra}</span></span>`; };
 
@@ -129,6 +130,7 @@ function metaNote(R) {
   return out.length ? `<div class="metanote">${out.map(x => `<p class="note">${x}</p>`).join('')}</div>` : '';
 }
 export function resultView() {
+  if (S.G.endless) return endlessResultView();
   const G = S.G, R = grantRun(G);
   const mvp = G.party.reduce((a, b) => (G.stats[b].dmg + G.stats[b].block) > (G.stats[a].dmg + G.stats[a].block) ? b : a);
   const mc = CHARACTERS[mvp], st = G.stats[mvp];
@@ -150,7 +152,7 @@ export function resultView() {
       ${runBar(G)}
       <table class="shards">${R.lines.map(([t, v], i) => `<tr style="--i:${i}"><td>${t}</td><td>+${v}</td></tr>`).join('')}<tr class="sum" style="--i:${R.lines.length}"><td>얻은 별 조각</td><td>+<b class="countup" data-to="${R.total}">${R.total}</b></td></tr></table>
       <p class="note">지금 별 조각 <b>${P.shards}</b> · ${P.shards >= SUMMON.tenCost ? '<b class="ok10">10연 소환을 할 수 있다</b>' : `10연까지 ${SUMMON.tenCost - P.shards}`}</p>
-      <div class="acts"><button type="button" class="primary" data-home>본부로</button><button type="button" data-view="party">다시 오르기</button></div>
+      <div class="acts"><button type="button" class="primary" data-home>본부로</button><button type="button" data-view="party">다시 오르기</button>${climbOnButton(G)}</div>
     </div></div>`;
 }
 export function deckModal() {

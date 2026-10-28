@@ -15,9 +15,10 @@ import { EPISODES, BOND_SCENES } from './data/episodes.js';
 import { DAILY_SHARDS, DAILY_CANDIDATES, dailyKey, dailySeed, dailyRule } from './data/daily.js';
 import { ACHIEVEMENTS } from './data/achievements.js';
 import { MASTERY_GAIN, MASTERY_REWARDS, masteryLv } from './data/mastery.js';
+import { ENDLESS } from './data/endless.js';
 
 const KEY = 'yk-profile';
-const VERSION = 3;
+const VERSION = 4;
 
 function fresh() {
   return {
@@ -30,7 +31,7 @@ function fresh() {
     // v2 (M5): 초심자 ★5 고르기 대기 수 · 픽업 확정 · 의상(열린 것·입은 것) · 산 카드 묶음 수 · 시작 도구 고르기 후보
     pick5: 0, pickGuar: false, costumeOwn: [], costume: {}, packs: {}, startRelics: [],
     talksSeen: [], titles: [], charStats: {}, cardsSeen: [], cardsUsed: [], foesSeen: [], foesBeaten: [], affixSeen: [],
-    rec: { combo: {}, moons: {}, depthBest: 0 },
+    rec: { combo: {}, moons: {}, depthBest: 0, endlessBest: 0, endlessCombo: {}, endlessBosses: 0 },   // v4: 끝없는 탑 최고 층·조합별 최고 층·탑 위 보스
     tutDone: false,   // 첫 실행 튜토리얼을 끝냈거나 건너뜀 (js/tutorial.js)
     // v3: 매일의 밤(날짜 → { best 가장 빠른 도착, won, tries }) · 업적(달성한 id) · 평생 기록 · 최근 판 20개 · 숙련도 점수 · 카드 뒷면
     daily: {}, achDone: [], history: [], mxp: {}, cardBack: null,
@@ -444,6 +445,7 @@ function recordHistory(G) {
   P.history.unshift({
     t: Date.now(), party: G.party.slice(), moon: G.moon, won: !!G.won, why: G.why, clock: G.clock, act: G.act, floors: G.floors || 0,
     mvp, best: G.bestTurn?.dmg || 0, duos: G.duoSet?.size || 0, depth: G.depth || 0, daily: G.daily?.key || null,
+    endless: G.endless ? G.endless.floor : null,
   });
   P.history.length = Math.min(P.history.length, HISTORY_MAX);
 }
@@ -462,4 +464,33 @@ export function achCheck() {
   }
   if (got.length) save();
   return got;
+}
+
+// ---------- 끝없는 탑 (§12, js/data/endless.js) ----------
+export const endlessOpen = () => P.wins > 0;
+// 끝없는 탑이 끝나면 한 번만: 별 조각(층 비례·상한 + 탑 위 보스) · 최고 층 · 조합별 최고 층 · 최근 판 · 업적
+// 「새벽」을 깬 판에서 이어 올랐으면 그 판의 보상(grantRun)은 이미 받았다. 새로 시작한 판이면 판 수에 넣는다.
+export function grantEndless(G) {
+  const E = G.endless; if (E.granted) return E.granted;
+  const S2 = ENDLESS.shards, lines = [];
+  const fl = Math.min(S2.cap, E.floor * S2.perFloor);
+  if (fl) lines.push([`탑 위 ${E.floor}층`, fl]);
+  if (E.bosses) lines.push([`탑 위 보스 ${E.bosses}번`, E.bosses * S2.perBoss]);
+  const total = lines.reduce((t, [, v]) => t + v, 0);
+  P.shards += total;
+  if (E.fresh) P.runs++;
+  const R = P.rec, key = G.party.slice().sort().join('+');
+  const newBest = E.floor > (R.endlessBest || 0);
+  R.endlessBest = Math.max(R.endlessBest || 0, E.floor);
+  R.endlessCombo[key] = Math.max(R.endlessCombo[key] || 0, E.floor);
+  R.endlessBosses = (R.endlessBosses || 0) + E.bosses;
+  const F = new Set(P.life.facts);
+  if (E.floor >= 10 && G.party.every(k => ROSTER[k]?.rarity === 3)) F.add('endless3star');
+  P.life.facts = [...F];
+  P.life.bestTurn = Math.max(P.life.bestTurn || 0, G.bestTurn?.dmg || 0);
+  recordHistory(G);
+  const ach = achCheck();
+  save();
+  E.granted = { lines, total, newBest, best: R.endlessBest, combo: R.endlessCombo[key], ach };
+  return E.granted;
 }

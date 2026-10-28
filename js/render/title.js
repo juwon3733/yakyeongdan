@@ -7,6 +7,7 @@ import { RELICS } from '../data/relics.js';
 import { DEPTH } from '../data/depth.js';
 import { stars, palOf, esc, charSrc } from './common.js';
 import { artURL } from '../art.js';
+import { ENDLESS } from '../data/endless.js';
 
 // 타이틀: 키아트 그림(title/key.png)이 있으면 그림, 없으면 살아 있는 밤 항구(별·달·탑 꼭대기 빛·등불·파도·동료 셋 실루엣)
 const rnd = (n => () => (n = (n * 1103515245 + 12345) >>> 0) / 4294967296)(7);
@@ -88,14 +89,14 @@ export function partyView() {
   }).join('');
   return `<div class="title">
     <div class="tleft">
-      <div class="thead"><button type="button" class="mini" data-view="title">‹ 타이틀</button><h2>동료 셋을 고른다</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
+      <div class="thead"><button type="button" class="mini" data-view="title">‹ 타이틀</button><h2>${S.mode === 'endless' ? '끝없는 탑 · 동료 셋' : '동료 셋을 고른다'}</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
       <div class="pick">${mates}</div>
     </div>
     <div class="tright">
       <h2>동료 셋 (${S.picked.length}/3)</h2>
       <div class="chosenrow formation">${chosen}</div>
-      ${runSetup()}
-      <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>출발</button>
+      ${S.mode === 'endless' ? `<p class="note endnote">끝없는 탑에 바로 오른다. 동료마다 희귀 카드 1장 · 도구 ${ENDLESS.freshRelics}개 · 별빛 ${ENDLESS.freshGold}을 들고 시작. 탑은 무너지지 않지만 층마다 적이 강해지고 규칙이 쌓인다.</p>` : runSetup()}
+      <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>${S.mode === 'endless' ? '끝없는 탑 오르기' : '출발'}</button>
       ${bondsOf(S.picked)}
       ${S.picked.length ? `<div class="chosenps">${S.picked.map(k => { const r = ROSTER[k], c = CHARACTERS[k]; return c ? `<span style="--c:${r.col}"><b>${r.name} · ${esc(c.passive.name)}</b> ${esc(c.passive.text)}</span>` : ''; }).join('')}</div>` : ''}
       <p class="note">대열은 지도에서 바꿀 수 있다. 처음엔 체력이 높은 동료가 앞에 선다.</p>

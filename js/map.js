@@ -12,6 +12,8 @@ import { RULES, NODE, SHOP } from './data/rules.js';
 import { hasRelic, relicSum, relicMul, rollRelic } from './relics.js';
 import { tutNode, rigHand } from './tutorial.js';
 import { setMoon } from './effects.js';
+import { nextSegment } from './endless.js';
+import { endlessBoss } from './data/endless.js';
 
 // ---------- 지도 만들기 (docs/10_details.md §4) ----------
 // 층 i의 칸 n개를 층 i+1의 칸 m개에 겹치지 않게 잇는다 (갈렸다 합쳐짐, 교차 없음)
@@ -82,6 +84,7 @@ export function goNode(r, i) {
   const G = S.G, t = G.map.rows[r]?.[i];
   if (!t || !reachable(r).includes(i)) return;
   G.took[r] = i; G.floors++; G.note = '';
+  if (G.endless) G.endless.floor++;   // 끝없는 탑: 층 세기 (js/endless.js)
   addTime(nodeTime(t));
   const pool = ACTS[G.act], tn = tutNode(r);
   // 첫 실행 튜토리얼: 정해진 적·사건, 첫 턴 손패 맞추기 (js/tutorial.js)
@@ -89,15 +92,19 @@ export function goNode(r, i) {
   else if (tn?.event) openEvent(tn.event);
   else if (t === 'fight') startCombat(G.rng.pick(r === 0 ? pool.easy : pool.fights), 'fight');
   else if (t === 'elite') { const e = G.nextElite; G.nextElite = pickElite(); startCombat(e, 'elite'); }
-  else if (t === 'boss') startCombat(pool.boss, 'boss');
+  else if (t === 'boss') startCombat(G.endless ? [endlessBoss(G.endless.floor)] : pool.boss, 'boss');
   else if (t === 'rest') { G.restTalk = restTalk(G); if (G.restTalk != null) G.talks?.add(G.restTalk); G.screen = 'rest'; }
   else if (t === 'shop') openShop();
   else openEvent();
 }
 
-export function nextRow() { const G = S.G; G.row++; G.screen = 'map'; }
+export function nextRow() {
+  const G = S.G; G.row++; G.screen = 'map';
+  if (G.endless && G.row >= G.map.rows.length) nextSegment();   // 끝없는 탑: 관문(강적)을 넘으면 다음 층 묶음
+}
 export function nextAct() {
   const G = S.G;
+  if (G.endless) { G.endless.bosses++; return nextSegment(); }   // 끝없는 탑: 보스 관문 뒤
   G.act++; G.row = 0; G.took = [];
   G.map = G.nextMap; G.nextMap = G.act < 3 ? makeMap(G.rng, G.moon) : null;
   G.nextElite = pickElite(); G.screen = 'map';

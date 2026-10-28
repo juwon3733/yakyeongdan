@@ -58,7 +58,7 @@ export function achTab() {
 export function historyBlock() {
   const rows = P.history.map(h => {
     const party = h.party.map(k => `<img class="px hface" src="${charSrc(k, 'face')}" alt="${esc(ROSTER[k]?.name || k)}" title="${esc(ROSTER[k]?.name || k)}">`).join('');
-    const end = h.won ? `<b class="won">${fmt(h.clock)} 도착</b>` : `${ACT[h.act] || ''} ${h.floors}칸 · ${h.why === 'collapse' ? '7시 붕괴' : '쓰러짐'}`;
+    const end = h.endless != null ? `<b class="won">끝없는 탑 ${h.endless}층</b>` : h.won ? `<b class="won">${fmt(h.clock)} 도착</b>` : `${ACT[h.act] || ''} ${h.floors}칸 · ${h.why === 'collapse' ? '7시 붕괴' : '쓰러짐'}`;
     const tags = [h.daily ? '매일' : '', h.depth ? `깊이 ${h.depth}` : ''].filter(Boolean).map(t => `<span class="chip">${t}</span>`).join('');
     const d = new Date(h.t);
     return `<tr><td class="dim">${d.getMonth() + 1}/${d.getDate()}</td><td class="hparty">${party}</td><td>${MOONS[h.moon]?.name || ''}</td><td>${end}</td>

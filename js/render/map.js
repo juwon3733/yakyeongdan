@@ -5,6 +5,8 @@ import { MOONS } from '../data/moons.js';
 import { CHARACTERS } from '../data/characters.js';
 import { RULES, NODE, ACT_NAME, ROW_NAME } from '../data/rules.js';
 import { fmt, face, paceOf } from './common.js';
+import { endlessHead } from './endless.js';
+import { segStart } from '../endless.js';
 
 // 가로 지도: 왼쪽(1층) → 오른쪽(꼭대기). 층 사이 선은 갈렸다 합쳐진다. 아래에 대열 고치기.
 const MW = 624, MH = 232, NW = 100, NH = 36;
@@ -21,9 +23,9 @@ export function mapView() {
   const nodes = M.rows.map((row, r) => row.map((t, j) => {
     const p = P[r][j], ok = r === G.row && can.includes(j), cls = r < G.row ? 'past' : ok ? 'now' : 'future';
     return `<button type="button" class="node k-${t} ${cls} ${G.took[r] === j ? 'took' : ''}" style="left:${p.x}px;top:${p.y}px" ${ok ? `data-node="${r},${j}"` : 'disabled'}>
-      <span class="t">${NODE[t].name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → <b class="pace ${G.tutorial ? '' : paceOf(G, G.clock + nodeTime(t), 1)}">${fmt(G.clock + nodeTime(t))}</b>` : ''}</span></button>`;
+      <span class="t">${NODE[t].name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → <b class="pace ${G.tutorial ? '' : G.endless ? '' : paceOf(G, G.clock + nodeTime(t), 1)}">${fmt(G.clock + nodeTime(t))}</b>` : ''}</span></button>`;
   }).join('')).join('');
-  const labels = M.rows.map((row, r) => `<span class="rowlabel" style="left:${P[r][0].x}px">${r === cols - 1 ? '꼭대기' : `${r + 1}층`}</span>`).join('');
+  const labels = M.rows.map((row, r) => `<span class="rowlabel" style="left:${P[r][0].x}px">${r === cols - 1 ? (G.endless ? '관문' : '꼭대기') : `${G.endless ? segStart() + r : r + 1}층`}</span>`).join('');
   // 대열 칸: 왼쪽→오른쪽 = 뒤·가운데·앞
   const slots = [2, 1, 0].map(fi => {
     const p = G.formation[fi], c = CHARACTERS[p], Mb = G.members[p];
@@ -33,10 +35,11 @@ export function mapView() {
   const peek = hasRelic('star_map') && G.nextMap
     ? `<span class="note peek">별 지도 · 다음 막: ${G.nextMap.rows.slice(0, -1).map(row => row.map(t => NODE[t].name).join('·')).join(' / ')}</span>` : '';
   const head = G.note ? `<span class="banner ok">${G.note}</span>`
+    : G.endless ? `<span class="note">탑은 무너지지 않는다 · 대신 층마다 적이 강해지고, 밤 시계가 흐를수록 여명이 짙어진다</span>`
     : isDawn() ? `<span class="banner">해가 떴다 · 적이 힘 +${RULES.dawnStartStr}으로 시작, 매 턴 +${RULES.dawnStrPerTurn} · ${fmt(RULES.collapse)}에 탑이 무너진다</span>`
     : `<span class="note">달: <b>${MOONS[G.moon].name}</b> · ${MOONS[G.moon].text}</span>`;
   return `<div class="mapwrap">
-      <div class="maphead"><h2>${ACT_NAME[G.act]}</h2>${head}${peek}</div>
+      <div class="maphead"><h2>${G.endless ? endlessHead(G) : ACT_NAME[G.act]}</h2>${head}${peek}</div>
       <div class="mapgrid" style="width:${MW}px;height:${MH}px">
         <svg class="edges" width="${MW}" height="${MH}" aria-hidden="true">${lines}</svg>${labels}${nodes}</div>
       <div class="mapfoot">

@@ -12,6 +12,8 @@ const BGM_VOL = 0.5, SFX_VOL = 0.8, AMB_VOL = 0.22;   // 설정의 음악·효�
 const AMB_LEN = 16;                     // 환경음 루프 길이(초, tools/compose/ambience.py LEN)
 const LATE = 300;                       // 5:00부터 전투곡이 조금 빨라진다
 const LATE_RATE = 1.05;
+// 끝없는 탑: 10층마다 곡이 조금씩 빨라진다 (최대 1.15)
+const endlessRate = G => Math.min(1.15, 1 + Math.floor((G.endless.floor || 0) / 10) * .03);
 
 let level = 0;
 try { level = Math.min(2, Math.max(0, +(localStorage.getItem('yk-sound') || 0))); } catch (e) { /* 저장 안 됨 */ }
@@ -144,6 +146,7 @@ function pickBgm() {
   if (G.episode) return 'battle';                        // 에피소드 특별 전투
   if (G.screen === 'combat' && S.C) {
     if (S.C.kind === 'boss') {
+      if (G.endless) { const k = S.C.all[0]?.key; if (k === 'keeper') return 'boss1'; if (k === 'captain') return 'boss2'; }   // 끝없는 탑: 보스마다 원래 곡
       if (G.act >= 3) return S.C.all.some(f => f.p2 && !f.dead) ? 'dawn2' : 'dawn';
       return `boss${G.act}`;
     }
@@ -154,6 +157,7 @@ function pickBgm() {
   if (G.screen === 'rest') return 'rest';
   if (G.screen === 'event' || G.screen === 'shop') return 'event';
   if (['remove', 'dupe', 'upgrade'].includes(G.screen) && want) return want;   // 야시장·사건·휴식에서 이어지는 고르기 화면은 곡 유지
+  if (G.endless) return `map${(G.endless.seg - 1) % 3 + 1}`;   // 끝없는 탑: 층 묶음마다 막 지도 곡을 돌아가며
   return `map${Math.min(3, G.act)}`;
 }
 
@@ -163,6 +167,7 @@ function pickAmb() {
   const G = S.G;
   if (!G || S.view !== 'run') return S.view === 'ep' ? null : 'sea';
   if (G.episode) return null;
+  if (G.endless) return AMB_ACT[(G.endless.seg - 1) % 3 + 1];
   return AMB_ACT[Math.min(3, G.act)] || 'sea';
 }
 
@@ -266,7 +271,7 @@ export function sync() {
   placeButton();
   playBgm(pickBgm());
   playAmb(pickAmb());
-  setRate(S.G && S.G.screen === 'combat' && S.G.clock >= LATE ? LATE_RATE : 1);
+  setRate(S.G?.endless ? endlessRate(S.G) : S.G && S.G.screen === 'combat' && S.G.clock >= LATE ? LATE_RATE : 1);
   const now = snap();
   try { sounds(prev, now); } catch (e) { /* 소리 때문에 게임이 멈추면 안 된다 */ }
   prev = now;

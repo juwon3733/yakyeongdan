@@ -16,6 +16,7 @@ import { CHARACTERS } from '../js/data/characters.js';
 import { CARDS, cardData, canUpgrade, DUOS } from '../js/data/cards.js';
 import { RULES, SHOP, NODE } from '../js/data/rules.js';
 import { RELICS } from '../js/data/relics.js';
+import { enterEndless } from '../js/endless.js';
 
 const args = process.argv.slice(2);
 const opt = (k, d) => { const i = args.indexOf(k); return i >= 0 ? args[i + 1] : d; };
@@ -24,6 +25,8 @@ const RUNS = +opt('--runs', QUICK ? 200 : 2000);
 const SEED0 = +opt('--seed', 1);
 const JSON_OUT = opt('--json', null);
 const VERBOSE = args.includes('-v');
+const ENDLESS_ON = !args.includes('--no-endless');
+const ENDLESS_CAP = +opt('--endless-cap', 80);
 
 // ---------- 난수: 엔진의 G.rng를 상태를 저장·복원할 수 있는 같은 알고리즘으로 바꾼다 ----------
 function rngFrom(a) {
@@ -338,10 +341,14 @@ function chooseBossRelic() {
 function playRun(party, seed, stats) {
   newRun(party, seed);
   S.G.rng = rngFrom(S.G.rng.state);
-  const G0 = S.G;
   const rec = { party, seed, won: false, why: '', bossReach: [0, 0, 0, 0], bossClock: [null, null, null, null], over6: false, clock: 0, duos: 0, act: 1, fights: 0 };
-  let lastAct = 1, steps = 0;
-  while (S.G.screen !== 'result' && steps++ < 4000) {
+  drive(rec, stats, 4000);
+  return finish(rec, stats, seed, party);
+}
+// 화면이 결과가 될 때까지 봇이 판을 진행한다 (본판·끝없는 탑 공통)
+function drive(rec, stats, maxSteps) {
+  let lastAct = S.G.act, steps = 0;
+  while (S.G.screen !== 'result' && steps++ < maxSteps) {
     const G = S.G;
     if (G.clock >= RULES.dawn) rec.over6 = true;
     if (G.moonPick && G.screen !== 'combat') { pickMoon(G.deck.some(id => cardData(id).time) ? 'crescent' : 'half'); continue; }
@@ -371,9 +378,11 @@ function playRun(party, seed, stats) {
     else throw new Error('모르는 화면: ' + sc);
     checkCollapse();
     if (S.G.act !== lastAct) lastAct = S.G.act;
+    if (S.G.endless && S.G.endless.floor >= ENDLESS_CAP) break;   // 끝없는 탑은 상한에서 멈춘다
   }
+}
+function finish(rec, stats, seed, party) {
   const G = S.G;
-  void G0;
   if (!G.won) {
     const k = G.why === 'collapse' ? `7시 붕괴 (${rec.lastFight})` : `${rec.lastFight} · ${rec.lastFoes}`;
     stats.deathAt[k] = (stats.deathAt[k] || 0) + 1;
@@ -384,6 +393,13 @@ function playRun(party, seed, stats) {
   if (G.clock >= RULES.dawn) rec.over6 = true;
   if (rec.won) rec.bossClock[3] = G.clock;
   for (const k of G.duoSet) stats.duoRuns[k] = (stats.duoRuns[k] || 0) + 1;
+  // 끝없는 탑 (docs/05 §12): 「새벽」을 깬 판은 그대로 이어 올라 도달 층을 잰다 (--no-endless로 끔)
+  if (rec.won && ENDLESS_ON) {
+    enterEndless(false);
+    drive(rec, stats, 6000);
+    rec.endless = S.G.endless.floor; rec.endlessBosses = S.G.endless.bosses;
+    rec.endlessEnd = `${rec.lastFight} · ${rec.lastFoes}`;
+  }
   return rec;
 }
 
@@ -467,6 +483,15 @@ if (process.env.DBG) { const col = recs.filter(r => r.why === "collapse"); conso
 console.log(`| 한 턴 피해 100+ (판당, 전체 / 「새벽」까지 간 판 / 이긴 판) | ${out.bigTurns.toFixed(2)} / ${avg(recs.filter(r => r.bossReach[3]).map(r => r.big)).toFixed(2)} / ${out.bigTurnsWin.toFixed(2)} | 3~5 |`);
 console.log(`| 최고의 한 턴 (판당 평균) | ${out.bestTurn.toFixed(0)} | |`);
 console.log(`| 패시브 ③ 폭발 (판당, 턴 기준) | ${out.bursts.toFixed(1)} | |`);
+// 끝없는 탑: 「새벽」을 깬 판이 이어 올라 닿은 층 (상한 ENDLESS_CAP)
+{ const es = recs.filter(r => r.endless != null).map(r => r.endless).sort((x, y) => x - y);
+  out.endlessAvg = avg(es); out.endlessMedian = es[Math.floor(es.length / 2)] ?? NaN;
+  const bk = [[0, 4], [5, 9], [10, 19], [20, 999]].map(([lo, hi]) => `${hi > 99 ? `${lo}+` : `${lo}~${hi}`} ${pct(es.filter(x => x >= lo && x <= hi).length, es.length)}`).join(' · ');
+  const ends = {}; for (const r of recs) if (r.endlessEnd) ends[r.endlessEnd] = (ends[r.endlessEnd] || 0) + 1;
+  out.endlessEnds = ends;
+  if (es.length) console.log(`| 끝없는 탑 층 분포 | ${bk} | |`);
+  if (es.length) console.log(`| 끝없는 탑에서 멈춘 곳 (상위 3) | ${Object.entries(ends).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([k, v]) => `${k} ${v}`).join(', ')} | |`);
+  if (es.length) console.log(`| 끝없는 탑 도달 층 (이긴 판 ${es.length}개: 평균 / 중앙 / 최고) | ${out.endlessAvg.toFixed(1)} / ${out.endlessMedian} / ${es[es.length - 1]} | 10~20 |`); }
 
 console.log('\n막별 전투 길이 (평균 턴)');
 console.log(Object.entries(stats.fightTurns).sort().map(([k, [t, n]]) => `${k} ${(t / n).toFixed(1)}턴(${n})`).join(' · '));

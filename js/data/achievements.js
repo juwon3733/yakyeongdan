@@ -9,7 +9,7 @@ const epSeen = P => Object.keys(P.epSeen).length;
 const maxStars = P => Math.max(0, ...Object.values(P.owned).map(o => o.stars || 0));
 const mxMax = (P, lv) => Object.values(P.mxp || {}).filter(x => x >= lv).length;
 
-export const ACH_GROUP = { play: '플레이', collect: '수집', depth: '밤의 깊이', daily: '매일의 밤' };
+export const ACH_GROUP = { play: '플레이', collect: '수집', depth: '밤의 깊이', daily: '매일의 밤', endless: '끝없는 탑' };
 
 export const ACHIEVEMENTS = [
   // 플레이
@@ -69,4 +69,10 @@ export const ACHIEVEMENTS = [
   { id: 'daily1', g: 'daily', name: '오늘의 밤', text: '매일의 밤을 처음 깬다.', r: 10, test: P => P.life.dailyWins >= 1 },
   { id: 'daily7', g: 'daily', name: '일주일의 야경단', text: '매일의 밤을 7번 깬다.', r: 20, test: P => P.life.dailyWins >= 7 },
   { id: 'daily30', g: 'daily', name: '한 달의 야경단', text: '매일의 밤을 30번 깬다.', r: 30, test: P => P.life.dailyWins >= 30 },
+  // 끝없는 탑
+  { id: 'end10', g: 'endless', name: '새벽 너머', text: '끝없는 탑 10층에 닿는다.', r: 10, test: P => (P.rec.endlessBest || 0) >= 10 },
+  { id: 'end20', g: 'endless', name: '구름보다 높이', text: '끝없는 탑 20층에 닿는다.', r: 20, test: P => (P.rec.endlessBest || 0) >= 20 },
+  { id: 'end30', g: 'endless', name: '별보다 높이', text: '끝없는 탑 30층에 닿는다.', r: 30, test: P => (P.rec.endlessBest || 0) >= 30 },
+  { id: 'endboss3', g: 'endless', name: '탑 위의 보스', text: '끝없는 탑에서 보스를 모두 3번 쓰러뜨린다.', r: 15, test: P => (P.rec.endlessBosses || 0) >= 3 },
+  { id: 'end3star', g: 'endless', name: '별 셋의 뚝심', text: '★3 동료만으로 끝없는 탑 10층에 닿는다.', r: 20, test: fact('endless3star') },
 ];

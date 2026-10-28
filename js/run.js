@@ -103,12 +103,12 @@ export function moonFx(k) {
 }
 // 시간 카드 비용(분): 달(초승 8) · 멈춘 시계탑(0) · 엘레오노르(−5) · 엘레오노르 「멈춘 자정」이 터진 턴(0) · 거꾸로 도는 시계 +10
 export const timeCost = () => relicFlag('timeCardFree') || S.C?.timeFree ? 0 : Math.max(0, (moonFx('timeCost') ?? RULES.timeCard) - partySum('timeMinus') + relicSum('timeCardAdd'));
-export const isDawn = () => S.G.clock >= dawnAt() && !relicFlag('noDawn');
+export const isDawn = () => S.G.clock >= dawnAt() && !relicFlag('noDawn') && !S.G.endless;   // 끝없는 탑은 여명 대신 여명 게이지(js/endless.js)
 
 // 7시가 되면 탑이 무너진다 (어떤 행동 뒤든 main.js가 부른다)
 export function checkCollapse() {
   const G = S.G;
-  if (!G || G.screen === 'result' || G.clock < RULES.collapse) return false;
+  if (!G || G.endless || G.screen === 'result' || G.clock < RULES.collapse) return false;   // 끝없는 탑은 무너지지 않는다(대신 여명 게이지)
   endRun(false, 'collapse');
   return true;
 }

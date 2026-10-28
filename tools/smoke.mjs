@@ -29,7 +29,7 @@ const errors = [];
 const browser = await chromium.launch();
 const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; };
 const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false,
-  migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, affix: false, ach: false, history: false,
+  migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, affix: false, ach: false, history: false, endless: false, climbOn: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
   ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false,
   tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false, pwa: false, backup: false };
@@ -287,7 +287,7 @@ try {
         pulls: 12, pity5: 12, pity4: 0, firstTen: true, got5: false, seenDuos: ['iris+marta'], runs: 2, wins: 0, best: null, sseed: 7, epProg: {}, epSeen: {}, bondOpen: [], bondSeen: [] });
       return { v: P.v, noel: P.owned.noel?.stars, dust: P.dust, rec: !!P.rec, packs: typeof P.packs };
     });
-    if (mig.v === 3 && mig.noel === 2 && mig.dust === 3 && mig.rec && mig.packs === 'object') seen.migrate = true; else fail(`v1 저장 이어받기 실패 ${JSON.stringify(mig)}`);
+    if (mig.v === 4 && mig.noel === 2 && mig.dust === 3 && mig.rec && mig.packs === 'object') seen.migrate = true; else fail(`v1 저장 이어받기 실패 ${JSON.stringify(mig)}`);
     // 초심자: 30번 안에 ★5 → 고르기 화면
     await page.evaluate(() => { window.__yk.shards(300); window.__yk.S.view = 'summon'; window.__yk.render(); });
     for (let k = 0; k < 3 && !(await page.evaluate(() => window.__yk.P().pick5)); k++) {
@@ -365,6 +365,49 @@ try {
       f.hp = 0; m.killCheck(f); window.__yk.render(); r.n = C.all.length; r.small = C.all.slice(2).every(g => g.small && g.name.startsWith('작은')); return r; });
     if (/숨은/.test(ax1.name) && ax1.noPick && ax1.chips === 3 && ax1.aura && ax2 && !ax2.hidden && ax2.guarded && ax2.n === 4 && ax2.small) { seen.affix = true; console.log(`affix: ${ax1.name} · 숨음 첫 턴 · 수호 방어 · 분열 → 작은 둘`); }
     else fail(`적 속성 실패 ${JSON.stringify({ ax1, ax2 })}`);
+    await page.close();
+  }
+  // 끝없는 탑 (docs/05 §12): 「새벽」을 한 번 깬 프로필 → 본부 [끝없는 탑] → 새로 시작 → 관문(강적)을 넘어 다음 층 묶음 → 결과(층·별 조각·기록)
+  //   그리고 「새벽」을 깬 결과 화면의 [더 오르기]로 같은 판이 이어 오른다
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    page.on('pageerror', e => errors.push(`[endless] ${e.message}`));
+    page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[endless] ${m.text()}`); });
+    await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+    await page.goto(`http://127.0.0.1:${port}/?notut&seed=7`);
+    await page.evaluate(() => { window.__yk.reset(); window.__yk.wins(1); window.__yk.S.view = 'base'; window.__yk.render(); });
+    await page.click('[data-view="party"][data-mode="endless"]');
+    for (const k of ['marta', 'iris', 'brick']) await page.click(`[data-pick="${k}"]`);
+    await page.click('[data-start]');
+    const st = await page.evaluate(() => { const G = window.__yk.S.G; return { act: G.act, e: !!G.endless, gate: G.map.rows.at(-1)[0], chip: !!document.querySelector('.endchip'), deck: G.deck.length }; });
+    let steps = 0;
+    while (steps++ < 80) {
+      const fl = await page.evaluate(() => window.__yk.S.G.endless?.floor || 0);
+      const sc = await page.evaluate(() => window.__yk.S.G.screen);
+      if (fl >= 6 && sc === 'map') break;
+      if (sc === 'combat') await page.evaluate(() => window.__yk.win());
+      else if (sc === 'result') break;
+      else if (!(await advance(page, 'endless'))) break;
+    }
+    const mid = await page.evaluate(() => { const G = window.__yk.S.G; return { fl: G.endless.floor, seg: G.endless.seg, rules: G.endless.rules.length, label: document.querySelector('.maphead h2')?.textContent || '', strs: G.mods ? Object.keys(G.mods).length : 0 }; });
+    // 모두 쓰러진 것으로 끝낸다
+    await page.evaluate(() => { const { S } = window.__yk; S.G.won = false; S.G.why = 'down'; S.G.screen = 'result'; window.__yk.render(); });
+    const r = await page.evaluate(() => { const P = window.__yk.P(); return { best: P.rec.endlessBest, combo: Object.values(P.rec.endlessCombo)[0], floorTxt: document.querySelector('.endfloor')?.textContent || '', shards: [...document.querySelectorAll('.shards td')].some(td => /탑 위/.test(td.textContent)) }; });
+    if (st.e && st.act === 4 && st.gate === 'elite' && st.chip && st.deck === 15 && mid.seg === 2 && mid.rules === 2 && /끝없는 탑/.test(mid.label) && r.best === mid.fl && r.combo === mid.fl && r.shards && r.floorTxt.startsWith(String(mid.fl))) {
+      seen.endless = true; console.log(`endless: 새로 시작 → ${mid.fl}층(층 묶음 ${mid.seg}, 규칙 ${mid.rules}개) → 결과·최고 ${r.best}층`);
+    } else fail(`끝없는 탑 ${JSON.stringify({ st, mid, r })}`);
+    await page.click('[data-home]');
+    await page.click('[data-view="records"]');
+    if (!(await page.$('text=최고'))) fail('기록 화면에 끝없는 탑 줄이 없음');
+    // 「새벽」을 깬 판의 결과 → [더 오르기]
+    await page.evaluate(() => { window.__yk.S.view = 'party'; window.__yk.S.mode = null; window.__yk.S.picked = []; window.__yk.render(); });
+    for (const k of ['marta', 'iris', 'brick']) await page.click(`[data-pick="${k}"]`);
+    await page.click('[data-start]');
+    await page.evaluate(() => { const G = window.__yk.S.G; G.won = true; G.why = 'win'; G.bossKills = 3; G.clock = 340; G.act = 3; G.screen = 'result'; window.__yk.render(); });
+    await page.click('[data-endless]');
+    const co = await page.evaluate(() => { const G = window.__yk.S.G; return { e: !!G.endless, fresh: G.endless?.fresh, act: G.act, screen: G.screen, start: G.endless?.startClock }; });
+    if (co.e && co.fresh === false && co.act === 4 && co.screen === 'map' && co.start === 340) { seen.climbOn = true; console.log('climbOn: 「새벽」 결과 → [더 오르기] → 같은 판으로 끝없는 탑'); }
+    else fail(`더 오르기 ${JSON.stringify(co)}`);
     await page.close();
   }
   // 매일의 밤 → 오늘의 시드·규칙으로 출발 → 이겨서 결과(첫 격파 별 조각 +15, 업적 띠, 숙련도) → 기록 화면 최근 판 · 도감 업적 탭

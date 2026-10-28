@@ -1,5 +1,6 @@
 // 전투 엔진: 턴, 손패, 적 1~3마리(의도·노림·상태), 동료별 체력·방어·상태, 대열, 쓰러짐, 연계·듀오, 패시브, 저주.
 import { S, addTime, rewind, timeCost, moonFx, logMsg, isDawn, depthRule, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll } from './run.js';
+import { endlessHp, endlessStr } from './endless.js';
 import { hasRelic, relicSum, relicFlag, rollRelic } from './relics.js';
 import { RELICS } from './data/relics.js';
 import { effects as E, draw } from './effects.js';
@@ -38,7 +39,7 @@ export function startCombat(ids, kind) {
   const G = S.G;
   // 밤의 깊이: 강적·보스·일반 적 체력 +%
   const hpMul = (1 + (depthRule(kind === 'elite' ? 'eliteHp' : kind === 'boss' ? 'bossHp' : 'fightHp') || 0))
-    * (G.tutorial || G.episode ? 1 : RULES.foeHpMul?.[G.act]?.[kind] || 1);
+    * (G.tutorial || G.episode ? 1 : G.endless ? endlessHp(kind) : RULES.foeHpMul?.[G.act]?.[kind] || 1);
   const foes = ids.map((k, i) => makeFoe(k, i, hpMul));
   rollAffixes(foes, kind);
   const C = S.C = {
@@ -93,7 +94,7 @@ export function startCombat(ids, kind) {
 function makeFoe(k, i, hpMul = 1) {
   const d = FOE[k], hp = Math.round(d.hp * hpMul);
   S.G.foesMet?.add(k);
-  return { key: k, i, ...d, pat: d.pat.slice(), hp, max: hp, pi: 0, block: 0, str: isDawn() ? RULES.dawnStartStr : 0, poison: 0, weak: 0, vuln: 0, bleed: 0, burn: 0,
+  return { key: k, i, ...d, pat: d.pat.slice(), hp, max: hp, pi: 0, block: 0, str: (isDawn() ? RULES.dawnStartStr : 0) + (S.G.endless ? endlessStr() : 0), poison: 0, weak: 0, vuln: 0, bleed: 0, burn: 0,
     armor: d.armor || 0, acts: d.acts || 1, affixes: [], ax: null, baseName: d.name, p2: false, cyc: 0, dead: false, lastHitter: null, skip: 0, dim: 0, bounty: 0, aimOverride: null, aimedTurn: false, stolen: [] };
 }
 
@@ -542,7 +543,7 @@ function foeAct(f) {
   }
   else if (it.t === 'sum') {
     if (livingFoes().length < 3 && C.all.length < 6) {
-      const g = makeFoe(it.id, C.all.length, (1 + (depthRule('fightHp') || 0)) * (S.G.tutorial || S.G.episode ? 1 : RULES.foeHpMul?.[S.G.act]?.fight || 1)); g.str = Math.max(g.str, f.str > 0 ? 0 : g.str);
+      const g = makeFoe(it.id, C.all.length, (1 + (depthRule('fightHp') || 0)) * (S.G.tutorial || S.G.episode ? 1 : S.G.endless ? endlessHp('fight') : RULES.foeHpMul?.[S.G.act]?.fight || 1)); g.str = Math.max(g.str, f.str > 0 ? 0 : g.str);
       C.all.push(g); logMsg(`${f.name}이(가) <b>${g.name}</b>을(를) 불렀다`);
       pushFx({ kind: 'summon', i: f.i, to: g.i });
     } else { f.block += 6; logMsg(`${f.name} 방어 6`); }
