@@ -58,7 +58,8 @@ export function skipFx() {
   const anims = [...layer.getAnimations({ subtree: true }), ...tracked];
   tracked.clear();
   for (const a of anims) { try { if (Number.isFinite(a.effect?.getComputedTiming().endTime)) a.finish(); } catch (e) { /* 끝낼 수 없는 연출 */ } }
-  layer.querySelectorAll('.jbanner,.jclimb,.jclock,.jwarm').forEach(x => x.remove());
+  layer.querySelectorAll('.jbanner,.jclimb,.jclock,.jwarm,.jstop,.jbig,.jstolen').forEach(x => x.remove());
+  freeze = 0;
   return left.length > 0;
 }
 export const fxBusy = () => timers.size > 0;
@@ -104,6 +105,7 @@ export function afterRender(events = []) {
   const P = pre; pre = null;
   if (calmNow()) {   // 애니메이션 줄이기: 소리만
     for (const e of events) { soundOf(e); if (e.kind === 'phase') showPhase(e.name, e.text); if (e.kind === 'burst') showBurst(e.who, e.name); }
+    setCounter(S.C ? S.C.dmgTurn : 0, false);
     if (S.G && S.view === 'run') { shown.seed = S.G.seed; shown.act = S.G.act; }
     dropFrozen(0);
     return;
@@ -114,12 +116,13 @@ export function afterRender(events = []) {
   for (const e of events) {
     switch (e.kind) {
       case 'combat':
+        acc = 0; stopped = 0; at(t, () => setCounter(0, false));
         if (e.boss) { at(t, () => { showBoss(e.boss, e.line); sfx('dawn', { vol: .6 }); }); t += 1100; }
         break;
       case 'play':
         played = e;
         flyCard(e, P, t); t += 170; break;
-      case 'hitFoe': { const s = t; at(s, () => hitFoe(e, P)); mark('f:' + e.i, s); t += foePhase ? 90 : 75; break; }
+      case 'hitFoe': { const s = t; at(s, () => hitFoe(e, P)); mark('f:' + e.i, s); t += foePhase ? 90 : 75; if (!e.counter) t = addDmg((e.dmg || 0) + (e.bleed || 0), s, t); break; }
       case 'kill': { const s = t + 40; at(s, () => killFoe(e, P)); t += 160; break; }
       case 'block': at(t, () => blockGain(e)); t += 50; break;
       case 'heal': at(t, () => healFx(e)); mark('a:' + e.id, t); t += 60; break;
@@ -132,11 +135,19 @@ export function afterRender(events = []) {
         foePhase = true;
         discardHand(P, e.keep || [], t);
         t += 220; { const s = t; at(s, () => banner('적의 차례', 'foe')); } t += 420; break;
-      case 'tick': { const s = t; at(s, () => tickFx(e)); mark('f:' + e.i, s); t += 200; break; }
+      case 'tick': { const s = t; at(s, () => tickFx(e)); mark('f:' + e.i, s); t += 200; t = addDmg(e.dmg || 0, s, t); break; }
+      // 적 쪽 연출 (짝 잃음·도전 반격·회복·부르기·훔치기·노림 바꾸기)
+      case 'rage': at(t, () => rageFx(e)); t += 220; break;
+      case 'duel': at(t, () => duelFx(e)); t += 160; break;
+      case 'mend': at(t, () => mendFx(e)); t += 200; break;
+      case 'summon': at(t, () => summonFx(e)); t += 260; break;
+      case 'steal': at(t, () => stealFx(e)); t += 240; break;
+      case 'retarget': at(t, () => retargetFx(e)); t += 220; break;
       case 'foeAct': { t += 80; const s = t; at(s, () => foeActFx(e)); t += e.t === 'atk' || e.t === 'mix' ? 150 : 260; break; }
       case 'hurt': { const s = t; at(s, () => hurtFx(e)); mark('a:' + e.id, s); t += 160; break; }
       case 'turn':
         if (foePhase) t += 120;
+        acc = 0; stopped = 0; { const s = t; at(s, () => setCounter(0, true)); }
         { const s = t, n = e.n; at(s, () => { banner(n === 1 ? '전투 시작' : `${n}턴 · 내 차례`, 'me'); sfx('turn'); }); }
         turnT = t + 180; t += 200; break;
     }
@@ -150,6 +161,7 @@ export function afterRender(events = []) {
   if (G && G.screen === 'result' && P && P.screen !== 'result') countUp(frozen ? t + 650 : 0);
   if (G && S.view === 'run' && G.screen === 'map' && !G.tutorial && P && (P.seed !== G.seed || P.act !== G.act)) at(P.seed !== G.seed ? 0 : t + 200, () => climb(G.act));
   if (G && S.view === 'run') { shown.seed = G.seed; shown.act = G.act; }
+  if (!S.C) at(frozen ? t + 650 : 0, () => setCounter(0, false));
   dropFrozen(frozen ? t + 650 : 0);
 }
 function dropFrozen(ms) {
@@ -294,7 +306,13 @@ function hitFoe(e, P) {
   const r = el ? rel(el) : P?.foes.get(e.i)?.r; if (!r) return;
   const img = el?.querySelector('img'), ir = img ? rel(img) : r;
   const x = ir.cx, y = ir.cy, col = colOf(e.actor), st = styleOf(e);
-  if (S.C?.all?.[e.i]?.thorns && e.dmg && e.actor) at(60, () => sfx('thorns', { vol: .7 }));
+  if (S.C?.all?.[e.i]?.thorns && e.dmg && e.actor) {
+    at(60, () => sfx('thorns', { vol: .7 }));
+    // 가시: 적에게서 친 동료 쪽으로 가시가 튄다
+    const a = allyEl(e.actor);
+    if (a) { const ar = rel(a.querySelector('img') || a); for (let k = 0; k < 5; k++) add({ k: 'line', x0: x, y0: y + rnd(-8, 8), x1: ar.cx + rnd(-6, 6), y1: ar.cy + rnd(-6, 6), col: '#c0d0ff', speed: 9, life: 9, s: 1 }); }
+    ring(x, y, '#c0d0ff', 10, 24, 8);
+  }
   if (st === 'slash') slashFx(x, y, col);
   else if (st === 'boom') { const from = e.actor && allyEl(e.actor); if (from) tracer(rel(from).cx, rel(from).y + 20, x, y, '#ffd890'); boomFx(x, y); }
   else if (st === 'star') { const from = allyEl('sion'); if (from) starTrail(rel(from).cx, rel(from).y + 14, x, y, col); sparks(x, y, '#fff6c8', 10, 1.6); }
@@ -445,6 +463,106 @@ function climb(act) {
   sfx('move');
 }
 
+// ---------- 터지는 턴: 한 턴 누적 피해 + 100/200을 넘는 순간 히트스톱 ----------
+let acc = 0, stopped = 0, ctr = null;
+const STOPS = [100, 200];
+// 사건 시간표에 피해를 더하고, 문턱을 넘으면 그 자리에서 잠깐 멈춘다. 새 시간(t)을 돌려준다.
+function addDmg(n, s, t) {
+  if (!n) return t;
+  acc += n; const v = acc;
+  at(s, () => setCounter(v, true));
+  for (const lv of STOPS) if (v >= lv && stopped < lv) { stopped = lv; const at0 = t; at(at0, () => hitStop(lv, v)); t += lv >= 200 ? 320 : 260; }
+  return t;
+}
+function setCounter(v, anim) {
+  if (!layer) return;
+  const on = v > 0 && !!S.C;
+  if (!ctr) { ctr = document.createElement('div'); ctr.className = 'jdmg'; ctr.innerHTML = '<small>이번 턴</small><b></b>'; }
+  if (!on) { ctr.remove(); return; }
+  if (!ctr.isConnected) layer.append(ctr);
+  const b = ctr.querySelector('b'), old = +b.textContent || 0;
+  b.textContent = v;
+  ctr.className = `jdmg ${v >= 200 ? 'l3' : v >= 100 ? 'l2' : v >= 50 ? 'l1' : ''}`;
+  if (anim && v > old) { void ctr.offsetWidth; ctr.classList.add('bump'); }
+}
+// 0.2~0.3초: 연출 층을 멈추고 화면을 하얗게, 큰 숫자. 흔들림 끔이면 흔들지 않는다.
+function hitStop(lv, v) {
+  const anims = layer.getAnimations({ subtree: true }).filter(a => a.playState === 'running');
+  for (const a of anims) a.pause();
+  freeze = performance.now() + (lv >= 200 ? 260 : 190);
+  const w = document.createElement('div'); w.className = 'jstop'; layer.append(w);
+  w.animate([{ opacity: 0 }, { opacity: .85, offset: .15 }, { opacity: 0 }], { duration: lv >= 200 ? 300 : 220, easing: 'steps(4)' }).onfinish = () => w.remove();
+  const big = document.createElement('div'); big.className = 'jbig';
+  const who = S.C ? [...S.C.burstTurn][0] : null;
+  if (who) big.style.setProperty('--c', colOf(who));
+  big.innerHTML = `${lv}+<small>${lv >= 200 ? '대폭발 턴' : '터지는 턴'}</small>`;
+  layer.append(big);
+  big.animate([
+    { transform: 'translate(-50%,-50%) scale(2.2)', opacity: 0 },
+    { transform: 'translate(-50%,-50%) scale(.95)', opacity: 1, offset: .12 },
+    { transform: 'translate(-50%,-50%) scale(1)', opacity: 1, offset: .7 },
+    { transform: 'translate(-50%,-60%) scale(1)', opacity: 0 },
+  ], { duration: 1000, easing: 'steps(12)' }).onfinish = () => big.remove();
+  if (SET.shake) shake();
+  sfx('cannon', { rate: lv >= 200 ? .55 : .7, vol: .9 }); sfx('burst', { vol: .7 });
+  setTimeout(() => { for (const a of anims) { try { a.play(); } catch (e) { /* 끝난 연출 */ } } }, lv >= 200 ? 260 : 190);
+}
+let freeze = 0;
+
+// ---------- 적 쪽 연출 ----------
+const foeR = i => { const el = foeEl(i); if (!el) return null; const img = el.querySelector('img'); return { el, r: img ? rel(img) : rel(el) }; };
+function rageFx(e) {
+  const q = foeR(e.i); if (!q) return;
+  pulse(q.el, 'jrage', 500);
+  for (let k = 0; k < 18; k++) add({ k: 'dot', x: rnd(q.r.x, q.r.x + q.r.w), y: q.r.y + q.r.h, vx: rnd(-.3, .3), vy: rnd(-2, -.8), g: 0, life: rnd(18, 28), col: k % 2 ? '#ff5a3a' : '#ffb060', s: 2 });
+  ring(q.r.cx, q.r.cy, '#ff5a3a', 8, 40, 14);
+  num(q.r.cx, q.r.y, `힘 +${e.v}`, 'buf', 14);
+  sfx('mana', { rate: .55 });
+}
+function duelFx(e) {
+  const q = foeR(e.i), a = allyEl(e.id); if (!q || !a) return;
+  const ar = rel(a.querySelector('img') || a);
+  tracer(q.r.cx, q.r.cy, ar.cx, ar.cy, '#e8f0ff'); slashFx(ar.cx, ar.cy, '#c9d2f0');
+  num(q.r.cx, q.r.y - 4, '도전!', 'buf', 9);
+  sfx('slash', { rate: .8 });
+}
+function mendFx(e) {
+  const q = foeR(e.i), t = foeR(e.to); if (!q) return;
+  const tr = t ? t.r : q.r;
+  if (t && e.to !== e.i) add({ k: 'line', x0: q.r.cx, y0: q.r.cy, x1: tr.cx, y1: tr.cy, col: '#7dff9a', speed: 5, life: 16, s: 2 });
+  for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(tr.x + 4, tr.x + tr.w - 4), y: rnd(tr.cy, tr.y + tr.h), vx: 0, vy: rnd(-1.3, -.5), g: 0, life: 26, col: k % 2 ? '#7dff9a' : '#e8ffe8', s: 1 });
+  ring(tr.cx, tr.cy, '#7dff9a', 6, 30, 12);
+  num(tr.cx, tr.y + 6, `+${e.v}`, 'heal', 10);
+}
+function summonFx(e) {
+  const q = foeR(e.i); if (q) { ring(q.r.cx, q.r.cy, '#f0d040', 4, 34, 14); sparks(q.r.cx, q.r.cy, '#f0d040', 12, 1.6); }
+  const t = foeEl(e.to); if (!t) return;
+  const tr = rel(t.querySelector('img') || t);
+  pulse(t, 'jsummon', 450);
+  for (let k = 0; k < 3; k++) ring(tr.cx, tr.y + tr.h - 4, k ? '#b48ae8' : '#f0d040', 2 + k * 6, 30 + k * 8, 16 + k * 4);
+  if (q) add({ k: 'line', x0: q.r.cx, y0: q.r.y, x1: tr.cx, y1: tr.cy, col: '#f0d040', speed: 7, life: 12, s: 1 });
+}
+function stealFx(e) {
+  const q = foeR(e.i), pile = app()?.querySelector('.endcol .note'); if (!q) return;
+  const from = pile ? rel(pile) : { cx: q.r.cx - 120, cy: q.r.cy + 120 };
+  const c = document.createElement('div'); c.className = 'jstolen';
+  c.style.left = `${from.cx - 8}px`; c.style.top = `${from.cy - 11}px`; layer.append(c);
+  c.animate([
+    { transform: 'translate(0,0) rotate(0)', opacity: 1 },
+    { transform: `translate(${(q.r.cx - from.cx) * .5}px,${(q.r.cy - from.cy) * .5 - 30}px) rotate(180deg)`, opacity: 1, offset: .5 },
+    { transform: `translate(${q.r.cx - from.cx}px,${q.r.cy - from.cy}px) rotate(360deg) scale(.4)`, opacity: 0 },
+  ], { duration: 420, easing: 'steps(10)' }).onfinish = () => c.remove();
+  setTimeout(() => { ring(q.r.cx, q.r.cy, '#b48ae8', 4, 24, 10); num(q.r.cx, q.r.y, '훔침', 'buf', 8); }, 400);
+}
+function retargetFx(e) {
+  const q = foeR(e.i); if (!q) return;
+  ring(q.r.cx, q.r.cy, '#f0d040', 6, 26, 10);
+  const a = e.to && allyEl(e.to); if (!a) return;
+  const ar = rel(a.querySelector('img') || a);
+  add({ k: 'line', x0: q.r.cx, y0: q.r.cy, x1: ar.cx, y1: ar.cy, col: '#ff6a7a', speed: 8, life: 18, s: 1 });
+  setTimeout(() => { pulse(a, 'jflash', 260); ring(ar.cx, ar.cy, '#ff6a7a', 4, 20, 10); }, 120);
+}
+
 // ---------- DOM 작은 것 ----------
 function pulse(el, cls, ms) {
   if (!el) return;
@@ -471,6 +589,7 @@ const parts = [];
 let raf = 0;
 function add(p) { p.age = 0; parts.push(p); if (!raf) raf = requestAnimationFrame(loop); }
 function loop() {
+  if (performance.now() < freeze) { raf = requestAnimationFrame(loop); return; }   // 히트스톱: 입자도 잠깐 멈춤
   g.clearRect(0, 0, cv.width, cv.height);
   for (let i = parts.length - 1; i >= 0; i--) {
     const p = parts[i]; p.age++;

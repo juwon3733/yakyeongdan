@@ -11,6 +11,7 @@ import { esc, cardHTML, face, hpBar, charSrc } from './common.js';
 import { kwTip, kwOne } from '../data/keywords.js';
 import { foeArt } from '../art.js';
 import { SET } from '../settings.js';
+import { burstProgHTML } from './burstprog.js';
 
 // 동료별 고유 수치 표시
 const STAT = {
@@ -44,6 +45,10 @@ const foeTraits = f => [
   f.thorns ? [`가시 ${f.thorns}`, `이 적을 친 동료가 ${f.thorns} 피해를 받는다.`] : null,
   f.deathBoom ? ['쓰러지며 폭발', `쓰러질 때 모든 동료에게 ${f.deathBoom} 피해.`] : null,
   f.stolen?.length ? [`훔친 카드 ${f.stolen.length}`, '이 적을 쓰러뜨리면 훔친 카드가 버린 더미로 돌아온다.'] : null,
+  f.huntBurst ? ['③ 사냥', '③이 터진 동료를 그 턴 노린다.'] : null,
+  f.heavyTime ? ['시계 감기', `내 턴 피해가 ${f.heavyTime.over} 이상이면 밤 시계를 ${f.heavyTime.add}분 더 돌린다.`] : null,
+  f.twinRage ? ['짝', `짝이 쓰러지면 남은 쪽 힘 +${f.twinRage}.`] : null,
+  f.duel ? [`도전 ${f.duel}`, `가장 많이 친 동료를 노리고, 그 동료에게 맞으면 ${f.duel} 반격.`] : null,
   f.phase2 && !f.p2 ? ['2단계', `체력이 ${Math.round(f.phase2.at * 100)}% 아래가 되면 모습이 바뀐다.`] : null,
 ].filter(Boolean).map(([n, t]) => `<span class="chip trait" data-tip="${esc(`${n}: ${t}`)}">${n}</span>`).join('');
 const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f.dim * 100) + '%' : 0, '빛 −', '#f0d040') + chip(f.bounty, '현상금', '#e0a050') + chip(f.block, '방어', 'var(--moon)') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
@@ -51,6 +56,9 @@ const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f
 
 // 세바스·예약: 턴 끝에 남길 수 있는 카드 수 (있으면 빠른 사용 대신 카드 → [남기기]를 고를 수 있게 두 번 누르기)
 export const keepSlots = () => (alive('sebas') ? CHARACTERS.sebas.passive.keepCard || 0 : 0) + (S.C?.reserve || 0);
+
+// 노림 이름: 대신 맞기 > 안개 마녀 ③ 사냥 > 노림 바꾸기 > 기본
+const aimKey = f => { const C = S.C; if (C.taunt) return 'taunt'; if (f.huntBurst && [...C.burstTurn].some(p => alive(p))) return 'burst'; return f.aimOverride || f.aim || RULES.defaultAim; };
 
 export function combatView() {
   const G = S.G, C = S.C;
@@ -69,7 +77,7 @@ export function combatView() {
         <img class="px" src="${charSrc(p)}" alt="">
         <span class="nm">${c.name}</span>
         ${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : `${M.hp}/${M.max}`}${blk ? ` <b class="blk">방어 ${blk}</b>` : ''}</span>
-        <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span></button>${swap}`;
+        <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span>${M.down ? '' : burstProgHTML(p)}</button>${swap}`;
   }).join('');
   const many = C.all.length > 1;
   const foes = C.all.map(f => {
@@ -78,7 +86,7 @@ export function combatView() {
     // 공격 의도는 흔들리고, 센 공격(한 번에 15 이상)은 붉게 빨리 (js/juice.js가 공격 직전 강조)
     const ic = atk ? `atk ${+atk[1] * (+atk[2] || 1) >= 15 ? 'big' : ''}` : '';
     return `<button type="button" class="foe ${many ? 'sm' : ''} ${wantFoe ? 'tg' : ''}" data-foe="${f.i}" data-fi="${f.i}">
-        <span class="intent ${ic}" data-tip="${esc(`다음 행동. ${aim ? `노림: ${AIM_NAME[C.taunt ? 'taunt' : f.aim || RULES.defaultAim]} (얼굴이 맞을 동료).` : ''}`)}">${it}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[C.taunt ? 'taunt' : f.aim || RULES.defaultAim]}</span>`}` : ''}</span>
+        <span class="intent ${ic}" data-tip="${esc(`다음 행동. ${aim ? `노림: ${AIM_NAME[aimKey(f)]} (얼굴이 맞을 동료).` : ''}`)}">${it}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[aimKey(f)]}</span>`}` : ''}</span>
         <img class="px" src="${foeArt(f) || sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
         <span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span>

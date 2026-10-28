@@ -182,8 +182,11 @@ export function foeDmg(f, v, id) {
 export function intentText(f) {
   const it = intentOf(f), id = intentHits(it) ? aimTarget(f) : null, v = foeDmg(f, it.v || 0, id);
   const two = f.acts > 1 ? ` <span class="two">행동 ×${f.acts}</span>` : '';
+  if (it.t === 'time') return `밤 시계 +${timeOf(f, it)}분` + two;
   return one(it, v) + two;
 }
+// 시계태엽 천사 (docs/12 §4): 이번 턴 피해가 heavyTime.over 이상이면 시계를 더 돌린다
+const timeOf = (f, it) => it.v + (f.heavyTime && (S.C?.dmgTurn || 0) >= f.heavyTime.over ? f.heavyTime.add : 0);
 function one(it, v) {
   if (it.t === 'atk') return `공격 ${v}${it.n > 1 ? '×' + it.n : ''}`;
   if (it.t === 'blk') return `방어 ${it.v}`;
@@ -207,7 +210,11 @@ export function aimTarget(f, k = 0) {
   if (C.taunt && alive(C.taunt)) return C.taunt;
   // 시그룬 「비상」①: 공중이면 단일 공격의 대상에서 빠진다(혼자 남으면 예외)
   const L = C.air && A.length > 1 ? A.filter(p => p !== 'sigrun') : A;
+  // 안개 마녀 (docs/12 §4): 이번 턴 ③이 터진 동료를 노린다
+  if (f.huntBurst && !f.aimOverride) { const b = [...C.burstTurn].find(p => L.includes(p)); if (b) return b; }
   const a = f.aimOverride || f.aim || RULES.defaultAim;
+  // 구름 기사단장 2단계 「도전」: 이번 턴(아직 없으면 지난 턴) 피해를 가장 많이 준 동료
+  if (a === 'top') { const dm = Object.keys(C.dmgBy).length ? C.dmgBy : C.dmgPrev || {}; const t = L.reduce((x, y) => (dm[y] || 0) > (dm[x] || 0) ? y : x); return t; }
   if (a === 'cycle') return L[f.cyc % L.length];
   if (a === 'dawn') { const it = intentOf(f); return it.n > 1 ? L[k % L.length] : L.reduce((x, y) => member(y).hp > member(x).hp ? y : x); }
   if (a === 'back') return L[L.length - 1];
@@ -229,12 +236,16 @@ export function dmgToFoe(f, n, actor, pierceBlock = false) {
   pushFx({ kind: 'hitFoe', i: f.i, dmg: d, blocked, bleed, actor, crit: f.vuln > 0, slash: !!C.curSlash });
   // 가시(등불 장어·톱니 기사): 친 동료가 피해를 받는다
   if (f.thorns && d + blocked > 0 && actor && alive(actor) && !C.spiritHit) hurtMember(actor, f.thorns, `${f.name}의 가시`);
+  // 「도전」: 도전한 동료에게 맞으면 카드마다 한 번 반격
+  if (f.duel && f.duelWho === actor && d + blocked > 0 && alive(actor) && !C.spiritHit && f.duelMark !== C.playedTurn && f.hp > 0) {
+    f.duelMark = C.playedTurn; pushFx({ kind: 'duel', i: f.i, id: actor }); hurtMember(actor, f.duel, `${f.name}의 반격`, f.i);
+  }
   return { dealt: d, blocked, bleed };
 }
 // 보스 2단계: 체력이 phase2.at 비율 아래로 내려가면 한 번 바뀐다
 function enterPhase2(f) {
   const p = f.phase2; f.p2 = true;
-  for (const k of ['armor', 'acts', 'aim', 'turnClock']) if (k in p) f[k] = p[k];
+  for (const k of ['armor', 'acts', 'aim', 'turnClock', 'duel']) if (k in p) f[k] = p[k];
   if (p.pat) { f.pat = p.pat; f.pi = 0; }
   if (p.clockOnce) addTime(p.clockOnce);
   logMsg(`<b>${p.msg}</b>`);
@@ -248,6 +259,8 @@ export function killCheck(f) {
     if (f.stolen?.length) { S.C.disc.push(...f.stolen); logMsg(`훔쳐 간 카드 ${f.stolen.length}장을 되찾았다`); f.stolen = []; }
     passives('onKill', f);
     if (f.deathBoom) for (const p of living()) hurtMember(p, f.deathBoom, `${f.name}의 폭발`);
+    // 쌍둥이 풍향계 (docs/12 §4): 한쪽이 쓰러지면 남은 쪽 힘 +
+    if (f.twinRage) for (const g of livingFoes()) if (g.twinRage) { g.str += f.twinRage; logMsg(`${g.name}의 힘 +${f.twinRage}`); pushFx({ kind: 'rage', i: g.i, v: f.twinRage }); }
   }
 }
 
@@ -270,6 +283,7 @@ function hurtMember(id, d, src, fi = null) {
 function enemyHit(f, v, k = 0) {
   const C = S.C, id = aimTarget(f, k); if (!id) return;
   if (f.aim === 'cycle' && !C.taunt) f.cyc++;
+  if (f.duel) f.duelWho = id;
   hurtMember(id, foeDmg(f, v, id), f.name, f.i);
   if (id === 'marta' && C.saintTurn) {
     // 마르타 「철의 성녀」③: 이번 적 턴 반격이 모든 적에게
@@ -464,7 +478,7 @@ function foeAct(f) {
   else if (it.t === 'buf') { f.str += it.v; logMsg(`${f.name}의 힘 +${it.v}`); }
   else if (it.t === 'deb') { const id = aimTarget(f); if (id) { C.ms[id][it.s] += it.v; logMsg(`${f.name} → ${CHARACTERS[id].name}: ${ST_NAME[it.s]} ${it.v}`); } }
   else if (it.t === 'curse') { for (let k = 0; k < it.n; k++) C.draw.push({ uid: uid++, id: it.card }); logMsg(`${f.name}: 저주 「${CARDS[it.card].name}」 ${it.n}장이 뽑을 더미 위에`); }
-  else if (it.t === 'time') { addTime(it.v); logMsg(`${f.name}이(가) 밤 시계를 <b>${it.v}분</b> 돌렸다`); }
+  else if (it.t === 'time') { const v = timeOf(f, it); addTime(v); logMsg(`${f.name}이(가) 밤 시계를 <b>${v}분</b> 돌렸다`); }
   else if (it.t === 'aoe') { for (const p of living()) hurtMember(p, foeDmg(f, it.v, p), f.name); }
   else if (it.t === 'boom') {
     for (const p of living()) hurtMember(p, foeDmg(f, it.v, p), `${f.name}의 자폭`);
@@ -474,11 +488,13 @@ function foeAct(f) {
   else if (it.t === 'mend') {
     const g = livingFoes().reduce((a, b) => (b.hp / b.max) < (a.hp / a.max) ? b : a);
     g.hp = Math.min(g.max, g.hp + it.v); logMsg(`${f.name} → ${g.name}: 체력 ${it.v} 회복`);
+    pushFx({ kind: 'mend', i: f.i, to: g.i, v: it.v });
   }
   else if (it.t === 'sum') {
     if (livingFoes().length < 3 && C.all.length < 6) {
       const g = makeFoe(it.id, C.all.length, (1 + (depthRule('fightHp') || 0)) * (S.G.tutorial || S.G.episode ? 1 : RULES.foeHpMul?.[S.G.act]?.fight || 1)); g.str = Math.max(g.str, f.str > 0 ? 0 : g.str);
       C.all.push(g); logMsg(`${f.name}이(가) <b>${g.name}</b>을(를) 불렀다`);
+      pushFx({ kind: 'summon', i: f.i, to: g.i });
     } else { f.block += 6; logMsg(`${f.name} 방어 6`); }
   }
   else if (it.t === 'steal') {
@@ -486,9 +502,10 @@ function foeAct(f) {
       const pile = C.draw.length ? C.draw : C.disc; if (!pile.length) break;
       const j = S.G.rng.int(pile.length), [h] = pile.splice(j, 1); f.stolen.push(h);
       logMsg(`${f.name}이(가) 「${cardDef(h).name}」을(를) 훔쳤다`);
+      pushFx({ kind: 'steal', i: f.i, card: h.id });
     }
   }
-  else if (it.t === 'aim') { f.aim = it.a; logMsg(`${f.name}의 노림: ${AIM_NAME[it.a]}`); }
+  else if (it.t === 'aim') { f.aim = it.a; logMsg(`${f.name}의 노림: ${AIM_NAME[it.a]}`); pushFx({ kind: 'retarget', i: f.i, to: aimTarget(f) }); }
   else { enemyHit(f, it.v); f.block += it.b; }
 }
 

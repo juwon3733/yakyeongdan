@@ -113,3 +113,12 @@ export const ACTS = {
                 ['statue', 'comet'], ['gear', 'thief']],
        elites: [['rider'], ['shadow'], ['sage']], boss: ['dawn'] },
 };
+
+// ③ 폭발 대응 (docs/12_signature.md §4): 막지 않고 언제 터뜨릴지 고민하게. 수치 밸런스는 위 FOE 표가 아니라 여기 한 곳.
+//   huntBurst: 그 턴 ③이 터진 동료를 노림 · heavyTime: 그 턴 피해가 over 이상이면 밤 시계 +add 더
+//   twinRage: 짝(같은 필드를 가진 적)이 쓰러지면 남은 쪽 힘 + · phase2.aim 'top' + duel: 가장 많이 친 동료를 노리고, 그 동료에게 맞으면 반격
+Object.assign(FOE.witch, { huntBurst: true });
+Object.assign(FOE.angel, { heavyTime: { over: 60, add: 5 } });
+Object.assign(FOE.vaneL, { twinRage: 5 });
+Object.assign(FOE.vaneR, { twinRage: 5 });
+Object.assign(FOE.captain.phase2, { aim: 'top', duel: 5, msg: '구름 기사단장이 갑옷을 벗어던졌다! 「도전」: 가장 많이 친 동료를 노리고, 그 동료에게 맞으면 반격한다. 매 턴 두 번 움직인다.' });
