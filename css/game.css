@@ -1150,3 +1150,25 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 .pm > img:not([src^="data:"]),.foe > img:not([src^="data:"]){-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(0deg,#000 0,#000 100%);-webkit-mask-size:100% 92%,100% 8%;-webkit-mask-position:0 0,0 100%;-webkit-mask-repeat:no-repeat;
   mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(0deg,#000 0,#000 100%);mask-size:100% 92%,100% 8%;mask-position:0 0,0 100%;mask-repeat:no-repeat}
 .pm > img.jxfade{position:absolute;margin:0;pointer-events:none;animation:none;z-index:1}
+
+/* ---- 기술 연출 (카오스 제로 나이트메어 참고): 잔상·암전·흰 번쩍·필살 컷인 (js/juice.js) ---- */
+#fx .jafter{position:absolute;z-index:2;pointer-events:none;image-rendering:pixelated;object-fit:contain;object-position:50% 100%;
+  filter:brightness(1.6) drop-shadow(0 0 3px var(--c))}
+#fx .jdim{position:absolute;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse 60% 55% at 50% 52%,transparent 35%,rgba(2,2,10,.72))}
+#fx .jflashw{position:absolute;inset:0;z-index:6;pointer-events:none;background:#fff;mix-blend-mode:screen}
+#fx .jskillcut{position:absolute;inset:0;z-index:7;pointer-events:none;overflow:hidden}
+#fx .jskillcut .band{position:absolute;left:-10%;right:-10%;top:24%;height:46%;transform:skewY(-6deg);
+  background:linear-gradient(90deg,rgba(6,6,20,.92),color-mix(in srgb,var(--c) 45%,#0a0a1a) 55%,rgba(6,6,20,.92));border-block:3px solid var(--c);
+  animation:jcutband .9s cubic-bezier(.2,.8,.3,1) both}
+#fx .jskillcut .lines{position:absolute;left:-10%;right:-10%;top:24%;height:46%;transform:skewY(-6deg);opacity:.35;
+  background:repeating-linear-gradient(90deg,transparent 0 18px,#fff 18px 19px,transparent 19px 46px);animation:jcutlines .9s linear both}
+#fx .jskillcut .who{position:absolute;bottom:22%;height:78%;width:auto;left:6%;image-rendering:auto;filter:drop-shadow(4px 4px 0 rgba(0,0,0,.6));animation:jcutwho .9s cubic-bezier(.2,.8,.3,1) both}
+#fx .jskillcut .who.w1{left:auto;right:6%;transform:scaleX(-1);animation-name:jcutwho2}
+#fx .jskillcut .tx{position:absolute;right:8%;top:42%;transform:skewY(-6deg);display:flex;flex-direction:column;align-items:flex-end;animation:jcuttx .9s cubic-bezier(.2,.8,.3,1) both}
+#fx .jskillcut .tx span{font-size:10px;color:var(--moon);letter-spacing:.2em}
+#fx .jskillcut .tx b{font-family:var(--f-disp);font-weight:400;font-size:30px;color:#fff;text-shadow:3px 3px 0 var(--c),-1px -1px 0 #000}
+@keyframes jcutband{0%{clip-path:inset(0 100% 0 0)}25%{clip-path:inset(0 0 0 0)}85%{clip-path:inset(0 0 0 0)}100%{clip-path:inset(0 0 0 100%)}}
+@keyframes jcutlines{from{background-position:0 0}to{background-position:-400px 0}}
+@keyframes jcutwho{0%{transform:translateX(-60%);opacity:0}25%{transform:translateX(0);opacity:1}80%{transform:translateX(4%)}100%{transform:translateX(8%);opacity:0}}
+@keyframes jcutwho2{0%{transform:scaleX(-1) translateX(-60%);opacity:0}25%{transform:scaleX(-1) translateX(0);opacity:1}100%{transform:scaleX(-1) translateX(8%);opacity:0}}
+@keyframes jcuttx{0%{transform:skewY(-6deg) translateX(40%) scale(1.6);opacity:0}30%{transform:skewY(-6deg) translateX(0) scale(1);opacity:1}85%{opacity:1}100%{opacity:0}}
