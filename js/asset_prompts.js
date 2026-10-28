@@ -5,7 +5,7 @@
 import { CARDS } from './data/cards.js';
 import { cardArtKind } from './cardkind.js';
 
-export const STYLE_VERSION = 4; // 4: 여러 장을 한 시트에(자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
+export const STYLE_VERSION = 4; // 4: 여러 장을 한 시트에(칸은 2배 도트라 한 장짜리와 같은 세밀함, 자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
 
 // ── 공통 스타일 ──────────────────────────────────────────
 export const STYLE = {
@@ -23,13 +23,13 @@ export const STYLE = {
 export const SPEC = {
   stand:    { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백' },
   portrait: { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음' },
-  pose:     { w: 1024, h: 1536, native: '128×192', scale: 8, transparent: true,  colors: 256, folder: 'chars', note: '전투 자세 한 장(공격·스킬·방어·피격) · 자세 시트(posesheet)에서 잘라 냄 · 서 있는 그림과 바꿔 끼운다' },
+  pose:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 자세 한 장(공격·스킬·방어·피격) · 자세 시트(posesheet)에서 잘라 냄 · 서 있는 그림과 바꿔 끼운다' },
   outfit:   { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '두 번째 의상 전신 · 투명 배경' },
   cutin:    { w: 1536, h: 576,  native: '384×144', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄' },
   duo:      { w: 1536, h: 768,  native: '384×192', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄' },
   cg:       { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'cg', note: '★5 전신 CG · 16:9 · 화질 우선, 색 제한 없음' },
-  enemy:    { w: 768,  h: 768,  native: '128×128', scale: 6, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
-  elite:    { w: 1024, h: 1024, native: '128×128', scale: 8, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
+  enemy:    { w: 768,  h: 768,  native: '256×256', scale: 3, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
+  elite:    { w: 1024, h: 1024, native: '256×256', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
   boss:     { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '보스 · 투명 배경' },
   bg:       { w: 1280, h: 720,  native: '640×360', scale: 2, transparent: false, colors: 256, folder: 'bg', note: '배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)' },
   title:    { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'title', note: '타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지' },
@@ -38,11 +38,11 @@ export const SPEC = {
   icon:     { w: 192,  h: 192,  native: '32×32',   scale: 6, transparent: true,  colors: 64,  folder: 'icons', note: '도구 아이콘 · 아이콘 시트(iconsheet)에서 잘라 냄 · 투명 배경' },
   appicon:  { w: 1024, h: 1024, native: '64×64',   scale: 16, transparent: false, colors: 64, folder: 'app', note: '앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다' },
   style:    { w: 1024, h: 1536, native: '시안마다 다름', scale: 0, transparent: true, colors: Infinity, folder: 'style', note: '그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다' },
-  card:     { w: 768,  h: 576,  native: '128×96', scale: 6, transparent: false, colors: 256, folder: 'cards', note: '카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
+  card:     { w: 768,  h: 576,  native: '256×192', scale: 3, transparent: false, colors: 256, folder: 'cards', note: '카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
   // 시트: GPT가 한 장에 여러 개를 그리고, tools/slice-sheets.mjs가 칸마다 잘라 위 종류의 파일로 만든다(npm run art).
-  posesheet: { w: 1024, h: 1536, native: '256×384 (칸 128×192 × 4)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '전투 자세 2×2 — 왼쪽 위 공격·오른쪽 위 스킬·왼쪽 아래 방어·오른쪽 아래 피격, 칸 512×768' },
-  cardsheet: { w: 1024, h: 1024, native: '256×256 (칸 128×128 × 4)', scale: 4, transparent: false, colors: Infinity, folder: 'sheets', note: '카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀' },
-  foesheet:  { w: 1536, h: 1024, native: '384×256 (칸 128×128 × 6)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '적 3×2, 칸 512×512' },
+  posesheet: { w: 1024, h: 1536, native: '512×768 (칸 256×384 × 4)', scale: 2, transparent: true, colors: Infinity, folder: 'sheets', note: '전투 자세 2×2 — 왼쪽 위 공격·오른쪽 위 스킬·왼쪽 아래 방어·오른쪽 아래 피격, 칸 512×768' },
+  cardsheet: { w: 1024, h: 1024, native: '512×512 (칸 256×256 × 4)', scale: 2, transparent: false, colors: Infinity, folder: 'sheets', note: '카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀' },
+  foesheet:  { w: 1536, h: 1024, native: '768×512 (칸 256×256 × 6)', scale: 2, transparent: true, colors: Infinity, folder: 'sheets', note: '적 3×2, 칸 512×512' },
   iconsheet: { w: 1024, h: 1024, native: '128×128 (칸 32×32 × 16)', scale: 8, transparent: true, colors: Infinity, folder: 'sheets', note: '아이콘 4×4, 칸 256×256' },
 };
 
@@ -412,7 +412,7 @@ A 2x2 sprite sheet of FOUR battle poses of this same character on one 1024x1536 
 - Top-right cell — SKILL: casting her signature power, confident focused expression, her magic effect glowing around her (${c.fx}).
 - Bottom-left cell — GUARD: bracing defensively with knees bent, weapon or arm raised in front like a shield, determined expression, a faint protective barrier glow in her accent color.
 - Bottom-right cell — HURT: just got hit, recoiling backward to the LEFT, wincing, one arm up, hair and clothes flung by the impact. No blood, no wounds.
-In every cell: the same character size as the attached battle-stance image, feet on the same line near the bottom of the cell, facing RIGHT toward the enemies, the whole body and effect fully inside its own cell. Fully transparent background. Native resolution 128x192 pixels per cell (256x384 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
+In every cell: the same character size as the attached battle-stance image, feet on the same line near the bottom of the cell, facing RIGHT toward the enemies, the whole body and effect fully inside its own cell. Fully transparent background. Fine, detailed pixel art at the SAME pixel size and detail as the attached battle-stance image: native resolution 256x384 pixels per cell (512x768 for the whole sheet), upscaled exactly 2x with nearest-neighbor. Up to about 96 colors per cell.`),
       [2, 2], [['pose', `${id}_attack`, `${id}_attack.png`, 0, 0], ['pose', `${id}_skill`, `${id}_skill.png`, 1, 0], ['pose', `${id}_guard`, `${id}_guard.png`, 0, 1], ['pose', `${id}_hurt`, `${id}_hurt.png`, 1, 1]],
       { must_show: '2×2: 공격·스킬 / 방어·피격, 칸마다 같은 크기·발 위치', reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
   }
@@ -433,7 +433,7 @@ In every cell: the same character size as the attached battle-stance image, feet
     const pos = { atk: ['Top-left', 0, 0], guard: ['Top-right', 1, 0], skill: ['Bottom-left', 0, 1], special: ['Bottom-right', 1, 1] };
     out.push(sheet('cardsheet', `${id}_cards`, batch, `${id}_cards.png`, join(base, `Four flashy skill card illustrations of ${c.name} on one 1024x1024 canvas, split into four equal square cells of 512x512 (2x2). No borders, no grid lines, no gutters, NO text anywhere (card titles below are Korean and must NOT be written).
 ${Object.entries(KIND_SCENE).map(([k, [label, scene]]) => `- ${pos[k][0]} cell — ${label.toUpperCase()} (${label === '필살' ? 'rare' : label} cards${names(k) ? ` such as ${names(k)}` : ''}): ${c.name} ${scene}.`).join('\n')}
-${c.name} is ON-MODEL from the attached references in every cell. Visual motifs: ${c.fx}. Accent colors: ${c.accent}. Each cell is a complete, spectacular scene with its own dark night background, the face clearly visible and attractive, dynamic angle, big readable shapes. Keep everything important inside the middle 512x384 band of each cell — the top 64 and bottom 64 pixels of every cell will be cut off. Native resolution 128x128 pixels per cell (256x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
+${c.name} is ON-MODEL from the attached references in every cell. Visual motifs: ${c.fx}. Accent colors: ${c.accent}. Each cell is a complete, spectacular scene with its own dark night background, the face clearly visible and attractive, dynamic angle, big readable shapes. Keep everything important inside the middle 512x384 band of each cell — the top 64 and bottom 64 pixels of every cell will be cut off. Fine, detailed pixel art: native resolution 256x256 pixels per cell (512x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.`),
       [2, 2], Object.entries(pos).map(([k, [, col, row]]) => ['card', `${id}_card_${k}`, `${id}_${k}.png`, col, row, [0, 64, 512, 384]]),
       { reference_images: [`chars/${id}_normal.png`, `chars/${id}_stand.png`], must_show: `2×2: 공격·방어 / 스킬·필살, 칸마다 ${c.name} 얼굴과 화려한 기술` }));
   }
@@ -483,7 +483,7 @@ ${c.name} is ON-MODEL from the attached references in every cell. Visual motifs:
       out.push(sheet('foesheet', `${act}_foes_${n + 1}`, batch, `${act}_foes_${n + 1}.png`, join(STYLE.pixel, part.some(([, , d]) => /woman/.test(d)) ? STYLE.character : '',
         `An enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.
 ${part.map(([k, , d], i) => `- Cell ${i + 1}: ${k === 'elite' ? 'ELITE (bigger and more imposing, fills more of the cell): ' : ''}${d}`).join('\n')}
-${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transparent).\n` : ''}Fully transparent background. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
+${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transparent).\n` : ''}Fully transparent background. Fine, detailed pixel art: native resolution 256x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.`),
         [3, 2], part.map(([k, id], i) => [k, id, `${id}.png`, i % 3, Math.floor(i / 3)]),
         { must_show: `3×2 칸에 ${part.map(([, id]) => id).join('·')}` }));
     }
