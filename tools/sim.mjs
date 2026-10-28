@@ -352,10 +352,12 @@ function playRun(party, seed, stats) {
     }
     else if (sc === 'combat') {
       rec.lastFight = `${G.act}막 ${S.C.kind}`;
+      rec.lastFoes = S.C.all.map(f => f.name).join('+');
       if (G.act === 3 && S.C.kind === "boss") rec.dawnStart = G.clock;
       let turns = 0; const tag = S.C._tag = ++combatTag;
       while (sameCombat(tag) && S.G.screen === 'combat' && turns++ < 60) { playTurn(stats); if (checkCollapse()) break; }
       if (sameCombat(tag) && turns >= 60) { rec.why = 'stall'; S.G.screen = 'result'; S.G.won = false; break; }
+      { const key = `${G.act}막 ${rec.lastFight.split(' ')[1]}`; const ft = stats.fightTurns[key] ||= [0, 0]; ft[0] += turns; ft[1]++; }
       if (S.G.screen === 'reward' && S.G.reward?.next === 'act') rec.bossClock[S.G.act] = S.G.clock;
     }
     else if (sc === 'reward') chooseReward(stats);
@@ -372,7 +374,10 @@ function playRun(party, seed, stats) {
   }
   const G = S.G;
   void G0;
-  if (!G.won) stats.deathAt[(G.why === 'collapse' ? '7시 ' : '') + rec.lastFight] = (stats.deathAt[(G.why === 'collapse' ? '7시 ' : '') + rec.lastFight] || 0) + 1;
+  if (!G.won) {
+    const k = G.why === 'collapse' ? `7시 붕괴 (${rec.lastFight})` : `${rec.lastFight} · ${rec.lastFoes}`;
+    stats.deathAt[k] = (stats.deathAt[k] || 0) + 1;
+  }
   if (G.screen !== 'result') { rec.why = rec.why || `stuck:${G.screen}`; console.error(`멈춘 판: 시드 ${seed} ${party.join('·')} 화면 ${G.screen}${G.event ? ` 사건 ${G.event.def.id}` : ''}`); }
   rec.won = !!G.won; rec.why = rec.why || G.why; rec.clock = G.clock; rec.act = G.act; rec.duos = G.duoSet.size; rec.fights = G.fights;
   rec.big = G.bigTurns || 0; rec.best = G.bestTurn?.dmg || 0; rec.bursts = { ...(G.burstLog || {}) };
@@ -386,7 +391,7 @@ function playRun(party, seed, stats) {
 if (opt('--fight', null)) {
   const ids = opt('--fight').split(','), party = (opt('--party', 'iris,brick,marta')).split(','), n = +opt('--n', 200);
   const { startCombat } = await import('../js/combat.js');
-  let won = 0, turnsT = 0; const st = { plays: {}, duoMade: {}, duoPlayed: {}, deathAt: {} };
+  let won = 0, turnsT = 0; const st = { plays: {}, duoMade: {}, duoPlayed: {}, deathAt: {}, fightTurns: {} };
   for (let k = 0; k < n; k++) {
     newRun(party, 1000 + k); S.G.rng = rngFrom(S.G.rng.state);
     S.G.act = +opt('--act', 2); S.G.clock = +opt('--clock', 240);
@@ -411,7 +416,7 @@ for (let a = 0; a < IDS.length; a++) for (let b = a + 1; b < IDS.length; b++) fo
 // 조합 순서를 시드로 섞어서 판 수가 적어도 동료가 고르게 나오게
 { const r = rngFrom(SEED0 * 2654435761); r.shuffle(combos); }
 
-const stats = { deathAt: {}, plays: {}, offered: {}, taken: {}, duoMade: {}, duoPlayed: {}, duoRuns: {} };
+const stats = { fightTurns: {}, deathAt: {}, plays: {}, offered: {}, taken: {}, duoMade: {}, duoPlayed: {}, duoRuns: {} };
 const recs = [];
 const t0 = Date.now();
 for (let n = 0; n < RUNS; n++) {
@@ -459,10 +464,15 @@ out.bursts = avg(recs.map(r => Object.values(r.bursts).reduce((t, x) => t + x, 0
 { const ds = recs.filter(r => r.dawnStart != null), col = ds.filter(r => r.why === "collapse"), fin = ds.filter(r => r.won);
   console.log(`| 「새벽」 전투 시작 시각 (전체 / 7시 붕괴 판) · 걸린 시간(이긴 판) | ${hhmm(avg(ds.map(r => r.dawnStart)))} / ${hhmm(avg(col.map(r => r.dawnStart)))} · ${Math.round(avg(fin.map(r => r.clock - r.dawnStart)))}분 | |`); }
 if (process.env.DBG) { const col = recs.filter(r => r.why === "collapse"); console.log("붕괴 판 막 끝", hhmm(avg(col.map(r => r.bossClock[1]))), hhmm(avg(col.map(r => r.bossClock[2]))), "새벽 시작", hhmm(avg(col.filter(r=>r.dawnStart).map(r => r.dawnStart))), "n", col.length, "새벽 못 감", col.filter(r=>r.dawnStart==null).length); }
-console.log(`| 한 턴 피해 100+ (판당, 전체 / 이긴 판) | ${out.bigTurns.toFixed(2)} / ${out.bigTurnsWin.toFixed(2)} | 3~5 |`);
+console.log(`| 한 턴 피해 100+ (판당, 전체 / 「새벽」까지 간 판 / 이긴 판) | ${out.bigTurns.toFixed(2)} / ${avg(recs.filter(r => r.bossReach[3]).map(r => r.big)).toFixed(2)} / ${out.bigTurnsWin.toFixed(2)} | 3~5 |`);
 console.log(`| 최고의 한 턴 (판당 평균) | ${out.bestTurn.toFixed(0)} | |`);
 console.log(`| 패시브 ③ 폭발 (판당, 턴 기준) | ${out.bursts.toFixed(1)} | |`);
 
+console.log('\n막별 전투 길이 (평균 턴)');
+console.log(Object.entries(stats.fightTurns).sort().map(([k, [t, n]]) => `${k} ${(t / n).toFixed(1)}턴(${n})`).join(' · '));
+console.log('\n어디서 졌나 (진 판 중 비율, 상위 15)');
+{ const lost = recs.filter(r => !r.won).length;
+  for (const [k, v] of Object.entries(stats.deathAt).sort((a, b) => b[1] - a[1]).slice(0, 15)) console.log(`- ${k}: ${v}판 (${pct(v, lost)})`); }
 console.log('\n동료별 (그 동료가 낀 판)');
 console.log('| 동료 | 성급 | 판 | 새벽 격파 | 2막 보스 도달 | ③ 폭발 (판당) | 최고의 한 턴 | 100+ 턴 (판당) |');
 console.log('|---|---|---|---|---|---|---|---|');

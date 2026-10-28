@@ -41,9 +41,9 @@ export const CHARACTERS = {
     pal: { h: '#d0463a', H: '#902a24', e: '#ffd060', o: '#5a4a3a', O: '#3a2e24', a: '#e0b84a' },   // 붉은 단발, 작업복
     start: ['brick.load', 'brick.load', 'brick.fire', 'brick.over'],
     passive: { name: '여분 탄약',
-      lines: [['trait', '', '다른 동료 공격에 장전 1을 실어 보낸다: 그 공격 피해 +6 (턴당 1번). 전투 시작에 장전 2.'],
+      lines: [['trait', '', '다른 동료 공격에 장전 1을 실어 보낸다: 그 공격 피해 +6 (턴당 1번). 전투 시작에 장전 1.'],
         ['burst', '전탄', '장전 6 이상에서 발사·일제 사격·최후의 포탄을 쓰면 모든 적에게.']],
-      onCombatStart: c => { c.loaded += 2; },
+      onCombatStart: c => { c.loaded += 1; },
       beforeCard: (c, card, e) => { c.fullLoad = !!card.fire && c.loaded >= 6; if (c.fullLoad) e.burst('brick', '전탄'); } },
   },
   marta: {
@@ -104,11 +104,11 @@ export const CHARACTERS = {
     start: ['akane.slash', 'akane.slash', 'akane.guard', 'akane.inferno'],
     passive: { name: '불꽃 칼날',
       lines: [['trait', '', '화상을 터뜨리는 건 아카네뿐(잔불·홍련 개화).'],
-        ['keyword', '', '누구의 베기든 대상에게 화상 4. 화상이 있는 적에게 베기 피해 +4.'],
+        ['keyword', '', '누구의 베기든 대상에게 화상 5. 화상이 있는 적에게 베기 피해 +5.'],
         ['burst', '홍련 개화', '대상 화상이 8 이상이면 베기가 맞을 때마다 화상만큼 바로 피해(화상은 남음).']],
-      beforeCard: (c, card, e) => { if (e.isSlash(card) && card.target === 'foe' && c.foe?.burn > 0) c.bonus += 4; },
-      preview: (c, card) => card.slash && card.target === 'foe' && c.all.some(f => !f.dead && f.burn > 0) ? 4 : 0,
-      afterCard: (c, card, pick, e) => { if (e.isSlash(card)) e.burnTargets(card, pick, 4); } },
+      beforeCard: (c, card, e) => { if (e.isSlash(card) && card.target === 'foe' && c.foe?.burn > 0) c.bonus += 5; },
+      preview: (c, card) => card.slash && card.target === 'foe' && c.all.some(f => !f.dead && f.burn > 0) ? 5 : 0,
+      afterCard: (c, card, pick, e) => { if (e.isSlash(card)) e.burnTargets(card, pick, 5); } },
   },
   eleonore: {
     name: '엘레오노르', role: '시계탑의 마녀', rarity: 5, maxHp: 30, col: '#b48ae8', long: true, pal: pal('eleonore'),
@@ -188,7 +188,7 @@ export const CHARACTERS = {
   },
   // ---------- ★3 (나머지) ----------
   finn: {
-    name: '핀', role: '우편배달부', rarity: 3, maxHp: 34, col: '#7aa0d0', long: false, pal: pal('finn'),
+    name: '핀', role: '우편배달부', rarity: 3, maxHp: 36, col: '#7aa0d0', long: false, pal: pal('finn'),
     ds: '핀의 카드는 언제나 연계를 잇는다.',
     start: ['finn.letter', 'finn.letter', 'finn.fast', 'finn.parcel'],
     passive: { name: '지름길',

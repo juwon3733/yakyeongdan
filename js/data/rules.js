@@ -22,10 +22,10 @@ export const RULES = {
   bossHealPct: .25,     // 막 보스를 이기면 살아 있는 동료 최대 체력의 비율만큼 회복
   defaultAim: 'front',  // 적 노림 기본값 (front·back·weakest·last)
   // 패시브 ③ 폭발이 생기면서 올린 적 체력 (docs/12_signature.md §3). 막별 × 칸 종류. 튜토리얼·에피소드 전투는 그대로.
-  foeHpMul: { 1: { fight: 2, elite: 2.8, boss: 3.4 }, 2: { fight: 2, elite: 2.8, boss: 3.2 }, 3: { fight: 2, elite: 2.8, boss: 3.2 } },
+  foeHpMul: { 1: { fight: 2, elite: 3.4, boss: 3.6 }, 2: { fight: 2.6, elite: 3.6, boss: 3.0 }, 3: { fight: 2.6, elite: 3.6, boss: 3.4 } },
   foeAtkMul: .66,        // 적 피해 배수 (전투가 길어진 만큼)
   bigTurn: 100,         // 「터지는 턴」: 한 턴 피해가 이 이상 (결과 화면 최고의 한 턴, 「새벽」 대응)
-  burstMul: 2,        // 폭발 턴: 패시브 ③이 터진 동료는 그 턴 남은 공격 피해 ×
+  burstMul: 3,        // 폭발 턴: 패시브 ③이 터진 동료는 그 턴 남은 공격 피해 ×
   // 지도 (docs/10_details.md §4): 막마다 4층 + 보스. 칸 비율, 그믐달이면 사건 비율 newMoonEvent
   mapRows: 4,
   mapWidth: [2, 3],     // 층마다 칸 수
@@ -61,9 +61,9 @@ export const REWARD = {
 export const RARITY_NAME = { c: '흔함', u: '보통', r: '희귀', curse: '저주', duo: '듀오' };
 export const NODE = {
   fight: { name: '전투', min: 12 },
-  elite: { name: '강적', min: 25 },
+  elite: { name: '강적', min: 22 },
   event: { name: '사건', min: 10 },
-  rest:  { name: '휴식', min: 35 },
+  rest:  { name: '휴식', min: 30 },
   shop:  { name: '야시장', min: 10 },
   boss:  { name: '보스', min: 15 },
 };
