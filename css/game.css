@@ -1149,3 +1149,4 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 /* 전투 스프라이트 칸 가장자리에서 잘린 효과가 네모로 보이지 않게 가장자리를 흐리게 */
 .pm > img:not([src^="data:"]),.foe > img:not([src^="data:"]){-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(0deg,#000 0,#000 100%);-webkit-mask-size:100% 92%,100% 8%;-webkit-mask-position:0 0,0 100%;-webkit-mask-repeat:no-repeat;
   mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(0deg,#000 0,#000 100%);mask-size:100% 92%,100% 8%;mask-position:0 0,0 100%;mask-repeat:no-repeat}
+.pm > img.jxfade{position:absolute;margin:0;pointer-events:none;animation:none;z-index:1}

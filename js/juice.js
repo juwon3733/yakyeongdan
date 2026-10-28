@@ -252,25 +252,38 @@ const busy = new WeakSet();
 function preloadPoses() {
   for (const id of S.G?.party || []) for (const k of FRAMES) { const u = battleArt(id, k); if (u) new Image().src = u; }
 }
+// 칸 바꾸기: 전 칸을 위에 잠깐 겹쳐 두고 흐리게 사라지게(교차 페이드). 동작 칸으로 들어갈 때는 바로(빠른 동작이 또렷하게), 돌아올 때·숨쉬기는 부드럽게
+function swapSrc(img, url, fade) {
+  const was = img.getAttribute('src');
+  if (was === url) return;
+  if (fade && img.parentElement && !calmNow()) {
+    const g = img.cloneNode(); g.className = 'px jxfade'; g.removeAttribute('alt');
+    const p = img.parentElement.getBoundingClientRect(), r = img.getBoundingClientRect(), k = r.width / img.offsetWidth || 1;
+    Object.assign(g.style, { left: `${(r.left - p.left) / k}px`, top: `${(r.top - p.top) / k}px`, width: `${img.offsetWidth}px`, height: `${img.offsetHeight}px` });
+    img.after(g);
+    g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: fade, easing: 'ease-out' }).onfinish = () => g.remove();
+  }
+  img.src = url;
+}
 function pose(id, kind, ms) {
   const img = allyEl(id)?.querySelector('img'), u = battleArt(id, kind);
   if (!img || !u) return false;
   const was = img.getAttribute('src');
-  img.src = u; busy.add(img);
-  setTimeout(() => { busy.delete(img); if (img.isConnected && img.getAttribute('src') === u) img.src = was; }, ms);
+  swapSrc(img, u, 60); busy.add(img);
+  setTimeout(() => { busy.delete(img); if (img.isConnected && img.getAttribute('src') === u) swapSrc(img, was, 160); }, ms);
   return true;
 }
 // 숨쉬기 두 칸 번갈아
 setInterval(() => {
   if (calmNow() || !S.C) return;
-  for (const img of document.querySelectorAll('#app [data-ally]:not(.down) > img')) {
+  for (const img of document.querySelectorAll('#app [data-ally]:not(.down) > img:not(.jxfade)')) {
     if (busy.has(img)) continue;
     const id = img.closest('[data-ally]').dataset.ally, a = battleArt(id, 'idle'), b = battleArt(id, 'idle2');
     if (!a || !b) continue;
     const src = img.getAttribute('src');
-    if (src === a) img.src = b; else if (src === b) img.src = a;
+    if (src === a) swapSrc(img, b, 420); else if (src === b) swapSrc(img, a, 420);
   }
-}, 650);
+}, 900);
 // 승리: 살아 있는 동료가 승리 동작
 function winPose() {
   for (const id of S.G?.party || []) if (!S.G.members[id]?.down) pose(id, 'win', 1400);
