@@ -70,6 +70,7 @@
 - 설정화 없이 시안 A부터 만들고, B·C·D는 A를 첨부해 같은 디자인·같은 자세로 해상도만 바꾼다.
 - 파일은 `assets/style/<id>_<a~d>.png`. 게임에 쓰지 않으니 `npm run art`는 필요 없다.
 - PR 본문에 네 장을 나란히 놓고 각각 어떤 느낌인지 한 줄씩.
+- 2차 시안(`style2-akane`)은 `chars/akane_stand.png`를 첨부해 같은 사람으로 E·F·G 세 장. 파일은 `assets/style/akane_<e~g>.png`. 손으로 찍은 도트처럼 — 장식·반짝이를 줄이고 셀 음영.
 
 
 ## 범위를 안 받았을 때
