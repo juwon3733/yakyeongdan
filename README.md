@@ -21,6 +21,7 @@
 | [docs/09_episodes.md](docs/09_episodes.md) | 이야기 원칙, 동료 에피소드 3화씩, 휴식 대화 |
 | [docs/PROMPTS.md](docs/PROMPTS.md) | 그림 241장 목록·크기·프롬프트 (자동 생성) |
 | [docs/GPT_REQUEST.md](docs/GPT_REQUEST.md) | GPT에 보낼 그림 요청 글, 묶음 추천 순서 |
+| [docs/13_next_plan.md](docs/13_next_plan.md) | 다음 계획 (그림·피드백·첫 업데이트·공개 준비) |
 | [docs/10_details.md](docs/10_details.md) | 카드 희귀도·보상, 저주, 도구 24개, 지도 만들기, 튜토리얼, 숫자 표시 |
 | [docs/12_signature.md](docs/12_signature.md) | 동료 특색 재설계: 패시브 3줄(특색·키워드·폭발)·터지는 턴·시그니처 콤보 (설계안) |
 
