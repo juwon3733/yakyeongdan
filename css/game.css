@@ -423,20 +423,20 @@ button.relic.spent{opacity:.35}
 .epbg{position:absolute;inset:0;background:linear-gradient(180deg,#141632,#22203e 70%,#2e2232)}
 .epbg i{position:absolute;inset:auto 0 0 0;height:34%;background:#1a1830;border-top:3px solid #2e2c50}
 .epbg .place{position:absolute;left:8px;top:34px;font-family:var(--f-disp);font-size:9px;color:var(--dim);background:rgba(6,6,18,.6);padding:1px 5px}
-.bg-roof .epbg{background:linear-gradient(180deg,#2a3a7a,#d08a6a 62%,#f0c890 72%,#1c2448 72%)}
-.bg-roof .epbg i{background:#2a2840;height:22%}
-.bg-harbor .epbg{background:linear-gradient(180deg,#0e1430,#1c2a5a 55%,#0c2a40 55%,#08182a)}
-.bg-harbor .epbg i{background:#3a2e24;border-top-color:#5a4a36;height:20%}
-.bg-clock .epbg{background:radial-gradient(circle at 50% 34%,#e8dcb0 0 14%,#8a7a50 14.5% 16%,transparent 16.5%),linear-gradient(180deg,#141030,#2a2048)}
-.bg-convent .epbg{background:linear-gradient(180deg,#3a4a8a,#e0a070 70%,#3a2a30 70%)}
-.bg-convent .epbg i{background:#4a3a34;border-top-color:#6a5446}
-.bg-forge .epbg{background:radial-gradient(circle at 70% 70%,#ff8a3a 0 10%,transparent 26%),linear-gradient(180deg,#1a1210,#3a2418)}
-.bg-forge .epbg i{background:#2a1c14;border-top-color:#4a3020}
-.bg-dream .epbg{background:radial-gradient(circle at 70% 26%,#fff6d0 0 8%,transparent 9%),linear-gradient(180deg,#2a2060,#6a5aa0 60%,#e8d8f0 60%,#c8b8e0)}
-.bg-dream .epbg i{display:none}
-.bg-stair .epbg{background:repeating-linear-gradient(160deg,#1a1c3a 0 18px,#22244a 18px 36px)}
-.bg-attic .epbg{background:linear-gradient(135deg,#2a1e18 0 30%,transparent 30%),linear-gradient(225deg,#2a1e18 0 30%,transparent 30%),linear-gradient(180deg,#3a2c24,#1e1612)}
-.bg-rest .epbg{background:radial-gradient(circle at 50% 78%,#ff9a4a 0 6%,#a04a20 6.5% 9%,transparent 22%),linear-gradient(180deg,#0e1030,#1e1c3a)}
+.bg-roof>.epbg{background:linear-gradient(180deg,#2a3a7a,#d08a6a 62%,#f0c890 72%,#1c2448 72%)}
+.bg-roof>.epbg i{background:#2a2840;height:22%}
+.bg-harbor>.epbg{background:linear-gradient(180deg,#0e1430,#1c2a5a 55%,#0c2a40 55%,#08182a)}
+.bg-harbor>.epbg i{background:#3a2e24;border-top-color:#5a4a36;height:20%}
+.bg-clock>.epbg{background:radial-gradient(circle at 50% 34%,#e8dcb0 0 14%,#8a7a50 14.5% 16%,transparent 16.5%),linear-gradient(180deg,#141030,#2a2048)}
+.bg-convent>.epbg{background:linear-gradient(180deg,#3a4a8a,#e0a070 70%,#3a2a30 70%)}
+.bg-convent>.epbg i{background:#4a3a34;border-top-color:#6a5446}
+.bg-forge>.epbg{background:radial-gradient(circle at 70% 70%,#ff8a3a 0 10%,transparent 26%),linear-gradient(180deg,#1a1210,#3a2418)}
+.bg-forge>.epbg i{background:#2a1c14;border-top-color:#4a3020}
+.bg-dream>.epbg{background:radial-gradient(circle at 70% 26%,#fff6d0 0 8%,transparent 9%),linear-gradient(180deg,#2a2060,#6a5aa0 60%,#e8d8f0 60%,#c8b8e0)}
+.bg-dream>.epbg i{display:none}
+.bg-stair>.epbg{background:repeating-linear-gradient(160deg,#1a1c3a 0 18px,#22244a 18px 36px)}
+.bg-attic>.epbg{background:linear-gradient(135deg,#2a1e18 0 30%,transparent 30%),linear-gradient(225deg,#2a1e18 0 30%,transparent 30%),linear-gradient(180deg,#3a2c24,#1e1612)}
+.bg-rest>.epbg{background:radial-gradient(circle at 50% 78%,#ff9a4a 0 6%,#a04a20 6.5% 9%,transparent 22%),linear-gradient(180deg,#0e1030,#1e1c3a)}
 .epfig{position:absolute;bottom:62px;width:120px;height:160px;filter:brightness(.55);transition:filter .1s steps(2)}
 .epfig img{width:120px;height:160px;display:block}
 .epfig.L{left:70px}.epfig.R{right:70px}
@@ -448,7 +448,44 @@ button.relic.spent{opacity:.35}
 .eptop .mini.on{border-color:var(--gold);color:var(--gold)}
 .epbox{position:absolute;left:8px;right:8px;bottom:8px;min-height:62px;display:flex;flex-direction:column;align-items:flex-start;gap:3px;text-align:left;
   background:var(--paper);color:var(--paper-ink);border:2px solid var(--shadow);box-shadow:3px 3px 0 var(--shadow);padding:6px 10px;cursor:pointer}
-.epbox .who{font-family:var(--f-disp);font-size:11px;-webkit-text-stroke:.3px var(--paper-ink)}
+.epbox .who{position:absolute;left:8px;top:-13px;font-family:var(--f-disp);font-size:11px;line-height:1;padding:2px 8px 2px;
+  background:var(--c,var(--gold));color:#141018;border:2px solid var(--shadow);box-shadow:2px 2px 0 var(--shadow)}
+.epbox:has(.who){padding-top:10px}
+.epbox.act .who{position:static;background:none;border:0;box-shadow:none;padding:0;color:var(--c,var(--gold))}
+/* 대사 글자 하나씩 */
+.epbox.typing .tx i{font-style:normal;opacity:0;animation:eptype .01s steps(1) forwards}
+.epbox.typing .more{visibility:hidden;animation:epmore 0s .6s forwards}
+@keyframes eptype{to{opacity:1}}
+@keyframes epmore{to{visibility:visible}}
+/* 말할 때 살짝 튀기 · 감정 */
+.epfig.talk{animation:eptalk .28s steps(3)}
+@keyframes eptalk{0%{transform:translateY(0)}40%{transform:translateY(-5px)}100%{transform:translateY(0)}}
+.epfig.emo-surprise{animation:epsurp .36s steps(6)}
+@keyframes epsurp{0%,100%{transform:translateX(0)}20%{transform:translate(-4px,-3px)}40%{transform:translate(4px,-3px)}60%{transform:translate(-3px,0)}80%{transform:translate(3px,0)}}
+.epfig.emo-sad{filter:brightness(.72) saturate(.6);transform:translateY(3px)}
+.epfig.emo-sad::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,24,60,.45),transparent 60%);pointer-events:none}
+.epfig.emo-laugh{animation:eplaugh .5s steps(4) 2}
+@keyframes eplaugh{0%,100%{transform:translateY(0)}25%{transform:translateY(-4px)}50%{transform:translateY(0)}75%{transform:translateY(-3px)}}
+/* 배경 디더 전환: 이전 배경이 체크무늬로 듬성듬성 사라진다 */
+.epprev{position:absolute;inset:0;pointer-events:none;animation:epdither .5s steps(1) forwards}
+.epprev>.epbg{position:absolute;inset:0}
+@keyframes epdither{
+  0%{opacity:1;-webkit-mask:none;mask:none}
+  33%{-webkit-mask:conic-gradient(#000 25%,transparent 0 50%,#000 0 75%,transparent 0) 0 0/4px 4px;mask:conic-gradient(#000 25%,transparent 0 50%,#000 0 75%,transparent 0) 0 0/4px 4px}
+  66%{-webkit-mask:conic-gradient(#000 25%,transparent 0) 0 0/4px 4px;mask:conic-gradient(#000 25%,transparent 0) 0 0/4px 4px}
+  100%{opacity:0}}
+/* 화면 효과 줄 명령: shake 흔들림 · flash 번쩍 · black 암전 · fade 흰 페이드 */
+.epscr.fx-shake{animation:epshake .42s steps(7)}
+@keyframes epshake{0%,100%{transform:none}15%{transform:translate(-5px,2px)}30%{transform:translate(5px,-2px)}45%{transform:translate(-4px,-1px)}60%{transform:translate(4px,1px)}80%{transform:translate(-2px,0)}}
+.epfx{position:absolute;inset:0;pointer-events:none;z-index:3}
+.epfx.fx-flash{background:#fff;animation:epflash .45s steps(5) forwards}
+@keyframes epflash{0%{opacity:.95}100%{opacity:0}}
+.epfx.fx-black{background:#04040c;animation:epblack 1.3s steps(8) forwards}
+@keyframes epblack{0%{opacity:0}30%,60%{opacity:1}100%{opacity:0}}
+.epfx.fx-fade{background:#f6f0e0;animation:epfade 1.1s steps(8) forwards}
+@keyframes epfade{0%{opacity:0}35%{opacity:.85}100%{opacity:0}}
+#stage.calm .epfig,#stage.calm .epscr,#stage.calm .epprev,#stage.calm .epfx{animation:none!important}
+#stage.calm .epprev,#stage.calm .epfx{display:none}
 .epbox .tx{font-size:11px;line-height:1.55}
 .epbox.narr .tx{color:#4a4656;font-style:italic}
 .epbox .more{position:absolute;right:8px;bottom:4px;font-size:8px;animation:blink 1s steps(2) infinite}
@@ -460,7 +497,7 @@ button.relic.spent{opacity:.35}
 .eplog .loglines{display:flex;flex-direction:column;gap:3px;font-size:10px;line-height:1.5}
 .eplog p{margin:0}.eplog .narr{color:var(--dim);font-style:italic}
 @keyframes blink{50%{opacity:0}}
-@media (prefers-reduced-motion:reduce){.epbox .more{animation:none}}
+@media (prefers-reduced-motion:reduce){.epbox .more{animation:none}.epbox.typing .tx i{opacity:1;animation:none}}
 /* M4: 인연 줄 · 휴식 대화 · 루나리아 달 고르기 */
 .bonds{display:flex;flex-wrap:wrap;gap:3px 6px;align-items:center;font-size:9px;margin:2px 0}
 .bond{color:var(--dim);border:1px solid var(--line);padding:0 4px;white-space:nowrap}

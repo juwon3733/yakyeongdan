@@ -1,7 +1,8 @@
 // 에피소드 목록 · 에피소드 재생 화면 (docs/06_art_ui_sound.md 「에피소드」): 배경 전면 + 상반신 좌우 + 아래 대화창
 import { S } from '../run.js';
 import { P, epOpen, epKey } from '../meta.js';
-import { epLine, epFight } from '../episodes.js';
+import { epLine, epFight, TYPE_MS } from '../episodes.js';
+import { calmNow } from '../settings.js';
 import { EPISODES, BOND_SCENES, EP_COND, EP_REWARD, EP_EXTRA, CAST, EP_BG } from '../data/episodes.js';
 import { ROSTER } from '../data/roster.js';
 import { CHARACTERS } from '../data/characters.js';
@@ -54,19 +55,30 @@ export function episodesView() {
 }
 
 // 재생 화면
+// 감정 표시: 대본 줄의 세 번째 칸 ('surprise' 놀람 · 'sad' 슬픔 · 'laugh' 웃음)
+const EMO = { surprise: 'surprise', 놀람: 'surprise', sad: 'sad', 슬픔: 'sad', laugh: 'laugh', 웃음: 'laugh' };
+// 대사를 글자 하나씩 (CSS 지연). 다시 그려도 처음부터 다시 치지 않게 한 줄에 한 번만.
+function typed(text, fresh) {
+  if (!fresh) return esc(text);
+  return [...text].map((ch, k) => `<i style="animation-delay:${k * TYPE_MS}ms">${esc(ch)}</i>`).join('');
+}
 export function epView() {
   const E = S.ep, line = epLine();
+  const calm = calmNow();
+  const fresh = !calm && E.phase === 'read' && !!line && E.drawn !== E.i && E.full !== E.i;   // 이 줄을 처음 그린다
+  const emo = line && EMO[line[2]];
   const fig = (id, side) => {
     if (!id) return '';
     const w = who(id), on = line && line[0] === id;
-    return `<div class="epfig ${side} ${on ? 'on' : ''}" style="--c:${w.col}">${w.img ? `<img class="px" src="${w.img}" alt="${esc(w.name)}">` : ''}</div>`;
+    const cls = [side, on ? 'on' : '', on && fresh ? 'talk' : '', on && emo ? `emo-${emo}` : ''].join(' ');
+    return `<div class="epfig ${cls}" style="--c:${w.col}">${w.img ? `<img class="px" src="${w.img}" alt="${esc(w.name)}">` : ''}</div>`;
   };
   const head = E.kind === 'ep' ? `${esc(who(E.cid).name)} 에피소드 ${E.n + 1}화 · ${esc(E.title)}` : `인연 장면 · ${esc(E.title)}`;
   let box;
   if (E.phase === 'read' && line) {
     const [id, text] = line, w = id ? who(id) : null;
-    box = `<button type="button" class="epbox ${id ? '' : 'narr'}" data-epnext>${w ? `<span class="who" style="color:${w.col}">${esc(w.name)}</span>` : ''}
-      <span class="tx">${esc(text)}</span><span class="more" aria-hidden="true">▼</span></button>`;
+    box = `<button type="button" class="epbox ${id ? '' : 'narr'} ${fresh ? 'typing' : ''}" data-epnext>${w ? `<span class="who" style="--c:${w.col}">${esc(w.name)}</span>` : ''}
+      <span class="tx" aria-label="${esc(text)}">${typed(text, fresh)}</span><span class="more" aria-hidden="true">▼</span></button>`;
   } else if (E.phase === 'fight') {
     const f = epFight(), foes = f.foes.map(k => FOE[k]?.name || k).join(' · '), party = f.party.map(k => who(k).name).join(' · ');
     box = `<div class="epbox act"><span class="who" style="color:var(--rose)">특별 전투</span>
@@ -81,8 +93,16 @@ export function epView() {
       <span class="tx">${E.reward ? `처음 다 봤다. 별 조각 +${E.reward}${esc(extra)}` : '다시 본 이야기.'}</span>
       <span class="btns"><button type="button" class="primary" data-view="episodes">에피소드 목록</button></span></div>`;
   }
-  return `<div class="epscr bg-${E.bg}">
+  // 배경 전환(바로 앞 줄에서 바뀌었으면 이전 배경이 디더로 사라진다) · 화면 효과 줄 명령
+  const swap = fresh && E.bgPrev && E.bgAt === E.i - 1;
+  const fxOn = !calm && E.fx && E.fxAt === E.i - 1 && E.fxDone !== E.fxAt ? E.fx : '';   // 한 번만 (특별 전투 앞에서도)
+  if (fxOn) E.fxDone = E.fxAt;
+  const shake = fxOn === 'shake' && !document.getElementById('stage')?.classList.contains('noshake');
+  if (line) { if (fresh) E.typing = true; E.drawn = E.i; }
+  return `<div class="epscr bg-${E.bg} ${shake ? 'fx-shake' : ''}">
     <div class="epbg" aria-hidden="true"><i></i><span class="place">${esc(EP_BG[E.bg] || '')}</span></div>
+    ${swap ? `<div class="epprev bg-${E.bgPrev}" aria-hidden="true"><div class="epbg"><i></i></div></div>` : ''}
+    ${fxOn && fxOn !== 'shake' ? `<div class="epfx fx-${fxOn}" aria-hidden="true"></div>` : ''}
     ${fig(E.left, 'L')}${fig(E.right, 'R')}
     <div class="eptop"><span class="ttl">${head}</span><span class="grow"></span>
       ${E.phase === 'read' ? `<button type="button" class="mini ${E.auto ? 'on' : ''}" data-epauto aria-pressed="${E.auto}">자동</button><button type="button" class="mini" data-epskip>빨리</button>` : ''}

@@ -216,8 +216,88 @@ def star():
     return verb(mix(fall, at(bell(91, 0.4, 0.5), 0.7), at(bell(96, 0.6, 0.4), 0.78)), 1.8, 0.45)
 
 
+# ---------- 적 행동 ----------
+
+def boom():
+    """적 자폭: 퓨즈 지지직 → 큰 폭발"""
+    t = T(0.25)
+    fuse = highpass(noise(0.25), 3000) * (0.2 + 0.3 * (np.sin(2 * np.pi * 30 * t) > 0)) * 0.3
+    tb = T(0.9)
+    blast = lowpass(noise(0.9), 1800) * np.exp(-tb / 0.25) * 0.9
+    thump = np.sin(2 * np.pi * np.cumsum(40 + 120 * np.exp(-tb / 0.05)) / SR) * np.exp(-tb / 0.3)
+    return verb(mix(fuse, at(mix(blast, thump), 0.22)), 1.2, 0.3)
+
+
+def summon():
+    """적이 부하를 부름: 올라가는 호각 + 발소리 둘"""
+    call = sweep_tone(500, 1100, 0.3, 'sin') * np.exp(-T(0.3) / 0.25) * 0.3
+    steps = mix(at(kick(0.4) * 0.5, 0.32), at(kick(0.4) * 0.5, 0.45))
+    return verb(mix(call, at(call * 0.7, 0.12), steps), 0.8, 0.3)
+
+
+def steal():
+    """카드 훔치기: 휙 + 종이 + 낄낄 내려가는 음"""
+    t = T(0.2)
+    swish = highpass(noise(0.2), 1500) * np.sin(np.pi * t / 0.2) ** 2 * 0.4
+    giggle = mix(*[at(square(n, 0.06, 0.25), i * 0.07) for i, n in enumerate((79, 76, 72))])
+    return mix(swish, at(card() * 0.6, 0.1), at(giggle, 0.22))
+
+
+def foe_heal():
+    """적 회복: 탁한 물방울 셋"""
+    return verb(mix(*[at(fm(n, 0.18, 0.3, ratio=2, index=1.5, idecay=0.1, a=0.005, d=0.2, s=0, r=0.1), i * 0.1)
+                      for i, n in enumerate((60, 63, 67))]), 0.9, 0.35)
+
+
+def retarget():
+    """노림 바꾸기: 조준 찰칵 두 번"""
+    c = mix(rim_click(), at(rim_click(), 0.12))
+    return mix(c, at(square(88, 0.05, 0.25), 0.2))
+
+
+def rim_click():
+    t = T(0.05)
+    return highpass(noise(0.05), 2500) * np.exp(-t / 0.008) * 0.6
+
+
+def thorns():
+    """가시에 찔림: 날카로운 찌직"""
+    t = T(0.18)
+    return mix(highpass(noise(0.18), 4000) * np.exp(-t / 0.04) * 0.5, square(91, 0.08, 0.3), at(square(85, 0.08, 0.25), 0.05))
+
+
+# ---------- 화면 ----------
+
+def flip():
+    """보상 카드 뒤집기"""
+    t = T(0.12)
+    return mix(highpass(noise(0.12), 2000) * np.sin(np.pi * t / 0.12) * 0.35, at(glock(84, 0.1, 0.25), 0.06))
+
+
+def constel():
+    """별자리 차오름: 별 다섯 개가 이어지는 종"""
+    return verb(mix(*[at(bell(n, 0.4, 0.35), i * 0.08) for i, n in enumerate((79, 83, 86, 91, 95))]), 1.6, 0.45)
+
+
+def burst():
+    """패시브 폭발(이름 띠): 금관 한 방 + 심벌 + 쿵"""
+    hornf = mix(*[brass(n, 0.45, 0.45) for n in (62, 69, 74, 78)])
+    return verb(mix(at(kick(0.9), 0), hornf, at(snare(0.6), 0.02), lowpass(highpass(noise(0.6), 3000), 9000) * np.exp(-T(0.6) / 0.2) * 0.3), 1.2, 0.3)
+
+
+def fanfare5():
+    """★5 소환 징글: 하늘이 갈라지는 종 + 금관 팡파르 (약 2.5초)"""
+    rise = mix(*[at(glock(n, 0.15, 0.3), i * 0.06) for i, n in enumerate((72, 76, 79, 84, 88, 91, 96))])
+    notes = [(0.5, 72, 0.15), (0.66, 76, 0.15), (0.82, 79, 0.15), (1.0, 84, 0.9)]
+    fan = mix(*[at(brass(n, d, 0.55), st) for st, n, d in notes])
+    chord_ = at(mix(*[brass(n, 1.2, 0.38) for n in (60, 67, 72, 76, 79)]), 1.0)
+    return verb(mix(rise, fan, chord_, at(timpani(0.6, 36), 1.0), at(bell(96, 1.0, 0.35), 1.0)), 2.2, 0.4)
+
+
 SFX = {'click': click, 'select': select, 'card': card, 'get': get, 'move': move, 'turn': turn,
        'slash': slash, 'hit': hit, 'cannon': cannon, 'block': block, 'poison': poison, 'spirit': spirit, 'mana': mana,
        'clock': clock, 'duo': duo, 'chain1': chain1, 'chain2': chain2, 'chain3': chain3,
        'hurt': hurt, 'down': down, 'heal': heal, 'foe_down': foe_down,
-       'win': win, 'lose': lose, 'dawn': dawn, 'star': star}
+       'win': win, 'lose': lose, 'dawn': dawn, 'star': star,
+       'boom': boom, 'summon': summon, 'steal': steal, 'foe_heal': foe_heal, 'retarget': retarget, 'thorns': thorns,
+       'flip': flip, 'constel': constel, 'burst': burst, 'fanfare5': fanfare5}

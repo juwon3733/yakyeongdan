@@ -126,16 +126,34 @@ export function sfx(name, { vol = 1, rate = 1 } = {}) {
 }
 
 // ---------- 화면 → 곡 ----------
+// 에피소드: 대본에 bgm(화 전체) 또는 줄 명령 { bgm } 이 있으면 그 곡, 없으면 분위기 기본(인연 장면·3화 뭉클, 나머지 일상)
+const EP_SONGS = ['ep_daily', 'ep_warm', 'ep_tense', 'base', 'rest', 'event', 'title', 'result', 'victory'];
+function epBgm() {
+  const E = S.ep;
+  if (!E) return 'ep_daily';
+  if (E.phase === 'fight' || E.phase === 'lost') return 'ep_tense';
+  if (E.bgm && EP_SONGS.includes(E.bgm)) return E.bgm;
+  return E.kind === 'bond' || E.n === 2 ? 'ep_warm' : 'ep_daily';
+}
 function pickBgm() {
   const G = S.G;
-  if (!G || S.view !== 'run') return ['base', 'summon', 'reveal', 'episodes', 'ep'].includes(S.view) ? 'base' : 'title';
+  if (S.view === 'ep') return epBgm();
+  if (!G || S.view !== 'run') return ['base', 'summon', 'reveal', 'episodes'].includes(S.view) ? 'base' : 'title';
   if (G.screen === 'result') return G.won ? 'victory' : 'result';
   if (G.screen === 'tutdone') return 'victory';
+  if (G.episode) return 'battle';                        // 에피소드 특별 전투
   if (G.screen === 'combat' && S.C) {
-    if (S.C.kind === 'boss') return G.act >= 3 ? 'dawn' : `boss${G.act}`;
+    if (S.C.kind === 'boss') {
+      if (G.act >= 3) return S.C.all.some(f => f.p2 && !f.dead) ? 'dawn2' : 'dawn';
+      return `boss${G.act}`;
+    }
+    if (G.tutorial) return 'tutorial';
     return S.C.kind === 'elite' ? 'elite' : 'battle';
   }
-  if (G.screen === 'rest') return 'base';
+  if (G.tutorial) return 'tutorial';
+  if (G.screen === 'rest') return 'rest';
+  if (G.screen === 'event' || G.screen === 'shop') return 'event';
+  if (['remove', 'dupe', 'upgrade'].includes(G.screen) && want) return want;   // 야시장·사건·휴식에서 이어지는 고르기 화면은 곡 유지
   return `map${Math.min(3, G.act)}`;
 }
 

@@ -10,7 +10,8 @@ const isLine = it => Array.isArray(it);
 
 function open(src, meta) {
   S.ep = { ...meta, title: src.title, bg: src.bg, seq: src.lines.slice(), i: -1, left: null, right: null, last: null,
-    log: [], auto: false, phase: 'read', lose: null, reward: 0 };
+    log: [], auto: false, phase: 'read', lose: null, reward: 0,
+    bgm: src.bgm || null, bgPrev: null, bgAt: -1, fx: null, fxAt: -1, shownAt: 0, drawn: -1 };
   S.view = 'ep';
   epNext();
 }
@@ -33,12 +34,15 @@ export function epNext() {
     E.i++;
     const it = E.seq[E.i];
     if (it === undefined) return finish();
-    if (it.bg) { E.bg = it.bg; continue; }
+    if (it.bg) { E.bgPrev = E.bg; E.bg = it.bg; E.bgAt = E.i; continue; }   // 배경 전환: 이전 배경이 디더로 사라진다
+    if (it.bgm) { E.bgm = it.bgm; continue; }                              // 곡 바꾸기 (js/audio.js 에피소드 곡)
+    if (it.fx) { E.fx = it.fx; E.fxAt = E.i; continue; }                   // 화면 효과: shake 흔들림 · flash 번쩍 · black 암전 · fade 흰 페이드
     if (it.fight) { E.phase = 'fight'; return; }
     const [who, text] = it;
     seat(E, who);
     if (who) E.last = who;
     E.log.push([who, text]);
+    E.shownAt = Date.now();
     return;
   }
 }
@@ -47,6 +51,18 @@ export function epSkip() {
   const E = S.ep; if (!E) return;
   while (E.phase === 'read') epNext();
 }
+// 글자를 하나씩 보여 주는 중이면 누르기 한 번은 그 줄을 다 보여 주기만 한다
+const TYPE_MS = 28;
+export const epTyping = () => {
+  const E = S.ep, line = epLine();
+  return !!(E && line && E.drawn === E.i && E.typing && Date.now() - E.shownAt < line[1].length * TYPE_MS + 60);
+};
+export function epAdvance() {
+  const E = S.ep; if (!E) return;
+  if (epTyping()) { E.typing = false; E.full = E.i; return; }
+  epNext();
+}
+export { TYPE_MS };
 export const epLine = () => { const it = S.ep?.seq[S.ep.i]; return isLine(it) ? it : null; };
 export const epFight = () => S.ep?.seq[S.ep.i]?.fight || null;
 

@@ -13,7 +13,7 @@ import { sfx, applyVolumes } from './audio.js';
 import { SET, applySettings, setOption, calmNow } from './settings.js';
 import { startTutorial, skipTutorial, finishTutorial, tutorialPending } from './tutorial.js';
 import { settingsModal } from './render/settings.js';
-import { openEp, openBond, epNext, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
+import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
 import { artReady } from './art.js';
 import './cardzoom.js';
@@ -81,6 +81,13 @@ function showTip(el) {
   tipEl.style.left = `${x}px`; tipEl.style.top = `${y}px`;
 }
 function hideTip() { tipFor = null; tipEl.hidden = true; }
+// 소환 결과를 펼칠 때: ★5는 징글, 겹친 동료(별자리 +1)는 별자리 종, 나머지는 별똥
+function revealSound(r) {
+  if (!r) return;
+  if (r.rarity >= 5) sfx('fanfare5');
+  else if (r.stars) sfx('constel');
+  else sfx('star', { rate: [1, 1, 1, .9, 1.1, 1.25][r.rarity] || 1 });
+}
 // title이 붙은 것(도구·달·밤의 깊이 버튼 등)도 같은 도움말로 띄운다 (손가락으로도 보이게)
 stage.addEventListener('pointerover', e => {
   const el = e.target.closest('[data-tip],[title]');
@@ -130,7 +137,7 @@ app.addEventListener('click', e => {
   else if (D.depth !== undefined) S.depth = +D.depth;
   else if (D.srelic) S.startRelic = D.srelic;
   // 판 바깥: 초심자 ★5 · 교환소 · 동료 · 도감
-  else if (D.choose5) { const r = choose5(D.choose5); if (r) { S.reveal = { list: [r], open: [true] }; S.view = 'reveal'; sfx('star'); } }
+  else if (D.choose5) { const r = choose5(D.choose5); if (r) { S.reveal = { list: [r], open: [true] }; S.view = 'reveal'; sfx('fanfare5'); } }
   else if (D.ex) { const [k, a] = D.ex.split(':'); S.exMsg = exchange(k, a || null) || ''; }
   else if (D.mate) S.mate = D.mate;
   else if (D.costume) { const [k, on] = D.costume.split(':'); setCostume(k, on === '1'); }
@@ -140,7 +147,7 @@ app.addEventListener('click', e => {
   // 에피소드
   else if (D.ep) { const [cid, n] = D.ep.split(':'); openEp(cid, +n); }
   else if (D.bond) openBond(D.bond);
-  else if ('epnext' in D) epNext();
+  else if ('epnext' in D) epAdvance();
   else if ('epskip' in D) epSkip();
   else if ('epauto' in D) S.ep.auto = !S.ep.auto;
   else if ('epfight' in D) epStartFight();
@@ -151,8 +158,8 @@ app.addEventListener('click', e => {
     const list = summon(+D.summon); if (!list) return;
     S.reveal = { list, open: list.map(() => false) }; S.view = 'reveal';
   }
-  else if (D.reveal !== undefined) { S.reveal.open[+D.reveal] = true; sfx('star', { rate: [1, 1, 1, .9, 1.1, 1.25][S.reveal.list[+D.reveal].rarity] }); }
-  else if ('revealall' in D) { S.reveal.open = S.reveal.open.map(() => true); sfx('star'); }
+  else if (D.reveal !== undefined) { S.reveal.open[+D.reveal] = true; revealSound(S.reveal.list[+D.reveal]); }
+  else if ('revealall' in D) { S.reveal.open = S.reveal.open.map(() => true); const top = S.reveal.list.reduce((a, r) => (r.rarity > a.rarity ? r : a), S.reveal.list[0]); revealSound(top); }
   // 판
   else if (D.node) { const [r, i] = D.node.split(',').map(Number); goNode(r, i); }
   // 카드: 누르면 고르고, 대상(적 또는 동료)을 누르면 쓴다. 적을 치는 카드는 한 번 더 눌러도 쓴다.
@@ -294,10 +301,10 @@ modal.addEventListener('input', e => {
 addEventListener('keydown', e => {
   if (e.key === 'Escape' && S.C?.pending) { S.C.pending = null; render(); }
   // 에피소드: 스페이스·엔터로 다음 줄
-  else if (S.view === 'ep' && S.ep?.phase === 'read' && modal.hidden && (e.key === ' ' || e.key === 'Enter') && !e.target.closest?.('button')) { e.preventDefault(); epNext(); render(); }
+  else if (S.view === 'ep' && S.ep?.phase === 'read' && modal.hidden && (e.key === ' ' || e.key === 'Enter') && !e.target.closest?.('button')) { e.preventDefault(); epAdvance(); render(); }
 });
 // 에피소드 [자동]: 1.8초마다 다음 줄
-setInterval(() => { if (S.view === 'ep' && S.ep?.auto && S.ep.phase === 'read' && modal.hidden) { epNext(); render(); } }, 1800);
+setInterval(() => { if (S.view === 'ep' && S.ep?.auto && S.ep.phase === 'read' && modal.hidden && !epTyping()) { epAdvance(); render(); } }, 1800);
 
 render();
 // 그림 목록(assets/art.json)이 오면, 그림이 하나라도 있을 때만 다시 그린다 (없으면 임시 도트 그대로)

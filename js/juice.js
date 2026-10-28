@@ -126,8 +126,8 @@ export function afterRender(events = []) {
       case 'time': at(t, () => clockFx(e, false)); t += 140; break;
       case 'rewind': at(t, () => clockFx(e, true)); t += 140; break;
       case 'phase': at(t, () => { showPhase(e.name, e.text); sfx('dawn', { vol: .5 }); }); t += 900; break;
-      // 패시브 ③ 폭발 (docs/12_signature.md): 이름 띠 0.6초 + 효과음 한 단계 위
-      case 'burst': at(t, () => { showBurst(e.who, e.name); sfx('chain3', { vol: .9 }); }); t += 220; break;
+      // 패시브 ③ 폭발 (docs/12_signature.md): 이름 띠 0.6초 + 폭발 효과음
+      case 'burst': at(t, () => { showBurst(e.who, e.name); sfx('burst', { vol: .8 }); }); t += 220; break;
       case 'foeTurn':
         foePhase = true;
         discardHand(P, e.keep || [], t);
@@ -294,6 +294,7 @@ function hitFoe(e, P) {
   const r = el ? rel(el) : P?.foes.get(e.i)?.r; if (!r) return;
   const img = el?.querySelector('img'), ir = img ? rel(img) : r;
   const x = ir.cx, y = ir.cy, col = colOf(e.actor), st = styleOf(e);
+  if (S.C?.all?.[e.i]?.thorns && e.dmg && e.actor) at(60, () => sfx('thorns', { vol: .7 }));
   if (st === 'slash') slashFx(x, y, col);
   else if (st === 'boom') { const from = e.actor && allyEl(e.actor); if (from) tracer(rel(from).cx, rel(from).y + 20, x, y, '#ffd890'); boomFx(x, y); }
   else if (st === 'star') { const from = allyEl('sion'); if (from) starTrail(rel(from).cx, rel(from).y + 14, x, y, col); sparks(x, y, '#fff6c8', 10, 1.6); }
@@ -348,11 +349,11 @@ function foeActFx(e) {
   else if (e.t === 'deb' || e.t === 'curse') { ring(r.cx, r.cy, '#b48ae8', 6, 30, 12); sfx('poison', { rate: .8 }); }
   else if (e.t === 'time') { /* 'time' 사건이 시계를 보여 준다 */ }
   else if (e.t === 'aoe') { pulse(el, SET.shake ? 'jlunge' : 'jflash', 260); ring(r.cx, r.cy, '#ff9a6a', 8, 44, 14); }
-  else if (e.t === 'boom') { boomFx(r.cx, r.cy); sfx('cannon'); }
+  else if (e.t === 'boom') { boomFx(r.cx, r.cy); sfx('boom'); }
   else if (e.t === 'gblk') { for (const f of document.querySelectorAll('.foe:not(.gone)')) { const q = rel(f); shieldIcon(q.cx, q.cy - 4, '#c9d2f0'); } sfx('block', { vol: .6 }); }
-  else if (e.t === 'mend') { ring(r.cx, r.cy, '#7dff9a', 6, 28, 12); sfx('heal', { vol: .6 }); }
-  else if (e.t === 'sum' || e.t === 'aim') { ring(r.cx, r.cy, '#f0d040', 6, 30, 12); }
-  else if (e.t === 'steal') { ring(r.cx, r.cy, '#b48ae8', 6, 30, 12); sfx('card', { rate: .8 }); }
+  else if (e.t === 'mend') { ring(r.cx, r.cy, '#7dff9a', 6, 28, 12); sfx('foe_heal', { vol: .7 }); }
+  else if (e.t === 'sum' || e.t === 'aim') { ring(r.cx, r.cy, '#f0d040', 6, 30, 12); sfx(e.t === 'sum' ? 'summon' : 'retarget', { vol: .7 }); }
+  else if (e.t === 'steal') { ring(r.cx, r.cy, '#b48ae8', 6, 30, 12); sfx('steal'); }
 }
 function tickFx(e) {
   const el = foeEl(e.i); if (!el) return;
@@ -418,7 +419,7 @@ function dealReward(t0) {
     el.classList.add('cardback');
     const tf = t0 + cards.length * 110 + 220 + k * 140;
     at(tf, () => { if (!hush) el.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 90, easing: 'steps(3)' }); });
-    at(tf + 90, () => { el.classList.remove('cardback'); if (!hush) el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 110, easing: 'steps(3)' }); sfx('select', { vol: .5, rate: 1 + k * .12 }); });
+    at(tf + 90, () => { el.classList.remove('cardback'); if (!hush) el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 110, easing: 'steps(3)' }); sfx('flip', { vol: .7, rate: 1 + k * .08 }); });
   });
   const gold = app()?.querySelector('[data-screen="reward"] .center > .note');
   if (gold) track(gold.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: t0, easing: 'steps(4)', fill: 'backwards' }));

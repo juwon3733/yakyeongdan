@@ -347,5 +347,122 @@ def result():
     return tr
 
 
+# ---------- 쉬는 곳 ----------
+
+def rest():
+    """휴식 칸: 탑 안 모닥불 곁. 느린 하프와 플루트, 북 없이"""
+    tr = Track(76, 8)
+    prog = ['Ebmaj7', 'Cm7', 'Abmaj7', 'Bb7sus4 Bb7', 'Ebmaj7', 'Gm7', 'Abmaj7 Fm7', 'Bb7sus4']
+    tr.bus('harp', -0.3, 0.45, 0.45); tr.bus('fl', 0.25, 0.46, 0.5); tr.bus('pad', 0, 0.2, 0.6); tr.bus('bass', 0, 0.55, 0.15)
+    arp(tr, 'harp', harp, prog, [0, 1, 2, 3, 2, 1], step=0.5, octave=3, vel=0.45)
+    block(tr, 'pad', pad, prog, [(0, 3.9)], octave=3, vel=0.42, top=3)
+    basses(tr, 'bass', bass, prog, [(0, 2.8, 0), (3, 0.9, 7)], vel=0.55)
+    melody(tr, 'fl', flute, 0, ['g:2 bb eb^', 'd^:3 c^', 'c^:1.5 bb:.5 ab g', 'f:3 -',
+                                 'g:1.5 ab:.5 bb eb^', 'f^:2 d^ bb', 'c^:1.5 eb^:.5 ab f', 'bb:4'], octave=4, vel=0.48)
+    return tr
+
+
+# ---------- 사건·야시장 ----------
+
+def event():
+    """사건·야시장: 수상한 노점 골목. 도리안 하프, 글로켄, 퉁기는 베이스"""
+    tr = Track(104, 8, swing=0.25)
+    prog = ['Dm7', 'G7', 'Dm7', 'G7', 'Bbmaj7', 'Am7', 'Gm7', 'A7sus4 A7']
+    tr.bus('harp', -0.35, 0.4, 0.3); tr.bus('gl', 0.35, 0.3, 0.45); tr.bus('bass', 0, 0.68, 0.08)
+    tr.bus('ld', 0.1, 0.42, 0.35); tr.bus('dr', 0.1, 0.4, 0.15)
+    arp(tr, 'harp', harp, prog, [0, 2, 1, 3], step=0.5, octave=3, vel=0.45)
+    basses(tr, 'bass', pluck_bass, prog, [(0, 0.45, 0), (1, 0.45, 7), (1.5, 0.45, 10), (2.5, 0.45, 12), (3, 0.8, 7)], vel=0.72)
+    melody(tr, 'gl', glock, 0, ['a:.5 - c^:.5 - d^ f^', 'e^:1.5 d^:.5 b:2', 'a:.5 - c^:.5 - d^ a^', 'g^:2 f^ e^',
+                                 'd^:1.5 f^:.5 a^ g^', 'e^:2 c^ a', 'bb:1.5 d^:.5 c^ bb', 'a:2 c#^:2'], octave=5, vel=0.42)
+    melody(tr, 'ld', lead, 4, ['f:2 a d^', 'c^:2 e g', 'd:2 f bb', 'a:4'], octave=4, vel=0.35)
+    drums(tr, 'dr', {'shaker': [0.5, 1.5, 2.5, 3.5], 'rim': [(1, 0.35), (3, 0.3)], 'kick': [(0, 0.35)]}, 8)
+    return tr
+
+
+# ---------- 에피소드 ----------
+
+def ep_daily():
+    """에피소드 일상: 본부의 아침. 통통 튀는 전자 피아노와 플루트"""
+    tr = Track(112, 8, swing=0.3)
+    prog = ['Gmaj7', 'Em7', 'Am7', 'D7', 'Bm7', 'Em7', 'Am7 D7', 'Gmaj7']
+    tr.bus('ep', -0.3, 0.48, 0.25); tr.bus('fl', 0.25, 0.48, 0.35); tr.bus('bass', 0, 0.7, 0.08); tr.bus('dr', 0.2, 0.42, 0.15)
+    block(tr, 'ep', epiano, prog, [(0, 0.4), (1.5, 0.4), (2.5, 0.4), (3.5, 0.4)], octave=4, vel=0.38)
+    walking(tr, 'bass', pluck_bass, prog, vel=0.72)
+    melody(tr, 'fl', flute, 0, ['d^:.5 b:.5 g a b', 'e^:2 d^ b', 'c^:.5 e^:.5 a^:2 g^', 'f#^:3 -',
+                                 'f#^:.5 d^:.5 b c#^ d^', 'g^:2 e^ b', 'c^ e^ d^ c^', 'b:3 -'], octave=4, vel=0.52)
+    drums(tr, 'dr', {'brush': [1, 3], 'hat': [0, 0.5, 1.5, 2, 2.5, 3.5], 'kick': [(0, 0.3), (2.5, 0.25)]}, 8)
+    return tr
+
+
+def ep_warm():
+    """에피소드 뭉클: 느린 현악과 종, 바다 위 새벽빛"""
+    tr = Track(66, 8)
+    prog = ['Dbmaj7', 'Bbm7', 'Gbmaj7', 'Ab7sus4 Ab7', 'Fm7', 'Bbm7', 'Gbmaj7 Ebm7', 'Ab7sus4']
+    tr.bus('str', -0.2, 0.32, 0.55); tr.bus('ep', 0.3, 0.42, 0.45); tr.bus('bell', 0.35, 0.3, 0.6); tr.bus('bass', 0, 0.5, 0.2)
+    block(tr, 'str', strings, prog, [(0, 3.9)], octave=3, vel=0.5)
+    arp(tr, 'ep', epiano, prog, [0, 2, 3, 4, 3, 2, 1, 2], step=0.5, octave=4, vel=0.34)
+    basses(tr, 'bass', bass, prog, [(0, 3.8, 0)], vel=0.55)
+    melody(tr, 'bell', bell, 0, ['f^:2 eb^ db^', 'db^:3 c^', 'bb:2 db^ gb^', 'f^:4',
+                                  'ab^:2 g^ f^', 'f^:2 db^:2', 'db^:1.5 eb^:.5 gb^ f^', 'eb^:4'], octave=4, vel=0.45)
+    return tr
+
+
+def ep_tense():
+    """에피소드 긴장: 낮은 맥박, 반음씩 기어오르는 현악, 시계 틱"""
+    tr = Track(92, 8)
+    prog = ['Bm', 'Bm', 'G', 'F#7', 'Bm', 'C', 'Bm', 'F#7']
+    tr.bus('str', -0.25, 0.34, 0.4); tr.bus('bass', 0, 0.72, 0.1); tr.bus('pl', 0.35, 0.18, 0.3); tr.bus('dr', 0, 0.5, 0.18)
+    block(tr, 'str', strings, prog, [(0, 1.9), (2, 1.9)], octave=3, vel=0.48, top=3)
+    basses(tr, 'bass', bass, prog, [(0, 0.4, 0), (0.75, 0.4, 0), (1.5, 0.4, 0), (2, 0.4, 0), (2.75, 0.4, 0), (3.5, 0.4, 1)], vel=0.72)
+    arp(tr, 'pl', pulse, prog, [0, 1, 0, 2], step=0.5, octave=4, vel=0.26, dur=0.2)
+    melody(tr, 'str', strings, 4, ['f#^:2 g^:2', 'f#^:2 e^:2', 'd^:2 c^:2', 'a#:4'], octave=4, vel=0.32)
+    drums(tr, 'dr', {'tick': [x * 0.5 for x in range(8)], 'timp': [(0, 0.45)], 'kick': [(2.5, 0.3)]}, 8)
+    return tr
+
+
+# ---------- 튜토리얼 ----------
+
+def tutorial():
+    """첫 밤: 가볍게 걷는 하프와 금관, 겁 안 나는 전투"""
+    tr = Track(118, 8)
+    prog = ['C', 'Am', 'F', 'G', 'C', 'Em', 'F G', 'C']
+    tr.bus('harp', -0.3, 0.42, 0.3); tr.bus('br', 0.15, 0.45, 0.3); tr.bus('bass', 0, 0.65, 0.08); tr.bus('dr', 0, 0.45, 0.15)
+    arp(tr, 'harp', harp, prog, [0, 1, 2, 1], step=0.5, octave=4, vel=0.42)
+    basses(tr, 'bass', pluck_bass, prog, [(0, 0.9, 0), (1, 0.4, 7), (2, 0.9, 12), (3, 0.4, 7)], vel=0.7)
+    melody(tr, 'br', brass, 0, ['e^:1.5 g^:.5 c^^ g^', 'a^:2 e^:2', 'f^:1.5 a^:.5 c^^ a^', 'g^:3 -',
+                                 'e^:1.5 g^:.5 c^^ e^^', 'b^:2 g^:2', 'a^ f^ d^ b', 'c^^:3 -'], octave=4, vel=0.5)
+    drums(tr, 'dr', {'kick': [0, 2], 'rim': [1, 3], 'shaker': [0.5, 1.5, 2.5, 3.5]}, 8)
+    return tr
+
+
+# ---------- 「새벽」 2단계 ----------
+
+def dawn2():
+    """최종전 「새벽」 2단계: 같은 주제를 반음 올려 더 빠르게, 두 배 북과 몰아치는 현악"""
+    tp = 1
+    tr = Track(156, 16)
+    prog = transpose(['F#m', 'D', 'E', 'C#7', 'F#m', 'D', 'Bm C#7', 'F#m',
+                      'D', 'E', 'A', 'F#m', 'Bm', 'D', 'E', 'C#7'], tp)
+    tr.bus('br', 0.05, 0.56, 0.28); tr.bus('str', -0.3, 0.3, 0.35); tr.bus('sq', 0.4, 0.2, 0.2)
+    tr.bus('bass', 0, 0.78, 0.05); tr.bus('dr', 0, 0.62, 0.12); tr.bus('clk', 0.2, 0.45, 0.08)
+    basses(tr, 'bass', bass, prog, [(i * 0.5, 0.42, 12 if i % 2 else 0) for i in range(8)], vel=0.78)
+    arp(tr, 'str', strings, prog, [0, 1, 2, 1], step=0.25, octave=4, vel=0.32, dur=0.22)
+    arp(tr, 'sq', square, prog, [0, 2, 1, 2], step=0.25, octave=5, vel=0.22, dur=0.15)
+    melody(tr, 'br', brass, 0, ['c#^:1.5 f#^:.5 a^ g#^', 'f#^:2 d^:2', 'e^:1.5 g#^:.5 b^ e^', 'f^:3 c#^',
+                                 'c#^:1.5 f#^:.5 a^ c#^^', 'd^^:2 a^ f#^', 'd^ f#^ f^ g#^', 'f#^:3 -',
+                                 'a^:1.5 f#^:.5 d^ f#^', 'g#^:1.5 b^:.5 e^ g#^', 'a^:2 c#^^ e^^', 'f#^:3 c#^',
+                                 'd^ f#^ b^ d^^', 'a^:2 f#^ d^', 'g#^ b^ e^^ b^', 'f^:2 g#^:2'], octave=4, vel=0.62, tp=tp)
+    drums(tr, 'dr', {'kick': [0, 0.5, 1.5, 2, 2.5, 3.5], 'snare': [1, 3, (3.75, 0.4)], 'hat': [x * 0.5 for x in range(8)]}, 16)
+    drums(tr, 'clk', {'tick': [x * 0.25 for x in range(16)]}, 16, vel=0.45)
+    drums(tr, 'dr', {'timp': [(0, 0.55), (2, 0.35)]}, 16)
+    for b in (3, 7, 11, 15):
+        roll(tr, 'dr', b, 0.55, 3.0)
+    tr.drum('dr', 'cym', 0, 0.65)
+    tr.drum('dr', 'cym', 32, 0.55)
+    return tr
+
+
 SONGS = {'title': title, 'base': base, 'map1': map1, 'map2': map2, 'map3': map3, 'battle': battle, 'elite': elite,
-         'boss1': boss1, 'boss2': boss2, 'dawn': dawn, 'victory': victory, 'result': result}
+         'boss1': boss1, 'boss2': boss2, 'dawn': dawn, 'victory': victory, 'result': result,
+         'rest': rest, 'event': event, 'ep_daily': ep_daily, 'ep_warm': ep_warm, 'ep_tense': ep_tense,
+         'tutorial': tutorial, 'dawn2': dawn2}
