@@ -6,14 +6,18 @@ import { ROSTER, ROSTER_IDS, byRarity } from './data/roster.js';
 import { STARTER_OWNED, CHARACTERS } from './data/characters.js';
 import { SUMMON, SUMMON_ITEMS, SHARDS, ITEM_DUST, PICKUPS, PICKUP_DAYS, PICKUP_EPOCH, EXCHANGE, START_PICK_RUNS, PACK_SIZE, PACK_COUNT } from './data/gacha.js';
 import { RULES } from './data/rules.js';
+import { MOONS } from './data/moons.js';
 import { RELICS } from './data/relics.js';
 import { CARDS } from './data/cards.js';
 import { TALKS } from './data/talks.js';
 import { DEPTH_MAX, DEPTH_BONUS } from './data/depth.js';
 import { EPISODES, BOND_SCENES } from './data/episodes.js';
+import { DAILY_SHARDS, DAILY_CANDIDATES, dailyKey, dailySeed, dailyRule } from './data/daily.js';
+import { ACHIEVEMENTS } from './data/achievements.js';
+import { MASTERY_GAIN, MASTERY_REWARDS, masteryLv } from './data/mastery.js';
 
 const KEY = 'yk-profile';
-const VERSION = 2;
+const VERSION = 3;
 
 function fresh() {
   return {
@@ -28,12 +32,19 @@ function fresh() {
     talksSeen: [], titles: [], charStats: {}, cardsSeen: [], cardsUsed: [], foesSeen: [], foesBeaten: [],
     rec: { combo: {}, moons: {}, depthBest: 0 },
     tutDone: false,   // 첫 실행 튜토리얼을 끝냈거나 건너뜀 (js/tutorial.js)
+    // v3: 매일의 밤(날짜 → { best 가장 빠른 도착, won, tries }) · 업적(달성한 id) · 평생 기록 · 최근 판 20개 · 숙련도 점수 · 카드 뒷면
+    daily: {}, achDone: [], history: [], mxp: {}, cardBack: null,
+    life: { bestTurn: 0, bigTurns: 0, bossKills: 0, dailyWins: 0, facts: [] },
   };
 }
 // 예전 저장(v1)을 이어받는다: 없는 필드만 새 값으로 채운다
 function migrate(d) {
   const f = fresh(), out = Object.assign(f, d);
   out.rec = Object.assign(fresh().rec, d.rec || {});
+  out.life = Object.assign(fresh().life, d.life || {});
+  // v2 → v3: 지난 판들로 숙련도 점수를 대강 채운다(판 수 + 이긴 판 ×2)
+  if (!d.mxp) for (const [k, st] of Object.entries(d.charStats || {})) out.mxp[k] = (st.runs || 0) + (st.wins || 0) * 2;
+  if (!d.life) out.life.bossKills = d.wins || 0;
   if (d.tutDone === undefined) out.tutDone = (d.runs || 0) > 0;   // 이미 판을 해 본 저장이면 튜토리얼을 건너뛴다
   out.v = VERSION;
   return out;
@@ -280,6 +291,7 @@ export function runShards(G) {
   add(`새로 찾은 듀오 ${newDuos.length}쌍`, newDuos.length * SHARDS.newDuo);
   add(`강적 ${G.elites || 0}번`, (G.elites || 0) * SHARDS.elite);
   if (!G.won) add(`오른 층 ${G.floors || 0}칸`, Math.max(SHARDS.lossMin, G.floors || 0));
+  if (G.daily && G.won && !P.daily[G.daily.key]?.won) add('오늘의 매일의 밤 첫 격파', DAILY_SHARDS);
   return { lines, total: lines.reduce((t, [, v]) => t + v, 0), newDuos };
 }
 // ---------- 에피소드 (docs/09_episodes.md) ----------
@@ -297,16 +309,17 @@ export function epNewCount() {
 }
 // 판이 끝나면 데려간 동료마다 진행을 올리고, 새로 열린 화를 돌려준다
 function epProgress(G) {
+  const party = G.party.filter(owns);   // 매일의 밤에 빌린 동료는 진행이 안 오른다
   const before = new Set();
-  for (const cid of G.party) for (let n = 0; n < 3; n++) if (epOpen(cid, n)) before.add(epKey(cid, n));
-  for (const cid of G.party) {
+  for (const cid of party) for (let n = 0; n < 3; n++) if (epOpen(cid, n)) before.add(epKey(cid, n));
+  for (const cid of party) {
     const g = P.epProg[cid] ||= { runs: 0, act2: false, dawn: false };
     g.runs++;
     if ((G.bossKills || 0) >= 2) g.act2 = true;
     if (G.won) g.dawn = true;
   }
   const out = [];
-  for (const cid of G.party) for (let n = 0; n < 3; n++) if (epOpen(cid, n) && !before.has(epKey(cid, n))) out.push({ cid, n });
+  for (const cid of party) for (let n = 0; n < 3; n++) if (epOpen(cid, n) && !before.has(epKey(cid, n))) out.push({ cid, n });
   return out;
 }
 // 에피소드 보상 (2화: 그 동료 휴식 대화 2개, 3화: 칭호). 받은 것 설명 목록.
@@ -347,7 +360,105 @@ export function grantRun(G) {
   // 인연 듀오를 처음 썼으면 인연 장면이 열린다
   r.newBonds = [...(G.duoSet || [])].filter(k => BOND_SCENES[k] && !P.bondOpen.includes(k));
   for (const k of r.newBonds) P.bondOpen.push(k);
+  r.daily = recordDaily(G);
+  r.mastery = recordMastery(G);
+  recordLife(G);
+  recordHistory(G);
+  r.ach = achCheck();
   save();
   G.granted = r;
   return r;
+}
+
+// ---------- 매일의 밤 (§11, js/data/daily.js) ----------
+// 오늘의 판: 시드·달·규칙·동료 후보 6명(구현된 동료 중, 가진 동료가 아니어도 빌려 쓴다)
+export function dailyToday(now = new Date()) {
+  const key = dailyKey(now), seed = dailySeed(key), rule = dailyRule(key);
+  const moon = makeRng(seed).pick(Object.keys(MOONS));   // run.js newRun이 같은 시드로 처음 뽑는 것이 달
+  const pool = ROSTER_IDS.filter(k => CHARACTERS[k]);
+  const cands = makeRng(seed ^ 0x5bd1e995).pickN(pool, DAILY_CANDIDATES);
+  return { key, seed, rule, moon, cands, rec: P.daily[key] || null };
+}
+function recordDaily(G) {
+  if (!G.daily) return null;
+  const d = P.daily[G.daily.key] ||= { best: null, won: false, tries: 0 };
+  const first = G.won && !d.won;
+  d.tries++;
+  if (G.won) { d.won = true; if (d.best == null || G.clock < d.best) d.best = G.clock; }
+  if (first) P.life.dailyWins++;
+  // 오래된 날은 30일만 남긴다
+  const keys = Object.keys(P.daily).sort();
+  while (keys.length > 30) delete P.daily[keys.shift()];
+  return { first, best: d.best };
+}
+
+// ---------- 동료 숙련도 (js/data/mastery.js) ----------
+export const mastery = id => masteryLv(P.mxp[id]);
+export const masteryTitles = () => {
+  const out = [];
+  for (const [id, xp] of Object.entries(P.mxp)) {
+    const lv = masteryLv(xp), name = ROSTER[id]?.name || id;
+    for (const rw of MASTERY_REWARDS) if (rw.title && lv >= rw.lv) out.push({ id, lv: rw.lv, title: rw.title.replace('{name}', name) });
+  }
+  return out.sort((a, b) => b.lv - a.lv);
+};
+export const backOpen = id => mastery(id) >= 4;
+export function setCardBack(id) { if (id && !backOpen(id)) return; P.cardBack = id || null; save(); }
+function recordMastery(G) {
+  const ups = [];
+  for (const id of G.party.filter(owns)) {
+    const before = mastery(id);
+    P.mxp[id] = (P.mxp[id] || 0) + MASTERY_GAIN.run + ((G.bossKills || 0) >= 2 ? MASTERY_GAIN.act2 : 0) + (G.won ? MASTERY_GAIN.win : 0);
+    const after = mastery(id);
+    if (after > before) ups.push({ id, lv: after });
+  }
+  return ups;
+}
+
+// ---------- 평생 기록 · 최근 판 ----------
+function recordLife(G) {
+  const L = P.life, F = new Set(L.facts);
+  L.bestTurn = Math.max(L.bestTurn || 0, G.bestTurn?.dmg || 0);
+  L.bigTurns = (L.bigTurns || 0) + (G.bigTurns || 0);
+  L.bossKills = (L.bossKills || 0) + (G.bossKills || 0);
+  if ((G.bossKills || 0) >= 2) F.add('act2');
+  if ((G.bigTurns || 0) >= 5) F.add('big5');
+  if ((G.duoSet?.size || 0) >= 3) F.add('duo3');
+  if ((G.elites || 0) >= 3) F.add('elite3');
+  if (G.relics.length >= 10) F.add('relic10');
+  if (G.gold >= 300) F.add('rich');
+  if (G.won) {
+    if (G.clock >= RULES.dawn) F.add('lateWin');
+    if (G.deck.length <= 12) F.add('thinWin');
+    if (G.deck.length >= 30) F.add('thickWin');
+    if (!G.downs) F.add('noDownWin');
+    if (G.party.every(k => ROSTER[k]?.rarity === 3)) F.add('star3Win');
+    if (!G.party.some(k => ROSTER[k]?.rarity === 5)) F.add('no5Win');
+  }
+  L.facts = [...F];
+}
+const HISTORY_MAX = 20;
+function recordHistory(G) {
+  const mvp = G.party.reduce((a, b) => (G.stats[b].dmg + G.stats[b].block) > (G.stats[a].dmg + G.stats[a].block) ? b : a);
+  P.history.unshift({
+    t: Date.now(), party: G.party.slice(), moon: G.moon, won: !!G.won, why: G.why, clock: G.clock, act: G.act, floors: G.floors || 0,
+    mvp, best: G.bestTurn?.dmg || 0, duos: G.duoSet?.size || 0, depth: G.depth || 0, daily: G.daily?.key || null,
+  });
+  P.history.length = Math.min(P.history.length, HISTORY_MAX);
+}
+
+// ---------- 업적 (js/data/achievements.js) ----------
+// 새로 달성한 업적에 별 조각을 주고 목록을 돌려준다. 화면은 achToasts를 꺼내 띠로 보여 준다.
+export const achToasts = [];
+export function achCheck() {
+  const got = [];
+  for (const a of ACHIEVEMENTS) {
+    if (P.achDone.includes(a.id)) continue;
+    let ok = false;
+    try { ok = !!a.test(P, ROSTER); } catch (e) { ok = false; }
+    if (!ok) continue;
+    P.achDone.push(a.id); P.shards += a.r; got.push(a); achToasts.push(a);
+  }
+  if (got.length) save();
+  return got;
 }

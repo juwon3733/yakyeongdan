@@ -120,6 +120,14 @@ function runBar(G) {
 }
 
 const WHY = { down: '모두 쓰러졌다', collapse: '7시. 탑이 무너졌다' };
+// 결과: 매일의 밤 기록 · 숙련도 단계 오름 · 이번 판에 달성한 업적
+function metaNote(R) {
+  const out = [];
+  if (R.daily) out.push(`<span class="chip dailychip">매일의 밤</span> ${R.daily.best != null ? `오늘 최고 <b>${fmt(R.daily.best)}</b>` : '오늘은 아직 못 깼다'}${R.daily.first ? ' · <b class="newt">오늘 첫 격파</b>' : ''}`);
+  for (const u of R.mastery || []) out.push(`<span class="chip">숙련도</span> ${esc(CHARACTERS[u.id]?.name || u.id)} <b>${u.lv}단계</b>`);
+  if (R.ach?.length) out.push(`<span class="chip">업적</span> ${R.ach.map(a => `「${esc(a.name)}」`).join(' ')} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b>`);
+  return out.length ? `<div class="metanote">${out.map(x => `<p class="note">${x}</p>`).join('')}</div>` : '';
+}
 export function resultView() {
   const G = S.G, R = grantRun(G);
   const mvp = G.party.reduce((a, b) => (G.stats[b].dmg + G.stats[b].block) > (G.stats[a].dmg + G.stats[a].block) ? b : a);
@@ -138,6 +146,7 @@ export function resultView() {
       <p class="note">쓴 듀오 ${duos}</p>
       ${G.bestTurn?.dmg ? `<p class="note">오늘 밤 최고의 한 턴 <b>${G.bestTurn.dmg}</b>${G.bestTurn.bursts.length ? ` · 터진 패시브 ${G.bestTurn.bursts.map(id => CHARACTERS[id].name).join('·')}` : ''}${G.bigTurns ? ` · 피해 ${RULES.bigTurn}+ 턴 ${G.bigTurns}번` : ''}</p>` : ''}
       ${epNote}
+      ${metaNote(R)}
       ${runBar(G)}
       <table class="shards">${R.lines.map(([t, v], i) => `<tr style="--i:${i}"><td>${t}</td><td>+${v}</td></tr>`).join('')}<tr class="sum" style="--i:${R.lines.length}"><td>얻은 별 조각</td><td>+<b class="countup" data-to="${R.total}">${R.total}</b></td></tr></table>
       <p class="note">지금 별 조각 <b>${P.shards}</b> · ${P.shards >= SUMMON.tenCost ? '<b class="ok10">10연 소환을 할 수 있다</b>' : `10연까지 ${SUMMON.tenCost - P.shards}`}</p>

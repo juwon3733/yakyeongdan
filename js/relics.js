@@ -3,11 +3,13 @@ import { S } from './run.js';
 import { RELICS, RELIC_ODDS } from './data/relics.js';
 
 export const hasRelic = id => !!S.G?.relics.includes(id);
+// 판 변칙 규칙(매일의 밤, js/data/daily.js)은 S.G.mods에 도구와 같은 필드로 들어와 도구처럼 더해진다
+const mod = field => S.G?.mods?.[field];
 // 가진 도구들의 수치 필드 합 (없으면 0)
-export const relicSum = field => (S.G?.relics || []).reduce((t, id) => t + (RELICS[id][field] || 0), 0);
+export const relicSum = field => (S.G?.relics || []).reduce((t, id) => t + (RELICS[id][field] || 0), 0) + (mod(field) || 0);
 // 곱 필드 (없으면 1)
-export const relicMul = field => (S.G?.relics || []).reduce((t, id) => t * (RELICS[id][field] ?? 1), 1);
-export const relicFlag = field => (S.G?.relics || []).some(id => RELICS[id][field]);
+export const relicMul = field => (S.G?.relics || []).reduce((t, id) => t * (RELICS[id][field] ?? 1), 1) * (mod(field) ?? 1);
+export const relicFlag = field => (S.G?.relics || []).some(id => RELICS[id][field]) || !!mod(field);
 
 // 등급 확률로 아직 없는 도구 하나 (없으면 null). tiers를 주면 그 등급에서만.
 // 전용 도구(별자리 4)는 주인이 파티에 있고 열렸을 때(G.sigs) 보통 등급 자리에 섞인다.

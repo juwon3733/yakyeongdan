@@ -14,6 +14,9 @@ import { P, nextRate5, epNewCount, pickupNow, starsOf, costumeOpen, wearing, pac
 import { stars, palOf, fmt, esc, cardHTML, charSrc } from './common.js';
 import { REST_LINES, FIRST_LINES } from '../data/hublines.js';
 import { artURL } from '../art.js';
+import { achTab, historyBlock, masteryLine } from './daily.js';
+import { dailyToday, mastery, masteryTitles, backOpen } from '../meta.js';
+import { MASTERY_REWARDS } from '../data/mastery.js';
 
 const pct = x => `${Math.round(x * 1000) / 10}%`;
 const wallet = () => `<span class="wallet"><b>별 조각 ${P.shards}</b> · 별가루 ${P.dust}</span>`;
@@ -51,7 +54,8 @@ export function baseView() {
     const say = L && L.k === k ? `<span class="bubble">${esc(lines[L.i % lines.length])}</span>` : '';
     return `<button type="button" class="rester r${i}" style="--c:${ROSTER[k].col}" data-restline="${k}" aria-label="${ROSTER[k].name}에게 말 걸기">${say}<img class="px" src="${charSrc(k)}" alt="${ROSTER[k].name}"><small>${ROSTER[k].name}</small></button>`;
   }).join('');
-  const titles = P.titles.length ? `<p class="note small">칭호 ${P.titles.map(c => `「${esc(ROSTER[c]?.name || c)}의 새벽」`).join(' ')}</p>` : '';
+  const tl = [...P.titles.map(c => `${ROSTER[c]?.name || c}의 새벽`), ...masteryTitles().slice(0, 4).map(t => t.title)];
+  const titles = tl.length ? `<p class="note small">칭호 ${tl.map(t => `「${esc(t)}」`).join(' ')}</p>` : '';
   const tm = hallTime();
   const matesNew = own.length > (+ls('yk-mates-seen') || 3);
   return `<div class="basescr">
@@ -61,11 +65,12 @@ export function baseView() {
     <div class="bmenu">
       <div class="bhead"><button type="button" class="mini" data-view="title">‹ 타이틀</button>${walletBump()}<button type="button" class="mini" data-settings>설정</button></div>
       <button type="button" class="primary ${S.hint === 'summon' ? 'hint' : ''}" data-view="summon">${dot(P.shards >= SUMMON.cost || P.pick5)}별 소환${P.pick5 ? ' <b class="newt">★5 고르기</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">여기서 10연</b>' : ''}</button>
-      <button type="button" data-view="exchange">${dot(P.dust >= Math.min(EXCHANGE.char[3], EXCHANGE.talk))}교환소</button>
-      <button type="button" data-view="mates">${dot(matesNew)}동료 <small>${own.length}/${ROSTER_IDS.length}</small></button>
+      <div class="brow"><button type="button" data-view="mates">${dot(matesNew)}동료 <small>${own.length}/${ROSTER_IDS.length}</small></button>
+      <button type="button" data-view="exchange">${dot(P.dust >= Math.min(EXCHANGE.char[3], EXCHANGE.talk))}교환소</button></div>
       <button type="button" data-view="episodes">${dot(epNewCount())}에피소드${epNewCount() ? ` <b class="newt">NEW ${epNewCount()}</b>` : ''}</button>
-      <button type="button" data-view="codex">도감</button>
-      <button type="button" data-view="records">기록</button>
+      <div class="brow"><button type="button" data-view="codex">도감 <small>업적 ${P.achDone.length}</small></button>
+      <button type="button" data-view="records">기록</button></div>
+      <button type="button" data-view="daily">${dot(!dailyToday().rec?.won)}매일의 밤 <small>${esc(dailyToday().rule.name)}</small></button>
       <button type="button" data-view="party">밤 오르기</button>
       <p class="note small">판 ${P.runs} · 이긴 판 ${P.wins}${P.best != null ? ` · 가장 빠른 도착 ${fmt(P.best)}` : ''}${depthOpen() ? ` · 밤의 깊이 최고 ${P.rec.depthBest}` : ''}</p>
       ${titles}
@@ -214,7 +219,7 @@ export function matesView() {
   ls('yk-mates-seen', String(Object.keys(P.owned).length));   // 본부 [동료] 새 소식 점 끄기
   const grid = ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k];
-    return `<button type="button" class="mcell r${r.rarity} ${k === sel ? 'on' : ''} ${own ? '' : 'none'} ${starRing(k)}" style="--c:${r.col}" ${own ? `data-mate="${k}"` : 'disabled'} title="${esc(r.name)}">
+    return `<button type="button" class="mcell r${r.rarity} ${k === sel ? 'on' : ''} ${own ? '' : 'none'} ${starRing(k)} mx${own ? mastery(k) : 0}" style="--c:${r.col}" ${own ? `data-mate="${k}"` : 'disabled'} title="${esc(r.name)}">
       ${own ? img(k) : '<span class="sil"></span>'}<span class="nm">${own ? r.name : '?'}</span>${own ? `<span class="st">${'✦'.repeat(starsOf(k))}</span>` : ''}</button>`;
   }).join('');
   return `<div class="matescr">
@@ -238,19 +243,22 @@ function mateDetail(k) {
   return `<div class="mhead ${starRing(k)}" style="--c:${r.col}">${img(k)}<div><h2>${r.name} <span class="stars">${stars(r.rarity)}</span></h2>
       <p class="note">${r.role} · 체력 ${c?.maxHp ?? '-'} · 별자리 ${s}/${SUMMON.maxStars} · 판 ${st.runs} · 이긴 판 ${st.wins}${P.titles.includes(k) ? ` · 칭호 「${r.name}의 새벽」` : ''}</p>
       ${c ? `<p class="ps"><b>${esc(c.passive.name)}</b></p>${(c.passive.lines || [['', '', c.passive.text]]).map(([k, n, t]) => `<p class="ps">${{ trait: '①', keyword: '②', burst: '③' }[k] || ''} ${n ? `<b>「${esc(n)}」</b> ` : ''}${esc(t)}</p>`).join('')}` : ''}${cos}</div></div>
-    <ul class="steps">${steps}</ul>
+    ${masteryLine(k)}
+    <ul class="steps mxsteps">${MASTERY_REWARDS.map(rw => `<li class="${mastery(k) >= rw.lv ? 'on' : ''}"><b>${rw.lv}</b> ${esc(rw.text.replace(/\{name\}/g, r.name))}${rw.kind === 'back' && backOpen(k) ? ` <button type="button" class="mini ${P.cardBack === k ? 'on' : ''}" data-cardback="${P.cardBack === k ? '' : k}">${P.cardBack === k ? '쓰는 중 (끄기)' : '이 뒷면 쓰기'}</button>` : ''}</li>`).join('')}</ul>
+    <h3 class="sub">별자리</h3><ul class="steps">${steps}</ul>
     ${c ? `<h3 class="sub">시작 카드</h3><div class="hand mini">${start}</div>
     <h3 class="sub">보상 카드 ${pool.length - locked.size}/${pool.length}</h3><div class="hand mini scroll">${pool.map(id => locked.has(id) ? `<span class="lockcard" title="카드 묶음이 열리면 나온다">${esc(CARDS[id].name)}<small>잠김</small></span>` : cardHTML(id, true, 'none')).join('')}</div>` : ''}`;
 }
 
 // 도감 (§8): 동료 · 듀오 · 카드 · 적 · 휴식 대화
-const TABS = [['mates', '동료'], ['duos', '인연 듀오'], ['cards', '카드'], ['foes', '적'], ['talks', '휴식 대화']];
+const TABS = [['mates', '동료'], ['duos', '인연 듀오'], ['cards', '카드'], ['foes', '적'], ['talks', '휴식 대화'], ['ach', '업적']];
 export function codexView() {
   const t = S.codexTab || 'mates';
   const tabs = TABS.map(([k, n]) => `<button type="button" class="mini ${t === k ? 'on' : ''}" data-ctab="${k}">${n}</button>`).join('');
   return `<div class="epsel">${head()}<h2>도감</h2><div class="tabs">${tabs}</div><div class="codex">${CODEX[t]()}</div></div>`;
 }
 const CODEX = {
+  ach: achTab,
   mates: () => `<div class="cgrid">${ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k], st = P.charStats[k] || { runs: 0, wins: 0 }, c = CHARACTERS[k];
     return `<div class="centry ${own ? '' : 'none'} ${starRing(k)}" style="--c:${r.col}">${own ? img(k) : '<span class="sil"></span>'}
@@ -300,6 +308,8 @@ export function recordsView() {
       <div><h3 class="sub">조합별 가장 빠른 도착</h3><table class="odds big">${combos}</table></div>
       <div><h3 class="sub">달별 승리</h3><table class="odds big">${moons}</table>
         <h3 class="sub">밤의 깊이</h3>${depth}
-        <p class="note small">판 ${P.runs} · 이긴 판 ${P.wins}${P.best != null ? ` · 가장 빠른 도착 ${fmt(P.best)}` : ''}${startPickOpen() ? '' : ' · 첫 판을 끝내면 시작 도구 고르기가 열린다'}</p></div>
-    </div></div>`;
+        <p class="note small">판 ${P.runs} · 이긴 판 ${P.wins}${P.best != null ? ` · 가장 빠른 도착 ${fmt(P.best)}` : ''}${startPickOpen() ? '' : ' · 첫 판을 끝내면 시작 도구 고르기가 열린다'}</p>
+        <p class="note small">최고의 한 턴 ${P.life.bestTurn} · 피해 100+ 턴 ${P.life.bigTurns}번 · 업적 ${P.achDone.length}</p></div>
+    </div>
+    ${historyBlock()}</div>`;
 }

@@ -2,7 +2,7 @@
 import { S, newRun, checkCollapse } from './run.js';
 import { goNode, reachable, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, specialBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
 import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, devWin, pickCombatMoon } from './combat.js';
-import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw, exportSave, readSave, importSave } from './meta.js';
+import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw, exportSave, readSave, importSave, dailyToday, setCardBack } from './meta.js';
 import { bootDone, syncWake, insets, toggleFullscreen, toast } from './pwa.js';
 import { temperPick } from './effects.js';
 import { render as draw } from './render/index.js';
@@ -143,6 +143,18 @@ app.addEventListener('click', e => {
   else if ('start' in D) newRun(S.picked.slice(), seedParam, runOptions(S.picked, S.depth || 0, S.startRelic));
   else if (D.depth !== undefined) S.depth = +D.depth;
   else if (D.srelic) S.startRelic = D.srelic;
+  // 매일의 밤: 후보 여섯 중 셋 → 오늘의 시드로 판, 규칙은 S.G.mods (js/relics.js가 도구처럼 더한다)
+  else if (D.dpick) {
+    const k = D.dpick, L = S.dpicked || [];
+    S.dpicked = L.includes(k) ? L.filter(x => x !== k) : L.length < 3 ? [...L, k] : L;
+  }
+  else if ('dailystart' in D) {
+    const T = dailyToday(), party = (S.dpicked || []).filter(k => T.cands.includes(k));
+    if (party.length !== 3) return;
+    newRun(party, T.seed, runOptions(party, 0));
+    S.G.daily = { key: T.key, rule: T.rule }; S.G.mods = T.rule.mods;
+  }
+  else if (D.cardback !== undefined) setCardBack(D.cardback || null);
   // 판 바깥: 초심자 ★5 · 교환소 · 동료 · 도감
   else if (D.choose5) { const r = choose5(D.choose5); if (r) { S.reveal = { list: [r], open: [true], focus: 0 }; S.view = 'reveal'; sfx('fanfare5'); } }
   else if (D.ex) { const [k, a] = D.ex.split(':'); S.exMsg = exchange(k, a || null) || ''; }

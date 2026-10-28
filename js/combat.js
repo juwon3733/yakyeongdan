@@ -277,7 +277,7 @@ function hurtMember(id, d, src, fi = null) {
   logMsg(`${src} → ${nm}: 피해 <b>${d}</b>${b ? ` (방어 ${b} 막음)` : ''}`);
   // 금빛 깃털: 판마다 동료당 한 번 버틴다
   if (m.hp <= 0 && !m.down && hasRelic('gold_feather') && !m.feather) { m.feather = true; m.hp = RELICS.gold_feather.goldFeather; logMsg(`금빛 깃털: <b>${nm}</b>이(가) 버텼다`); }
-  if (m.hp <= 0 && !m.down) { m.down = true; m.wasDown = true; logMsg(`<b>${nm} 쓰러짐</b> · 카드를 쓸 수 없다`); }
+  if (m.hp <= 0 && !m.down) { m.down = true; m.wasDown = true; S.G.downs = (S.G.downs || 0) + 1; logMsg(`<b>${nm} 쓰러짐</b> · 카드를 쓸 수 없다`); }
   pushFx({ kind: 'hurt', id, dmg: before - m.hp, blocked: b, foe: fi, down: m.down && before > 0 && m.hp <= 0, air: id === 'sigrun' && C.air > 0 });
 }
 function enemyHit(f, v, k = 0) {

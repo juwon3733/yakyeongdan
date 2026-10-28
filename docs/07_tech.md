@@ -33,6 +33,9 @@ js/
     talks.js       휴식 대화
     gacha.js       소환 확률·천장·픽업·별자리·교환소 가격·카드 묶음
     depth.js       밤의 깊이 1~10 규칙
+    daily.js       매일의 밤: 날짜 시드·변칙 규칙 14개(도구 필드 → S.G.mods, js/relics.js가 더함)
+    achievements.js 업적 53개(저장 P만 보고 판정)
+    mastery.js     동료 숙련도 단계 점수·보상(꾸미기)
   asset_prompts.js 그림 프롬프트 원본 (→ assets/prompts.json, docs/PROMPTS.md)
 assets/ (chars/ cutins/ cg/ enemies/ bg/ title/ summon/ icons/ cards/ audio/, prompts.json)
 fonts/  (Galmuri)

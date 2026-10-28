@@ -29,7 +29,7 @@ const errors = [];
 const browser = await chromium.launch();
 const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; };
 const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false,
-  migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false,
+  migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, ach: false, history: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
   ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false,
   tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false, pwa: false, backup: false };
@@ -287,7 +287,7 @@ try {
         pulls: 12, pity5: 12, pity4: 0, firstTen: true, got5: false, seenDuos: ['iris+marta'], runs: 2, wins: 0, best: null, sseed: 7, epProg: {}, epSeen: {}, bondOpen: [], bondSeen: [] });
       return { v: P.v, noel: P.owned.noel?.stars, dust: P.dust, rec: !!P.rec, packs: typeof P.packs };
     });
-    if (mig.v === 2 && mig.noel === 2 && mig.dust === 3 && mig.rec && mig.packs === 'object') seen.migrate = true; else fail(`v1 저장 이어받기 실패 ${JSON.stringify(mig)}`);
+    if (mig.v === 3 && mig.noel === 2 && mig.dust === 3 && mig.rec && mig.packs === 'object') seen.migrate = true; else fail(`v1 저장 이어받기 실패 ${JSON.stringify(mig)}`);
     // 초심자: 30번 안에 ★5 → 고르기 화면
     await page.evaluate(() => { window.__yk.shards(300); window.__yk.S.view = 'summon'; window.__yk.render(); });
     for (let k = 0; k < 3 && !(await page.evaluate(() => window.__yk.P().pick5)); k++) {
@@ -353,6 +353,37 @@ try {
     const kept = await page.evaluate(() => window.__yk.S.C ? window.__yk.S.C.hand.some(h => h.uid === 9001) : null);
     if (ch === 'temper' && !tp.choose && tp.id === 'iris.parry+' && kept) { seen.chooseUi = true; console.log('meta: 도라 담금질 고르기 · 세바스 남기기 고르기'); }
     else fail(`담금질·남기기 고르기 실패 ${JSON.stringify({ ch, tp, kept })}`);
+    await page.close();
+  }
+  // 매일의 밤 → 오늘의 시드·규칙으로 출발 → 이겨서 결과(첫 격파 별 조각 +15, 업적 띠, 숙련도) → 기록 화면 최근 판 · 도감 업적 탭
+  {
+    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    page.on('pageerror', e => errors.push(`[daily] ${e.message}`));
+    page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[daily] ${m.text()}`); });
+    await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+    await page.goto(`http://127.0.0.1:${port}/?notut`);
+    await page.evaluate(() => { window.__yk.reset(); window.__yk.S.view = 'base'; window.__yk.render(); });
+    await page.click('[data-view="daily"]');
+    const cands = await page.$$eval('[data-dpick]', b => b.map(x => x.dataset.dpick));
+    for (const k of cands.slice(0, 3)) await page.click(`[data-dpick="${k}"]`);
+    await page.click('[data-dailystart]');
+    const st = await page.evaluate(() => { const G = window.__yk.S.G; return { daily: G.daily?.key, mods: !!G.mods, chip: !!document.querySelector('.dailychip'), party: G.party.length }; });
+    // 이긴 판으로 끝낸다
+    await page.evaluate(() => { const G = window.__yk.S.G; G.won = true; G.why = 'win'; G.bossKills = 3; G.clock = 330; G.bestTurn = { dmg: 120, bursts: [], act: 3 }; G.bigTurns = 1; G.screen = 'result'; window.__yk.render(); });
+    const r = await page.evaluate(() => { const P = window.__yk.P(); return { d: Object.values(P.daily)[0], wins: P.life.dailyWins, ach: P.achDone.length, hist: P.history.length, mx: Object.values(P.mxp).length,
+      line: [...document.querySelectorAll('.shards td')].some(td => /매일의 밤/.test(td.textContent)), toast: !!document.querySelector('.achtoast'), meta: !!document.querySelector('.metanote') }; });
+    if (st.daily && st.mods && st.chip && st.party === 3 && r.d?.won && r.d.best === 330 && r.wins === 1 && r.line && r.meta) { seen.daily = true; console.log(`daily: ${st.daily} 매일의 밤 격파 (첫 격파 별 조각 줄, 숙련도 ${r.mx}명)`); }
+    else fail(`매일의 밤 실패 ${JSON.stringify({ st, r })}`);
+    if (r.ach >= 3 && r.toast) { seen.ach = true; console.log(`ach: 업적 ${r.ach}개 달성 · 띠 표시`); } else fail(`업적 달성 실패 ${JSON.stringify(r)}`);
+    await page.click('[data-home]');
+    await page.click('[data-view="records"]');
+    const hrows = await page.$$eval('.odds.hist tr', t => t.length);
+    await page.click('[data-view="base"]');
+    await page.click('[data-view="codex"]');
+    await page.click('[data-ctab="ach"]');
+    const achOn = await page.$$eval('.ach.on', a => a.length);
+    if (r.hist === 1 && hrows === 1 && achOn === r.ach) { seen.history = true; console.log('history: 기록 화면 최근 판 1개 · 도감 업적 탭'); }
+    else fail(`판 기록/업적 탭 실패 ${JSON.stringify({ hist: r.hist, hrows, achOn })}`);
     await page.close();
   }
   // M8: 첫 실행 튜토리얼 끝까지 (끌어 놓기 · 대열 · 사건 · 손패 맞춘 듀오 · 작은 보스 → 본부 [별 소환] 안내)
