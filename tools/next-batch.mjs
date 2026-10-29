@@ -17,13 +17,13 @@ const ORDER = [
   // 퀄리티 계획(docs/QUALITY_PLAN.md): 늘 보이는 카드 그림 → UI 키트·로고 → 타이틀부터
   ...[...STAR5, ...FIRST, ...REST].map((id) => `cards-${id}`), 'ui-kit', 'logo', 'title',
   'tower',       // 지도 탑 — 지도 화면이 코드로 칠한 돌벽 대신 그림 탑이 된다
+  'title',       // 타이틀 도트 키아트(key_px) — 첫 화면의 매끈한 애니 그림이 가장 AI 티가 난다
   'fx-common',   // 공용 타격 이펙트 — 모든 공격이 바로 화려해진다
   ...STAR5.flatMap((id) => [`char-${id}`, `pose-${id}`, `fx-${id}`, `cards-${id}`, `aura-${id}`, `pet-${id}`]),   // 몸·이펙트·오라·동반자는 층마다 따로(docs/BATTLE_PLAN.md)   // 전투 스프라이트·이펙트는 서 있는 그림 바로 뒤에
   'cg-star5',
   ...FIRST.map((id) => `char-${id}`),
   'bg',
   'enemy-act1', 'boss-lighthouse', 'boss-fog_queen',
-  'title',
   'enemy-act2', 'boss-cloud_captain', 'boss-storm_whale', 'enemy-act3', 'boss-dawn',
   'summon', 'icons',
   ...REST.map((id) => `char-${id}`),

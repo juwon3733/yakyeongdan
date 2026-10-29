@@ -5,7 +5,7 @@
 import { CARDS } from './data/cards.js';
 import { cardArtKind } from './cardkind.js';
 
-export const STYLE_VERSION = 7; // 7: 캐릭터를 층으로 — 전투 스프라이트는 몸만(이펙트·동반자 없이, 칸을 꽉 채움, 숨쉬기 칸 대신 준비 자세), ★5 오라·동반자(네레아 고래·시온 별 정령)·원거리 투사체는 따로. 6: 6: 기술 이펙트 시트(공용 4종·동료별 시그니처), 스킨은 skin-<id>로 맨 뒤. 5: 전투는 일러스트 대신 저해상도 전투 스프라이트(동료 4×2 시트 8동작, 적 128×128). 4: 여러 장을 한 시트에(칸은 2배 도트라 한 장짜리와 같은 세밀함, 자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
+export const STYLE_VERSION = 8; // 8: 모든 그림에 STYLE.handmade(AI 그림 티 줄이기 — 장식 과잉·광택·대칭 자세·같은 얼굴 금지). 7: 7: 캐릭터를 층으로 — 전투 스프라이트는 몸만(이펙트·동반자 없이, 칸을 꽉 채움, 숨쉬기 칸 대신 준비 자세), ★5 오라·동반자(네레아 고래·시온 별 정령)·원거리 투사체는 따로. 6: 6: 기술 이펙트 시트(공용 4종·동료별 시그니처), 스킨은 skin-<id>로 맨 뒤. 5: 전투는 일러스트 대신 저해상도 전투 스프라이트(동료 4×2 시트 8동작, 적 128×128). 4: 여러 장을 한 시트에(칸은 2배 도트라 한 장짜리와 같은 세밀함, 자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
 
 // ── 공통 스타일 ──────────────────────────────────────────
 export const STYLE = {
@@ -18,6 +18,8 @@ export const STYLE = {
   rarity4: 'This is a 4-star character: one flashy signature prop or accessory, otherwise clean.',
   rarity3: 'This is a 3-star character: simple, friendly and approachable design, still cute or cool.',
   onModel: 'Draw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.',
+  // AI 그림 티 줄이기: 손으로 찍은 도트처럼 — 장식 과잉·플라스틱 광택·똑같은 예쁜 얼굴·좌우 대칭 정면 자세·흐린 배경 빛 번짐을 피한다
+  handmade: 'Make it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.',
   keyart: '이미지를 만들어줘. 최고 화질로, 색을 줄이지 말고.\n\nHigh-quality, highly detailed pixel-art style illustration, like the key visual of a premium modern pixel-art game: crisp pixel detail, rich dramatic lighting, clean anime gacha-game faces. Night sky, a tall tower rising from the sea, lanterns and stars. No text, no letters, no logo, no watermark, no UI.',
 };
 
@@ -384,7 +386,7 @@ export function assetList() {
   outputs.length = 0;
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `char-${id}`;
-    const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity));
+    const base = join(STYLE.pixel, STYLE.handmade, STYLE.distinct, STYLE.character, rarityStyle(c.rarity));
     const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
     batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name}`,
       reference_sheet_prompt: join(base, `Character reference sheet of ${who} Full body front view plus a face close-up, plain background. Native resolution about 384x256, upscaled with nearest-neighbor.`) });
@@ -422,7 +424,7 @@ export function assetList() {
     const batch = `pose-${id}`;
     batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 전투 스프라이트 — 몸만 (시트 1장 → 8동작)` });
     const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
-    out.push(sheet('battlesheet', `${id}_body`, batch, `${id}_body.png`, join(STYLE.sprite, STYLE.distinct, rarityStyle(c.rarity), `${who}
+    out.push(sheet('battlesheet', `${id}_body`, batch, `${id}_body.png`, join(STYLE.sprite, STYLE.handmade, STYLE.distinct, rarityStyle(c.rarity), `${who}
 A battle sprite sheet of this ONE character: eight poses on one 1536x1024 canvas, split into eight equal cells of 384x512 (4 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text.
 ${FRAMES.map(([, t], i) => `- Cell ${i + 1} — ${t.replace('${c.fx}', c.fx)}`).join('\n')}
 All eight cells are the SAME sprite redrawn by one pixel artist: identical face, hair shape, outfit details, palette and outline in every cell — only the pose changes.
@@ -442,7 +444,7 @@ In every cell: exactly the same character size and proportions (adult about 1:6.
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `cards-${id}`;
     batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 카드 그림 (시트 1장 → 4장)` });
-    const base = join(STYLE.pixel, STYLE.distinct, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
+    const base = join(STYLE.pixel, STYLE.handmade, STYLE.distinct, STYLE.character, rarityStyle(c.rarity), STYLE.onModel);
     const mine = Object.values(CARDS).filter((d) => d.ch === id);
     const names = (k) => mine.filter((d) => cardArtKind(d) === k).map((d) => `「${d.name}」`).slice(0, 5).join(', ');
     const pos = { atk: ['Top-left', 0, 0], guard: ['Top-right', 1, 0], skill: ['Bottom-left', 0, 1], special: ['Bottom-right', 1, 1] };
@@ -475,7 +477,7 @@ ${c.name} is ON-MODEL from the attached references in every cell. Visual motifs:
   batches.push({ id: 'cg-star5', title: '★5 전신 CG' });
   for (const [id, c] of Object.entries(CHARS).filter(([, c]) => c.rarity === 5)) {
     out.push(item('cg', `star5_${id}`, 'cg-star5', `star5_${id}.png`,
-      join(STYLE.keyart, STYLE.character, STYLE.onModel, `Full-body splash art of ${c.name}: ${c.sheet} Her most dramatic signature pose with her magical effect at full power (${c.cutin}). 16:9 composition (1536x864), the character fills the frame, night sky and tower background.`),
+      join(STYLE.keyart, STYLE.handmade, STYLE.character, STYLE.onModel, `Full-body splash art of ${c.name}: ${c.sheet} Her most dramatic signature pose with her magical effect at full power (${c.cutin}). 16:9 composition (1536x864), the character fills the frame, night sky and tower background.`),
       { reference_images: [`chars/${id}_normal.png`, `chars/${id}_stand.png`] }));
   }
 
@@ -484,7 +486,7 @@ ${c.name} is ON-MODEL from the attached references in every cell. Visual motifs:
   for (const [id, d] of Object.entries(DUOS)) {
     const [a, b] = d.pair;
     out.push(item('duo', `duo_${id}`, 'duo', `duo_${id}.png`,
-      join(STYLE.pixel, STYLE.distinct, STYLE.character, STYLE.onModel, `Duo cut-in of ${CHARS[a].name} and ${CHARS[b].name}: ${d.scene}. Both characters ON-MODEL from the attached references, faces clearly visible. Wide horizontal composition; the top and bottom will be cropped to 1536x768. Speed lines made of pixels.`),
+      join(STYLE.pixel, STYLE.handmade, STYLE.distinct, STYLE.character, STYLE.onModel, `Duo cut-in of ${CHARS[a].name} and ${CHARS[b].name}: ${d.scene}. Both characters ON-MODEL from the attached references, faces clearly visible. Wide horizontal composition; the top and bottom will be cropped to 1536x768. Speed lines made of pixels.`),
       { reference_images: [`chars/${a}_normal.png`, `chars/${b}_normal.png`], must_show: '두 사람 얼굴 둘 다' }));
   }
 
@@ -495,7 +497,7 @@ ${c.name} is ON-MODEL from the attached references in every cell. Visual motifs:
     const list = [...Object.entries(ENEMIES[act]).map(([id, d]) => ['enemy', id, d]), ...Object.entries(ENEMIES[act + '_elite']).map(([id, d]) => ['elite', id, d])];
     for (let n = 0; n * 6 < list.length; n++) {
       const part = list.slice(n * 6, n * 6 + 6);
-      out.push(sheet('foesheet', `${act}_foes_${n + 1}`, batch, `${act}_foes_${n + 1}.png`, join(STYLE.pixel, part.some(([, , d]) => /woman/.test(d)) ? STYLE.character : '',
+      out.push(sheet('foesheet', `${act}_foes_${n + 1}`, batch, `${act}_foes_${n + 1}.png`, join(STYLE.pixel, STYLE.handmade, part.some(([, , d]) => /woman/.test(d)) ? STYLE.character : '',
         `An enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.
 ${part.map(([k, , d], i) => `- Cell ${i + 1}: ${k === 'elite' ? 'ELITE (bigger and more imposing, fills more of the cell): ' : ''}${d}`).join('\n')}
 ${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transparent).\n` : ''}Fully transparent background. Low-resolution battle sprites (chunkier pixels than character illustrations, like premium 16-bit era RPG battle sprites, about 32 colors each, clean dark outline): native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
@@ -509,7 +511,7 @@ ${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transpare
     const list = [...Object.entries(ENEMIES[act]), ...Object.entries(ENEMIES[act + '_elite'])];
     for (let n = 0; n * 3 < list.length; n++) {
       const part = list.slice(n * 3, n * 3 + 3);
-      out.push(sheet('foesheet', `${act}_foepose_${n + 1}`, batch, `${act}_foepose_${n + 1}.png`, join(STYLE.pixel, STYLE.onModel,
+      out.push(sheet('foesheet', `${act}_foepose_${n + 1}`, batch, `${act}_foepose_${n + 1}.png`, join(STYLE.pixel, STYLE.handmade, STYLE.onModel,
         `Battle poses for ${part.length} enemies, ON-MODEL from the attached enemy sprites (same design, colors, pixel size and body size as the attached sprite — only the pose changes). One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows). Column N is enemy N. TOP row = ATTACK pose (lunging or striking toward the LEFT at the party, mouth/claws/weapon forward). BOTTOM row = HURT pose (recoiling back to the RIGHT, flinching, eyes squeezed). Keep about 6% empty margin inside every cell edge. No effects, no text, no borders. All facing LEFT.
 ${part.map(([, d], i) => `- Column ${i + 1}: ${d}`).join('\n')}
 ${part.length < 3 ? `Columns ${part.length + 1}-3 stay completely empty (transparent).\n` : ''}Fully transparent background. Native 128x128 pixels per cell, upscaled exactly 4x with nearest-neighbor.`),
@@ -521,17 +523,17 @@ ${part.length < 3 ? `Columns ${part.length + 1}-3 stay completely empty (transpa
   for (const [id, b] of Object.entries(BOSSES)) {
     const batch = `boss-${id}`;
     batches.push({ id: batch, title: `보스 ${b.name}` });
-    const human = join(STYLE.sprite, b.beast ? '' : STYLE.character);
+    const human = join(STYLE.sprite, STYLE.handmade, b.beast ? '' : STYLE.character);
     out.push(item('boss', `boss_${id}_1`, batch, `boss_${id}_1.png`, join(human, `Boss sprite, ${b.name}: ${b.p1}. Facing LEFT, imposing, a big low-resolution battle sprite. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.`)));
     out.push(item('boss', `boss_${id}_2`, batch, `boss_${id}_2.png`, join(human, STYLE.onModel, `Boss sprite, ${b.name}, ${b.p2}. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.`), { reference_images: [`enemies/boss_${id}_1.png`] }));
     if (b.p3) out.push(item('boss', `boss_${id}_3`, batch, `boss_${id}_3.png`, join(human, STYLE.onModel, `Boss sprite, ${b.name}, ${b.p3}. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.`), { reference_images: [`enemies/boss_${id}_1.png`] }));
-    out.push(item('cutin', `boss_${id}_cutin`, batch, `boss_${id}_cutin.png`, join(STYLE.pixel, b.beast ? '' : STYLE.character, STYLE.onModel, `Boss cut-in: ${b.cutin}. Wide horizontal composition, face in the middle band (cropped to 1536x576).`), { reference_images: [`enemies/boss_${id}_1.png`] }));
+    out.push(item('cutin', `boss_${id}_cutin`, batch, `boss_${id}_cutin.png`, join(STYLE.pixel, STYLE.handmade, b.beast ? '' : STYLE.character, STYLE.onModel, `Boss cut-in: ${b.cutin}. Wide horizontal composition, face in the middle band (cropped to 1536x576).`), { reference_images: [`enemies/boss_${id}_1.png`] }));
   }
 
   // 배경·타이틀·소환·아이콘
   // 기술 이펙트: 공용 4종(6프레임) + 동료마다 시그니처 이펙트(공격 3프레임 / 스킬 3프레임). 프레임을 차례로 돌려 터뜨린다(js/juice.js playFx).
   const fxCells = (name, n) => Array.from({ length: n }, (_, i) => ['fx', `fx_${name}_${i + 1}`, `${name}_${i + 1}.png`, i % 3, Math.floor(i / 3)]);
-  const fxSheet = (batch, id, prompt, cells, must) => out.push(sheet('fxsheet', id, batch, `${id}.png`, join(STYLE.vfx, prompt + `
+  const fxSheet = (batch, id, prompt, cells, must) => out.push(sheet('fxsheet', id, batch, `${id}.png`, join(STYLE.vfx, STYLE.handmade, prompt + `
 One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`), [3, 2], cells, { must_show: must }));
   const COMMON_FX = {
     slash: 'a sword SLASH hit: a wide crescent slash arc (white core, pale blue edge) appearing, flashing brightest, then breaking into sparks and fading',
@@ -590,7 +592,7 @@ One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2
 
   batches.push({ id: 'bg', title: '배경' });
   for (const [id, desc] of Object.entries(BGS)) {
-    out.push(item('bg', `bg_${id}`, 'bg', `${id}.png`, join(STYLE.pixel, `Background: ${desc}. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 pixels, full color, limited palette of about 64 colors, upscaled exactly 2x with nearest-neighbor to 1280x720.`)));
+    out.push(item('bg', `bg_${id}`, 'bg', `${id}.png`, join(STYLE.pixel, STYLE.handmade, `Background: ${desc}. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 pixels, full color, limited palette of about 64 colors, upscaled exactly 2x with nearest-neighbor to 1280x720.`)));
   }
   // 지도 화면의 탑: 막마다 한 장. 게임(js/render/map.js)이 이 위에 층 난간·계단·칸 아이콘을 얹는다
   batches.push({ id: 'tower', title: '지도 탑 (막마다 1장)' });
@@ -600,27 +602,27 @@ One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2
     3: 'the top of the tower among the stars: deep navy stone with inlaid gold star patterns and small clock gears, glowing golden windows, a sharp golden spire, an arched opening at the bottom center',
   };
   for (const [n, desc] of Object.entries(TOWERS)) {
-    out.push(item('tower', `tower${n}`, 'tower', `tower${n}.png`, join(STYLE.pixel, `A single tall stone TOWER seen straight from the front (orthographic, no perspective), ${desc}. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges, NO stairs, NO doors except the one at the bottom, NO people (the game draws floor ledges, stairs and icons on top). Fully transparent background around the tower. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272.`)));
+    out.push(item('tower', `tower${n}`, 'tower', `tower${n}.png`, join(STYLE.pixel, STYLE.handmade, `A single tall stone TOWER seen straight from the front (orthographic, no perspective), ${desc}. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges, NO stairs, NO doors except the one at the bottom, NO people (the game draws floor ledges, stairs and icons on top). Fully transparent background around the tower. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272.`)));
   }
   batches.push({ id: 'title', title: '타이틀 키아트' });
   // v7: 매끈한 애니 일러스트(AI 티) 대신 게임과 같은 도트 — 파일 이름을 key_px.png로 바꿔 다시 그린다(js/render/title.js가 먼저 찾음)
   out.push(item('title', 'title_key', 'title', 'key_px.png',
-    join(STYLE.pixel, STYLE.character, STYLE.distinct, STYLE.onModel, `TRUE PIXEL ART title key art, draw it at 384x216 native resolution and upscale exactly 4x with nearest-neighbor to 1536x864; visible square pixels everywhere, limited palette of about 64 colors, NOT a smooth painted anime illustration. Title key art: three night-watch members standing back to back on a ledge of a tower rising from the night sea — the swordswoman Iris (center), the gunner Brick (left) and the tall nun Marta (right), ON-MODEL from the attached references. Lanterns, stars, a crescent moon. Keep the right 40% of the image darker and simpler for the menu. 16:9 (1536x864).`),
+    join(STYLE.pixel, STYLE.handmade, STYLE.character, STYLE.distinct, STYLE.onModel, `TRUE PIXEL ART title key art, draw it at 384x216 native resolution and upscale exactly 4x with nearest-neighbor to 1536x864; visible square pixels everywhere, limited palette of about 64 colors, NOT a smooth painted anime illustration. Title key art: three night-watch members standing back to back on a ledge of a tower rising from the night sea — the swordswoman Iris (center), the gunner Brick (left) and the tall nun Marta (right), ON-MODEL from the attached references. Lanterns, stars, a crescent moon. Keep the right 40% of the image darker and simpler for the menu. 16:9 (1536x864).`),
     { reference_images: ['chars/iris_normal.png', 'chars/brick_normal.png', 'chars/marta_normal.png'] }));
   batches.push({ id: 'summon', title: '별 소환 연출' });
-  out.push(item('summon', 'summon_sky', 'summon', 'sky.png', join(STYLE.keyart, 'Summon screen: the rooftop of the night-watch lighthouse headquarters under a vast starry night sky, a telescope and railing in the foreground, empty center of the sky where shooting stars will fall. No people. 16:9 (1536x864).')));
+  out.push(item('summon', 'summon_sky', 'summon', 'sky.png', join(STYLE.keyart, STYLE.handmade, 'Summon screen: the rooftop of the night-watch lighthouse headquarters under a vast starry night sky, a telescope and railing in the foreground, empty center of the sky where shooting stars will fall. No people. 16:9 (1536x864).')));
   const meteors = { 3: 'white', 4: 'violet', 5: 'gold, the biggest and brightest with sparkles' };
   for (const [r, col] of Object.entries(meteors)) {
-    out.push(item('meteor', `meteor_${r}`, 'summon', `meteor_${r}.png`, join(STYLE.pixel, `A single shooting star effect, ${col}, falling diagonally from top-right to bottom-left with a pixel trail. Fully transparent background. Native 64x64, upscaled 8x to 512x512.`)));
+    out.push(item('meteor', `meteor_${r}`, 'summon', `meteor_${r}.png`, join(STYLE.pixel, STYLE.handmade, `A single shooting star effect, ${col}, falling diagonally from top-right to bottom-left with a pixel trail. Fully transparent background. Native 64x64, upscaled 8x to 512x512.`)));
   }
   batches.push({ id: 'app', title: '앱 아이콘' });
-  out.push(item('appicon', 'app_icon', 'app', 'icon.png', join(STYLE.pixel, 'App icon for the game 「야경단」 (Night Watch): a tall dark tower rising from the night sea with a single warm lantern glowing at its top, a gold crescent moon, a few stars, deep navy sky. Bold, simple silhouette that still reads at 48x48. Fill the whole square edge to edge with the night background (no transparent corners, no border, no text); keep the tower and moon inside the central 80%. Native resolution 64x64 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1024.')));
+  out.push(item('appicon', 'app_icon', 'app', 'icon.png', join(STYLE.pixel, STYLE.handmade, 'App icon for the game 「야경단」 (Night Watch): a tall dark tower rising from the night sea with a single warm lantern glowing at its top, a gold crescent moon, a few stars, deep navy sky. Bold, simple silhouette that still reads at 48x48. Fill the whole square edge to edge with the night background (no transparent corners, no border, no text); keep the tower and moon inside the central 80%. Native resolution 64x64 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1024.')));
   // 아이콘: 4×4 시트(16개씩)
   const iconSheets = (batch, title, entries) => {
     batches.push({ id: batch, title: `${title} ${entries.length} (시트 → 한 개씩)` });
     for (let n = 0; n * 16 < entries.length; n++) {
       const part = entries.slice(n * 16, n * 16 + 16);
-      out.push(sheet('iconsheet', `${batch}_${n + 1}`, batch, `${batch}_${n + 1}.png`, join(STYLE.pixel,
+      out.push(sheet('iconsheet', `${batch}_${n + 1}`, batch, `${batch}_${n + 1}.png`, join(STYLE.pixel, STYLE.handmade,
         `An item icon sheet on one 1024x1024 canvas, split into sixteen equal square cells of 256x256 (4x4), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One icon per cell, centered, readable at small size, bold dark outline, consistent style across all icons.
 ${part.map(([, d], i) => `- Cell ${i + 1}: ${d}`).join('\n')}
 ${part.length < 16 ? `Cells ${part.length + 1}-16 stay completely empty (transparent).\n` : ''}Fully transparent background. Native resolution 32x32 pixels per cell (128x128 for the whole sheet), upscaled exactly 8x with nearest-neighbor.`),

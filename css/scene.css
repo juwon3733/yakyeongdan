@@ -1,0 +1,43 @@
+/* 사건·휴식 장면 (js/render/screens.js scene): 바닥에 선 동료 셋 + 아래 대화 창. 옛 .scene 규칙(가운데 글 상자·구석 일러스트)을 덮는다 */
+.scene{flex-direction:column;align-items:stretch;justify-content:flex-end}
+.scene > .epbg{z-index:0}
+.scene .sport{display:none}
+.scene .sground{position:relative;flex:1;min-height:0;padding-bottom:2px;z-index:1;display:flex;align-items:flex-end;justify-content:center;gap:0;padding-left:0}
+.scene .sman{position:relative;width:88px;display:flex;justify-content:center}
+.scene .sman img{width:96px;height:128px;object-fit:contain;object-position:50% 100%;image-rendering:pixelated;max-width:none;
+  filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6));background:radial-gradient(ellipse 30% 4% at 50% 98%,rgba(0,0,0,.6),transparent)}
+.scene .sman:not(.speak) img{filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6)) brightness(.78)}
+.scene .sman .face{width:28px;height:28px}
+/* 휴식: 동료 사이 모닥불(도트 불꽃 두 겹이 박자 다르게 일렁) + 바닥 불빛 */
+.scene .fire{order:2;position:relative;width:40px;height:40px;margin:0 6px;align-self:flex-end}
+.scene .sman:nth-of-type(n+3){order:3}
+.scene .fire::before,.scene .fire::after{content:"";position:absolute;left:8px;right:8px;bottom:4px;height:30px;image-rendering:pixelated;
+  clip-path:polygon(50% 0,58% 20%,70% 12%,72% 40%,86% 34%,100% 100%,0 100%,14% 34%,28% 40%,30% 12%,42% 20%);background:linear-gradient(#ffe7a0,#ff9a3a 45%,#d0401a);animation:yk-fire .5s steps(2) infinite}
+.scene .fire::after{left:14px;right:14px;height:18px;background:#fff2c0;animation-duration:.36s}
+.scene .fire{background:radial-gradient(ellipse 120% 30% at 50% 100%,rgba(255,150,60,.5),transparent 70%),linear-gradient(transparent 34px,#5a3a1a 34px 37px,#3a2410 37px)}
+@keyframes yk-fire{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.86) translateX(1px)}}
+#stage.calm .scene .fire::before,#stage.calm .scene .fire::after{animation:none}
+.bg-rest .epbg.see{background:radial-gradient(ellipse 55% 30% at 50% 62%,rgba(255,140,60,.22),transparent 70%),radial-gradient(ellipse 70% 60% at 50% 60%,rgba(6,6,18,.35),rgba(6,6,18,.78))}
+
+/* 대화 창: 화면 아래 폭 가득, 왼쪽 얼굴 액자 */
+.scene .swin{position:relative;z-index:2;flex:none;display:flex;gap:10px;align-items:stretch;min-height:128px;max-height:176px;margin:0 8px 8px;padding:8px 10px;
+  background:rgba(8,8,22,.92);border:2px solid #c9b07a;box-shadow:inset 0 0 0 2px #2a2238,4px 4px 0 #000}
+.scene .sface{flex:none;position:relative;width:96px;border:2px solid var(--c);background:#0b0b18;overflow:hidden;box-shadow:2px 2px 0 #000}
+.scene .sface img{position:absolute;left:50%;top:-4px;width:120px;height:auto;transform:translateX(-50%);image-rendering:pixelated;max-width:none}
+.scene .sface b{position:absolute;left:0;right:0;bottom:0;font-family:var(--f-disp);font-weight:400;font-size:10px;text-align:center;color:#fff;background:linear-gradient(transparent,rgba(0,0,0,.85) 40%);padding:6px 0 1px}
+.scene .sbody{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;overflow:auto}
+.scene .sbody h2{font-size:14px;color:var(--gold);margin:0;text-align:left}
+.scene .sbody .note{margin:0;text-align:left;font-size:10px;line-height:1.5;color:var(--ink)}
+.scene .sbody .acts,.scene .sbody .acts.col{margin-top:auto;width:auto;flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:4px}
+.scene .sbody .acts button{font-size:10px;padding:3px 8px;text-align:left}
+.scene .sbody .acts button::before{content:"▸ ";color:var(--gold)}
+.scene .sbody .restwho{justify-content:flex-start;gap:12px}
+.scene .sbody .talk{margin:0;max-width:none;border:0;background:none;padding:0}
+
+/* 결과 화면 MVP: 큰 액자 안에 작게 서 있던 것 → 액자 없이 왼쪽 바닥에 크게 서고, 발밑에 빛 웅덩이와 이름 받침 */
+.resultscr .mvp{width:200px;margin:-14px 0 -14px -14px;background:none;border:0;box-shadow:none;animation:none;justify-content:flex-end;gap:2px;padding:0 0 10px;overflow:visible;
+  background:radial-gradient(ellipse 46% 6% at 50% calc(100% - 46px),color-mix(in srgb,var(--c) 55%,transparent),transparent),radial-gradient(ellipse 60% 55% at 50% 70%,color-mix(in srgb,var(--c) 14%,transparent),transparent 70%)}
+.resultscr .mvp img.mvpart{width:192px;height:288px;margin-bottom:-6px;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.6))}
+.resultscr .mvp .nm{font-size:13px;color:#fff;background:#0b0b18;border:2px solid var(--c);box-shadow:3px 3px 0 #000;padding:1px 10px;position:relative;z-index:1}
+.resultscr .mvp .note{font-size:9px;text-shadow:1px 1px 0 #000}
+.resultscr.lost .mvp{box-shadow:none}

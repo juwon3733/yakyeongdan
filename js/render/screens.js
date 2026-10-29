@@ -9,7 +9,7 @@ import { DUOS, canUpgrade } from '../data/cards.js';
 import { RULES, ACT_NAME, SHOP } from '../data/rules.js';
 import { grantRun, P, mvpOf } from '../meta.js';
 import { cardHTML, fmt, face, esc, charSrc } from './common.js';
-import { artURL } from '../art.js';
+import { artURL, battleArt } from '../art.js';
 import { SUMMON } from '../data/gacha.js';
 import { dawnAt } from '../run.js';
 import { moonImg } from './sprites.js';
@@ -18,13 +18,19 @@ import { endlessResultView, climbOnButton } from './endless.js';
 
 const relicBox = (id, extra = '') => { const d = RELICS[id]; return `<span class="rbox t-${d.tier}">${(ic => `<span class="relic t-${d.tier} ${ic ? 'hasic' : ''}">${ic ? `<img class="px" src="${ic}" alt="">` : esc(d.name.slice(0, 1))}</span>`)(artURL(`icons/relic_${id}.png`))}<span><b>${esc(d.name)}</b> <small>${RELIC_TIER_NAME[d.tier]}</small><br>${esc(d.text)}${extra}</span></span>`; };
 
-// 사건·휴식 무대 (docs/11 #3): 배경(그림 bg/<키>.png가 있으면 그것, 없으면 .bg-<키> 임시 그림) + 동료 상반신 + 가운데 글 상자
+// 사건·휴식 무대: 배경 위 바닥에 동료 셋이 전투처럼 서 있고(전투 스프라이트), 아래는 대화 창(왼쪽 얼굴 액자 + 글·선택지).
+// 화면 가운데 떠 있는 글 상자 + 구석에 잘린 큰 일러스트는 장면이 아니라 「배경 위에 상자를 얹은」 티가 나서 바꿈.
 const SCENE_BG = { 1: ['act1', 'harbor'], 2: ['act2', 'roof'], 3: ['act3', 'dream'] };
 function scene(bgKey, bgFile, people, inner) {
-  const img = bgFile && artURL(`bg/${bgFile}.png`);
-  const port = (p, side) => p ? `<img class="px sport ${side}" src="${charSrc(p, 'normal')}" alt="">` : '';
+  const G = S.G, img = bgFile && artURL(`bg/${bgFile}.png`), who = people.find(Boolean);
+  // 왼쪽→오른쪽 = 뒤·가운데·앞 (전투와 같은 줄)
+  const cast = [2, 1, 0].map(fi => G.formation[fi]).map(p => {
+    const u = battleArt(p, G.members[p]?.down ? 'down' : 'idle');
+    return `<span class="sman ${p === who ? 'speak' : ''}" style="--c:${CHARACTERS[p].col}">${u ? `<img class="px" src="${u}" alt="">` : face(p)}</span>`;
+  }).join('');
   return `<div class="scene bg-${bgKey}"><div class="epbg${bgFile ? '' : ' see'}" aria-hidden="true"><i></i>${img ? `<img class="bgimg" src="${img}" alt="">` : ''}</div>
-    ${port(people[0], 'l')}${port(people[1], 'r')}<div class="center sbox">${inner}</div></div>`;
+    <div class="sground" aria-hidden="true">${bgKey === 'rest' ? '<i class="fire"></i>' : ''}${cast}</div>
+    <div class="swin">${who ? `<span class="sface" style="--c:${CHARACTERS[who].col}"><img class="px" src="${charSrc(who, 'normal')}" alt=""><b>${CHARACTERS[who].name}</b></span>` : ''}<div class="sbody">${inner}</div></div></div>`;
 }
 
 export function rewardView() {
