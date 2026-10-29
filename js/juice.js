@@ -13,6 +13,7 @@ const sfx = (...a) => { if (!hush) sfxRaw(...a); };
 import { showPhase, showBoss, shake, showBurst } from './fx.js';
 import { battleArt, FRAMES, charArt, fxFrames } from './art.js';
 import { cardData } from './data/cards.js';
+import { actorOf } from './combat.js';
 
 const stage = document.getElementById('stage');
 let layer = null, cv = null, g = null, sky = null;
@@ -171,6 +172,7 @@ export function afterRender(events = []) {
         turnT = t + 180; t += 200; break;
     }
   }
+  arrowSvg = null; layer.querySelector('.jarrow')?.remove(); aimArrow(null);
   tweenBars(P, barT);
   drawIn(P, turnT ?? (played ? 120 : 0));
   chainPop(P);
@@ -303,6 +305,54 @@ setInterval(() => {
 function winPose() {
   for (const id of S.G?.party || []) if (!S.G.members[id]?.down) pose(id, 'win', 1400);
 }
+// ---------- 대상 화살표 (슬레이 더 스파이어식): 손패 카드에 마우스를 대거나 고르면 쓰는 동료 → 대상으로 화살표 ----------
+// 대상을 고르는 카드는 커서를 따라가다 고를 수 있는 대상 위에서 붙고, 모든 적 카드는 적마다, 대상 없는 카드는 쓰는 동료 자신을 감싼다.
+const SVGNS = 'http://www.w3.org/2000/svg';
+let arrowSvg = null, pt = null;
+function toStage(e) { const sr = stage.getBoundingClientRect(), k = sr.width / stage.offsetWidth || 1; return { x: (e.clientX - sr.left) / k, y: (e.clientY - sr.top) / k }; }
+if (stage) {
+  stage.addEventListener('pointermove', e => { pt = toStage(e); aimArrow(e.target); }, { passive: true });
+  stage.addEventListener('pointerleave', () => { pt = null; aimArrow(null); });
+}
+function aimArrow(over) {
+  ensure(); if (!layer) return;
+  if (!arrowSvg) { arrowSvg = document.createElementNS(SVGNS, 'svg'); arrowSvg.setAttribute('class', 'jarrow'); layer.append(arrowSvg); }
+  arrowSvg.innerHTML = '';
+  root()?.querySelectorAll('.jaimed').forEach(x => x.classList.remove('jaimed'));
+  const C = S.C, A = app();
+  if (!C || !A || calmNow() || A.dataset.screen !== 'combat') return;
+  const card = A.querySelector('.bottom .hand .card.sel') || (over && over.closest?.('.bottom .hand .card[data-play]'));
+  if (!card || card.classList.contains('no')) return;
+  const inst = C.hand.find(h => String(h.uid) === card.dataset.play); if (!inst) return;
+  const d = cardData(inst.id), who = actorOf(d), from = who && allyEl(who)?.querySelector(':scope > img'); if (!from) return;
+  const col = colOf(who), a = rel(from), x0 = a.cx, y0 = a.y + a.h * .35;
+  const foes = [...A.querySelectorAll('.foe[data-foe]')], allies = [...A.querySelectorAll('.pm[data-ally]:not(.down)')];
+  const want = d.target === 'ally' ? allies : d.target === 'foe' ? foes : d.target === 'all' ? foes : [];
+  const hov = over?.closest?.(d.target === 'ally' ? '.pm[data-ally]' : '.foe[data-foe]');
+  let tgts = [];
+  if (hov && want.includes(hov)) tgts = [hov];
+  else if (d.target === 'all') tgts = foes;
+  else if (want.length === 1) tgts = want;
+  if (tgts.length) for (const t of tgts) { t.classList.add('jaimed'); const r = rel(t.querySelector(':scope > img') || t); arrow(x0, y0, r.cx, r.y + r.h * .45, col); }
+  else if (want.length && card.classList.contains('sel') && pt) arrow(x0, y0, pt.x, pt.y, col);
+  else if (!want.length) { from.closest('[data-ally]')?.classList.add('jaimed'); selfRing(a, col); }
+}
+function arrow(x0, y0, x1, y1, col) {
+  const mx = (x0 + x1) / 2, my = Math.min(y0, y1) - Math.max(30, Math.abs(x1 - x0) * .35);
+  const p = document.createElementNS(SVGNS, 'path');
+  p.setAttribute('d', `M${x0},${y0} Q${mx},${my} ${x1},${y1}`); p.setAttribute('class', 'line'); p.style.setProperty('--c', col);
+  // 끝 화살촉: 곡선의 마지막 방향
+  const ang = Math.atan2(y1 - my, x1 - mx), h = document.createElementNS(SVGNS, 'path'), L = 9, W = .5;
+  h.setAttribute('d', `M${x1},${y1} L${x1 - L * Math.cos(ang - W)},${y1 - L * Math.sin(ang - W)} L${x1 - L * Math.cos(ang + W)},${y1 - L * Math.sin(ang + W)}Z`);
+  h.setAttribute('class', 'head'); h.style.setProperty('--c', col);
+  arrowSvg.append(p, h);
+}
+function selfRing(a, col) {
+  const e = document.createElementNS(SVGNS, 'ellipse');
+  e.setAttribute('cx', a.cx); e.setAttribute('cy', a.y + a.h - 3); e.setAttribute('rx', a.w * .42); e.setAttribute('ry', 5);
+  e.setAttribute('class', 'self'); e.style.setProperty('--c', col); arrowSvg.append(e);
+}
+
 // 카드마다 모션: 슬레이 더 스파이어처럼 짧고 또렷하게, 기술 종류마다 자세 + 움직임: 근접 베기·원거리 사격·휩쓸기·필살·방어·회복·시간·뽑기·시전
 const RANGED = new Set(['boom', 'star', 'magic']);
 export function motionOf(d, actor) {

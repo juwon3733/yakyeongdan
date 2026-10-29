@@ -3,7 +3,7 @@ import { actorOf, costOf, shownValue, duoPreview } from '../combat.js';
 import { cardData } from '../data/cards.js';
 import { CHARACTERS } from '../data/characters.js';
 import { MOONS } from '../data/moons.js';
-import { RULES, RARITY_NAME } from '../data/rules.js';
+import { RULES } from '../data/rules.js';
 import { ROSTER } from '../data/roster.js';
 import { relicFlag } from '../relics.js';
 import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
@@ -133,16 +133,15 @@ export function cardHTML(inst, playable, act = 'play', idOverride, sel = false) 
   let cost = d.unplayable ? '–' : String(d.cost), cc = '';
   if (!isStr && S.C) { const c = costOf(inst); if (c != null) { cost = String(c); cc = c > d.cost ? 'dn' : c < d.cost ? 'up' : ''; } }
   const tags = [d.time ? `<span class="tm">${S.C?.payEnergy && relicFlag('hourglass') ? '에너지로' : `+${S.G ? timeCost() : RULES.timeCard}분`}</span>` : '', d.target === 'ally' ? '<span class="tg">동료 고름</span>' : '',
-    d.target === 'all' ? '<span class="tg all">모든 적</span>' : ''].join('');
+    d.target === 'all' ? '<span class="tg all">모든 적</span>' : '', d.exhaust && !duo ? '<span class="tg ex">소멸</span>' : ''].join('');
   const dn = !isStr && S.C && playable && act === 'play' ? duoPreview(inst) : null;
   const tip = (dn ? `지금 쓰면 듀오 「${dn}」 카드가 손에 들어온다.\n` : '') + kwTip(`${d.text || ''} ${d.time ? '시간 카드' : ''} ${d.exhaust ? '소멸' : ''} ${duo ? '듀오' : ''} ${curse ? '저주' : ''} ${(d.tags || []).includes('slash') ? '베기' : ''}`);
   const faces = duo ? [d.a, d.b] : curse ? [] : [d.ch];
   const fc = faces.map(k => `<img class="px" src="${charSrc(k)}" alt="">`).join('');
-  const rar = duo ? '듀오' : RARITY_NAME[d.rarity] || '';
   return `<button type="button" class="card r-${d.rarity} ${duo ? 'duo' : ''} ${curse ? 'curse' : ''} ${d.time ? 'time' : ''} ${d.up ? 'upg' : ''} ${playable ? '' : 'no'} ${down ? 'down' : ''} ${sel ? 'sel' : ''} ${dn ? 'duonext' : ''}" style="--c:${col};--c2:${col2}" data-${act}="${id}" data-cid="${esc(cid)}"${tip ? ` data-tip="${esc(tip)}"` : ''}>
     <span class="art"><img class="px" src="${cardArtSrc(d, pals, longs)}" alt="" draggable="false"></span>
     <span class="cost ${d.time ? 'clock' : 'gem'} ${cc}">${cost}</span>
     <span class="hd"><span class="nm ${d.name.length >= 6 ? 'long' : ''}">${esc(d.name)}</span></span>
     <span class="bd">${tags}${cardText(d)}</span>
-    <span class="who"><span class="fc">${fc}</span><span class="wn">${down ? '쓰러짐' : who}</span><span class="rar">${rar}${d.exhaust && !duo ? '·소멸' : ''}</span></span></button>`;
+    <span class="who"><span class="fc">${fc}</span><span class="wn">${down ? '쓰러짐' : who}</span></span></button>`;
 }

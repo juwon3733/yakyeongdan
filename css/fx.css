@@ -29,3 +29,21 @@
 /* 고른 카드(대상을 고르는 중)는 조금만 들어 올린다 — 크게 키우면 적·동료를 가려 대상을 못 누른다 */
 .bottom .hand .card.sel:not(:hover){transform:translateY(-12px) rotate(0deg) scale(1.15)}
 .bottom .hand .card.sel{pointer-events:auto}
+/* 대상 화살표 (js/juice.js aimArrow) */
+#fx .jarrow{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none;overflow:visible}
+#fx .jarrow .line{fill:none;stroke:var(--c);stroke-width:3.5;stroke-linecap:square;stroke-dasharray:7 5;filter:drop-shadow(1px 1px 0 #000);animation:jarrowrun .5s linear infinite}
+#fx .jarrow .head{fill:var(--c);stroke:#000;stroke-width:1}
+#fx .jarrow .self{fill:none;stroke:var(--c);stroke-width:2.5;stroke-dasharray:5 4;animation:jarrowrun .6s linear infinite}
+@keyframes jarrowrun{to{stroke-dashoffset:-12}}
+#app[data-screen="combat"] .jaimed > img{filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px var(--c,#ff6a7a)) brightness(1.15)}
+#app[data-screen="combat"] .foe.jaimed{--c:#ff6a7a}
+/* 손패 카드: 그림 크게, 아래 이름·희귀도 줄 없앰(얼굴·색 띠가 누구 카드인지 알려 준다) */
+.bottom .hand .card,#stage.bigtext .bottom .hand .card{--ah:44px}
+.bottom .hand .card .who{display:none}
+.bottom .hand .card .art img{object-position:50% 30%}
+.card .tg.ex{background:#4a2a3a;color:#ffb8c8}
+/* 고를 수 있는 대상: 네모 테두리 대신 그림만 빛나게(화살표가 붙으면 더 밝게) */
+#app[data-screen="combat"] :is(.foe,.pm).tg{outline:0;background:none}
+#app[data-screen="combat"] :is(.foe,.pm).tg > img{filter:drop-shadow(0 0 2px rgba(255,255,255,.7))}
+/* 도움말 줄은 할 말이 있을 때만 */
+#app[data-screen="combat"] .log:not(:has(> :not(.tip:empty))):not(:has(b)){visibility:hidden}
