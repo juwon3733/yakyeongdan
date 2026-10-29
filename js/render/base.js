@@ -71,7 +71,7 @@ export function baseView() {
     <div class="h2stage">
       <div class="h2top">${walletBump()}</div>
       <div class="h2cast">${side}${leadBtn}</div>
-      <p class="h2note note small">야경단 본부 · 등대 아래. ${tm === 'dawn' ? '창밖이 밝아 온다. 지난밤은 무사히 넘겼다.' : '창밖은 아직 밤. 탑이 다시 솟을 시간이다.'} <span class="dim">(동료를 누르면 말을 건다)</span></p>
+      <p class="h2note note small">야경단 본부 · 등대 아래. ${tm === 'dawn' ? '창밖이 밝아 온다. 지난밤은 무사히 넘겼다.' : '창밖은 아직 밤. 탑이 다시 솟을 시간이다.'}</p>
       ${tl.length ? `<p class="h2titles note small">칭호 ${tl.map(t => `「${esc(t)}」`).join(' ')}</p>` : ''}
     </div>
     <nav class="h2menu" aria-label="본부 메뉴">
@@ -89,6 +89,7 @@ export function baseView() {
         <button type="button" class="mini" data-view="title">타이틀</button>
       </div>
     </nav>
+    <div class="tutbar h2help" role="note"><span class="lb">도움말</span><span class="tx">동료를 누르면 말을 건다.</span></div>
   </div>`;
 }
 

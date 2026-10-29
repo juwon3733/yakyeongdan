@@ -7,7 +7,7 @@ import { CHARACTERS } from '../data/characters.js';
 import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
 import { DUOS, canUpgrade } from '../data/cards.js';
 import { RULES, ACT_NAME, SHOP } from '../data/rules.js';
-import { grantRun, P } from '../meta.js';
+import { grantRun, P, mvpOf } from '../meta.js';
 import { cardHTML, fmt, face, esc, charSrc } from './common.js';
 import { artURL } from '../art.js';
 import { SUMMON } from '../data/gacha.js';
@@ -133,7 +133,7 @@ function metaNote(R) {
 export function resultView() {
   if (S.G.endless) return endlessResultView();
   const G = S.G, R = grantRun(G);
-  const mvp = G.party.reduce((a, b) => (G.stats[b].dmg + G.stats[b].block) > (G.stats[a].dmg + G.stats[a].block) ? b : a);
+  const mvp = mvpOf(G);
   const mc = CHARACTERS[mvp], st = G.stats[mvp];
   const duos = [...G.duoSet].map(k => `<span class="chip">${DUOS[k]?.name || k}</span>`).join('') || '<span class="note">없음</span>';
   // 새로 열린 에피소드 · 인연 장면 (본부 [에피소드]에서 본다)
@@ -147,7 +147,7 @@ export function resultView() {
   const epNote = opened.length ? `<p class="epnew"><b class="newt">새 에피소드</b> ${opened.map(esc).join(' · ')}</p>` : '';
   return `<div class="resultscr ${G.won ? 'won' : 'lost'}">
     ${G.won ? '<i class="rdust" aria-hidden="true"></i><i class="rdust far" aria-hidden="true"></i>' : ''}
-    <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">MVP · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}</span></div>
+    <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">MVP · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}${st.heal ? ` · 회복 ${st.heal}` : ''}</span></div>
     <div class="rinfo">
       <h2 class="rtitle">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
       <p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</p>
