@@ -911,133 +911,133 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sion_body` | `assets/sheets/sion_body.png` → `sion_idle.png` `sion_windup.png` `sion_attack.png` `sion_skill.png` `sion_guard.png` `sion_hurt.png` `sion_down.png` `sion_win.png` | 1536×1024 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `sion_body` | `assets/sheets/sion_body.png` → `sion_idle.png` `sion_windup.png` `sion_attack.png` `sion_skill.png` `sion_guard.png` `sion_hurt.png` `sion_down.png` `sion_win.png` | 1536×1024 투명 | `assets/chars/sion_stand.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-lunaria` — ★★★★★ 루나리아 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `lunaria_body` | `assets/sheets/lunaria_body.png` → `lunaria_idle.png` `lunaria_windup.png` `lunaria_attack.png` `lunaria_skill.png` `lunaria_guard.png` `lunaria_hurt.png` `lunaria_down.png` `lunaria_win.png` | 1536×1024 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `lunaria_body` | `assets/sheets/lunaria_body.png` → `lunaria_idle.png` `lunaria_windup.png` `lunaria_attack.png` `lunaria_skill.png` `lunaria_guard.png` `lunaria_hurt.png` `lunaria_down.png` `lunaria_win.png` | 1536×1024 투명 | `assets/chars/lunaria_stand.png` `assets/chars/lunaria_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-akane` — ★★★★★ 아카네 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `akane_body` | `assets/sheets/akane_body.png` → `akane_idle.png` `akane_windup.png` `akane_attack.png` `akane_skill.png` `akane_guard.png` `akane_hurt.png` `akane_down.png` `akane_win.png` | 1536×1024 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `akane_body` | `assets/sheets/akane_body.png` → `akane_idle.png` `akane_windup.png` `akane_attack.png` `akane_skill.png` `akane_guard.png` `akane_hurt.png` `akane_down.png` `akane_win.png` | 1536×1024 투명 | `assets/chars/akane_stand.png` `assets/chars/akane_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-eleonore` — ★★★★★ 엘레오노르 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `eleonore_body` | `assets/sheets/eleonore_body.png` → `eleonore_idle.png` `eleonore_windup.png` `eleonore_attack.png` `eleonore_skill.png` `eleonore_guard.png` `eleonore_hurt.png` `eleonore_down.png` `eleonore_win.png` | 1536×1024 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `eleonore_body` | `assets/sheets/eleonore_body.png` → `eleonore_idle.png` `eleonore_windup.png` `eleonore_attack.png` `eleonore_skill.png` `eleonore_guard.png` `eleonore_hurt.png` `eleonore_down.png` `eleonore_win.png` | 1536×1024 투명 | `assets/chars/eleonore_stand.png` `assets/chars/eleonore_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-nerea` — ★★★★★ 네레아 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `nerea_body` | `assets/sheets/nerea_body.png` → `nerea_idle.png` `nerea_windup.png` `nerea_attack.png` `nerea_skill.png` `nerea_guard.png` `nerea_hurt.png` `nerea_down.png` `nerea_win.png` | 1536×1024 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `nerea_body` | `assets/sheets/nerea_body.png` → `nerea_idle.png` `nerea_windup.png` `nerea_attack.png` `nerea_skill.png` `nerea_guard.png` `nerea_hurt.png` `nerea_down.png` `nerea_win.png` | 1536×1024 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-iris` — ★★★★ 아이리스 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `iris_body` | `assets/sheets/iris_body.png` → `iris_idle.png` `iris_windup.png` `iris_attack.png` `iris_skill.png` `iris_guard.png` `iris_hurt.png` `iris_down.png` `iris_win.png` | 1536×1024 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `iris_body` | `assets/sheets/iris_body.png` → `iris_idle.png` `iris_windup.png` `iris_attack.png` `iris_skill.png` `iris_guard.png` `iris_hurt.png` `iris_down.png` `iris_win.png` | 1536×1024 투명 | `assets/chars/iris_stand.png` `assets/chars/iris_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-noel` — ★★★★ 노엘 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `noel_body` | `assets/sheets/noel_body.png` → `noel_idle.png` `noel_windup.png` `noel_attack.png` `noel_skill.png` `noel_guard.png` `noel_hurt.png` `noel_down.png` `noel_win.png` | 1536×1024 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `noel_body` | `assets/sheets/noel_body.png` → `noel_idle.png` `noel_windup.png` `noel_attack.png` `noel_skill.png` `noel_guard.png` `noel_hurt.png` `noel_down.png` `noel_win.png` | 1536×1024 투명 | `assets/chars/noel_stand.png` `assets/chars/noel_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-raven` — ★★★★ 레이븐 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `raven_body` | `assets/sheets/raven_body.png` → `raven_idle.png` `raven_windup.png` `raven_attack.png` `raven_skill.png` `raven_guard.png` `raven_hurt.png` `raven_down.png` `raven_win.png` | 1536×1024 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `raven_body` | `assets/sheets/raven_body.png` → `raven_idle.png` `raven_windup.png` `raven_attack.png` `raven_skill.png` `raven_guard.png` `raven_hurt.png` `raven_down.png` `raven_win.png` | 1536×1024 투명 | `assets/chars/raven_stand.png` `assets/chars/raven_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-mimimomo` — ★★★★ 미미·모모 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `mimimomo_body` | `assets/sheets/mimimomo_body.png` → `mimimomo_idle.png` `mimimomo_windup.png` `mimimomo_attack.png` `mimimomo_skill.png` `mimimomo_guard.png` `mimimomo_hurt.png` `mimimomo_down.png` `mimimomo_win.png` | 1536×1024 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `mimimomo_body` | `assets/sheets/mimimomo_body.png` → `mimimomo_idle.png` `mimimomo_windup.png` `mimimomo_attack.png` `mimimomo_skill.png` `mimimomo_guard.png` `mimimomo_hurt.png` `mimimomo_down.png` `mimimomo_win.png` | 1536×1024 투명 | `assets/chars/mimimomo_stand.png` `assets/chars/mimimomo_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-sebas` — ★★★★ 세바스 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sebas_body` | `assets/sheets/sebas_body.png` → `sebas_idle.png` `sebas_windup.png` `sebas_attack.png` `sebas_skill.png` `sebas_guard.png` `sebas_hurt.png` `sebas_down.png` `sebas_win.png` | 1536×1024 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `sebas_body` | `assets/sheets/sebas_body.png` → `sebas_idle.png` `sebas_windup.png` `sebas_attack.png` `sebas_skill.png` `sebas_guard.png` `sebas_hurt.png` `sebas_down.png` `sebas_win.png` | 1536×1024 투명 | `assets/chars/sebas_stand.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-mariana` — ★★★★ 마리아나 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `mariana_body` | `assets/sheets/mariana_body.png` → `mariana_idle.png` `mariana_windup.png` `mariana_attack.png` `mariana_skill.png` `mariana_guard.png` `mariana_hurt.png` `mariana_down.png` `mariana_win.png` | 1536×1024 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `mariana_body` | `assets/sheets/mariana_body.png` → `mariana_idle.png` `mariana_windup.png` `mariana_attack.png` `mariana_skill.png` `mariana_guard.png` `mariana_hurt.png` `mariana_down.png` `mariana_win.png` | 1536×1024 투명 | `assets/chars/mariana_stand.png` `assets/chars/mariana_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-tomori` — ★★★★ 토모리 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `tomori_body` | `assets/sheets/tomori_body.png` → `tomori_idle.png` `tomori_windup.png` `tomori_attack.png` `tomori_skill.png` `tomori_guard.png` `tomori_hurt.png` `tomori_down.png` `tomori_win.png` | 1536×1024 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `tomori_body` | `assets/sheets/tomori_body.png` → `tomori_idle.png` `tomori_windup.png` `tomori_attack.png` `tomori_skill.png` `tomori_guard.png` `tomori_hurt.png` `tomori_down.png` `tomori_win.png` | 1536×1024 투명 | `assets/chars/tomori_stand.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-sigrun` — ★★★★ 시그룬 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `sigrun_body` | `assets/sheets/sigrun_body.png` → `sigrun_idle.png` `sigrun_windup.png` `sigrun_attack.png` `sigrun_skill.png` `sigrun_guard.png` `sigrun_hurt.png` `sigrun_down.png` `sigrun_win.png` | 1536×1024 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `sigrun_body` | `assets/sheets/sigrun_body.png` → `sigrun_idle.png` `sigrun_windup.png` `sigrun_attack.png` `sigrun_skill.png` `sigrun_guard.png` `sigrun_hurt.png` `sigrun_down.png` `sigrun_win.png` | 1536×1024 투명 | `assets/chars/sigrun_stand.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-zeno` — ★★★★ 제노 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `zeno_body` | `assets/sheets/zeno_body.png` → `zeno_idle.png` `zeno_windup.png` `zeno_attack.png` `zeno_skill.png` `zeno_guard.png` `zeno_hurt.png` `zeno_down.png` `zeno_win.png` | 1536×1024 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `zeno_body` | `assets/sheets/zeno_body.png` → `zeno_idle.png` `zeno_windup.png` `zeno_attack.png` `zeno_skill.png` `zeno_guard.png` `zeno_hurt.png` `zeno_down.png` `zeno_win.png` | 1536×1024 투명 | `assets/chars/zeno_stand.png` `assets/chars/zeno_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-bertha` — ★★★★ 베르타 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `bertha_body` | `assets/sheets/bertha_body.png` → `bertha_idle.png` `bertha_windup.png` `bertha_attack.png` `bertha_skill.png` `bertha_guard.png` `bertha_hurt.png` `bertha_down.png` `bertha_win.png` | 1536×1024 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `bertha_body` | `assets/sheets/bertha_body.png` → `bertha_idle.png` `bertha_windup.png` `bertha_attack.png` `bertha_skill.png` `bertha_guard.png` `bertha_hurt.png` `bertha_down.png` `bertha_win.png` | 1536×1024 투명 | `assets/chars/bertha_stand.png` `assets/chars/bertha_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-brick` — ★★★ 브릭 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `brick_body` | `assets/sheets/brick_body.png` → `brick_idle.png` `brick_windup.png` `brick_attack.png` `brick_skill.png` `brick_guard.png` `brick_hurt.png` `brick_down.png` `brick_win.png` | 1536×1024 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `brick_body` | `assets/sheets/brick_body.png` → `brick_idle.png` `brick_windup.png` `brick_attack.png` `brick_skill.png` `brick_guard.png` `brick_hurt.png` `brick_down.png` `brick_win.png` | 1536×1024 투명 | `assets/chars/brick_stand.png` `assets/chars/brick_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-marta` — ★★★ 마르타 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `marta_body` | `assets/sheets/marta_body.png` → `marta_idle.png` `marta_windup.png` `marta_attack.png` `marta_skill.png` `marta_guard.png` `marta_hurt.png` `marta_down.png` `marta_win.png` | 1536×1024 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `marta_body` | `assets/sheets/marta_body.png` → `marta_idle.png` `marta_windup.png` `marta_attack.png` `marta_skill.png` `marta_guard.png` `marta_hurt.png` `marta_down.png` `marta_win.png` | 1536×1024 투명 | `assets/chars/marta_stand.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-finn` — ★★★ 핀 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `finn_body` | `assets/sheets/finn_body.png` → `finn_idle.png` `finn_windup.png` `finn_attack.png` `finn_skill.png` `finn_guard.png` `finn_hurt.png` `finn_down.png` `finn_win.png` | 1536×1024 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `finn_body` | `assets/sheets/finn_body.png` → `finn_idle.png` `finn_windup.png` `finn_attack.png` `finn_skill.png` `finn_guard.png` `finn_hurt.png` `finn_down.png` `finn_win.png` | 1536×1024 투명 | `assets/chars/finn_stand.png` `assets/chars/finn_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-laila` — ★★★ 라일라 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `laila_body` | `assets/sheets/laila_body.png` → `laila_idle.png` `laila_windup.png` `laila_attack.png` `laila_skill.png` `laila_guard.png` `laila_hurt.png` `laila_down.png` `laila_win.png` | 1536×1024 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `laila_body` | `assets/sheets/laila_body.png` → `laila_idle.png` `laila_windup.png` `laila_attack.png` `laila_skill.png` `laila_guard.png` `laila_hurt.png` `laila_down.png` `laila_win.png` | 1536×1024 투명 | `assets/chars/laila_stand.png` `assets/chars/laila_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-dora` — ★★★ 도라 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `dora_body` | `assets/sheets/dora_body.png` → `dora_idle.png` `dora_windup.png` `dora_attack.png` `dora_skill.png` `dora_guard.png` `dora_hurt.png` `dora_down.png` `dora_win.png` | 1536×1024 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `dora_body` | `assets/sheets/dora_body.png` → `dora_idle.png` `dora_windup.png` `dora_attack.png` `dora_skill.png` `dora_guard.png` `dora_hurt.png` `dora_down.png` `dora_win.png` | 1536×1024 투명 | `assets/chars/dora_stand.png` `assets/chars/dora_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-gordon` — ★★★ 고든 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `gordon_body` | `assets/sheets/gordon_body.png` → `gordon_idle.png` `gordon_windup.png` `gordon_attack.png` `gordon_skill.png` `gordon_guard.png` `gordon_hurt.png` `gordon_down.png` `gordon_win.png` | 1536×1024 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `gordon_body` | `assets/sheets/gordon_body.png` → `gordon_idle.png` `gordon_windup.png` `gordon_attack.png` `gordon_skill.png` `gordon_guard.png` `gordon_hurt.png` `gordon_down.png` `gordon_win.png` | 1536×1024 투명 | `assets/chars/gordon_stand.png` `assets/chars/gordon_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `pose-fukuro` — ★★★ 후쿠로 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `fukuro_body` | `assets/sheets/fukuro_body.png` → `fukuro_idle.png` `fukuro_windup.png` `fukuro_attack.png` `fukuro_skill.png` `fukuro_guard.png` `fukuro_hurt.png` `fukuro_down.png` `fukuro_win.png` | 1536×1024 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치 |
+| `fukuro_body` | `assets/sheets/fukuro_body.png` → `fukuro_idle.png` `fukuro_windup.png` `fukuro_attack.png` `fukuro_skill.png` `fukuro_guard.png` `fukuro_hurt.png` `fukuro_down.png` `fukuro_win.png` | 1536×1024 투명 | `assets/chars/fukuro_stand.png` `assets/chars/fukuro_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
 ## `cards-sion` — ★★★★★ 시온 카드 그림 (시트 1장 → 4장)
 
