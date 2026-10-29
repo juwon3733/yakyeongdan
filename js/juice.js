@@ -122,6 +122,7 @@ export function afterRender(events = []) {
       case 'combat':
         acc = 0; stopped = 0; at(t, () => setCounter(0, false));
         preloadPoses();
+        at(t, () => enterFx());
         if (e.boss) { at(t, () => { showBoss(e.boss, e.line); sfx('dawn', { vol: .6 }); }); t += 1100; }
         break;
       case 'play': {
@@ -659,17 +660,45 @@ function killFoe(e, P) {
   const c = P?.foes.get(e.i); if (!c) return;
   const ghost = cloneAt(c, 'jdie');
   ghost.firstElementChild.classList.remove('tg');
+  const last = !S.C || S.C.all.every(f => f.dead);
+  // 흰 번쩍 → 뒤로 튕겨 휘청 → 몸이 도트 조각으로 부서져 흩어짐. 마지막 적은 느리게(슬로 모션)
+  const dur = last ? 1100 : 700;
   ghost.animate([
-    { filter: 'brightness(1)', transform: 'none', opacity: 1 },
-    { filter: 'brightness(4)', transform: 'translateX(4px)', opacity: 1, offset: .15 },
-    { filter: 'brightness(2.5) grayscale(1)', transform: 'translateY(4px) scaleY(.9)', opacity: .8, offset: .5 },
-    { filter: 'brightness(1) grayscale(1)', transform: 'translateY(14px) scaleY(.2)', opacity: 0 },
-  ], { duration: 640, easing: 'cubic-bezier(.3,.6,.4,1)' }).onfinish = () => ghost.remove();
+    { offset: 0, filter: 'brightness(5)', transform: 'none', opacity: 1 },
+    { offset: .12, filter: 'brightness(3)', transform: 'translate(8px,-3px) rotate(5deg)', opacity: 1 },
+    { offset: .32, filter: 'brightness(1.6)', transform: 'translate(10px,0) rotate(7deg) scale(1.02,.97)', opacity: 1 },
+    { offset: .55, filter: 'brightness(2.5) grayscale(.6)', transform: 'translate(10px,2px) rotate(6deg)', opacity: .6 },
+    { offset: 1, filter: 'brightness(3) grayscale(1)', transform: 'translate(12px,4px) rotate(6deg) scale(1.04,.96)', opacity: 0 },
+  ], { duration: dur, easing: 'cubic-bezier(.3,.6,.4,1)' }).onfinish = () => ghost.remove();
   const img = ghost.querySelector('.foe > img'), r = img ? rel(img) : c.r;
-  for (let k = 0; k < 26; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: rnd(r.y, r.y + r.h), vx: rnd(-.6, .6), vy: rnd(-1.6, -.2), g: .05, life: rnd(18, 34), col: k % 3 ? '#ece8f6' : '#8a86b8', s: 1 });
-  ring(r.cx, r.cy, '#ffffff', 6, 40, 14);
+  at(dur * .35, () => shatter(img, r, last ? 120 : 70));
+  ring(r.cx, r.cy, '#ffffff', 6, 44, 14);
   sfx('foe_down');
   if (e.boss) shake();
+  if (last && !calmNow()) { dim(dur + 200); slowmo(dur); }
+}
+// 그림에서 색을 뽑아 그 자리에서 도트 조각으로 흩어지게
+function shatter(img, r, n) {
+  let px = null;
+  try {
+    if (img?.complete && img.naturalWidth) {
+      const k = document.createElement('canvas'), w = 48, h = Math.round(48 * img.naturalHeight / img.naturalWidth);
+      k.width = w; k.height = h; const g2 = k.getContext('2d'); g2.drawImage(img, 0, 0, w, h);
+      const d = g2.getImageData(0, 0, w, h).data; px = [];
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const i = (y * w + x) * 4; if (d[i + 3] > 128) px.push([x / w, y / h, `rgb(${d[i]},${d[i + 1]},${d[i + 2]})`]); }
+    }
+  } catch (_) { px = null; }
+  for (let k = 0; k < n; k++) {
+    const p = px?.length ? px[(Math.random() * px.length) | 0] : [Math.random(), Math.random(), k % 3 ? '#ece8f6' : '#8a86b8'];
+    const x = r.x + p[0] * r.w, y = r.y + p[1] * r.h, a = Math.atan2(y - r.cy, x - r.cx);
+    add({ k: 'dot', x, y, vx: Math.cos(a) * rnd(.4, 1.8) + .6, vy: Math.sin(a) * rnd(.4, 1.6) - rnd(.6, 1.6), g: .06, life: rnd(20, 40), col: p[2], s: k % 5 ? 1 : 2 });
+  }
+}
+// 마지막 일격: 잠깐 모든 연출을 느리게
+function slowmo(ms) {
+  const anims = layer.getAnimations({ subtree: true }).concat(root()?.getAnimations?.({ subtree: true }) || []);
+  for (const a of anims) { try { a.playbackRate = .35; } catch (_) {} }
+  setTimeout(() => { for (const a of anims) { try { a.playbackRate = 1; } catch (_) {} } }, ms * .6);
 }
 function hurtFx(e) {
   const el = allyEl(e.id); if (!el) return;
@@ -686,6 +715,28 @@ function hurtFx(e) {
     at(160, () => { pulse(el.querySelector(':scope > img') || el, 'jdown', 820); num(x, r.y + 18, '쓰러짐', 'down', 12); for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: rnd(-1, 1), vy: rnd(-1, -.2), g: .06, life: 22, col: '#6a6688', s: 1 }); });
     sfx('down');
   } else sfx(e.dmg ? 'hurt' : 'block');
+}
+// 전투 시작: 동료는 왼쪽에서 뛰어 들어와 착지, 적은 안개 속에서 흐릿하게 떠올라 또렷해진다
+function enterFx() {
+  if (calmNow()) return;
+  const A = app(); if (!A) return;
+  [...A.querySelectorAll('.pm[data-ally] > img')].reverse().forEach((img, k) => {
+    img.animate([
+      { offset: 0, transform: 'translate(-140px,0)', opacity: 0, easing: 'cubic-bezier(.2,.7,.3,1)' },
+      { offset: .55, transform: 'translate(6px,-6px) scale(.97,1.04)', opacity: 1, easing: 'ease-out' },
+      { offset: .72, transform: 'translate(0,1px) scale(1.06,.92)', easing: 'ease-out' },
+      { offset: .86, transform: 'scale(.98,1.03)' }, { offset: 1, transform: 'none' },
+    ], { duration: 620, delay: k * 90, fill: 'backwards' });
+  });
+  A.querySelectorAll('.foe[data-fi] > img').forEach((img, k) => {
+    img.animate([
+      { transform: 'translateY(8px) scale(.94)', opacity: 0, filter: 'blur(3px) brightness(.4)' },
+      { transform: 'translateY(-2px)', opacity: .9, filter: 'blur(1px) brightness(.8)', offset: .6 },
+      { transform: 'none', opacity: 1, filter: 'none' },
+    ], { duration: 700, delay: 150 + k * 110, easing: 'ease-out', fill: 'backwards' });
+    const r = rel(img);
+    at(150 + k * 110, () => { for (let j = 0; j < 3; j++) add({ k: 'blob', x: r.cx + rnd(-14, 14), y: r.y + r.h - rnd(4, 18), vx: rnd(-.4, .4), vy: rnd(-.3, -.1), r: rnd(8, 12), col: '#8a86b8', life: 30 }); });
+  });
 }
 // 적 공격 예고: 의도 글자가 커지며 불타고, 몸을 뒤로 웅크린다. 노린 동료 발밑에 붉은 표시
 function foeWindup(e) {
