@@ -77,7 +77,8 @@ try {
     page.on('pageerror', e => errors.push(`[seed ${seed}] ${e.message}`));
     const isFont = u => /fonts\.(googleapis|gstatic)\.com/.test(u);
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[seed ${seed}] ${m.text()}`); });
-    page.on('requestfailed', r => { if (!isFont(r.url())) errors.push(`[seed ${seed}] 불러오기 실패 ${r.url()}`); });
+    // 장면이 바뀌며 받던 그림을 브라우저가 취소한 것(ERR_ABORTED)은 오류가 아니다. 없는 파일은 아래 404로 잡힌다
+    page.on('requestfailed', r => { const why = r.failure()?.errorText || ''; if (!isFont(r.url()) && !/ERR_ABORTED/.test(why)) errors.push(`[seed ${seed}] 불러오기 실패 ${r.url()} (${why})`); });
     page.on('response', r => { if (r.status() >= 400 && !isFont(r.url())) errors.push(`[seed ${seed}] ${r.status()} ${r.url()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
     await page.goto(`http://127.0.0.1:${port}/?notut&seed=${seed}`);
