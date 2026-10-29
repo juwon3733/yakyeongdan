@@ -23,6 +23,7 @@
 - 소리: PC-98식 FM 음원으로 Claude가 직접 작곡.
 
 ## 작업 방식
+- **큰 파일은 통째로 읽지 않는다**(한 번에 1MB가 넘으면 작업이 멈춘다): `assets/prompts.json`·`docs/PROMPTS.md`는 `node -e`나 `grep`으로 필요한 줄만, `shots/`·`assets/` 그림은 열어 보지 말고 `npm run shots` 결과 파일 이름만 PR에 적는다(화면 확인은 Claude가). `.claude/settings.json`이 막아 둔다.
 - `main`은 항상 플레이 가능. 작업은 `feat/` `fix/` `chore/` `docs/` 브랜치 → main 병합. 병합한 브랜치·안 쓰는 브랜치는 바로 지운다 — main에 내용이 다 들어간 브랜치는 `.github/workflows/cleanup-branches.yml`이 main에 push될 때·6시간마다 자동으로 지운다(`claude/*` 제외).
 - 수치를 바꾸면 `node tools/sim.mjs`로 승률을 확인한다(도구가 생긴 뒤).
 - 그림 파이프라인: 사용자가 GPT 에이전트에게 `AGENTS.md`대로 묶음 id를 맡김(요청 글·추천 순서 `docs/GPT_REQUEST.md`) → `assets/…` 브랜치 → Claude가 이미지를 열어 보고 게임 화면에서 확인 후 병합.

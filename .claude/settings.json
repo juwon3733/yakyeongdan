@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(./assets/prompts.json)",
+      "Read(./docs/PROMPTS.md)",
+      "Read(./shots/**)",
+      "Read(./assets/sheets/**)",
+      "Read(./assets/cg/**)",
+      "Read(./assets/bg/**)",
+      "Read(./assets/title/**)",
+      "Read(./assets/summon/**)",
+      "Read(./assets/style/**)"
+    ]
+  }
+}
