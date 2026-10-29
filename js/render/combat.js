@@ -176,9 +176,10 @@ export function combatView() {
     <div class="log" aria-live="polite">${C.moonPick ? `<span class="cmoonpick">월광 · 이번 전투의 달: ${Object.keys(MOONS).map(k => `<button type="button" class="mini ${G.moon === k ? 'on' : ''}" data-cmoon="${k}" title="${esc(MOONS[k].text)}"><img class="px" src="${moonImg(k)}" alt="">${MOONS[k].name}</button>`).join('')}</span>` : ''}${temperBar}${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span>${pendKeep}${relicFlag('hourglass')
       ? `<button type="button" class="mini hg ${C.payEnergy ? 'on' : ''}" data-hg aria-pressed="${C.payEnergy}" title="깨진 모래시계: 시간 카드를 시간 대신 에너지 1로">시간 카드: ${C.payEnergy ? '에너지 1' : '시간'}</button>` : ''}</div>
     <div class="bottom">
-      <span class="energy" data-tip="에너지: 카드를 쓰는 데 든다. 턴마다 다시 찬다.">${pip(RULES.energy, C.energy)}<b>${C.energy}</b><small>에너지</small></span>
+      <span class="energy ${C.energy ? '' : 'empty'}" data-tip="에너지: 카드를 쓰는 데 든다. 턴마다 다시 찬다."><span class="orb"><i class="swirl"></i><b>${C.energy}</b><small>/${Math.max(RULES.energy, C.energy)}</small></span></span>
       <div class="hand">${hand || '<p class="note">손패가 비었다.</p>'}</div>
-      <div class="endcol"><button type="button" class="primary" data-end ${tempering ? 'disabled' : ''}>턴 끝</button><span class="note">뽑을 ${C.draw.length} · 버린 ${C.disc.length}${C.exh.length ? ` · 소멸 ${C.exh.length}` : ''}</span></div>
+      <div class="endcol"><button type="button" class="primary endbtn ${!tempering && !C.hand.some(usable) ? 'ready' : ''}" data-end ${tempering ? 'disabled' : ''}><span>턴 끝</span></button>
+        <span class="piles"><span class="pile draw" data-tip="뽑을 더미">${C.draw.length}</span><span class="pile disc" data-tip="버린 더미">${C.disc.length}</span>${C.exh.length ? `<span class="pile exh" data-tip="소멸">${C.exh.length}</span>` : ''}</span></div>
     </div>`;
 }
 
