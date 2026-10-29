@@ -9,7 +9,7 @@ import { MOONS } from '../data/moons.js';
 import { sprite, moonImg } from './sprites.js';
 import { esc, cardHTML, face, hpBar, battleSrc } from './common.js';
 import { kwTip, kwOne } from '../data/keywords.js';
-import { foeArt } from '../art.js';
+import { foeArt, battleArt, spriteScale } from '../art.js';
 import { AFFIX } from '../data/affixes.js';
 import { SET } from '../settings.js';
 import { burstProgHTML } from './burstprog.js';
@@ -81,7 +81,7 @@ export function combatView() {
     const swap = k < 2 ? `<button type="button" class="swap" data-swap="${fi - 1}" ${C.swaps >= swapLimit() ? 'disabled' : ''} title="자리 바꾸기 (바꾼 둘 방어 -${RULES.swapBlockCost})">⇄</button>` : '';
     return `<button type="button" class="pm ${M.down ? 'down' : ''} ${aims.has(p) ? 'aimed' : ''} ${lit.includes(p) ? 'lit' : ''} ${wantAlly && !M.down ? 'tg' : ''} ${C.last === p ? 'last' : ''}" style="--c:${c.col}" data-ally="${p}" ${wantAlly && !M.down ? '' : 'tabindex="-1"'}>
         <span class="row">${ROW_NAME[fi]}${lit.includes(p) ? ' · <b class="litnm">불빛 +1</b>' : ''}</span>
-        <img class="px" src="${battleSrc(p, M.down ? 'down' : 'idle')}" alt="">
+        <img class="px" src="${battleSrc(p, M.down ? 'down' : 'idle')}" alt=""${battleArt(p) ? ` style="--sk:${spriteScale(p)}"` : ''}>
         <span class="lab"><span class="nm">${c.name}</span>
         ${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : `${M.hp}/${M.max}`}${blk ? ` <b class="blk">방어 ${blk}</b>` : ''}</span>
         <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span>${M.down ? '' : burstProgHTML(p)}</span></button>${swap}`;

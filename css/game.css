@@ -1149,7 +1149,7 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 /* 전투 스프라이트 칸 가장자리에서 잘린 효과가 네모로 보이지 않게 가장자리를 흐리게 */
 .pm > img:not([src^="data:"]),.foe > img:not([src^="data:"]){-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(0deg,#000 0,#000 100%);-webkit-mask-size:100% 92%,100% 8%;-webkit-mask-position:0 0,0 100%;-webkit-mask-repeat:no-repeat;
   mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(0deg,#000 0,#000 100%);mask-size:100% 92%,100% 8%;mask-position:0 0,0 100%;mask-repeat:no-repeat}
-.pm > img.jxfade{position:absolute;margin:0;pointer-events:none;animation:none;z-index:1}
+.pm > img.jxfade{position:absolute;margin:0;pointer-events:none;animation:none;z-index:1;--sk:1}
 
 /* ---- 기술 연출 (카오스 제로 나이트메어 참고): 잔상·암전·흰 번쩍·필살 컷인 (js/juice.js) ---- */
 #fx .jafter{position:absolute;z-index:2;pointer-events:none;image-rendering:pixelated;object-fit:contain;object-position:50% 100%;
@@ -1179,3 +1179,19 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 #app::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;image-rendering:pixelated;
   background-image:linear-gradient(180deg,rgba(6,6,18,.35),rgba(6,6,18,.1) 40%,rgba(6,6,18,.55)),var(--bgimg,none);background-size:cover;background-position:center}
 #app[data-screen="combat"] .field{background:none}
+/* 전투 스프라이트 몸 크기 보정(--sk): 그림 칸을 키우되 자리(레이아웃)는 그대로 — 위·양옆으로만 넘친다 */
+.pm > img[style*="--sk"]{width:calc(72px * var(--sk));height:calc(96px * var(--sk));margin:calc(96px * (1 - var(--sk))) calc(36px * (1 - var(--sk))) 0}
+/* ---- 입체 배치: 무대 바닥 위에 비스듬히 — 뒤쪽일수록 위·작게·어둡게, 앞쪽일수록 아래·크게 (사선 진형) ---- */
+#app[data-screen="combat"] .field{perspective:600px}
+#app[data-screen="combat"] .party{align-items:flex-end;gap:0}
+#app[data-screen="combat"] .party > .pm:nth-of-type(1){transform:translate(8px,-16px) scale(.88);filter:brightness(.85);z-index:1}
+#app[data-screen="combat"] .party > .pm:nth-of-type(2){transform:translate(2px,-7px) scale(.94);filter:brightness(.93);z-index:2}
+#app[data-screen="combat"] .party > .pm:nth-of-type(3){transform:translate(-6px,4px);z-index:3}
+#app[data-screen="combat"] .party > .swap{z-index:4}
+#app[data-screen="combat"] .foes{align-items:flex-end}
+#app[data-screen="combat"] .foes > .foe:nth-child(1){z-index:3;transform:translateY(4px)}
+#app[data-screen="combat"] .foes > .foe:nth-child(2){z-index:2;transform:translateY(-16px) scale(.9);filter:brightness(.9)}
+#app[data-screen="combat"] .foes > .foe:nth-child(3){z-index:1;transform:translateY(-4px) scale(.95);filter:brightness(.95)}
+#app[data-screen="combat"] .foes > .foe:nth-child(4){z-index:1;transform:translateY(-22px) scale(.86);filter:brightness(.85)}
+/* 발밑 그림자를 진하게(바닥에 서 있는 느낌) */
+.pm > img,.foe > img{background:radial-gradient(ellipse 42% 5% at 50% 97%,rgba(0,0,0,.7),transparent)}

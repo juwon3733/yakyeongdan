@@ -424,7 +424,7 @@ A battle sprite sheet of this ONE character: eight poses on one 1536x1024 canvas
 ${FRAMES.map(([, t], i) => `- Cell ${i + 1} — ${t.replace('${c.fx}', c.fx)}`).join('\n')}
 In every cell: exactly the same character size and proportions (adult about 1:6.5 head-to-body, NOT chibi), feet on the same line near the bottom of the cell, facing RIGHT toward the enemies (except HURT recoiling), the whole body and effect inside its own cell. Fully transparent background. Native resolution 96x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
       [4, 2], FRAMES.map(([f], i) => ['sprite', `${id}_sp_${f}`, `${id}_${f}.png`, i % 4, Math.floor(i / 4)]),
-      { must_show: '4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트', reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
+      { fit: 'union', must_show: '4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트', reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
   }
 
   // 카드 그림: 동료마다 종류별 4장(공격·방어·스킬·필살). 같은 종류 카드가 같이 쓴다(js/cardkind.js). 인연 듀오 카드는 임시 일러스트.

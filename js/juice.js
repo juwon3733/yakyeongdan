@@ -262,8 +262,8 @@ function swapSrc(img, url, fade) {
   if (was === url) return;
   if (fade && img.parentElement && !calmNow()) {
     const g = img.cloneNode(); g.className = 'px jxfade'; g.removeAttribute('alt');
-    const p = img.parentElement.getBoundingClientRect(), r = img.getBoundingClientRect(), k = r.width / img.offsetWidth || 1;
-    Object.assign(g.style, { left: `${(r.left - p.left) / k}px`, top: `${(r.top - p.top) / k}px`, width: `${img.offsetWidth}px`, height: `${img.offsetHeight}px` });
+    // 레이아웃 좌표(offsetLeft/Top)로 놓아 부모의 transform(입체 배치)·크기 보정과 상관없이 같은 자리에
+    Object.assign(g.style, { left: `${img.offsetLeft}px`, top: `${img.offsetTop}px`, width: `${img.offsetWidth}px`, height: `${img.offsetHeight}px`, margin: '0' });
     img.after(g);
     g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: fade, easing: 'ease-out' }).onfinish = () => g.remove();
   }

@@ -7,6 +7,11 @@ export const artReady = (typeof fetch === 'function' && typeof location !== 'und
   ? fetch('assets/art.json').then(r => (r.ok ? r.json() : [])).catch(() => [])
   : Promise.resolve([])).then(list => { INDEX = new Set(Array.isArray(list) ? list : []); return INDEX.size; });
 
+// 전투 스프라이트 몸 크기 보정(tools/slice-sheets.mjs가 잰 값): GPT가 칸 안에 작게 그린 동료도 같은 키로 보이게
+let SCALE = {};
+if (typeof fetch === 'function' && typeof location !== 'undefined' && location.protocol !== 'file:')
+  fetch('assets/sprite_scale.json').then(r => (r.ok ? r.json() : {})).then(j => { SCALE = j || {}; }).catch(() => {});
+export const spriteScale = id => SCALE[id] || 1;
 export const hasArt = file => INDEX.has(file);
 export const artURL = file => (INDEX.has(file) ? `assets/${file}` : null);
 export const artCount = () => INDEX.size;
