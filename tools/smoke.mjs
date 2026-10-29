@@ -419,7 +419,7 @@ try {
       else if (sc === 'result') break;
       else if (!(await advance(page, 'endless'))) break;
     }
-    const mid = await page.evaluate(() => { const G = window.__yk.S.G; return { fl: G.endless.floor, seg: G.endless.seg, rules: G.endless.rules.length, label: document.querySelector('.maphead h2')?.textContent || '', strs: G.mods ? Object.keys(G.mods).length : 0 }; });
+    const mid = await page.evaluate(() => { const G = window.__yk.S.G; return { fl: G.endless.floor, seg: G.endless.seg, rules: G.endless.rules.length, label: document.querySelector('.mapside h2')?.textContent || '', strs: G.mods ? Object.keys(G.mods).length : 0 }; });
     // 모두 쓰러진 것으로 끝낸다
     await page.evaluate(() => { const { S } = window.__yk; S.G.won = false; S.G.why = 'down'; S.G.screen = 'result'; window.__yk.render(); });
     const r = await page.evaluate(() => { const P = window.__yk.P(); return { best: P.rec.endlessBest, combo: Object.values(P.rec.endlessCombo)[0], floorTxt: document.querySelector('.endfloor')?.textContent || '', shards: [...document.querySelectorAll('.shards td')].some(td => /탑 위/.test(td.textContent)) }; });
@@ -569,7 +569,7 @@ try {
     await openParty(page);
     for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
     await page.click('[data-start]'); await page.waitForSelector('[data-node="0,0"]');
-    const pace = await ev(() => !!document.querySelector('.topbar .chip.pace') && !!document.querySelector('.night u') && !!document.querySelector('.node .m b.pace'));
+    const pace = await ev(() => !!document.querySelector('.topbar .chip.pace') && !!document.querySelector('.night u') && !!document.querySelector('.node .tag b.pace'));
     const rig = () => ev(() => { window.__yk.fight(['ghost'], 'fight'); const C = window.__yk.S.C; C.energy = 9; C.hand = ['iris.slash', 'iris.slash'].map((id, k) => ({ uid: 9100 + k, id })); window.__yk.render(); });
     await rig();
     // 손패 카드는 마우스를 대면 커지는 연출이 있어, 다 커진 뒤에 누른다(커지는 중에 누르면 끌기로 잡힐 때가 있다)
@@ -603,7 +603,7 @@ try {
     for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
     await page.click('[data-start]'); await page.waitForSelector('[data-node="0,0"]');
     const mapOk = await ev(() => {
-      const G = window.__yk.S.G, lab = [...document.querySelectorAll('.node.k-boss .t')].map(x => x.textContent).join('');
+      const G = window.__yk.S.G, lab = [...document.querySelectorAll('.node.k-boss .tag b')].map(x => x.textContent).join('');
       return ['keeper', 'queen'].includes(G.map.boss) && ['captain', 'whale'].includes(G.nextMap.boss) && lab.length > 0 && lab !== '보스';
     });
     const queen = await ev(async () => {

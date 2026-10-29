@@ -1128,6 +1128,15 @@
       ]
     },
     {
+      "id": "tower",
+      "title": "지도 탑 (막마다 1장)",
+      "items": [
+        "tower1",
+        "tower2",
+        "tower3"
+      ]
+    },
+    {
       "id": "title",
       "title": "타이틀 키아트",
       "items": [
@@ -15486,6 +15495,54 @@
       "native": "640×360",
       "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nBackground: 에피소드 장소: 항구 거리 — a sloped harbor town street at night, the tower visible far out at sea. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 pixels, full color, limited palette of about 64 colors, upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "tower1",
+      "kind": "tower",
+      "batch": "tower",
+      "file": "bg/tower1.png",
+      "width": 1200,
+      "height": 1272,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "300×318",
+      "note": "지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nA single tall stone TOWER seen straight from the front (orthographic, no perspective), the lower part of the tower: weathered grey-violet harbor stone, iron rings and old ropes, barnacles and dripping sea water at the base, warm orange lantern windows, a big arched wooden door at the bottom center. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges, NO stairs, NO doors except the one at the bottom, NO people (the game draws floor ledges, stairs and icons on top). Fully transparent background around the tower. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "tower2",
+      "kind": "tower",
+      "batch": "tower",
+      "file": "bg/tower2.png",
+      "width": 1200,
+      "height": 1272,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "300×318",
+      "note": "지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nA single tall stone TOWER seen straight from the front (orthographic, no perspective), the middle of the tower above the clouds: pale blue-grey stone, wind-worn, small pinwheels and fluttering cloth banners on the sides, wisps of cloud drifting across, cool white-blue windows, an arched opening at the bottom center. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges, NO stairs, NO doors except the one at the bottom, NO people (the game draws floor ledges, stairs and icons on top). Fully transparent background around the tower. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "tower3",
+      "kind": "tower",
+      "batch": "tower",
+      "file": "bg/tower3.png",
+      "width": 1200,
+      "height": 1272,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "300×318",
+      "note": "지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nA single tall stone TOWER seen straight from the front (orthographic, no perspective), the top of the tower among the stars: deep navy stone with inlaid gold star patterns and small clock gears, glowing golden windows, a sharp golden spire, an arched opening at the bottom center. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges, NO stairs, NO doors except the one at the bottom, NO people (the game draws floor ledges, stairs and icons on top). Fully transparent background around the tower. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272.",
       "reference_images": [
         "style/akane_c.png"
       ]

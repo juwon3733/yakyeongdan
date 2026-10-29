@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 7 · GPT가 그릴 그림 307장(시트 포함, 잘라 내면 846장) · 묶음 165개
+style_version 7 · GPT가 그릴 그림 310장(시트 포함, 잘라 내면 849장) · 묶음 166개
 
 ## 묶음
 
@@ -146,6 +146,7 @@ style_version 7 · GPT가 그릴 그림 307장(시트 포함, 잘라 내면 846�
 | `pet-sion` | ★5 시온 동반자 (시트 1장 → 대기 3·공격 3프레임) | 1 |
 | `proj` | 원거리 투사체 9종 (시트 5장 → 3프레임씩) | 5 |
 | `bg` | 배경 | 13 |
+| `tower` | 지도 탑 (막마다 1장) | 3 |
 | `title` | 타이틀 키아트 | 1 |
 | `summon` | 별 소환 연출 | 4 |
 | `app` | 앱 아이콘 | 1 |
@@ -188,6 +189,7 @@ style_version 7 · GPT가 그릴 그림 307장(시트 포함, 잘라 내면 846�
 | 일반 적 (`enemy`) | 512×512 | 128×128 | 예 | 256 | 일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경 |
 | 강적 (`elite`) | 512×512 | 128×128 | 예 | 256 | 강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경 |
 | 보스 (`boss`) | 1024×1536 | 128×192 | 예 | 256 | 보스 전투 스프라이트(저해상도 도트) · 투명 배경 |
+| tower (`tower`) | 1200×1272 | 300×318 | 예 | 64 | 지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다 |
 | 배경 (`bg`) | 1280×720 | 640×360 | 아니오 | 256 | 배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리) |
 | 타이틀 (`title`) | 1536×864 | — | 아니오 | 제한 없음 | 타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지 |
 | 소환 배경 (`summon`) | 1536×864 | — | 아니오 | 제한 없음 | 소환 화면 밤하늘 16:9 |
@@ -1540,6 +1542,14 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `bg_ep_lighthouse` | `assets/bg/ep_lighthouse.png` | 1280×720 | `assets/style/akane_c.png` | — |
 | `bg_ep_kitchen` | `assets/bg/ep_kitchen.png` | 1280×720 | `assets/style/akane_c.png` | — |
 | `bg_ep_harbor` | `assets/bg/ep_harbor.png` | 1280×720 | `assets/style/akane_c.png` | — |
+
+## `tower` — 지도 탑 (막마다 1장)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `tower1` | `assets/bg/tower1.png` | 1200×1272 투명 | `assets/style/akane_c.png` | — |
+| `tower2` | `assets/bg/tower2.png` | 1200×1272 투명 | `assets/style/akane_c.png` | — |
+| `tower3` | `assets/bg/tower3.png` | 1200×1272 투명 | `assets/style/akane_c.png` | — |
 
 ## `title` — 타이틀 키아트
 

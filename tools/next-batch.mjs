@@ -14,6 +14,7 @@ const STAR5 = ['akane', 'sion', 'lunaria', 'eleonore', 'nerea'];
 const FIRST = ['iris', 'brick', 'marta'];
 const REST = ['noel', 'raven', 'mimimomo', 'sebas', 'mariana', 'tomori', 'sigrun', 'zeno', 'bertha', 'finn', 'laila', 'dora', 'gordon', 'fukuro'];
 const ORDER = [
+  'tower',       // 지도 탑 — 지도 화면이 코드로 칠한 돌벽 대신 그림 탑이 된다
   'fx-common',   // 공용 타격 이펙트 — 모든 공격이 바로 화려해진다
   ...STAR5.flatMap((id) => [`char-${id}`, `pose-${id}`, `fx-${id}`, `cards-${id}`, `aura-${id}`, `pet-${id}`]),   // 몸·이펙트·오라·동반자는 층마다 따로(docs/BATTLE_PLAN.md)   // 전투 스프라이트·이펙트는 서 있는 그림 바로 뒤에
   'cg-star5',

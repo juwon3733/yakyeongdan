@@ -140,15 +140,21 @@ function after() {
 
 // 지도에서 칸을 고르면: 맨 앞 동료 표지가 길을 따라 0.4초에 미끄러져 가고, 칸이 한 번 번쩍인 뒤 넘어간다.
 // 걸리는 시간(ms)을 돌려준다. 애니메이션 줄이기(점검 도구 포함)면 0 → 바로 넘어감.
-const MAP_SLIDE = 400, MAP_FLASH = 220;
+const MAP_SLIDE = 640, MAP_FLASH = 220;   // 탑 지도: 계단을 꺾어 오르므로 조금 길게
 let mapGo = null;
 function mapMove(b, r, i) {
   if (calmNow()) return 0;
   const grid = b.closest('.mapgrid'), tok = grid?.querySelector('.maptok'); if (!tok) return 0;
-  grid.querySelector(`line[data-to="${r},${i}"]`)?.setAttribute('class', 'trail go');   // 고른 길이 금색 점선으로
+  const path = grid.querySelector(`[data-to="${r},${i}"]`);
+  path?.setAttribute('class', 'trail go');   // 고른 계단이 금색으로
   grid.classList.add('going');
-  const x = parseFloat(b.style.left) - 2, y = parseFloat(b.style.top) + b.offsetHeight / 2;
-  tok.animate([{ left: tok.style.left, top: tok.style.top }, { left: `${x}px`, top: `${y}px` }], { duration: MAP_SLIDE, easing: 'cubic-bezier(.45,.05,.35,1)', fill: 'forwards' });
+  // 계단 꺾인 점을 차례로 밟아 오른다(탑 지도: 발 자리 = 칸 아래 가운데)
+  const pts = (path?.getAttribute('d') || '').match(/[MVH]-?[\d.]+(?: -?[\d.]+)?/g) || [];
+  let px = parseFloat(tok.style.left), py = parseFloat(tok.style.top); const kf = [{ left: `${px}px`, top: `${py}px` }];
+  for (const c of pts.slice(1)) { const v = parseFloat(c.slice(1)); if (c[0] === 'V') py = v; else px = v; kf.push({ left: `${px}px`, top: `${py}px` }); }
+  const x = parseFloat(b.style.left) + b.offsetWidth / 2, y = parseFloat(b.style.top) + b.offsetHeight;
+  kf.push({ left: `${x}px`, top: `${y}px` });
+  tok.animate(kf, { duration: MAP_SLIDE, easing: 'cubic-bezier(.45,.05,.35,1)', fill: 'forwards' });
   setTimeout(() => { b.classList.add('flash'); tok.classList.add('arrive'); sfx('select'); }, MAP_SLIDE);
   return MAP_SLIDE + MAP_FLASH;
 }

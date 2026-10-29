@@ -33,6 +33,7 @@ export const SPEC = {
   enemy:    { w: 512,  h: 512,  native: '128×128', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
   elite:    { w: 512,  h: 512,  native: '128×128', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
   boss:     { w: 1024, h: 1536, native: '128×192', scale: 8, transparent: true,  colors: 256, folder: 'enemies', note: '보스 전투 스프라이트(저해상도 도트) · 투명 배경' },
+  tower:    { w: 1200, h: 1272, native: '300×318', scale: 4, transparent: true, colors: 64, folder: 'bg', note: '지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다' },
   bg:       { w: 1280, h: 720,  native: '640×360', scale: 2, transparent: false, colors: 256, folder: 'bg', note: '배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)' },
   title:    { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'title', note: '타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지' },
   summon:   { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'summon', note: '소환 화면 밤하늘 16:9' },
@@ -581,6 +582,16 @@ One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2
   batches.push({ id: 'bg', title: '배경' });
   for (const [id, desc] of Object.entries(BGS)) {
     out.push(item('bg', `bg_${id}`, 'bg', `${id}.png`, join(STYLE.pixel, `Background: ${desc}. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 pixels, full color, limited palette of about 64 colors, upscaled exactly 2x with nearest-neighbor to 1280x720.`)));
+  }
+  // 지도 화면의 탑: 막마다 한 장. 게임(js/render/map.js)이 이 위에 층 난간·계단·칸 아이콘을 얹는다
+  batches.push({ id: 'tower', title: '지도 탑 (막마다 1장)' });
+  const TOWERS = {
+    1: 'the lower part of the tower: weathered grey-violet harbor stone, iron rings and old ropes, barnacles and dripping sea water at the base, warm orange lantern windows, a big arched wooden door at the bottom center',
+    2: 'the middle of the tower above the clouds: pale blue-grey stone, wind-worn, small pinwheels and fluttering cloth banners on the sides, wisps of cloud drifting across, cool white-blue windows, an arched opening at the bottom center',
+    3: 'the top of the tower among the stars: deep navy stone with inlaid gold star patterns and small clock gears, glowing golden windows, a sharp golden spire, an arched opening at the bottom center',
+  };
+  for (const [n, desc] of Object.entries(TOWERS)) {
+    out.push(item('tower', `tower${n}`, 'tower', `tower${n}.png`, join(STYLE.pixel, `A single tall stone TOWER seen straight from the front (orthographic, no perspective), ${desc}. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges, NO stairs, NO doors except the one at the bottom, NO people (the game draws floor ledges, stairs and icons on top). Fully transparent background around the tower. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272.`)));
   }
   batches.push({ id: 'title', title: '타이틀 키아트' });
   // v7: 매끈한 애니 일러스트(AI 티) 대신 게임과 같은 도트 — 파일 이름을 key_px.png로 바꿔 다시 그린다(js/render/title.js가 먼저 찾음)
