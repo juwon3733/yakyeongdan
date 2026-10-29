@@ -430,12 +430,23 @@ const MOTION = {
   slash: ['jatk', 400, 'attack'], shot: ['jshot', 400, 'attack'], sweep: ['jsweep', 500, 'attack'], finisher: ['jfin', 620, 'attack'],
   guard: ['jguard', 470, 'guard'], heal: ['jheal', 570, 'skill'], time: ['jtime', 570, 'skill'], draw: ['jdraw2', 380, 'skill'], cast: ['jcast', 520, 'skill'],
 };
+// 오라는 상황에 맞게: 기술을 쓰면 확 커지며 밝아지고(필살은 화면을 덮을 만큼), 맞으면 흔들리며 꺼질 듯 깜빡
+function auraFlare(id, k = 1.5, ms = 600) {
+  const el = allyEl(id)?.querySelector(':scope > .jaura'); if (!el || calmNow()) return;
+  el.animate([{ scale: '1', opacity: .55 }, { scale: String(k), opacity: 1, offset: .25 }, { scale: String(1 + (k - 1) * .6), opacity: .9, offset: .7 }, { scale: '1', opacity: .55 }],
+    { duration: ms, easing: 'cubic-bezier(.2,.8,.3,1)' });
+}
+function auraHurt(id) {
+  const el = allyEl(id)?.querySelector(':scope > .jaura'); if (!el || calmNow()) return;
+  el.animate([{ opacity: .1, translate: '-3px 0' }, { opacity: .7, translate: '2px 0', offset: .3 }, { opacity: .2, offset: .55 }, { opacity: .55, translate: '0 0' }], { duration: 360 });
+}
 function actFx(e, special = false) {
   const d = cardData(e.id);
   const who = e.ch === 'duo' ? [e.a, e.b] : [e.actor || e.ch];
   for (const [n, id] of who.entries()) {
     const img = allyEl(id)?.querySelector(':scope > img'); if (!img) continue;
     const m = e.ch === 'duo' ? (e.atk ? 'finisher' : 'cast') : motionOf(d, id);
+    auraFlare(id, special ? 2.6 : m === 'finisher' ? 2 : m === 'guard' ? 1.25 : 1.5, special ? 1100 : 650);
     const [cls, ms, p] = MOTION[m];
     const col = colOf(id), r = rel(img);
     if ((m === 'slash' || m === 'sweep' || m === 'finisher') && !calmNow()) {
@@ -757,7 +768,7 @@ function hurtFx(e) {
   if (e.dmg > 0) {
     impactFx(x, y, '#ff6a7a');
     pulse(el.querySelector(':scope > img') || el, SET.shake ? 'jhitA' : 'jflash', 380);
-    if (!e.down) pose(e.id, 'hurt', 380);
+    if (!e.down) { pose(e.id, 'hurt', 380); auraHurt(e.id); }
     num(x, r.y + r.h * .25, String(e.dmg), 'hurt', e.dmg);
     if (e.dmg >= 10) { shake(); redEdge(); }
   } else num(x, r.y + r.h * .25, '막음', 'blk', 8);
@@ -1294,16 +1305,20 @@ function bodyIn(img) {
   const x = img.offsetLeft + img.offsetWidth * bx, y = img.offsetTop + img.offsetHeight * by, w = img.offsetWidth * bw, h = img.offsetHeight * bh;
   return { x, y, w, h, cx: x + w / 2, cy: y + h / 2 };
 }
+const AURA_AT = { akane: ['feet', 1.1], nerea: ['feet', .9], sion: ['back', 1.1, -.1], eleonore: ['back', 1.2, -.1], lunaria: ['head', .8, -.15] };
 function charLayers() {
   const A = app(); if (!A || A.dataset.screen !== 'combat') return;
   for (const pm of A.querySelectorAll('.pm[data-ally]')) {
     const id = pm.dataset.ally, img = pm.querySelector(':scope > img'); if (!img || !img.dataset.b) continue;
-    const b = bodyIn(img), down = pm.classList.contains('down');
+    const b = bodyIn(img), down = pm.classList.contains('down'), M = S.G?.members?.[id];
+    pm.classList.toggle('lowhp', !!M && !M.down && M.hp / M.max < .3);   // 위기: 오라가 불안하게 깜빡
     const aura = fxFrames(`${id}_aura`);
     if (aura.length && !down && !pm.querySelector(':scope > .jaura')) {
       const el = document.createElement('img'); el.className = 'jaura'; el.alt = ''; el.dataset.fx = `${id}_aura`; el.src = aura[0];
-      const sz = Math.round(b.h * 1.5);
-      Object.assign(el.style, { left: `${Math.round(b.cx - sz / 2)}px`, top: `${Math.round(b.cy - sz / 2)}px`, width: `${sz}px`, height: `${sz}px` });
+      // 자리는 동료마다(발밑 불꽃·물방울, 등 뒤 별자리판·시계, 머리 위 초승달). 크기·밝기는 상황마다(auraFlare·css .jaura)
+      const [where, k, dx = 0] = AURA_AT[id] || ['back', .8], sz = Math.round(b.h * k);
+      const cy = where === 'feet' ? b.y + b.h - sz * .42 : where === 'head' ? b.y + b.h * .08 : b.y + b.h * .32;
+      Object.assign(el.style, { left: `${Math.round(b.cx + b.w * dx - sz / 2)}px`, top: `${Math.round(cy - sz / 2)}px`, width: `${sz}px`, height: `${sz}px` });
       img.before(el);
     }
     const pet = fxFrames(`${id}_pet_idle`);

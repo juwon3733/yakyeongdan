@@ -137,9 +137,9 @@ style_version 7 · GPT가 그릴 그림 310장(시트 포함, 잘라 내면 849�
 | `fx-dora` | 도라 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
 | `fx-gordon` | 고든 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
 | `fx-fukuro` | 후쿠로 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `aura-akane` | ★5 아카네 오라 (시트 1장 → 6프레임 반복) | 1 |
 | `aura-sion` | ★5 시온 오라 (시트 1장 → 6프레임 반복) | 1 |
 | `aura-lunaria` | ★5 루나리아 오라 (시트 1장 → 6프레임 반복) | 1 |
-| `aura-akane` | ★5 아카네 오라 (시트 1장 → 6프레임 반복) | 1 |
 | `aura-eleonore` | ★5 엘레오노르 오라 (시트 1장 → 6프레임 반복) | 1 |
 | `aura-nerea` | ★5 네레아 오라 (시트 1장 → 6프레임 반복) | 1 |
 | `pet-nerea` | ★5 네레아 동반자 (시트 1장 → 대기 3·공격 3프레임) | 1 |
@@ -1473,35 +1473,35 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 |---|---|---|---|---|
 | `fx_fukuro` | `assets/sheets/fx_fukuro.png` → `fukuro_atk_1.png` `fukuro_atk_2.png` `fukuro_atk_3.png` `fukuro_skill_1.png` `fukuro_skill_2.png` `fukuro_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
 
+## `aura-akane` — ★5 아카네 오라 (시트 1장 → 6프레임 반복)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `aura_akane` | `assets/sheets/aura_akane.png` → `akane_aura_1.png` `akane_aura_2.png` `akane_aura_3.png` `akane_aura_4.png` `akane_aura_5.png` `akane_aura_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 반복 6프레임, 모양: a LOW BED OF FLAMES on the ground |
+
 ## `aura-sion` — ★5 시온 오라 (시트 1장 → 6프레임 반복)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `aura_sion` | `assets/sheets/aura_sion.png` → `sion_aura_1.png` `sion_aura_2.png` `sion_aura_3.png` `sion_aura_4.png` `sion_aura_5.png` `sion_aura_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게 |
+| `aura_sion` | `assets/sheets/aura_sion.png` → `sion_aura_1.png` `sion_aura_2.png` `sion_aura_3.png` `sion_aura_4.png` `sion_aura_5.png` `sion_aura_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 반복 6프레임, 모양: a slowly turning CONSTELLATION CHART halo |
 
 ## `aura-lunaria` — ★5 루나리아 오라 (시트 1장 → 6프레임 반복)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `aura_lunaria` | `assets/sheets/aura_lunaria.png` → `lunaria_aura_1.png` `lunaria_aura_2.png` `lunaria_aura_3.png` `lunaria_aura_4.png` `lunaria_aura_5.png` `lunaria_aura_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게 |
-
-## `aura-akane` — ★5 아카네 오라 (시트 1장 → 6프레임 반복)
-
-| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
-|---|---|---|---|---|
-| `aura_akane` | `assets/sheets/aura_akane.png` → `akane_aura_1.png` `akane_aura_2.png` `akane_aura_3.png` `akane_aura_4.png` `akane_aura_5.png` `akane_aura_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게 |
+| `aura_lunaria` | `assets/sheets/aura_lunaria.png` → `lunaria_aura_1.png` `lunaria_aura_2.png` `lunaria_aura_3.png` `lunaria_aura_4.png` `lunaria_aura_5.png` `lunaria_aura_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 반복 6프레임, 모양: a large pale CRESCENT MOON with soft silver glow and two thin moonlight veil ribbons drifting from its tips, a few falling silver petals. Placed above and behind her head. |
 
 ## `aura-eleonore` — ★5 엘레오노르 오라 (시트 1장 → 6프레임 반복)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `aura_eleonore` | `assets/sheets/aura_eleonore.png` → `eleonore_aura_1.png` `eleonore_aura_2.png` `eleonore_aura_3.png` `eleonore_aura_4.png` `eleonore_aura_5.png` `eleonore_aura_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게 |
+| `aura_eleonore` | `assets/sheets/aura_eleonore.png` → `eleonore_aura_1.png` `eleonore_aura_2.png` `eleonore_aura_3.png` `eleonore_aura_4.png` `eleonore_aura_5.png` `eleonore_aura_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 반복 6프레임, 모양: a giant translucent violet CLOCK FACE magic circle |
 
 ## `aura-nerea` — ★5 네레아 오라 (시트 1장 → 6프레임 반복)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `aura_nerea` | `assets/sheets/aura_nerea.png` → `nerea_aura_1.png` `nerea_aura_2.png` `nerea_aura_3.png` `nerea_aura_4.png` `nerea_aura_5.png` `nerea_aura_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게 |
+| `aura_nerea` | `assets/sheets/aura_nerea.png` → `nerea_aura_1.png` `nerea_aura_2.png` `nerea_aura_3.png` `nerea_aura_4.png` `nerea_aura_5.png` `nerea_aura_6.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 반복 6프레임, 모양: rising sea-water BUBBLES and tiny glowing star-fish drifting upward from a small ring of rippling starlit water on the ground; narrow column, mostly empty above. Placed at her feet. |
 
 ## `pet-nerea` — ★5 네레아 동반자 (시트 1장 → 대기 3·공격 3프레임)
 
