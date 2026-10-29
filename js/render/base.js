@@ -63,26 +63,27 @@ export function baseView() {
     `<button type="button" class="h2side s${i}" style="--c:${ROSTER[k].col}" data-restline="${k}" aria-label="${ROSTER[k].name}에게 말 걸기">${say(k)}<img class="px" src="${charSrc(k)}" alt="${ROSTER[k].name}"></button>`).join('');
   const leadBtn = lead ? `<button type="button" class="h2lead ${starRing(lead)}" style="--c:${ROSTER[lead].col}" data-restline="${lead}" aria-label="${ROSTER[lead].name}에게 말 걸기">${say(lead)}<img class="px" src="${charSrc(lead)}" alt="${ROSTER[lead].name}">
       <span class="h2name"><b>${ROSTER[lead].name}</b> <i class="stars">${stars(ROSTER[lead].rarity)}</i><small>${esc(ROSTER[lead].role)}</small></span></button>` : '';
-  const tl = [...P.titles.map(c => `${ROSTER[c]?.name || c}의 새벽`), ...masteryTitles().slice(0, 4).map(t => t.title)];
   const tm = hallTime();
   const matesNew = own.length > (+ls('yk-mates-seen') || 3);
   const epN = epNewCount();
-  const big = (attrs, cls, ico, label, sub = '', on = false) =>
-    `<button type="button" class="h2btn ${cls}" ${attrs}><span class="h2ico" aria-hidden="true">${ico}</span><span class="h2lb">${dot(on)}${label}</span>${sub ? `<small>${sub}</small>` : ''}</button>`;
+  // 로비(모바일 가챠식): 가운데 대표 동료, 오른쪽 둥근 도트 아이콘 메뉴, 오른쪽 아래 큰 출격, 왼쪽 아래 작은 칩. 설명 글은 없앤다
+  const ico = k => `<svg class="h2px" viewBox="0 0 9 9" aria-hidden="true">${(LOBBY_ICON[k] || []).map((row, y) => [...row].map((c, x) => c === '.' ? '' : `<rect x="${x}" y="${y}" width="1" height="1" fill="${c === 'w' ? '#fff' : c === 'd' ? '#2a1a04' : 'currentColor'}"/>`).join('')).join('')}</svg>`;
+  const round = (attrs, k, label, on = false, cls = '') =>
+    `<button type="button" class="h2rnd ${cls}" ${attrs}><span class="h2ring">${ico(k)}</span><span class="h2lb">${dot(on)}${label}</span></button>`;
   return `<div class="hub2 tm-${tm}">
     <div class="h2stage">
       <div class="h2top">${walletBump()}</div>
       <div class="h2cast">${side}${leadBtn}</div>
-      <p class="h2note note small">야경단 본부 · 등대 아래. ${tm === 'dawn' ? '창밖이 밝아 온다. 지난밤은 무사히 넘겼다.' : '창밖은 아직 밤. 탑이 다시 솟을 시간이다.'}</p>
-      ${tl.length ? `<p class="h2titles note small">칭호 ${tl.map(t => `「${esc(t)}」`).join(' ')}</p>` : ''}
     </div>
     <nav class="h2menu" aria-label="본부 메뉴">
-      ${big('data-view="party"', 'go primary', '▲', '출격', '밤 오르기 · 동료 셋 고르기')}
-      ${big('data-view="summon"', `primary sm ${S.hint === 'summon' ? 'hint' : ''}`, '✦', `별 소환${P.pick5 ? ' <b class="newt">★5 고르기</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">여기서 10연</b>' : ''}`, `별 조각 ${P.shards}`, P.shards >= SUMMON.cost || P.pick5)}
-      ${big('data-view="mates"', '', '◆', '동료', `${own.length}/${ROSTER_IDS.length}`, matesNew)}
-      ${big('data-view="episodes"', '', '❖', `에피소드${epN ? ` <b class="newt">NEW ${epN}</b>` : ''}`, '', epN)}
-      ${big('data-view="records"', '', '▤', '기록', `판 ${P.runs} · 이긴 판 ${P.wins}${P.best != null ? ` · 최고 ${fmt(P.best)}` : ''}`)}
-      ${big('data-settings', '', '⚙', '설정')}
+      <div class="h2col">
+        ${round('data-view="summon"', 'star', `별 소환${P.pick5 ? ' <b class="newt">★5</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">10연</b>' : ''}`, !!P.pick5, `gold ${S.hint === 'summon' ? 'hint' : ''}`)}
+        ${round('data-view="mates"', 'mates', '동료', matesNew)}
+        ${round('data-view="episodes"', 'book', `에피소드${epN ? ` <b class="newt">${epN}</b>` : ''}`, epN)}
+        ${round('data-view="records"', 'scroll', '기록')}
+        ${round('data-settings', 'gear', '설정')}
+      </div>
+      <button type="button" class="h2go primary" data-view="party"><span class="h2gotx">출격</span><small>동료 셋을 골라 탑으로</small></button>
       <div class="h2sub">
         <button type="button" class="mini" data-view="daily">${dot(!dailyToday().rec?.won)}매일의 밤</button>
         <button type="button" class="mini" data-view="exchange">${dot(P.dust >= Math.min(EXCHANGE.char[3], EXCHANGE.talk))}교환소</button>
@@ -94,6 +95,14 @@ export function baseView() {
     <div class="tutbar h2help" role="note"><span class="lb">도움말</span><span class="tx">동료를 누르면 말을 건다.</span></div>
   </div>`;
 }
+// 로비 아이콘(9×9 도트): x = 색(currentColor), w = 흰 빛, d = 어두운 선
+const LOBBY_ICON = {
+  star: ['....x....', '....x....', '...xwx...', 'xxxxwxxxx', '.xxwwwxx.', '..xxwxx..', '..xx.xx..', '.xx...xx.', '.x.....x.'],
+  mates: ['.xx...xx.', 'xwwx.xwwx', 'xwwx.xwwx', '.xx...xx.', '.........', 'xxxx.xxxx', 'xxxx.xxxx', 'xxxx.xxxx', '.........'],
+  book: ['.........', 'xxxx.xxxx', 'xwwx.xwwx', 'xwwx.xwwx', 'xwwx.xwwx', 'xwwx.xwwx', 'xxxxxxxxx', '....x....', '.........'],
+  scroll: ['.xxxxxxx.', 'x.......x', '.xwwwwwx.', '.x.....x.', '.xwwwww..', '.x.....x.', '.xwwww.x.', 'x.......x', '.xxxxxxx.'],
+  gear: ['...x.x...', '.xxxxxxx.', '.xx...xx.', 'xx..w..xx', '.x.www.x.', 'xx..w..xx', '.xx...xx.', '.xxxxxxx.', '...x.x...'],
+};
 
 export function summonView() {
   const r5 = nextRate5(), pk = pickupNow();

@@ -100,31 +100,25 @@ function partyStage(order, bonded) {
 // 파티 고르기: 가진 동료만 (개발판은 구현된 동료 전부). 아직 구현 안 된 동료는 「준비 중」.
 export function partyView() {
   const can = k => !!CHARACTERS[k] && (S.dev || owns(k));
+  // 아래 얼굴 줄: 고르면 위 무대에 선다. 자세한 패시브는 마우스를 대면(title) / 마지막에 고른 동료만 무대 위 카드로
   const mates = ROSTER_IDS.filter(k => owns(k) || (S.dev && CHARACTERS[k])).map(k => {
     const r = ROSTER[k], c = CHARACTERS[k], on = S.picked.includes(k), ok = can(k);
-    return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'} title="${c ? esc(`${c.passive.name}: ${c.passive.text}`) : ''}">
-      <img class="px" src="${charSrc(k)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
-      <span class="rl">${r.role}</span>${c ? `<span class="hp">체력 ${c.maxHp}</span>` : ''}
-      <span class="ps" ${c ? `title="${c.passive.name}: ${c.passive.text}"` : ''}>${c ? `<b>${c.passive.name}</b> ${c.passive.short}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
+    return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'} title="${c ? esc(`${r.name} · ${r.role} · 체력 ${c.maxHp}\n${c.passive.name}: ${c.passive.text}`) : '준비 중'}">
+      <img class="px" src="${charSrc(k, 'normal')}" alt=""><span class="nm">${r.name}</span><span class="stars">${stars(r.rarity)}</span>${on ? '<i class="ck" aria-hidden="true"></i>' : ''}</button>`;
   }).join('');
-  // 고른 셋: 전투처럼 대열로 크게 선다(왼쪽 뒤 → 오른쪽 앞, 처음엔 체력이 높은 동료가 앞). 인연이 있는 동료는 빛난다.
   const bonded = new Set();
   S.picked.forEach(a => S.picked.forEach(b => { if (a !== b && DUOS[duoKey(a, b)]) { bonded.add(a); bonded.add(b); } }));
   const order = S.picked.slice().sort((a, b) => (CHARACTERS[a]?.maxHp || 0) - (CHARACTERS[b]?.maxHp || 0));
-  return `<div class="title partyscr">
-    <div class="tleft">
-      <div class="thead"><button type="button" class="mini" data-view="base">‹ 본부</button><h2>${S.mode === 'endless' ? '끝없는 탑 · 동료 셋' : '동료 셋을 고른다'}</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
-      <div class="pick">${mates}</div>
-      ${partyStage(order, bonded)}
+  const last = S.picked[S.picked.length - 1], lc = last && CHARACTERS[last], lr = last && ROSTER[last];
+  const info = lc ? `<div class="p2info" style="--c:${lr.col}"><b>${lr.name}</b> <span class="stars">${stars(lr.rarity)}</span> <small>${esc(lr.role)} · 체력 ${lc.maxHp}</small>
+    <p><i>${esc(lc.passive.name)}</i> ${esc(lc.passive.text)}</p></div>` : '';
+  const help = '대열은 지도에서 바꿀 수 있다. 처음엔 체력이 높은 동료가 앞에 선다.\n연계: 서로 다른 동료 카드를 번갈아 쓰면 칸이 차고 공격이 세진다. 2칸 이상에서 인연 있는 둘을 이어 쓰면 듀오 카드.';
+  return `<div class="title partyscr p2">
+    <div class="p2head"><button type="button" class="mini" data-view="base">‹ 본부</button><h2>${S.mode === 'endless' ? '끝없는 탑' : '출격'} <small>동료 셋 ${S.picked.length}/3</small></h2>${S.dev ? '<span class="dev">개발판</span>' : ''}<span class="p2q" title="${esc(help)}" aria-label="${esc(help)}">?</span></div>
+    <div class="p2stage">${partyStage(order, bonded)}<div class="p2left">${info}${bondsOf(S.picked)}</div>
+      <div class="p2go">${S.mode === 'endless' ? `<p class="note small endnote">동료마다 희귀 카드 1장 · 도구 ${ENDLESS.freshRelics}개 · 별빛 ${ENDLESS.freshGold}. 층마다 적이 강해진다.</p>` : runSetup()}
+        <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>${S.mode === 'endless' ? '탑 오르기' : '출발'}</button></div>
     </div>
-    <div class="tright">
-      <h2>동료 셋 (${S.picked.length}/3)</h2>
-      ${S.mode === 'endless' ? `<p class="note endnote">끝없는 탑에 바로 오른다. 동료마다 희귀 카드 1장 · 도구 ${ENDLESS.freshRelics}개 · 별빛 ${ENDLESS.freshGold}을 들고 시작. 탑은 무너지지 않지만 층마다 적이 강해지고 규칙이 쌓인다.</p>` : runSetup()}
-      <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>${S.mode === 'endless' ? '끝없는 탑 오르기' : '출발'}</button>
-      ${bondsOf(S.picked)}
-      ${S.picked.length ? `<div class="chosenps">${S.picked.map(k => { const r = ROSTER[k], c = CHARACTERS[k]; return c ? `<span style="--c:${r.col}"><b>${r.name} · ${esc(c.passive.name)}</b> ${esc(c.passive.text)}</span>` : ''; }).join('')}</div>` : ''}
-      <p class="note">대열은 지도에서 바꿀 수 있다. 처음엔 체력이 높은 동료가 앞에 선다.</p>
-      <p class="note small"><b>연계</b>: 서로 다른 동료 카드를 번갈아 쓰면 칸이 차고 공격이 세진다. 2칸 이상에서 인연 있는 둘을 이어 쓰면 <b>듀오 카드</b>.</p>
-    </div>
+    <div class="p2pick">${mates}</div>
   </div>`;
 }

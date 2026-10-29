@@ -1,0 +1,46 @@
+/* 파티 고르기 (js/render/title.js partyView, Claude): 위 큰 무대에 고른 셋, 아래 얼굴 줄, 오른쪽 아래 출발. 설명은 「?」에 */
+.title.p2{display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:0;padding:0;height:100%}
+.p2head{display:flex;align-items:center;gap:8px;padding:6px 10px;background:linear-gradient(180deg,rgba(6,6,18,.85),rgba(6,6,18,0))}
+.p2head h2{font-size:16px;color:#fff;text-shadow:2px 2px 0 #000}
+.p2head h2 small{font-size:10px;color:var(--gold);margin-left:4px}
+.p2q{margin-left:auto;display:grid;place-items:center;width:18px;height:18px;border-radius:50%;border:2px solid var(--gold);color:var(--gold);font-family:var(--f-disp);font-size:11px;background:rgba(6,6,18,.8);cursor:help}
+.p2stage{position:relative;min-height:0}
+.p2 .pstage{position:absolute;left:0;right:170px;bottom:6px;border:0;box-shadow:none;background:none;gap:34px;padding:0;
+  background:radial-gradient(ellipse 34% 14% at 42% 92%,rgba(0,0,0,.55),transparent)}
+.p2 .pslot{width:112px;grid-template-rows:130px auto auto}
+.p2 .pslot .spr{width:120px;height:160px;margin-top:-30px;animation:p2bob 3s ease-in-out infinite}
+.p2 .pslot.in .spr{animation:p2in .35s cubic-bezier(.2,.8,.3,1) backwards,p2bob 3s ease-in-out .35s infinite}
+.p2 .pslot .ghost{animation:p2out .3s ease-out forwards}
+.p2 .pslot .spot{width:60px;height:12px;border:0;border-radius:50%;background:radial-gradient(ellipse,rgba(160,170,255,.35),transparent 70%);color:transparent}
+.p2 .pslot .plate{font-size:11px}
+.p2 .pslot.bonded .plate{animation:p2bond 1.8s ease-in-out infinite}
+.p2left{position:absolute;z-index:3;left:10px;top:4px;max-width:260px;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.p2left .bonds{display:flex;flex-wrap:wrap;gap:3px;background:rgba(8,8,22,.8);padding:3px 5px}
+.p2info{background:rgba(8,8,22,.86);border:2px solid var(--c);box-shadow:2px 2px 0 #000;padding:5px 8px;animation:p2in .3s cubic-bezier(.2,.8,.3,1) both}
+.p2info b{font-family:var(--f-disp);font-weight:400;font-size:14px;color:var(--c)}
+.p2info .stars{font-size:9px}
+.p2info small{color:var(--dim);font-size:8.5px}
+.p2info p{margin:3px 0 0;font-size:9.5px;line-height:1.35;color:var(--ink)}
+.p2info p i{font-style:normal;color:var(--gold)}
+.p2go{position:absolute;right:10px;bottom:8px;display:flex;flex-direction:column;align-items:flex-end;gap:4px;max-width:210px}
+.p2go .go{width:150px;height:44px;font-family:var(--f-disp);font-size:20px;letter-spacing:.2em;background:linear-gradient(180deg,#ffe28a,#e0a838 55%,#b07a1c);color:#2a1a04;border:2px solid #fff3c0;box-shadow:0 0 0 2px #2a1a04,3px 4px 0 2px rgba(0,0,0,.5)}
+.p2go .go:disabled{filter:grayscale(.8) brightness(.55);cursor:default}
+.p2go .bonds{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:3px;background:rgba(8,8,22,.8);padding:3px 5px}
+.p2go .setup{background:rgba(8,8,22,.8);padding:2px 5px}
+.p2pick{display:flex;gap:4px;overflow-x:auto;padding:5px 8px 6px;background:linear-gradient(0deg,rgba(6,6,18,.92),rgba(6,6,18,.75));border-top:2px solid var(--line);scrollbar-width:thin}
+.p2pick .mate{position:relative;flex:none;display:flex;flex-direction:column;align-items:center;width:52px;padding:0 0 2px;background:#10112a;border:2px solid #3a3d6a;box-shadow:none;transition:transform .1s,border-color .1s}
+.p2pick .mate.r5{border-color:#8a6a1a}.p2pick .mate.r4{border-color:#5a3a8a}
+.p2pick .mate img{width:48px;height:44px;object-fit:cover;object-position:50% 12%;image-rendering:auto}
+.p2pick .mate .nm{font-size:8.5px;line-height:1.2;white-space:nowrap;max-width:50px;overflow:hidden}
+.p2pick .mate .stars{font-size:6.5px;line-height:1;color:var(--gold)}
+.p2pick .mate:hover{transform:translateY(-3px);border-color:#fff}
+.p2pick .mate.on{border-color:var(--gold);box-shadow:0 0 0 1px #fff3c0,0 0 8px rgba(255,226,138,.6)}
+.p2pick .mate.on img{filter:brightness(1.1)}
+.p2pick .mate .ck{position:absolute;right:-3px;top:-3px;width:12px;height:12px;background:var(--gold);border:2px solid #2a1a04;
+  -webkit-mask:none;clip-path:polygon(0 50%,35% 85%,100% 10%,100% 35%,35% 100%,0 70%)}
+.p2pick .mate.locked{filter:grayscale(1) brightness(.5)}
+@keyframes p2bob{0%,100%{translate:0 0}50%{translate:0 -1px}}
+@keyframes p2in{from{opacity:0;translate:0 10px;filter:brightness(3)}to{opacity:1;translate:0 0;filter:none}}
+@keyframes p2out{to{opacity:0;translate:0 -8px}}
+@keyframes p2bond{0%,100%{text-shadow:1px 1px 0 #000}50%{text-shadow:1px 1px 0 #000,0 0 6px var(--gold)}}
+#stage.calm .p2 .pslot .spr,#stage.calm .p2info{animation:none}
