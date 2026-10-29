@@ -45,3 +45,34 @@
 .partyscr .go:disabled{color:var(--dim);filter:grayscale(.6)}
 
 @media (prefers-reduced-motion:reduce){.partyscr .mate.r5,.partyscr .go{animation:none}.partyscr .mate,.partyscr .go{transition:none}}
+
+/* 아래 무대: 고른 셋이 전투 스프라이트로 대열대로 선다(왼쪽 뒤 → 오른쪽 앞). 발은 한 줄(스프라이트 칸 바닥), 숨쉬기는 1px 위아래만 */
+.partyscr .pstage{flex:none;display:flex;justify-content:center;gap:14px;padding:10px 8px 3px;position:relative;z-index:1;border:2px solid var(--line);box-shadow:2px 2px 0 var(--shadow);
+  background:linear-gradient(180deg,#0b0b22 0,#14143a 96px,#22224a 96px,#22224a 98px,#101030 98px,#0b0b18)}
+.partyscr .pslot{position:relative;width:96px;display:grid;grid-template-rows:88px auto auto;justify-items:center;align-items:end}
+.partyscr .pslot .spr{grid-row:1;width:96px;height:128px;margin-top:-40px;object-fit:contain;object-position:50% 100%;pointer-events:none;filter:drop-shadow(2px 0 0 rgba(0,0,0,.55));
+  animation:pbreath 1.4s steps(1) infinite}
+.partyscr .pslot.s1 .spr{animation-delay:-.45s}
+.partyscr .pslot.s2 .spr{animation-delay:-.9s}
+.partyscr .pslot.r5 .spr{filter:drop-shadow(2px 0 0 rgba(0,0,0,.55)) drop-shadow(0 0 2px rgba(224,184,74,.75))}
+@keyframes pbreath{0%{transform:translateY(0)}50%{transform:translateY(-1px)}}
+/* 새로 고른 동료: 빛 기둥 속에서 0.3초 만에 선다 */
+.partyscr .pslot.in .spr{animation:pin .3s steps(4) backwards,pbreath 1.4s steps(1) .3s infinite}
+@keyframes pin{0%{opacity:0;filter:brightness(3)}50%{opacity:1;filter:brightness(2)}}
+.partyscr .pslot .beam{position:absolute;z-index:2;top:-24px;left:calc(50% - 12px);width:24px;height:114px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--c) 55%,#fff) 30%,#fff 50%,color-mix(in srgb,var(--c) 55%,#fff) 70%,transparent);
+  animation:pbeam .3s steps(5) forwards}
+@keyframes pbeam{0%{opacity:0;transform:scaleX(.2)}30%{opacity:1;transform:scaleX(1)}100%{opacity:0;transform:scaleX(.1)}}
+/* 뺀 동료: 그 자리에서 흐려지며 사라진다 */
+.partyscr .pslot .ghost{position:absolute;top:0;left:0;animation:pout .3s steps(4) forwards;pointer-events:none}
+@keyframes pout{to{opacity:0;filter:blur(1px) brightness(.6)}}
+.partyscr .pslot .spot{grid-row:1;width:40px;height:14px;border:1px dashed var(--line);display:flex;align-items:center;justify-content:center;
+  color:var(--dim);font-family:var(--f-disp);font-size:10px;line-height:1}
+.partyscr .pslot.empty .rk{visibility:hidden}
+.partyscr .pslot .plate{margin-top:3px;display:flex;align-items:center;gap:2px;font-size:9px;white-space:nowrap;color:var(--c);text-shadow:1px 1px 0 #000}
+.partyscr .pslot.r5 .plate{color:var(--gold)}
+.partyscr .pslot.bonded .plate{animation:bondplate 1.6s steps(2) infinite}
+@keyframes bondplate{50%{text-shadow:1px 1px 0 #000,0 0 2px var(--gold)}}
+.partyscr .pslot .rk{width:8px;height:8px;padding:1px;background:#0b0b18;border:1px solid var(--line);box-shadow:1px 1px 0 var(--shadow);image-rendering:pixelated}
+.partyscr .pslot .pos{font-size:7.5px;color:var(--dim);font-family:var(--f-disp)}
+@media (prefers-reduced-motion:reduce){.partyscr .pslot .spr,.partyscr .pslot.in .spr,.partyscr .pslot.bonded .plate{animation:none}.partyscr .pslot .beam,.partyscr .pslot .ghost{display:none}}

@@ -64,6 +64,16 @@ function inspect() {
       const r = document.createRange(); r.selectNodeContents(t);
       for (const q of r.getClientRects()) if (q.width > 1 && q.height > 1) rects.push(q);
     }
+    // 스크롤·overflow로 잘린 조상 바깥은 안 보이니 그만큼 잘라 낸다(스크롤 목록 아래로 숨은 칸이 겹침으로 잡히지 않게)
+    for (let e = el.parentElement; e && e !== document.documentElement && rects.length; e = e.parentElement) {
+      const cs = getComputedStyle(e);
+      if (cs.overflowX === 'visible' && cs.overflowY === 'visible') continue;
+      const c = e.getBoundingClientRect();
+      for (let k = rects.length - 1; k >= 0; k--) {
+        const q = rects[k], l = Math.max(q.left, c.left), t = Math.max(q.top, c.top), r = Math.min(q.right, c.right), b = Math.min(q.bottom, c.bottom);
+        if (r - l > 1 && b - t > 1) rects[k] = new DOMRect(l, t, r - l, b - t); else rects.splice(k, 1);
+      }
+    }
     if (!rects.length) continue;
     if (rects.every(q => q.right < 0 || q.bottom < 0 || q.left > vw || q.top > vh)) continue;
     items.push({ el, rects, text: el.textContent.trim().replace(/\s+/g, ' ').slice(0, 40) });

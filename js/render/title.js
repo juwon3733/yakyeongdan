@@ -1,12 +1,12 @@
 import { S } from '../run.js';
 import { CHARACTERS } from '../data/characters.js';
-import { ROSTER, ROSTER_IDS } from '../data/roster.js';
+import { ROSTER, ROSTER_IDS, ROLE_KIND, ROLE_KINDS } from '../data/roster.js';
 import { DUOS, duoKey } from '../data/cards.js';
 import { P, owns, duoSpecial, depthOpen, depthMax, startPickOpen, startRelicChoices } from '../meta.js';
 import { RELICS } from '../data/relics.js';
 import { DEPTH } from '../data/depth.js';
 import { stars, palOf, esc, charSrc } from './common.js';
-import { artURL } from '../art.js';
+import { artURL, battleArt } from '../art.js';
 import { ENDLESS } from '../data/endless.js';
 
 // 타이틀: 키아트 그림(title/key.png)이 있으면 그림, 없으면 살아 있는 밤 항구(별·달·탑 꼭대기 빛·등불·파도·동료 셋 실루엣)
@@ -66,6 +66,37 @@ function runSetup() {
   return out;
 }
 
+// 역할 아이콘: 8×8 도트 (공격 칼 · 방어 방패 · 회복 십자 · 지원 별)
+const ROLE_DOTS = {
+  atk: ['......##', '.....###', '....###.', '#..###..', '.####...', '..##....', '.#.##...', '#...#...'],
+  def: ['.######.', '########', '##.##.##', '########', '.######.', '.######.', '..####..', '...##...'],
+  heal: ['..####..', '..####..', '########', '########', '########', '########', '..####..', '..####..'],
+  sup: ['...##...', '...##...', '.######.', '########', '.######.', '..####..', '.##..##.', '.#....#.'],
+};
+const ROLE_COL = { atk: '#ef6352', def: '#7ab0d8', heal: '#7ad08a', sup: '#e0b84a' };
+const roleIcon = Object.fromEntries(Object.entries(ROLE_DOTS).map(([k, rows]) => {
+  const r = rows.flatMap((row, y) => [...row].map((ch, x) => ch === '#' ? `<rect x="${x}" y="${y}" width="1" height="1"/>` : '')).join('');
+  return [k, `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 8 8" shape-rendering="crispEdges" fill="${ROLE_COL[k]}">${r}</svg>`)}`];
+}));
+
+// 파티 무대: 고른 셋이 전투 스프라이트로 대열대로(뒤·가운데·앞) 선다. 새로 고른 동료는 빛 기둥과 함께, 뺀 동료는 흐려지며 사라진다.
+let lastStage = [];   // 바로 전에 그린 무대 [뒤, 가운데, 앞] — 다시 그릴 때 누가 들어오고 나갔는지 본다
+function partyStage(order, bonded) {
+  const slots = ['뒤', '가운데', '앞'];
+  const now = [0, 1, 2].map(i => order[i - (3 - order.length)] || null);
+  const html = now.map((k, i) => {
+    const was = lastStage[i], gone = was && was !== k && !now.includes(was) ? was : null;
+    const ghost = gone ? `<img class="px spr ghost" src="${battleArt(gone, 'idle') || charSrc(gone)}" alt="">` : '';
+    if (!k) return `<div class="pslot empty s${i}"><span class="spot">?</span>${ghost}<span class="plate" aria-hidden="true"><i class="rk"></i></span><small class="pos">${slots[i]}</small></div>`;
+    const r = ROSTER[k], kind = ROLE_KIND[k] || 'sup', fresh = !lastStage.includes(k);
+    return `<div class="pslot s${i} r${r.rarity} ${fresh ? 'in' : ''} ${bonded.has(k) ? 'bonded' : ''}" style="--c:${r.col}">
+      ${fresh ? '<span class="beam" aria-hidden="true"></span>' : ''}${ghost}<img class="px spr" src="${battleArt(k, 'idle') || charSrc(k)}" alt="">
+      <span class="plate"><img class="rk" src="${roleIcon[kind]}" alt="${ROLE_KINDS[kind]}" title="${ROLE_KINDS[kind]}">${r.name}</span><small class="pos">${slots[i]}</small></div>`;
+  }).join('');
+  lastStage = now;
+  return `<div class="pstage">${html}</div>`;
+}
+
 // 파티 고르기: 가진 동료만 (개발판은 구현된 동료 전부). 아직 구현 안 된 동료는 「준비 중」.
 export function partyView() {
   const can = k => !!CHARACTERS[k] && (S.dev || owns(k));
@@ -80,20 +111,14 @@ export function partyView() {
   const bonded = new Set();
   S.picked.forEach(a => S.picked.forEach(b => { if (a !== b && DUOS[duoKey(a, b)]) { bonded.add(a); bonded.add(b); } }));
   const order = S.picked.slice().sort((a, b) => (CHARACTERS[a]?.maxHp || 0) - (CHARACTERS[b]?.maxHp || 0));
-  const slots = ['뒤', '가운데', '앞'];
-  const chosen = [0, 1, 2].map(i => {
-    const k = order[i - (3 - order.length)], r = k && ROSTER[k];
-    return r ? `<span class="chosen r${r.rarity} ${bonded.has(k) ? 'bonded' : ''} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}"><small>${slots[i]}</small><img class="px" src="${charSrc(k)}" alt=""><span>${r.name} <i class="stars">${stars(r.rarity)}</i></span></span>`
-      : `<span class="chosen empty"><small>${slots[i]}</small>?</span>`;
-  }).join('');
   return `<div class="title partyscr">
     <div class="tleft">
       <div class="thead"><button type="button" class="mini" data-view="base">‹ 본부</button><h2>${S.mode === 'endless' ? '끝없는 탑 · 동료 셋' : '동료 셋을 고른다'}</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
       <div class="pick">${mates}</div>
+      ${partyStage(order, bonded)}
     </div>
     <div class="tright">
       <h2>동료 셋 (${S.picked.length}/3)</h2>
-      <div class="chosenrow formation">${chosen}</div>
       ${S.mode === 'endless' ? `<p class="note endnote">끝없는 탑에 바로 오른다. 동료마다 희귀 카드 1장 · 도구 ${ENDLESS.freshRelics}개 · 별빛 ${ENDLESS.freshGold}을 들고 시작. 탑은 무너지지 않지만 층마다 적이 강해지고 규칙이 쌓인다.</p>` : runSetup()}
       <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>${S.mode === 'endless' ? '끝없는 탑 오르기' : '출발'}</button>
       ${bondsOf(S.picked)}
