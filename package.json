@@ -10,6 +10,7 @@
     "art": "node tools/slice-sheets.mjs && node tools/art-index.mjs",
     "prompts": "node tools/export-prompts.mjs",
     "smoke": "node tools/smoke.mjs",
+    "fps": "node tools/fps.mjs",
     "shots": "node tools/screens.mjs",
     "sim": "node tools/sim.mjs",
     "text": "node tools/text-check.mjs",
