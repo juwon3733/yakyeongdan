@@ -5,7 +5,7 @@
 import { CARDS } from './data/cards.js';
 import { cardArtKind } from './cardkind.js';
 
-export const STYLE_VERSION = 6; // 6: 기술 이펙트 시트(공용 4종·동료별 시그니처), 스킨은 skin-<id>로 맨 뒤. 5: 전투는 일러스트 대신 저해상도 전투 스프라이트(동료 4×2 시트 8동작, 적 128×128). 4: 여러 장을 한 시트에(칸은 2배 도트라 한 장짜리와 같은 세밀함, 자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
+export const STYLE_VERSION = 7; // 7: 캐릭터를 층으로 — 전투 스프라이트는 몸만(이펙트·동반자 없이, 칸을 꽉 채움, 숨쉬기 칸 대신 준비 자세), ★5 오라·동반자(네레아 고래·시온 별 정령)·원거리 투사체는 따로. 6: 6: 기술 이펙트 시트(공용 4종·동료별 시그니처), 스킨은 skin-<id>로 맨 뒤. 5: 전투는 일러스트 대신 저해상도 전투 스프라이트(동료 4×2 시트 8동작, 적 128×128). 4: 여러 장을 한 시트에(칸은 2배 도트라 한 장짜리와 같은 세밀함, 자세 2×2·카드 2×2·적 3×2·아이콘 4×4, tools/slice-sheets.mjs가 자름). 3: 동료마다 다른 얼굴·포즈, 전투 모션 그림(공격·스킬·방어·피격). 2: 그림체 시안 C(세밀한 도트 256×384 4배, ~96색)로 고정, 성인 여성 노출은 적당히
 
 // ── 공통 스타일 ──────────────────────────────────────────
 export const STYLE = {
@@ -407,24 +407,25 @@ export function assetList() {
   // 전투 스프라이트: 동료마다 시트 한 장(4×2)에 8동작. 전투 화면은 일러스트 대신 이 저해상도 도트를 쓴다(js/art.js battleArt).
   const FRAMES = [
     ['idle', 'IDLE: standing in a ready battle stance'],
-    ['idle2', 'IDLE 2: the same stance a moment later, breathing in (shoulders and hair raised by one or two pixels) — used to loop with IDLE'],
-    ['attack', `ATTACK: the peak of her basic attack, lunging or striking toward the RIGHT with her weapon, motion smear (${'${c.fx}'})`],
-    ['skill', 'SKILL: casting her signature power, the effect glowing around her'],
-    ['guard', 'GUARD: bracing defensively, knees bent, weapon or arm raised in front like a shield, faint barrier glow'],
+    ['windup', 'WINDUP: the anticipation just before her attack — body coiled, weight on the back foot, weapon pulled back'],
+    ['attack', 'ATTACK: the peak of her basic attack, lunging or striking toward the RIGHT with her weapon fully extended (no slash trail or effect — drawn separately)'],
+    ['skill', 'SKILL: a strong casting pose (hand, weapon or staff raised), NO glow or magic effect drawn — effects are drawn separately'],
+    ['guard', 'GUARD: bracing defensively, knees bent, weapon or arm raised in front like a shield (no barrier effect)'],
     ['hurt', 'HURT: just got hit, recoiling back to the LEFT, wincing, no blood'],
     ['down', 'DOWN: knocked out, kneeling or collapsed on the ground, eyes closed, no blood'],
     ['win', 'VICTORY: a confident, stylish win pose fitting her personality'],
   ];
   for (const [id, c] of Object.entries(CHARS)) {
     const batch = `pose-${id}`;
-    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 전투 스프라이트 (시트 1장 → 8동작)` });
+    batches.push({ id: batch, title: `${'★'.repeat(c.rarity)} ${c.name} 전투 스프라이트 — 몸만 (시트 1장 → 8동작)` });
     const who = `${c.name} (${id}): ${c.sheet} Accent colors: ${c.accent}.`;
-    out.push(sheet('battlesheet', `${id}_battle`, batch, `${id}_battle.png`, join(STYLE.sprite, STYLE.distinct, rarityStyle(c.rarity), `${who}
+    out.push(sheet('battlesheet', `${id}_body`, batch, `${id}_body.png`, join(STYLE.sprite, STYLE.distinct, rarityStyle(c.rarity), `${who}
 A battle sprite sheet of this ONE character: eight poses on one 1536x1024 canvas, split into eight equal cells of 384x512 (4 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text.
 ${FRAMES.map(([, t], i) => `- Cell ${i + 1} — ${t.replace('${c.fx}', c.fx)}`).join('\n')}
-In every cell: exactly the same character size and proportions (adult about 1:6.5 head-to-body, NOT chibi), feet on the same line near the bottom of the cell, facing RIGHT toward the enemies (except HURT recoiling), the whole body and effect inside its own cell. Fully transparent background. Native resolution 96x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
+BODY ONLY: draw just the character and what she holds or wears. NO magic effects, NO glow, NO sparkles or particles, NO slash trails, NO companion creature, pet or familiar, NO projectiles, NO ground shadow — the game draws those as separate layers.
+In every cell: exactly the same character size and proportions (adult about 1:6.5 head-to-body, NOT chibi), the figure LARGE — the standing figure fills about 88% of the cell height —, feet on the same line near the bottom of the cell, facing RIGHT toward the enemies (except HURT recoiling), the whole body and effect inside its own cell. Fully transparent background. Native resolution 96x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
       [4, 2], FRAMES.map(([f], i) => ['sprite', `${id}_sp_${f}`, `${id}_${f}.png`, i % 4, Math.floor(i / 4)]),
-      { fit: 'union', must_show: '4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트', reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
+      { fit: 'union', must_show: '4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 88% 꽉 차게, 칸마다 같은 크기·발 위치', reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
   }
 
   // 카드 그림: 동료마다 종류별 4장(공격·방어·스킬·필살). 같은 종류 카드가 같이 쓴다(js/cardkind.js). 인연 듀오 카드는 임시 일러스트.
@@ -497,7 +498,22 @@ ${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transpare
         [3, 2], part.map(([k, id], i) => [k, id, `${id}.png`, i % 3, Math.floor(i / 3)]),
         { must_show: `3×2 칸에 ${part.map(([, id]) => id).join('·')}` }));
     }
+  }  // 적 자세: 적마다 공격·피격 2칸(위 줄 공격, 아래 줄 피격), 3마리씩 한 시트. 기존 적 그림을 기준으로 첨부해 같은 모습·같은 크기로
+  for (const act of ['act1', 'act2', 'act3']) {
+    const batch = `foepose-${act}`;
+    batches.push({ id: batch, title: `${act.slice(-1)}막 적 공격·피격 자세 (시트 → 적마다 2칸)` });
+    const list = [...Object.entries(ENEMIES[act]), ...Object.entries(ENEMIES[act + '_elite'])];
+    for (let n = 0; n * 3 < list.length; n++) {
+      const part = list.slice(n * 3, n * 3 + 3);
+      out.push(sheet('foesheet', `${act}_foepose_${n + 1}`, batch, `${act}_foepose_${n + 1}.png`, join(STYLE.pixel, STYLE.onModel,
+        `Battle poses for ${part.length} enemies, ON-MODEL from the attached enemy sprites (same design, colors, pixel size and body size as the attached sprite — only the pose changes). One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows). Column N is enemy N. TOP row = ATTACK pose (lunging or striking toward the LEFT at the party, mouth/claws/weapon forward). BOTTOM row = HURT pose (recoiling back to the RIGHT, flinching, eyes squeezed). Keep about 6% empty margin inside every cell edge. No effects, no text, no borders. All facing LEFT.
+${part.map(([, d], i) => `- Column ${i + 1}: ${d}`).join('\n')}
+${part.length < 3 ? `Columns ${part.length + 1}-3 stay completely empty (transparent).\n` : ''}Fully transparent background. Native 128x128 pixels per cell, upscaled exactly 4x with nearest-neighbor.`),
+        [3, 2], part.flatMap(([id], i) => [['enemy', `${id}_attack`, `${id}_attack.png`, i, 0], ['enemy', `${id}_hurt`, `${id}_hurt.png`, i, 1]]),
+        { must_show: `열마다 적 하나(위 공격·아래 피격): ${part.map(([id]) => id).join('·')}`, reference_images: part.map(([id]) => `enemies/${id}.png`) }));
+    }
   }
+
   for (const [id, b] of Object.entries(BOSSES)) {
     const batch = `boss-${id}`;
     batches.push({ id: batch, title: `보스 ${b.name}` });
@@ -526,6 +542,39 @@ One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2
     fxSheet(`fx-${id}`, `fx_${id}`, `${c.name}'s signature skill effects (her motifs: ${c.fx}; accent colors ${c.accent}). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.`,
       [...[0, 1, 2].map((i) => ['fx', `fx_${id}_atk_${i + 1}`, `${id}_atk_${i + 1}.png`, i, 0]), ...[0, 1, 2].map((i) => ['fx', `fx_${id}_skill_${i + 1}`, `${id}_skill_${i + 1}.png`, i, 1])],
       '위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만');
+  }
+
+  // 캐릭터 층(docs/BATTLE_PLAN.md): 몸과 따로 움직이는 오라·동반자·투사체. 몸 스프라이트 위아래에 겹쳐 그린다(js/juice.js).
+  const AURA = ['sion', 'lunaria', 'akane', 'eleonore', 'nerea'];
+  for (const id of AURA) {
+    const c = CHARS[id];
+    batches.push({ id: `aura-${id}`, title: `★5 ${c.name} 오라 (시트 1장 → 6프레임 반복)` });
+    fxSheet(`aura-${id}`, `aura_${id}`, `${c.name}'s idle AURA that floats around her body while she stands in battle (her motifs: ${c.fx}; accent colors ${c.accent}). Six frames of a seamless LOOP (frame 6 flows back into frame 1): small sparkles, motes and wisps drifting upward around an EMPTY tall oval in the middle of each cell where her body will be (keep that middle empty — no character). Subtle and elegant, not a big explosion.`,
+      fxCells(`${id}_aura`, 6), '3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게');
+  }
+  const PETS = {
+    nerea: 'her STAR WHALE companion: a small translucent whale made of constellations (deep blue body, glowing star markings, a starlight water trail)',
+    sion: 'her STAR SPIRIT companions: three tiny lantern-like star spirits with cute faces and glowing tails, flying as a group',
+  };
+  for (const [id, pet] of Object.entries(PETS)) {
+    const c = CHARS[id];
+    batches.push({ id: `pet-${id}`, title: `★5 ${c.name} 동반자 (시트 1장 → 대기 3·공격 3프레임)` });
+    fxSheet(`pet-${id}`, `pet_${id}`, `${c.name}'s companion, drawn on its own: ${pet}. ONLY the companion — no human character. Facing RIGHT. Top row = IDLE floating loop, 3 frames (gently bobbing, frame 3 loops back to frame 1). Bottom row = ATTACK, 3 frames: rearing back, charging forward to the right, hitting with a burst of starlight. Same size in every cell.`,
+      [...[0, 1, 2].map((i) => ['fx', `pet_${id}_idle_${i + 1}`, `${id}_pet_idle_${i + 1}.png`, i, 0]), ...[0, 1, 2].map((i) => ['fx', `pet_${id}_atk_${i + 1}`, `${id}_pet_atk_${i + 1}.png`, i, 1])],
+      '위 3칸 대기(반복), 아래 3칸 공격, 동반자만(사람 없음), 오른쪽을 봄');
+  }
+  const PROJ = {
+    brick: 'a glowing cannon shell with a fiery trail', mariana: 'a flintlock bullet with gold sparks and a smoke trail', fukuro: 'a thrown lucky-charm bundle tumbling with trinkets',
+    sion: 'a shooting star with a constellation-line trail', noel: 'a dreamy pink-lavender star with a sheep-cloud puff trail', lunaria: 'a spinning silver crescent-moon blade',
+    eleonore: 'a spinning glowing clock hand with violet time ripples', tomori: 'a warm lantern-light orb with a beam trail', nerea: 'a starlight harpoon with a water-spray trail',
+  };
+  const projIds = Object.keys(PROJ);
+  batches.push({ id: 'proj', title: `원거리 투사체 ${projIds.length}종 (시트 ${Math.ceil(projIds.length / 2)}장 → 3프레임씩)` });
+  for (let n = 0; n * 2 < projIds.length; n++) {
+    const pair = projIds.slice(n * 2, n * 2 + 2);
+    fxSheet('proj', `proj_${n + 1}`, `Ranged PROJECTILES flying to the RIGHT, each animated in 3 frames (a short flicker loop while flying). ${pair.map((id, r) => `${r ? 'Bottom' : 'Top'} row = ${CHARS[id].name}'s projectile: ${PROJ[id]} (accent colors ${CHARS[id].accent})`).join('. ')}.${pair.length < 2 ? ' The bottom row stays completely empty (transparent).' : ''} Each projectile horizontal, pointing right, centered in its cell, about half the cell wide.`,
+      pair.flatMap((id, r) => [0, 1, 2].map((i) => ['fx', `proj_${id}_${i + 1}`, `${id}_proj_${i + 1}.png`, i, r])),
+      `한 줄에 투사체 하나씩 3프레임, 오른쪽을 향함: ${pair.join('·')}`);
   }
 
   batches.push({ id: 'bg', title: '배경' });

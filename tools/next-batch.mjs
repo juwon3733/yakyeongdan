@@ -15,7 +15,7 @@ const FIRST = ['iris', 'brick', 'marta'];
 const REST = ['noel', 'raven', 'mimimomo', 'sebas', 'mariana', 'tomori', 'sigrun', 'zeno', 'bertha', 'finn', 'laila', 'dora', 'gordon', 'fukuro'];
 const ORDER = [
   'fx-common',   // 공용 타격 이펙트 — 모든 공격이 바로 화려해진다
-  ...STAR5.flatMap((id) => [`char-${id}`, `pose-${id}`, `fx-${id}`]),   // 전투 스프라이트·이펙트는 서 있는 그림 바로 뒤에
+  ...STAR5.flatMap((id) => [`char-${id}`, `pose-${id}`, `fx-${id}`, `cards-${id}`, `aura-${id}`, `pet-${id}`]),   // 몸·이펙트·오라·동반자는 층마다 따로(docs/BATTLE_PLAN.md)   // 전투 스프라이트·이펙트는 서 있는 그림 바로 뒤에
   'cg-star5',
   ...FIRST.map((id) => `char-${id}`),
   'bg',
@@ -24,9 +24,10 @@ const ORDER = [
   'enemy-act2', 'boss-cloud_captain', 'boss-storm_whale', 'enemy-act3', 'boss-dawn',
   'summon', 'icons',
   ...REST.map((id) => `char-${id}`),
+  ...[...FIRST, ...REST].map((id) => `cards-${id}`),
   ...[...FIRST, ...REST].flatMap((id) => [`pose-${id}`, `fx-${id}`]),
+  'proj', 'foepose-act1', 'foepose-act2', 'foepose-act3',
   'duo',
-  ...[...STAR5, ...FIRST, ...REST].map((id) => `cards-${id}`),
   'icons-sig', 'app',
 ];
 for (const b of P.batches) if (!ORDER.includes(b.id) && !b.id.startsWith('style') && !b.id.startsWith('skin-')) ORDER.push(b.id);

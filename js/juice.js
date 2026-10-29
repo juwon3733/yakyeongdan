@@ -33,10 +33,55 @@ function sizeCanvas() {
   if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
 }
 // 화면 위치 → 판 안 논리 좌표
-function rel(el) {
+// 무대 좌표 상자. 전투 스프라이트(data-b가 붙은 그림)는 투명 여백을 뺀 몸 상자 — 숫자·이펙트·돌진이 허공이 아니라 몸에 붙게
+function rel(el, full) {
   const sr = stage.getBoundingClientRect(), k = sr.width / stage.offsetWidth || 1, r = el.getBoundingClientRect();
-  const x = (r.left - sr.left) / k, y = (r.top - sr.top) / k, w = r.width / k, h = r.height / k;
+  let x = (r.left - sr.left) / k, y = (r.top - sr.top) / k, w = r.width / k, h = r.height / k;
+  const b = !full && el.dataset?.b;
+  if (b) { const [bx, by, bw, bh] = b.split(' ').map(Number); x += w * bx; y += h * by; w *= bw; h *= bh; }
   return { x, y, w, h, cx: x + w / 2, cy: y + h / 2 };
+}
+// ---------- 몸 영역: 그림마다 불투명한 부분의 상자(0~1 비율)를 한 번 재 둔다 ----------
+// 동료는 몸 키를 모두 ALLY_H로 맞추고(시트마다 그려진 크기가 달라도 같은 키), 적은 지금 크기 그대로.
+// 그림 칸의 여백은 음수 여백으로 레이아웃에서 빼서, 자리(발 줄·가운데)는 몸 기준이 된다
+const BOX = new Map(), ALLY_H = 88;
+function bodyBox(src) {
+  if (!src || src.startsWith('data:')) return null;
+  const b = BOX.get(src); if (b) return b === 'wait' ? null : b;
+  BOX.set(src, 'wait');
+  const im = new Image();
+  im.onload = () => {
+    const W = 96, H = Math.max(1, Math.round(96 * im.naturalHeight / im.naturalWidth)), c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(im, 0, 0, W, H);
+    let d; try { d = g.getImageData(0, 0, W, H).data; } catch { BOX.delete(src); return; }
+    let x0 = W, y0 = H, x1 = -1, y1 = -1;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (d[(y * W + x) * 4 + 3] > 40) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    BOX.set(src, x1 < 0 ? { x: 0, y: 0, w: 1, h: 1, ar: im.naturalWidth / im.naturalHeight } :
+      { x: x0 / W, y: y0 / H, w: (x1 - x0 + 1) / W, h: (y1 - y0 + 1) / H, ar: im.naturalWidth / im.naturalHeight });
+    fitSprites();
+  };
+  im.onerror = () => BOX.delete(src);
+  im.src = src;
+  return null;
+}
+function fitSprites() {
+  const A = app(); if (!A) return;
+  for (const img of A.querySelectorAll('.pm[data-ally] > img:not(.jxfade), .foe[data-fi] > img')) {
+    const id = img.parentElement.dataset.ally, key = id ? battleArt(id, 'idle') : img.getAttribute('src');
+    if (!key || img.dataset.bk === key) continue;
+    const b = bodyBox(key); if (!b) continue;
+    let iw, ih;
+    if (id) { ih = Math.round(ALLY_H / b.h); iw = Math.round(ih * b.ar); }
+    else {   // 적: css 칸 안에 들어가던(contain) 크기 그대로
+      img.style.cssText = ''; const cw = img.offsetWidth, ch = img.offsetHeight; if (!cw || !ch) continue;
+      const k = Math.min(cw, ch * b.ar); iw = Math.round(k); ih = Math.round(k / b.ar);
+    }
+    Object.assign(img.style, { width: `${iw}px`, height: `${ih}px`, objectFit: 'fill',
+      margin: `${-Math.round(ih * b.y)}px ${-Math.round(iw * (1 - b.x - b.w))}px ${-Math.round(ih * (1 - b.y - b.h))}px ${-Math.round(iw * b.x)}px` });
+    img.style.setProperty('--ft', `${Math.round((b.y + b.h) * 1000) / 10 - 1}%`);   // 발 높이(발밑 그림자·대상 빛)
+    img.dataset.b = `${b.x} ${b.y} ${b.w} ${b.h}`; img.dataset.bk = key;
+  }
 }
 const app = () => document.getElementById('app');
 // 지금 보이는 판(전투가 끝나 화면이 바뀌었으면 얼려 둔 전투 화면)
@@ -104,6 +149,7 @@ export function beforeRender() {
 export function afterRender(events = []) {
   ensure(); if (!layer) return;
   sizeCanvas();
+  fitSprites();
   setSky();
   fanHand();
   const P = pre; pre = null;
@@ -199,7 +245,7 @@ export function afterRender(events = []) {
 function dropFrozen(ms) {
   if (!frozen) return;
   const f = frozen;
-  at(ms, () => { if (frozen === f) frozen = null; f.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: 'steps(4)' }).onfinish = () => f.remove(); });
+  at(ms, () => { if (frozen === f) frozen = null; f.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => f.remove(); });
 }
 
 // ---------- 효과음 (애니메이션 줄이기: 바로) ----------
@@ -278,11 +324,11 @@ function flyCard(e, P, t0) {
   });
 }
 // 동료 모션: 카드를 쓴 동료는 공격·스킬·방어, 맞은 동료는 피격. 전투 스프라이트(sprites/<id>_<frame>.png)가 있으면
-// 그 동작 칸으로 잠깐 바꿔 끼우고, 없으면 움직임만. 가만히 있을 때는 서기·숨쉬기 두 칸을 번갈아(슬레이 더 스파이어식 숨쉬기).
+// 그 동작 칸으로 잠깐 바꿔 끼우고, 없으면 움직임만. 칸은 섞지 않고 바로 바꾼다(도트가 흐물거리지 않게). 가만히 있을 때는 css 1px 위아래만.
 const busy = new WeakSet();
 const PRE = new Map();   // 미리 받은 그림(버려지지 않게 붙들어 둠)
 function preloadPoses() {
-  for (const id of S.G?.party || []) for (const k of FRAMES) { const u = battleArt(id, k); if (u) new Image().src = u; }
+  for (const id of S.G?.party || []) { for (const k of FRAMES) { const u = battleArt(id, k); if (u) new Image().src = u; } bodyBox(battleArt(id, 'idle')); }
   // 이펙트 프레임도 미리 받아 둔다(재생 중에 그림을 바꿀 때 받다 끊기지 않게)
   for (const n of [...(S.G?.party || []).flatMap(id => [`${id}_atk`, `${id}_skill`]), 'slash', 'explode', 'pierce', 'magic']) for (const u of fxFrames(n)) if (!PRE.has(u)) { const im = new Image(); im.src = u; PRE.set(u, im); }
 }
@@ -303,21 +349,10 @@ function pose(id, kind, ms) {
   const img = allyEl(id)?.querySelector(':scope > img'), u = battleArt(id, kind);
   if (!img || !u) return false;
   const was = img.getAttribute('src');
-  swapSrc(img, u, 60); busy.add(img);
-  setTimeout(() => { busy.delete(img); if (img.isConnected && img.getAttribute('src') === u) swapSrc(img, was, 160); }, ms);
+  swapSrc(img, u, 0); busy.add(img);
+  setTimeout(() => { busy.delete(img); if (img.isConnected && img.getAttribute('src') === u) swapSrc(img, was, 0); }, ms);
   return true;
 }
-// 숨쉬기 두 칸 번갈아
-setInterval(() => {
-  if (calmNow() || !S.C) return;
-  for (const img of document.querySelectorAll('#app [data-ally]:not(.down) > img:not(.jxfade)')) {
-    if (busy.has(img)) continue;
-    const id = img.closest('[data-ally]').dataset.ally, a = battleArt(id, 'idle'), b = battleArt(id, 'idle2');
-    if (!a || !b) continue;
-    const src = img.getAttribute('src');
-    if (src === a) swapSrc(img, b, 420); else if (src === b) swapSrc(img, a, 420);
-  }
-}, 900);
 // 승리: 살아 있는 동료가 승리 동작
 function winPose() {
   for (const id of S.G?.party || []) if (!S.G.members[id]?.down) pose(id, 'win', 1400);
@@ -442,50 +477,50 @@ const moving = new Set();
 function dash(id, img, e, m, delay = 0) {
   const tgt = e.foe != null ? foeEl(e.foe)?.querySelector(':scope > img') : root()?.querySelector('.foes');
   const a = rel(img), b = tgt ? rel(tgt) : { x: a.x + 160, cx: a.cx + 160 };
-  const dx = Math.max(20, (tgt ? b.x : b.cx) - a.x - a.w * .55);
+  const dx = Math.round(Math.max(20, tgt ? b.x - (a.x + a.w) + 10 : b.cx - a.cx));   // 상대 몸 바로 앞에서 멈춤(조금만 겹침)
   const dur = m === 'finisher' ? 820 : m === 'sweep' ? 700 : 600, up = m === 'finisher' ? -26 : 0;
   const host = img.closest('[data-ally]'); if (host) host.style.zIndex = 5;
   // 예비(뒤로 웅크림) → 튀어 나감(몸이 앞으로 늘어남) → 도착하며 꾹 눌림 → 베고 버팀 → 뒤로 뛰어 돌아와 착지·출렁
   const an = img.animate([
     { offset: 0, transform: 'none', easing: 'cubic-bezier(.5,0,.75,.4)' },
-    { offset: .12, transform: `translate(-9px,${m === 'finisher' ? 4 : 2}px) scale(1.07,.9) rotate(-3deg)`, easing: 'cubic-bezier(.2,.9,.3,1)' },
-    { offset: .26, transform: `translate(${dx}px,${up / 3}px) scale(1.1,.94) rotate(5deg)`, easing: 'cubic-bezier(.2,.9,.3,1)' },
-    { offset: .34, transform: `translate(${dx + 4}px,1px) scale(1.04,.96) rotate(2deg)`, easing: 'ease-out' },
-    { offset: .6, transform: `translate(${dx + 6}px,0) scale(1.02,.99) rotate(1deg)`, easing: 'cubic-bezier(.4,0,.6,1)' },
-    { offset: .8, transform: `translate(${dx * .25}px,-10px) scale(.97,1.04) rotate(-2deg)`, easing: 'cubic-bezier(.5,0,.75,.4)' },
-    { offset: .88, transform: 'translate(0,2px) scale(1.06,.92)', easing: 'ease-out' },
-    { offset: .95, transform: 'translate(0,-1px) scale(.99,1.02)', easing: 'ease-out' },
+    { offset: .12, transform: `translate(-9px,${m === 'finisher' ? 4 : 2}px)`, easing: 'cubic-bezier(.2,.9,.3,1)' },
+    { offset: .26, transform: `translate(${dx}px,${up / 3}px)`, easing: 'cubic-bezier(.2,.9,.3,1)' },
+    { offset: .34, transform: `translate(${dx + 4}px,1px)`, easing: 'ease-out' },
+    { offset: .6, transform: `translate(${dx + 6}px,0)`, easing: 'cubic-bezier(.4,0,.6,1)' },
+    { offset: .8, transform: `translate(${Math.round(dx * .25)}px,-10px)`, easing: 'cubic-bezier(.5,0,.75,.4)' },
+    { offset: .88, transform: 'translate(0,2px)', easing: 'ease-out' },
+    { offset: .95, transform: 'translate(0,-1px)', easing: 'ease-out' },
     { offset: 1, transform: 'none' },
   ], { duration: dur, delay });
   moving.add(an);
   an.onfinish = an.oncancel = () => { moving.delete(an); if (host) host.style.zIndex = ''; };
-  // 잔상: 출발~도착 사이에 3장
-  for (let k = 1; k <= 3; k++) at(delay + dur * (.1 + k * .05), () => afterimage(img, colOf(id)));
+  // 잔상: 출발~도착 사이에 1장
+  at(delay + dur * .2, () => afterimage(img, colOf(id)));
   return dur + delay;
 }
 // 적 돌진: 노린 동료 앞까지 왼쪽으로 갔다가 돌아온다. 첫 피격(≈150ms 뒤)에 도착, 잔상
 function foeDash(img, id) {
   const tgt = id ? allyEl(id)?.querySelector(':scope > img') || allyEl(id) : null;
   const a = rel(img), b = tgt ? rel(tgt) : { x: a.x - 160, w: 0 };
-  const dx = Math.min(-20, b.x + b.w * .55 - a.x);
+  const dx = Math.round(Math.min(-20, b.x + b.w - 10 - a.x));   // 노린 동료 바로 앞에서 멈춤
   const dur = 560, host = img.closest('[data-fi],[data-jfi]');
   if (host) host.style.zIndex = 5;
   const an = img.animate([
     { transform: 'none' },
-    { transform: 'translate(8px,0) scaleY(.94)', offset: .1 },
-    { transform: `translate(${dx * .6}px,0) scale(1.04)`, offset: .2 },
-    { transform: `translate(${dx}px,0) scale(1.06)`, offset: .27 },
-    { transform: `translate(${dx - 6}px,0) scale(1.06)`, offset: .6 },
-    { transform: `translate(${dx * .3}px,-6px)`, offset: .85 },
+    { transform: 'translate(8px,0)', offset: .1 },
+    { transform: `translate(${Math.round(dx * .6)}px,0)`, offset: .2 },
+    { transform: `translate(${dx}px,0)`, offset: .27 },
+    { transform: `translate(${dx - 6}px,0)`, offset: .6 },
+    { transform: `translate(${Math.round(dx * .3)}px,-6px)`, offset: .85 },
     { transform: 'none' },
   ], { duration: dur, easing: 'cubic-bezier(.3,.7,.3,1)' });
   moving.add(an);
   an.onfinish = an.oncancel = () => { moving.delete(an); if (host) host.style.zIndex = ''; };
-  for (let k = 1; k <= 3; k++) at(dur * (.1 + k * .05), () => afterimage(img, '#ff6a7a'));
+  at(dur * .18, () => afterimage(img, '#ff6a7a'));
 }
 function afterimage(img, col) {
   if (!img.isConnected) return;
-  const r = rel(img), g2 = document.createElement('img');
+  const r = rel(img, true), g2 = document.createElement('img');
   g2.src = img.currentSrc || img.src; g2.className = 'px jafter';
   Object.assign(g2.style, { left: `${r.x}px`, top: `${r.y}px`, width: `${r.w}px`, height: `${r.h}px`, '--c': col });
   layer.insertBefore(g2, cv);
@@ -578,7 +613,7 @@ function discardHand(P, keep, t0) {
     ghost.animate([
       { transform: 'none', opacity: 1 },
       { transform: `translate(${pr.cx - c.r.cx}px,${pr.cy - c.r.cy}px) scale(.25) rotate(${30 + d * 8}deg)`, opacity: 0 },
-    ], { duration: 240, delay: t0 + d * 40, easing: 'steps(6)', fill: 'backwards' }).onfinish = () => ghost.remove();
+    ], { duration: 240, delay: t0 + d * 40, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' }).onfinish = () => ghost.remove();
   }
 }
 // 연계 칸이 찰 때 톡 튀어 오른다
@@ -597,11 +632,11 @@ function tweenBars(P, barT) {
     const w1 = parseFloat(bar.style.width) || 0;
     if (Math.abs(w1 - w0) < .5) continue;
     const d = barT.get(k) ?? 0;
-    bar.animate([{ width: `${w0}%` }, { width: `${w1}%` }], { duration: 260, delay: d, easing: 'steps(5)', fill: 'backwards' });
+    bar.animate([{ width: `${w0}%` }, { width: `${w1}%` }], { duration: 260, delay: d, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' });
     if (w1 < w0) {
       const lag = document.createElement('b'); lag.className = 'lag'; lag.style.width = `${w0}%`;
       host.insertBefore(lag, bar);
-      lag.animate([{ width: `${w0}%` }, { width: `${w0}%`, offset: .5 }, { width: `${w1}%` }], { duration: 700, delay: d, easing: 'steps(8)', fill: 'forwards' }).onfinish = () => lag.remove();
+      lag.animate([{ width: `${w0}%` }, { width: `${w0}%`, offset: .5 }, { width: `${w1}%` }], { duration: 700, delay: d, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'forwards' }).onfinish = () => lag.remove();
     }
   }
 }
@@ -648,9 +683,9 @@ function hitFoe(e, P) {
   else impactFx(x, y, col);
   if (e.blocked) shieldBreak(x, y - 6, e.dmg === 0);
   if (el) pulse(el.querySelector(':scope > img') || el, SET.shake ? 'jhitF' : 'jflash', 380);
-  if (e.dmg > 0) num(x, ir.y + 6, String(e.dmg), e.crit ? 'crit' : '', e.dmg);
-  else if (e.blocked) num(x, ir.y + 6, '막음', 'blk', 8);
-  if (e.bleed) at(110, () => num(x + 14, ir.y + 16, String(e.bleed), 'bleed', e.bleed));
+  if (e.dmg > 0) num(x, ir.y + ir.h * .25, String(e.dmg), e.crit ? 'crit' : '', e.dmg);
+  else if (e.blocked) num(x, ir.y + ir.h * .25, '막음', 'blk', 8);
+  if (e.bleed) at(110, () => num(x + 14, ir.y + ir.h * .25 + 10, String(e.bleed), 'bleed', e.bleed));
   sfx(e.dmg ? atkSound(e) : 'block');
   // 맞는 적의 재질 소리(js/data/enemies.js hitSound)를 공격음 위에 살짝 겹친다
   const hs = e.dmg && HIT_SFX[FOE[S.C?.all?.[e.i]?.key]?.hitSound];
@@ -665,10 +700,10 @@ function killFoe(e, P) {
   const dur = last ? 1100 : 700;
   ghost.animate([
     { offset: 0, filter: 'brightness(5)', transform: 'none', opacity: 1 },
-    { offset: .12, filter: 'brightness(3)', transform: 'translate(8px,-3px) rotate(5deg)', opacity: 1 },
-    { offset: .32, filter: 'brightness(1.6)', transform: 'translate(10px,0) rotate(7deg) scale(1.02,.97)', opacity: 1 },
-    { offset: .55, filter: 'brightness(2.5) grayscale(.6)', transform: 'translate(10px,2px) rotate(6deg)', opacity: .6 },
-    { offset: 1, filter: 'brightness(3) grayscale(1)', transform: 'translate(12px,4px) rotate(6deg) scale(1.04,.96)', opacity: 0 },
+    { offset: .12, filter: 'brightness(3)', transform: 'translate(8px,-3px)', opacity: 1 },
+    { offset: .32, filter: 'brightness(1.6)', transform: 'translate(10px,0)', opacity: 1 },
+    { offset: .55, filter: 'brightness(2.5) gray', transform: 'translate(10px,2px)', opacity: .6 },
+    { offset: 1, filter: 'brightness(3) gray', transform: 'translate(12px,4px)', opacity: 0 },
   ], { duration: dur, easing: 'cubic-bezier(.3,.6,.4,1)' }).onfinish = () => ghost.remove();
   const img = ghost.querySelector('.foe > img'), r = img ? rel(img) : c.r;
   at(dur * .35, () => shatter(img, r, last ? 120 : 70));
@@ -708,9 +743,9 @@ function hurtFx(e) {
     impactFx(x, y, '#ff6a7a');
     pulse(el.querySelector(':scope > img') || el, SET.shake ? 'jhitA' : 'jflash', 380);
     if (!e.down) pose(e.id, 'hurt', 380);
-    num(x, r.y + 4, String(e.dmg), 'hurt', e.dmg);
+    num(x, r.y + r.h * .25, String(e.dmg), 'hurt', e.dmg);
     if (e.dmg >= 10) { shake(); redEdge(); }
-  } else num(x, r.y + 4, '막음', 'blk', 8);
+  } else num(x, r.y + r.h * .25, '막음', 'blk', 8);
   if (e.down) {
     at(160, () => { pulse(el.querySelector(':scope > img') || el, 'jdown', 820); num(x, r.y + 18, '쓰러짐', 'down', 12); for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: rnd(-1, 1), vy: rnd(-1, -.2), g: .06, life: 22, col: '#6a6688', s: 1 }); });
     sfx('down');
@@ -723,14 +758,14 @@ function enterFx() {
   [...A.querySelectorAll('.pm[data-ally] > img')].reverse().forEach((img, k) => {
     img.animate([
       { offset: 0, transform: 'translate(-140px,0)', opacity: 0, easing: 'cubic-bezier(.2,.7,.3,1)' },
-      { offset: .55, transform: 'translate(6px,-6px) scale(.97,1.04)', opacity: 1, easing: 'ease-out' },
-      { offset: .72, transform: 'translate(0,1px) scale(1.06,.92)', easing: 'ease-out' },
-      { offset: .86, transform: 'scale(.98,1.03)' }, { offset: 1, transform: 'none' },
+      { offset: .55, transform: 'translate(6px,-6px)', opacity: 1, easing: 'ease-out' },
+      { offset: .72, transform: 'translate(0,1px)', easing: 'ease-out' },
+      { offset: .86, transform: 'none' }, { offset: 1, transform: 'none' },
     ], { duration: 620, delay: k * 90, fill: 'backwards' });
   });
   A.querySelectorAll('.foe[data-fi] > img').forEach((img, k) => {
     img.animate([
-      { transform: 'translateY(8px) scale(.94)', opacity: 0, filter: 'blur(3px) brightness(.4)' },
+      { transform: 'translateY(8px)', opacity: 0, filter: 'blur(3px) brightness(.4)' },
       { transform: 'translateY(-2px)', opacity: .9, filter: 'blur(1px) brightness(.8)', offset: .6 },
       { transform: 'none', opacity: 1, filter: 'none' },
     ], { duration: 700, delay: 150 + k * 110, easing: 'ease-out', fill: 'backwards' });
@@ -743,7 +778,7 @@ function foeWindup(e) {
   const el = foeEl(e.i); if (!el) return;
   const img = el.querySelector(':scope > img');
   pulse(el.querySelector('.intent'), 'jfire', 300);
-  if (img) img.animate([{ transform: 'none', filter: 'none' }, { transform: 'translate(6px,2px) scaleY(.92)', filter: 'brightness(1.5) drop-shadow(0 0 4px #ff4a6a)' }],
+  if (img) img.animate([{ transform: 'none', filter: 'none' }, { transform: 'translate(6px,2px)', filter: 'brightness(1.5)' }],
     { duration: 240, easing: 'ease-in', fill: 'none' });
   const id = e.target ?? e.aim, a = id && allyEl(id)?.querySelector(':scope > img');
   if (a) { const r = rel(a); add({ k: 'oval', x: r.cx, y: r.y + r.h - 3, r0: r.w * .5, r1: r.w * .3, col: '#ff4a6a', life: 14 }); }
@@ -798,11 +833,11 @@ function clockFx(e, back) {
   d.style.left = `${r.cx}px`; d.style.top = `${r.cy + 36}px`;
   d.innerHTML = '<i></i><b></b><span>' + (back ? `−${e.m}분` : `+${e.m}분`) + '</span>';
   layer.append(d);
-  d.querySelector('i').animate([{ transform: 'rotate(0)' }, { transform: `rotate(${back ? -360 : 360}deg)` }], { duration: 520, easing: 'steps(12)' });
+  d.querySelector('i').animate([{ transform: 'rotate(0)' }, { transform: `rotate(${back ? -360 : 360}deg)` }], { duration: 520, easing: 'cubic-bezier(.25,.8,.35,1)' });
   d.animate([{ opacity: 0, transform: 'translate(-50%,-50%) scale(.6)' }, { opacity: 1, transform: 'translate(-50%,-50%) scale(1)', offset: .15 }, { opacity: 1, transform: 'translate(-50%,-50%) scale(1)', offset: .8 }, { opacity: 0, transform: 'translate(-50%,-60%) scale(1)' }],
-    { duration: 760, easing: 'steps(10)' }).onfinish = () => d.remove();
+    { duration: 760, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => d.remove();
   const w = document.createElement('div'); w.className = `jwarm ${back ? 'back' : ''}`; layer.append(w);
-  w.animate([{ opacity: 0 }, { opacity: 1, offset: .3 }, { opacity: 0 }], { duration: 600, easing: 'steps(6)' }).onfinish = () => w.remove();
+  w.animate([{ opacity: 0 }, { opacity: 1, offset: .3 }, { opacity: 0 }], { duration: 600, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => w.remove();
   if (ck) pulse(ck, 'jtick', 500);
   sfx('clock', { rate: back ? .8 : 1 });
   if (e.dawn) at(300, () => banner('해가 뜬다', 'dawn'));
@@ -818,24 +853,24 @@ function banner(text, cls) {
     { transform: 'translate(-50%,-50%) scaleY(1)', opacity: 1, offset: .15 },
     { transform: 'translate(-50%,-50%) scaleY(1)', opacity: 1, offset: .75 },
     { transform: 'translate(-50%,-50%) scaleY(0)', opacity: 0 },
-  ], { duration: cls === 'win' ? 900 : 640, easing: 'steps(10)' }).onfinish = () => b.remove();
-  b.querySelector('span').animate([{ transform: 'translateX(-30px)' }, { transform: 'translateX(0)', offset: .2 }, { transform: 'translateX(8px)' }], { duration: cls === 'win' ? 900 : 640, easing: 'steps(10)' });
+  ], { duration: cls === 'win' ? 900 : 640, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => b.remove();
+  b.querySelector('span').animate([{ transform: 'translateX(-30px)' }, { transform: 'translateX(0)', offset: .2 }, { transform: 'translateX(8px)' }], { duration: cls === 'win' ? 900 : 640, easing: 'cubic-bezier(.25,.8,.35,1)' });
 }
 // 보상 카드가 한 장씩 내려앉는다
 function dealReward(t0) {
   const cards = app()?.querySelectorAll('[data-screen="reward"] .hand.big .card') || [];
   cards.forEach((el, k) => {
     track(el.animate([{ transform: 'translateY(-40px) rotate(-8deg) scale(.6)', opacity: 0 }, { transform: 'translateY(4px) rotate(1deg) scale(1.03)', opacity: 1, offset: .7 }, { transform: 'none', opacity: 1 }],
-      { duration: 320, delay: t0 + k * 110, easing: 'steps(8)', fill: 'backwards' }));
+      { duration: 320, delay: t0 + k * 110, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' }));
     at(t0 + k * 110, () => sfx('card', { vol: .5, rate: .9 + k * .1 }));
     // 뒷면으로 내려앉았다가 한 장씩 뒤집힌다 (docs/11 #3)
     el.classList.add('cardback');
     const tf = t0 + cards.length * 110 + 220 + k * 140;
-    at(tf, () => { if (!hush) el.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 90, easing: 'steps(3)' }); });
-    at(tf + 90, () => { el.classList.remove('cardback'); if (!hush) el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 110, easing: 'steps(3)' }); sfx('flip', { vol: .7, rate: 1 + k * .08 }); });
+    at(tf, () => { if (!hush) el.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 90, easing: 'cubic-bezier(.25,.8,.35,1)' }); });
+    at(tf + 90, () => { el.classList.remove('cardback'); if (!hush) el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 110, easing: 'cubic-bezier(.25,.8,.35,1)' }); sfx('flip', { vol: .7, rate: 1 + k * .08 }); });
   });
   const gold = app()?.querySelector('[data-screen="reward"] .center > .note');
-  if (gold) track(gold.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: t0, easing: 'steps(4)', fill: 'backwards' }));
+  if (gold) track(gold.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: t0, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' }));
 }
 // 결과 화면: 얻은 별 조각이 0부터 올라간다 (별 조각 줄이 하나씩 나온 뒤)
 function countUp(t0) {
@@ -851,10 +886,10 @@ function climb(act) {
   d.className = `jclimb a${act}`;
   d.innerHTML = `<i class="tw"></i><i class="st"></i><b>${ACT_NAME[act] || ''}</b>`;
   layer.append(d);
-  d.querySelector('.tw').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(160px)' }], { duration: 1400, easing: 'steps(20)' });
-  d.querySelector('.st').animate([{ backgroundPositionY: '0px' }, { backgroundPositionY: '90px' }], { duration: 1400, easing: 'steps(20)' });
-  d.querySelector('b').animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none', offset: .3 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400, easing: 'steps(12)' });
-  d.animate([{ opacity: 1 }, { opacity: 1, offset: .82 }, { opacity: 0 }], { duration: 1500, easing: 'steps(6)' }).onfinish = () => d.remove();
+  d.querySelector('.tw').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(160px)' }], { duration: 1400, easing: 'cubic-bezier(.25,.8,.35,1)' });
+  d.querySelector('.st').animate([{ backgroundPositionY: '0px' }, { backgroundPositionY: '90px' }], { duration: 1400, easing: 'cubic-bezier(.25,.8,.35,1)' });
+  d.querySelector('b').animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none', offset: .3 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400, easing: 'cubic-bezier(.25,.8,.35,1)' });
+  d.animate([{ opacity: 1 }, { opacity: 1, offset: .82 }, { opacity: 0 }], { duration: 1500, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => d.remove();
   sfx('move');
 }
 
@@ -886,7 +921,7 @@ function hitStop(lv, v) {
   for (const a of anims) a.pause();
   freeze = performance.now() + (lv >= 200 ? 260 : 190);
   const w = document.createElement('div'); w.className = 'jstop'; layer.append(w);
-  w.animate([{ opacity: 0 }, { opacity: .85, offset: .15 }, { opacity: 0 }], { duration: lv >= 200 ? 300 : 220, easing: 'steps(4)' }).onfinish = () => w.remove();
+  w.animate([{ opacity: 0 }, { opacity: .85, offset: .15 }, { opacity: 0 }], { duration: lv >= 200 ? 300 : 220, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => w.remove();
   const big = document.createElement('div'); big.className = 'jbig';
   const who = S.C ? [...S.C.burstTurn][0] : null;
   if (who) big.style.setProperty('--c', colOf(who));
@@ -897,7 +932,7 @@ function hitStop(lv, v) {
     { transform: 'translate(-50%,-50%) scale(.95)', opacity: 1, offset: .12 },
     { transform: 'translate(-50%,-50%) scale(1)', opacity: 1, offset: .7 },
     { transform: 'translate(-50%,-60%) scale(1)', opacity: 0 },
-  ], { duration: 1000, easing: 'steps(12)' }).onfinish = () => big.remove();
+  ], { duration: 1000, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => big.remove();
   if (SET.shake) shake();
   sfx('cannon', { rate: lv >= 200 ? .55 : .7, vol: .9 }); sfx('burst', { vol: .7 });
   setTimeout(() => { for (const a of anims) { try { a.play(); } catch (e) { /* 끝난 연출 */ } } }, lv >= 200 ? 260 : 190);
@@ -985,7 +1020,7 @@ function stealFx(e) {
     { transform: 'translate(0,0) rotate(0)', opacity: 1 },
     { transform: `translate(${(q.r.cx - from.cx) * .5}px,${(q.r.cy - from.cy) * .5 - 30}px) rotate(180deg)`, opacity: 1, offset: .5 },
     { transform: `translate(${q.r.cx - from.cx}px,${q.r.cy - from.cy}px) rotate(360deg) scale(.4)`, opacity: 0 },
-  ], { duration: 420, easing: 'steps(10)' }).onfinish = () => c.remove();
+  ], { duration: 420, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => c.remove();
   setTimeout(() => { ring(q.r.cx, q.r.cy, '#b48ae8', 4, 24, 10); num(q.r.cx, q.r.y, '훔침', 'buf', 8); }, 400);
 }
 function retargetFx(e) {
@@ -1015,34 +1050,34 @@ const f = (o, t, extra = {}) => ({ offset: o, transform: t, easing: E, ...extra 
 const GLOW = c => `brightness(1.35) drop-shadow(0 0 6px ${c})`;
 const KF = {
   // 맞음: 번쩍 → 뒤로 꺾이며 밀림 → 앞으로 살짝 튕김 → 잦아듦(스프링)
-  jhitA: () => [f(0, 'none', { filter: 'brightness(3) sepia(1) hue-rotate(-40deg)' }), f(.1, 'translate(-15px,1px) rotate(-7deg) scale(.94,1.05)', { filter: 'brightness(1.8)' }),
-    f(.32, 'translate(5px,0) rotate(2.5deg) scale(1.03,.97)', { filter: 'none' }), f(.52, 'translate(-2px,0) rotate(-1deg)'), f(.72, 'translate(1px,0) rotate(.4deg)'), f(1, 'none')],
-  jhitF: () => [f(0, 'none', { filter: 'brightness(3.2)' }), f(.1, 'translate(15px,1px) rotate(7deg) scale(.94,1.05)', { filter: 'brightness(1.8)' }),
-    f(.32, 'translate(-5px,0) rotate(-2.5deg) scale(1.03,.97)', { filter: 'none' }), f(.52, 'translate(2px,0) rotate(1deg)'), f(.72, 'translate(-1px,0) rotate(-.4deg)'), f(1, 'none')],
+  jhitA: () => [f(0, 'none', { filter: 'brightness(3) sepia(1) hue-rotate(-40deg)' }), f(.1, 'translate(-15px,1px)', { filter: 'brightness(1.8)' }),
+    f(.32, 'translate(5px,0)', { filter: 'none' }), f(.52, 'translate(-2px,0)'), f(.72, 'translate(1px,0)'), f(1, 'none')],
+  jhitF: () => [f(0, 'none', { filter: 'brightness(3.2)' }), f(.1, 'translate(15px,1px)', { filter: 'brightness(1.8)' }),
+    f(.32, 'translate(-5px,0)', { filter: 'none' }), f(.52, 'translate(2px,0)'), f(.72, 'translate(-1px,0)'), f(1, 'none')],
   // 시전: 웅크렸다(예비) → 솟아오르며 빛 → 내려와 살짝 눌림 → 제자리
-  jcast: () => [f(0, 'none'), f(.22, 'translateY(2px) scale(1.05,.93)', { easing: IN }), f(.48, 'translateY(-11px) scale(.96,1.06)', { filter: GLOW('var(--c)') }),
-    f(.74, 'translateY(1px) scale(1.04,.96)', { filter: 'none' }), f(.88, 'translateY(-1px) scale(.99,1.01)'), f(1, 'none')],
-  jheal: () => [f(0, 'none'), f(.2, 'translateY(1px) scale(1.03,.96)', { easing: IN }), f(.5, 'translateY(-9px) scale(.98,1.03)', { filter: GLOW('#b8ffc8') }),
-    f(.75, 'translateY(-6px)', { filter: GLOW('#b8ffc8') }), f(.9, 'translateY(1px) scale(1.02,.98)', { filter: 'none' }), f(1, 'none')],
-  jtime: () => [f(0, 'none'), f(.2, 'rotate(-4deg) translateY(-2px)', { filter: GLOW('#ffe7a0') }), f(.45, 'rotate(4deg) translateY(-6px)'), f(.7, 'rotate(-1.5deg) translateY(-1px)', { filter: 'none' }), f(.85, 'rotate(.6deg)'), f(1, 'none')],
-  jdraw2: () => [f(0, 'none'), f(.2, 'translateY(1px) scale(1.05,.93)', { easing: IN }), f(.45, 'translateY(-9px) scale(.96,1.05)'), f(.7, 'translateY(1px) scale(1.05,.94)'), f(.85, 'translateY(-1px)'), f(1, 'none')],
+  jcast: () => [f(0, 'none'), f(.22, 'translateY(2px)', { easing: IN }), f(.48, 'translateY(-11px)', { filter: GLOW('var(--c)') }),
+    f(.74, 'translateY(1px)', { filter: 'none' }), f(.88, 'translateY(-1px)'), f(1, 'none')],
+  jheal: () => [f(0, 'none'), f(.2, 'translateY(1px)', { easing: IN }), f(.5, 'translateY(-9px)', { filter: GLOW('#b8ffc8') }),
+    f(.75, 'translateY(-6px)', { filter: GLOW('#b8ffc8') }), f(.9, 'translateY(1px)', { filter: 'none' }), f(1, 'none')],
+  jtime: () => [f(0, 'none'), f(.2, 'translateY(-2px)', { filter: GLOW('#ffe7a0') }), f(.45, 'translateY(-6px)'), f(.7, 'translateY(-1px)', { filter: 'none' }), f(.85, 'none'), f(1, 'none')],
+  jdraw2: () => [f(0, 'none'), f(.2, 'translateY(1px)', { easing: IN }), f(.45, 'translateY(-9px)'), f(.7, 'translateY(1px)'), f(.85, 'translateY(-1px)'), f(1, 'none')],
   // 방어: 몸을 낮추고 버팀 → 살짝 밀렸다 → 단단히 서기
-  jguard: () => [f(0, 'none'), f(.18, 'translate(-3px,3px) scale(1.06,.9)', { easing: IN, filter: 'brightness(1.3) drop-shadow(0 0 5px #c9d2f0)' }),
-    f(.5, 'translate(-1px,2px) scale(1.04,.93)', { filter: 'drop-shadow(0 0 4px #c9d2f0)' }), f(.75, 'translate(0,-1px) scale(.98,1.03)', { filter: 'none' }), f(1, 'none')],
+  jguard: () => [f(0, 'none'), f(.18, 'translate(-3px,3px)', { easing: IN, filter: 'brightness(1.3) drop-shadow(0 0 5px #c9d2f0)' }),
+    f(.5, 'translate(-1px,2px)', { filter: 'drop-shadow(0 0 4px #c9d2f0)' }), f(.75, 'translate(0,-1px)', { filter: 'none' }), f(1, 'none')],
   // 원거리: 겨눔 → 쏘는 반동으로 뒤로 → 되돌아옴
-  jshot: () => [f(0, 'none'), f(.15, 'translate(3px,0) rotate(1deg)', { easing: IN }), f(.3, 'translate(-13px,0) rotate(-4deg) scale(1.03,.97)', { filter: 'brightness(1.6)' }),
-    f(.55, 'translate(3px,0) rotate(1deg)', { filter: 'none' }), f(.78, 'translate(-1px,0)'), f(1, 'none')],
-  jatk: () => [f(0, 'none'), f(.22, 'translate(-7px,1px) rotate(-3deg) scale(1.03,.96)', { easing: IN }), f(.42, 'translate(22px,0) rotate(4deg) scale(1.06)'),
-    f(.65, 'translate(10px,0) rotate(1deg)'), f(.85, 'translate(-2px,0) rotate(-.5deg)'), f(1, 'none')],
-  jsweep: () => [f(0, 'none'), f(.22, 'translate(-9px,1px) rotate(-9deg)', { easing: IN }), f(.48, 'translate(26px,0) rotate(11deg) scale(1.06)'),
-    f(.7, 'translate(10px,0) rotate(-3deg)'), f(.86, 'translate(-2px,0) rotate(1deg)'), f(1, 'none')],
-  jfin: () => [f(0, 'none'), f(.22, 'translate(-6px,4px) scale(1.07,.9)', { easing: IN }), f(.48, 'translate(18px,-28px) rotate(6deg) scale(.96,1.08)', { filter: GLOW('var(--c)') }),
-    f(.64, 'translate(30px,3px) rotate(-2deg) scale(1.08,.9)', { filter: 'none' }), f(.82, 'translate(8px,-2px) scale(.98,1.02)'), f(1, 'none')],
-  jlunge: () => [f(0, 'none'), f(.22, 'translate(7px,1px) rotate(3deg) scale(1.03,.96)', { easing: IN }), f(.42, 'translate(-24px,0) rotate(-4deg) scale(1.06)'),
-    f(.65, 'translate(-9px,0) rotate(-1deg)'), f(.85, 'translate(2px,0)'), f(1, 'none')],
+  jshot: () => [f(0, 'none'), f(.15, 'translate(3px,0)', { easing: IN }), f(.3, 'translate(-13px,0)', { filter: 'brightness(1.6)' }),
+    f(.55, 'translate(3px,0)', { filter: 'none' }), f(.78, 'translate(-1px,0)'), f(1, 'none')],
+  jatk: () => [f(0, 'none'), f(.22, 'translate(-7px,1px)', { easing: IN }), f(.42, 'translate(22px,0)'),
+    f(.65, 'translate(10px,0)'), f(.85, 'translate(-2px,0)'), f(1, 'none')],
+  jsweep: () => [f(0, 'none'), f(.22, 'translate(-9px,1px)', { easing: IN }), f(.48, 'translate(26px,0)'),
+    f(.7, 'translate(10px,0)'), f(.86, 'translate(-2px,0)'), f(1, 'none')],
+  jfin: () => [f(0, 'none'), f(.22, 'translate(-6px,4px)', { easing: IN }), f(.48, 'translate(18px,-28px)', { filter: GLOW('var(--c)') }),
+    f(.64, 'translate(30px,3px)', { filter: 'none' }), f(.82, 'translate(8px,-2px)'), f(1, 'none')],
+  jlunge: () => [f(0, 'none'), f(.22, 'translate(7px,1px)', { easing: IN }), f(.42, 'translate(-24px,0)'),
+    f(.65, 'translate(-9px,0)'), f(.85, 'translate(2px,0)'), f(1, 'none')],
   // 쓰러짐: 휘청 → 무릎 꺾임 → 바닥에 닿으며 살짝 튐 → 잿빛
-  jdown: () => [f(0, 'none', { filter: 'brightness(2)' }), f(.2, 'translate(-6px,0) rotate(-6deg)', { filter: 'none' }), f(.45, 'translate(3px,2px) rotate(4deg) scale(1.02,.95)'),
-    f(.7, 'translate(0,4px) scale(1.06,.88)', { filter: 'grayscale(.7)' }), f(.85, 'translate(0,2px) scale(1.02,.93)'), f(1, 'translate(0,3px) scale(1.04,.91)', { filter: 'grayscale(1)' })],
+  jdown: () => [f(0, 'none', { filter: 'brightness(2)' }), f(.2, 'translate(-6px,0)', { filter: 'none' }), f(.45, 'translate(3px,2px)'),
+    f(.7, 'translate(0,4px)', { filter: 'gray' }), f(.85, 'translate(0,2px)'), f(1, 'translate(0,3px)', { filter: 'gray' })],
   jflash: () => [{ filter: 'brightness(3)' }, { filter: 'none' }],
 };
 // 튀어 오르는 숫자(슬레이 더 스파이어식): 튀어 올랐다 옆으로 살짝 떨어지며 사라짐.
@@ -1125,8 +1160,10 @@ function draw(p) {
 const SHIELD = ['.oooooo.', 'ocwwccco', 'ocwccc.o', 'occcccco', 'occcccco', '.occcco.', '.occcco.', '..occo..', '...oo...'];
 
 function ring(x, y, col, r0, r1, life) { add({ k: 'ring', x, y, col, r0, r1, life }); }
+// 불티: 1px 가루를 잔뜩 뿌리면 지저분해서, 개수는 줄이고 2px로 또렷하게
 function sparks(x, y, col, n = 8, sp = 1.5) {
-  for (let k = 0; k < n; k++) { const a = Math.random() * Math.PI * 2, v = rnd(.5, 1) * sp * 2; add({ k: 'dot', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: .04, life: rnd(12, 22), col: k % 3 ? col : '#ffffff', s: 1 }); }
+  n = Math.ceil(n * .6);
+  for (let k = 0; k < n; k++) { const a = Math.random() * Math.PI * 2, v = rnd(.5, 1) * sp * 2; add({ k: 'dot', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: .04, life: rnd(12, 22), col: k % 3 ? col : '#ffffff', s: 2 }); }
 }
 function slashFx(x, y, col) {
   const a0 = rnd(-2.7, -2.3);
