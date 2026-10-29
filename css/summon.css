@@ -1,0 +1,57 @@
+/* 별 소환 연출 (Claude) — js/render/base.js summonView·revealView, js/juice.js gachaFx */
+
+/* 소환 화면: 왼쪽은 빈 하늘 대신 픽업 ★5 일러스트 (배경은 summon/sky.png) */
+.summonscr .ssky{border:0;background:none;overflow:hidden}
+.summonscr .ssky .pkglow{position:absolute;left:50%;bottom:-10%;width:90%;height:80%;transform:translateX(-50%);
+  background:radial-gradient(ellipse 50% 50% at 50% 60%,color-mix(in srgb,var(--c) 55%,transparent),transparent 70%);animation:pkglow 3.2s ease-in-out infinite}
+.summonscr .ssky .pkart{position:absolute;left:50%;bottom:0;height:104%;width:auto;transform:translateX(-50%);image-rendering:auto;
+  filter:drop-shadow(3px 3px 0 rgba(0,0,0,.55));animation:pkin .7s cubic-bezier(.2,.8,.3,1) both,pkbob 4s ease-in-out .7s infinite}
+.summonscr .ssky .pkname{position:absolute;left:8px;bottom:10px;display:flex;flex-direction:column;align-items:flex-start;gap:1px;
+  background:rgba(8,8,22,.82);border:2px solid var(--c);box-shadow:2px 2px 0 #000;padding:3px 7px;animation:pkin .5s cubic-bezier(.2,.8,.3,1) .25s both}
+.summonscr .ssky .pkname i{font-style:normal;font-size:8px;color:var(--gold);letter-spacing:.15em}
+.summonscr .ssky .pkname b{font-family:var(--f-disp);font-weight:400;font-size:18px;color:#fff;text-shadow:2px 2px 0 var(--c)}
+.summonscr .ssky .pkname small{color:var(--gold);font-size:9px}
+.summonscr .spanel{background:rgba(14,14,34,.9)}
+@keyframes pkin{from{opacity:0;translate:-24px 0}to{opacity:1;translate:0 0}}
+@keyframes pkbob{0%,100%{translate:0 0}50%{translate:0 -2px}}
+@keyframes pkglow{0%,100%{opacity:.7}50%{opacity:1}}
+
+/* 펼치기 화면: 배경 그림이 보이게 */
+.revealscr,.revealscr.sky5{background:radial-gradient(ellipse 70% 60% at 50% 45%,transparent,rgba(4,4,16,.6))}
+.revealscr.sky5{background:radial-gradient(ellipse 70% 60% at 50% 40%,rgba(255,200,80,.18),rgba(4,4,16,.6))}
+
+/* 아직 안 펼친 칸: 상자 대신 빛나는 별 구슬 */
+.drop{border:0;background:none;box-shadow:none;cursor:pointer;animation:none;overflow:visible}
+.drop .tail,.drop .head,.drop .spark{display:none}
+.drop .orb{position:absolute;left:50%;top:50%;width:34px;height:34px;translate:-50% -50%;border-radius:0;
+  background:radial-gradient(circle,#fff 0 18%,var(--oc,#cfe0ff) 30%,color-mix(in srgb,var(--oc,#cfe0ff) 35%,transparent) 55%,transparent 72%);
+  animation:orbpulse 1.4s ease-in-out infinite;animation-delay:calc(var(--d) * -1)}
+.drop.g4{--oc:#c08aff}.drop.g5{--oc:#ffd860}
+.drop.g5 .orb{width:46px;height:46px}
+.drop:hover .orb{scale:1.25}
+.drop .met{position:absolute;left:50%;top:50%;width:96px;height:96px;translate:-50% -50%;pointer-events:none;image-rendering:pixelated;opacity:0}
+@keyframes orbpulse{0%,100%{scale:1;opacity:.9}50%{scale:1.15;opacity:1}}
+/* 처음 한 번: 별이 모인 뒤(1초) 별똥별이 오른쪽 위에서 칸마다 떨어져 구슬이 된다 */
+.revealscr.intro .drop .met{animation:metfall .5s cubic-bezier(.4,0,.8,.6) both;animation-delay:calc(1.05s + var(--d))}
+.revealscr.intro .drop .orb{animation:orbin .3s cubic-bezier(.2,.8,.3,1) both,orbpulse 1.4s ease-in-out infinite;animation-delay:calc(1.45s + var(--d)),calc(1.75s + var(--d))}
+.revealscr.intro > h2,.revealscr.intro > .acts{animation:fadein .4s ease-out 1.2s both}
+@keyframes metfall{0%{opacity:0;transform:translate(160px,-200px)}15%{opacity:1}85%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(0,0) scale(.6)}}
+@keyframes orbin{from{scale:0;opacity:0;filter:brightness(4)}to{scale:1;opacity:1;filter:none}}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+
+/* 펼친 카드: 동료는 일러스트를 크게, 막 펼친 것만 뒤집혀 나온다 */
+.got,.got.crack{overflow:hidden;animation:none}   /* 다시 그릴 때마다 들어오는 애니메이션이 반복되지 않게 — 막 펼친 것(.fresh)만 */
+.got > img.px{width:auto;height:66px;margin-top:-6px;image-rendering:auto;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6))}
+.got.g4{box-shadow:0 0 0 1px #c08aff inset,2px 2px 0 var(--shadow)}
+.got.g5::after{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,transparent 0 80%,rgba(255,240,180,.5) 88%,transparent 96%);animation:gspin 2.6s linear infinite;pointer-events:none;mix-blend-mode:screen}
+@keyframes gspin{to{transform:rotate(360deg)}}
+.got.fresh{animation:gotflip .42s cubic-bezier(.2,.8,.3,1) both;animation-delay:var(--fd,0ms)}
+.got.fresh.g5{animation:gotflip .42s cubic-bezier(.2,.8,.3,1) both,crack .45s cubic-bezier(.25,.8,.35,1) both;animation-delay:var(--fd,0ms),calc(var(--fd,0ms) + .4s)}
+@keyframes gotflip{0%{transform:perspective(300px) rotateY(90deg);filter:brightness(3)}60%{transform:perspective(300px) rotateY(-8deg);filter:brightness(1.5)}100%{transform:none;filter:none}}
+
+/* 도입의 빛 덩어리 (js/juice.js gachaFx) */
+#fx .gcore{position:absolute;left:50%;top:42%;width:140px;height:140px;z-index:5;pointer-events:none;
+  background:radial-gradient(circle,#fff 0 10%,var(--c) 22%,color-mix(in srgb,var(--c) 30%,transparent) 45%,transparent 68%)}
+@media (prefers-reduced-motion:reduce){.revealscr.intro .drop .met,.revealscr.intro .drop .orb,.got.fresh,.summonscr .ssky *{animation:none}}
+.drop,.drop:hover,.drop:focus{outline:none;border:0;background:none;box-shadow:none;transform:none}
+.drop:focus-visible .orb{outline:2px solid #fff;outline-offset:4px}

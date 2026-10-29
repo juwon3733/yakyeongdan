@@ -103,7 +103,8 @@ export function summonView() {
   const beginner = !P.got5 ? `<p class="note">초심자: 처음 ${SUMMON.beginner}번 안에 ★5 동료 확정, <b>처음 얻는 ★5는 직접 고른다</b> (지금 ${P.pulls}번).</p>` : '';
   const choose = P.pick5 ? `<button type="button" class="primary" data-view="pick5">★5 동료 고르기 (${P.pick5})</button>` : '';
   return `<div class="summonscr">
-    <div class="ssky" aria-hidden="true"><span class="sstar s1"></span><span class="sstar s2"></span><span class="sstar s3"></span></div>
+    <div class="ssky" aria-hidden="true" style="--c:${ROSTER[pk.five].col}"><span class="pkglow"></span><img class="pkart" src="${charSrc(pk.five, 'stand')}" alt="">
+      <span class="pkname"><i>픽업</i><b>${ROSTER[pk.five].name}</b><small>${stars(5)}</small></span></div>
     <div class="spanel">
       ${head()}
       <h2>별 소환</h2>
@@ -150,23 +151,27 @@ export function oddsView() {
 // 소환 결과: 별똥(등급 색)이 떨어지고, 누르면 하나씩 펼친다
 export function revealView() {
   const R = S.reveal, top = Math.max(...R.list.map(r => r.rarity));
+  // 처음 그릴 때만 별이 모이는 도입(js/juice.js gachaFx), 이번에 막 펼친 것만 뒤집히는 연출(.fresh) — 다시 그려도 반복되지 않게
+  const intro = !R.seen; R.seen = true;
+  const was = R.was || [], fresh = R.open.map((o, i) => o && !was[i]); R.was = R.open.slice();
+  let fk = 0; const fd = i => fresh[i] ? ` fresh" data-g="${R.list[i].rarity}" style="--fd:${fk++ * 140}ms;` : '" style="';
   const done0 = R.open.every(Boolean);
   // 다 펼치면 등급 높은 것부터 앞에 (data-reveal 번호는 그대로, 보이는 순서만 CSS order로)
   const ord = r => done0 && R.list.length > 1 ? ` order:${(5 - r.rarity) * 2 + (r.kind === 'char' ? 0 : 1)};` : '';
   const items = R.list.map((r, i) => {
-    if (!R.open[i]) return `<button type="button" class="drop g${r.rarity}" data-reveal="${i}" style="--d:${i * 70}ms;--x:${(i % 5) * 7 - 14}px" aria-label="펼치기"><span class="tail"></span><span class="head"></span><span class="spark"></span></button>`;
-    if (r.kind === 'choose5') return `<div class="got g5 crack choose" style="--c:var(--gold);${ord(r)}"><span class="ico">?</span><span class="nm">★5 동료</span><span class="stars">${stars(5)}</span><span class="tag">직접 고른다</span></div>`;
+    if (!R.open[i]) return `<button type="button" class="drop g${r.rarity}" data-reveal="${i}" style="--d:${i * 90}ms;--x:${(i % 5) * 7 - 14}px" aria-label="펼치기">${artURL(`summon/meteor_${r.rarity}.png`) ? `<img class="met" src="${artURL(`summon/meteor_${r.rarity}.png`)}" alt="">` : ''}<span class="orb"></span><span class="tail"></span><span class="head"></span><span class="spark"></span></button>`;
+    if (r.kind === 'choose5') return `<div class="got g5 crack choose${fd(i)}--c:var(--gold);${ord(r)}"><span class="ico">?</span><span class="nm">★5 동료</span><span class="stars">${stars(5)}</span><span class="tag">직접 고른다</span></div>`;
     if (r.kind === 'char') {
       const c = ROSTER[r.id];
       // 겹침: 별자리 칸 5개 중 이번에 찬 칸이 차오른다
       const cells = r.stars ? `<span class="stcells">${Array.from({ length: SUMMON.maxStars }, (_, n) => `<i class="${n < r.stars ? 'on' : ''} ${n === r.stars - 1 ? 'fill' : ''}"></i>`).join('')}</span>` : '';
       const tag = r.isNew ? '<b class="new">NEW</b>' : r.stars ? `별자리 ${r.stars}` : `별가루 +${r.dust}`;
-      return `<div class="got g${r.rarity} ${r.rarity === 5 ? 'crack' : ''} ${r.isNew ? 'isnew' : ''}" style="--c:${c.col};${ord(r)}">${img(r.id)}
+      return `<div class="got g${r.rarity} ${r.rarity === 5 ? 'crack' : ''} ${r.isNew ? 'isnew' : ''}${fd(i)}--c:${c.col};${ord(r)}">${img(r.id)}
         <span class="nm">${c.name}</span><span class="stars">${stars(r.rarity)}</span>${cells}<span class="tag">${tag}</span></div>`;
     }
     // 물건 이름(「…」)을 크게, 종류(흔한 도구·의상 등)는 아래 작게
     const m = /「(.+?)」/.exec(r.text || ''), nm = m ? m[1] : r.name;
-    return `<div class="got g${r.rarity} item" style="${ord(r)}"><span class="ico">${esc(nm.slice(0, 1))}</span><span class="nm">${esc(nm)}</span><span class="stars">${stars(r.rarity)}</span>
+    return `<div class="got g${r.rarity} item${fd(i)}${ord(r)}"><span class="ico">${esc(nm.slice(0, 1))}</span><span class="nm">${esc(nm)}</span><span class="stars">${stars(r.rarity)}</span>
       <span class="tag" title="${esc(r.text || '')}">${r.dust ? (/^별가루/.test(nm) ? '교환소에서 쓴다' : `이미 있음 → 별가루 +${r.dust}`) : esc(m ? r.text.replace(m[0], '').trim() || r.name : r.text || '보관함에')}</span></div>`;
   }).join('');
   const done = R.open.every(Boolean);
@@ -182,7 +187,7 @@ export function revealView() {
       <span class="s5line">「${esc(FIRST_LINES[f.id] || '')}」</span></div>`;
     R.focus = null;   // 한 번만
   }
-  return `<div class="revealscr ${top === 5 && R.open.some((o, i) => o && R.list[i].rarity === 5) ? 'sky5' : ''} ${done ? 'done' : ''}">
+  return `<div class="revealscr ${intro ? 'intro' : ''} ${top === 5 && R.open.some((o, i) => o && R.list[i].rarity === 5) ? 'sky5' : ''} ${done ? 'done' : ''}">
     <h2>${R.list.length === 10 ? '10연 소환' : '소환'} ${top === 5 ? '· 하늘이 갈라진다' : top === 4 ? '· 보랏빛 별똥' : ''}</h2>
     <div class="drops n${R.list.length}">${items}</div>
     <div class="acts">${done ? next : '<button type="button" data-revealall>모두 넘기기</button>'}</div>

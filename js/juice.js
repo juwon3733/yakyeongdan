@@ -152,6 +152,7 @@ export function afterRender(events = []) {
   fitSprites();
   setSky();
   fanHand();
+  gachaFx();
   const P = pre; pre = null;
   if (calmNow()) {   // 애니메이션 줄이기: 소리만
     for (const e of events) { soundOf(e); if (e.kind === 'phase') showPhase(e.name, e.text); if (e.kind === 'burst') showBurst(e.who, e.name); }
@@ -1199,4 +1200,46 @@ export function clearFx() {
   for (const t of timers.keys()) clearTimeout(t); timers.clear();
   parts.length = 0;
   layer?.querySelectorAll('.jghost,.jnum,.jbanner,.jclock,.jwarm,.jclimb').forEach(x => x.remove());
+}
+
+// ---------- 별 소환 (js/render/base.js revealView) ----------
+// 처음: 화면 가운데로 별빛이 빨려 들며 차오름 → 가장 높은 희귀도 색으로 번쩍 → 별똥별이 칸마다 떨어짐(css .intro .drop)
+// 펼칠 때: 막 펼친 카드(.fresh)마다 빛 고리·불티, ★4 보라 반짝, ★5 금빛 기둥
+const GACHA_COL = { 3: '#cfe0ff', 4: '#c08aff', 5: '#ffd860' };
+const gsfx = (name, alt, o) => sfx(hasSfx(name) ? name : alt, o);
+function gachaFx() {
+  const A = app(); if (!A || A.dataset.screen !== 'reveal' || calmNow()) return;
+  const R = S.reveal; if (!R) return;
+  const scr = A.querySelector('.revealscr.intro');
+  if (scr) {
+    const top = Math.max(...R.list.map(r => r.rarity)), col = GACHA_COL[top];
+    const W = stage.offsetWidth, H = stage.offsetHeight, cx = W / 2, cy = H * .42;
+    gsfx('summon_charge', 'summon', { vol: .8 });
+    for (let k = 0; k < 70; k++) {   // 가장자리에서 가운데로 빨려 드는 별빛
+      const a = Math.random() * Math.PI * 2, d = rnd(140, 320), life = Math.round(rnd(26, 44)), t = rnd(0, 520);
+      at(t, () => add({ k: 'dot', x: cx + Math.cos(a) * d, y: cy + Math.sin(a) * d * .7, vx: -Math.cos(a) * d / life, vy: -Math.sin(a) * d * .7 / life, g: 0, life, col: k % 4 ? '#ffffff' : col, s: k % 3 ? 2 : 1 }));
+    }
+    for (let k = 0; k < 4; k++) at(k * 220, () => ring(cx, cy, k === 3 ? col : '#9fb4ff', 70 - k * 8, 6, 26));
+    const core = document.createElement('div'); core.className = 'gcore'; core.style.setProperty('--c', col);
+    layer.append(core);
+    core.animate([{ transform: 'translate(-50%,-50%) scale(.1)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: 1, offset: .8 }, { transform: 'translate(-50%,-50%) scale(1.6)', opacity: 0 }],
+      { duration: 1100, easing: 'cubic-bezier(.5,0,.75,.4)' }).onfinish = () => core.remove();
+    at(1000, () => {
+      flash(); ring(cx, cy, col, 8, 150, 22); sparks(cx, cy, col, 30, 3);
+      gsfx('summon_drop', 'star', { vol: .8 });
+      if (top === 5) { shake(); for (let k = 0; k < 3; k++) at(k * 120, () => ring(cx, cy, '#fff6c8', 10, 110 + k * 30, 20)); }
+    });
+  }
+  // 막 펼친 카드
+  for (const el of A.querySelectorAll('.revealscr .got.fresh')) {
+    const g = +el.dataset.g || 3, col = GACHA_COL[g], d = parseFloat(getComputedStyle(el).getPropertyValue('--fd')) || 0;
+    at(d + 40, () => {
+      if (!el.isConnected) return;
+      const r = rel(el);
+      ring(r.cx, r.cy, col, 6, g === 5 ? 90 : g === 4 ? 60 : 40, 18);
+      sparks(r.cx, r.cy, col, g === 5 ? 34 : g === 4 ? 20 : 10, g === 5 ? 3 : 2);
+      if (g >= 4) for (let k = 0; k < (g === 5 ? 18 : 8); k++) add({ k: 'dot', x: r.cx + rnd(-r.w / 2, r.w / 2), y: r.y + r.h, vx: 0, vy: rnd(-3, -1.2), g: 0, life: rnd(18, 34), col: k % 2 ? col : '#ffffff', s: 2 });
+      gsfx(`summon_r${g}`, g === 3 ? 'flip' : 'star', { vol: g === 3 ? .5 : .8 });
+    });
+  }
 }
