@@ -18,56 +18,48 @@
 ## 주니어 큐 (위에서부터, 큐에 그대로 붙여 넣기)
 
 ### 주니어 A — 화면
-1. `feat` · **보상·상점 카드 크게 보기**
+1. `fix` · **글자 잘림·겹침 고치기**
    ```
-   보상 화면(js/render/screens.js의 보상)과 상점(야시장)에서 카드에 마우스를 대면 1.6배로 커지고(옆 카드는 비켜남),
-   희귀(r-r) 카드는 금빛이 테두리를 따라 도는 반짝임을 넣어 줘. CSS는 css/screens.css를 새로 만들어 넣고
-   index.html에 <link rel="stylesheet" href="css/screens.css"> 한 줄 추가(affix.css 다음). css/game.css는 고치지 마.
-   전투 손패(.bottom .hand)에는 영향 없게 .hand.big 범위로만. 끝나면 node tools/smoke.mjs, npm run shots로 reward.png·shop.png 확인.
+   글꼴이 갈무리(도트, css/game.css --f-body Galmuri9 / --f-disp Galmuri11)로 바뀌었어. 이 글꼴 기준으로 글자 잘림·겹침을 고쳐 줘.
+   - 지도(js/render/map.js): 칸의 "+12분 → 00:12"가 잘림, "안개 마…"처럼 이름이 잘림 → 칸 폭 안에 들어가게(시간은 두 줄째 작은 글자로).
+   - 상점(js/render/screens.js 야시장): 왼쪽 위 아이콘이 상인 이름·"+10분"을 덮음. 카드에 "모든 적 모든 적 피해 5"처럼 같은 말이 두 번 찍힘(원인 찾아서).
+   - 결과 화면: 업적 알림 세 개가 본문("새 에피소드" 줄)을 가림 → 알림은 오른쪽 아래에 차례로 하나씩.
+   - 파티 고르기: "체력 / 32"처럼 줄이 어색하게 꺾임, 「멈춘…」처럼 잘림.
+   CSS는 css/screens.css에(game.css는 고치지 마). 끝나면 node tools/smoke.mjs, npm run shots로 map·shop·result·party 확인.
    ```
-2. `feat` · **지도 노드 꾸미기**
+2. `fix` · **본부·타이틀 정리 + MVP 기준**
    ```
-   지도(js/render/map.js)의 칸이 글자 상자라 밋밋해. 칸 종류(전투·강적·보스·휴식·사건·상점)마다 도트 아이콘(인라인 SVG나 CSS 도트,
-   16×16을 2배)과 색 테두리를 넣고, 지금 갈 수 있는 칸은 천천히 떠오르듯 깜빡이게. 지나온 길은 금색 점선.
-   CSS는 css/screens.css에. node tools/smoke.mjs, npm run shots로 map.png 확인.
+   - 타이틀·본부(js/render/screens.js, js/render/base.js) 메뉴에 섞인 "소리 켬" 버튼을 빼 줘(위 띠에 소리 아이콘이 이미 있음).
+   - 본부 배경: assets/bg/hq.png 그림이 배경(#app::before)으로 깔리는데, 그 위에 코드로 그린 빈 방(어두운 창문·주황 네모)이 덮고 있으면 그 코드 그림을 빼서 그림이 보이게.
+   - 본부 안내 문장 끝의 "(누르면 말을 건다)"를 이야기 문장에서 빼고, 화면 아래 도움말 줄로(다른 화면 도움말과 같은 모양).
+   - 결과 MVP가 "피해 0 · 방어 8"인 동료가 뽑히는 문제: js/render/screens.js:136, js/render/endless.js:27, js/meta.js:445의 기준(피해+방어)을
+     피해 + 방어×0.5 + 회복으로 바꾸고, 같으면 피해가 큰 쪽. 세 곳이 같은 함수를 쓰게 js/meta.js에 mvpOf(G) 하나로.
+   node tools/smoke.mjs, npm run shots로 title·base·result 확인.
    ```
-3. `feat` · **보상 등장 연출**
+3. `feat` · **표 같은 화면 다듬기**
    ```
-   전투 승리 후 보상 카드 3장이 뒤집혀 나오는 연출(js/juice.js dealReward가 .cardback을 붙였다 뗌)에 맞춰,
-   보상 화면 배경을 살짝 어둡게 하고 카드 뒤로 빛줄기(css 회전 그라디언트)가 돌게 해 줘. js/juice.js는 고치지 말고 css/screens.css로만.
+   데이터를 그대로 늘어놓은 화면 셋을 게임답게:
+   - 에피소드 목록: 같은 문장이 66칸 반복 → 동료 얼굴 칸(잠긴 건 어둡게 + 자물쇠) 격자, 고르면 3화 목록이 옆에.
+   - 동료 상세: 숙련도 1~5 글 목록 → 별 다섯 칸 진행 막대 + 지금 단계 보상만 크게, 나머지는 작게.
+   - 소환 설명: 글 벽 → 확률은 작은 표 한 줄, 천장은 진행 막대(50 중 몇), 나머지는 접기.
+   CSS는 css/screens.css. npm run shots로 확인.
    ```
 
 ### 주니어 B — 소리
-1. `feat` · **피격·방어·처치 효과음 종류별로**
+1. `feat` · **별 소환 효과음**
    ```
-   js/audio.js의 hurt·block·kill 소리가 하나씩이야. 적 종류(js/data/enemies.js의 pal: ghost·crab·cloud·star 등)마다
-   맞는 소리를 3~4갈래로 나눠 tools/compose/sfx.py로 만들고(sfx_hit_<종류>.wav), sfx('hit', { kind })처럼 부를 수 있게.
-   js/juice.js는 Claude가 연결하니 audio.js에 함수만 만들어 두고 PR 설명에 부르는 법을 적어 줘.
-   ```
-2. `feat` · **필살 컷인 효과음**
-   ```
-   희귀 카드·듀오 필살 컷인(0.9초) 때 나는 소리를 새로: 0~0.2초 빨려 드는 소리 → 0.7초 쾅. sfx('special')로.
-   tools/compose/sfx.py로 만들고 audio.js에 등록만.
-   ```
-3. `feat` · **막마다 전투 음악 변주**
-   ```
-   1·2·3막 전투 음악이 같은 곡이면 막마다 악기·템포를 바꾼 변주를 만들어 줘(PC-98 FM 느낌 유지). 곡 구조는 js/audio.js를 보고.
+   별 소환 연출(Claude가 다시 만드는 중)에 쓸 소리를 tools/compose/sfx.py로 만들어 js/audio.js에 등록만 해 줘(PC-98 FM 느낌):
+   sfx('summon_charge') 별이 모이며 차오르는 1.2초, sfx('summon_drop') 별똥별 떨어짐 0.5초,
+   sfx('summon_r3') 흰 별 열림 짧게, sfx('summon_r4') 보라 반짝 + 화음, sfx('summon_r5') 금빛 큰 쾅 + 상승 아르페지오 1.5초.
+   부르는 법을 PR 설명에.
    ```
 
 ### 주니어 C — 도구
-1. `feat` · **적 차례 연속 사진**
+1. `feat` · **글자 잘림 검사**
    ```
-   tools/screens.mjs에 적 차례 장면도 추가: 턴 끝을 누른 뒤 0.08초 간격 8장(shots/foe_seq_*.png).
-   또 피해 숫자 확인용으로 공격 카드(베기 같은 atk 카드)를 쓰는 연속 6장(shots/atk_seq_*.png)도. 찍는 게 느리면 page.clock으로 시간을 멈춰 가며 찍어.
-   ```
-2. `feat` · **사진 모아 보기**
-   ```
-   npm run shots가 끝나면 shots/index.html(사진을 한 화면에 격자로, 연속 사진은 한 줄로)을 만들어 줘. 브라우저로 열어 한눈에 보게.
-   ```
-3. `chore` · **CI에서 사진 남기기**
-   ```
-   .github/workflows/ci.yml에서 smoke 다음에 npm run shots를 돌리고 shots/를 actions/upload-artifact로 올려 줘(보관 7일).
-   그러면 PR마다 화면 사진을 내려받아 볼 수 있어.
+   tools/text-check.mjs(새로): 플레이라이트로 타이틀·파티·본부·지도·전투·보상·상점·결과·소환·에피소드 화면을 돌며,
+   글자가 든 요소 중 scrollWidth > clientWidth+1 이거나 글자가 다른 글자 요소와 겹치는 것을 찾아 화면 이름·선택자·글을 출력(있으면 종료 코드 1).
+   package.json에 "text": "node tools/text-check.mjs". CI에는 아직 넣지 말고 결과만 PR 설명에.
    ```
 
 ## Claude 할 일 (차례대로 — 하나 끝날 때마다 사진 확인 → 테스트 → main)
@@ -85,3 +77,8 @@
 10. **턴 띠·숫자 다듬기** — 「적의 차례」「1턴」 띠를 짧고 굵게, 피해 합계 표시 정리
 11. **폰 가로 화면 확인** — 작은 화면에서 글자·버튼 크기, 손패 겹침
 
+12. ✅ **전투 다듬기 1단계**(docs/BATTLE_PLAN.md) — 부드러운 곡선, 회전·늘이기 제거, 몸 영역 기준, 적이 앞에서 멈춤, 기록·점선 숨김
+13. ✅ **한글 도트 글꼴** 갈무리
+14. **보상 등장** — 「승리」 띠가 걷히기 전에 카드가 뒷면으로 비어 보임 → 띠와 동시에 한 장씩 뒤집힘
+15. **별 소환 연출** — 별이 모임 → 별똥별(희귀도 색) → 빛기둥 → ★5는 전신 CG 컷인, 하늘 그림(summon/sky.png) 위에서
+16. **타이틀 그림** — AI 애니 느낌 → 도트 키아트로 프롬프트 다시

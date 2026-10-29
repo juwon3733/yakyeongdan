@@ -863,9 +863,9 @@ function dealReward(t0) {
     track(el.animate([{ transform: 'translateY(-40px) rotate(-8deg) scale(.6)', opacity: 0 }, { transform: 'translateY(4px) rotate(1deg) scale(1.03)', opacity: 1, offset: .7 }, { transform: 'none', opacity: 1 }],
       { duration: 320, delay: t0 + k * 110, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' }));
     at(t0 + k * 110, () => sfx('card', { vol: .5, rate: .9 + k * .1 }));
-    // 뒷면으로 내려앉았다가 한 장씩 뒤집힌다 (docs/11 #3)
+    // 뒷면으로 내려앉자마자 한 장씩 뒤집힌다 (docs/11 #3). 「승리」 띠는 위쪽(css .jbanner.win)이라 카드를 안 가린다
     el.classList.add('cardback');
-    const tf = t0 + cards.length * 110 + 220 + k * 140;
+    const tf = t0 + k * 110 + 300;   // 내려앉자마자 뒤집힘(빈 뒷면이 오래 보이지 않게)
     at(tf, () => { if (!hush) el.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 90, easing: 'cubic-bezier(.25,.8,.35,1)' }); });
     at(tf + 90, () => { el.classList.remove('cardback'); if (!hush) el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 110, easing: 'cubic-bezier(.25,.8,.35,1)' }); sfx('flip', { vol: .7, rate: 1 + k * .08 }); });
   });
