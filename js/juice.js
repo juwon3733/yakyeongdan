@@ -6,7 +6,7 @@ import { S, dawnAt } from './run.js';
 import { CHARACTERS } from './data/characters.js';
 import { ACT_NAME } from './data/rules.js';
 import { calmNow, SET } from './settings.js';
-import { sfx as sfxRaw, hasSfx, HIT_SFX } from './audio.js';
+import { sfx as sfxRaw, hasSfx, HIT_SFX, CUTIN_SFX } from './audio.js';
 import { FOE } from './data/enemies.js';
 // 누르면 넘기기(skipFx)로 남은 연출을 한꺼번에 돌릴 때는 효과음을 겹쳐 내지 않는다
 let hush = false;
@@ -539,7 +539,7 @@ function skillCut(e) {
   el.innerHTML = `<i class="band"></i><i class="lines"></i>${ids.map((id, i) => [i, charArt(id, 'stand') || battleArt(id, 'skill')]).filter(([, u]) => u).map(([i, u]) => `<img class="px who w${i}" src="${u}" alt="">`).join('')}
     <div class="tx"><span>${ids.map(id => CHARACTERS[id]?.name).join(' + ')}</span><b>${d?.name || ''}</b></div>`;
   layer.append(el);
-  sfx('burst', { vol: .7 });
+  sfx(hasSfx(CUTIN_SFX) ? CUTIN_SFX : 'burst', { vol: .8 });
   el.animate([{ opacity: 0 }, { opacity: 1, offset: .06 }, { opacity: 1, offset: .88 }, { opacity: 0 }], { duration: 900 }).onfinish = () => el.remove();
 }
 // 필살: 판이 그 동료 쪽으로 살짝 다가감 (다키스트 던전식 확대)
