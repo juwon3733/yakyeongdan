@@ -128,6 +128,16 @@ export const HIT_SFX = {
 // 희귀 카드·듀오 필살 컷인(0.9초) 효과음: 0~0.2초 빨려 듦 → 0.7초 쾅 (sfx(CUTIN_SFX)로 부른다)
 export const CUTIN_SFX = 'special';
 
+// UI 효과음 (0.05~0.2초): sfx(UI_SFX.hover) 식으로 부른다. 자주 나므로 SFX_GAIN으로 작게 낸다
+export const UI_SFX = {
+  hover: 'ui_hover',  // 카드에 마우스를 댐: 아주 짧은 틱
+  pick: 'ui_pick',    // 카드를 고름
+  end: 'ui_end',      // 턴 끝 버튼
+  page: 'ui_page',    // 화면 바뀜
+};
+// 효과음마다 기본 음량 배수 (없으면 1). 부르는 쪽의 vol과 곱한다
+const SFX_GAIN = { ui_hover: 0.25, ui_pick: 0.4, ui_end: 0.45, ui_page: 0.35 };
+
 let lastSfx = {};
 export function sfx(name, { vol = 1, rate = 1 } = {}) {
   if (!ctx || !LEVELS[level]) return;
@@ -137,7 +147,7 @@ export function sfx(name, { vol = 1, rate = 1 } = {}) {
   if (now - (lastSfx[name] || -1) < 0.04) return;   // 같은 소리가 한꺼번에 겹치지 않게
   lastSfx[name] = now;
   const src = ctx.createBufferSource(), g = ctx.createGain();
-  src.buffer = buf; src.playbackRate.value = rate; g.gain.value = vol;
+  src.buffer = buf; src.playbackRate.value = rate; g.gain.value = vol * (SFX_GAIN[name] ?? 1);
   src.connect(g); g.connect(sfxBus); src.start();
 }
 
