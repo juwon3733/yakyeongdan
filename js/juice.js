@@ -239,7 +239,11 @@ export function afterRender(events = []) {
   const G = S.G;
   if (P && G && P.screen === 'combat' && G.screen === 'reward') { at(t + 120, () => { banner('승리', 'win'); sfx('win'); winPose(); }); dealReward(t + 420); }
   if (G && G.screen === 'result' && P && P.screen !== 'result') countUp(frozen ? t + 650 : 0);
-  if (G && S.view === 'run' && G.screen === 'map' && !G.tutorial && P && (P.seed !== G.seed || P.act !== G.act)) at(P.seed !== G.seed ? 0 : t + 200, () => climb(G.act));
+  if (G && S.view === 'run' && G.screen === 'map' && !G.tutorial && P && (P.seed !== G.seed || P.act !== G.act)) {
+    const t0 = P.seed !== G.seed ? 0 : t + 200;
+    at(t0, () => climb(G.act));
+    if (!G.endless && G.row === 0) at(t0 + 1350, () => actBand(G.act));   // 올라가는 장면이 걷힐 즈음 지도 위로 막 이름 띠
+  }
   if (G && S.view === 'run') { shown.seed = G.seed; shown.act = G.act; }
   if (!S.C) at(frozen ? t + 650 : 0, () => setCounter(0, false));
   dropFrozen(frozen ? t + 650 : 0);
@@ -903,6 +907,15 @@ function climb(act) {
   d.querySelector('b').animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none', offset: .3 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400, easing: 'cubic-bezier(.25,.8,.35,1)' });
   d.animate([{ opacity: 1 }, { opacity: 1, offset: .82 }, { opacity: 0 }], { duration: 1500, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => d.remove();
   sfx('move');
+}
+
+// 막의 1층 지도: 「1막 · 항구층」 띠가 위에서 내려왔다 올라간다 (0.9초, css/screens.css .mapact)
+function actBand(act) {
+  const w = app()?.querySelector('.mapwrap'); if (!w || !ACT_NAME[act]) return;
+  const d = document.createElement('div');
+  d.className = 'mapact'; d.innerHTML = `<b>${ACT_NAME[act]}</b>`;
+  d.addEventListener('animationend', () => d.remove());
+  w.append(d);
 }
 
 // ---------- 터지는 턴: 한 턴 누적 피해 + 100/200을 넘는 순간 히트스톱 ----------

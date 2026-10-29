@@ -44,6 +44,35 @@
   .mapgrid .node.now,.mapgrid .node.now .ic,.mapgrid line.on{animation:none}
 }
 
+/* 지도 표지: 파티 맨 앞 동료 얼굴. 지난 칸의 길 끝에서 숨 쉬듯 까딱이다가, 칸을 고르면 길을 따라 미끄러져 간다(main.js mapMove) */
+.mapgrid .maptok{position:absolute;z-index:3;width:0;height:0;pointer-events:none}
+.mapgrid .maptok .face{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border:2px solid var(--gold);box-shadow:2px 2px 0 #000;animation:yk-tok-bob 1.4s steps(4) infinite}
+.mapgrid .maptok .face img{width:18px;height:24px}
+.mapgrid.going .maptok .face{animation:yk-tok-hop .2s steps(2) infinite}
+.mapgrid .maptok.arrive .face{animation:yk-tok-land .22s steps(3) forwards}
+@keyframes yk-tok-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+@keyframes yk-tok-hop{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+@keyframes yk-tok-land{0%{transform:scale(1.25,.8)}60%{transform:scale(.9,1.15)}100%{transform:none}}
+/* 고른 길은 금색 점선으로 바뀌어 표지를 따라 흐른다 */
+.mapgrid line.trail.go{animation:yk-map-flow .4s steps(5) infinite;filter:drop-shadow(0 0 2px var(--gold))}
+.mapgrid.going .node.now:not(.flash){animation:none;filter:brightness(.8)}
+/* 도착한 칸: 한 번 하얗게 번쩍 */
+.mapgrid .node.flash{animation:yk-node-flash .22s steps(3) forwards}
+@keyframes yk-node-flash{
+  0%{background:#fff6d0;box-shadow:3px 3px 0 var(--shadow),0 0 0 3px #fff;filter:brightness(2)}
+  100%{background:#2a2c5e;box-shadow:3px 3px 0 var(--shadow),0 0 0 2px var(--gold);filter:brightness(1.2)}
+}
+#stage.calm .mapgrid .maptok .face{animation:none}
+@media (prefers-reduced-motion:reduce){.mapgrid .maptok .face{animation:none}}
+
+/* 막의 1층: 「1막 · 항구층」 띠가 위에서 내려왔다 올라간다 (0.9초, js/juice.js actBand) */
+.mapwrap{position:relative}
+.mapact{position:absolute;left:-8px;right:-8px;top:-8px;z-index:6;pointer-events:none;display:flex;justify-content:center;
+  padding:6px 0;background:linear-gradient(#0d0e26,#1a1c44);border-top:2px solid #000;border-bottom:2px solid var(--gold);box-shadow:0 3px 0 #000;
+  animation:yk-act-band .9s cubic-bezier(.25,.8,.35,1) forwards}
+.mapact b{font-size:16px;color:var(--gold);letter-spacing:2px;text-shadow:1px 1px 0 #000,0 0 6px rgba(240,200,100,.5)}
+@keyframes yk-act-band{0%{transform:translateY(-110%)}22%,72%{transform:translateY(0)}100%{transform:translateY(-110%)}}
+
 /* ── 전투 보상: 어두운 배경 + 카드 뒤 도는 빛줄기 + 금색 제목 띠 ── */
 #app[data-screen="reward"] .body{background:radial-gradient(ellipse at 50% 55%,rgba(8,6,20,.25) 0%,rgba(8,6,20,.6) 75%),rgba(8,6,20,.3)}
 #app[data-screen="reward"] .center > h2{position:relative;margin:0;padding:3px 22px 4px;color:#2a1a08;background:linear-gradient(#f6dc84 0 45%,var(--gold) 45% 100%);border:2px solid #7a5418;box-shadow:3px 3px 0 var(--shadow),inset 0 -2px 0 #b8892a,inset 0 2px 0 #fff2c0;letter-spacing:.06em;text-shadow:1px 1px 0 #fff2c0;

@@ -69,7 +69,11 @@ try {
   await page.waitForSelector('[data-node="0,0"]');
   await shot('map', 3000); // 「1막 · 항구층」 올라가는 연출이 끝난 뒤
 
-  await page.click('[data-node="0,0"]');
+  // 칸을 고르면: 맨 앞 동료 표지가 길을 따라 미끄러져 가고(0.4초) 칸이 번쩍인 뒤 넘어간다 → 번쩍이는 때를 찍는다
+  await page.evaluate(() => document.querySelector('[data-node="0,0"]').click());
+  await sleep(380);
+  await page.screenshot({ path: join(OUT, 'map_go.png') });
+  made.push({ name: 'map_go', files: ['map_go.png'], note: '지도 칸 이동 연출' }); console.log('shots/map_go.png');
   await page.waitForSelector('[data-end]');
   await page.waitForFunction(() => document.querySelector('.hand .card[data-play]') && !document.querySelector('.hand .card.jdraw'));
   await shot('combat', 800);

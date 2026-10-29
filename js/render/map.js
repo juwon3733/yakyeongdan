@@ -72,7 +72,7 @@ export function mapView() {
     const on = r + 1 === G.row && G.took[r] === i && can.includes(j);
     const open = r >= G.row && reach[r].has(i);
     const cls = trail ? 'trail' : on ? 'on' : open ? 'open' : 'dim';
-    return { cls, svg: `<line x1="${a.x + NW + 2}" y1="${a.y + NH / 2}" x2="${b.x - 2}" y2="${b.y + NH / 2}" class="${cls}"/>` };
+    return { cls, svg: `<line ${on ? `data-to="${r + 1},${j}" ` : ''}x1="${a.x + NW + 2}" y1="${a.y + NH / 2}" x2="${b.x - 2}" y2="${b.y + NH / 2}" class="${cls}"/>` };
   }))).sort((x, y) => LAYER[x.cls] - LAYER[y.cls]).map(l => l.svg).join('');   // 밝은 길이 흐린 길 위에
   const nodes = M.rows.map((row, r) => row.map((t, j) => {
     const p = P[r][j], ok = r === G.row && can.includes(j), cls = r < G.row ? 'past' : ok ? 'now' : 'future';
@@ -80,6 +80,13 @@ export function mapView() {
     return `<button type="button" class="node k-${t} ${cls} ${G.took[r] === j ? 'took' : ''}" style="left:${p.x}px;top:${p.y}px;width:${NW}px;height:${NH}px" ${ok ? `data-node="${r},${j}"` : 'disabled'}>
       ${ICON_SVG[t] || ''}<span class="tx"><span class="t ${name.length > 5 ? 'long' : ''}">${name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → <b class="pace ${G.tutorial ? '' : G.endless ? '' : paceOf(G, G.clock + nodeTime(t), 1)}">${fmt(G.clock + nodeTime(t))}</b>` : ''}</span></span></button>`;
   }).join('')).join('');
+  // 파티 맨 앞(쓰러지지 않은) 동료의 얼굴 표지: 지난 칸의 길 끝(1층이면 지도 왼쪽 끝)에 서 있다가, 칸을 고르면 그 길을 따라 미끄러져 간다(main.js mapMove)
+  const lead = G.formation.find(p => !G.members[p]?.down) || G.formation[0];
+  // 1층(지나온 칸 없음): 지도 왼쪽 끝, 칸과 칸 사이 빈자리
+  const from = G.row > 0 && P[G.row - 1]?.[G.took[G.row - 1]], P0 = P[0];
+  const start = { x: 10, y: P0.length % 2 === 0 ? MH / 2 : P0.length > 1 ? (P0[0].y + NH + P0[1].y) / 2 : P0[0].y - 10 };
+  const at = from ? { x: from.x + NW + 2, y: from.y + NH / 2 } : start;
+  const tok = can.length && lead ? `<span class="maptok" style="left:${at.x}px;top:${Math.round(at.y)}px">${face(lead)}</span>` : '';
   const labels = M.rows.map((row, r) => `<span class="rowlabel" style="left:${P[r][0].x}px">${r === cols - 1 ? (G.endless ? '관문' : '꼭대기') : `${G.endless ? segStart() + r : r + 1}층`}</span>`).join('');
   // 대열 칸: 왼쪽→오른쪽 = 뒤·가운데·앞
   const slots = [2, 1, 0].map(fi => {
@@ -96,7 +103,7 @@ export function mapView() {
   return `<div class="mapwrap">
       <div class="maphead"><h2>${G.endless ? endlessHead(G) : ACT_NAME[G.act]}</h2>${head}${peek}</div>
       <div class="mapgrid" style="width:${MW}px;height:${MH}px">
-        <svg class="edges" width="${MW}" height="${MH}" viewBox="0 0 ${MW} ${MH}" shape-rendering="crispEdges" aria-hidden="true">${lines}</svg>${labels}${nodes}</div>
+        <svg class="edges" width="${MW}" height="${MH}" viewBox="0 0 ${MW} ${MH}" shape-rendering="crispEdges" aria-hidden="true">${lines}</svg>${labels}${nodes}${tok}</div>
       <div class="mapfoot">
         <div class="formation"><span class="lbl">대열<br><small>두 칸을 눌러 자리 바꾸기</small></span>${slots}<span class="enemy-side" data-tip="오른쪽이 적 쪽. 앞줄이 먼저 맞는다(적마다 노림이 다르다).">적은 이쪽 ›</span></div>
       </div>
