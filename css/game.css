@@ -1233,3 +1233,8 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 /* 장면 그림이 따로 없는 장면(휴식): 코드로 칠한 빈 방 대신 지금 막의 배경(#app --bgimg)을 어둡게 비쳐 보인다 */
 .scene .epbg.see{background:radial-gradient(ellipse 70% 60% at 50% 60%,rgba(6,6,18,.35),rgba(6,6,18,.75))}
 .scene .epbg.see i{display:none}
+/* 못 얻은 동료(도감·동료): 실루엣 — 검게 칠하고 동료 색 테두리 빛만 살짝 */
+/* filter는 배경까지 칠하므로 배경은 빼고 그림만: 검게 → 남색 기운 도는 어두운 회색 + 동료 색 1px 테두리 */
+.mcell img.sil,.centry img.sil{background:none;filter:brightness(0) invert(.2) sepia(.6) hue-rotate(200deg) drop-shadow(1px 0 0 var(--c,#5a5c8a)) drop-shadow(-1px 0 0 var(--c,#5a5c8a));object-fit:contain}
+.mcell.none{opacity:.75}
+.centry.none{opacity:.6}

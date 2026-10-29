@@ -146,8 +146,8 @@ export function resultView() {
     ...(R.newBonds || []).map(k => `인연 장면 「${BOND_SCENES[k].title}」`)];
   const epNote = opened.length ? `<p class="epnew"><b class="newt">새 에피소드</b> ${opened.map(esc).join(' · ')}</p>` : '';
   return `<div class="resultscr ${G.won ? 'won' : 'lost'}">
-    ${G.won ? '<i class="rdust" aria-hidden="true"></i><i class="rdust far" aria-hidden="true"></i>' : ''}
-    <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">MVP · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}${st.heal ? ` · 회복 ${st.heal}` : ''}</span></div>
+    ${G.won ? '<i class="rdust" aria-hidden="true"></i><i class="rdust far" aria-hidden="true"></i>' : '<i class="rash" aria-hidden="true"></i><i class="rash far" aria-hidden="true"></i>'}
+    <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">${G.won ? 'MVP' : '끝까지 버틴'} · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}${st.heal ? ` · 회복 ${st.heal}` : ''}</span></div>
     <div class="rinfo">
       <h2 class="rtitle">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
       <p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</p>
