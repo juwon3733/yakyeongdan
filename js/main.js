@@ -16,7 +16,7 @@ import { startTutorial, skipTutorial, finishTutorial, tutorialPending } from './
 import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
-import { artReady } from './art.js';
+import { artReady, hasArt } from './art.js';
 import './cardzoom.js';
 import { setHallTime } from './render/base.js';
 import { enterEndless } from './endless.js';
@@ -429,4 +429,5 @@ setInterval(() => { if (S.view === 'ep' && S.ep?.auto && S.ep.phase === 'read' &
 render();
 bootDone();   // 첫 로딩 화면: 소리를 미리 받고 걷는다 (js/pwa.js)
 // 그림 목록(assets/art.json)이 오면, 그림이 하나라도 있을 때만 다시 그린다 (없으면 임시 도트 그대로)
-artReady.then(n => { if (n) render(); });
+// UI 키트 그림(assets/ui/…)이 있으면 css/ui.css가 CSS 네모 대신 그린 틀·버튼을 쓴다
+artReady.then(n => { if (hasArt('ui/frame.png')) stage.dataset.ui = 'kit'; if (n) render(); });

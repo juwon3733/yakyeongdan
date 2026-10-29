@@ -14,6 +14,8 @@ const STAR5 = ['akane', 'sion', 'lunaria', 'eleonore', 'nerea'];
 const FIRST = ['iris', 'brick', 'marta'];
 const REST = ['noel', 'raven', 'mimimomo', 'sebas', 'mariana', 'tomori', 'sigrun', 'zeno', 'bertha', 'finn', 'laila', 'dora', 'gordon', 'fukuro'];
 const ORDER = [
+  // 퀄리티 계획(docs/QUALITY_PLAN.md): 늘 보이는 카드 그림 → UI 키트·로고 → 타이틀부터
+  ...[...STAR5, ...FIRST, ...REST].map((id) => `cards-${id}`), 'ui-kit', 'logo', 'title',
   'tower',       // 지도 탑 — 지도 화면이 코드로 칠한 돌벽 대신 그림 탑이 된다
   'title',       // 타이틀 도트 키아트(key_px) — 첫 화면의 매끈한 애니 그림이 가장 AI 티가 난다
   'fx-common',   // 공용 타격 이펙트 — 모든 공격이 바로 화려해진다
