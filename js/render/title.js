@@ -31,8 +31,7 @@ export function titleView() {
     <div class="tmenu">
       <h1><span>야</span><span>경</span><span>단</span></h1>
       <p class="note">0시에 솟는 탑을 <b>6시 해 뜨기 전에</b> 오른다</p>
-      <button type="button" class="primary ${first ? 'firstgo' : ''}" data-view="party">밤 오르기</button>
-      <button type="button" data-view="base">본부</button>
+      <button type="button" class="primary ${first ? 'firstgo' : ''}" data-view="base">시작</button>
       <button type="button" data-settings>설정</button>
       <span class="note small">별 조각 <b>${P.shards}</b> · 동료 ${Object.keys(P.owned).length}/${ROSTER_IDS.length}${S.dev ? ' · <span class="dev">개발판</span>' : ''}</span>
     </div>
@@ -89,7 +88,7 @@ export function partyView() {
   }).join('');
   return `<div class="title partyscr">
     <div class="tleft">
-      <div class="thead"><button type="button" class="mini" data-view="title">‹ 타이틀</button><h2>${S.mode === 'endless' ? '끝없는 탑 · 동료 셋' : '동료 셋을 고른다'}</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
+      <div class="thead"><button type="button" class="mini" data-view="base">‹ 본부</button><h2>${S.mode === 'endless' ? '끝없는 탑 · 동료 셋' : '동료 셋을 고른다'}</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
       <div class="pick">${mates}</div>
     </div>
     <div class="tright">

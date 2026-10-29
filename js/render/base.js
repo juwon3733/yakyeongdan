@@ -46,38 +46,49 @@ function walletBump() {
 }
 export const hallTime = () => ls('yk-hall') === 'dawn' ? 'dawn' : 'night';
 export const setHallTime = won => ls('yk-hall', won ? 'dawn' : 'night');
+// 본부 로비: 왼쪽은 본부 배경(bg/hq.png)과 대표 동료(쉬는 셋 중 성급이 가장 높은 동료) 큰 그림, 오른쪽은 세로 큰 메뉴(css/hub2.css)
 const dot = on => on ? '<i class="ndot" aria-label="새 소식"></i>' : '';
 
 export function baseView() {
   const own = ROSTER_IDS.filter(k => P.owned[k]);
   const trio = restTrio(own), L = S.restLine;
-  const rest3 = trio.map((k, i) => {
+  const lead = trio.slice().sort((a, b) => ROSTER[b].rarity - ROSTER[a].rarity)[0];
+  const say = k => {
     const lines = REST_LINES[k] || [ROSTER[k].role];
-    const say = L && L.k === k ? `<span class="bubble">${esc(lines[L.i % lines.length])}</span>` : '';
-    return `<button type="button" class="rester r${i}" style="--c:${ROSTER[k].col}" data-restline="${k}" aria-label="${ROSTER[k].name}에게 말 걸기">${say}<img class="px" src="${charSrc(k)}" alt="${ROSTER[k].name}"><small>${ROSTER[k].name}</small></button>`;
-  }).join('');
+    return L && L.k === k ? `<span class="bubble">${esc(lines[L.i % lines.length])}</span>` : '';
+  };
+  const side = trio.filter(k => k !== lead).map((k, i) =>
+    `<button type="button" class="h2side s${i}" style="--c:${ROSTER[k].col}" data-restline="${k}" aria-label="${ROSTER[k].name}에게 말 걸기">${say(k)}<img class="px" src="${charSrc(k)}" alt="${ROSTER[k].name}"></button>`).join('');
+  const leadBtn = lead ? `<button type="button" class="h2lead ${starRing(lead)}" style="--c:${ROSTER[lead].col}" data-restline="${lead}" aria-label="${ROSTER[lead].name}에게 말 걸기">${say(lead)}<img class="px" src="${charSrc(lead)}" alt="${ROSTER[lead].name}">
+      <span class="h2name"><b>${ROSTER[lead].name}</b> <i class="stars">${stars(ROSTER[lead].rarity)}</i><small>${esc(ROSTER[lead].role)}</small></span></button>` : '';
   const tl = [...P.titles.map(c => `${ROSTER[c]?.name || c}의 새벽`), ...masteryTitles().slice(0, 4).map(t => t.title)];
-  const titles = tl.length ? `<p class="note small">칭호 ${tl.map(t => `「${esc(t)}」`).join(' ')}</p>` : '';
   const tm = hallTime();
   const matesNew = own.length > (+ls('yk-mates-seen') || 3);
-  return `<div class="basescr">
-    <div class="hall tm-${tm}"><span class="hallwin" aria-hidden="true"><i></i></span><span class="hlamp l1" aria-hidden="true"></span><span class="hlamp l2" aria-hidden="true"></span>
-      <div class="resting">${rest3}</div>
-      <p class="note">야경단 본부 · 등대 아래. ${tm === 'dawn' ? '창밖이 밝아 온다. 지난밤은 무사히 넘겼다.' : '창밖은 아직 밤. 탑이 다시 솟을 시간이다.'} <span class="dim">(누르면 말을 건다)</span></p></div>
-    <div class="bmenu">
-      <div class="bhead"><button type="button" class="mini" data-view="title">‹ 타이틀</button>${walletBump()}<button type="button" class="mini" data-settings>설정</button></div>
-      <button type="button" class="primary ${S.hint === 'summon' ? 'hint' : ''}" data-view="summon">${dot(P.shards >= SUMMON.cost || P.pick5)}별 소환${P.pick5 ? ' <b class="newt">★5 고르기</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">여기서 10연</b>' : ''}</button>
-      <div class="brow"><button type="button" data-view="mates">${dot(matesNew)}동료 <small>${own.length}/${ROSTER_IDS.length}</small></button>
-      <button type="button" data-view="exchange">${dot(P.dust >= Math.min(EXCHANGE.char[3], EXCHANGE.talk))}교환소</button></div>
-      <button type="button" data-view="episodes">${dot(epNewCount())}에피소드${epNewCount() ? ` <b class="newt">NEW ${epNewCount()}</b>` : ''}</button>
-      <div class="brow"><button type="button" data-view="codex">도감 <small>업적 ${P.achDone.length}</small></button>
-      <button type="button" data-view="records">기록</button></div>
-      <button type="button" data-view="daily">${dot(!dailyToday().rec?.won)}매일의 밤 <small>${esc(dailyToday().rule.name)}</small></button>
-      <button type="button" data-view="party">밤 오르기</button>
-      ${endlessMenu()}
-      <p class="note small">판 ${P.runs} · 이긴 판 ${P.wins}${P.best != null ? ` · 가장 빠른 도착 ${fmt(P.best)}` : ''}${depthOpen() ? ` · 밤의 깊이 최고 ${P.rec.depthBest}` : ''}</p>
-      ${titles}
+  const epN = epNewCount();
+  const big = (attrs, cls, ico, label, sub = '', on = false) =>
+    `<button type="button" class="h2btn ${cls}" ${attrs}><span class="h2ico" aria-hidden="true">${ico}</span><span class="h2lb">${dot(on)}${label}</span>${sub ? `<small>${sub}</small>` : ''}</button>`;
+  return `<div class="hub2 tm-${tm}">
+    <div class="h2stage">
+      <div class="h2top">${walletBump()}</div>
+      <div class="h2cast">${side}${leadBtn}</div>
+      <p class="h2note note small">야경단 본부 · 등대 아래. ${tm === 'dawn' ? '창밖이 밝아 온다. 지난밤은 무사히 넘겼다.' : '창밖은 아직 밤. 탑이 다시 솟을 시간이다.'} <span class="dim">(동료를 누르면 말을 건다)</span></p>
+      ${tl.length ? `<p class="h2titles note small">칭호 ${tl.map(t => `「${esc(t)}」`).join(' ')}</p>` : ''}
     </div>
+    <nav class="h2menu" aria-label="본부 메뉴">
+      ${big('data-view="party"', 'go primary', '▲', '출격', '밤 오르기 · 동료 셋 고르기')}
+      ${big('data-view="summon"', `primary sm ${S.hint === 'summon' ? 'hint' : ''}`, '✦', `별 소환${P.pick5 ? ' <b class="newt">★5 고르기</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">여기서 10연</b>' : ''}`, `별 조각 ${P.shards}`, P.shards >= SUMMON.cost || P.pick5)}
+      ${big('data-view="mates"', '', '◆', '동료', `${own.length}/${ROSTER_IDS.length}`, matesNew)}
+      ${big('data-view="episodes"', '', '❖', `에피소드${epN ? ` <b class="newt">NEW ${epN}</b>` : ''}`, '', epN)}
+      ${big('data-view="records"', '', '▤', '기록', `판 ${P.runs} · 이긴 판 ${P.wins}${P.best != null ? ` · 최고 ${fmt(P.best)}` : ''}`)}
+      ${big('data-settings', '', '⚙', '설정')}
+      <div class="h2sub">
+        <button type="button" class="mini" data-view="daily">${dot(!dailyToday().rec?.won)}매일의 밤</button>
+        <button type="button" class="mini" data-view="exchange">${dot(P.dust >= Math.min(EXCHANGE.char[3], EXCHANGE.talk))}교환소</button>
+        <button type="button" class="mini" data-view="codex">도감</button>
+        ${endlessMenu().replace('type="button"', 'type="button" class="mini"')}
+        <button type="button" class="mini" data-view="title">타이틀</button>
+      </div>
+    </nav>
   </div>`;
 }
 
