@@ -12,6 +12,7 @@
     "smoke": "node tools/smoke.mjs",
     "shots": "node tools/screens.mjs",
     "sim": "node tools/sim.mjs",
+    "text": "node tools/text-check.mjs",
     "next": "node tools/next-batch.mjs"
   }
 }
