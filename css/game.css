@@ -769,16 +769,6 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s steps
 .jghost.jdie .foe{margin:0}
 
 /* 슬레이 더 스파이어처럼 짧고 또렷하게(0.4초 안팎). 캐릭터·적 움직임은 부드럽게(도트 그림 자체는 계단 없이 이동). 그림(img)에만 걸어 이름·체력 줄은 그대로 */
-/* 가만히 있을 때: 숨쉬기 (발끝 기준, 캐릭터마다 박자 어긋나게) */
-:where(.pm:not(.down), .foe:not(.gone)) > img{animation:jidle 2.8s ease-in-out infinite;transform-origin:50% 100%}
-:where(.pm:nth-of-type(2n)) > img{animation-delay:-.9s;animation-duration:3.1s}
-:where(.foe:nth-child(2n)) > img{animation-delay:-1.4s;animation-duration:2.5s}
-/* 적은 숨쉬기에 좌우로 살짝 흔들림을 더한다 */
-:where(.foe:not(.gone)) > img{animation:jidleF 2.2s ease-in-out infinite;transform-origin:50% 100%}
-@keyframes jidleF{0%,100%{transform:none}30%{transform:translateY(-2px) scaleY(1.03) rotate(-1deg)}70%{transform:translateY(-1px) scaleY(1.015) rotate(1deg)}}
-:where(.foe:nth-child(2n)) > img{animation-delay:-1.1s;animation-duration:2.6s}
-@media (prefers-reduced-motion:reduce){:where(.pm, .foe) > img{animation:none}}
-@keyframes jidle{0%,100%{transform:none}50%{transform:translateY(-2px) scaleY(1.035) scaleX(.99)}}
 /* 맞음: 번쩍임 + 뒤로 밀렸다 돌아옴 (흔들림 끔이면 번쩍임만) */
 .jhitF{animation:jhitF .36s cubic-bezier(.2,.7,.3,1);transform-origin:50% 100%}
 @keyframes jhitF{0%{filter:brightness(3.2);transform:none}18%{filter:brightness(2);transform:translateX(16px) rotate(4deg)}55%{filter:none;transform:translateX(-3px) rotate(-1deg)}100%{transform:none}}
@@ -928,7 +918,9 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s steps
 .pm img{width:72px;height:108px}
 .pm .hpbar{width:70px}
 .pm.tg{background:rgba(76,192,138,.16);outline:2px solid #4cc08a;outline-offset:-2px}
-.pm.last{outline:1px dashed var(--c);outline-offset:-2px}
+/* 마지막에 카드를 쓴 동료(연계 기준): 칸 전체 점선 네모 대신 몸 둘레에 동료 색 1px 도트 테두리 */
+.pm.last{outline:0}
+.pm.last > img{filter:drop-shadow(1px 0 0 var(--c)) drop-shadow(-1px 0 0 var(--c)) drop-shadow(0 -1px 0 var(--c)) drop-shadow(2px 2px 0 rgba(0,0,0,.55))}
 .pm.aimed{border-bottom-color:var(--rose);box-shadow:0 3px 0 var(--rose)}
 .pm.lit{background:rgba(255,224,96,.12);outline:2px solid #ffe060;outline-offset:-2px}
 .swap{margin-bottom:52px}
@@ -1149,7 +1141,6 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 /* 전투 스프라이트 칸 가장자리에서 잘린 효과가 네모로 보이지 않게 가장자리를 흐리게 */
 .pm > img:not([src^="data:"]),.foe > img:not([src^="data:"]){-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(0deg,#000 0,#000 100%);-webkit-mask-size:100% 92%,100% 8%;-webkit-mask-position:0 0,0 100%;-webkit-mask-repeat:no-repeat;
   mask-image:linear-gradient(90deg,transparent 0,#000 7%,#000 93%,transparent 100%),linear-gradient(0deg,#000 0,#000 100%);mask-size:100% 92%,100% 8%;mask-position:0 0,0 100%;mask-repeat:no-repeat}
-.pm > img.jxfade{position:absolute;margin:0;pointer-events:none;animation:none;z-index:1;--sk:1}
 
 /* ---- 기술 연출 (카오스 제로 나이트메어 참고): 잔상·암전·흰 번쩍·필살 컷인 (js/juice.js) ---- */
 #fx .jafter{position:absolute;z-index:2;pointer-events:none;image-rendering:pixelated;object-fit:contain;object-position:50% 100%;

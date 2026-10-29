@@ -173,7 +173,7 @@ export function combatView() {
       <div class="party">${party}</div>
       <div class="foes ${many ? 'many' : ''}">${foes}</div>
     </div>
-    <div class="log" aria-live="polite">${C.moonPick ? `<span class="cmoonpick">월광 · 이번 전투의 달: ${Object.keys(MOONS).map(k => `<button type="button" class="mini ${G.moon === k ? 'on' : ''}" data-cmoon="${k}" title="${esc(MOONS[k].text)}"><img class="px" src="${moonImg(k)}" alt="">${MOONS[k].name}</button>`).join('')}</span>` : ''}${temperBar}${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span>${pendKeep}${relicFlag('hourglass')
+    <div class="log${!C.moonPick && !temperBar && !tip && !pendKeep && !relicFlag('hourglass') ? ' fade' : ''}" aria-live="polite">${C.moonPick ? `<span class="cmoonpick">월광 · 이번 전투의 달: ${Object.keys(MOONS).map(k => `<button type="button" class="mini ${G.moon === k ? 'on' : ''}" data-cmoon="${k}" title="${esc(MOONS[k].text)}"><img class="px" src="${moonImg(k)}" alt="">${MOONS[k].name}</button>`).join('')}</span>` : ''}${temperBar}${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span>${pendKeep}${relicFlag('hourglass')
       ? `<button type="button" class="mini hg ${C.payEnergy ? 'on' : ''}" data-hg aria-pressed="${C.payEnergy}" title="깨진 모래시계: 시간 카드를 시간 대신 에너지 1로">시간 카드: ${C.payEnergy ? '에너지 1' : '시간'}</button>` : ''}</div>
     <div class="bottom">
       <span class="energy ${C.energy ? '' : 'empty'}" data-tip="에너지: 카드를 쓰는 데 든다. 턴마다 다시 찬다."><span class="orb"><i class="swirl"></i><b>${C.energy}</b><small>/${Math.max(RULES.energy, C.energy)}</small></span></span>
