@@ -1,3 +1,4 @@
+import { artURL } from '../art.js';
 import { S } from '../run.js';
 import { topbar } from './common.js';
 import { titleView, partyView } from './title.js';
@@ -19,6 +20,13 @@ const VIEWS = { map: mapView, combat: combatView, reward: rewardView, rest: rest
 const META = { title: titleView, party: partyView, base: baseView, summon: summonView, reveal: revealView, episodes: episodesView, ep: epView,
   pick5: pick5View, odds: oddsView, exchange: exchangeView, mates: matesView, codex: codexView, records: recordsView, tutintro: tutIntroView, daily: dailyView };
 
+function bgImage(G, scr) {
+  const run = G && S.view === 'run' && !G.tutorial;
+  const f = run ? (scr === 'combat' || scr === 'reward' ? `bg/act${G.act}.png` : scr === 'result' ? null : `bg/map${G.act}.png`)
+    : scr === 'base' || scr === 'party' || scr === 'mates' ? 'bg/hq.png' : scr === 'summon' || scr === 'reveal' || scr === 'pick5' ? 'summon/sky.png' : null;
+  const u = f && artURL(f);
+  return u ? `url("${new URL(u, location.href).href}")` : 'none';   // CSS 변수의 주소는 CSS 파일 기준이라 절대 주소로
+}
 export function render(app) {
   const G = S.G;
   app.classList.toggle('tut', !!(G?.tutorial && S.view === 'run'));
@@ -34,6 +42,8 @@ export function render(app) {
     else if (s === 'tutdone') app.innerHTML = tutDoneView();
     else app.innerHTML = topbar(s === 'combat' ? combatTopExtra() : '') + tutBar() + `<div class="body">${s === 'moon' ? moonView() : VIEWS[s]()}</div>`;
   }
+  // 배경 그림(bg/…): 전투·보상은 그 막 전투 배경, 지도·상점·휴식 등은 그 막 지도 배경, 본부·파티는 본부, 소환은 소환 하늘. 그림이 없으면 원래 색
+  app.style.setProperty('--bgimg', bgImage(G, app.dataset.screen));
   // 카드 뒷면(숙련도 4): 보상 뒤집기 뒷면 색
   if (P.cardBack && ROSTER[P.cardBack]) app.style.setProperty('--back-c', ROSTER[P.cardBack].col); else app.style.removeProperty('--back-c');
   // 판 밖 화면에서는 수집 업적도 살핀다(판 업적은 결과 화면 grantRun이 살핌)
