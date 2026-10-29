@@ -54,18 +54,25 @@ const ICON_SVG = Object.fromEntries(Object.entries(ICON).map(([k, { px, col }]) 
   return [k, `<svg class="ic" width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">${paths}</svg>`];
 }));
 
+const LAYER = { dim: 0, open: 1, trail: 2, on: 3 };
 const pos = (r, j, n, cols) => ({ x: 4 + r * ((MW - NW - 8) / (cols - 1)), y: Math.round((j + 1) * MH / (n + 1) - NH / 2) });
 
 export function mapView() {
   const G = S.G, M = G.map, cols = M.rows.length, can = reachable(G.row);
   const P = M.rows.map((row, r) => row.map((_, j) => pos(r, j, row.length, cols)));
+  // 지금 자리에서 앞으로 닿을 수 있는 칸(층마다 번호 모음)
+  const reach = M.rows.map(() => new Set());
+  if (G.row < cols) can.forEach(j => reach[G.row].add(j));
+  for (let r = G.row; r < cols - 1; r++) reach[r].forEach(i => (M.edges[r][i] || []).forEach(j => reach[r + 1].add(j)));
   const lines = M.edges.slice(0, -1).flatMap((ed, r) => ed.flatMap((to, i) => to.map(j => {
     const a = P[r][i], b = P[r + 1][j];
-    // trail = 지나온 길(금색 점선), on = 지금 갈 수 있는 길
+    // trail = 지나온 길(금색), on = 바로 갈 수 있는 길, open = 그 너머로 이어지는 길, dim = 못 가는 길
     const trail = r + 1 < G.row && G.took[r] === i && G.took[r + 1] === j;
     const on = r + 1 === G.row && G.took[r] === i && can.includes(j);
-    return `<line x1="${a.x + NW}" y1="${a.y + NH / 2}" x2="${b.x}" y2="${b.y + NH / 2}" class="${trail ? 'trail' : on ? 'on' : r < G.row - 1 ? 'past' : ''}"/>`;
-  }))).join('');
+    const open = r >= G.row && reach[r].has(i);
+    const cls = trail ? 'trail' : on ? 'on' : open ? 'open' : 'dim';
+    return { cls, svg: `<line x1="${a.x + NW + 2}" y1="${a.y + NH / 2}" x2="${b.x - 2}" y2="${b.y + NH / 2}" class="${cls}"/>` };
+  }))).sort((x, y) => LAYER[x.cls] - LAYER[y.cls]).map(l => l.svg).join('');   // 밝은 길이 흐린 길 위에
   const nodes = M.rows.map((row, r) => row.map((t, j) => {
     const p = P[r][j], ok = r === G.row && can.includes(j), cls = r < G.row ? 'past' : ok ? 'now' : 'future';
     return `<button type="button" class="node k-${t} ${cls} ${G.took[r] === j ? 'took' : ''}" style="left:${p.x}px;top:${p.y}px" ${ok ? `data-node="${r},${j}"` : 'disabled'}>
@@ -87,7 +94,7 @@ export function mapView() {
   return `<div class="mapwrap">
       <div class="maphead"><h2>${G.endless ? endlessHead(G) : ACT_NAME[G.act]}</h2>${head}${peek}</div>
       <div class="mapgrid" style="width:${MW}px;height:${MH}px">
-        <svg class="edges" width="${MW}" height="${MH}" aria-hidden="true">${lines}</svg>${labels}${nodes}</div>
+        <svg class="edges" width="${MW}" height="${MH}" viewBox="0 0 ${MW} ${MH}" shape-rendering="crispEdges" aria-hidden="true">${lines}</svg>${labels}${nodes}</div>
       <div class="mapfoot">
         <div class="formation"><span class="lbl">대열<br><small>두 칸을 눌러 자리 바꾸기</small></span>${slots}<span class="enemy-side" data-tip="오른쪽이 적 쪽. 앞줄이 먼저 맞는다(적마다 노림이 다르다).">적은 이쪽 ›</span></div>
       </div>
