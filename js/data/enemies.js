@@ -59,7 +59,7 @@ export const FOE = {
   smuggler:{ name: '밀수꾼 두목', hp: 64, pal: 'pirate', hitSound: 'soft', aim: 'last', pat: [S(1), G(8), A(19), A(8, 2)],
              lines: ['"그 패, 좋아 보이는데. 잠깐 빌리지."', '"탑에서 파는 건 다 내 물건이야."'] },
   keeper:  { name: '등대지기', hp: 95, pal: 'keeper', hitSound: 'soft', long: true, crown: true, aim: 'light',
-             lines: ['"불빛이 닿는 곳이 네 자리다."', '"오늘 밤도 올라왔나. 불을 켜 두마."', '"등대는 길을 비추지. 숨을 곳도 같이."'],
+             lines: ['"불빛이 닿는 곳이 네 자리다."', '"오늘 밤도 올라왔나. 불을 켜 두마."', '"그림자에 숨어 봐야 소용없다. 불은 돌거든."'],
              light: { double: .5 },   // 불빛이 비춘 동료: 그 동료 카드 비용 +1, 단일 공격은 그 동료를 노림. 체력 절반이면 불빛 둘
              pat: [A(9), M(11, 8), A(6, 3), U(3)] },
   // 1막 보스 변형 (판 시드로 등대지기와 둘 중 하나): 안개 마녀 여왕 — 저주·약한 동료 노림, 「안개 장막」
@@ -80,11 +80,11 @@ export const FOE = {
   bird:    { name: '번개새', hp: 84, pal: 'knight', hitSound: 'beast', long: true, aim: 'back', pat: [A(12, 3), U(3), A(35)],
              lines: ['번개새가 날개를 펴자 공기가 찌릿하다.', '하늘이 갈라지는 소리. 번개새가 내려앉는다.'] },
   trumpet: { name: '폭풍 나팔수', hp: 78, pal: 'knight', hitSound: 'shell', long: true, pat: [Z('puff'), R(10), U(3), A(23)],
-             lines: ['"나팔 소리가 들리면 구름이 모인다!"', '"기사단의 이름으로, 바람을 부른다."'] },
+             lines: ['"나팔 소리가 들리면 구름이 모인다!"', '"숨 한 번이면 폭풍 하나다!"'] },
   vaneL:   { name: '풍향계 동', hp: 45, pal: 'cloud', hitSound: 'shell', aim: 'weakest', pat: [A(16), B(12)], line: '삐걱, 삐걱. 두 풍향계가 서로를 등지고 돈다.' },
   vaneR:   { name: '풍향계 서', hp: 45, pal: 'cloud', hitSound: 'shell', aim: 'weakest', pat: [B(12), A(16)] },
   captain: { name: '구름 기사단장', hp: 120, pal: 'knight', hitSound: 'shell', long: true, crown: true, armor: 1, aim: 'front',
-             lines: ['"구름 기사단의 이름으로. 여기서 돌아가라."', '"높이 오를수록 떨어지는 것도 아프다."', '"…시그룬이 있었다면, 이 밤도 달랐을까."'],
+             lines: ['"구름 기사단의 이름으로. 여기서 돌아가라."', '"높이 오를수록 떨어지는 것도 아프다."', '"…시그룬은 결국 너희 편에 섰군."'],
              phase2: { at: .5, msg: '구름 기사단장이 갑옷을 벗어던졌다! 피해 감소가 사라지고 매 턴 두 번 움직인다.', armor: 0, acts: 2, aim: 'cycle',
                       pat: [A(10), A(4, 2), M(8, 8), U(2)] },
              pat: [M(12, 10), A(7, 3), U(3), A(20)] },
@@ -109,7 +109,7 @@ export const FOE = {
   sage:    { name: '성좌 마법사', hp: 92, pal: 'thief', hitSound: 'magic', long: true, crown: true, pat: [G(10), R(8), Z('comet'), A(20)],
              lines: ['"별자리는 내가 이어. 너희 자리는 없어."', '"떨어지는 별은 다 내 거야."'] },
   dawn:    { name: '새벽', hp: 176, pal: 'dawn', hitSound: 'magic', long: true, crown: true, aim: 'dawn', turnClock: 1, burstClock: 3,
-             lines: ['"왜 매일 밤 올라오는 거야? …그냥 아침이 오게 두면 되잖아."', '"또 너희구나. 오늘은 몇 시에 왔어?"', '"밤은 끝나야 해. 그게 맞는 거야."'],
+             lines: ['"왜 매일 밤 올라오는 거야? …그냥 아침이 오게 두면 되잖아."', '"또 너희구나. 오늘은 몇 시에 왔어?"', '"밤은 끝나게 돼 있어. 너희가 뭘 하든."'],
              phase2: { at: .5, msg: '해가 뜬다. 밤 시계 +5분.', clockOnce: 5, turnClock: 1 },
              // 밤의 깊이 5 이상에서만: 체력 20% 아래 「한낮」 3단계
              phase3: { at: .2, depth: 5, msg: '한낮. 「새벽」이 해를 등에 지고 날아올랐다. 매 턴 모두 공격, 밤 시계 +2분. 대신 한 턴 100+ 벌칙은 사라진다.',
