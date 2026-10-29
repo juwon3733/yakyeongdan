@@ -47,7 +47,10 @@ try {
   pending = execSync('git ls-remote --heads origin "assets/*"', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] })
     .split('\n').map((l) => l.split('refs/heads/assets/')[1]).filter(Boolean);
 } catch { /* 원격을 못 보면 대기 중 브랜치는 모름 */ }
-const inReview = (id) => pending.some((b) => b === id || b.startsWith(id + '-'));
+// 프롬프트를 바꿔 다시 그려야 하는 묶음: 이 시각(월일시분) 이전 브랜치는 검수 대기로 치지 않는다(옛 그림은 안 씀)
+const REDO_AFTER = { 'aura-akane': '10300110', 'aura-sion': '10300110', 'aura-lunaria': '10300110', 'aura-eleonore': '10300110', 'aura-nerea': '10300110' };
+const stampOf = (b) => (/-(\d{4})-(\d{4})$/.exec(b) || []).slice(1).join('');
+const inReview = (id) => pending.some((b) => (b === id || b.startsWith(id + '-')) && !(REDO_AFTER[id] && stampOf(b) && stampOf(b) <= REDO_AFTER[id]));
 
 const todo = ORDER.filter((id) => P.batches.some((b) => b.id === id) && missing(id).length);
 if (process.argv.includes('--all')) {
