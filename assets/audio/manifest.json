@@ -88,6 +88,10 @@
   "summon",
   "thorns",
   "turn",
+  "ui_end",
+  "ui_hover",
+  "ui_page",
+  "ui_pick",
   "win"
  ],
  "amb": [

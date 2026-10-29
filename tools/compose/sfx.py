@@ -482,3 +482,43 @@ def hit_magic():
 
 
 SFX.update({'hit_soft': hit_soft, 'hit_shell': hit_shell, 'hit_beast': hit_beast, 'hit_magic': hit_magic})
+
+
+# ---------- UI (작고 짧게: 0.05~0.2초) ----------
+# 빌드에서 크기를 0.9로 맞추므로, 실제로 작게 들리는 건 js/audio.js의 SFX_GAIN이 맡는다.
+
+def ui_hover():
+    """카드에 마우스를 댐: 아주 짧은 높은 틱"""
+    tk = fm(98, 0.008, 0.6, ratio=2.0, index=1.2, idecay=0.008, a=0.0005, d=0.015, s=0, r=0.006)
+    return fit(highpass(tk, 1500), 0.05)
+
+
+def ui_pick():
+    """카드를 고름: 위로 오르는 FM 두 음 (뾱-삑)"""
+    a = fm(84, 0.03, 0.5, ratio=2.0, index=1.6, idecay=0.03, a=0.001, d=0.05, s=0, r=0.015)
+    b = fm(91, 0.04, 0.5, ratio=2.0, index=1.6, idecay=0.04, a=0.001, d=0.07, s=0, r=0.02)
+    return fit(mix(a, at(b, 0.04)), 0.12)
+
+
+def ui_end():
+    """턴 끝 버튼: 또렷하게 내려앉는 두 음 + 가벼운 툭"""
+    a = fm(79, 0.04, 0.55, ratio=1.0, index=2.0, idecay=0.05, a=0.001, d=0.08, s=0, r=0.02)
+    b = fm(72, 0.07, 0.55, ratio=1.0, index=2.0, idecay=0.07, a=0.001, d=0.12, s=0, r=0.03)
+    t = T(0.05)
+    thud = np.sin(2 * np.pi * np.cumsum(140 + 120 * np.exp(-t / 0.01)) / SR) * np.exp(-t / 0.015) * 0.4
+    return fit(mix(a, at(b, 0.06), at(thud, 0.06)), 0.18)
+
+
+def ui_page():
+    """화면 바뀜: 짧게 스치는 바람 + 위로 미끄러지는 FM"""
+    sec = 0.16
+    t = T(sec)
+    swish = lowpass(highpass(noise(sec), 1200), 5000) * np.sin(np.pi * t / sec) ** 2 * 0.35
+    f = hz(74) * 2 ** (t / sec)                     # 한 옥타브 위로
+    ph = np.cumsum(f) / SR
+    mod = np.sin(2 * np.pi * ph * 2) * 1.2 * np.exp(-t / 0.08)
+    slide = np.sin(2 * np.pi * ph + mod) * np.sin(np.pi * t / sec) * 0.35
+    return fit(mix(swish, slide), sec)
+
+
+SFX.update({'ui_hover': ui_hover, 'ui_pick': ui_pick, 'ui_end': ui_end, 'ui_page': ui_page})
