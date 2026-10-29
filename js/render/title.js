@@ -14,7 +14,7 @@ const rnd = (n => () => (n = (n * 1103515245 + 12345) >>> 0) / 4294967296)(7);
 const STARS = Array.from({ length: 46 }, () => [rnd() * 100, rnd() * 58, rnd() < .2 ? 2 : 1, Math.floor(rnd() * 8)]);
 const LAMPS = [[40, 0], [46, 1], [53, 2], [61, 0], [68, 1], [90, 2], [96, 0]];
 export function titleView() {
-  const key = artURL('title/key.png');
+  const key = artURL('title/key_px.png') || artURL('title/key.png');   // 도트 키아트가 들어오면 그걸 먼저
   const three = ['iris', 'brick', 'marta'].map((k, i) => `<img class="px sil s${i}" src="${charSrc(k)}" alt="">`).join('');
   const scene = key ? `<img class="keyart" src="${key}" alt="">` : `<div class="harbor" aria-hidden="true">
       ${STARS.map(([x, y, z, d]) => `<i class="tw d${d}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;width:${z}px;height:${z}px"></i>`).join('')}

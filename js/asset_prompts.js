@@ -582,8 +582,9 @@ One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2
     out.push(item('bg', `bg_${id}`, 'bg', `${id}.png`, join(STYLE.pixel, `Background: ${desc}. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 pixels, full color, limited palette of about 64 colors, upscaled exactly 2x with nearest-neighbor to 1280x720.`)));
   }
   batches.push({ id: 'title', title: '타이틀 키아트' });
-  out.push(item('title', 'title_key', 'title', 'key.png',
-    join(STYLE.keyart, STYLE.character, STYLE.onModel, `Title key art: three night-watch members standing back to back on a ledge of a tower rising from the night sea — the swordswoman Iris (center), the gunner Brick (left) and the tall nun Marta (right), ON-MODEL from the attached references. Lanterns, stars, a crescent moon. Keep the right 40% of the image darker and simpler for the menu. 16:9 (1536x864).`),
+  // v7: 매끈한 애니 일러스트(AI 티) 대신 게임과 같은 도트 — 파일 이름을 key_px.png로 바꿔 다시 그린다(js/render/title.js가 먼저 찾음)
+  out.push(item('title', 'title_key', 'title', 'key_px.png',
+    join(STYLE.pixel, STYLE.character, STYLE.distinct, STYLE.onModel, `TRUE PIXEL ART title key art, draw it at 384x216 native resolution and upscale exactly 4x with nearest-neighbor to 1536x864; visible square pixels everywhere, limited palette of about 64 colors, NOT a smooth painted anime illustration. Title key art: three night-watch members standing back to back on a ledge of a tower rising from the night sea — the swordswoman Iris (center), the gunner Brick (left) and the tall nun Marta (right), ON-MODEL from the attached references. Lanterns, stars, a crescent moon. Keep the right 40% of the image darker and simpler for the menu. 16:9 (1536x864).`),
     { reference_images: ['chars/iris_normal.png', 'chars/brick_normal.png', 'chars/marta_normal.png'] }));
   batches.push({ id: 'summon', title: '별 소환 연출' });
   out.push(item('summon', 'summon_sky', 'summon', 'sky.png', join(STYLE.keyart, 'Summon screen: the rooftop of the night-watch lighthouse headquarters under a vast starry night sky, a telescope and railing in the foreground, empty center of the sky where shooting stars will fall. No people. 16:9 (1536x864).')));

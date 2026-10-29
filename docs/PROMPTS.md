@@ -1545,7 +1545,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `title_key` | `assets/title/key.png` | 1536×864 | `assets/chars/iris_normal.png` `assets/chars/brick_normal.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | — |
+| `title_key` | `assets/title/key_px.png` | 1536×864 | `assets/chars/iris_normal.png` `assets/chars/brick_normal.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | — |
 
 ## `summon` — 별 소환 연출
 
