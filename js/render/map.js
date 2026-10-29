@@ -10,7 +10,8 @@ import { endlessHead } from './endless.js';
 import { segStart } from '../endless.js';
 
 // 가로 지도: 왼쪽(1층) → 오른쪽(꼭대기). 층 사이 선은 갈렸다 합쳐진다. 아래에 대열 고치기.
-const MW = 624, MH = 232, NW = 100, NH = 36;
+// 칸 폭 108: 아이콘(32) 옆에 이름(12px)과 「+12분 → 00:12」(9px)가 갈무리 글꼴로 잘리지 않게
+const MW = 624, MH = 232, NW = 108, NH = 36;
 
 // 칸 종류 도트 아이콘(16×16, 2배로 그림). 글자 하나 = 한 픽셀, '.'는 비움.
 const ICON = {
@@ -75,8 +76,9 @@ export function mapView() {
   }))).sort((x, y) => LAYER[x.cls] - LAYER[y.cls]).map(l => l.svg).join('');   // 밝은 길이 흐린 길 위에
   const nodes = M.rows.map((row, r) => row.map((t, j) => {
     const p = P[r][j], ok = r === G.row && can.includes(j), cls = r < G.row ? 'past' : ok ? 'now' : 'future';
-    return `<button type="button" class="node k-${t} ${cls} ${G.took[r] === j ? 'took' : ''}" style="left:${p.x}px;top:${p.y}px" ${ok ? `data-node="${r},${j}"` : 'disabled'}>
-      ${ICON_SVG[t] || ''}<span class="tx"><span class="t">${t === 'boss' && M.boss && !G.tutorial && !G.endless ? FOE[M.boss].name : NODE[t].name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → <b class="pace ${G.tutorial ? '' : G.endless ? '' : paceOf(G, G.clock + nodeTime(t), 1)}">${fmt(G.clock + nodeTime(t))}</b>` : ''}</span></span></button>`;
+    const name = t === 'boss' && M.boss && !G.tutorial && !G.endless ? FOE[M.boss].name : NODE[t].name;
+    return `<button type="button" class="node k-${t} ${cls} ${G.took[r] === j ? 'took' : ''}" style="left:${p.x}px;top:${p.y}px;width:${NW}px;height:${NH}px" ${ok ? `data-node="${r},${j}"` : 'disabled'}>
+      ${ICON_SVG[t] || ''}<span class="tx"><span class="t ${name.length > 5 ? 'long' : ''}">${name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → <b class="pace ${G.tutorial ? '' : G.endless ? '' : paceOf(G, G.clock + nodeTime(t), 1)}">${fmt(G.clock + nodeTime(t))}</b>` : ''}</span></span></button>`;
   }).join('')).join('');
   const labels = M.rows.map((row, r) => `<span class="rowlabel" style="left:${P[r][0].x}px">${r === cols - 1 ? (G.endless ? '관문' : '꼭대기') : `${G.endless ? segStart() + r : r + 1}층`}</span>`).join('');
   // 대열 칸: 왼쪽→오른쪽 = 뒤·가운데·앞

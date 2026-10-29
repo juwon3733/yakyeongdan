@@ -113,3 +113,35 @@
 @media (prefers-reduced-motion:reduce){
   .rdust,.resultscr.won .rtitle,.resultscr .countup,.resultscr .mvp{animation:none}
 }
+
+/* ── 갈무리 글꼴 맞춤: 글자 잘림·겹침 ── */
+
+/* 지도 칸(폭 108, map.js NW): 이름 12px · 시간은 둘째 줄 9px. 긴 보스 이름은 10px */
+.mapgrid .node{gap:3px;padding:1px 3px 1px 1px}
+.mapgrid .node .t{line-height:13px}
+.mapgrid .node .t.long{font-size:10px}
+.mapgrid .node .m{font-size:9px;line-height:11px;overflow:hidden;text-overflow:clip}
+#stage.bigtext .mapgrid .node .t{font-size:12px}
+#stage.bigtext .mapgrid .node .t.long{font-size:10px}
+#stage.bigtext .mapgrid .node .m{font-size:9px}
+
+/* 시간 연출(juice.js clockFx): 위 띠 바로 아래에 붙이고 「+10분」은 시계 오른쪽에 —
+   야시장 후쿠로 아이콘·이름, 지도 제목을 덮지 않게 */
+#fx .jclock{margin-top:-15px;width:26px;height:26px}
+#fx .jclock i{left:11px;top:3px;height:10px;transform-origin:1px 10px}
+#fx .jclock b{left:10px;top:11px}
+#fx .jclock span{left:32px;top:50%;transform:translateY(-50%)}
+
+/* 업적 띠: 오른쪽 아래에 한 장씩 (index.js가 차례로 띄움) */
+#achbox{top:auto;bottom:8px;right:8px}
+.achtoast{animation:achin .3s cubic-bezier(.25,.8,.35,1) both,achout .3s cubic-bezier(.25,.8,.35,1) 2.3s both}
+
+/* 파티 고르기 칸: 이름은 칸 폭 전체 한 줄, 그림 옆에 별 / 역할(낱말 단위로 두 줄까지) / 체력(꺾이지 않게), 패시브는 아래 칸 폭 전체로 */
+.partyscr .mate{grid-template-columns:30px minmax(0,1fr);grid-template-rows:auto auto auto 1fr auto;row-gap:2px;column-gap:4px;min-height:88px}
+.partyscr .mate .tx{display:contents}
+.partyscr .mate .nm{grid-row:1;grid-column:1 / -1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:12px;padding-right:10px}
+.partyscr .mate > img{grid-row:2 / span 3;grid-column:1}
+.partyscr .mate .stars{grid-row:2;grid-column:2;line-height:10px;white-space:nowrap}
+.partyscr .mate .rl{grid-row:3;grid-column:2;line-height:10px;word-break:keep-all;overflow-wrap:anywhere}
+.partyscr .mate .hp{grid-row:4;grid-column:2;font-size:9px;line-height:10px;white-space:nowrap;color:var(--ink)}
+.partyscr .mate .ps{grid-row:5;grid-column:1 / -1;line-height:11px;-webkit-line-clamp:2}
