@@ -1,7 +1,7 @@
 // 화면 사진: 타이틀·파티·지도·전투·보상·상점·결과를 1280×720으로 찍어 shots/에 저장한다.
 // 전투에서는 카드 한 장 쓰는 순간을 0.1초 간격 6장(shots/combat_seq_1~6.png),
 // 공격 카드(atk)를 쓰는 순간 0.1초 간격 6장(shots/atk_seq_1~6.png, 피해 숫자 확인용),
-// 턴 끝을 누른 뒤 적 차례를 0.08초 간격 8장(shots/foe_seq_1~8.png).
+// 턴 끝을 누른 뒤 적 차례를 0.1초 간격 16장(shots/foe_seq_1~16.png).
 // 끝나면 shots/index.html(이번에 찍은 사진을 한 화면에 격자로, 연속 사진은 한 줄로)을 만든다 — tools/shots-index.mjs.
 // 실행: node tools/screens.mjs   (npm run shots, Playwright 필요) — 서버 띄우는 방식은 tools/smoke.mjs와 같다.
 import http from 'node:http';
@@ -65,7 +65,7 @@ try {
 
   await page.click('[data-start]');
   await page.waitForSelector('[data-node="0,0"]');
-  await shot('map');
+  await shot('map', 3000); // 「1막 · 항구층」 올라가는 연출이 끝난 뒤
 
   await page.click('[data-node="0,0"]');
   await page.waitForSelector('[data-end]');
@@ -121,14 +121,14 @@ try {
   if (!atkCard) console.warn('  ! 손패에 쓸 수 있는 공격 카드가 없어 atk_seq를 건너뜀');
   else await play(atkCard, 'atk_seq', '공격');
 
-  // 적 차례: 턴 끝을 누른 직후부터 0.08초 간격으로 8장
+  // 적 차례: 턴 끝을 누른 직후부터 0.1초 간격으로 16장
   await settle();
   if (!await page.$('[data-end]:not([disabled])')) fail('턴 끝 단추를 누를 수 없음');
   else {
     const turn = await ev(() => window.__yk.S.C?.turn);
     await page.click('[data-end]');
     await park();
-    await burst('foe_seq', 8, 80, `턴 ${turn} 끝, `);
+    await burst('foe_seq', 16, 100, `턴 ${turn} 끝, `);
   }
   await settle();
 

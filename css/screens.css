@@ -29,9 +29,15 @@
 .mapgrid .node.past.took{--k:var(--gold);border-style:dashed;opacity:.9}
 .mapgrid .node.past .ic,.mapgrid .node.future .ic{filter:grayscale(.5) drop-shadow(1px 1px 0 #000)}
 
-/* 길: 지나온 길은 금색 점선, 지금 갈 수 있는 길은 흐르는 연한 금색 */
+/* 길: 칸 뒤에 깔리는 점선(슬레이 더 스파이어식).
+   못 가는 길은 흐리게, 앞으로 이어지는 길은 밝게, 바로 갈 길은 흐르는 연한 금색, 지나온 길은 금색 */
+.mapgrid .edges{z-index:0;pointer-events:none;overflow:visible}
+.mapgrid .node,.mapgrid .rowlabel{z-index:1}
+.mapgrid line{stroke-width:2;stroke-linecap:butt}
+.mapgrid line.dim{stroke:#3a3d6e;stroke-dasharray:2 4;opacity:.55}
+.mapgrid line.open{stroke:#b9c2ea;stroke-dasharray:2 4;filter:drop-shadow(1px 1px 0 #000)}
 .mapgrid line.trail{stroke:var(--gold);stroke-width:2;stroke-dasharray:4 3;stroke-linecap:butt}
-.mapgrid line.on{stroke:#f0d890;stroke-width:2;stroke-dasharray:2 3;animation:yk-map-flow 1.2s steps(5) infinite}
+.mapgrid line.on{stroke:#f0d890;stroke-width:2;stroke-dasharray:2 3;filter:drop-shadow(1px 1px 0 #000);animation:yk-map-flow 1.2s steps(5) infinite}
 @keyframes yk-map-flow{to{stroke-dashoffset:-10}}
 
 @media (prefers-reduced-motion:reduce){
