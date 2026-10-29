@@ -47,3 +47,4 @@
 #app[data-screen="combat"] :is(.foe,.pm).tg > img{filter:drop-shadow(0 0 2px rgba(255,255,255,.7))}
 /* 도움말 줄은 할 말이 있을 때만 */
 #app[data-screen="combat"] .log:not(:has(> :not(.tip:empty))):not(:has(b)){visibility:hidden}
+#fx .jred{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse 70% 65% at 50% 50%,transparent 45%,rgba(200,20,40,.55))}

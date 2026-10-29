@@ -113,7 +113,7 @@ export function afterRender(events = []) {
     dropFrozen(0);
     return;
   }
-  let t = 0, turnT = null, foePhase = false, played = null;
+  let t = 0, turnT = null, foePhase = false, played = null, foeBack = 0;
   const barT = new Map();
   const mark = (k, ms) => { if (!barT.has(k)) barT.set(k, ms); };
   for (const e of events) {
@@ -163,10 +163,17 @@ export function afterRender(events = []) {
             if (x.kind === 'hurt') { e.aim = x.id; break; }
           }
         }
-        t += 80; const s = t; at(s, () => foeActFx(e)); t +=e.t === 'atk' || e.t === 'mix' ? 150 : 260; break; }
+        // 앞 적이 돌진에서 돌아온 뒤에 다음 적 (적 차례가 한 명씩 또렷하게)
+        t = Math.max(t, foeBack) + 80;
+        if ((e.t === 'atk' || e.t === 'mix') && !calmNow()) {
+          // 예고(의도가 불타며 들썩, 몸을 웅크림) → 돌진, 맞는 순간에 피격이 오게
+          { const s = t; at(s, () => foeWindup(e)); } t += 240;
+          { const s = t; at(s, () => foeActFx(e)); } t += 150; foeBack = t + 430;
+        } else { const s = t; at(s, () => foeActFx(e)); t += e.t === 'atk' || e.t === 'mix' ? 150 : 260; }
+        break; }
       case 'hurt': { const s = t; at(s, () => hurtFx(e)); mark('a:' + e.id, s); t += 160; break; }
       case 'turn':
-        if (foePhase) t += 120;
+        if (foePhase) t = Math.max(t, foeBack) + 120;
         acc = 0; stopped = 0; { const s = t; at(s, () => setCounter(0, true)); }
         { const s = t, n = e.n; at(s, () => { banner(n === 1 ? '전투 시작' : `${n}턴 · 내 차례`, 'me'); sfx('turn'); }); }
         turnT = t + 180; t += 200; break;
@@ -471,6 +478,14 @@ function afterimage(img, col) {
   layer.insertBefore(g2, cv);
   g2.animate([{ opacity: .55 }, { opacity: 0 }], { duration: 220, easing: 'ease-out' }).onfinish = () => g2.remove();
 }
+// 적 공격 때 카메라: 적과 노린 동료 사이로 살짝
+function foeCamera(fel, id) {
+  const field = root()?.querySelector('.field'), a = id && allyEl(id); if (!field || !a) return;
+  const f = rel(field), r = rel(a), q = rel(fel);
+  field.style.transformOrigin = `${(r.cx + q.cx) / 2 - f.x}px ${r.cy - f.y}px`;
+  field.animate([{ transform: 'none' }, { transform: 'scale(1.04)', offset: .3 }, { transform: 'scale(1.04)', offset: .6 }, { transform: 'none' }],
+    { duration: 560, easing: 'cubic-bezier(.3,.6,.4,1)' }).onfinish = () => { field.style.transformOrigin = ''; };
+}
 // 카메라: 판이 동료와 대상 사이로 살짝 다가갔다 돌아온다
 function camera(id, e, k, ms) {
   const field = root()?.querySelector('.field'), a = allyEl(id); if (!field || !a) return;
@@ -650,18 +665,29 @@ function hurtFx(e) {
     pulse(el.querySelector(':scope > img') || el, SET.shake ? 'jhitA' : 'jflash', 380);
     if (!e.down) pose(e.id, 'hurt', 380);
     num(x, r.y + 4, String(e.dmg), 'hurt', e.dmg);
-    if (e.dmg >= 10) shake();
+    if (e.dmg >= 10) { shake(); redEdge(); }
   } else num(x, r.y + 4, '막음', 'blk', 8);
   if (e.down) {
     at(160, () => { pulse(el.querySelector(':scope > img') || el, 'jdown', 820); num(x, r.y + 18, '쓰러짐', 'down', 12); for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: rnd(-1, 1), vy: rnd(-1, -.2), g: .06, life: 22, col: '#6a6688', s: 1 }); });
     sfx('down');
   } else sfx(e.dmg ? 'hurt' : 'block');
 }
+// 적 공격 예고: 의도 글자가 커지며 불타고, 몸을 뒤로 웅크린다. 노린 동료 발밑에 붉은 표시
+function foeWindup(e) {
+  const el = foeEl(e.i); if (!el) return;
+  const img = el.querySelector(':scope > img');
+  pulse(el.querySelector('.intent'), 'jfire', 300);
+  if (img) img.animate([{ transform: 'none', filter: 'none' }, { transform: 'translate(6px,2px) scaleY(.92)', filter: 'brightness(1.5) drop-shadow(0 0 4px #ff4a6a)' }],
+    { duration: 240, easing: 'ease-in', fill: 'none' });
+  const id = e.target ?? e.aim, a = id && allyEl(id)?.querySelector(':scope > img');
+  if (a) { const r = rel(a); add({ k: 'oval', x: r.cx, y: r.y + r.h - 3, r0: r.w * .5, r1: r.w * .3, col: '#ff4a6a', life: 14 }); }
+  sfx('turn', { vol: .3, rate: .7 });
+}
 function foeActFx(e) {
   const el = foeEl(e.i); if (!el) return;
   const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   if (e.t === 'atk' || e.t === 'mix') {
-    if (img && SET.shake && !calmNow()) foeDash(img, e.target ?? e.aim);
+    if (img && SET.shake && !calmNow()) { foeDash(img, e.target ?? e.aim); foeCamera(el, e.target ?? e.aim); }
     else pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 400);
     pulse(el.querySelector('.intent'), 'jfire', 300);
   }
@@ -1003,6 +1029,10 @@ function boomFx(x, y) {
   add({ k: 'blob', x, y, vx: 0, vy: 0, r: 10, col: '#ffd060', life: 8 });
   ring(x, y, '#ffb050', 4, 30, 12);
   sparks(x, y, '#ff9a4a', 16, 2.4);
+}
+function redEdge() {
+  const w = document.createElement('div'); w.className = 'jred'; layer.append(w);
+  w.animate([{ opacity: .9 }, { opacity: 0 }], { duration: 420, easing: 'ease-out' }).onfinish = () => w.remove();
 }
 function flash() {
   const w = document.createElement('div'); w.className = 'jflashw'; layer.append(w);
