@@ -585,7 +585,7 @@ try {
     await ev(() => window.__yk.win());
     if (await page.$('[data-take]')) await page.click('[data-take]');
     const scenes = [];
-    for (const k of ['event', 'rest']) { await page.evaluate(k2 => window.__yk.node(k2), k); scenes.push(await ev(() => !!document.querySelector('.scene .sport') && !!document.querySelector('.scene .sbox'))); }
+    for (const k of ['event', 'rest']) { await page.evaluate(k2 => window.__yk.node(k2), k); scenes.push(await ev(() => document.querySelectorAll('.scene .sground .sman').length === 3 && !!document.querySelector('.scene .swin .sbody'))); }
     await ev(() => { const Y = window.__yk, G = Y.S.G; Y.S.C = null; G.won = true; G.why = 'win'; G.screen = 'result'; Y.render(); });
     const bar = await ev(() => !!document.querySelector('.runbar .fill') && !!document.querySelector('.countup'));
     if (pace && scenes.every(Boolean) && bar) { seen.qaTop = true; console.log('qa-top: 빠른 사용(켬 한 번 · 끔 두 번), 시간 페이스, 사건·휴식 무대, 결과 진행 막대'); }

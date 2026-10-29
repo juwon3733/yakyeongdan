@@ -87,3 +87,8 @@
 .tmenu h1::after{content:"";align-self:flex-start;width:12px;height:12px;margin:4px 0 0 4px;background:#fff2b8;box-shadow:0 0 0 2px #120a04,0 0 8px #ffd070;
   clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:yk-logo-star 2.4s steps(4) infinite}
 @keyframes yk-logo-star{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.7)}}
+/* 옆 동료가 대표의 반 크기라 「뒤에 붙인 작은 그림」처럼 보이던 것 → 같은 사람 키로(조금 뒤에 서서 3/4 크기), 바닥 줄을 맞춘다 */
+.h2side img{width:144px;height:216px}
+.h2side.s0{left:calc(50% - 200px);bottom:14px}
+.h2side.s1{left:calc(50% + 56px);bottom:18px}
+.h2cast::after{content:"";position:absolute;left:8%;right:8%;bottom:8px;height:22px;z-index:0;pointer-events:none;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(0,0,0,.5),transparent)}
