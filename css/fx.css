@@ -226,3 +226,12 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 @keyframes jambup{from{transform:translateY(0)}to{transform:translateY(-200px)}}
 @keyframes jambglow{0%,100%{opacity:.7}45%{opacity:1}55%{opacity:.85}}
 #stage.calm #fx .jamb{display:none}
+/* 위 띠 정리(js/render/common.js topbar): 글자 칩 대신 아이콘·숫자만, 자세한 건 마우스를 대면 */
+.topbar span.pace{display:inline-block;width:8px;height:8px;border:2px solid #0a0a14;box-shadow:0 0 0 1px currentColor;cursor:help}
+.topbar span.pace.ok{background:#e0c060;color:#e0c060}.topbar span.pace.early{background:#6ad08a;color:#6ad08a}
+.topbar span.pace.late{background:#ff6a5a;color:#ff6a5a;animation:pacelate 1s ease-in-out infinite}
+@keyframes pacelate{50%{box-shadow:0 0 0 1px currentColor,0 0 6px currentColor}}
+.topbar .moon{cursor:help}
+.topbar .gold{display:flex;align-items:center;gap:3px;font-family:var(--f-disp);font-size:13px}
+.topbar .gold .gico{width:10px;height:10px;background:#ffe9a0;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);filter:drop-shadow(0 0 3px #ffd860)}
+#app[data-screen="combat"] .topbar{background:linear-gradient(180deg,rgba(8,8,22,.92),rgba(8,8,22,.55));border-bottom:0}

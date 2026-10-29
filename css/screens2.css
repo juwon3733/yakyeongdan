@@ -1,0 +1,20 @@
+/* 야시장(js/render/screens.js shopView, Claude): 왼쪽 상인 그림 + 말풍선, 오른쪽 진열대. 값은 별빛 아이콘 */
+.shopscr.s2{flex-direction:row;gap:0;padding:0}
+.shopscr.s2::before,.shopscr.s2::after{display:none}
+.shopkeep{position:relative;flex:none;width:170px;align-self:stretch}
+.shopkeep img{position:absolute;left:-10px;bottom:0;height:96%;width:auto;image-rendering:auto;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.55))}
+.shopkeep .bubble{position:absolute;left:14px;right:-40px;top:14px;z-index:2;bottom:auto;transform:none;white-space:normal;font-size:10px}
+.shopmain{flex:1;display:flex;flex-direction:column;gap:6px;padding:8px 10px 8px 4px;min-width:0;background:linear-gradient(90deg,rgba(6,6,18,0),rgba(6,6,18,.65) 12%)}
+.shopmain .shophead b{font-family:var(--f-disp);font-weight:400;font-size:15px;color:var(--gold)}
+.shopmain .wares{padding:8px 0 4px;background:linear-gradient(0deg,rgba(90,60,30,.55),transparent 18%);border-bottom:4px solid #4a3020;box-shadow:0 3px 0 #1a0e08}
+.shopmain .ware .price,.shopmain .relicware .price{display:flex;align-items:center;gap:2px;font-family:var(--f-disp);font-size:12px;color:var(--gold);background:rgba(8,8,22,.85);padding:0 6px;border:1px solid #6a5020}
+.shopmain .price.short{color:#ff8a7a}
+.gico{display:inline-block;width:9px;height:9px;background:#ffe9a0;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);filter:drop-shadow(0 0 2px #ffd860);vertical-align:-1px}
+.shopmain .gold.big{display:flex;align-items:center;gap:3px;font-size:15px}
+.shopmain .services button{display:flex;align-items:center;gap:3px;justify-content:center}
+.shopmain .wares{gap:5px}
+.shopmain .ware .card,#stage.bigtext .shopmain .ware .card{width:86px;height:124px;--ah:58px}
+.shopmain .shoprow{gap:5px;min-height:0}
+.shopmain .relicware{max-width:150px;font-size:9px}
+.shopkeep .bubble{left:20px;right:-60px;top:10px;max-width:200px}
+.shopkeep .bubble{left:8px;transform:none;translate:none}

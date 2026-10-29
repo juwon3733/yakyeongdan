@@ -32,7 +32,7 @@
 
 /* 메뉴: 화면 위에 겹쳐 놓는다(배경·동료가 화면을 다 쓰게) — 오른쪽 둥근 아이콘, 오른쪽 아래 출격, 왼쪽 아래 칩 */
 .h2stage{grid-area:1 / 1}
-.h2menu{grid-area:1 / 1;position:relative;z-index:2;pointer-events:none}
+.h2menu{grid-area:1 / 1;position:relative;z-index:6;pointer-events:none}
 .h2menu > *{pointer-events:auto}
 .h2col{position:absolute;right:12px;top:10px;display:flex;flex-direction:column;gap:4px;align-items:center}
 .h2rnd{display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:0;box-shadow:none;padding:0;color:var(--ink);animation:h2in .4s cubic-bezier(.2,.8,.3,1) backwards}

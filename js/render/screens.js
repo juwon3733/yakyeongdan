@@ -86,18 +86,21 @@ export function dupeView() {
 export function shopView() {
   const G = S.G, sh = G.shop;
   const cards = sh.cards.map((c, i) => `<span class="ware ${c.sold ? 'sold' : ''}">${cardHTML(c.id, !c.sold && G.gold >= c.price, 'buycard', i)}
-    <span class="price ${G.gold >= c.price ? '' : 'short'}">${c.sold ? '팔림' : `별빛 ${c.price}${c.sale ? ' <b>반값</b>' : ''}`}</span></span>`).join('');
+    <span class="price ${G.gold >= c.price ? '' : 'short'}">${c.sold ? '팔림' : `<i class="gico"></i>${c.price}${c.sale ? ' <b>반값</b>' : ''}`}</span></span>`).join('');
   const relics = sh.relics.map((r, i) => `<button type="button" class="ware relicware ${r.sold ? 'sold' : ''}" data-buyrelic="${i}" ${r.sold || G.gold < r.price ? 'disabled' : ''}>
-    ${relicBox(r.id)}<span class="price">${r.sold ? '팔림' : `별빛 ${r.price}`}</span></button>`).join('');
-  return `<div class="shopscr">
-    <div class="shophead"><span class="fukuro" aria-hidden="true">${artURL('chars/fukuro_normal.png') ? `<img class="px" src="${charSrc('fukuro', 'normal')}" alt="">` : 'F'}</span><span><b>후쿠로</b> ${sh.talk}</span>${sh.off ? `<span class="chip" style="color:var(--moon)">할인 ${sh.off}%</span>` : ''}<span class="grow"></span>${sh.special ? `<button type="button" class="mini ${sh.spView ? 'on' : ''}" data-spview>${sh.spView ? '◂ 후쿠로 노점' : `옆 노점: ${sh.special.name} ▸`}</button>` : ''}<span class="gold big">별빛 ${G.gold}</span></div>
+    ${relicBox(r.id)}<span class="price">${r.sold ? '팔림' : `<i class="gico"></i>${r.price}`}</span></button>`).join('');
+  // 야시장: 왼쪽에 상인 후쿠로(그림 + 말풍선), 오른쪽 진열대(카드 줄·도구 줄), 값은 별빛 아이콘
+  return `<div class="shopscr s2">
+    <div class="shopkeep" aria-hidden="true"><img class="px" src="${charSrc('fukuro', 'stand')}" alt=""><span class="bubble">${sh.talk}</span></div>
+    <div class="shopmain">
+    <div class="shophead"><span class="fukuro" aria-hidden="true">${artURL('chars/fukuro_normal.png') ? `<img class="px" src="${charSrc('fukuro', 'normal')}" alt="">` : 'F'}</span><span><b>후쿠로의 야시장</b></span>${sh.off ? `<span class="chip" style="color:var(--moon)">할인 ${sh.off}%</span>` : ''}<span class="grow"></span>${sh.special ? `<button type="button" class="mini ${sh.spView ? 'on' : ''}" data-spview>${sh.spView ? '◂ 후쿠로 노점' : `옆 노점: ${sh.special.name} ▸`}</button>` : ''}<span class="gold big"><i class="gico"></i>${G.gold}</span></div>
     ${sh.spView ? specialRow(sh.special) : `<div class="wares">${cards}</div>`}
     <div class="shoprow">${relics}
       <span class="services">
-        <button type="button" data-shop="remove" ${G.gold >= removePrice() && !sh.removed ? '' : 'disabled'}>카드 지우기 · 별빛 ${removePrice()}${sh.removed ? ' (오늘은 끝)' : ''}</button>
-        <button type="button" data-shop="upgrade" ${G.gold >= SHOP.upgrade && G.deck.some(canUpgrade) ? '' : 'disabled'}>카드 강화 · 별빛 ${SHOP.upgrade}</button>
+        <button type="button" data-shop="remove" ${G.gold >= removePrice() && !sh.removed ? '' : 'disabled'}>카드 지우기 <i class="gico"></i>${removePrice()}${sh.removed ? ' (오늘은 끝)' : ''}</button>
+        <button type="button" data-shop="upgrade" ${G.gold >= SHOP.upgrade && G.deck.some(canUpgrade) ? '' : 'disabled'}>카드 강화 <i class="gico"></i>${SHOP.upgrade}</button>
         <button type="button" class="primary" data-leave>나간다</button></span>
-    </div></div>`;
+    </div></div></div>`;
 }
 // 특별 노점: 별빛 대신 밤 시계(분)나 체력으로 산다
 function specialRow(sp) {

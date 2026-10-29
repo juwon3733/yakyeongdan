@@ -63,7 +63,8 @@ function paceChip(G) {
   if (G.tutorial) return '';
   const d = G.clock - paceGoal(G), k = paceOf(G);
   const t = k === 'late' ? `늦음 +${d}분` : k === 'early' ? `여유 ${-d}분` : '알맞음';
-  return `<span class="chip pace ${k}" data-tip="${esc(paceTip(G))}">${t}</span>`;
+  // 글자 칩 대신 시계 옆 작은 신호(초록 여유·금 알맞음·빨강 늦음), 자세한 건 마우스를 대면
+  return `<span class="pace ${k}" data-tip="${esc(`${t} — ${paceTip(G)}`)}" aria-label="${t}"></span>`;
 }
 function paceTip(G) {
   return `밤 시계 페이스: 막마다 목표 ${fmt(Math.round(dawnAt() / 3))} · ${fmt(Math.round(dawnAt() / 3 * 2))} · ${fmt(dawnAt())}. 지금 층의 목표 시각은 ${fmt(paceGoal(G))}. 늦으면 시간 카드를 아끼고 낮잠을 고려.`;
@@ -95,12 +96,11 @@ export function topbar(extra = '') {
     <span class="night" data-tip="${esc(paceTip(G))}"><i style="width:${Math.min(100, G.clock / dawnAt() * 100)}%"></i><b style="left:33.3%"></b><b style="left:66.6%"></b><u style="left:${Math.min(100, paceGoal(G) / dawnAt() * 100)}%"></u></span>${G.endless ? endlessChip(G) : paceChip(G)}`}
     ${G.depth ? `<span class="chip depthchip" title="밤의 깊이 ${G.depth}">깊이 ${G.depth}</span>` : ''}
     ${G.daily ? `<span class="chip dailychip" data-tip="${esc(`매일의 밤 「${G.daily.rule.name}」: ${G.daily.rule.text}`)}">매일 · ${esc(G.daily.rule.name)}</span>` : ''}
-    <img class="px moon" src="${moonImg(G.moon)}" alt="">
-    <span class="chip" style="color:var(--moon)" title="${esc(m.text)}">${m.name}</span>
+    <img class="px moon" src="${moonImg(G.moon)}" alt="${esc(m.name)}" data-tip="${esc(`${m.name}: ${m.text}`)}">
     ${extra}
     <span class="grow"></span>
     ${ep ? '' : `<span class="relics">${relicRow(G)}</span>
-    <span class="gold" title="별빛 (야시장·사건에서 쓴다)">별빛 ${G.gold}</span>`}
+    <span class="gold" data-tip="별빛 — 야시장·사건에서 쓴다"><i class="gico" aria-hidden="true"></i>${G.gold}</span>`}
     ${mates}
     <button type="button" class="mini hudb" data-settings title="설정" aria-label="설정">${hudIcon('gear')}</button>
     <button type="button" class="mini hudb" data-deck title="덱 보기" aria-label="덱 ${G.deck.length}장">${hudIcon('deck')}<b>${G.deck.length}</b></button>
