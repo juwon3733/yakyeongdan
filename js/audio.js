@@ -114,6 +114,9 @@ async function playAmb(name, force = false) {
   ambSrc = src; ambGain = g;
 }
 
+// 효과음이 있는지 (manifest 기준). 아직 못 읽었으면 false → 부르는 쪽이 공용 소리로 대신한다
+export const hasSfx = name => !!manifest?.sfx?.includes(name);
+
 let lastSfx = {};
 export function sfx(name, { vol = 1, rate = 1 } = {}) {
   if (!ctx || !LEVELS[level]) return;
