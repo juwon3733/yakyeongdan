@@ -91,7 +91,7 @@ function partyStage(order, bonded) {
     const r = ROSTER[k], kind = ROLE_KIND[k] || 'sup', fresh = !lastStage.includes(k);
     return `<div class="pslot s${i} r${r.rarity} ${fresh ? 'in' : ''} ${bonded.has(k) ? 'bonded' : ''}" style="--c:${r.col}">
       ${fresh ? '<span class="beam" aria-hidden="true"></span>' : ''}${ghost}<img class="px spr" src="${battleArt(k, 'idle') || charSrc(k)}" alt="">
-      <span class="plate"><img class="rk" src="${roleIcon[kind]}" alt="${ROLE_KINDS[kind]}" title="${ROLE_KINDS[kind]}">${r.name}</span><small class="pos">${slots[i]}</small></div>`;
+      <span class="plate" data-tip="${esc(CHARACTERS[k] ? `${CHARACTERS[k].passive.name}: ${CHARACTERS[k].passive.text}` : r.role)}"><img class="rk" src="${roleIcon[kind]}" alt="${ROLE_KINDS[kind]}" title="${ROLE_KINDS[kind]}">${r.name}</span><small class="pos">${slots[i]}</small></div>`;
   }).join('');
   lastStage = now;
   return `<div class="pstage">${html}</div>`;
@@ -99,32 +99,31 @@ function partyStage(order, bonded) {
 
 // 파티 고르기: 가진 동료만 (개발판은 구현된 동료 전부). 아직 구현 안 된 동료는 「준비 중」.
 export function partyView() {
+  // 출격 준비: 정보 상자를 격자로 늘어놓은 화면 대신 — 가운데 무대에 고른 셋이 크게 서고, 아래 줄에 동료 얼굴을 한 줄로.
+  // 동료 설명(패시브)은 얼굴에 커서를 대면(data-tip), 고른 셋의 것은 무대 아래에 한 줄씩.
   const can = k => !!CHARACTERS[k] && (S.dev || owns(k));
   const mates = ROSTER_IDS.filter(k => owns(k) || (S.dev && CHARACTERS[k])).map(k => {
     const r = ROSTER[k], c = CHARACTERS[k], on = S.picked.includes(k), ok = can(k);
-    return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'} title="${c ? esc(`${c.passive.name}: ${c.passive.text}`) : ''}">
-      <img class="px" src="${charSrc(k)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
-      <span class="rl">${r.role}</span>${c ? `<span class="hp">체력 ${c.maxHp}</span>` : ''}
-      <span class="ps" ${c ? `title="${c.passive.name}: ${c.passive.text}"` : ''}>${c ? `<b>${c.passive.name}</b> ${c.passive.short}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
+    const tip = c ? `${r.name} ${'★'.repeat(r.rarity)} · ${r.role} · 체력 ${c.maxHp}\n${c.passive.name}: ${c.passive.text}` : `${r.name} · 준비 중`;
+    return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'} data-tip="${esc(tip)}" aria-label="${r.name}">
+      <span class="fc"><img class="px" src="${charSrc(k, 'normal')}" alt=""></span><span class="nm">${r.name}</span></button>`;
   }).join('');
-  // 고른 셋: 전투처럼 대열로 크게 선다(왼쪽 뒤 → 오른쪽 앞, 처음엔 체력이 높은 동료가 앞). 인연이 있는 동료는 빛난다.
   const bonded = new Set();
   S.picked.forEach(a => S.picked.forEach(b => { if (a !== b && DUOS[duoKey(a, b)]) { bonded.add(a); bonded.add(b); } }));
   const order = S.picked.slice().sort((a, b) => (CHARACTERS[a]?.maxHp || 0) - (CHARACTERS[b]?.maxHp || 0));
-  return `<div class="title partyscr">
-    <div class="tleft">
-      <div class="thead"><button type="button" class="mini" data-view="base">‹ 본부</button><h2>${S.mode === 'endless' ? '끝없는 탑 · 동료 셋' : '동료 셋을 고른다'}</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
-      <div class="pick">${mates}</div>
+  // 패시브 글은 이름표에 커서를 대면(무대 아래 글 벽은 뺐다)
+  const ps = S.picked.length ? '' : '<p class="note pempty">아래에서 동료 셋을 고른다. 처음엔 체력이 높은 동료가 앞에 선다.</p>';
+  return `<div class="title partyscr p2">
+    <div class="thead"><button type="button" class="mini" data-view="base">‹ 본부</button><h2>${S.mode === 'endless' ? '끝없는 탑' : '출격 준비'}</h2>${S.dev ? '<span class="dev">개발판</span>' : ''}</div>
+    <div class="pmain">
       ${partyStage(order, bonded)}
+      ${ps}
     </div>
-    <div class="tright">
-      <h2>동료 셋 (${S.picked.length}/3)</h2>
-      ${S.mode === 'endless' ? `<p class="note endnote">끝없는 탑에 바로 오른다. 동료마다 희귀 카드 1장 · 도구 ${ENDLESS.freshRelics}개 · 별빛 ${ENDLESS.freshGold}을 들고 시작. 탑은 무너지지 않지만 층마다 적이 강해지고 규칙이 쌓인다.</p>` : runSetup()}
-      <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>${S.mode === 'endless' ? '끝없는 탑 오르기' : '출발'}</button>
+    <div class="pside">
+      ${S.mode === 'endless' ? `<p class="note endnote">동료마다 희귀 카드 1장 · 도구 ${ENDLESS.freshRelics}개 · 별빛 ${ENDLESS.freshGold}을 들고 시작. 층마다 적이 강해지고 규칙이 쌓인다.</p>` : runSetup()}
       ${bondsOf(S.picked)}
-      ${S.picked.length ? `<div class="chosenps">${S.picked.map(k => { const r = ROSTER[k], c = CHARACTERS[k]; return c ? `<span style="--c:${r.col}"><b>${r.name} · ${esc(c.passive.name)}</b> ${esc(c.passive.text)}</span>` : ''; }).join('')}</div>` : ''}
-      <p class="note">대열은 지도에서 바꿀 수 있다. 처음엔 체력이 높은 동료가 앞에 선다.</p>
-      <p class="note small"><b>연계</b>: 서로 다른 동료 카드를 번갈아 쓰면 칸이 차고 공격이 세진다. 2칸 이상에서 인연 있는 둘을 이어 쓰면 <b>듀오 카드</b>.</p>
+      <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>${S.mode === 'endless' ? '오르기' : '출발'} <small>${S.picked.length}/3</small></button>
     </div>
+    <div class="pick">${mates}</div>
   </div>`;
 }
