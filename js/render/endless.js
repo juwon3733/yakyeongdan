@@ -4,7 +4,7 @@ import { ROSTER } from '../data/roster.js';
 import { CHARACTERS } from '../data/characters.js';
 import { ENDLESS, isBossGate } from '../data/endless.js';
 import { endlessFloor, dawnStacks, endlessRules, endlessStr } from '../endless.js';
-import { P, grantEndless, endlessOpen } from '../meta.js';
+import { P, grantEndless, endlessOpen, mvpOf } from '../meta.js';
 import { SUMMON } from '../data/gacha.js';
 import { fmt, face, esc, charSrc } from './common.js';
 
@@ -24,12 +24,12 @@ export function endlessHead(G) {
 // 결과 (끝없는 탑이 끝났을 때)
 export function endlessResultView() {
   const G = S.G, E = G.endless, R = grantEndless(G);
-  const mvp = G.party.reduce((a, b) => (G.stats[b].dmg + G.stats[b].block) > (G.stats[a].dmg + G.stats[a].block) ? b : a);
+  const mvp = mvpOf(G);
   const mc = CHARACTERS[mvp], st = G.stats[mvp];
   const rules = endlessRules().map(r => `<span class="chip" title="${esc(r.text)}">${esc(r.name)}</span>`).join('') || '<span class="note">없음</span>';
   const ach = R.ach?.length ? `<p class="note"><span class="chip">업적</span> ${R.ach.map(a => `「${esc(a.name)}」`).join(' ')} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b></p>` : '';
   return `<div class="resultscr endresult">
-    <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">MVP · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}</span></div>
+    <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">MVP · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}${st.heal ? ` · 회복 ${st.heal}` : ''}</span></div>
     <div class="rinfo">
       <h2 style="font-size:20px">끝없는 탑에서 멈췄다</h2>
       <p class="clockbig endfloor">${E.floor}<small>층</small></p>

@@ -34,7 +34,7 @@ export function newRun(party, seed = newSeed(), opts = {}) {
     deck, depth, locked: new Set(opts.locked || []), sigs: opts.sigs || [],
     act: 1, row: 0, map: null, nextMap: null, took: [], duos: 0, fights: 0, pity: 0,
     gold: RULES.startGold, relics: [opts.startRelic && RELICS[opts.startRelic] ? opts.startRelic : START_RELIC], used: {}, salt: 0,
-    duoSet: new Set(), stats: Object.fromEntries(party.map(p => [p, { dmg: 0, block: 0 }])),
+    duoSet: new Set(), stats: Object.fromEntries(party.map(p => [p, { dmg: 0, block: 0, heal: 0 }])),
     floors: 0, elites: 0, bossKills: 0, removes: 0, seenEvents: [], note: '', moonPick: false, shop: null,
     haggle: 0, nextFight: null, smithLeft: 0,
     // 도감·기록용 (meta.js grantRun이 모은다)

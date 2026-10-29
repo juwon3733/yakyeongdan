@@ -39,8 +39,8 @@ function countDmg(n) {
   const C = S.C; if (!C || n <= 0) return;
   C.dmgTurn += n; if (C.actor) C.dmgBy[C.actor] = (C.dmgBy[C.actor] || 0) + n;
 }
-// 결과 화면 MVP용: 동료마다 준 피해·쌓은 방어
-function stat(id, k, n) { const st = S.G.stats[id]; if (st && n > 0) st[k] += n; }
+// 결과 화면 MVP용: 동료마다 준 피해·쌓은 방어·회복 (meta.js mvpOf)
+function stat(id, k, n) { const st = S.G.stats[id]; if (st && n > 0) st[k] = (st[k] || 0) + n; }
 export function hitAll(n) {
   const C = S.C, b = C.bonus;
   for (const f of livingFoes()) { C.bonus = b; hit(n, f); }
@@ -67,6 +67,7 @@ export function healAll(n) { for (const p of living()) healOne(p, n); }
 // 전투 중 회복. 고든 「만찬」③: 넘친 회복은 방어로, 한 턴 회복이 15 이상이면 이번 전투 모든 동료 공격 +1
 function healOne(id, n) {
   const C = S.C, got = healMember(id, n);
+  if (C?.actor) stat(C.actor, 'heal', got);
   const gordon = C && alive('gordon') && S.G.party.includes('gordon');
   if (!gordon) return got;
   if (n > got && alive(id)) guard(n - got, id);

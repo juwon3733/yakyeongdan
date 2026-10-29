@@ -441,8 +441,17 @@ function recordLife(G) {
   L.facts = [...F];
 }
 const HISTORY_MAX = 20;
+// 판 MVP: 피해 + 방어×0.5 + 회복이 가장 큰 동료, 같으면 피해가 큰 쪽 (결과·끝없는 탑 결과·기록이 같이 쓴다)
+export function mvpOf(G) {
+  const st = k => G.stats?.[k] || {};
+  const score = k => (st(k).dmg || 0) + (st(k).block || 0) * 0.5 + (st(k).heal || 0);
+  return G.party.reduce((a, b) => {
+    const d = score(b) - score(a);
+    return d > 0 || (d === 0 && (st(b).dmg || 0) > (st(a).dmg || 0)) ? b : a;
+  });
+}
 function recordHistory(G) {
-  const mvp = G.party.reduce((a, b) => (G.stats[b].dmg + G.stats[b].block) > (G.stats[a].dmg + G.stats[a].block) ? b : a);
+  const mvp = mvpOf(G);
   P.history.unshift({
     t: Date.now(), party: G.party.slice(), moon: G.moon, won: !!G.won, why: G.why, clock: G.clock, act: G.act, floors: G.floors || 0,
     mvp, best: G.bestTurn?.dmg || 0, duos: G.duoSet?.size || 0, depth: G.depth || 0, daily: G.daily?.key || null,
