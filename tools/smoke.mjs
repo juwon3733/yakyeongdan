@@ -27,6 +27,8 @@ const port = server.address().port;
 
 const errors = [];
 const browser = await chromium.launch();
+// 애니메이션 줄이기로 연다: 지도 칸 이동 연출(0.6초) 같은 늦춤이 0이 되어 누른 뒤 바로 상태를 볼 수 있다
+const CALM = 'reduce';
 const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; };
 const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false,
   migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, affix: false, ach: false, history: false, endless: false, climbOn: false,
@@ -77,7 +79,7 @@ const screenOf = page => page.evaluate(() => document.querySelector('[data-end]'
 try {
   // seed 4·5: M4 새 동료 (루나리아 달 고르기, 시온 정령, 쌍둥이, 인연 줄)
   for (const seed of [1, 2, 3, 4, 5, 6]) {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[seed ${seed}] ${e.message}`));
     const isFont = u => /fonts\.(googleapis|gstatic)\.com/.test(u);
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[seed ${seed}] ${m.text()}`); });
@@ -159,7 +161,7 @@ try {
   }
   // 1막 끝까지: 개발용 치트(체력 크게)로 등대지기까지. 적 여럿·저주·강화·수 표시·상태·불빛도 여기서 본다.
   {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[act1] ${e.message}`));
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[act1] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
@@ -204,7 +206,7 @@ try {
   }
   // 한 판 끝까지: 0시 → 「새벽」 격파 → 결과 → 본부 → 별 소환
   {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[full] ${e.message}`));
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[full] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
@@ -264,7 +266,7 @@ try {
   }
   // 에피소드: 판을 끝내면 1화가 열리고 → 본부 [에피소드] → 1화를 끝까지 넘기기(별 조각 +10). 2화 특별 전투 → 이겨서 끝까지.
   {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[ep] ${e.message}`));
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[ep] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
@@ -305,7 +307,7 @@ try {
   }
   // 판 바깥 (M5): 예전 저장(v1) 이어받기 → 초심자 ★5 고르기 → 교환소 → 동료·도감·기록·확률 화면 → 밤의 깊이 1로 시작
   {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[meta] ${e.message}`));
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[meta] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
@@ -398,7 +400,7 @@ try {
   // 끝없는 탑 (docs/05 §12): 「새벽」을 한 번 깬 프로필 → 본부 [끝없는 탑] → 새로 시작 → 관문(강적)을 넘어 다음 층 묶음 → 결과(층·별 조각·기록)
   //   그리고 「새벽」을 깬 결과 화면의 [더 오르기]로 같은 판이 이어 오른다
   {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[endless] ${e.message}`));
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[endless] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
@@ -440,7 +442,7 @@ try {
   }
   // 매일의 밤 → 오늘의 시드·규칙으로 출발 → 이겨서 결과(첫 격파 별 조각 +15, 업적 띠, 숙련도) → 기록 화면 최근 판 · 도감 업적 탭
   {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[daily] ${e.message}`));
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[daily] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
@@ -472,7 +474,7 @@ try {
   }
   // M8: 첫 실행 튜토리얼 끝까지 (끌어 놓기 · 대열 · 사건 · 손패 맞춘 듀오 · 작은 보스 → 본부 [별 소환] 안내)
   {
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`tutorial: ${e.message}`));
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
     await page.goto(`http://127.0.0.1:${port}/`);
@@ -559,7 +561,7 @@ try {
   }
   // docs/11 상위 과제: 빠른 사용(한 번 눌러 바로 쓰기, 끄면 두 번), 시간 페이스 표시, 사건·휴식 무대, 결과 진행 막대
   {
-    const page = await browser.newPage({ viewport: { width: 844, height: 390 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 844, height: 390 } });
     page.on('pageerror', e => errors.push(`[qa-top] ${e.message}`));
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
     await page.goto(`http://127.0.0.1:${port}/?notut&seed=6`);
@@ -592,7 +594,7 @@ try {
   }
   {
     // 보스 변형 (docs/13 3단계): 지도 보스 칸 이름, 안개 마녀 여왕 「안개 장막」이 ③에 걷힘, 폭풍 고래 비틀거림·곡, 「새벽」 3단계(밤의 깊이 5+)·곡
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[boss-var] ${e.message}`));
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
     await page.goto(`http://127.0.0.1:${port}/?notut&seed=9`);
@@ -630,7 +632,7 @@ try {
   }
   {
     // 폰·오프라인 (js/pwa.js): manifest·아이콘, 서비스 워커 등록, 첫 로딩 화면이 걷힘, 저장 내보내기 → 지우기 → 불러오기 왕복
-    const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[pwa] ${e.message}`));
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
     await page.goto(`http://127.0.0.1:${port}/?notut`);
@@ -666,7 +668,7 @@ try {
     await page.close();
   }
   // 세로 폰: 돌려 달라는 안내
-  const pp = await browser.newPage({ viewport: { width: 390, height: 844 } });
+  const pp = await browser.newPage({ reducedMotion: CALM, viewport: { width: 390, height: 844 } });
   await pp.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
   await pp.goto(`http://127.0.0.1:${port}/`);
   if (!(await pp.isVisible('#rotate'))) fail('세로 화면에서 "가로로 돌려 주세요"가 안 보임');
