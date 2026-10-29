@@ -2,12 +2,14 @@
 // 전투에서는 카드 한 장 쓰는 순간을 0.1초 간격 6장(shots/combat_seq_1~6.png),
 // 공격 카드(atk)를 쓰는 순간 0.1초 간격 6장(shots/atk_seq_1~6.png, 피해 숫자 확인용),
 // 턴 끝을 누른 뒤 적 차례를 0.08초 간격 8장(shots/foe_seq_1~8.png).
+// 끝나면 shots/index.html(이번에 찍은 사진을 한 화면에 격자로, 연속 사진은 한 줄로)을 만든다 — tools/shots-index.mjs.
 // 실행: node tools/screens.mjs   (npm run shots, Playwright 필요) — 서버 띄우는 방식은 tools/smoke.mjs와 같다.
 import http from 'node:http';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { writeShotsIndex } from './shots-index.mjs';
 
 const require = createRequire(import.meta.url);
 const { chromium } = require('playwright');
@@ -31,6 +33,7 @@ const errors = [];
 const browser = await chromium.launch();
 const fail = msg => { console.error('SCREENS FAIL:', msg); process.exitCode = 1; };
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+const made = []; // 이번에 찍은 사진 목록 → shots/index.html
 
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
@@ -47,7 +50,9 @@ try {
     await park();
     await sleep(wait);
     await page.screenshot({ path: join(OUT, `${name}.png`) });
-    console.log(`shots/${name}.png (${await screen()})`);
+    const sc = await screen();
+    made.push({ name, files: [`${name}.png`], note: sc });
+    console.log(`shots/${name}.png (${sc})`);
   };
 
   await page.goto(`http://127.0.0.1:${port}/?notut&seed=4`);
@@ -78,6 +83,7 @@ try {
       frames.push({ t, data });
     }
     for (const [i, f] of frames.entries()) await writeFile(join(OUT, `${name}_${i + 1}.png`), Buffer.from(f.data, 'base64'));
+    made.push({ name, files: frames.map((_, i) => `${name}_${i + 1}.png`), note: `${note}찍은 때 ${frames.map(f => f.t).join('·')}ms` });
     console.log(`shots/${name}_1~${n}.png (${note}찍은 때 ${frames.map(f => f.t).join('·')}ms)`);
     if (frames.some((f, i) => f.t > i * gap + gap * .6)) console.warn(`  ! 찍는 데 오래 걸려 ${gap / 1000}초 간격이 밀림`);
   };
@@ -143,6 +149,8 @@ try {
 } finally {
   await browser.close();
   server.close();
+  // 중간에 실패해도 찍은 데까지는 모아 본다
+  if (made.length) console.log('shots/index.html →', await writeShotsIndex(OUT, made));
 }
 if (errors.length) fail('페이지 오류\n' + errors.join('\n'));
 else if (!process.exitCode) console.log('screens OK →', OUT);
