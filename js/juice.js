@@ -908,15 +908,21 @@ function countUp(t0) {
   for (let k = 1; k <= n; k++) at(start + k * 50, () => { el.textContent = String(Math.round(to * k / n)); if (k === n) sfx('star', { vol: .5 }); });
 }
 // 막이 바뀌면: 탑을 올라가는 짧은 장면
+// 막이 바뀜: 지도와 같은 돌벽 탑을 카메라가 타고 올라간다 — 난간이 아래로 지나가고, 맨 앞 동료가 가운데서 오르며, 막 이름 띠가 찍힌다
 function climb(act) {
+  const G = S.G, lead = G?.formation?.find(p => !G.members[p]?.down) || G?.formation?.[0];
+  const spr = lead && battleArt(lead, 'idle'), sky = artURL(`bg/map${act}.png`);
   const d = document.createElement('div');
   d.className = `jclimb a${act}`;
-  d.innerHTML = `<i class="tw"></i><i class="st"></i><b>${ACT_NAME[act] || ''}</b>`;
+  if (sky) d.style.setProperty('--sky', `url("${new URL(sky, location.href).href}")`);   // CSS 변수 주소는 CSS 파일 기준이라 절대 주소로
+  d.innerHTML = `<i class="sk"></i><i class="tw"><i class="lg"></i></i>${spr ? `<img class="px who" src="${spr}" alt="">` : ''}<b>${act <= 3 ? `<small>${act}막</small>` : ''}${(ACT_NAME[act] || '').replace(/^\d+막\s*·\s*/, '')}</b>`;
   layer.append(d);
-  d.querySelector('.tw').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(160px)' }], { duration: 1400, easing: 'cubic-bezier(.25,.8,.35,1)' });
-  d.querySelector('.st').animate([{ backgroundPositionY: '0px' }, { backgroundPositionY: '90px' }], { duration: 1400, easing: 'cubic-bezier(.25,.8,.35,1)' });
-  d.querySelector('b').animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none', offset: .3 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400, easing: 'cubic-bezier(.25,.8,.35,1)' });
-  d.animate([{ opacity: 1 }, { opacity: 1, offset: .82 }, { opacity: 0 }], { duration: 1500, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => d.remove();
+  const E = 'cubic-bezier(.3,.1,.3,1)';
+  d.querySelector('.tw').animate([{ backgroundPositionY: '0px' }, { backgroundPositionY: '192px' }], { duration: 1500, easing: E });
+  d.querySelector('.lg').animate([{ backgroundPositionY: '0px' }, { backgroundPositionY: '192px' }], { duration: 1500, easing: E });
+  d.querySelector('.sk').animate([{ backgroundPositionY: '100%' }, { backgroundPositionY: '30%' }], { duration: 1500, easing: E });
+  d.querySelector('b').animate([{ opacity: 0, transform: 'scaleX(.2)' }, { opacity: 0, transform: 'scaleX(.2)', offset: .25 }, { opacity: 1, transform: 'none', offset: .38 }, { opacity: 1, offset: .85 }, { opacity: 0 }], { duration: 1500, easing: 'steps(12)' });
+  d.animate([{ opacity: 0 }, { opacity: 1, offset: .08 }, { opacity: 1, offset: .86 }, { opacity: 0 }], { duration: 1600 }).onfinish = () => d.remove();
   sfx('move');
 }
 

@@ -68,3 +68,22 @@
 /* 아래 도움말 줄 (튜토리얼 도움말 줄 .tutbar와 같은 모양, 화면 아래에 깔린다) */
 .tutbar.h2help{grid-column:1 / -1;position:relative;z-index:3;border-bottom:0;border-top:2px solid #2a5a7a}
 .h2top .mini{font-size:9px;padding:1px 5px}
+/* 말풍선이 옆 동료 버튼(z-index 1) 안에 갇혀 대표 동료 그림 밑으로 잘리던 것: 말하는 동안은 그 버튼을 맨 위로, 왼쪽 동료 말풍선은 화면 밖으로 안 나가게 */
+.h2side:has(.bubble){z-index:5;opacity:1}
+.h2side.s0 .bubble{left:0;transform:none}
+.h2side.s1 .bubble{left:auto;right:0;transform:none}
+.h2side.s0 .bubble::after{left:30px}.h2side.s1 .bubble::after{left:auto;right:30px}
+/* 대표 동료 이름표: 옆구리(무기를 가리던 자리) 대신 발밑 받침대처럼 */
+.h2name{left:50%;bottom:-2px;transform:translateX(-50%);flex-direction:row;align-items:baseline;gap:5px;padding:1px 8px}
+.h2name small{display:none}
+/* 본부 한 줄 설명은 발밑과 겹치지 않게 위쪽 지갑 아래로 */
+.h2note{top:30px;bottom:auto;right:auto;max-width:55%;font-size:9px;color:var(--dim)}
+.h2titles{top:46px}
+/* 타이틀 글자: 밋밋한 금색 글 대신 도트 간판 — 위는 밝은 금, 아래는 주황으로 끊어 칠하고(그라데이션 없이 두 단), 검은 2px 테두리 + 아래로 두꺼운 그림자 */
+.tmenu h1{font-size:60px;line-height:1;letter-spacing:.02em;margin:0 0 2px;display:flex;gap:2px}
+.tmenu h1 span{position:relative;color:transparent;background:linear-gradient(#fff2b8 0 18%,#f6d060 18% 52%,#e08a2a 52% 78%,#a8501a 78%);-webkit-background-clip:text;background-clip:text;
+  filter:drop-shadow(2px 0 0 #120a04) drop-shadow(-2px 0 0 #120a04) drop-shadow(0 2px 0 #120a04) drop-shadow(0 -2px 0 #120a04) drop-shadow(0 4px 0 #3a1a08) drop-shadow(0 2px 0 #000)}
+.tmenu h1 span:nth-child(2){top:4px}
+.tmenu h1::after{content:"";align-self:flex-start;width:12px;height:12px;margin:4px 0 0 4px;background:#fff2b8;box-shadow:0 0 0 2px #120a04,0 0 8px #ffd070;
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:yk-logo-star 2.4s steps(4) infinite}
+@keyframes yk-logo-star{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.6;transform:scale(.7)}}
