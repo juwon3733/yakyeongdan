@@ -58,7 +58,7 @@ const foeTraits = f => (f.affixes || []).map(axChip).join('') + [
   f.phase2 && !f.p2 ? ['2단계', `체력이 ${Math.round(f.phase2.at * 100)}% 아래가 되면 모습이 바뀐다.`] : null,
   f.phase3 && f.p2 && !f.p3 && (S.G.depth || 0) >= (f.phase3.depth || 0) ? ['3단계', `체력이 ${Math.round(f.phase3.at * 100)}% 아래가 되면 「한낮」.`] : null,
 ].filter(Boolean).map(([n, t]) => `<span class="chip trait" data-tip="${esc(`${n}: ${t}`)}">${n}</span>`).join('');
-const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f.dim * 100) + '%' : 0, '빛 −', '#f0d040') + chip(f.bounty, '현상금', '#e0a050') + chip(f.block, '방어', 'var(--moon)') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
+const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f.dim * 100) + '%' : 0, '빛 −', '#f0d040') + chip(f.bounty, '현상금', '#e0a050') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
   + chip(f.str, '힘', '#ff9a8a') + chip(f.weak, '약화', '#f08ac0') + chip(f.vuln, '취약', '#ffd060');
 
 // 세바스·예약: 턴 끝에 남길 수 있는 카드 수 (있으면 빠른 사용 대신 카드 → [남기기]를 고를 수 있게 두 번 누르기)
@@ -80,10 +80,10 @@ export function combatView() {
     const blk = C.blocks[p];
     const swap = k < 2 ? `<button type="button" class="swap" data-swap="${fi - 1}" ${C.swaps >= swapLimit() ? 'disabled' : ''} title="자리 바꾸기 (바꾼 둘 방어 -${RULES.swapBlockCost})">⇄</button>` : '';
     return `<button type="button" class="pm ${M.down ? 'down' : ''} ${aims.has(p) ? 'aimed' : ''} ${lit.includes(p) ? 'lit' : ''} ${wantAlly && !M.down ? 'tg' : ''} ${C.last === p ? 'last' : ''}" style="--c:${c.col}" data-ally="${p}" ${wantAlly && !M.down ? '' : 'tabindex="-1"'}>
-        <span class="row">${ROW_NAME[fi]}${lit.includes(p) ? ' · <b class="litnm">불빛 +1</b>' : ''}</span>
+        <span class="row">${ROW_NAME[fi]}</span>${lit.includes(p) ? '<b class="litnm">불빛 +1</b>' : ''}
         <img class="px" src="${battleSrc(p, M.down ? 'down' : 'idle')}" alt=""${battleArt(p) ? ` style="--sk:${spriteScale(p)}"` : ''}>
         <span class="lab"><span class="nm">${c.name}</span>
-        ${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : `${M.hp}/${M.max}`}${blk ? ` <b class="blk">방어 ${blk}</b>` : ''}</span>
+        <span class="hpw">${blk ? `<b class="blk" title="방어">${blk}</b>` : ''}${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : `${M.hp}/${M.max}`}</span></span>
         <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span>${M.down ? '' : burstProgHTML(p)}</span></button>${swap}`;
   }).join('');
   const many = C.all.length > 1;
@@ -99,8 +99,7 @@ export function combatView() {
         <span class="intent ${ic}" data-tip="${esc(`다음 행동. ${aim ? `노림: ${AIM_NAME[aimKey(f)]} (얼굴이 맞을 동료).` : ''}`)}">${it}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[aimKey(f)]}</span>`}` : ''}</span>
         <img class="px" src="${foeArt(f) || sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="lab"><span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
-        <span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span>
-        <span class="hp">${f.hp}/${f.max}</span>
+        <span class="hpw">${f.block ? `<b class="blk" title="방어">${f.block}</b>` : ''}<span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span><span class="hp">${f.hp}/${f.max}</span></span>
         <span class="st">${foeTraits(f)}${foeSt(f)}</span></span>
       </button>`;
   }).join('');

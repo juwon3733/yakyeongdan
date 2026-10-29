@@ -1,0 +1,31 @@
+/* 전투 화면 정리 (Claude 영역, docs/JUNIOR_TASKS.md): 슬레이 더 스파이어처럼 글자를 줄이고 발밑에 체력 막대 하나.
+   이름·대열은 마우스를 대거나 고를 때만, 방어는 막대 왼쪽 파란 방패, 자리 바꾸기 ⇄는 대열에 마우스를 댈 때만. */
+#app[data-screen="combat"] .pm .row{position:absolute;top:-2px;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .15s;font-size:7.5px;color:var(--dim)}
+#app[data-screen="combat"] .pm:hover .row,#app[data-screen="combat"] .pm.tg .row{opacity:1}
+#app[data-screen="combat"] .pm .litnm{position:absolute;top:-2px;left:50%;transform:translateX(-50%);z-index:3;font-weight:400;font-size:8px;color:#ffe060;text-shadow:1px 1px 0 #000;white-space:nowrap}
+#app[data-screen="combat"] :is(.pm,.foe) .lab .nm{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:2px;opacity:0;transition:opacity .15s;pointer-events:none;white-space:nowrap;
+  background:rgba(7,8,26,.85);padding:0 4px;border:1px solid var(--line)}
+#app[data-screen="combat"] :is(.pm,.foe):is(:hover,.tg) .lab .nm{opacity:1}
+#app[data-screen="combat"] :is(.pm,.foe) .lab{position:relative}
+/* 체력: 막대 안에 숫자 */
+#app[data-screen="combat"] .hpw{order:2;position:relative;display:flex;align-items:center;gap:2px;flex:0 0 auto}
+#app[data-screen="combat"] .hpw .hpbar{width:66px;height:9px;flex:none;background:#1a0c14;border:1px solid #000;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+#app[data-screen="combat"] .foe .hpw .hpbar{width:72px}
+#app[data-screen="combat"] .hpw .hpbar i{background:linear-gradient(180deg,#ff6a7a,#c0304a)}
+#app[data-screen="combat"] .hpw .hp{position:absolute;right:0;left:0;top:50%;transform:translateY(-50%);text-align:center;font-size:7.5px;line-height:1;color:#fff;text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000;pointer-events:none;z-index:2;font-family:var(--f-disp)}
+#app[data-screen="combat"] .hpw .blk+.hpbar+.hp{left:16px}
+#app[data-screen="combat"] .hpw .blk{position:static;transform:none;display:flex;align-items:center;justify-content:center;width:14px;height:14px;padding:0;border:0;font-family:var(--f-disp);font-weight:400;font-size:8px;color:#fff;
+  background:#3a6ad0;clip-path:polygon(50% 0,100% 15%,92% 70%,50% 100%,8% 70%,0 15%);text-shadow:1px 1px 0 #000}
+#app[data-screen="combat"] .pm.down .hpw{opacity:.5}
+/* 자리 바꾸기 ⇄: 대열에 마우스를 댈 때만 */
+#app[data-screen="combat"] .party .swap{opacity:0;transition:opacity .15s}
+#app[data-screen="combat"] .party:hover .swap,#app[data-screen="combat"] .party .swap:focus-visible{opacity:.9}
+@media (hover:none){#app[data-screen="combat"] .party .swap{opacity:.55}#app[data-screen="combat"] :is(.pm,.foe) .lab .nm{opacity:.85}}
+#app[data-screen="combat"] .hpw{width:max-content}
+#app[data-screen="combat"] .pm .lab .hpw .hpbar{flex:none}
+/* 동료 아래 색 줄 대신 발밑 그림자만 */
+#app[data-screen="combat"] .pm,#app[data-screen="combat"] .foe{border-bottom:0;box-shadow:none}
+#app[data-screen="combat"] .pm.aimed .hpw .hpbar{box-shadow:0 0 0 1px var(--rose)}
+/* 고른 카드(대상을 고르는 중)는 조금만 들어 올린다 — 크게 키우면 적·동료를 가려 대상을 못 누른다 */
+.bottom .hand .card.sel:not(:hover){transform:translateY(-12px) rotate(0deg) scale(1.15)}
+.bottom .hand .card.sel{pointer-events:auto}
