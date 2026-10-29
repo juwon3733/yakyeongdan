@@ -827,19 +827,26 @@ function pulse(el, cls, ms) {
   el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls);
   setTimeout(() => el.classList.remove(cls), ms);
 }
-// 튀어 오르는 숫자: 크기는 피해량에 비례
-function num(x, y, text, cls, v = 6) {
+// 튀어 오르는 숫자(슬레이 더 스파이어식): 튀어 올랐다 옆으로 살짝 떨어지며 사라짐.
+// 치명타·15 이상 피해는 크게 + 흔들림(.big), 막힌 건 회색 「막음」(.blk). 움직임은 css .jnum 키프레임.
+function num(x, y, text, cls = '', v = 6) {
+  if (!layer) return;
+  const dmg = /^\d+$/.test(text);
+  const big = cls === 'crit' || (dmg && v >= 15 && cls !== 'heal' && cls !== 'blkup');
   const el = document.createElement('div');
-  el.className = `jnum ${cls}`; el.textContent = text;
+  el.className = `jnum ${cls}${big ? ' big' : ''}`;
+  const inner = document.createElement('span');
+  inner.textContent = text;
+  el.append(inner);
   el.style.left = `${x}px`; el.style.top = `${y}px`;
-  el.style.fontSize = `${Math.round(Math.min(26, 11 + Math.sqrt(Math.max(1, v)) * 2.4))}px`;
+  const size = Math.round(Math.min(26, 11 + Math.sqrt(Math.max(1, v)) * 2.4));
+  el.style.fontSize = `${cls === 'blk' ? 11 : big ? Math.min(34, size + 8) : size}px`;
+  el.style.setProperty('--dx', `${Math.round((Math.random() < .5 ? -1 : 1) * (6 + Math.random() * 12))}px`);
   layer.append(el);
-  el.animate([
-    { transform: 'translate(-50%,-50%) scale(.4)', opacity: 0 },
-    { transform: 'translate(-50%,-110%) scale(1.35)', opacity: 1, offset: .16 },
-    { transform: 'translate(-50%,-120%) scale(1)', opacity: 1, offset: .55 },
-    { transform: 'translate(-50%,-190%) scale(1)', opacity: 0 },
-  ], { duration: 900, easing: 'steps(14)' }).onfinish = () => el.remove();
+  let done = false;
+  const kill = () => { if (!done) { done = true; el.remove(); } };
+  el.addEventListener('animationend', e => { if (e.target === el) kill(); });
+  setTimeout(kill, big ? 1400 : 1100); // 애니메이션이 안 돌 때 대비
 }
 
 // ---------- 캔버스 입자 (반 해상도, 도트처럼 굵게) ----------

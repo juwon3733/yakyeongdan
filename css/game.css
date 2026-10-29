@@ -1196,3 +1196,37 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 /* 발밑 그림자를 진하게(바닥에 서 있는 느낌) */
 .pm > img,.foe > img{background:radial-gradient(ellipse 42% 5% at 50% 97%,rgba(0,0,0,.7),transparent)}
 .pm > img,.foe > img{pointer-events:none}
+
+/* 피해 숫자 — 슬레이 더 스파이어식: 튀어 올랐다(살짝 커짐) 옆으로 조금 떨어지며 사라짐 */
+.jnum{transform:translate(-50%,-50%);pointer-events:none;animation:jnumPop .95s cubic-bezier(.2,.7,.3,1) forwards}
+.jnum>span{display:inline-block}
+@keyframes jnumPop{
+  0%{transform:translate(-50%,-30%) scale(.3);opacity:0}
+  12%{transform:translate(calc(-50% + var(--dx,0px) * .25),-150%) scale(1.3);opacity:1}
+  26%{transform:translate(calc(-50% + var(--dx,0px) * .45),-165%) scale(1);opacity:1}
+  65%{transform:translate(calc(-50% + var(--dx,0px) * .8),-130%) scale(1);opacity:1}
+  100%{transform:translate(calc(-50% + var(--dx,0px)),-95%) scale(.9);opacity:0}}
+/* 치명타·15 이상: 크게 튀고 흔들림 */
+.jnum.big{z-index:7;animation:jnumBig 1.25s cubic-bezier(.2,.7,.3,1) forwards;
+  text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000,3px 3px 0 #000,0 0 6px rgba(255,90,60,.7)}
+.jnum.big>span{animation:jnumShake .32s steps(8) .1s}
+.jnum.crit.big{color:#ffe060}
+@keyframes jnumBig{
+  0%{transform:translate(-50%,-30%) scale(.3);opacity:0}
+  10%{transform:translate(calc(-50% + var(--dx,0px) * .2),-170%) scale(1.7);opacity:1}
+  24%{transform:translate(calc(-50% + var(--dx,0px) * .4),-180%) scale(1.15);opacity:1}
+  70%{transform:translate(calc(-50% + var(--dx,0px) * .8),-145%) scale(1.1);opacity:1}
+  100%{transform:translate(calc(-50% + var(--dx,0px)),-105%) scale(1);opacity:0}}
+@keyframes jnumShake{
+  0%,100%{transform:none}
+  15%{transform:translate(-3px,1px)}30%{transform:translate(3px,-1px)}
+  45%{transform:translate(-2px,-1px)}60%{transform:translate(2px,1px)}
+  75%{transform:translate(-1px,0)}90%{transform:translate(1px,0)}}
+/* 방어로 막힘: 회색 「막음」, 작게 떴다 가라앉음 */
+.jnum.blk{color:#9a98a8;animation:jnumBlk .8s ease-out forwards}
+@keyframes jnumBlk{
+  0%{transform:translate(-50%,-50%) scale(.6);opacity:0}
+  18%{transform:translate(-50%,-110%) scale(1.05);opacity:1}
+  60%{transform:translate(-50%,-110%) scale(1);opacity:1}
+  100%{transform:translate(-50%,-70%) scale(1);opacity:0}}
+@media (prefers-reduced-motion:reduce){.jnum.big>span{animation:none}}
