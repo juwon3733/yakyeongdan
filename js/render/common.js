@@ -147,7 +147,8 @@ export function cardHTML(inst, playable, act = 'play', idOverride, sel = false) 
   let cost = d.unplayable ? '–' : String(d.cost), cc = '';
   if (!isStr && S.C) { const c = costOf(inst); if (c != null) { cost = String(c); cc = c > d.cost ? 'dn' : c < d.cost ? 'up' : ''; } }
   const tags = [d.time ? `<span class="tm">${S.C?.payEnergy && relicFlag('hourglass') ? '에너지로' : `+${S.G ? timeCost() : RULES.timeCard}분`}</span>` : '', d.target === 'ally' ? '<span class="tg">동료 고름</span>' : '',
-    d.target === 'all' ? '<span class="tg all">모든 적</span>' : '', d.exhaust && !duo ? '<span class="tg ex">소멸</span>' : ''].join('');
+    // 효과 글이 이미 「모든 적 …」이면 태그를 또 붙이지 않는다(「모든 적 모든 적 피해 5」처럼 두 번 찍힘)
+    d.target === 'all' && !(d.text || '').includes('모든 적') ? '<span class="tg all">모든 적</span>' : '', d.exhaust && !duo ? '<span class="tg ex">소멸</span>' : ''].join('');
   const dn = !isStr && S.C && playable && act === 'play' ? duoPreview(inst) : null;
   const tip = (dn ? `지금 쓰면 듀오 「${dn}」 카드가 손에 들어온다.\n` : '') + kwTip(`${d.text || ''} ${d.time ? '시간 카드' : ''} ${d.exhaust ? '소멸' : ''} ${duo ? '듀오' : ''} ${curse ? '저주' : ''} ${(d.tags || []).includes('slash') ? '베기' : ''}`);
   const faces = duo ? [d.a, d.b] : curse ? [] : [d.ch];
