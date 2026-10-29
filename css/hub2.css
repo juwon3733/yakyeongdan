@@ -92,3 +92,15 @@
 .h2side.s0{left:calc(50% - 200px);bottom:14px}
 .h2side.s1{left:calc(50% + 56px);bottom:18px}
 .h2cast::after{content:"";position:absolute;left:8%;right:8%;bottom:8px;height:22px;z-index:0;pointer-events:none;background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(0,0,0,.5),transparent)}
+/* 타이틀 메뉴: 그림 위에 얹은 큰 네모 단추 두 개 대신, 글자만 있는 메뉴 + 고른 줄 앞에 ▸ (옛 게임 타이틀처럼) */
+.tmenu{width:auto;gap:2px}
+.tmenu::before{content:"";position:absolute;left:-24px;right:-60px;top:-30px;bottom:-24px;z-index:-1;background:radial-gradient(ellipse 60% 60% at 30% 60%,rgba(6,6,18,.75),transparent 75%)}
+.tmenu button,.tmenu button.primary{background:none;border:0;box-shadow:none;padding:2px 0 2px 16px;font-size:16px;color:#d8d4ec;text-shadow:2px 2px 0 #000;position:relative;width:max-content}
+.tmenu button.primary{color:#fff4d0}
+.tmenu button::before{content:"▸";position:absolute;left:0;color:var(--gold);opacity:0}
+.tmenu button.primary::before,.tmenu button:hover::before,.tmenu button:focus-visible::before{opacity:1;animation:yk-cur .8s steps(2) infinite}
+.tmenu button:hover{color:#fff;transform:none}
+.tmenu button.firstgo{background:none}
+@keyframes yk-cur{50%{transform:translateX(3px)}}
+.tmenu > .note{text-shadow:1px 1px 0 #000}
+.tmenu button:focus-visible{outline:0}
