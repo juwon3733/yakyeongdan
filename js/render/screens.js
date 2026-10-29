@@ -51,8 +51,7 @@ export function restView() {
   const talk = G.restTalk != null ? TALKS[G.restTalk] : null;
   // 대화가 있으면 말하는 둘, 없으면 대열 앞·가운데 둘이 모닥불 곁에
   const pair = talk ? [...new Set(talk.lines.map(([p]) => p))].slice(0, 2) : G.formation.slice(0, 2);
-  return scene('rest', null, pair, `<h2>휴식</h2><p class="note">탑의 계단참. 쉬거나, 잠깐 눈을 붙여 시간을 벌거나, 카드를 손질하거나.</p>
-    <div class="restwho">${who}</div>
+  return scene('rest', null, pair, `<h2>휴식</h2>
     ${talk ? `<div class="talk">${talk.lines.map(([p, t]) => `<p>${face(p, 'sm')}<b>${CHARACTERS[p].name}</b> ${esc(t)}</p>`).join('')}</div>` : ''}
     <div class="acts">
       <button type="button" class="primary" data-rest="heal">쉬기: 각자 최대 체력의 ${Math.round(restPct(false) * 100)}% (쓰러졌던 동료 ${Math.round(restPct(true) * 100)}%)</button>

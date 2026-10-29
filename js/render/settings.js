@@ -16,14 +16,13 @@ export function settingsModal() {
     <div class="shead"><h2>설정</h2><button type="button" class="mini" data-close>닫기</button></div>
     <div class="srow"><label for="set-music">음악</label><input id="set-music" type="range" min="0" max="1" step="0.05" value="${SET.music}" data-vol="music"><output id="out-music">${pct(SET.music)}</output></div>
     <div class="srow"><label for="set-sfx">효과음</label><input id="set-sfx" type="range" min="0" max="1" step="0.05" value="${SET.sfx}" data-vol="sfx"><output id="out-sfx">${pct(SET.sfx)}</output></div>
-    <p class="note small">환경음(파도·바람)은 음악 음량을 따른다. 위 띠의 소리 버튼(M 키)은 전체를 켬·작게·끔으로 바꾼다.</p>
-    <div class="srow"><span class="lb">빠른 사용</span>${seg('quick', [[true, '켬'], [false, '끔']], SET.quick)}<span class="note small">대상이 하나뿐인 카드는 한 번 눌러 바로 쓴다</span></div>
+    <div class="srow" data-tip="대상이 하나뿐인 카드는 한 번 눌러 바로 쓴다"><span class="lb">빠른 사용</span>${seg('quick', [[true, '켬'], [false, '끔']], SET.quick)}</div>
     <div class="srow"><span class="lb">화면 흔들림</span>${seg('shake', [[true, '켬'], [false, '끔']], SET.shake)}</div>
-    <div class="srow"><span class="lb">애니메이션 줄이기</span>${seg('calm', [['null', '기기 설정대로'], [true, '줄임'], [false, '그대로']], SET.calm ?? 'null')}<span class="note small">지금 ${calmNow() ? '줄임' : '그대로'}</span></div>
-    <div class="srow"><span class="lb">글자 크기</span>${seg('text', [['auto', '자동'], ['normal', '보통'], ['big', '크게']], SET.text)}<span class="note small">지금 ${bigTextNow() ? '크게' : '보통'} (자동: 작은 화면이면 크게)</span></div>
+    <div class="srow" data-tip="지금 ${calmNow() ? '줄임' : '그대로'}"><span class="lb">애니메이션 줄이기</span>${seg('calm', [['null', '기기 설정대로'], [true, '줄임'], [false, '그대로']], SET.calm ?? 'null')}</div>
+    <div class="srow" data-tip="지금 ${bigTextNow() ? '크게' : '보통'} (자동: 작은 화면이면 크게)"><span class="lb">글자 크기</span>${seg('text', [['auto', '자동'], ['normal', '보통'], ['big', '크게']], SET.text)}</div>
     <div class="srow"><span class="lb">첫 밤</span><button type="button" class="mini" data-tutreplay ${inRun ? 'disabled title="판을 마치고 다시 보세요"' : ''}>튜토리얼 다시 하기</button></div>
     ${canFullscreen() ? `<div class="srow"><span class="lb">전체 화면</span><button type="button" class="mini" data-fs>${isFullscreen() ? '전체 화면 끄기' : '전체 화면 켜기'}</button><span class="note small">폰은 홈 화면에 추가하면 앱처럼 켜진다</span></div>` : ''}
-    <div class="srow"><span class="lb">저장 백업</span><button type="button" class="mini ${S.backup?.mode === 'export' ? 'on' : ''}" data-bexport>저장 내보내기</button><button type="button" class="mini ${S.backup?.mode === 'import' ? 'on' : ''}" data-bimport>불러오기</button><span class="note small">폰을 바꿀 때: 코드를 복사해 새 기기에 붙여 넣는다</span></div>
+    <div class="srow" data-tip="폰을 바꿀 때: 코드를 복사해 새 기기에 붙여 넣는다"><span class="lb">저장 백업</span><button type="button" class="mini ${S.backup?.mode === 'export' ? 'on' : ''}" data-bexport>저장 내보내기</button><button type="button" class="mini ${S.backup?.mode === 'import' ? 'on' : ''}" data-bimport>불러오기</button></div>
     ${backupBox()}
     <div class="srow danger"><span class="lb">저장 지우기</span><button type="button" class="mini" data-wipe ${S.wipeArm ? 'aria-pressed="true"' : ''}>${S.wipeArm ? '한 번 더 누르면 모두 지운다' : '동료·별 조각·기록 지우기'}</button></div>
   </div>`;

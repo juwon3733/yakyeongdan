@@ -41,3 +41,4 @@
 .resultscr .mvp .nm{font-size:13px;color:#fff;background:#0b0b18;border:2px solid var(--c);box-shadow:3px 3px 0 #000;padding:1px 10px;position:relative;z-index:1}
 .resultscr .mvp .note{font-size:9px;text-shadow:1px 1px 0 #000}
 .resultscr.lost .mvp{box-shadow:none}
+.scene .sbody{position:relative}

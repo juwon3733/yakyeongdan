@@ -146,8 +146,30 @@ export function beforeRender() {
 }
 
 // ---------- 그린 뒤: 사건을 시간 순서로 ----------
+// 장면 대화 창 글이 한 글자씩 찍힌다(옛 게임 대화 창처럼). 선택지는 글이 다 나온 뒤 차례로 올라온다. 누르면 바로 끝까지.
+let typedFor = '', typeTimer = null;
+function typeScene() {
+  const box = app()?.querySelector('.scene .sbody'); if (!box) { typedFor = ''; return; }
+  const key = box.textContent; if (key === typedFor) return; typedFor = key;
+  const p = box.querySelector(':scope > .note'); const acts = [...box.querySelectorAll(':scope > .acts button, :scope > .restwho, :scope > .talk')];
+  if (!p || calmNow()) return;
+  const full = p.innerHTML, text = p.textContent; if (!text) return;
+  // 글자 수만큼 드러낸다(태그는 지키려고 글자마다 span으로 감싸지 않고, 보이는 길이만 clip)
+  p.style.visibility = 'hidden';
+  const ghost = p.cloneNode(false); ghost.style.visibility = 'visible'; ghost.textContent = ''; ghost.className = p.className + ' jtype';
+  p.after(ghost); Object.assign(ghost.style, { position: 'absolute', left: `${p.offsetLeft}px`, top: `${p.offsetTop}px`, width: `${p.offsetWidth}px`, margin: '0' });
+  for (const a of acts) a.style.opacity = '0';
+  let i = 0; clearInterval(typeTimer);
+  const done = () => { clearInterval(typeTimer); typeTimer = null; ghost.remove(); p.style.visibility = ''; p.innerHTML = full;
+    acts.forEach((a, k) => { a.style.opacity = ''; a.animate([{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 160, delay: k * 60, easing: 'steps(3)', fill: 'backwards' }); });
+    box.removeEventListener('pointerdown', skip, true); };
+  const skip = e => { if (typeTimer) { e.stopPropagation(); e.preventDefault(); done(); } };
+  box.addEventListener('pointerdown', skip, true);
+  typeTimer = setInterval(() => { i = Math.min(text.length, i + 1); ghost.textContent = text.slice(0, i); if (i % 3 === 0) sfx('ui_hover', { vol: .25, rate: 1.6 }); if (i >= text.length) done(); }, 22);
+}
 export function afterRender(events = []) {
   ensure(); if (!layer) return;
+  typeScene();
   sizeCanvas();
   fitSprites();
   charLayers();
@@ -1183,9 +1205,15 @@ function draw(p) {
       const a = p.a0 + (p.a1 - p.a0) * s, w = Math.sin(s * Math.PI) * p.w;
       for (let j = 0; j <= w; j += 1.5) { g.fillStyle = j < 1.5 ? '#ffffff' : p.col; px(p.x + Math.cos(a) * (p.r - j), p.y + Math.sin(a) * (p.r - j) * p.flat); }
     }
-  } else if (p.k === 'line') {   // 포탄·창·별의 꼬리
+  } else if (p.k === 'line') {   // 포탄·창·별의 꼬리: 끊긴 점(「????!!!」처럼 보이던 것) 대신 이어진 줄 — 머리는 흰 2칸, 꼬리는 색이 가늘어진다
     const head = Math.min(1, p.age / p.speed), tail = Math.max(0, head - .35);
-    for (let s = tail; s <= head; s += .02) { g.fillStyle = s > head - .05 ? '#ffffff' : p.col; px(p.x0 + (p.x1 - p.x0) * s, p.y0 + (p.y1 - p.y0) * s, p.s || 1); }
+    const len = Math.hypot(p.x1 - p.x0, p.y1 - p.y0) / 2, step = 1 / Math.max(8, len);
+    if (f > .8 && (p.age & 1)) return;
+    for (let s = tail; s <= head; s += step) {
+      const k = (s - tail) / Math.max(.001, head - tail), w = k > .85 ? 2 : (p.s || 1);
+      g.fillStyle = k > .85 ? '#ffffff' : p.col;
+      g.fillRect(Math.round((p.x0 + (p.x1 - p.x0) * s) / 2), Math.round((p.y0 + (p.y1 - p.y0) * s - Math.sin(s * Math.PI) * (p.arc || 0)) / 2) - (w > 1 ? 1 : 0), 1, w);
+    }
   } else if (p.k === 'icon') {   // 방패 도트
     const pop = f < .2 ? .6 + f * 2 : 1, dy = -f * 8;
     if (f > .7 && (p.age & 1)) return;
@@ -1228,7 +1256,8 @@ function flash() {
   w.animate([{ opacity: .5 }, { opacity: 0 }], { duration: 140, easing: 'ease-out' }).onfinish = () => w.remove();
 }
 function impactFx(x, y, col) { ring(x, y, col, 3, 18, 9); sparks(x, y, col, 10, 1.8); }
-function tracer(x0, y0, x1, y1, col) { add({ k: 'line', x0, y0, x1, y1, col, speed: 6, life: 10, s: 1 }); }
+// 포탄: 뒷줄에서 쏘면 앞 동료들 몸을 꿰뚫고 지나가 보이던 것 → 동료들 머리 위로 낮게 휘어 날아간다
+function tracer(x0, y0, x1, y1, col) { add({ k: 'line', x0, y0, x1, y1, col, speed: 7, life: 11, s: 1, arc: Math.min(70, Math.abs(x1 - x0) * .18) }); }
 function starTrail(x0, y0, x1, y1, col) { add({ k: 'line', x0, y0, x1, y1, col, speed: 9, life: 14, s: 2 }); }
 function mistFx(x, y) { for (let k = 0; k < 3; k++) add({ k: 'blob', x: x + rnd(-10, 10), y: y + rnd(-6, 8), vx: rnd(-.2, .2), vy: rnd(-.5, -.2), r: rnd(7, 11), col: k % 2 ? '#7ad05a' : '#b4f07a', life: 26 }); }
 function flames(x, y) { for (let k = 0; k < 12; k++) add({ k: 'dot', x: x + rnd(-10, 10), y: y + rnd(-2, 6), vx: rnd(-.2, .2), vy: rnd(-1.6, -.8), g: 0, life: rnd(14, 22), col: k % 3 ? '#ff9a4a' : '#ffe060', s: 2 }); }
