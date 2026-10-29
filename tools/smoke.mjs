@@ -450,10 +450,11 @@ try {
     // 이긴 판으로 끝낸다
     await page.evaluate(() => { const G = window.__yk.S.G; G.won = true; G.why = 'win'; G.bossKills = 3; G.clock = 330; G.bestTurn = { dmg: 120, bursts: [], act: 3 }; G.bigTurns = 1; G.screen = 'result'; window.__yk.render(); });
     const r = await page.evaluate(() => { const P = window.__yk.P(); return { d: Object.values(P.daily)[0], wins: P.life.dailyWins, ach: P.achDone.length, hist: P.history.length, mx: Object.values(P.mxp).length,
-      line: [...document.querySelectorAll('.shards td')].some(td => /매일의 밤/.test(td.textContent)), toast: !!document.querySelector('.achtoast'), meta: !!document.querySelector('.metanote') }; });
+      line: [...document.querySelectorAll('.shards td')].some(td => /매일의 밤/.test(td.textContent)), achLine: [...document.querySelectorAll('.metanote .chip')].some(c => c.textContent === '업적'), toast: !!document.querySelector('.achtoast'), meta: !!document.querySelector('.metanote') }; });
     if (st.daily && st.mods && st.chip && st.party === 3 && r.d?.won && r.d.best === 330 && r.wins === 1 && r.line && r.meta) { seen.daily = true; console.log(`daily: ${st.daily} 매일의 밤 격파 (첫 격파 별 조각 줄, 숙련도 ${r.mx}명)`); }
     else fail(`매일의 밤 실패 ${JSON.stringify({ st, r })}`);
-    if (r.ach >= 3 && r.toast) { seen.ach = true; console.log(`ach: 업적 ${r.ach}개 달성 · 띠 표시`); } else fail(`업적 달성 실패 ${JSON.stringify(r)}`);
+    // 결과 화면은 업적을 본문(.metanote)에 적고 띠는 띄우지 않는다(같은 내용이 본문을 가리지 않게)
+    if (r.ach >= 3 && r.achLine && !r.toast) { seen.ach = true; console.log(`ach: 업적 ${r.ach}개 달성 · 결과 본문에 표시`); } else fail(`업적 달성 실패 ${JSON.stringify(r)}`);
     await page.click('[data-home]');
     await page.click('[data-view="records"]');
     const hrows = await page.$$eval('.odds.hist tr', t => t.length);

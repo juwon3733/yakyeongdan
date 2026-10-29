@@ -163,7 +163,7 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 .topbar .clock{display:inline-flex;align-items:center;gap:3px}
 .topbar .clock .hi{width:13px;height:13px}
 /* 소리 버튼: 글자 대신 스피커 그림(켬·작게·끔) */
-.topbar [data-sound]{font-size:0;width:26px;height:22px;padding:0;position:relative}
+#stage .topbar [data-sound]{font-size:0;width:26px;height:22px;padding:0;position:relative}
 .topbar [data-sound]::before{content:"";position:absolute;left:5px;top:5px;width:7px;height:10px;background:#c9d2f0;clip-path:polygon(0 30%,40% 30%,100% 0,100% 100%,40% 70%,0 70%)}
 .topbar [data-sound]::after{content:"";position:absolute;left:13px;top:6px;width:6px;height:8px;border:2px solid #c9d2f0;border-left:0;border-radius:0 8px 8px 0}
 .topbar [data-sound][data-lv="1"]::after{width:3px;height:6px;top:7px}

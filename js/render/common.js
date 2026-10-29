@@ -156,6 +156,6 @@ export function cardHTML(inst, playable, act = 'play', idOverride, sel = false) 
     <span class="art"><img class="px" src="${cardArtSrc(d, pals, longs)}" alt="" draggable="false"></span>
     <span class="cost ${d.time ? 'clock' : 'gem'} ${cc}">${cost}</span>
     <span class="hd"><span class="nm ${d.name.length >= 6 ? 'long' : ''}">${esc(d.name)}</span></span>
-    <span class="bd">${tags}${cardText(d)}</span>
+    <span class="bd">${tags}${d.target === 'all' ? cardText(d).replace(/^모든 적 /, '') : cardText(d)}</span>
     <span class="who"><span class="fc">${fc}</span><span class="wn">${down ? '쓰러짐' : who}</span></span></button>`;
 }

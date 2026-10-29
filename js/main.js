@@ -340,8 +340,11 @@ function openSettings() {
   modal.innerHTML = settingsModal(); modal.hidden = false; modal.dataset.kind = 'settings';
   if (S.backup) modal.querySelector('.backup')?.scrollIntoView({ block: 'nearest' });   // 작은 화면: 백업 칸이 아래에 가려지지 않게
 }
+const closeModal = () => { modal.hidden = true; S.wipeArm = false; S.backup = null; delete modal.dataset.kind; };
+// Esc로도 닫는다(덱 보기·설정 등)
+addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
 modal.addEventListener('click', e => {
-  if (e.target === modal || e.target.closest('[data-close]')) { modal.hidden = true; S.wipeArm = false; S.backup = null; delete modal.dataset.kind; return; }
+  if (e.target === modal || e.target.closest('[data-close]')) { closeModal(); return; }
   const b = e.target.closest('button'); if (!b || b.disabled) return;
   const D = b.dataset;
   // 전체 화면 · 저장 백업 (js/pwa.js · js/meta.js)

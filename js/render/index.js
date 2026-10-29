@@ -55,6 +55,8 @@ export function render(app) {
 // 업적 달성 띠: 화면 오른쪽 위에 3초. 한꺼번에 많이 달성하면 둘만 보이고 나머지는 「외 n개」 한 줄로.
 function showAchToasts() {
   if (!achToasts.length) return;
+  // 결과 화면은 본문에 이번 판 업적을 적어 두므로 띠를 또 띄우면 같은 내용이 본문을 가린다
+  if (S.view === 'run' && S.G?.screen === 'result') { achToasts.length = 0; return; }
   const list = achToasts.splice(0), shown = list.length > 3 ? list.slice(0, 2) : list, rest = list.slice(shown.length);
   let box = document.getElementById('achbox');
   if (!box) { box = document.createElement('div'); box.id = 'achbox'; box.setAttribute('aria-live', 'polite'); (document.getElementById('stage') || document.body).appendChild(box); }

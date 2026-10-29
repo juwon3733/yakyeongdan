@@ -116,7 +116,7 @@ export function moonView() {
 function runBar(G) {
   const end = Math.max(dawnAt(), RULES.collapse, G.clock), pct = m => Math.min(100, m / end * 100).toFixed(1);
   const acts = [1, 2, 3].map(a => `<span class="seg a${a} ${a < G.act || G.won ? 'done' : a === G.act ? 'now' : ''}" style="left:${pct((a - 1) * dawnAt() / 3)}%;width:${pct(dawnAt() / 3)}%">${ACT_NAME[a]}</span>`).join('');
-  return `<div class="runbar" aria-label="진행"><div class="track">${acts}<i class="fill ${G.won ? 'won' : ''}" style="width:${pct(G.clock)}%"></i><b class="dawnmark" style="left:${pct(dawnAt())}%" title="해 뜨는 시각"></b><u class="me" style="left:${pct(G.clock)}%">${fmt(G.clock)}</u></div>
+  return `<div class="runbar" aria-label="진행"><div class="track">${acts}<i class="fill ${G.won ? 'won' : ''}" style="width:${pct(G.clock)}%"></i><b class="dawnmark" style="left:${pct(dawnAt())}%" title="해 뜨는 시각"></b><u class="me${G.clock / end > .93 ? ' end' : ''}" style="left:${pct(G.clock)}%">${fmt(G.clock)}</u></div>
     <div class="ticks"><span>00:00</span><span style="left:${pct(dawnAt())}%">${fmt(dawnAt())}</span></div></div>`;
 }
 
