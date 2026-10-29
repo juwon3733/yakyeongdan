@@ -568,3 +568,131 @@ def boss_in():
 
 
 SFX.update({'win2': win2, 'boss_in': boss_in})
+
+
+# ---------- 별 소환 연출 (summon_*) ----------
+
+def summon_charge():
+    """별이 모이며 차오름(1.2초): 위로 휘는 FM 웅웅 + 점점 빨라지는 반짝임 → 끝에서 뚝"""
+    sec = 1.2
+    t = T(sec)
+    p = t / sec
+    ph = np.cumsum(hz(48) * 2 ** (2 * p ** 1.6)) / SR          # 두 옥타브 위로
+    swell = np.sin(2 * np.pi * ph + (0.6 + 2.4 * p) * np.sin(2 * np.pi * 2 * ph)) * (0.1 + 0.4 * p ** 2)
+    air = lowpass(highpass(noise(sec), 2500), 9000) * p ** 3 * 0.25
+    sparks, s, i = [], 0.0, 0
+    notes = (79, 84, 86, 88, 91, 93, 96, 98, 100, 103)
+    while s < sec - 0.08:
+        sparks.append(at(glock(notes[i % len(notes)] if s < 0.8 else notes[-1 - i % 3], 0.05, 0.12 + 0.2 * s / sec), s))
+        s += 0.16 * (1 - s / sec) + 0.035
+        i += 1
+    y = mix(swell, air, *sparks)
+    y = fit(verb(y, 0.8, 0.3), sec)
+    y[-int(0.03 * SR):] *= np.linspace(1, 0, int(0.03 * SR))
+    return y
+
+
+def summon_drop():
+    """별똥별 떨어짐(0.5초): 높은 데서 휘익 내려오는 사인 + 꼬리 반짝 + 땅에 닿는 툭"""
+    sec = 0.5
+    t = T(sec)
+    fall = np.sin(2 * np.pi * np.cumsum(3000 * np.exp(-t / 0.15) + 300) / SR) * np.exp(-t / 0.3) * 0.35
+    trail = highpass(noise(sec), 4000) * np.exp(-t / 0.12) * 0.15
+    tk = T(0.15)
+    thud = np.sin(2 * np.pi * np.cumsum(70 + 180 * np.exp(-tk / 0.02)) / SR) * np.exp(-tk / 0.06) * 0.6
+    return fit(verb(mix(fall, trail, at(thud, 0.33), at(glock(96, 0.06, 0.25), 0.34)), 0.6, 0.3), sec)
+
+
+def summon_r3():
+    """★3 흰 별 열림(짧게): 맑은 종 두 음"""
+    return fit(verb(mix(bell(88, 0.25, 0.45), at(glock(95, 0.12, 0.35), 0.05)), 0.7, 0.3), 0.45)
+
+
+def summon_r4():
+    """★4 보라 반짝 + 화음: 위로 흩뿌리는 FM 반짝 → 신비한 add9 화음"""
+    sp = mix(*[at(fm(n, 0.05, 0.3, ratio=3.5, index=2.0, idecay=0.05, a=0.001, d=0.12, s=0, r=0.05), i * 0.04)
+               for i, n in enumerate((86, 90, 93, 98))])
+    ch = at(mix(*[fm(n, 0.5, 0.3, ratio=2.0, index=1.2, idecay=0.3, a=0.01, d=0.6, s=0.3, r=0.3, vib=0.006)
+                  for n in (62, 69, 74, 76, 81)]), 0.14)
+    y = fit(verb(mix(sp, ch, at(bell(93, 0.5, 0.3), 0.14)), 1.2, 0.4), 0.9)
+    return y * np.clip((0.9 - T(0.9)) / 0.35, 0, 1)
+
+
+def summon_r5():
+    """★5 금빛 큰 쾅 + 상승 아르페지오(1.5초)"""
+    tb = T(1.0)
+    thump = np.sin(2 * np.pi * np.cumsum(36 + 170 * np.exp(-tb / 0.04)) / SR) * np.exp(-tb / 0.4)
+    blast = lowpass(noise(1.0), 2500) * np.exp(-tb / 0.2) * 0.6
+    stab = mix(*[brass(n, 0.5, 0.5) for n in (48, 55, 60, 64, 67, 72)])
+    arp = mix(*[at(glock(n, 0.12, 0.3), 0.12 + i * 0.07) for i, n in enumerate((72, 76, 79, 84, 88, 91, 96, 100))])
+    harp_ = mix(*[at(bell(n, 0.4, 0.22), 0.12 + i * 0.07) for i, n in enumerate((60, 64, 67, 72, 76, 79, 84, 88))])
+    top = at(mix(*[brass(n, 0.7, 0.32) for n in (72, 76, 79, 84)]), 0.7)
+    y = verb(mix(kick(1.0), thump, blast, stab, at(snare(0.5), 0.0), arp, harp_, top,
+                 at(timpani(0.6, 36), 0.0), at(bell(96, 0.8, 0.35), 0.7)), 1.6, 0.38)
+    y = fit(y, 1.5)
+    return y * np.clip((1.5 - T(1.5)) / 0.5, 0, 1)
+
+
+SFX.update({'summon_charge': summon_charge, 'summon_drop': summon_drop,
+            'summon_r3': summon_r3, 'summon_r4': summon_r4, 'summon_r5': summon_r5})
+
+
+# ---------- 기술 연출 ----------
+
+def windup():
+    """공격 직전(0.15초): 숨 들이킴 같은 위로 휘는 바람 + 칼 뽑는 쉭-칭"""
+    sec = 0.15
+    t = T(sec)
+    breath = lowpass(highpass(noise(sec), 700), 3500) * (t / sec) ** 1.5 * 0.4
+    scrape = highpass(noise(sec), 4500) * np.clip((t - 0.05) / 0.08, 0, 1) * 0.3
+    ting = at(fm(93, 0.03, 0.3, ratio=3.53, index=2.5, idecay=0.03, a=0.001, d=0.06, s=0, r=0.02), 0.11)
+    return fit(mix(breath, scrape, ting), sec)
+
+
+def proj_fly():
+    """투사체 날아감(0.3초): 가까워졌다 멀어지는 휘익(도플러) + 얇은 FM 꼬리"""
+    sec = 0.3
+    t = T(sec)
+    shape = np.sin(np.pi * t / sec) ** 2
+    n_ = highpass(noise(sec), 1000)
+    whoosh = (lowpass(n_, 3000) * (1 - shape) + lowpass(n_, 7000) * shape) * shape * 0.5   # 가까울수록 밝게
+    ph = np.cumsum(hz(86) * 2 ** (-0.6 * t / sec)) / SR
+    tone_ = np.sin(2 * np.pi * ph + 0.8 * np.sin(2 * np.pi * 2 * ph)) * shape * 0.15
+    return fit(mix(whoosh, tone_), sec)
+
+
+def pet_whale():
+    """고래 소환(0.8초): 길게 휘는 고래 울음(비브라토 FM) + 물보라"""
+    sec = 0.8
+    t = T(0.6)
+    f = hz(55) * 2 ** (0.5 * np.sin(np.pi * t / 0.6))            # 올라갔다 내려오는 울음
+    ph = np.cumsum(f * (1 + 0.012 * np.sin(2 * np.pi * 6 * t))) / SR
+    song = np.sin(2 * np.pi * ph + 1.2 * np.sin(2 * np.pi * 2 * ph)) * np.sin(np.pi * t / 0.6) * 0.5
+    ts = T(0.5)
+    splash = lowpass(highpass(noise(0.5), 600), 6000) * np.exp(-ts / 0.12) * 0.5
+    drops = mix(*[at(fm(n, 0.04, 0.2, ratio=2.0, index=1.5, idecay=0.04, a=0.001, d=0.08, s=0, r=0.03), s)
+                  for s, n in ((0.08, 84), (0.15, 88), (0.22, 81), (0.3, 91))])
+    y = fit(verb(mix(lowpass(song, 2500), at(mix(splash, drops), 0.3)), 1.0, 0.35), sec)
+    return y * np.clip((sec - T(sec)) / 0.25, 0, 1)
+
+
+def pet_spirit():
+    """별 정령(0.4초): 반짝 3연타"""
+    hits = [at(mix(glock(n, 0.06, 0.4), fm(n + 12, 0.03, 0.15, ratio=3.5, index=1.5, idecay=0.03,
+                                            a=0.001, d=0.06, s=0, r=0.02)), i * 0.09)
+            for i, n in enumerate((88, 91, 96))]
+    return fit(verb(mix(*hits), 0.6, 0.3), 0.4)
+
+
+def aura_on():
+    """오라 켜짐(0.4초): 낮은 웅 + 살짝 차오르는 맥놀이"""
+    sec = 0.4
+    t = T(sec)
+    a = fm(43, 0.35, 0.5, ratio=1.0, index=1.8, idecay=0.2, a=0.03, d=0.4, s=0.4, r=0.1, detune=0.008)
+    b = fm(55, 0.35, 0.3, ratio=2.0, index=1.0, idecay=0.2, a=0.05, d=0.4, s=0.3, r=0.1, vib=0.01)
+    air = lowpass(highpass(noise(sec), 2000), 6000) * np.sin(np.pi * t / sec) * 0.08
+    y = fit(mix(lowpass(a, 1200), lowpass(b, 2000), air), sec)
+    return y * np.clip((sec - t) / 0.12, 0, 1)
+
+
+SFX.update({'windup': windup, 'proj_fly': proj_fly, 'pet_whale': pet_whale, 'pet_spirit': pet_spirit, 'aura_on': aura_on})
