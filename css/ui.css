@@ -1,0 +1,14 @@
+/* UI 키트 (assets/ui/*.png, GPT 「ui-kit」 묶음): 그림이 있으면(#stage[data-ui="kit"], js/main.js) CSS 네모 대신 그린 틀·버튼·띠.
+   조각은 원본 32×32 도트를 4배(128px) — 9칸 늘이기 경계는 원본 10px = 파일 40px, 화면에서는 테두리 8px(정수배로 또렷하게). */
+#stage[data-ui="kit"]{--ui-b:8px}
+#stage[data-ui="kit"] :is(button:not(.card,.pm,.foe,.drop,.node,.swap,.got,.mini,.hi,.endbtn),.bmenu,.spanel,.tright,.zinfo,.modal .box,.panel){
+  border:var(--ui-b) solid transparent;border-image:url("../assets/ui/frame.png") 40 fill / var(--ui-b) stretch;background:none;box-shadow:none;image-rendering:pixelated}
+#stage[data-ui="kit"] button:not(.card,.pm,.foe,.drop,.node,.swap,.got,.mini,.hi,.endbtn){border-image-source:url("../assets/ui/btn.png")}
+#stage[data-ui="kit"] button:not(.card,.pm,.foe,.drop,.node,.swap,.got,.mini,.hi,.endbtn):hover:not(:disabled){border-image-source:url("../assets/ui/btn_hi.png")}
+#stage[data-ui="kit"] button:not(.card,.pm,.foe,.drop,.node,.swap,.got,.mini,.hi,.endbtn):active:not(:disabled){border-image-source:url("../assets/ui/btn_down.png");translate:0 1px}
+#stage[data-ui="kit"] button.primary:not(.card){border-image-source:url("../assets/ui/btn_gold.png");color:#2a1a04;text-shadow:none}
+#stage[data-ui="kit"] button.mini{border:4px solid transparent;border-image:url("../assets/ui/chip.png") 40 fill / 4px stretch;background:none;box-shadow:none}
+#stage[data-ui="kit"] .jbanner{border:0;background:none;border-image:url("../assets/ui/ribbon.png") 40 fill / 12px stretch}
+#stage[data-ui="kit"] .hpbar{border-image:url("../assets/ui/bar.png") 40 fill / 2px stretch}
+/* 도트 로고(ui/logo.png, 192×64 원본): 정수배로 */
+.tlogo{display:block;width:192px;height:64px;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6));animation:pkin .6s cubic-bezier(.2,.8,.3,1) both}

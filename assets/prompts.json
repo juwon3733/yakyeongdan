@@ -1178,6 +1178,20 @@
       ]
     },
     {
+      "id": "ui-kit",
+      "title": "UI 키트 (시트 1장 → 틀·버튼·띠·아이콘 16개)",
+      "items": [
+        "ui_kit"
+      ]
+    },
+    {
+      "id": "logo",
+      "title": "「야경단」 도트 로고",
+      "items": [
+        "ui_logo"
+      ]
+    },
+    {
       "id": "skin-sion",
       "title": "시온 스킨(두 번째 의상) — 나중",
       "items": [
@@ -16669,6 +16683,281 @@
             192
           ]
         }
+      ]
+    },
+    {
+      "id": "ui_kit",
+      "kind": "iconsheet",
+      "batch": "ui-kit",
+      "file": "sheets/ui_kit.png",
+      "width": 1024,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "128×128 (칸 32×32 × 16)",
+      "note": "아이콘 4×4, 칸 256×256",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nA pixel-art GAME UI KIT sheet for a night-themed gacha RPG (navy, gold, crimson; moon and star motifs), on one 1024x1024 canvas split into sixteen equal square cells of 256x256 (4x4), reading order left to right, top to bottom. Each cell holds ONE piece, filling most of the cell, centered, with an empty transparent margin of about 6% (nothing touches a cell edge). No text, no letters, no labels, no grid lines.\n- Cell 1: a PANEL FRAME for 9-slice stretching: dark navy translucent center (flat, no pattern), a 2-pixel dark outline, a thin gold inner line, and small ornate gold corner pieces (stars/moon motif) in the four corners; the edges between corners are plain and uniform so they can stretch\n- Cell 2: the same panel frame but highlighted: brighter gold edges and corner gems glowing\n- Cell 3: the same panel frame in a crimson-rose color scheme (for danger / enemy panels)\n- Cell 4: a BUTTON for 9-slice stretching: a raised navy-blue plate with a 2-pixel dark outline, a light top bevel and dark bottom bevel, small rivets in the corners, plain uniform edges\n- Cell 5: the same button hovered: slightly brighter with a thin gold rim\n- Cell 6: the same button pressed: bevel inverted, shifted down 1 pixel, darker\n- Cell 7: a PRIMARY BUTTON: the same shape in rich gold with a warm glow, dark outline\n- Cell 8: a TITLE RIBBON banner for 9-slice stretching: a deep-red cloth band with folded tails on both ends, gold trim lines along the top and bottom, plain uniform middle\n- Cell 9: a small TAB label plate: dark navy with a gold top edge, rounded only by pixel steps\n- Cell 10: a thin horizontal DIVIDER line with a small gold star ornament in the middle, fading at both ends\n- Cell 11: a small pill-shaped STAT CHIP background: dark with a 1-pixel light outline, plain middle for 9-slice\n- Cell 12: an empty HP BAR frame: dark trough with a 1-pixel outline and tiny end caps, plain middle for 9-slice\n- Cell 13: a STAR SHARD currency icon: a glowing pale-gold four-pointed star crystal\n- Cell 14: a round HELP button icon: a navy disc with a gold rim and a white question mark\n- Cell 15: a small LOCK icon: an old brass padlock\n- Cell 16: a round wax-SEAL style stamp: crimson wax with a crescent moon imprint, for the end-turn button\nFrames, buttons, ribbon, chip and bar must be perfectly symmetric with plain, uniform straight edges between the corners (they will be stretched with 9-slice scaling). Fully transparent background. Native resolution 32x32 pixels per cell (128x128 for the whole sheet), upscaled exactly 8x with nearest-neighbor.",
+      "must_show": "4×4: 틀3·버튼4·띠·탭·구분선·칩·막대·별조각·도움말·자물쇠·도장, 글자 없음, 가장자리 곧고 대칭",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "ui/frame.png",
+          "x": 0,
+          "y": 0,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/frame_hi.png",
+          "x": 256,
+          "y": 0,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/frame_rose.png",
+          "x": 512,
+          "y": 0,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/btn.png",
+          "x": 768,
+          "y": 0,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/btn_hi.png",
+          "x": 0,
+          "y": 256,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/btn_down.png",
+          "x": 256,
+          "y": 256,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/btn_gold.png",
+          "x": 512,
+          "y": 256,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/ribbon.png",
+          "x": 768,
+          "y": 256,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/tab.png",
+          "x": 0,
+          "y": 512,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/divider.png",
+          "x": 256,
+          "y": 512,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/chip.png",
+          "x": 512,
+          "y": 512,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/bar.png",
+          "x": 768,
+          "y": 512,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/coin.png",
+          "x": 0,
+          "y": 768,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/help.png",
+          "x": 256,
+          "y": 768,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/lock.png",
+          "x": 512,
+          "y": 768,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        },
+        {
+          "file": "ui/seal.png",
+          "x": 768,
+          "y": 768,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            128,
+            128
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ui_logo",
+      "kind": "logo",
+      "batch": "logo",
+      "file": "ui/logo.png",
+      "width": 1536,
+      "height": 512,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "192×64",
+      "note": "「야경단」 도트 로고 · 투명 배경 · 글자 모양이 그림의 전부",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nPixel-art GAME LOGO of the Korean title 「야경단」 (three Hangul syllables 야 경 단, written correctly and clearly readable). Chunky bold pixel letters in warm gold with a dark navy outline and a soft lantern-glow highlight, a small crescent moon tucked against the first syllable and a few tiny stars around; a subtle night-watch lantern motif. Only the logo — no other text, no background. Wide horizontal layout. Fully transparent background. Native resolution 192x64 pixels, upscaled exactly 8x with nearest-neighbor to 1536x512.",
+      "reference_images": [
+        "style/akane_c.png"
       ]
     }
   ]

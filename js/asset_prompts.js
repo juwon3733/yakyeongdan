@@ -38,6 +38,8 @@ export const SPEC = {
   title:    { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'title', note: '타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지' },
   summon:   { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'summon', note: '소환 화면 밤하늘 16:9' },
   meteor:   { w: 512,  h: 512,  native: '64×64',   scale: 8, transparent: true,  colors: 256, folder: 'summon', note: '별똥별 효과 · 투명 배경' },
+  ui:       { w: 128,  h: 128,  native: '32×32',   scale: 4, transparent: true,  colors: 64,  folder: 'ui', note: 'UI 키트 조각(틀·버튼·띠, 9칸 늘이기용) · UI 시트에서 잘라 냄 · 투명 배경' },
+  logo:     { w: 1536, h: 512,  native: '192×64',  scale: 8, transparent: true,  colors: 64,  folder: 'ui', note: '「야경단」 도트 로고 · 투명 배경 · 글자 모양이 그림의 전부' },
   icon:     { w: 192,  h: 192,  native: '32×32',   scale: 6, transparent: true,  colors: 64,  folder: 'icons', note: '도구 아이콘 · 아이콘 시트(iconsheet)에서 잘라 냄 · 투명 배경' },
   appicon:  { w: 1024, h: 1024, native: '64×64',   scale: 16, transparent: false, colors: 64, folder: 'app', note: '앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다' },
   style:    { w: 1024, h: 1536, native: '시안마다 다름', scale: 0, transparent: true, colors: Infinity, folder: 'style', note: '그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다' },
@@ -628,6 +630,35 @@ ${part.length < 16 ? `Cells ${part.length + 1}-16 stay completely empty (transpa
   };
   iconSheets('icons', '도구 아이콘', Object.entries(RELICS));
   iconSheets('icons-sig', '동료 전용 도구 아이콘', Object.entries(SIG_RELICS));
+  // UI 키트: CSS 네모 대신 그린 틀·버튼·띠(9칸 늘이기). 게임은 assets/ui/<이름>.png가 있으면 border-image로 쓴다(css/ui.css).
+  const UI = [
+    ['frame', 'a PANEL FRAME for 9-slice stretching: dark navy translucent center (flat, no pattern), a 2-pixel dark outline, a thin gold inner line, and small ornate gold corner pieces (stars/moon motif) in the four corners; the edges between corners are plain and uniform so they can stretch'],
+    ['frame_hi', 'the same panel frame but highlighted: brighter gold edges and corner gems glowing'],
+    ['frame_rose', 'the same panel frame in a crimson-rose color scheme (for danger / enemy panels)'],
+    ['btn', 'a BUTTON for 9-slice stretching: a raised navy-blue plate with a 2-pixel dark outline, a light top bevel and dark bottom bevel, small rivets in the corners, plain uniform edges'],
+    ['btn_hi', 'the same button hovered: slightly brighter with a thin gold rim'],
+    ['btn_down', 'the same button pressed: bevel inverted, shifted down 1 pixel, darker'],
+    ['btn_gold', 'a PRIMARY BUTTON: the same shape in rich gold with a warm glow, dark outline'],
+    ['ribbon', 'a TITLE RIBBON banner for 9-slice stretching: a deep-red cloth band with folded tails on both ends, gold trim lines along the top and bottom, plain uniform middle'],
+    ['tab', 'a small TAB label plate: dark navy with a gold top edge, rounded only by pixel steps'],
+    ['divider', 'a thin horizontal DIVIDER line with a small gold star ornament in the middle, fading at both ends'],
+    ['chip', 'a small pill-shaped STAT CHIP background: dark with a 1-pixel light outline, plain middle for 9-slice'],
+    ['bar', 'an empty HP BAR frame: dark trough with a 1-pixel outline and tiny end caps, plain middle for 9-slice'],
+    ['coin', 'a STAR SHARD currency icon: a glowing pale-gold four-pointed star crystal'],
+    ['help', 'a round HELP button icon: a navy disc with a gold rim and a white question mark'],
+    ['lock', 'a small LOCK icon: an old brass padlock'],
+    ['seal', 'a round wax-SEAL style stamp: crimson wax with a crescent moon imprint, for the end-turn button'],
+  ];
+  batches.push({ id: 'ui-kit', title: 'UI 키트 (시트 1장 → 틀·버튼·띠·아이콘 16개)' });
+  out.push(sheet('iconsheet', 'ui_kit', 'ui-kit', 'ui_kit.png', join(STYLE.pixel,
+    `A pixel-art GAME UI KIT sheet for a night-themed gacha RPG (navy, gold, crimson; moon and star motifs), on one 1024x1024 canvas split into sixteen equal square cells of 256x256 (4x4), reading order left to right, top to bottom. Each cell holds ONE piece, filling most of the cell, centered, with an empty transparent margin of about 6% (nothing touches a cell edge). No text, no letters, no labels, no grid lines.
+${UI.map(([, d], i) => `- Cell ${i + 1}: ${d}`).join('\n')}
+Frames, buttons, ribbon, chip and bar must be perfectly symmetric with plain, uniform straight edges between the corners (they will be stretched with 9-slice scaling). Fully transparent background. Native resolution 32x32 pixels per cell (128x128 for the whole sheet), upscaled exactly 8x with nearest-neighbor.`),
+    [4, 4], UI.map(([id], i) => ['ui', `ui_${id}`, `${id}.png`, i % 4, Math.floor(i / 4)]),
+    { must_show: '4×4: 틀3·버튼4·띠·탭·구분선·칩·막대·별조각·도움말·자물쇠·도장, 글자 없음, 가장자리 곧고 대칭' }));
+  batches.push({ id: 'logo', title: '「야경단」 도트 로고' });
+  out.push(item('logo', 'ui_logo', 'logo', 'logo.png', join(STYLE.pixel,
+    `Pixel-art GAME LOGO of the Korean title 「야경단」 (three Hangul syllables 야 경 단, written correctly and clearly readable). Chunky bold pixel letters in warm gold with a dark navy outline and a soft lantern-glow highlight, a small crescent moon tucked against the first syllable and a few tiny stars around; a subtle night-watch lantern motif. Only the logo — no other text, no background. Wide horizontal layout. Fully transparent background. Native resolution 192x64 pixels, upscaled exactly 8x with nearest-neighbor to 1536x512.`)));
   // 스킨(두 번째 의상)은 나중에 — 맨 뒤
   for (const [id, c] of Object.entries(CHARS)) batches.push({ id: `skin-${id}`, title: `${c.name} 스킨(두 번째 의상) — 나중` });
   return { batches, items: out, outputs: [...outputs] };

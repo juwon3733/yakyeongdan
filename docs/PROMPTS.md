@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 7 · GPT가 그릴 그림 310장(시트 포함, 잘라 내면 849장) · 묶음 166개
+style_version 7 · GPT가 그릴 그림 312장(시트 포함, 잘라 내면 866장) · 묶음 168개
 
 ## 묶음
 
@@ -152,6 +152,8 @@ style_version 7 · GPT가 그릴 그림 310장(시트 포함, 잘라 내면 849�
 | `app` | 앱 아이콘 | 1 |
 | `icons` | 도구 아이콘 40 (시트 → 한 개씩) | 3 |
 | `icons-sig` | 동료 전용 도구 아이콘 22 (시트 → 한 개씩) | 2 |
+| `ui-kit` | UI 키트 (시트 1장 → 틀·버튼·띠·아이콘 16개) | 1 |
+| `logo` | 「야경단」 도트 로고 | 1 |
 | `skin-sion` | 시온 스킨(두 번째 의상) — 나중 | 1 |
 | `skin-lunaria` | 루나리아 스킨(두 번째 의상) — 나중 | 1 |
 | `skin-akane` | 아카네 스킨(두 번째 의상) — 나중 | 1 |
@@ -194,6 +196,8 @@ style_version 7 · GPT가 그릴 그림 310장(시트 포함, 잘라 내면 849�
 | 타이틀 (`title`) | 1536×864 | — | 아니오 | 제한 없음 | 타이틀 키아트 16:9 · 오른쪽 40%는 메뉴 자리 · 글자 금지 |
 | 소환 배경 (`summon`) | 1536×864 | — | 아니오 | 제한 없음 | 소환 화면 밤하늘 16:9 |
 | 별똥별 (`meteor`) | 512×512 | 64×64 | 예 | 256 | 별똥별 효과 · 투명 배경 |
+| ui (`ui`) | 128×128 | 32×32 | 예 | 64 | UI 키트 조각(틀·버튼·띠, 9칸 늘이기용) · UI 시트에서 잘라 냄 · 투명 배경 |
+| logo (`logo`) | 1536×512 | 192×64 | 예 | 64 | 「야경단」 도트 로고 · 투명 배경 · 글자 모양이 그림의 전부 |
 | 도구 아이콘 (`icon`) | 192×192 | 32×32 | 예 | 64 | 도구 아이콘 · 아이콘 시트(iconsheet)에서 잘라 냄 · 투명 배경 |
 | appicon (`appicon`) | 1024×1024 | 64×64 | 아니오 | 64 | 앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다 |
 | style (`style`) | 1024×1536 | 시안마다 다름 | 예 | 제한 없음 | 그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다 |
@@ -1586,6 +1590,18 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 |---|---|---|---|---|
 | `icons-sig_1` | `assets/sheets/icons-sig_1.png` → `relic_sig_sion.png` `relic_sig_lunaria.png` `relic_sig_akane.png` `relic_sig_eleonore.png` `relic_sig_iris.png` `relic_sig_noel.png` `relic_sig_raven.png` `relic_sig_mimimomo.png` `relic_sig_sebas.png` `relic_sig_mariana.png` `relic_sig_tomori.png` `relic_sig_sigrun.png` `relic_sig_zeno.png` `relic_sig_brick.png` `relic_sig_marta.png` `relic_sig_finn.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 16개 |
 | `icons-sig_2` | `assets/sheets/icons-sig_2.png` → `relic_sig_laila.png` `relic_sig_dora.png` `relic_sig_gordon.png` `relic_sig_nerea.png` `relic_sig_bertha.png` `relic_sig_fukuro.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 6개 |
+
+## `ui-kit` — UI 키트 (시트 1장 → 틀·버튼·띠·아이콘 16개)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `ui_kit` | `assets/sheets/ui_kit.png` → `frame.png` `frame_hi.png` `frame_rose.png` `btn.png` `btn_hi.png` `btn_down.png` `btn_gold.png` `ribbon.png` `tab.png` `divider.png` `chip.png` `bar.png` `coin.png` `help.png` `lock.png` `seal.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4: 틀3·버튼4·띠·탭·구분선·칩·막대·별조각·도움말·자물쇠·도장, 글자 없음, 가장자리 곧고 대칭 |
+
+## `logo` — 「야경단」 도트 로고
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `ui_logo` | `assets/ui/logo.png` | 1536×512 투명 | `assets/style/akane_c.png` | — |
 
 ## `skin-sion` — 시온 스킨(두 번째 의상) — 나중
 
