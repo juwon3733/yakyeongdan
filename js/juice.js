@@ -154,6 +154,8 @@ export function afterRender(events = []) {
   setSky();
   fanHand();
   gachaFx();
+  ambient();
+  if (pre && pre.screen && A0() && pre.screen !== A0().dataset.screen && !(pre.screen === 'combat' && A0().dataset.screen === 'reward')) screenWipe();
   const P = pre; pre = null;
   if (calmNow()) {   // 애니메이션 줄이기: 소리만
     for (const e of events) { soundOf(e); if (e.kind === 'phase') showPhase(e.name, e.text); if (e.kind === 'burst') showBurst(e.who, e.name); }
@@ -1379,4 +1381,24 @@ function projectile(id, e, from) {
     let k = 0; const iv = setInterval(() => { el.src = fr[++k % fr.length]; }, 45);
     an.onfinish = () => { clearInterval(iv); el.remove(); };
   });
+}
+
+// ---------- 화면 넘김·배경 움직임 (docs/QUALITY_PLAN.md 3) ----------
+const A0 = () => document.getElementById('app');
+// 화면이 바뀌면 밤하늘 막이 비스듬히 걷힌다(0.38초, 누름은 막지 않음)
+function screenWipe() {
+  if (calmNow() || !layer) return;
+  const w = document.createElement('div'); w.className = 'jwipe';
+  layer.append(w);
+  w.animate([{ clipPath: 'polygon(0 0,100% 0,100% 100%,0 100%)' }, { clipPath: 'polygon(100% 0,115% 0,115% 100%,85% 100%)' }],
+    { duration: 380, easing: 'cubic-bezier(.6,0,.3,1)', fill: 'forwards' }).onfinish = () => w.remove();
+}
+// 배경이 있는 화면(본부·출격 준비·소환·지도·타이틀)에 떠오르는 먼지·불티와 등불 깜빡임 — css #fx .jamb
+const AMB = new Set(['base', 'party', 'summon', 'reveal', 'map', 'title', 'mates', 'episodes', 'rest', 'event', 'shop']);
+let amb = null;
+function ambient() {
+  if (!layer) return;
+  const scr = A0()?.dataset.screen, on = AMB.has(scr) && !calmNow();
+  if (on && !amb) { amb = document.createElement('div'); amb.className = 'jamb'; amb.innerHTML = '<i class="d1"></i><i class="d2"></i><i class="glow"></i>'; layer.prepend(amb); }
+  if (amb) { amb.hidden = !on; amb.dataset.scr = scr || ''; }
 }

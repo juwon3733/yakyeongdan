@@ -405,6 +405,7 @@ try {
     page.on('console', m => { if (m.type() === 'error' && !/Failed to load resource/.test(m.text())) errors.push(`[endless] ${m.text()}`); });
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
     await page.goto(`http://127.0.0.1:${port}/?notut&seed=7`);
+    await page.waitForSelector('#boot', { state: 'detached', timeout: 30000 });   // 첫 로딩 화면(소리 받기)이 걷히기 전에 누르면 가려져 실패
     await page.evaluate(() => { window.__yk.reset(); window.__yk.wins(1); window.__yk.S.view = 'base'; window.__yk.render(); });
     await page.click('[data-view="party"][data-mode="endless"]');
     for (const k of ['marta', 'iris', 'brick']) await page.click(`[data-pick="${k}"]`);

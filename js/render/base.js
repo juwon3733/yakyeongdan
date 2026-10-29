@@ -107,10 +107,6 @@ const LOBBY_ICON = {
 export function summonView() {
   const r5 = nextRate5(), pk = pickupNow();
   const days = Math.max(1, Math.ceil((pk.ends - Date.now()) / 86400000));
-  const pickup = `<div class="pickup"><span class="chip" style="color:var(--gold)">픽업 · ${days}일 남음</span>
-    <span class="pk5" style="--c:${ROSTER[pk.five].col}">${img(pk.five)}<b>${ROSTER[pk.five].name}</b> ★5</span>
-    ${pk.four.map(k => `<span class="pk4" style="--c:${ROSTER[k].col}">${img(k)}${ROSTER[k].name}</span>`).join('')}
-    <span class="note small">★5의 ${pct(SUMMON.pickShare5)}가 픽업${P.pickGuar ? ' · <b>다음 ★5는 픽업 확정</b>' : ''}. ${PICKUP_DAYS}일마다 바뀐다.</span></div>`;
   const firstTen = !P.firstTen ? '<p class="note"><b>첫 10연</b>: 노엘·레이븐 중 ★4 동료 1명 확정.</p>' : '';
   const beginner = !P.got5 ? `<p class="note">초심자: 처음 ${SUMMON.beginner}번 안에 ★5 동료 확정, <b>처음 얻는 ★5는 직접 고른다</b> (지금 ${P.pulls}번).</p>` : '';
   const choose = P.pick5 ? `<button type="button" class="primary" data-view="pick5">★5 동료 고르기 (${P.pick5})</button>` : '';
@@ -119,16 +115,16 @@ export function summonView() {
       <span class="pkname"><i>픽업</i><b>${ROSTER[pk.five].name}</b><small>${stars(5)}</small></span></div>
     <div class="spanel">
       ${head()}
-      <h2>별 소환</h2>
-      ${pickup}
+      <div class="sban" style="--c:${ROSTER[pk.five].col}"><span class="sbk">픽업 소환 · ${days}일 남음</span><b>${ROSTER[pk.five].name}</b><span class="stars">${stars(5)}</span>
+        <span class="sb4">${pk.four.map(k => `<span style="--c:${ROSTER[k].col}">${img(k)}${ROSTER[k].name}</span>`).join('')}</span>
+        ${P.pickGuar ? '<span class="sguar">다음 ★5는 픽업 확정</span>' : ''}</div>
       ${pityBar(r5)}
-      <div class="oddsline">${oddsRow()}<button type="button" class="mini" data-view="odds">자세히</button></div>
+      <div class="oddsline"><button type="button" class="mini" data-view="odds">확률·규칙</button></div>
       ${firstTen || beginner ? `<details class="fold"><summary>확정 혜택${!P.firstTen ? ' · 첫 10연' : ''}${!P.got5 ? ` · 초심자 ${P.pulls}/${SUMMON.beginner}` : ''}</summary>${firstTen}${beginner}</details>` : ''}${choose}
-      <div class="acts">
-        <button type="button" data-summon="1" ${P.shards >= SUMMON.cost ? '' : 'disabled'}>1회 · 별 조각 ${SUMMON.cost}</button>
-        <button type="button" class="primary" data-summon="10" ${P.shards >= SUMMON.tenCost ? '' : 'disabled'}>10연 · 별 조각 ${SUMMON.tenCost}</button>
+      <div class="acts sacts">
+        <button type="button" class="sbtn" data-summon="1" ${P.shards >= SUMMON.cost ? '' : 'disabled'}><b>1회</b><span class="scost"><i class="shard"></i>${SUMMON.cost}</span></button>
+        <button type="button" class="sbtn primary" data-summon="10" ${P.shards >= SUMMON.tenCost ? '' : 'disabled'}><b>10연</b><span class="scost"><i class="shard"></i>${SUMMON.tenCost}</span><small>★4 이상 1 확정</small></button>
       </div>
-      <p class="note small">별 조각은 판을 하면 얻는다. 현금은 쓰지 않는다.</p>
     </div>
   </div>`;
 }
