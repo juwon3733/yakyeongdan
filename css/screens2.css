@@ -18,3 +18,25 @@
 .shopmain .relicware{max-width:150px;font-size:9px}
 .shopkeep .bubble{left:20px;right:-60px;top:10px;max-width:200px}
 .shopkeep .bubble{left:8px;transform:none;translate:none}
+/* 동료 화면(js/render/base.js matesView, Claude): 왼쪽 얼굴 격자, 가운데 고른 동료 큰 그림 + 이름판, 오른쪽 자세한 것 */
+.matescr{gap:0;padding:0}
+.matescr .mleft{width:206px;padding:8px;background:linear-gradient(90deg,rgba(6,6,18,.88),rgba(6,6,18,.7))}
+.matescr .mgrid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.matescr .mcell{background:#10112a;border:2px solid #3a3d6a;box-shadow:none}
+.matescr .mcell.on{border-color:var(--gold);box-shadow:0 0 0 1px #fff3c0,0 0 6px rgba(255,226,138,.5)}
+.matescr .mcell.none{opacity:.45}
+.mart{position:relative;flex:1;min-width:0;overflow:hidden}
+.mart .mglow{position:absolute;left:10%;right:10%;bottom:-10%;height:70%;background:radial-gradient(ellipse 50% 50% at 50% 60%,color-mix(in srgb,var(--c) 45%,transparent),transparent 70%);animation:pkglow 3.2s ease-in-out infinite}
+.mart img{position:absolute;left:50%;bottom:0;height:100%;width:auto;transform:translateX(-50%);image-rendering:auto;filter:drop-shadow(3px 3px 0 rgba(0,0,0,.55));animation:pkin .45s cubic-bezier(.2,.8,.3,1) both,pkbob 4s ease-in-out .45s infinite}
+.mart .mplate{position:absolute;left:10px;bottom:12px;display:flex;flex-direction:column;align-items:flex-start;background:rgba(8,8,22,.85);border-left:4px solid var(--c);padding:3px 10px;box-shadow:2px 2px 0 #000}
+.mart .mplate b{font-family:var(--f-disp);font-weight:400;font-size:22px;color:#fff;text-shadow:2px 2px 0 var(--c)}
+.mart .mplate .stars{font-size:10px}
+.mart .mplate small{font-size:9px;color:var(--dim)}
+.matescr .mright{flex:none;width:300px;background:rgba(10,10,26,.9);border:0;border-left:2px solid var(--line)}
+.matescr .mright .mhead > img{display:none}
+.matescr > .mright{flex:0 0 300px;width:300px}
+.matescr > .mart{flex:1 1 auto}
+.matescr > .mright{flex:0 0 250px;width:250px}
+.matescr .mleft{width:170px}
+.matescr .mgrid{grid-template-columns:repeat(4,minmax(0,1fr));gap:2px}
+.matescr .mcell .nm{font-size:7.5px}

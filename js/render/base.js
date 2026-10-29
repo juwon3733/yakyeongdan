@@ -274,6 +274,8 @@ export function matesView() {
   }).join('');
   return `<div class="matescr">
     <div class="mleft">${head()}<h2>동료</h2><div class="mgrid">${grid}</div></div>
+    ${sel ? `<div class="mart ${starRing(sel)}" style="--c:${ROSTER[sel].col}" aria-hidden="true"><span class="mglow"></span><img class="px" src="${charSrc(sel, 'stand')}" alt="">
+      <span class="mplate"><b>${ROSTER[sel].name}</b><span class="stars">${stars(ROSTER[sel].rarity)}</span><small>${esc(ROSTER[sel].role)}</small></span></div>` : ''}
     <div class="mright">${sel ? mateDetail(sel) : ''}</div></div>`;
 }
 function mateDetail(k) {
