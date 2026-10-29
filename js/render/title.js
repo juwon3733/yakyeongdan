@@ -87,7 +87,7 @@ export function partyView() {
     return r ? `<span class="chosen r${r.rarity} ${bonded.has(k) ? 'bonded' : ''} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}"><small>${slots[i]}</small><img class="px" src="${charSrc(k)}" alt=""><span>${r.name} <i class="stars">${stars(r.rarity)}</i></span></span>`
       : `<span class="chosen empty"><small>${slots[i]}</small>?</span>`;
   }).join('');
-  return `<div class="title">
+  return `<div class="title partyscr">
     <div class="tleft">
       <div class="thead"><button type="button" class="mini" data-view="title">‹ 타이틀</button><h2>${S.mode === 'endless' ? '끝없는 탑 · 동료 셋' : '동료 셋을 고른다'}</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
       <div class="pick">${mates}</div>
