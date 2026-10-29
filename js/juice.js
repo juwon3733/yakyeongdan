@@ -177,7 +177,7 @@ export function afterRender(events = []) {
         played = e;
         // 필살(희귀 카드·듀오): 스킬 컷인을 먼저 띄우고 그다음 기술 (카오스 제로 나이트메어식 연출)
         const sp = isSpecial(e);
-        if (sp) { at(t, () => skillCut(e)); t += 900; }
+        if (sp) { at(t, () => skillCut(e)); t += 760; }
         // 카드를 낸 뒤 커서 아래로 밀려온 다음 카드가 크게 튀어 오르지 않게(커서를 움직이면 다시)
         document.body.classList.add('nohov');
         at(t, () => actFx(e, sp));
@@ -576,11 +576,17 @@ function skillCut(e) {
   const d = cardData(e.id), ids = e.ch === 'duo' ? [e.a, e.b] : [e.actor || e.ch];
   const c = CHARACTERS[ids[0]], el = document.createElement('div');
   el.className = 'jskillcut'; el.style.setProperty('--c', c?.col || '#fff');
-  el.innerHTML = `<i class="band"></i><i class="lines"></i>${ids.map((id, i) => [i, charArt(id, 'stand') || battleArt(id, 'skill')]).filter(([, u]) => u).map(([i, u]) => `<img class="px who w${i}" src="${u}" alt="">`).join('')}
+  // 그림: 인연 듀오 컷인(cutins/duo_a_b) → 동료 컷인(cutins/<id>_cutin) → 없으면 서 있는 그림을 띠 옆에
+  const wide = ids.length > 1 ? artURL(`cutins/duo_${ids[0]}_${ids[1]}.png`) || artURL(`cutins/duo_${ids[1]}_${ids[0]}.png`) : charArt(ids[0], 'cutin');
+  const who = wide ? `<img class="art" src="${wide}" alt="">`
+    : ids.map((id, i) => [i, charArt(id, 'stand') || battleArt(id, 'skill')]).filter(([, u]) => u).map(([i, u]) => `<img class="px who w${i}" src="${u}" alt="">`).join('');
+  el.innerHTML = `<i class="band"></i>${who}<i class="lines"></i><i class="edge"></i>
     <div class="tx"><span>${ids.map(id => CHARACTERS[id]?.name).join(' + ')}</span><b>${d?.name || ''}</b></div>`;
   layer.append(el);
   sfx(hasSfx(CUTIN_SFX) ? CUTIN_SFX : 'burst', { vol: .8 });
-  el.animate([{ opacity: 0 }, { opacity: 1, offset: .06 }, { opacity: 1, offset: .88 }, { opacity: 0 }], { duration: 900 }).onfinish = () => el.remove();
+  // 한 박자: 띠가 그어짐(0.12초) → 버팀 → 잘려 나감(0.62초~) → 흰 번쩍과 함께 기술(js afterRender가 0.76초 뒤 actFx)
+  el.animate([{ opacity: 0 }, { opacity: 1, offset: .05 }, { opacity: 1, offset: .9 }, { opacity: 0 }], { duration: 780 }).onfinish = () => el.remove();
+  at(700, () => { flash(); if (SET.shake) shake(); });
 }
 // 필살: 판이 그 동료 쪽으로 살짝 다가감 (다키스트 던전식 확대)
 function zoomIn(id, ms) {

@@ -202,3 +202,12 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 .pm > .jpet.atk{animation:none;z-index:2}
 @keyframes jpetbob{0%,100%{translate:0 0}50%{translate:0 -4px}}
 #stage.calm .pm > .jpet{animation:none}
+/* 필살 컷인 그림(js/juice.js skillCut): 띠 안에 컷인 그림을 꽉 — 그어지듯 열리고, 천천히 밀리다, 잘려 나간다 */
+#fx .jskillcut .art{position:absolute;left:-10%;right:-10%;width:120%;top:24%;height:46%;object-fit:cover;object-position:50% 40%;image-rendering:auto;
+  transform:skewY(-6deg);animation:jcutart .78s cubic-bezier(.2,.8,.3,1) both}
+#fx .jskillcut .edge{position:absolute;left:-10%;right:-10%;top:24%;height:46%;transform:skewY(-6deg);border-block:3px solid #fff;
+  box-shadow:0 0 0 2px var(--c);animation:jcutband .78s cubic-bezier(.2,.8,.3,1) both;pointer-events:none}
+#fx .jskillcut .band,#fx .jskillcut .lines{animation-duration:.78s}
+#fx .jskillcut .tx{z-index:2;animation-duration:.78s}
+@keyframes jcutart{0%{clip-path:inset(0 100% 0 0);translate:-3% 0;filter:brightness(2.5)}16%{clip-path:inset(0 0 0 0);filter:brightness(1.2)}30%{filter:none}
+  80%{clip-path:inset(0 0 0 0);translate:2% 0}100%{clip-path:inset(0 0 0 100%);translate:3% 0}}
