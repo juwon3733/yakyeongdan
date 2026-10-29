@@ -154,7 +154,15 @@ export function afterRender(events = []) {
       case 'summon': at(t, () => summonFx(e)); t += 260; break;
       case 'steal': at(t, () => stealFx(e)); t += 240; break;
       case 'retarget': at(t, () => retargetFx(e)); t += 220; break;
-      case 'foeAct': { t += 80; const s = t; at(s, () => foeActFx(e)); t += e.t === 'atk' || e.t === 'mix' ? 150 : 260; break; }
+      case 'foeAct': {
+        // 노린 동료: 사건에 없으면 이 행동 뒤에 이어지는 첫 피격(hurt)에서 찾는다
+        if ((e.t === 'atk' || e.t === 'mix') && e.target == null && e.aim == null) {
+          for (let j = events.indexOf(e) + 1; j < events.length; j++) {
+            const x = events[j]; if (x.kind === 'foeAct' || x.kind === 'turn') break;
+            if (x.kind === 'hurt') { e.aim = x.id; break; }
+          }
+        }
+        t += 80; const s = t; at(s, () => foeActFx(e)); t +=e.t === 'atk' || e.t === 'mix' ? 150 : 260; break; }
       case 'hurt': { const s = t; at(s, () => hurtFx(e)); mark('a:' + e.id, s); t += 160; break; }
       case 'turn':
         if (foePhase) t += 120;
@@ -385,6 +393,26 @@ function dash(id, img, e, m, delay = 0) {
   for (let k = 1; k <= 3; k++) at(delay + dur * (.1 + k * .05), () => afterimage(img, colOf(id)));
   return dur + delay;
 }
+// 적 돌진: 노린 동료 앞까지 왼쪽으로 갔다가 돌아온다. 첫 피격(≈150ms 뒤)에 도착, 잔상
+function foeDash(img, id) {
+  const tgt = id ? allyEl(id)?.querySelector(':scope > img') || allyEl(id) : null;
+  const a = rel(img), b = tgt ? rel(tgt) : { x: a.x - 160, w: 0 };
+  const dx = Math.min(-20, b.x + b.w * .55 - a.x);
+  const dur = 560, host = img.closest('[data-fi],[data-jfi]');
+  if (host) host.style.zIndex = 5;
+  const an = img.animate([
+    { transform: 'none' },
+    { transform: 'translate(8px,0) scaleY(.94)', offset: .1 },
+    { transform: `translate(${dx * .6}px,0) scale(1.04)`, offset: .2 },
+    { transform: `translate(${dx}px,0) scale(1.06)`, offset: .27 },
+    { transform: `translate(${dx - 6}px,0) scale(1.06)`, offset: .6 },
+    { transform: `translate(${dx * .3}px,-6px)`, offset: .85 },
+    { transform: 'none' },
+  ], { duration: dur, easing: 'cubic-bezier(.3,.7,.3,1)' });
+  moving.add(an);
+  an.onfinish = an.oncancel = () => { moving.delete(an); if (host) host.style.zIndex = ''; };
+  for (let k = 1; k <= 3; k++) at(dur * (.1 + k * .05), () => afterimage(img, '#ff6a7a'));
+}
 function afterimage(img, col) {
   if (!img.isConnected) return;
   const r = rel(img), g2 = document.createElement('img');
@@ -580,7 +608,11 @@ function hurtFx(e) {
 function foeActFx(e) {
   const el = foeEl(e.i); if (!el) return;
   const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
-  if (e.t === 'atk' || e.t === 'mix') { pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 400); pulse(el.querySelector('.intent'), 'jfire', 300); }
+  if (e.t === 'atk' || e.t === 'mix') {
+    if (img && SET.shake && !calmNow()) foeDash(img, e.target ?? e.aim);
+    else pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 400);
+    pulse(el.querySelector('.intent'), 'jfire', 300);
+  }
   else if (e.t === 'blk') { shieldIcon(r.cx, r.cy - 4, '#c9d2f0'); sfx('block', { vol: .6 }); }
   else if (e.t === 'buf') { for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: 0, vy: rnd(-1.4, -.6), g: 0, life: 24, col: '#ff7a6a', s: 1 }); num(r.cx, r.y, `힘 +${e.v}`, 'buf', 10); sfx('mana', { rate: .7 }); }
   else if (e.t === 'deb' || e.t === 'curse') { ring(r.cx, r.cy, '#b48ae8', 6, 30, 12); sfx('poison', { rate: .8 }); }
