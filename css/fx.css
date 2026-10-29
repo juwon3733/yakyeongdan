@@ -235,3 +235,13 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 .topbar .gold{display:flex;align-items:center;gap:3px;font-family:var(--f-disp);font-size:13px}
 .topbar .gold .gico{width:10px;height:10px;background:#ffe9a0;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);filter:drop-shadow(0 0 3px #ffd860)}
 #app[data-screen="combat"] .topbar{background:linear-gradient(180deg,rgba(8,8,22,.92),rgba(8,8,22,.55));border-bottom:0}
+/* 턴 띠: 화면을 가로지르는 얇은 줄 대신 짧고 굵은 비스듬한 띠 — 왼쪽에서 들어와 글자가 쾅 (js/juice.js banner) */
+#fx .jbanner{width:auto;min-width:220px;padding:6px 40px;border:0;transform-origin:50% 50%;
+  background:linear-gradient(90deg,transparent,rgba(10,10,26,.95) 14%,rgba(10,10,26,.95) 86%,transparent);clip-path:polygon(6% 0,100% 0,94% 100%,0 100%)}
+#fx .jbanner::before,#fx .jbanner::after{content:"";position:absolute;left:8%;right:8%;height:3px;background:var(--bc,var(--gold))}
+#fx .jbanner::before{top:2px}#fx .jbanner::after{bottom:2px}
+#fx .jbanner span{font-size:26px;letter-spacing:.18em;color:#fff;text-shadow:3px 3px 0 var(--bc,var(--gold)),-1px -1px 0 #000}
+#fx .jbanner.foe{--bc:#e04a6a}#fx .jbanner.foe span{color:#ffd0da}
+#fx .jbanner.me{--bc:var(--gold)}
+#fx .jbanner.dawn{--bc:#ffb070}
+#fx .jbanner.win{--bc:var(--gold);padding:10px 60px}#fx .jbanner.win span{font-size:36px}

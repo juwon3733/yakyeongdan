@@ -229,7 +229,7 @@ export function afterRender(events = []) {
       case 'turn':
         if (foePhase) t = Math.max(t, foeBack) + 120;
         acc = 0; stopped = 0; { const s = t; at(s, () => setCounter(0, true)); }
-        { const s = t, n = e.n; at(s, () => { banner(n === 1 ? '전투 시작' : `${n}턴 · 내 차례`, 'me'); sfx('turn'); }); }
+        { const s = t, n = e.n; at(s, () => { banner(n === 1 ? '전투 시작' : `${n}턴`, 'me'); sfx('turn'); }); }
         turnT = t + 180; t += 200; break;
     }
   }
