@@ -15,9 +15,9 @@ import { P, nextRate5, epNewCount, pickupNow, starsOf, costumeOpen, wearing, pac
 import { stars, palOf, fmt, esc, cardHTML, charSrc } from './common.js';
 import { REST_LINES, FIRST_LINES } from '../data/hublines.js';
 import { artURL } from '../art.js';
-import { achTab, historyBlock, masteryLine } from './daily.js';
+import { achTab, historyBlock } from './daily.js';
 import { dailyToday, mastery, masteryTitles, backOpen } from '../meta.js';
-import { MASTERY_REWARDS } from '../data/mastery.js';
+import { MASTERY_REWARDS, MASTERY_XP } from '../data/mastery.js';
 import { endlessMenu, endlessRecords } from './endless.js';
 
 const pct = x => `${Math.round(x * 1000) / 10}%`;
@@ -110,8 +110,9 @@ export function summonView() {
       ${head()}
       <h2>별 소환</h2>
       ${pickup}
-      <p class="note">★5 없이 ${P.pity5}번 · 다음 ★5 확률 <b>${pct(r5)}</b> (40번째부터 오르고 ${SUMMON.hard}번째 확정). 10연은 ★4 이상 1개 확정. <button type="button" class="mini" data-view="odds">확률 보기</button></p>
-      ${firstTen}${beginner}${choose}
+      ${pityBar(r5)}
+      <div class="oddsline">${oddsRow()}<button type="button" class="mini" data-view="odds">자세히</button></div>
+      ${firstTen || beginner ? `<details class="fold"><summary>확정 혜택${!P.firstTen ? ' · 첫 10연' : ''}${!P.got5 ? ` · 초심자 ${P.pulls}/${SUMMON.beginner}` : ''}</summary>${firstTen}${beginner}</details>` : ''}${choose}
       <div class="acts">
         <button type="button" data-summon="1" ${P.shards >= SUMMON.cost ? '' : 'disabled'}>1회 · 별 조각 ${SUMMON.cost}</button>
         <button type="button" class="primary" data-summon="10" ${P.shards >= SUMMON.tenCost ? '' : 'disabled'}>10연 · 별 조각 ${SUMMON.tenCost}</button>
@@ -119,6 +120,15 @@ export function summonView() {
       <p class="note small">별 조각은 판을 하면 얻는다. 현금은 쓰지 않는다.</p>
     </div>
   </div>`;
+}
+
+// 확률 한 줄 (등급별 칸) · 천장 진행 막대 (★5 없이 몇 번 / 확정까지, 확률이 오르기 시작하는 곳에 눈금)
+const oddsRow = () => `<span class="oc r5"><b>★5</b>${pct(SUMMON.rate5)}</span><span class="oc r4"><b>★4</b>${pct(SUMMON.rate4)}</span><span class="oc r3"><b>★3</b>${pct(1 - SUMMON.rate5 - SUMMON.rate4)}</span><span class="oc ten">10연 ★4↑ 확정</span>`;
+function pityBar(r5) {
+  const cap = SUMMON.hard - 1, n = Math.min(P.pity5, cap), soft = (SUMMON.softFrom - 1) / cap * 100;
+  return `<div class="pity ${n >= SUMMON.softFrom - 1 ? 'hot' : ''}" title="${SUMMON.softFrom}번째부터 ★5 확률이 오르고, ★5 없이 ${cap}번이면 ${SUMMON.hard}번째 확정">
+    <span class="plbl">천장</span><span class="pbar"><i style="width:${n / cap * 100}%"></i><u style="left:${soft}%"></u></span>
+    <span class="pn"><b>${n}</b>/${cap}</span><span class="pr">다음 ★5 <b>${pct(r5)}</b></span></div>`;
 }
 
 // 확률 표시 화면 (모든 확률을 숫자로)
@@ -130,6 +140,9 @@ export function oddsView() {
   return `<div class="epsel">
     ${head('summon', '별 소환')}
     <h2>소환 확률</h2>
+    <div class="oddsline big">${oddsRow()}</div>
+    ${pityBar(nextRate5())}
+    <details class="fold"><summary>등급별로 나오는 것</summary>
     <table class="odds big">
       <tr><th>등급</th><td>나오는 것</td><td>확률</td></tr>
       ${row(5, byRarity(5), `${pct(SUMMON.rate5)} (픽업 ${ROSTER[pk.five].name} ${pct(SUMMON.rate5 * SUMMON.pickShare5)}, 나머지 셋 각 ${pct(SUMMON.rate5 * (1 - SUMMON.pickShare5) / 3)})`)}
@@ -137,7 +150,8 @@ export function oddsView() {
       <tr><th>★4</th><td>동료 의상 · 희귀 도구 · 카드 묶음</td><td>${pct(SUMMON.rate4 - c4)} (셋 같은 확률)</td></tr>
       ${row(3, byRarity(3), `동료 ${pct(c3)} (${byRarity(3).length}명 같은 확률)`)}
       <tr><th>★3</th><td>흔한 도구 · 별가루 10 · 휴식 대화 조각</td><td>${pct(1 - SUMMON.rate5 - SUMMON.rate4 - c3)} (셋 같은 확률)</td></tr>
-    </table>
+    </table></details>
+    <details class="fold"><summary>천장 · 확정 규칙</summary>
     <ul class="note rules">
       <li>${SUMMON.softFrom}번째 뽑기부터 ★5 확률이 매번 +${pct(SUMMON.softStep)}, ★5 없이 ${SUMMON.hard - 1}번이면 ${SUMMON.hard}번째 확정. 횟수는 픽업이 바뀌어도 이어진다.</li>
       <li>10연은 ★4 이상 1개 확정. 첫 10연은 노엘·레이븐 중 1명 확정.</li>
@@ -145,7 +159,7 @@ export function oddsView() {
       <li>★5를 픽업이 아닌 동료로 받으면 다음 ★5는 픽업 확정.</li>
       <li>처음 ${SUMMON.beginner}번 안에 ★5 확정, 처음 얻는 ★5는 직접 고른다.</li>
       <li>겹친 동료는 별자리 +1 (최대 ${SUMMON.maxStars}), 꽉 차면 별가루 ${SUMMON.dustFullStars}. 열 것이 없는 물건은 별가루로.</li>
-    </ul>
+    </ul></details>
   </div>`;
 }
 
@@ -263,11 +277,30 @@ function mateDetail(k) {
   return `<div class="mhead ${starRing(k)}" style="--c:${r.col}">${img(k)}<div><h2>${r.name} <span class="stars">${stars(r.rarity)}</span></h2>
       <p class="note">${r.role} · 체력 ${c?.maxHp ?? '-'} · 별자리 ${s}/${SUMMON.maxStars} · 판 ${st.runs} · 이긴 판 ${st.wins}${P.titles.includes(k) ? ` · 칭호 「${r.name}의 새벽」` : ''}</p>
       ${c ? `<p class="ps"><b>${esc(c.passive.name)}</b></p>${(c.passive.lines || [['', '', c.passive.text]]).map(([k, n, t]) => `<p class="ps">${{ trait: '①', keyword: '②', burst: '③' }[k] || ''} ${n ? `<b>「${esc(n)}」</b> ` : ''}${esc(t)}</p>`).join('')}` : ''}${cos}</div></div>
-    ${masteryLine(k)}
-    <ul class="steps mxsteps">${MASTERY_REWARDS.map(rw => `<li class="${mastery(k) >= rw.lv ? 'on' : ''}"><b>${rw.lv}</b> ${esc(rw.text.replace(/\{name\}/g, r.name))}${rw.kind === 'back' && backOpen(k) ? ` <button type="button" class="mini ${P.cardBack === k ? 'on' : ''}" data-cardback="${P.cardBack === k ? '' : k}">${P.cardBack === k ? '쓰는 중 (끄기)' : '이 뒷면 쓰기'}</button>` : ''}</li>`).join('')}</ul>
+    ${masteryBlock(k, r.name)}
     <h3 class="sub">별자리</h3><ul class="steps">${steps}</ul>
     ${c ? `<h3 class="sub">시작 카드</h3><div class="hand mini">${start}</div>
     <h3 class="sub">보상 카드 ${pool.length - locked.size}/${pool.length}</h3><div class="hand mini scroll">${pool.map(id => locked.has(id) ? `<span class="lockcard" title="카드 묶음이 열리면 나온다">${esc(CARDS[id].name)}<small>잠김</small></span>` : cardHTML(id, true, 'none')).join('')}</div>` : ''}`;
+}
+
+// 숙련도: 별 다섯 칸 진행 막대(다음 칸은 점수만큼 차오름) + 지금 단계 보상은 크게, 나머지 단계는 작은 칩
+function masteryBlock(k, name) {
+  const lv = mastery(k), xp = P.mxp[k] || 0, prev = lv ? MASTERY_XP[lv - 1] : 0, next = MASTERY_XP[lv];
+  const frac = next == null ? 1 : Math.max(0, Math.min(1, (xp - prev) / (next - prev)));
+  const txt = rw => esc(rw.text.replace(/\{name\}/g, name));
+  const bar = MASTERY_REWARDS.map(rw => {
+    const st = rw.lv <= lv ? 'on' : rw.lv === lv + 1 ? 'cur' : '';
+    return `<span class="mxs ${st}" style="--f:${st === 'on' ? 100 : st === 'cur' ? Math.round(frac * 100) : 0}%" title="${rw.lv}단계 · ${txt(rw)}"><i>★</i></span>`;
+  }).join('');
+  const now = MASTERY_REWARDS[Math.max(0, lv - 1)], up = lv === 0;
+  const chips = MASTERY_REWARDS.filter(rw => rw !== now).map(rw => `<span class="mxchip ${rw.lv <= lv ? 'on' : ''}"><b>${rw.lv}</b>${txt(rw)}</span>`).join('');
+  const back = backOpen(k) ? `<button type="button" class="mini ${P.cardBack === k ? 'on' : ''}" data-cardback="${P.cardBack === k ? '' : k}">${P.cardBack === k ? '카드 뒷면 쓰는 중 (끄기)' : '이 카드 뒷면 쓰기'}</button>` : '';
+  return `<div class="mxbox">
+    <div class="mxtop"><span class="mxlbl">숙련도</span><span class="mxbar">${bar}</span>
+      <span class="mxxp">${next != null ? `${xp} / ${next}` : '최고 단계'}</span></div>
+    <div class="mxnow ${up ? 'up' : ''}"><small>${up ? '1단계 보상' : `${lv}단계 보상`}</small><b>${txt(now)}</b>${back}</div>
+    <div class="mxchips">${chips}</div>
+  </div>`;
 }
 
 // 도감 (§8): 동료 · 듀오 · 카드 · 적 · 휴식 대화

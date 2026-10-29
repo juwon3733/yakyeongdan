@@ -191,6 +191,7 @@ app.addEventListener('click', e => {
   }
   // 에피소드
   else if (D.ep) { const [cid, n] = D.ep.split(':'); openEp(cid, +n); }
+  else if (D.epsel) S.epSel = D.epsel;
   else if (D.bond) openBond(D.bond);
   else if ('epnext' in D) epAdvance();
   else if ('epskip' in D) epSkip();
