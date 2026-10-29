@@ -55,7 +55,11 @@ async function advance(page, tag) {
   else { fail(`${tag}: 모르는 화면 ${screen}`); return false; }
   return true;
 }
-async function openParty(page) { await page.click('[data-view="party"]'); }
+// 타이틀은 「시작」 → 본부 → 「출격」(밤 오르기)
+async function openParty(page) {
+  if (await page.$('.titlescr [data-view="base"]')) await page.click('.titlescr [data-view="base"]');
+  await page.click('.h2menu [data-view="party"]:not([data-mode])');
+}
 
 // 카드 한 장 쓰기: 누르고 → 대상(동료/적) 누르기, 대상이 없으면 카드를 한 번 더
 async function playOne(page) {

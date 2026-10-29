@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { decodePng, encodePng } from './png.mjs';
+import { spriteBox } from './sprite-box.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const P = await import(pathToFileURL(path.join(root, 'js/asset_prompts.js')).href);
@@ -63,3 +64,5 @@ for (const s of items.filter((i) => i.cells)) {
 }
 fs.writeFileSync(path.join(root, 'assets/sprite_scale.json'), JSON.stringify(Object.fromEntries(Object.entries(scale).sort()), null, 1) + '\n');
 console.log(`시트 자르기: ${made}장`);
+// 그림마다 투명하지 않은 부분의 상자(원본 도트 기준) → assets/sprite_box.json (적 assets/enemies도 같이)
+await spriteBox();

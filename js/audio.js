@@ -284,7 +284,7 @@ function sounds(a, b) {
 // ---------- 소리 버튼 (위 띠, 파티 고르기 화면) ----------
 function placeButton() {
   if (document.querySelector('[data-sound]')) return;
-  const host = document.querySelector('.topbar [data-deck]') || document.querySelector('.thead, .bhead, .tmenu');
+  const host = document.querySelector('.topbar [data-deck]') || document.querySelector('.thead, .bhead, .tmenu, .h2top');
   if (!host) return;
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'mini'; b.dataset.sound = ''; b.dataset.lv = level; b.textContent = LABELS[level];
