@@ -73,7 +73,7 @@ export function partyView() {
     const r = ROSTER[k], c = CHARACTERS[k], on = S.picked.includes(k), ok = can(k);
     return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'} title="${c ? esc(`${c.passive.name}: ${c.passive.text}`) : ''}">
       <img class="px" src="${charSrc(k)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
-      <span class="rl">${r.role}${c ? ` · 체력 ${c.maxHp}` : ''}</span>
+      <span class="rl">${r.role}</span>${c ? `<span class="hp">체력 ${c.maxHp}</span>` : ''}
       <span class="ps" ${c ? `title="${c.passive.name}: ${c.passive.text}"` : ''}>${c ? `<b>${c.passive.name}</b> ${c.passive.short}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
   }).join('');
   // 고른 셋: 전투처럼 대열로 크게 선다(왼쪽 뒤 → 오른쪽 앞, 처음엔 체력이 높은 동료가 앞). 인연이 있는 동료는 빛난다.

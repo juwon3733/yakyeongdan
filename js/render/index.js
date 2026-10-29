@@ -52,20 +52,27 @@ export function render(app) {
   syncSound();
 }
 
-// 업적 달성 띠: 화면 오른쪽 위에 3초. 한꺼번에 많이 달성하면 둘만 보이고 나머지는 「외 n개」 한 줄로.
+// 업적 달성 띠: 화면 오른쪽 아래에 하나씩 차례로(한 장 2.6초, 본문을 가리지 않게).
+// 한꺼번에 많이 달성하면 둘만 따로 보이고 나머지는 「외 n개」 한 장으로.
+const ACH_MS = 2600, achQueue = [];
+let achTimer = 0;
 function showAchToasts() {
   if (!achToasts.length) return;
   const list = achToasts.splice(0), shown = list.length > 3 ? list.slice(0, 2) : list, rest = list.slice(shown.length);
+  for (const a of shown) achQueue.push([a.name, a.text, a.r]);
+  if (rest.length) achQueue.push([`외 ${rest.length}개 달성`, rest.map(a => a.name).join(' · '), rest.reduce((t, a) => t + a.r, 0)]);
+  if (!achTimer) nextAchToast();
+}
+function nextAchToast() {
+  achTimer = 0;
+  const q = achQueue.shift(); if (!q) return;
+  const [name, text, r] = q;
   let box = document.getElementById('achbox');
   if (!box) { box = document.createElement('div'); box.id = 'achbox'; box.setAttribute('aria-live', 'polite'); (document.getElementById('stage') || document.body).appendChild(box); }
-  const add = (name, text, r) => {
-    const el = document.createElement('div');
-    el.className = 'achtoast';
-    el.innerHTML = `<span class="ak">업적</span><b></b><small></small><i>별 조각 +${r}</i>`;
-    el.querySelector('b').textContent = name; el.querySelector('small').textContent = text;
-    box.appendChild(el);
-    setTimeout(() => el.remove(), 3400);
-  };
-  for (const a of shown) add(a.name, a.text, a.r);
-  if (rest.length) add(`외 ${rest.length}개 달성`, rest.map(a => a.name).join(' · '), rest.reduce((t, a) => t + a.r, 0));
+  const el = document.createElement('div');
+  el.className = 'achtoast';
+  el.innerHTML = `<span class="ak">업적</span><b></b><small></small><i>별 조각 +${r}</i>`;
+  el.querySelector('b').textContent = name; el.querySelector('small').textContent = text;
+  box.appendChild(el);
+  achTimer = setTimeout(() => { el.remove(); nextAchToast(); }, ACH_MS);
 }
