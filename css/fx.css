@@ -88,3 +88,39 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 #app[data-screen="combat"] .sti b{font-family:var(--f-disp);font-weight:400;font-size:10px;color:#fff;line-height:1;margin-left:-2px;text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000}
 #app[data-screen="combat"] .foe .lab .st{display:flex;flex-wrap:wrap;justify-content:center;gap:1px}
 #app[data-screen="combat"] .chip{font-size:7.5px;padding:0 2px}
+
+/* ---- 카드 틀 (계획 4): 종이색 대신 밤 테마 — 짙은 남색 몸통, 동료 색 안쪽 테두리, 금속 모서리, 이름 띠는 동료 색 그라디언트.
+   희귀도는 바깥 테두리 빛으로만(흔함 강철·보통 보라·희귀 금, 희귀는 빛이 테두리를 따라 돎) ---- */
+.card{--rim:#8a90a8;background:linear-gradient(180deg,#22213e 0%,#16152c 60%,#100f22 100%);color:#e6e2f2;
+  border:2px solid var(--rim);outline:1px solid #000;box-shadow:2px 2px 0 #000,inset 0 0 0 1px color-mix(in srgb,var(--c) 55%,transparent)}
+.card.r-u{--rim:#a07ae8}
+.card.r-r{--rim:#f0c860}
+.card.r-r::after{inset:-1px;box-shadow:none;border:1px solid transparent;
+  background:conic-gradient(from var(--rot,0deg),transparent 0 80%,#fff6c8 88%,transparent 96%) border-box;
+  -webkit-mask:linear-gradient(#000 0 0) padding-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:jrimspin 2.4s linear infinite}
+@property --rot{syntax:'<angle>';inherits:false;initial-value:0deg}
+@keyframes jrimspin{to{--rot:360deg}}
+/* 모서리 금속 장식 */
+.card::before{content:"";position:absolute;inset:1px;z-index:2;pointer-events:none;
+  background:linear-gradient(var(--rim),var(--rim)) left top/5px 1px,linear-gradient(var(--rim),var(--rim)) left top/1px 5px,
+    linear-gradient(var(--rim),var(--rim)) right top/5px 1px,linear-gradient(var(--rim),var(--rim)) right top/1px 5px,
+    linear-gradient(var(--rim),var(--rim)) left bottom/5px 1px,linear-gradient(var(--rim),var(--rim)) left bottom/1px 5px,
+    linear-gradient(var(--rim),var(--rim)) right bottom/5px 1px,linear-gradient(var(--rim),var(--rim)) right bottom/1px 5px;background-repeat:no-repeat}
+.card .art{border-bottom:1px solid color-mix(in srgb,var(--c) 70%,#000)}
+.card .art::after{content:"";position:absolute;inset:auto 0 0;height:30%;background:linear-gradient(transparent,rgba(16,15,34,.85));pointer-events:none}
+.card .hd{background:linear-gradient(90deg,color-mix(in srgb,var(--c) 85%,#000),color-mix(in srgb,var(--c) 45%,#101022));color:#fff;
+  text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000;border-bottom:1px solid #000}
+.card.duo .hd{background:linear-gradient(90deg,color-mix(in srgb,var(--c) 85%,#000) 0 50%,color-mix(in srgb,var(--c2) 85%,#000) 50% 100%)}
+.card .bd{color:#dcd8ea}
+.card .bd b{color:#fff}
+.card .bd b.up{color:#7dff9a}
+.card .bd b.dn{color:#ff7a8a}
+.card .tm{background:#2a3070;color:#d8e0ff}
+.card .tg{background:#1e4a3a;color:#c8ffe0}
+.card .who{color:#a8a2c0;border-top:1px solid #2e2c4e}
+/* 비용 보석: 크게, 모서리에 걸쳐 */
+.card .cost{left:1px;top:1px;width:18px;height:18px;font-size:11px;z-index:3}
+.card .cost::before{background:radial-gradient(circle at 35% 30%,#fff6c8,var(--gold) 45%,#a07010 100%)}
+.card .cost.clock::before{background:radial-gradient(circle at 35% 30%,#ffffff,var(--moon) 45%,#5a64a8 100%)}
+.card.no{opacity:.55;filter:saturate(.5)}
+.card.duo{background:linear-gradient(180deg,#2e2a1e,#1a1712 70%)}
