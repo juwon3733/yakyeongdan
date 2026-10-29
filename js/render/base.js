@@ -166,6 +166,14 @@ export function oddsView() {
 }
 
 // 소환 결과: 별똥(등급 색)이 떨어지고, 누르면 하나씩 펼친다
+// 소환된 물건 그림: 도구는 도구 그림, 의상·카드 묶음·휴식 대화는 그 동료 얼굴, 별가루는 별 — 글자 한 칸(임시 티)은 그림이 없을 때만
+function itemIco(r, nm) {
+  const ic = r.relic && artURL(`icons/relic_${r.relic}.png`);
+  if (ic) return `<span class="ico pic"><img class="px" src="${ic}" alt=""></span>`;
+  if (r.who) return `<span class="ico who ${r.kind}" style="--c:${ROSTER[r.who].col}"><img class="px" src="${charSrc(r.who, 'normal')}" alt=""></span>`;
+  if (r.dust) return '<span class="ico dust" aria-hidden="true"></span>';
+  return `<span class="ico">${esc(nm.slice(0, 1))}</span>`;
+}
 export function revealView() {
   const R = S.reveal, top = Math.max(...R.list.map(r => r.rarity));
   // 처음 그릴 때만 별이 모이는 도입(js/juice.js gachaFx), 이번에 막 펼친 것만 뒤집히는 연출(.fresh) — 다시 그려도 반복되지 않게
@@ -181,14 +189,15 @@ export function revealView() {
     if (r.kind === 'char') {
       const c = ROSTER[r.id];
       // 겹침: 별자리 칸 5개 중 이번에 찬 칸이 차오른다
-      const cells = r.stars ? `<span class="stcells">${Array.from({ length: SUMMON.maxStars }, (_, n) => `<i class="${n < r.stars ? 'on' : ''} ${n === r.stars - 1 ? 'fill' : ''}"></i>`).join('')}</span>` : '';
-      const tag = r.isNew ? '<b class="new">NEW</b>' : r.stars ? `별자리 ${r.stars}` : `별가루 +${r.dust}`;
+      const cells = r.stars ? `<span class="stcells" title="별자리 ${r.stars}">${Array.from({ length: SUMMON.maxStars }, (_, n) => `<i class="${n < r.stars ? 'on' : ''} ${n === r.stars - 1 ? 'fill' : ''}"></i>`).join('')}</span>` : '';
+      // 겹친 동료는 별자리 칸이 이미 말해 주므로 글은 빼고 칸에 title로(칸 아래가 잘리던 것)
+      const tag = r.isNew ? '<b class="new">NEW</b>' : r.stars ? '' : `별가루 +${r.dust}`;
       return `<div class="got g${r.rarity} ${r.rarity === 5 ? 'crack' : ''} ${r.isNew ? 'isnew' : ''}${fd(i)}--c:${c.col};${ord(r)}">${img(r.id)}
         <span class="nm">${c.name}</span><span class="stars">${stars(r.rarity)}</span>${cells}<span class="tag">${tag}</span></div>`;
     }
     // 물건 이름(「…」)을 크게, 종류(흔한 도구·의상 등)는 아래 작게
     const m = /「(.+?)」/.exec(r.text || ''), nm = m ? m[1] : r.name;
-    return `<div class="got g${r.rarity} item${fd(i)}${ord(r)}"><span class="ico">${esc(nm.slice(0, 1))}</span><span class="nm">${esc(nm)}</span><span class="stars">${stars(r.rarity)}</span>
+    return `<div class="got g${r.rarity} item${fd(i)}${ord(r)}">${itemIco(r, nm)}<span class="nm">${esc(nm)}</span><span class="stars">${stars(r.rarity)}</span>
       <span class="tag" title="${esc(r.text || '')}">${r.dust ? (/^별가루/.test(nm) ? '교환소에서 쓴다' : `이미 있음 → 별가루 +${r.dust}`) : esc(m ? r.text.replace(m[0], '').trim() || r.name : r.text || '보관함에')}</span></div>`;
   }).join('');
   const done = R.open.every(Boolean);

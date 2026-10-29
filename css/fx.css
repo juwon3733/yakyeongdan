@@ -124,7 +124,8 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 .card .cost{left:1px;top:1px;width:18px;height:18px;font-size:11px;z-index:3}
 .card .cost::before{background:radial-gradient(circle at 35% 30%,#fff6c8,var(--gold) 45%,#a07010 100%)}
 .card .cost.clock::before{background:radial-gradient(circle at 35% 30%,#ffffff,var(--moon) 45%,#5a64a8 100%)}
-.card.no{opacity:.55;filter:saturate(.5)}
+/* 못 사는·못 쓰는 카드: 반투명이면 뒤 배경이 카드 그림에 비쳐 깨져 보인다 → 불투명하게 어둡게만 */
+.card.no{opacity:1;filter:brightness(.55) saturate(.45)}
 .card.duo{background:linear-gradient(180deg,#2e2a1e,#1a1712 70%)}
 
 /* ---- 에너지 구슬·턴 끝 버튼 (계획 5) ---- */
@@ -160,11 +161,11 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 .topbar .clock{display:inline-flex;align-items:center;gap:3px}
 .topbar .clock .hi{width:13px;height:13px}
 /* 소리 버튼: 글자 대신 스피커 그림(켬·작게·끔) */
-#stage .topbar [data-sound]{font-size:0;width:26px;height:22px;padding:0;position:relative}
-.topbar [data-sound]::before{content:"";position:absolute;left:5px;top:5px;width:7px;height:10px;background:#c9d2f0;clip-path:polygon(0 30%,40% 30%,100% 0,100% 100%,40% 70%,0 70%)}
-.topbar [data-sound]::after{content:"";position:absolute;left:13px;top:6px;width:6px;height:8px;border:2px solid #c9d2f0;border-left:0;border-radius:0 8px 8px 0}
-.topbar [data-sound][data-lv="1"]::after{width:3px;height:6px;top:7px}
-.topbar [data-sound][data-lv="2"]::after{border:0;width:8px;height:8px;top:6px;left:13px;border-radius:0;
+#stage :is(.topbar,.thead,.bhead) [data-sound]{font-size:0;width:26px;height:22px;padding:0;position:relative}
+:is(.topbar,.thead,.bhead) [data-sound]::before{content:"";position:absolute;left:5px;top:5px;width:7px;height:10px;background:#c9d2f0;clip-path:polygon(0 30%,40% 30%,100% 0,100% 100%,40% 70%,0 70%)}
+:is(.topbar,.thead,.bhead) [data-sound]::after{content:"";position:absolute;left:13px;top:6px;width:6px;height:8px;border:2px solid #c9d2f0;border-left:0;border-radius:0 8px 8px 0}
+:is(.topbar,.thead,.bhead) [data-sound][data-lv="1"]::after{width:3px;height:6px;top:7px}
+:is(.topbar,.thead,.bhead) [data-sound][data-lv="2"]::after{border:0;width:8px;height:8px;top:6px;left:13px;border-radius:0;
   background:linear-gradient(45deg,transparent 42%,#ff6a7a 42% 58%,transparent 58%),linear-gradient(-45deg,transparent 42%,#ff6a7a 42% 58%,transparent 58%)}
 /* 연계: 글자 칩 대신 작은 이름 + 빛나는 칸 */
 .topbar .chainbox{display:inline-flex;align-items:center;gap:3px;cursor:help}
@@ -179,12 +180,6 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 
 /* 선택·마지막 동료 점선 네모 없앰 — 고른 대상은 발밑 빛과 화살표로만 */
 #app[data-screen="combat"] .pm.last,#app[data-screen="combat"] .pm.aimed,#app[data-screen="combat"] .foe.tg,#app[data-screen="combat"] .foe.sel{outline:none}
-/* 입체 배치는 위치·밝기만(그림을 비정수로 줄이지 않는다) */
-#app[data-screen="combat"] .party > .pm:nth-of-type(1){transform:translate(10px,-14px)}
-#app[data-screen="combat"] .party > .pm:nth-of-type(2){transform:translate(2px,-6px)}
-#app[data-screen="combat"] .foes > .foe:nth-child(2){transform:translateY(-14px)}
-#app[data-screen="combat"] .foes > .foe:nth-child(3){transform:translateY(-4px)}
-#app[data-screen="combat"] .foes > .foe:nth-child(4){transform:translateY(-20px)}
 /* 발밑: 그림자는 실제 발 위치(--ft, js/juice.js fitSprites)에. 고를 수 있는 대상·불 켜진 동료는 네모 테두리 대신 발밑 빛 */
 #app[data-screen="combat"] :is(.pm, .foe) > img{background:radial-gradient(ellipse 40% 4% at 50% var(--ft,97%),rgba(0,0,0,.7),transparent)}
 #app[data-screen="combat"] :is(.pm.tg, .pm.lit, .foe.tg){outline:none;background:none}

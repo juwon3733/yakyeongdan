@@ -16,7 +16,7 @@ import { moonImg } from './sprites.js';
 import { EPISODES, BOND_SCENES } from '../data/episodes.js';
 import { endlessResultView, climbOnButton } from './endless.js';
 
-const relicBox = (id, extra = '') => { const d = RELICS[id]; return `<span class="rbox t-${d.tier}"><span class="relic t-${d.tier}">${esc(d.name.slice(0, 1))}</span><span><b>${esc(d.name)}</b> <small>${RELIC_TIER_NAME[d.tier]}</small><br>${esc(d.text)}${extra}</span></span>`; };
+const relicBox = (id, extra = '') => { const d = RELICS[id]; return `<span class="rbox t-${d.tier}">${(ic => `<span class="relic t-${d.tier} ${ic ? 'hasic' : ''}">${ic ? `<img class="px" src="${ic}" alt="">` : esc(d.name.slice(0, 1))}</span>`)(artURL(`icons/relic_${id}.png`))}<span><b>${esc(d.name)}</b> <small>${RELIC_TIER_NAME[d.tier]}</small><br>${esc(d.text)}${extra}</span></span>`; };
 
 // 사건·휴식 무대 (docs/11 #3): 배경(그림 bg/<키>.png가 있으면 그것, 없으면 .bg-<키> 임시 그림) + 동료 상반신 + 가운데 글 상자
 const SCENE_BG = { 1: ['act1', 'harbor'], 2: ['act2', 'roof'], 3: ['act3', 'dream'] };
@@ -84,7 +84,7 @@ export function shopView() {
   const relics = sh.relics.map((r, i) => `<button type="button" class="ware relicware ${r.sold ? 'sold' : ''}" data-buyrelic="${i}" ${r.sold || G.gold < r.price ? 'disabled' : ''}>
     ${relicBox(r.id)}<span class="price">${r.sold ? '팔림' : `별빛 ${r.price}`}</span></button>`).join('');
   return `<div class="shopscr">
-    <div class="shophead"><span class="fukuro" aria-hidden="true">梟</span><span><b>후쿠로</b> ${sh.talk}</span>${sh.off ? `<span class="chip" style="color:var(--moon)">할인 ${sh.off}%</span>` : ''}<span class="grow"></span>${sh.special ? `<button type="button" class="mini ${sh.spView ? 'on' : ''}" data-spview>${sh.spView ? '◂ 후쿠로 노점' : `옆 노점: ${sh.special.name} ▸`}</button>` : ''}<span class="gold big">별빛 ${G.gold}</span></div>
+    <div class="shophead"><span class="fukuro" aria-hidden="true">${artURL('chars/fukuro_normal.png') ? `<img class="px" src="${charSrc('fukuro', 'normal')}" alt="">` : 'F'}</span><span><b>후쿠로</b> ${sh.talk}</span>${sh.off ? `<span class="chip" style="color:var(--moon)">할인 ${sh.off}%</span>` : ''}<span class="grow"></span>${sh.special ? `<button type="button" class="mini ${sh.spView ? 'on' : ''}" data-spview>${sh.spView ? '◂ 후쿠로 노점' : `옆 노점: ${sh.special.name} ▸`}</button>` : ''}<span class="gold big">별빛 ${G.gold}</span></div>
     ${sh.spView ? specialRow(sh.special) : `<div class="wares">${cards}</div>`}
     <div class="shoprow">${relics}
       <span class="services">

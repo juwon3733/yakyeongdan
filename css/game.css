@@ -1175,13 +1175,13 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
    동료 칸 사이에 자리 바꾸기 단추(button)가 끼어 있어 nth-of-type은 1·3·5번째가 동료다 */
 #app[data-screen="combat"] .party > .pm:first-of-type{transform:translate(8px,-8px);z-index:1}
 #app[data-screen="combat"] .party > .pm:not(:first-of-type):not(:last-of-type){transform:translate(2px,-4px);z-index:2}
-#app[data-screen="combat"] .party > .pm:last-of-type{transform:translate(-6px,2px);z-index:3}
+#app[data-screen="combat"] .party > .pm:last-of-type{transform:translate(-6px,-2px);z-index:3}
 #app[data-screen="combat"] .party > .swap{z-index:4}
 #app[data-screen="combat"] .foes{align-items:flex-end}
-#app[data-screen="combat"] .foes > .foe:nth-child(1){z-index:3;transform:translateY(2px)}
-#app[data-screen="combat"] .foes > .foe:nth-child(2){z-index:2;transform:translateY(-8px)}
-#app[data-screen="combat"] .foes > .foe:nth-child(3){z-index:1;transform:translateY(-3px)}
-#app[data-screen="combat"] .foes > .foe:nth-child(4){z-index:1;transform:translateY(-11px)}
+#app[data-screen="combat"] .foes > .foe:nth-child(1){z-index:3;transform:translateY(-6px)}
+#app[data-screen="combat"] .foes > .foe:nth-child(2){z-index:2;transform:translateY(-14px)}
+#app[data-screen="combat"] .foes > .foe:nth-child(3){z-index:1;transform:translateY(-9px)}
+#app[data-screen="combat"] .foes > .foe:nth-child(4){z-index:1;transform:translateY(-17px)}
 /* 발밑 그림자를 진하게(바닥에 서 있는 느낌) */
 .pm > img,.foe > img{background:radial-gradient(ellipse 42% 5% at 50% 97%,rgba(0,0,0,.7),transparent)}
 .pm > img,.foe > img{pointer-events:none}
@@ -1238,3 +1238,19 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 .mcell img.sil,.centry img.sil{background:none;filter:brightness(0) invert(.2) sepia(.6) hue-rotate(200deg) drop-shadow(1px 0 0 var(--c,#5a5c8a)) drop-shadow(-1px 0 0 var(--c,#5a5c8a));object-fit:contain}
 .mcell.none{opacity:.75}
 .centry.none{opacity:.6}
+/* 소환된 물건: 도구 그림 / 그 동료 얼굴(의상·카드 묶음·휴식 대화) / 별가루 별 */
+.got.item .ico.pic,.got.item .ico.who,.got.item .ico.dust{border:0;background:none;width:40px;height:40px}
+.got.item .ico.pic img{width:40px;height:40px;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000)}
+.got.item .ico.who{overflow:hidden;width:34px;height:34px;border:2px solid var(--c);background:#0b0b18;box-shadow:2px 2px 0 #000}
+.got.item .ico.who img{width:34px;height:auto;display:block;image-rendering:pixelated}
+.got.item .ico.who.costume::after,.got.item .ico.who.pack::after,.got.item .ico.who.talk::after{position:absolute;right:-3px;bottom:-3px;font-family:var(--f-disp);font-size:8px;color:#0b0b18;background:var(--gold);padding:0 2px}
+.got.item .ico.who{position:relative}
+.got.item .ico.who.costume::after{content:"의상"}.got.item .ico.who.pack::after{content:"카드"}.got.item .ico.who.talk::after{content:"대화"}
+.got.item .ico.dust{background:radial-gradient(circle,#fff6c8 0 3px,transparent 3.5px),
+  conic-gradient(from 45deg,transparent 0 10%,#f6dc84 10% 15%,transparent 15% 35%,#f6dc84 35% 40%,transparent 40% 60%,#f6dc84 60% 65%,transparent 65% 85%,#f6dc84 85% 90%,transparent 90%);clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+/* 상점·보상·덱 보기의 도구 칸: 그림이 있으면 크게(글자 한 칸은 그림 없을 때만) */
+.rbox .relic.hasic{width:32px;height:32px;border:0;background:none}
+.rbox .relic.hasic img{width:32px;height:32px}
+/* 상인 후쿠로: 한자 대신 얼굴 */
+.fukuro{overflow:hidden;padding:0}
+.fukuro img{width:100%;height:auto;display:block;image-rendering:pixelated}

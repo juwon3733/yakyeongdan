@@ -168,25 +168,28 @@ function grantChar(id) {
   return r;
 }
 // 물건 열기 (소환·교환소). arg를 주면 그것, 없으면 무작위. 열었으면 설명 글, 열 것이 없으면 null.
+// 연 것이 누구·무엇인지(소환 결과 그림용): unlocked.who = 동료 id, unlocked.relic = 도구 id
+const unlocked = {};
 function unlock(kind, rng, arg, tier) {
+  unlocked.who = unlocked.relic = null;
   const pick = L => arg != null ? (L.includes(arg) ? arg : null) : L.length ? rng.pick(L) : null;
   if (kind === 'costume') {
     const k = pick(ROSTER_IDS.filter(x => owns(x) && !costumeOpen(x))); if (!k) return null;
-    P.costumeOwn.push(k); return `${ROSTER[k].name}의 두 번째 의상`;
+    P.costumeOwn.push(k); unlocked.who = k; return `${ROSTER[k].name}의 두 번째 의상`;
   }
   if (kind === 'pack') {
     const k = pick(ROSTER_IDS.filter(x => owns(x) && packsOpen(x) < packCards(x).length)); if (!k) return null;
-    P.packs[k] = (P.packs[k] || 0) + 1;
+    P.packs[k] = (P.packs[k] || 0) + 1; unlocked.who = k;
     const pk = packCards(k)[packsOpen(k) - 1] || [];
     return `${ROSTER[k].name} 카드 묶음 ${packsOpen(k)}: ${pk.map(c => CARDS[c].name).join('·')}`;
   }
   if (kind === 'relic') {
     const k = pick(Object.keys(RELICS).filter(x => RELICS[x].tier === (tier || RELICS[arg]?.tier) && !P.startRelics.includes(x))); if (!k) return null;
-    P.startRelics.push(k); return `시작 도구 「${RELICS[k].name}」`;
+    P.startRelics.push(k); unlocked.relic = k; return `시작 도구 「${RELICS[k].name}」`;
   }
   if (kind === 'talk') {
     const k = pick(TALKS.map((t, i) => i).filter(i => !P.talksSeen.includes(i))); if (k == null) return null;
-    P.talksSeen.push(k); return `휴식 대화 「${ROSTER[TALKS[k].a].name}·${ROSTER[TALKS[k].b].name}」`;
+    P.talksSeen.push(k); unlocked.who = TALKS[k].a; return `휴식 대화 「${ROSTER[TALKS[k].a].name}·${ROSTER[TALKS[k].b].name}」`;
   }
   return null;
 }
@@ -195,7 +198,7 @@ function grantItem(rng, rarity) {
   P.items.push(it.name);
   if (it.dust) { P.dust += it.dust; r.dust = it.dust; return r; }
   const got = unlock(it.kind, rng, null, it.tier);
-  if (got) r.text = got;
+  if (got) { r.text = got; r.who = unlocked.who; r.relic = unlocked.relic; }
   else { r.dust = ITEM_DUST[it.kind] || SUMMON.dustDupItem; P.dust += r.dust; r.text = '열 것이 없어 별가루로'; }
   return r;
 }
