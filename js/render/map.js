@@ -11,6 +11,49 @@ import { segStart } from '../endless.js';
 
 // 가로 지도: 왼쪽(1층) → 오른쪽(꼭대기). 층 사이 선은 갈렸다 합쳐진다. 아래에 대열 고치기.
 const MW = 624, MH = 232, NW = 100, NH = 36;
+
+// 칸 종류 도트 아이콘(16×16, 2배로 그림). 글자 하나 = 한 픽셀, '.'는 비움.
+const ICON = {
+  fight: { px: [
+    '................', '.s............s.', '.ss..........ss.', '..sss......sss..', '...sss....sss...',
+    '....sss..sss....', '.....ssssss.....', '......ssss......', '......ssss......', '.....ssssss.....',
+    '...gg.ss.ss.gg..', '....gg....gg....', '...ggg....ggg...', '..bb........bb..', '.bb..........bb.', '................'],
+    col: { s: '#dfe6f6', g: '#e0b84a', b: '#8a5a3a' } },
+  elite: { px: [
+    '................', '.p............p.', '.pp..........pp.', '..pp.wwwwww.pp..', '...pwwwwwwwwp...',
+    '...wwwwwwwwwww..', '..wwwwwwwwwwwww.', '..ww...ww...ww..', '..ww.r.ww.r.ww..', '..wwwwwwwwwwww..',
+    '...wwwww.wwwww..', '....wwwwwwwww...', '....w.w.w.w.w...', '....wwwwwwwww...', '................', '................'],
+    col: { p: '#b06ae0', w: '#ece4f4', r: '#e04a6a' } },
+  boss: { px: [
+    '................', '................', '..g.....g.....g.', '..gg...ggg...gg.', '..ggg.ggggg.ggg.',
+    '..ggggggggggggg.', '..ggggggggggggg.', '..gggrgggjgggrg.', '..ggggggggggggg.', '..ggggggggggggg.',
+    '...ggggggggggg..', '................', '..rrrrrrrrrrrrr.', '..rrrrrrrrrrrrr.', '................', '................'],
+    col: { g: '#e0b84a', r: '#e04a6a', j: '#7ab0d8' } },
+  rest: { px: [
+    '.......f........', '.......ff.......', '......fff.......', '......ffff......', '.....fffff......',
+    '....fffyfff.....', '....ffyyyff.f...', '...fffyyyfff....', '...ffyyyyyff....', '....fyyyyyf.....',
+    '.....fffff......', '..ll.......ll...', '...lll...lll....', '.....lllll......', '...lll...lll....', '..ll.......ll...'],
+    col: { f: '#ff8a3a', y: '#ffe08a', l: '#8a5a3a' } },
+  event: { px: [
+    '................', '.....mmmmmm.....', '....mmmmmmmm....', '...mmm....mmm...', '...mm......mm...',
+    '...........mm...', '..........mmm...', '.........mmm....', '........mmm.....', '.......mmm......',
+    '.......mm.......', '.......mm.......', '................', '.......mm.......', '.......mm.......', '................'],
+    col: { m: '#c9d2f0' } },
+  shop: { px: [
+    '................', '.....d....d.....', '......dddd......', '.......dd.......', '......oooo......',
+    '....oooooooo....', '...oooooooooo...', '..oooooggooooo..', '..ooooggggoooo..', '..oooogddgoooo..',
+    '..ooooggggoooo..', '..oooooggooooo..', '...oooooooooo...', '....oooooooo....', '................', '................'],
+    col: { o: '#e0a050', d: '#7a4a1a', g: '#ffe08a' } },
+};
+const ICON_SVG = Object.fromEntries(Object.entries(ICON).map(([k, { px, col }]) => {
+  const paths = Object.keys(col).map(ch => {
+    let d = '';
+    px.forEach((row, y) => [...row].forEach((c, x) => { if (c === ch) d += `M${x} ${y}h1v1h-1z`; }));
+    return d ? `<path fill="${col[ch]}" d="${d}"/>` : '';
+  }).join('');
+  return [k, `<svg class="ic" width="32" height="32" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">${paths}</svg>`];
+}));
+
 const pos = (r, j, n, cols) => ({ x: 4 + r * ((MW - NW - 8) / (cols - 1)), y: Math.round((j + 1) * MH / (n + 1) - NH / 2) });
 
 export function mapView() {
@@ -18,13 +61,15 @@ export function mapView() {
   const P = M.rows.map((row, r) => row.map((_, j) => pos(r, j, row.length, cols)));
   const lines = M.edges.slice(0, -1).flatMap((ed, r) => ed.flatMap((to, i) => to.map(j => {
     const a = P[r][i], b = P[r + 1][j];
-    const on = G.took[r] === i && (G.took[r + 1] === j || (r + 1 === G.row && can.includes(j)));
-    return `<line x1="${a.x + NW}" y1="${a.y + NH / 2}" x2="${b.x}" y2="${b.y + NH / 2}" class="${on ? 'on' : r < G.row - 1 ? 'past' : ''}"/>`;
+    // trail = 지나온 길(금색 점선), on = 지금 갈 수 있는 길
+    const trail = r + 1 < G.row && G.took[r] === i && G.took[r + 1] === j;
+    const on = r + 1 === G.row && G.took[r] === i && can.includes(j);
+    return `<line x1="${a.x + NW}" y1="${a.y + NH / 2}" x2="${b.x}" y2="${b.y + NH / 2}" class="${trail ? 'trail' : on ? 'on' : r < G.row - 1 ? 'past' : ''}"/>`;
   }))).join('');
   const nodes = M.rows.map((row, r) => row.map((t, j) => {
     const p = P[r][j], ok = r === G.row && can.includes(j), cls = r < G.row ? 'past' : ok ? 'now' : 'future';
     return `<button type="button" class="node k-${t} ${cls} ${G.took[r] === j ? 'took' : ''}" style="left:${p.x}px;top:${p.y}px" ${ok ? `data-node="${r},${j}"` : 'disabled'}>
-      <span class="t">${t === 'boss' && M.boss && !G.tutorial && !G.endless ? FOE[M.boss].name : NODE[t].name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → <b class="pace ${G.tutorial ? '' : G.endless ? '' : paceOf(G, G.clock + nodeTime(t), 1)}">${fmt(G.clock + nodeTime(t))}</b>` : ''}</span></button>`;
+      ${ICON_SVG[t] || ''}<span class="tx"><span class="t">${t === 'boss' && M.boss && !G.tutorial && !G.endless ? FOE[M.boss].name : NODE[t].name}</span><span class="m">+${nodeTime(t)}분${ok ? ` → <b class="pace ${G.tutorial ? '' : G.endless ? '' : paceOf(G, G.clock + nodeTime(t), 1)}">${fmt(G.clock + nodeTime(t))}</b>` : ''}</span></span></button>`;
   }).join('')).join('');
   const labels = M.rows.map((row, r) => `<span class="rowlabel" style="left:${P[r][0].x}px">${r === cols - 1 ? (G.endless ? '관문' : '꼭대기') : `${G.endless ? segStart() + r : r + 1}층`}</span>`).join('');
   // 대열 칸: 왼쪽→오른쪽 = 뒤·가운데·앞
