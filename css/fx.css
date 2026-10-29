@@ -67,3 +67,24 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 @keyframes jbob{0%,100%{translate:0 0}50%{translate:0 -1.5px}}
 @media (prefers-reduced-motion:reduce){:where(.pm, .foe) > img{animation:none}}
 #stage.calm :where(.pm, .foe) > img{animation:none}
+/* 적 의도: 도트 아이콘 + 큰 숫자 (js/render/combat.js intentIcon) */
+#app[data-screen="combat"] .foe .intent{display:flex;align-items:center;gap:2px;margin-bottom:-6px;padding:0;background:none;font-size:inherit;animation:none}
+#app[data-screen="combat"] .foe .intent .iv{display:flex;align-items:center;gap:1px}
+#app[data-screen="combat"] .foe .intent .ii{width:18px;height:18px;filter:drop-shadow(1px 1px 0 #000)}
+#app[data-screen="combat"] .foe .intent .iv b{font-family:var(--f-disp);font-weight:400;font-size:13px;color:#fff;line-height:1;
+  text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000,1px 1px 0 #000}
+#app[data-screen="combat"] .foe .intent .iv b i{font-style:normal;font-size:10px;color:#ffd0d8}
+#app[data-screen="combat"] .foe .intent .iv.all .ii{filter:drop-shadow(1px 1px 0 #000) drop-shadow(3px -2px 0 rgba(232,236,255,.45))}
+#app[data-screen="combat"] .foe .intent .two{font-size:8px;color:#ffd0a0;text-shadow:1px 1px 0 #000}
+#app[data-screen="combat"] .foe .intent .face{margin-left:2px;opacity:.9}
+/* 공격 의도는 칼이 들썩, 센 공격은 붉게 빨리 떨림 */
+#app[data-screen="combat"] .foe .intent.atk .ii{animation:jintent 1.2s ease-in-out infinite;transform-origin:50% 80%}
+#app[data-screen="combat"] .foe .intent.big .ii{animation-duration:.5s;filter:drop-shadow(1px 1px 0 #000) drop-shadow(0 0 3px #ff3a5a)}
+#app[data-screen="combat"] .foe .intent.big .iv b{color:#ffb0bc}
+@keyframes jintent{0%,100%{transform:rotate(0) translateY(0)}50%{transform:rotate(-10deg) translateY(-1px)}}
+/* 상태 아이콘 (js/render/combat.js stIcon): 체력 막대 아래 한 줄 */
+#app[data-screen="combat"] .sti{display:inline-flex;align-items:center;gap:0;margin:0 1px}
+#app[data-screen="combat"] .sti .ii{width:15px;height:15px;filter:drop-shadow(1px 1px 0 #000)}
+#app[data-screen="combat"] .sti b{font-family:var(--f-disp);font-weight:400;font-size:10px;color:#fff;line-height:1;margin-left:-2px;text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000}
+#app[data-screen="combat"] .foe .lab .st{display:flex;flex-wrap:wrap;justify-content:center;gap:1px}
+#app[data-screen="combat"] .chip{font-size:7.5px;padding:0 2px}

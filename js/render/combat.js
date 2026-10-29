@@ -37,7 +37,11 @@ const STAT = {
   nerea: C => C.whale ? `고래 ${C.whale}${C.whalePlus ? ` (+${C.whalePlus})` : ''}${C.whaleDive ? ' · 잠수' : ''}` : '',
   bertha: C => C.guideTurn ? `안내 ${C.guideTurn}` : '',
 };
-const chip = (v, nm, col) => v ? `<span class="chip" style="color:${col}" data-tip="${esc(kwOne(nm.replace(/ −$/, '')))}">${nm} ${v}</span>` : '';
+// 상태: 아는 이름은 작은 도트 아이콘 + 숫자, 모르는 건 글자 칩
+const SICON = { 독: 'drop', 화상: 'fire', 출혈: 'blood', 가시: 'thorn', 갑옷: 'shield', 멈춤: 'pause', 약화: 'down', 취약: 'crack', 현상금: 'coin' };
+const chip = (v, nm, col) => !v ? '' : SICON[nm] ? stIcon(SICON[nm], v, kwOne(nm), col)
+  : `<span class="chip" style="color:${col}" data-tip="${esc(kwOne(nm.replace(/ −$/, '')))}">${nm} ${v}</span>`;
+const stIcon = (k, v, tip, col) => `<span class="sti" style="--sc:${col || '#fff'}" data-tip="${esc(tip)}">${iconSvg(k)}<b>${v}</b></span>`;
 // 적 특징 (데이터 필드 → 짧은 이름 + 설명)
 const axChip = k => `<span class="chip trait ax" style="--ax:${AFFIX[k].col}" data-tip="${esc(`속성 「${AFFIX[k].pre}」: ${AFFIX[k].text}`)}">${AFFIX[k].pre}</span>`;
 const foeTraits = f => (f.affixes || []).map(axChip).join('') + [
@@ -57,7 +61,7 @@ const foeTraits = f => (f.affixes || []).map(axChip).join('') + [
   f.stagger ? ['비틀거림', '내 턴 피해가 100 이상이면 다음 행동 하나를 건너뛴다.'] : null,
   f.phase2 && !f.p2 ? ['2단계', `체력이 ${Math.round(f.phase2.at * 100)}% 아래가 되면 모습이 바뀐다.`] : null,
   f.phase3 && f.p2 && !f.p3 && (S.G.depth || 0) >= (f.phase3.depth || 0) ? ['3단계', `체력이 ${Math.round(f.phase3.at * 100)}% 아래가 되면 「한낮」.`] : null,
-].filter(Boolean).map(([n, t]) => `<span class="chip trait" data-tip="${esc(`${n}: ${t}`)}">${n}</span>`).join('');
+].filter(Boolean).map(([n, t]) => { const m = /^(가시|갑옷) (\d+)$/.exec(n); return m ? stIcon(SICON[m[1]], m[2], `${n}: ${t}`, '#c8d0ff') : `<span class="chip trait" data-tip="${esc(`${n}: ${t}`)}">${n}</span>`; }).join('');
 const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f.dim * 100) + '%' : 0, '빛 −', '#f0d040') + chip(f.bounty, '현상금', '#e0a050') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
   + chip(f.str, '힘', '#ff9a8a') + chip(f.weak, '약화', '#f08ac0') + chip(f.vuln, '취약', '#ffd060');
 
@@ -67,6 +71,53 @@ export const keepSlots = () => (alive('sebas') ? CHARACTERS.sebas.passive.keepCa
 // 노림 이름: 대신 맞기 > 안개 마녀 ③ 사냥 > 노림 바꾸기 > 기본
 const aimKey = f => { const C = S.C; if (C.taunt) return 'taunt'; if (f.huntBurst && [...C.burstTurn].some(p => alive(p))) return 'burst'; return f.aimOverride || f.aim || RULES.defaultAim; };
 
+// 적 의도 아이콘 (슬레이 더 스파이어식): 글자 대신 도트 아이콘 + 큰 숫자. 자세한 글은 마우스를 대면(data-tip)
+// 아이콘은 16×16 도트 문자열(. 빈칸, k 테두리, 1~3 색)
+const ICON = {
+  sword: ['...........kk...', '..........k22k..', '.........k22k...', '........k22k....', '.......k22k.....', '......k22k......', '..k..k22k.......', '..kk.k2k........', '...k1kk.........', '....k1k.........', '...k1k1k........', '..k1k.k1k.......', '.k1k...kk.......', 'k1k.............', 'kk..............', '................'],
+  shield: ['................', '..kkkkkkkkkkkk..', '..k2222332222k..', '..k2222332222k..', '..k2222332222k..', '..k3333333333k..', '..k2222332222k..', '...k22233222k...', '...k22233222k...', '....k2233222k...', '....k2233222k...', '.....k23322k....', '......k332k.....', '.......kkk......', '................', '................'],
+  up: ['.......kk.......', '......k11k......', '.....k1111k.....', '....k111111k....', '...k11111111k...', '..kkkk1111kkkk..', '.....k1111k.....', '.....k1111k.....', '.....k1111k.....', '.....k1111k.....', '.....k1111k.....', '.....kkkkkk.....', '................', '................', '................', '................'],
+  skull: ['................', '....kkkkkkkk....', '...k11111111k...', '..k1111111111k..', '..k1kk1111kk1k..', '..k1kk1111kk1k..', '..k1111kk1111k..', '...k11111111k...', '....k1k1k1k1....', '....kkkkkkkk....', '................', '................', '................', '................', '................', '................'],
+  clock: ['................', '.....kkkkkk.....', '...kk111111kk...', '..k11111k1111k..', '..k11111k1111k..', '.k111111k11111k.', '.k111111k11111k.', '.k111111kkkk11k.', '.k11111111111k..', '..k1111111111k..', '..k111111111k...', '...kk111111kk...', '.....kkkkkk.....', '................', '................', '................'],
+  boom: ['......k...k.....', '...k..k2.k..k...', '....k.k22k.k....', '.....k2332k.....', '.kkk23333332kkk.', '...k2333333k....', '....k23333k.....', '...k2k2332k2k...', '..k..k.22.k..k..', '.....k..k..k....', '................', '................', '................', '................', '................', '................'],
+  heart: ['................', '..kkk....kkk....', '.k111k..k111k...', 'k11111kk11111k..', 'k111111111111k..', 'k111111111111k..', '.k1111111111k...', '..k11111111k....', '...k111111k.....', '....k1111k......', '.....k11k.......', '......kk........', '................', '................', '................', '................'],
+  drop: ['.......k........', '......k1k.......', '.....k111k......', '....k11111k.....', '...k1111111k....', '...k1121111k....', '...k1211111k....', '....k11111k.....', '.....kkkkk......', '................', '................', '................', '................', '................', '................', '................'],
+  blood: ['.......k........', '......k1k.......', '.....k111k......', '....k11111k.....', '...k1111111k....', '...k1121111k....', '...k1211111k....', '....k11111k.....', '.....kkkkk......', '................', '................', '................', '................', '................', '................', '................'],
+  fire: ['.......k........', '......k1k..k....', '.....k11k.k1k...', '....k121kk11k...', '...k1221111k....', '...k12232221k...', '...k12333221k...', '...k1233321k....', '....k12221k.....', '.....kkkkk......', '................', '................', '................', '................', '................', '................'],
+  thorn: ['................', '...k.......k....', '...kk.....kk....', '....k1k.k1k.....', '.....k111k......', '.kk.k11111k.kk..', '..kk1111111kk...', '.kk.k11111k.kk..', '.....k111k......', '....k1k.k1k.....', '...kk.....kk....', '...k.......k....', '................', '................', '................', '................'],
+  pause: ['................', '..kkkk..kkkk....', '..k11k..k11k....', '..k11k..k11k....', '..k11k..k11k....', '..k11k..k11k....', '..k11k..k11k....', '..k11k..k11k....', '..kkkk..kkkk....', '................', '................', '................', '................', '................', '................', '................'],
+  down: ['....kkkkkk......', '....k1111k......', '....k1111k......', '....k1111k......', '.kkkk1111kkkk...', '..k11111111k....', '...k111111k.....', '....k1111k......', '.....k11k.......', '......kk........', '................', '................', '................', '................', '................', '................'],
+  crack: ['................', '..kkkkkkkkkk....', '..k1111k111k....', '..k111k1111k....', '..k1111k111k....', '..k111k1111k....', '...k111k11k.....', '....k1k11k......', '.....kk1k.......', '......kk........', '................', '................', '................', '................', '................', '................'],
+  coin: ['................', '....kkkkk.......', '...k11111k......', '..k1122211k.....', '..k1211121k.....', '..k1221111k.....', '..k1112211k.....', '..k1211121k.....', '..k1122211k.....', '...k11111k......', '....kkkkk.......', '................', '................', '................', '................', '................'],
+  what: ['....kkkkkk......', '...k111111k.....', '..k11kkkk11k....', '..kkk....k1k....', '........k11k....', '.......k11k.....', '......k11k......', '......k1k.......', '......kkk.......', '......k1k.......', '......kkk.......', '................', '................', '................', '................', '................'],
+};
+const ICON_COL = { drop: ['#9af07a', '#e8ffe0'], blood: ['#ff5a6a', '#ffd0d8'], fire: ['#ff7a3a', '#ffb050', '#fff2a0'], thorn: ['#c8d0ff'], pause: ['#b48ae8'], down: ['#9a9ac8'], crack: ['#ff9ab0'], coin: ['#ffd060', '#b08020'], sword: ['#e8ecff', '#9aa6c8', ''], shield: ['', '#6a9ae0', '#c9d8ff'], up: ['#ff8a5a'], skull: ['#c8a0ff'], clock: ['#ffe7a0'], boom: ['', '#ff9a4a', '#fff2a0'], heart: ['#7dff9a'], what: ['#ffe060'] };
+const iconCache = {};
+function iconSvg(k) {
+  if (iconCache[k]) return iconCache[k];
+  const col = ICON_COL[k]; let r = '';
+  ICON[k].forEach((row, y) => [...row].forEach((ch, x) => {
+    const c = ch === 'k' ? '#0a0a14' : ch === '1' ? col[0] : ch === '2' ? col[1] : ch === '3' ? col[2] : '';
+    if (c) r += `<rect x="${x}" y="${y}" width="1" height="1" fill="${c}"/>`;
+  }));
+  return (iconCache[k] = `<svg class="ii" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`);
+}
+function intentIcon(text) {
+  const t = String(text).replace(/<[^>]+>/g, '').trim();
+  let m;
+  const two = /행동 ×(\d+)/.exec(t), extra = two ? `<small class="two">×${two[1]}행동</small>` : '';
+  const out = (k, n, cls = '') => `<span class="iv ${cls}">${iconSvg(k)}${n != null ? `<b>${n}</b>` : ''}</span>`;
+  if ((m = /^공격 (\d+) · 방어 (\d+)/.exec(t))) return out('sword', m[1]) + out('shield', m[2]) + extra;
+  if ((m = /^모두 공격 (\d+)/.exec(t))) return out('sword', m[1], 'all') + extra;
+  if ((m = /^공격 (\d+)(?:×(\d+))?/.exec(t))) return out('sword', m[2] ? `${m[1]}<i>×${m[2]}</i>` : m[1]) + extra;
+  if ((m = /^자폭 (\d+)/.exec(t))) return out('boom', m[1]) + extra;
+  if ((m = /^(?:모든 적 )?방어 (\d+)/.exec(t))) return out('shield', m[1]) + extra;
+  if ((m = /^힘 \+(\d+)/.exec(t))) return out('up', m[1]) + extra;
+  if ((m = /^밤 시계 \+(\d+)/.exec(t))) return out('clock', `+${m[1]}`) + extra;
+  if ((m = /^적 회복 (\d+)/.exec(t))) return out('heart', m[1]) + extra;
+  if (/^저주|약화|취약|독|화상|출혈|잠|느림/.test(t)) return out('skull', (/(\d+)/.exec(t) || [])[1] ?? null) + extra;
+  return out('what', null) + extra;
+}
 export function combatView() {
   const G = S.G, C = S.C;
   const pend = C.pending != null ? C.hand.find(h => h.uid === C.pending) : null;
@@ -96,7 +147,7 @@ export function combatView() {
     const hid = f.hidden && C.all.some(g => !g.dead && !g.hidden);
     const ax = f.affixes?.length ? ` affixed" style="--ax:${AFFIX[f.affixes[0]].col}` : '';
     return `<button type="button" class="foe ${many ? 'sm' : ''} ${C.kind === 'boss' && f.i === 0 ? 'boss' : ''} ${wantFoe && !hid ? 'tg' : ''} ${hid ? 'hidden' : ''}${ax}" ${hid ? 'aria-disabled="true" title="숨어 있어 이번 턴에는 고를 수 없다"' : `data-foe="${f.i}"`} data-fi="${f.i}">
-        <span class="intent ${ic}" data-tip="${esc(`다음 행동. ${aim ? `노림: ${AIM_NAME[aimKey(f)]} (얼굴이 맞을 동료).` : ''}`)}">${it}${aim ? ` → ${face(aim, 'sm')}${many ? '' : ` <span class="aimnm">${AIM_NAME[aimKey(f)]}</span>`}` : ''}</span>
+        <span class="intent ${ic}" data-tip="${esc(`다음 행동: ${it.replace(/<[^>]+>/g, '')}. ${aim ? `노림: ${AIM_NAME[aimKey(f)]} (얼굴이 맞을 동료).` : ''}`)}">${intentIcon(it)}${aim ? face(aim, 'sm') : ''}</span>
         <img class="px" src="${foeArt(f) || sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="lab"><span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
         <span class="hpw">${f.block ? `<b class="blk" title="방어">${f.block}</b>` : ''}<span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span><span class="hp">${f.hp}/${f.max}</span></span>
