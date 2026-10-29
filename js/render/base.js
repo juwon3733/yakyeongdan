@@ -24,6 +24,8 @@ const pct = x => `${Math.round(x * 1000) / 10}%`;
 const wallet = () => `<span class="wallet"><b>별 조각 ${P.shards}</b> · 별가루 ${P.dust}</span>`;
 const head = (back = 'base', label = '본부') => `<div class="bhead"><button type="button" class="mini" data-view="${back}">‹ ${label}</button>${wallet()}</div>`;
 const img = (id, alt) => `<img class="px" src="${charSrc(id, 'stand', alt)}" alt="">`;
+// 아직 없는 동료: 같은 그림을 검은 실루엣으로(빈 네모는 깨진 그림처럼 보인다)
+const sil = id => `<img class="px sil" src="${charSrc(id, 'stand')}" alt="" aria-hidden="true">`;
 const starRing = id => duoSpecial(id) ? 'star5' : '';
 
 // 본부에서 쉬는 셋: 들어올 때마다 가진 동료 중 무작위 셋(같은 방문 동안은 그대로), 하나가 말풍선으로 한 줄.
@@ -254,7 +256,7 @@ export function matesView() {
   const grid = ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k];
     return `<button type="button" class="mcell r${r.rarity} ${k === sel ? 'on' : ''} ${own ? '' : 'none'} ${starRing(k)} mx${own ? mastery(k) : 0}" style="--c:${r.col}" ${own ? `data-mate="${k}"` : 'disabled'} title="${esc(r.name)}">
-      ${own ? img(k) : '<span class="sil"></span>'}<span class="nm">${own ? r.name : '?'}</span>${own ? `<span class="st">${'✦'.repeat(starsOf(k))}</span>` : ''}</button>`;
+      ${own ? img(k) : sil(k)}<span class="nm">${own ? r.name : '?'}</span>${own ? `<span class="st">${'✦'.repeat(starsOf(k))}</span>` : ''}</button>`;
   }).join('');
   return `<div class="matescr">
     <div class="mleft">${head()}<h2>동료</h2><div class="mgrid">${grid}</div></div>
@@ -314,7 +316,7 @@ const CODEX = {
   ach: achTab,
   mates: () => `<div class="cgrid">${ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k], st = P.charStats[k] || { runs: 0, wins: 0 }, c = CHARACTERS[k];
-    return `<div class="centry ${own ? '' : 'none'} ${starRing(k)}" style="--c:${r.col}">${own ? img(k) : '<span class="sil"></span>'}
+    return `<div class="centry ${own ? '' : 'none'} ${starRing(k)}" style="--c:${r.col}">${own ? img(k) : sil(k)}
       <b>${own ? r.name : '???'}</b><small>${stars(r.rarity)} ${own ? r.role : ''}</small>${own && c ? `<small class="dim">${esc(c.ds || '')}</small><small>별자리 ${starsOf(k)} · 판 ${st.runs} · 승 ${st.wins}</small>` : ''}</div>`;
   }).join('')}</div>`,
   duos: () => {

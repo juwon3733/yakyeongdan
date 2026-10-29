@@ -66,8 +66,26 @@
 /* ── 판 결과: 승리면 금빛 별가루, 패배면 살짝 잿빛 ── */
 .resultscr{position:relative;isolation:isolate;overflow:hidden}
 .resultscr > .mvp,.resultscr > .rinfo{position:relative;z-index:1}
-.resultscr.lost{filter:grayscale(.55) brightness(.92)}
-.resultscr.lost .mvp img.mvpart{filter:grayscale(.3) drop-shadow(2px 2px 0 rgba(0,0,0,.6))}
+/* 패배: 승리의 금빛·별가루 대신 차갑고 붉은 밤 — 아래에서 번지는 핏빛 어둠, 위로 흩날리는 재, 금 간 붉은 제목 띠.
+   화면 전체를 회색으로 죽이면 단추까지 꺼져 보여서, 그림·배경만 식힌다 */
+.resultscr.lost{background:radial-gradient(ellipse 90% 70% at 50% 115%,rgba(120,16,34,.55),transparent 70%),linear-gradient(180deg,#08070f,#120a14)}
+.resultscr.lost .mvp{animation:none;box-shadow:3px 3px 0 var(--shadow),0 0 0 2px rgba(255,90,110,.18);border-color:#5a2030}
+.resultscr.lost .mvp img.mvpart{filter:grayscale(.65) brightness(.8) sepia(.2) hue-rotate(-20deg) drop-shadow(2px 2px 0 rgba(0,0,0,.6))}
+.resultscr.lost .mvp .nm{color:#ff9aac}
+.resultscr.lost .rtitle{align-self:flex-start;position:relative;padding:4px 22px 5px;font-size:24px;color:#ffd6dc;letter-spacing:.06em;
+  background:linear-gradient(#3a0f1c 0 50%,#2a0a14 50%);border:2px solid #b0304a;box-shadow:3px 3px 0 var(--shadow);text-shadow:2px 2px 0 #000;
+  clip-path:polygon(0 0,46% 0,49% 40%,52% 0,100% 0,100% 100%,57% 100%,54% 62%,51% 100%,0 100%);
+  animation:yk-lose-in .5s steps(6) both}
+@keyframes yk-lose-in{0%{transform:translateY(-14px);opacity:0}40%{transform:translateY(3px);opacity:1}55%{transform:translate(-3px,0)}70%{transform:translate(2px,0)}100%{transform:none}}
+.resultscr.lost .clockbig{color:#ff6a7a;text-shadow:2px 2px 0 #3a0a14}
+/* 재: 어두운 점과 꺼져 가는 불씨가 천천히 위로 */
+.rash{position:absolute;inset:0;z-index:2;pointer-events:none;opacity:.7;
+  background-image:radial-gradient(circle at 14px 70px,#ff7a5a 0 1px,transparent 1.5px),radial-gradient(circle at 66px 20px,#6a6478 0 1.5px,transparent 2px),
+    radial-gradient(circle at 98px 50px,#8a8498 0 1px,transparent 1.5px),radial-gradient(circle at 40px 88px,#c04a3a 0 1px,transparent 1.5px);
+  background-size:120px 96px;-webkit-mask:linear-gradient(transparent,#000 45%);mask:linear-gradient(transparent,#000 45%);animation:yk-ash 11s steps(60) infinite}
+.rash.far{background-size:80px 70px;opacity:.35;animation-duration:17s}
+@keyframes yk-ash{from{background-position:0 0}to{background-position:-14px -96px}}
+#stage.calm .rash{animation:none}
 
 /* 별가루: 점 무늬 타일을 아래로 천천히 흘린다 (계단식으로 끊어 도트 느낌) */
 .rdust{position:absolute;inset:0;z-index:2;pointer-events:none;
