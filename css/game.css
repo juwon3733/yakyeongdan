@@ -416,12 +416,6 @@ button.relic.spent{opacity:.35}
 /* 에피소드 (docs/06 「에피소드」): 배경 전면 + 상반신 좌우 + 아래 대화창. 배경 그림이 오기 전엔 .bg-<키> 임시 그림 */
 .newt{font-family:var(--f-disp);font-weight:400;font-size:8px;color:var(--bg);background:var(--gold);padding:0 3px;margin-left:3px}
 .epsel{display:flex;flex-direction:column;gap:5px;height:100%;padding:8px;overflow:auto}
-.eplist{display:flex;flex-direction:column;gap:4px}
-.eprow{display:grid;grid-template-columns:22px 62px repeat(3,minmax(0,1fr));gap:5px;align-items:stretch;background:var(--panel);border:2px solid var(--line);border-left-color:var(--c);padding:4px}
-.eprow .face{width:22px;height:22px;align-self:center}.eprow .face img{width:22px;height:29px}
-.eprow .nm{font-family:var(--f-disp);font-size:11px;align-self:center;display:flex;flex-direction:column}
-.eprow .nm small{font-family:var(--f-body);font-size:7.5px;color:var(--dim)}
-.eprow.notown{opacity:.75}
 .epslot{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;padding:3px 5px;min-width:0}
 .epslot b{font-family:var(--f-disp);font-weight:400;font-size:9.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
 .epslot small{font-size:7.5px;color:var(--dim);line-height:1.3}
@@ -719,9 +713,8 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s ease-
 /* 에피소드 */
 #stage.bigtext .epbox .who{font-size:12.5px}
 #stage.bigtext .epbox .tx{font-size:13px;line-height:1.5}
-#stage.bigtext .eprow .nm{font-size:12.5px}
 #stage.bigtext .epslot b{font-size:11px}
-#stage.bigtext .epslot small,#stage.bigtext .eprow .nm small{font-size:9px}
+#stage.bigtext .epslot small{font-size:9px}
 #stage.bigtext .eptop .ttl{font-size:11.5px}
 #stage.bigtext .eplog .loglines{font-size:11.5px}
 /* 설정 창 */

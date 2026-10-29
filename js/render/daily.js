@@ -5,8 +5,7 @@ import { CHARACTERS } from '../data/characters.js';
 import { MOONS } from '../data/moons.js';
 import { ACHIEVEMENTS, ACH_GROUP } from '../data/achievements.js';
 import { DAILY_SHARDS } from '../data/daily.js';
-import { MASTERY_XP } from '../data/mastery.js';
-import { P, owns, dailyToday, mastery } from '../meta.js';
+import { P, owns, dailyToday } from '../meta.js';
 import { stars, fmt, esc, charSrc } from './common.js';
 import { moonImg } from './sprites.js';
 
@@ -65,10 +64,4 @@ export function historyBlock() {
       <td>MVP ${esc(ROSTER[h.mvp]?.name || '')}</td><td>${h.best ? `최고 한 턴 ${h.best}` : ''}</td><td>${tags}</td></tr>`;
   }).join('');
   return `<h3 class="sub">최근 판 ${P.history.length}/20</h3><div class="histwrap"><table class="odds hist">${rows || '<tr><td class="note">아직 없다</td></tr>'}</table></div>`;
-}
-
-// 동료 화면 숙련도 줄
-export function masteryLine(k) {
-  const lv = mastery(k), xp = P.mxp[k] || 0, next = MASTERY_XP[lv];
-  return `<p class="note mxline">숙련도 <b>${lv}</b>/5 ${'◆'.repeat(lv)}${'◇'.repeat(5 - lv)} · 점수 ${xp}${next != null ? ` (다음 단계 ${next})` : ' · 최고 단계'}</p>`;
 }
