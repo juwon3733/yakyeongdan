@@ -211,24 +211,72 @@ def map3():
 
 # ---------- 전투 ----------
 
+BATTLE_PROG = ['Dm', 'Bb', 'C', 'A7', 'Dm', 'Bb', 'Gm A7', 'Dm',
+               'Gm', 'Dm', 'Bb', 'A7', 'Gm', 'Dm', 'Bb C', 'A7']
+BATTLE_MEL = ['d^:1.5 a:.5 d^ e^', 'f^:1.5 e^:.5 d^ f^', 'e^:1.5 c^:.5 g c^', 'c#^:3 a',
+              'd^:1.5 a:.5 d^ e^', 'f^:1.5 g^:.5 f^ d^', 'bb:1.5 d^:.5 c#^ e^', 'd^:3 -',
+              'g^:1.5 f^:.5 d^ bb', 'a:1.5 d^:.5 f^ a^', 'g^:1.5 f^:.5 d^ f^', 'e^:2 c#^:2',
+              'bb^:1.5 a^:.5 g^ d^', 'f^:1.5 e^:.5 d^ a', 'bb d^ c^ e^', 'e^:2 c#^ a']
+
+
 def battle():
+    """1막 항구층 전투 (에피소드 특별 전투도 이 곡): 금관 주제, 펄스 아르페지오, 곧은 8비트"""
     tr = Track(144, 16)
-    prog = ['Dm', 'Bb', 'C', 'A7', 'Dm', 'Bb', 'Gm A7', 'Dm',
-            'Gm', 'Dm', 'Bb', 'A7', 'Gm', 'Dm', 'Bb C', 'A7']
+    prog = BATTLE_PROG
     tr.bus('br', 0.1, 0.5, 0.25); tr.bus('sq', -0.4, 0.2, 0.2); tr.bus('bass', 0, 0.75, 0.05)
     tr.bus('dr', 0, 0.6, 0.12); tr.bus('str', 0.3, 0.22, 0.3)
     basses(tr, 'bass', bass, prog, EIGHTS, vel=0.75)
     arp(tr, 'sq', pulse, prog, [0, 1, 2, 1], step=0.25, octave=4, vel=0.32, dur=0.18)
     block(tr, 'str', strings, prog, [(0, 1.9), (2, 1.9)], octave=4, vel=0.4, top=3)
-    melody(tr, 'br', brass, 0, ['d^:1.5 a:.5 d^ e^', 'f^:1.5 e^:.5 d^ f^', 'e^:1.5 c^:.5 g c^', 'c#^:3 a',
-                                 'd^:1.5 a:.5 d^ e^', 'f^:1.5 g^:.5 f^ d^', 'bb:1.5 d^:.5 c#^ e^', 'd^:3 -',
-                                 'g^:1.5 f^:.5 d^ bb', 'a:1.5 d^:.5 f^ a^', 'g^:1.5 f^:.5 d^ f^', 'e^:2 c#^:2',
-                                 'bb^:1.5 a^:.5 g^ d^', 'f^:1.5 e^:.5 d^ a', 'bb d^ c^ e^', 'e^:2 c#^ a'], octave=4, vel=0.6)
+    melody(tr, 'br', brass, 0, BATTLE_MEL, octave=4, vel=0.6)
     drums(tr, 'dr', {'kick': [0, 1.5, 2, 3.5], 'snare': [1, 3], 'hat': [(x * 0.5, 0.3 if x % 2 else 0.45) for x in range(8)]}, 16)
     for b in (7, 15):
         roll(tr, 'dr', b, 0.5)
     tr.drum('dr', 'cym', 0, 0.6)
     tr.drum('dr', 'cym', 32, 0.5)
+    return tr
+
+
+def battle2():
+    """2막 구름층 전투: 한 음 올려 FM 리드(+옥타브 위 글로켄 겹침), 뜯는 베이스, 엇박 당김 리듬"""
+    tp = 2
+    tr = Track(152, 16)
+    prog = transpose(BATTLE_PROG, tp)
+    tr.bus('ld', 0.1, 0.46, 0.3); tr.bus('gl', 0.4, 0.2, 0.45); tr.bus('sq', -0.4, 0.2, 0.25)
+    tr.bus('bass', 0, 0.72, 0.05); tr.bus('dr', 0, 0.58, 0.14); tr.bus('ep', -0.25, 0.3, 0.3)
+    basses(tr, 'bass', pluck_bass, prog, [(0, .4, 0), (.75, .4, 12), (1.5, .4, 0), (2, .4, 7), (2.75, .4, 12), (3.5, .4, 10)], vel=0.8)
+    arp(tr, 'sq', square, prog, [0, 2, 4, 2, 1, 2, 4, 2], step=0.25, octave=4, vel=0.26, dur=0.14)
+    block(tr, 'ep', epiano, prog, [(0, 0.4), (1.5, 0.4), (2.5, 0.4), (3.5, 0.4)], octave=4, vel=0.45, top=3)
+    melody(tr, 'ld', lead, 0, BATTLE_MEL, octave=4, vel=0.6, tp=tp)
+    melody(tr, 'gl', glock, 8, BATTLE_MEL[8:], octave=5, vel=0.3, legato=0.6, tp=tp)
+    drums(tr, 'dr', {'kick': [0, 0.75, 2, 2.75], 'snare': [1, 3, (3.75, 0.3)], 'rim': [(1.5, 0.3)],
+                     'hat': [(x * 0.5, 0.25 if x % 2 else 0.4) for x in range(8)]}, 16)
+    for b in (7, 15):
+        roll(tr, 'dr', b, 0.45, 3.5)
+    tr.drum('dr', 'cym', 0, 0.55)
+    tr.drum('dr', 'cym', 32, 0.5)
+    return tr
+
+
+def battle3():
+    """3막 별층 전투: 두 음 더 올려 금관+종 주제, 현악 트레몰로, 16분 베이스와 팀파니 — 해가 가까워진다"""
+    tp = 4
+    tr = Track(160, 16)
+    prog = transpose(BATTLE_PROG, tp)
+    tr.bus('br', 0.05, 0.5, 0.28); tr.bus('bell', 0.4, 0.22, 0.5); tr.bus('str', -0.3, 0.24, 0.35)
+    tr.bus('pl', -0.45, 0.16, 0.25); tr.bus('bass', 0, 0.74, 0.05); tr.bus('dr', 0, 0.62, 0.14)
+    basses(tr, 'bass', bass, prog, [(i * 0.25, 0.22, 12 if i % 4 == 2 else 0) for i in range(16)], vel=0.62)
+    arp(tr, 'pl', pulse, prog, [0, 1, 2, 4], step=0.25, octave=5, vel=0.24, dur=0.16)
+    block(tr, 'str', strings, prog, [(x * 0.25, 0.22) for x in range(16)], octave=4, vel=0.22, top=3)
+    melody(tr, 'br', brass, 0, BATTLE_MEL, octave=4, vel=0.62, tp=tp)
+    melody(tr, 'bell', bell, 0, BATTLE_MEL, octave=5, vel=0.22, legato=0.5, tp=tp)
+    drums(tr, 'dr', {'kick': [0, 0.5, 1.5, 2, 2.5, 3.5], 'snare': [1, 3],
+                     'tick': [(x * 0.25, 0.3 if x % 2 else 0.45) for x in range(16)]}, 16)
+    drums(tr, 'dr', {'timp': [(0, 0.5), (2, 0.35)]}, 16)
+    for b in (3, 7, 11, 15):
+        roll(tr, 'dr', b, 0.5, 3.0 if b % 8 == 7 else 3.5)
+    tr.drum('dr', 'cym', 0, 0.65)
+    tr.drum('dr', 'cym', 32, 0.55)
     return tr
 
 
@@ -530,7 +578,7 @@ def dawn3():
     return tr
 
 
-SONGS = {'title': title, 'base': base, 'map1': map1, 'map2': map2, 'map3': map3, 'battle': battle, 'elite': elite,
+SONGS = {'title': title, 'base': base, 'map1': map1, 'map2': map2, 'map3': map3, 'battle': battle, 'battle2': battle2, 'battle3': battle3, 'elite': elite,
          'boss1': boss1, 'boss2': boss2, 'dawn': dawn, 'victory': victory, 'result': result,
          'rest': rest, 'event': event, 'ep_daily': ep_daily, 'ep_warm': ep_warm, 'ep_tense': ep_tense,
          'tutorial': tutorial, 'dawn2': dawn2,

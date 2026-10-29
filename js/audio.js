@@ -151,6 +151,8 @@ function epBgm() {
   if (E.bgm && EP_SONGS.includes(E.bgm)) return E.bgm;
   return E.kind === 'bond' || E.n === 2 ? 'ep_warm' : 'ep_daily';
 }
+// 일반 전투: 같은 주제를 막마다 조·악기·빠르기를 바꿔 편곡 (1 금관 144 · 2 FM 리드 152 · 3 금관+종 160)
+const BATTLE_SONG = { 1: 'battle', 2: 'battle2', 3: 'battle3' };
 // 보스별 곡 (막 보스 변형: 안개 마녀 여왕·폭풍 고래)
 const BOSS_SONG = { keeper: 'boss1', queen: 'boss_queen', captain: 'boss2', whale: 'boss_whale' };
 function pickBgm() {
@@ -167,7 +169,8 @@ function pickBgm() {
       return BOSS_SONG[b?.key] || `boss${Math.min(2, G.act)}`;
     }
     if (G.tutorial) return 'tutorial';
-    return S.C.kind === 'elite' ? 'elite' : 'battle';
+    if (S.C.kind === 'elite') return 'elite';
+    return BATTLE_SONG[G.endless ? (G.endless.seg - 1) % 3 + 1 : Math.min(3, G.act)] || 'battle';
   }
   if (G.tutorial) return 'tutorial';
   if (G.screen === 'rest') return 'rest';
