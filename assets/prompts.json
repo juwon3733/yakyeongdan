@@ -1049,6 +1049,13 @@
       ]
     },
     {
+      "id": "aura-akane",
+      "title": "★5 아카네 오라 (시트 1장 → 6프레임 반복)",
+      "items": [
+        "aura_akane"
+      ]
+    },
+    {
       "id": "aura-sion",
       "title": "★5 시온 오라 (시트 1장 → 6프레임 반복)",
       "items": [
@@ -1060,13 +1067,6 @@
       "title": "★5 루나리아 오라 (시트 1장 → 6프레임 반복)",
       "items": [
         "aura_lunaria"
-      ]
-    },
-    {
-      "id": "aura-akane",
-      "title": "★5 아카네 오라 (시트 1장 → 6프레임 반복)",
-      "items": [
-        "aura_akane"
       ]
     },
     {
@@ -14020,6 +14020,115 @@
       ]
     },
     {
+      "id": "aura_akane",
+      "kind": "fxsheet",
+      "batch": "aura-akane",
+      "file": "sheets/aura_akane.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n아카네's idle AURA, drawn on its own (no character). Shape: a LOW BED OF FLAMES on the ground: crimson-and-gold fire tongues licking upward from a wide flat base, embers and sparks floating up; wide at the bottom, empty and transparent in the upper half. Placed at her feet. Accent colors crimson and gold. Six frames of a seamless LOOP (frame 6 flows back into frame 1), gentle motion between frames. Make the SHAPE unmistakable — NOT a generic ring of sparkles. Keep it elegant and not too dense.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "3×2 반복 6프레임, 모양: a LOW BED OF FLAMES on the ground",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/akane_aura_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/akane_aura_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/akane_aura_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/akane_aura_4.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/akane_aura_5.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/akane_aura_6.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
       "id": "aura_sion",
       "kind": "fxsheet",
       "batch": "aura-sion",
@@ -14030,8 +14139,8 @@
       "max_colors": null,
       "native": "384×256 (칸 128×128 × 6)",
       "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
-      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n시온's idle AURA that floats around her body while she stands in battle (her motifs: glowing star spirits like tiny lantern stars, constellation lines, a starfield swirling from her star-map cloak; accent colors silver-blue and gold). Six frames of a seamless LOOP (frame 6 flows back into frame 1): small sparkles, motes and wisps drifting upward around an EMPTY tall oval in the middle of each cell where her body will be (keep that middle empty — no character). Subtle and elegant, not a big explosion.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
-      "must_show": "3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n시온's idle AURA, drawn on its own (no character). Shape: a slowly turning CONSTELLATION CHART halo: a flat round star map of thin glowing lines connecting 7-9 bright star nodes, faint blue nebula dust, like a sacred disk. Placed behind her shoulders. Accent colors silver-blue and gold. Six frames of a seamless LOOP (frame 6 flows back into frame 1), gentle motion between frames. Make the SHAPE unmistakable — NOT a generic ring of sparkles. Keep it elegant and not too dense.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "3×2 반복 6프레임, 모양: a slowly turning CONSTELLATION CHART halo",
       "reference_images": [
         "style/akane_c.png"
       ],
@@ -14139,8 +14248,8 @@
       "max_colors": null,
       "native": "384×256 (칸 128×128 × 6)",
       "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
-      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n루나리아's idle AURA that floats around her body while she stands in battle (her motifs: twin moonlight fans, silver crescent arcs, a translucent veil, ankle bells, the moon (crescent, half, full or new as the card says) huge behind her; accent colors moon silver and pale violet). Six frames of a seamless LOOP (frame 6 flows back into frame 1): small sparkles, motes and wisps drifting upward around an EMPTY tall oval in the middle of each cell where her body will be (keep that middle empty — no character). Subtle and elegant, not a big explosion.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
-      "must_show": "3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n루나리아's idle AURA, drawn on its own (no character). Shape: a large pale CRESCENT MOON with soft silver glow and two thin moonlight veil ribbons drifting from its tips, a few falling silver petals. Placed above and behind her head. Accent colors moon silver and pale violet. Six frames of a seamless LOOP (frame 6 flows back into frame 1), gentle motion between frames. Make the SHAPE unmistakable — NOT a generic ring of sparkles. Keep it elegant and not too dense.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "3×2 반복 6프레임, 모양: a large pale CRESCENT MOON with soft silver glow and two thin moonlight veil ribbons drifting from its tips, a few falling silver petals. Placed above and behind her head.",
       "reference_images": [
         "style/akane_c.png"
       ],
@@ -14238,115 +14347,6 @@
       ]
     },
     {
-      "id": "aura_akane",
-      "kind": "fxsheet",
-      "batch": "aura-akane",
-      "file": "sheets/aura_akane.png",
-      "width": 1536,
-      "height": 1024,
-      "transparent": true,
-      "max_colors": null,
-      "native": "384×256 (칸 128×128 × 6)",
-      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
-      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n아카네's idle AURA that floats around her body while she stands in battle (her motifs: twin katana-like blades with flame patterns, crimson fire trails, burning embers, a high ponytail whipping; accent colors crimson and gold). Six frames of a seamless LOOP (frame 6 flows back into frame 1): small sparkles, motes and wisps drifting upward around an EMPTY tall oval in the middle of each cell where her body will be (keep that middle empty — no character). Subtle and elegant, not a big explosion.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
-      "must_show": "3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게",
-      "reference_images": [
-        "style/akane_c.png"
-      ],
-      "cells": [
-        {
-          "file": "fx/akane_aura_1.png",
-          "x": 0,
-          "y": 0,
-          "w": 512,
-          "h": 512,
-          "native": [
-            128,
-            128
-          ],
-          "out": [
-            512,
-            512
-          ]
-        },
-        {
-          "file": "fx/akane_aura_2.png",
-          "x": 512,
-          "y": 0,
-          "w": 512,
-          "h": 512,
-          "native": [
-            128,
-            128
-          ],
-          "out": [
-            512,
-            512
-          ]
-        },
-        {
-          "file": "fx/akane_aura_3.png",
-          "x": 1024,
-          "y": 0,
-          "w": 512,
-          "h": 512,
-          "native": [
-            128,
-            128
-          ],
-          "out": [
-            512,
-            512
-          ]
-        },
-        {
-          "file": "fx/akane_aura_4.png",
-          "x": 0,
-          "y": 512,
-          "w": 512,
-          "h": 512,
-          "native": [
-            128,
-            128
-          ],
-          "out": [
-            512,
-            512
-          ]
-        },
-        {
-          "file": "fx/akane_aura_5.png",
-          "x": 512,
-          "y": 512,
-          "w": 512,
-          "h": 512,
-          "native": [
-            128,
-            128
-          ],
-          "out": [
-            512,
-            512
-          ]
-        },
-        {
-          "file": "fx/akane_aura_6.png",
-          "x": 1024,
-          "y": 512,
-          "w": 512,
-          "h": 512,
-          "native": [
-            128,
-            128
-          ],
-          "out": [
-            512,
-            512
-          ]
-        }
-      ]
-    },
-    {
       "id": "aura_eleonore",
       "kind": "fxsheet",
       "batch": "aura-eleonore",
@@ -14357,8 +14357,8 @@
       "max_colors": null,
       "native": "384×256 (칸 128×128 × 6)",
       "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
-      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n엘레오노르's idle AURA that floats around her body while she stands in battle (her motifs: a giant clock-hand staff, glowing clock faces, brass gears, violet time ripples, clock hands spinning; accent colors violet and brass). Six frames of a seamless LOOP (frame 6 flows back into frame 1): small sparkles, motes and wisps drifting upward around an EMPTY tall oval in the middle of each cell where her body will be (keep that middle empty — no character). Subtle and elegant, not a big explosion.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
-      "must_show": "3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n엘레오노르's idle AURA, drawn on its own (no character). Shape: a giant translucent violet CLOCK FACE magic circle: roman numerals, two clock hands that move a little each frame, small brass gears turning at its rim. Placed behind her back. Accent colors violet and brass. Six frames of a seamless LOOP (frame 6 flows back into frame 1), gentle motion between frames. Make the SHAPE unmistakable — NOT a generic ring of sparkles. Keep it elegant and not too dense.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "3×2 반복 6프레임, 모양: a giant translucent violet CLOCK FACE magic circle",
       "reference_images": [
         "style/akane_c.png"
       ],
@@ -14466,8 +14466,8 @@
       "max_colors": null,
       "native": "384×256 (칸 128×128 × 6)",
       "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
-      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n네레아's idle AURA that floats around her body while she stands in battle (her motifs: a harpoon staff with a star lantern, a giant translucent star whale made of constellations, sprays of glowing starlight water, waves in the night sky; accent colors sea teal and starlight gold). Six frames of a seamless LOOP (frame 6 flows back into frame 1): small sparkles, motes and wisps drifting upward around an EMPTY tall oval in the middle of each cell where her body will be (keep that middle empty — no character). Subtle and elegant, not a big explosion.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
-      "must_show": "3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\n네레아's idle AURA, drawn on its own (no character). Shape: rising sea-water BUBBLES and tiny glowing star-fish drifting upward from a small ring of rippling starlit water on the ground; narrow column, mostly empty above. Placed at her feet. Accent colors sea teal and starlight gold. Six frames of a seamless LOOP (frame 6 flows back into frame 1), gentle motion between frames. Make the SHAPE unmistakable — NOT a generic ring of sparkles. Keep it elegant and not too dense.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "3×2 반복 6프레임, 모양: rising sea-water BUBBLES and tiny glowing star-fish drifting upward from a small ring of rippling starlit water on the ground; narrow column, mostly empty above. Placed at her feet.",
       "reference_images": [
         "style/akane_c.png"
       ],

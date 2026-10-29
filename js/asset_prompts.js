@@ -546,12 +546,19 @@ One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2
   }
 
   // 캐릭터 층(docs/BATTLE_PLAN.md): 몸과 따로 움직이는 오라·동반자·투사체. 몸 스프라이트 위아래에 겹쳐 그린다(js/juice.js).
-  const AURA = ['sion', 'lunaria', 'akane', 'eleonore', 'nerea'];
-  for (const id of AURA) {
+  // 오라는 동료마다 모양·자리가 다르다(같은 고리 모양 금지). 게임은 자리(발밑·등 뒤·머리 위)에 맞춰 몸보다 작게 붙인다(js/juice.js AURA_AT).
+  const AURA = {
+    akane: 'a LOW BED OF FLAMES on the ground: crimson-and-gold fire tongues licking upward from a wide flat base, embers and sparks floating up; wide at the bottom, empty and transparent in the upper half. Placed at her feet.',
+    sion: 'a slowly turning CONSTELLATION CHART halo: a flat round star map of thin glowing lines connecting 7-9 bright star nodes, faint blue nebula dust, like a sacred disk. Placed behind her shoulders.',
+    lunaria: 'a large pale CRESCENT MOON with soft silver glow and two thin moonlight veil ribbons drifting from its tips, a few falling silver petals. Placed above and behind her head.',
+    eleonore: 'a giant translucent violet CLOCK FACE magic circle: roman numerals, two clock hands that move a little each frame, small brass gears turning at its rim. Placed behind her back.',
+    nerea: 'rising sea-water BUBBLES and tiny glowing star-fish drifting upward from a small ring of rippling starlit water on the ground; narrow column, mostly empty above. Placed at her feet.',
+  };
+  for (const [id, shape] of Object.entries(AURA)) {
     const c = CHARS[id];
     batches.push({ id: `aura-${id}`, title: `★5 ${c.name} 오라 (시트 1장 → 6프레임 반복)` });
-    fxSheet(`aura-${id}`, `aura_${id}`, `${c.name}'s idle AURA that floats around her body while she stands in battle (her motifs: ${c.fx}; accent colors ${c.accent}). Six frames of a seamless LOOP (frame 6 flows back into frame 1): small sparkles, motes and wisps drifting upward around an EMPTY tall oval in the middle of each cell where her body will be (keep that middle empty — no character). Subtle and elegant, not a big explosion.`,
-      fxCells(`${id}_aura`, 6), '3×2 반복 6프레임, 가운데(몸 자리) 비움, 은은하게');
+    fxSheet(`aura-${id}`, `aura_${id}`, `${c.name}'s idle AURA, drawn on its own (no character). Shape: ${shape} Accent colors ${c.accent}. Six frames of a seamless LOOP (frame 6 flows back into frame 1), gentle motion between frames. Make the SHAPE unmistakable — NOT a generic ring of sparkles. Keep it elegant and not too dense.`,
+      fxCells(`${id}_aura`, 6), `3×2 반복 6프레임, 모양: ${shape.split(':')[0]}`);
   }
   const PETS = {
     nerea: 'her STAR WHALE companion: a small translucent whale made of constellations (deep blue body, glowing star markings, a starlight water trail)',
