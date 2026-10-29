@@ -135,6 +135,22 @@ export const JINGLE_SFX = {
   bossIn: 'boss_in',  // 보스 등장 (1.2초, 무거운 쿵 + 불길한 화음)
 };
 
+// 별 소환 연출: sfx(SUMMON_SFX.charge) 식으로 부른다. 등급 열림은 SUMMON_SFX.rank[3|4|5]
+export const SUMMON_SFX = {
+  charge: 'summon_charge',  // 별이 모이며 차오름 (1.2초, 끝에서 뚝 끊김)
+  drop: 'summon_drop',      // 별똥별 떨어짐 (0.5초, 0.33초에 땅에 닿는 툭)
+  rank: { 3: 'summon_r3', 4: 'summon_r4', 5: 'summon_r5' },  // 흰 별(0.45초)·보라 반짝+화음(0.9초)·금빛 쾅+상승 아르페지오(1.5초)
+};
+
+// 기술 연출: sfx(SKILL_SFX.windup) 식으로 부른다. 없으면 hasSfx로 확인해 옛 소리로 대신한다
+export const SKILL_SFX = {
+  windup: 'windup',          // 공격 직전 숨 들이킴·칼 뽑기 (0.15초, 끝에 칭)
+  projFly: 'proj_fly',       // 투사체 날아가는 휘익 (0.3초, 가운데가 가장 큼)
+  petWhale: 'pet_whale',     // 고래 울음 + 물보라 (0.8초, 0.3초부터 물보라)
+  petSpirit: 'pet_spirit',   // 별 정령 반짝 3연타 (0.4초, 0.09초 간격)
+  auraOn: 'aura_on',         // 오라 켜지는 낮은 웅 (0.4초)
+};
+
 // UI 효과음 (0.05~0.2초): sfx(UI_SFX.hover) 식으로 부른다. 자주 나므로 SFX_GAIN으로 작게 낸다
 export const UI_SFX = {
   hover: 'ui_hover',  // 카드에 마우스를 댐: 아주 짧은 틱
@@ -143,7 +159,7 @@ export const UI_SFX = {
   page: 'ui_page',    // 화면 바뀜
 };
 // 효과음마다 기본 음량 배수 (없으면 1). 부르는 쪽의 vol과 곱한다
-const SFX_GAIN = { ui_hover: 0.25, ui_pick: 0.4, ui_end: 0.45, ui_page: 0.35 };
+const SFX_GAIN = { ui_hover: 0.25, ui_pick: 0.4, ui_end: 0.45, ui_page: 0.35, windup: 0.6, proj_fly: 0.6, aura_on: 0.7 };
 
 let lastSfx = {};
 export function sfx(name, { vol = 1, rate = 1 } = {}) {
