@@ -23,11 +23,11 @@ export const SUMMON = {
 //   talk 도감 휴식 대화 하나 · dust 별가루
 export const SUMMON_ITEMS = {
   4: [ { kind: 'costume', name: '동료 의상', text: '가진 동료 하나의 두 번째 의상' },
-       { kind: 'relic', tier: 'r', name: '희귀 도구', text: '판 시작 도구 고르기에 들어갈 희귀 도구' },
-       { kind: 'pack', name: '카드 묶음', text: '가진 동료 하나의 보상 풀에 카드 2장' } ],
-  3: [ { kind: 'relic', tier: 'c', name: '흔한 도구', text: '판 시작 도구 고르기에 들어갈 흔한 도구' },
+       { kind: 'relic', tier: 'r', name: '희귀 도구', text: '판을 시작할 때 고를 수 있는 희귀 도구' },
+       { kind: 'pack', name: '카드 묶음', text: '가진 동료 하나의 보상 카드 2장 추가' } ],
+  3: [ { kind: 'relic', tier: 'c', name: '흔한 도구', text: '판을 시작할 때 고를 수 있는 흔한 도구' },
        { kind: 'dust', name: '별가루 10', text: '교환소에서 쓰는 별가루', dust: 10 },
-       { kind: 'talk', name: '휴식 대화 조각', text: '도감에서 다시 볼 수 있는 휴식 대화 하나' } ],
+       { kind: 'talk', name: '휴식 대화 조각', text: '도감에서 다시 보는 휴식 대화 하나' } ],
 };
 export const ITEM_DUST = { costume: 20, pack: 15, relic: 10, talk: 5 };
 
@@ -45,10 +45,10 @@ export const PICKUP_EPOCH = Date.UTC(2026, 9, 26);
 // 별자리 (§4). 같은 동료가 또 나오면 한 칸씩, 최대 5.
 export const STAR_STEPS = [
   { n: 1, text: '두 번째 의상' },
-  { n: 2, text: '카드 묶음 1 해금 (보상 풀에 2장)' },
-  { n: 3, text: '시작 카드 1장이 강화판으로 시작' },
-  { n: 4, text: '전용 도구 해금 (이 동료가 파티에 있을 때 강적·야시장에서 나옴)' },
-  { n: 5, text: '이 동료의 듀오 컷인 특별판, 이름 옆 별 테두리' },
+  { n: 2, text: '카드 묶음 1 해금(보상 카드 2장 추가)' },
+  { n: 3, text: '시작 카드 1장을 강화판으로' },
+  { n: 4, text: '전용 도구 해금(파티에 있으면 강적·야시장에서 나온다)' },
+  { n: 5, text: '듀오 컷인 특별판, 이름 옆에 별 테두리' },
 ];
 // 교환소 (§5) 별가루 가격
 export const EXCHANGE = {
