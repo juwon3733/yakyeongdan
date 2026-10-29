@@ -6,7 +6,7 @@ import { S, dawnAt } from './run.js';
 import { CHARACTERS } from './data/characters.js';
 import { ACT_NAME } from './data/rules.js';
 import { calmNow, SET } from './settings.js';
-import { sfx as sfxRaw } from './audio.js';
+import { sfx as sfxRaw, hasSfx } from './audio.js';
 // 누르면 넘기기(skipFx)로 남은 연출을 한꺼번에 돌릴 때는 효과음을 겹쳐 내지 않는다
 let hush = false;
 const sfx = (...a) => { if (!hush) sfxRaw(...a); };
@@ -184,7 +184,7 @@ function dropFrozen(ms) {
 // ---------- 효과음 (애니메이션 줄이기: 바로) ----------
 function soundOf(e) {
   const k = e.kind;
-  if (k === 'hitFoe') sfx(e.dmg ? styleSound(styleOf(e)) : 'block');
+  if (k === 'hitFoe') sfx(e.dmg ? atkSound(e) : 'block');
   else if (k === 'kill') sfx('foe_down');
   else if (k === 'hurt') sfx(e.down ? 'down' : e.dmg ? 'hurt' : 'block');
   else if (k === 'block') sfx('block', { vol: .7 });
@@ -506,6 +506,8 @@ const STYLE = { iris: 'slash', akane: 'slash', laila: 'slash', mimimomo: 'slash'
   noel: 'magic', lunaria: 'magic', eleonore: 'magic', tomori: 'magic', nerea: 'magic', bertha: 'impact' };
 const styleOf = e => e.counter ? 'impact' : e.slash ? 'slash' : e.gun ? 'boom' : STYLE[e.actor] || 'impact';
 const styleSound = s => ({ slash: 'slash', boom: 'cannon', star: 'spirit', mist: 'poison', magic: 'mana' })[s] || 'hit';
+// 동료별 공격음(sfx_atk_<id>, tools/compose/sfx.py) → 없으면 공격 갈래 공용 소리
+const atkSound = e => e.actor && hasSfx(`atk_${e.actor}`) ? `atk_${e.actor}` : styleSound(styleOf(e));
 const colOf = id => CHARACTERS[id]?.col || '#ece8f6';
 
 function hitFoe(e, P) {
@@ -543,7 +545,7 @@ function hitFoe(e, P) {
   if (e.dmg > 0) num(x, ir.y + 6, String(e.dmg), e.crit ? 'crit' : '', e.dmg);
   else if (e.blocked) num(x, ir.y + 6, '막음', 'blk', 8);
   if (e.bleed) at(110, () => num(x + 14, ir.y + 16, String(e.bleed), 'bleed', e.bleed));
-  sfx(e.dmg ? styleSound(st) : 'block');
+  sfx(e.dmg ? atkSound(e) : 'block');
 }
 function killFoe(e, P) {
   const c = P?.foes.get(e.i); if (!c) return;

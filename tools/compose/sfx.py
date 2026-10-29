@@ -301,3 +301,100 @@ SFX = {'click': click, 'select': select, 'card': card, 'get': get, 'move': move,
        'win': win, 'lose': lose, 'dawn': dawn, 'star': star,
        'boom': boom, 'summon': summon, 'steal': steal, 'foe_heal': foe_heal, 'retarget': retarget, 'thorns': thorns,
        'flip': flip, 'constel': constel, 'burst': burst, 'fanfare5': fanfare5}
+
+
+# ---------- 동료별 공격음 (atk_<id>) ----------
+# 공격 갈래(베기·포격·별·안개·마법·타격·찌르기) 바탕 위에 동료마다 음높이(n)·길이(ln)·파형(w: fm 비율/사각 듀티)을 조금씩 바꾼다.
+# 같은 갈래끼리도 귀로 구별되게: 칼날 울림 음, 꼬리 길이, 덧붙는 FM 한 음이 다르다.
+
+def tone(n, dur, vel, w):
+    """w: 숫자면 FM 모듈레이터 비율, 'sq'/'pu'면 사각(50%/25%) 펄스."""
+    if w == 'sq':
+        return square(n, dur, vel)
+    if w == 'pu':
+        return square(n, dur, vel, 0.25)
+    return fm(n, dur, vel, ratio=w, index=2.2, idecay=dur * 0.5, a=0.001, d=dur, s=0, r=dur * 0.6)
+
+
+def a_slash(n, ln, w, hp=2500):
+    t = T(0.12 + ln)
+    whoosh = highpass(noise(0.12 + ln), hp) * np.exp(-((t - 0.04) / (0.03 + ln * 0.15)) ** 2) * 0.7
+    return mix(whoosh, at(tone(n, 0.04 + ln * 0.3, 0.4, w), 0.04))
+
+
+def a_boom(n, ln, w):
+    t = T(0.5 + ln)
+    f0 = hz(n) / 8
+    body = np.sin(2 * np.pi * np.cumsum(f0 + 110 * np.exp(-t / 0.05)) / SR) * np.exp(-t / (0.15 + ln * 0.4))
+    blast = lowpass(noise(0.5 + ln), 1600) * np.exp(-t / (0.08 + ln * 0.15)) * 0.8
+    return verb(mix(body * 1.1, blast, at(tone(n, 0.05, 0.25, w), 0.0)), 0.6 + ln, 0.25)
+
+
+def a_star(n, ln, w):
+    notes = (n, n + 4, n + 7, n + 12)
+    return verb(mix(*[at(tone(m, 0.05 + ln * 0.2, 0.35, w), i * (0.03 + ln * 0.05)) for i, m in enumerate(notes)],
+                    highpass(noise(0.15), 5000) * np.exp(-T(0.15) / 0.04) * 0.2), 0.8 + ln, 0.35)
+
+
+def a_mist(n, ln, w):
+    t = T(0.25 + ln)
+    hiss = lowpass(highpass(noise(0.25 + ln), 1200), 5000) * np.sin(np.pi * t / (0.25 + ln)) ** 2 * 0.35
+    drop = mix(*[at(tone(m, 0.05, 0.3, w), i * 0.05) for i, m in enumerate((n, n - 5, n - 9))])
+    return mix(hiss, at(lowpass(drop, 3500), 0.03))
+
+
+def a_magic(n, ln, w):
+    a = fm(n, 0.1 + ln, 0.4, ratio=w if isinstance(w, (int, float)) else 2, index=1.8, idecay=0.08 + ln * 0.3,
+           a=0.004, d=0.2 + ln, s=0, r=0.15 + ln * 0.3, vib=0.01)
+    up = sweep_tone(hz(n - 12), hz(n + 12), 0.08 + ln * 0.3, 'sin') * np.exp(-T(0.08 + ln * 0.3) / 0.1) * 0.25
+    return verb(mix(a, up, at(tone(n + 7, 0.05, 0.25, w), 0.05 + ln * 0.2)), 0.7 + ln, 0.3)
+
+
+def a_impact(n, ln, w):
+    t = T(0.18 + ln)
+    body = np.sin(2 * np.pi * np.cumsum(hz(n) / 4 + 150 * np.exp(-t / 0.025)) / SR) * np.exp(-t / (0.05 + ln * 0.3))
+    crack = highpass(noise(0.18 + ln), 1500) * np.exp(-t / 0.018) * 0.5
+    return mix(body * 0.9, crack, at(tone(n, 0.03 + ln * 0.2, 0.25, w), 0.01))
+
+
+def a_pierce(n, ln, w):
+    zip_ = sweep_tone(hz(n + 12), hz(n), 0.06 + ln * 0.2, 'sq') * np.exp(-T(0.06 + ln * 0.2) / 0.05) * 0.25
+    t = T(0.12)
+    stab = highpass(noise(0.12), 3000) * np.exp(-t / 0.015) * 0.6
+    return mix(lowpass(zip_, 5000), at(stab, 0.04), at(tone(n, 0.05 + ln * 0.2, 0.35, w), 0.05))
+
+
+ATK_KIND = {'slash': a_slash, 'boom': a_boom, 'star': a_star, 'mist': a_mist, 'magic': a_magic, 'impact': a_impact, 'pierce': a_pierce}
+# id: (갈래, 음높이 midi, 길이(초, 꼬리 늘림), 파형)
+ATK = {
+    'iris': ('slash', 96, 0.10, 3.01),       # 맑고 곧은 칼날
+    'akane': ('slash', 91, 0.35, 1.41),      # 홍련: 낮고 길게 타오르는 울림
+    'laila': ('slash', 100, 0.05, 'pu'),     # 바람 칼: 가볍고 높게
+    'mimimomo': ('slash', 103, 0.03, 'sq'),  # 쌍둥이: 짧고 통통
+    'sebas': ('slash', 98, 0.08, 4.0),       # 은 식기처럼 쨍
+    'brick': ('boom', 55, 0.45, 'sq'),       # 큰 대포
+    'mariana': ('boom', 62, 0.30, 1.5),      # 해적 권총·작은 포
+    'fukuro': ('boom', 70, 0.15, 'pu'),      # 폭죽
+    'sion': ('star', 84, 0.15, 5.0),         # 별 정령
+    'raven': ('mist', 72, 0.20, 2.5),        # 흑우·독
+    'marta': ('impact', 60, 0.20, 3.53),     # 철퇴 + 종
+    'zeno': ('impact', 50, 0.30, 1.0),       # 무거운 흑검
+    'gordon': ('impact', 65, 0.10, 'sq'),    # 프라이팬
+    'dora': ('impact', 72, 0.15, 3.53),      # 망치·모루
+    'finn': ('impact', 77, 0.05, 'pu'),      # 가벼운 가방 휘두르기
+    'bertha': ('impact', 69, 0.12, 2.0),     # 지팡이
+    'sigrun': ('pierce', 86, 0.15, 2.0),     # 창
+    'noel': ('magic', 76, 0.15, 2.0),        # 마술
+    'lunaria': ('magic', 81, 0.35, 1.5),     # 달빛: 길게
+    'eleonore': ('magic', 69, 0.30, 3.5),    # 시계탑: 종 같은 낮은 울림
+    'tomori': ('magic', 88, 0.08, 'pu'),     # 등대 불빛: 짧고 높게
+    'nerea': ('magic', 72, 0.40, 1.0),       # 물보라: 둥글고 길게
+}
+
+
+def _atk(cid):
+    kind, n, ln, w = ATK[cid]
+    return lambda: ATK_KIND[kind](n, ln, w)
+
+
+SFX.update({f'atk_{cid}': _atk(cid) for cid in ATK})
