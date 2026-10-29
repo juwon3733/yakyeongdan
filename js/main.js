@@ -83,7 +83,7 @@ addEventListener('orientationchange', () => setTimeout(fit, 120));
 const tipEl = document.getElementById('tip');
 var tipFor = null;   // var: render()가 이 줄보다 먼저 불려도 되게
 function showTip(el) {
-  const t = el.dataset.tip; if (!t) return hideTip();
+  const t = el.dataset.tip; if (!t || document.body.classList.contains('nohov')) return hideTip();
   tipFor = el; tipEl.textContent = t; tipEl.hidden = false;
   const s = parseFloat(getComputedStyle(stage).getPropertyValue('--s')) || 1;
   tipEl.style.setProperty('--ts', Math.max(1, s));

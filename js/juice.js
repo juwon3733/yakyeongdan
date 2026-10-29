@@ -129,6 +129,8 @@ export function afterRender(events = []) {
         // 필살(희귀 카드·듀오): 스킬 컷인을 먼저 띄우고 그다음 기술 (카오스 제로 나이트메어식 연출)
         const sp = isSpecial(e);
         if (sp) { at(t, () => skillCut(e)); t += 900; }
+        // 카드를 낸 뒤 커서 아래로 밀려온 다음 카드가 크게 튀어 오르지 않게(커서를 움직이면 다시)
+        document.body.classList.add('nohov');
         at(t, () => actFx(e, sp));
         flyCard(e, P, t); t += 170; break;
       }
@@ -256,17 +258,23 @@ function flyCard(e, P, t0) {
   }
   S.drop = null;
   const ghost = cloneAt(c, 'jfly');
-  let tgt = e.foe != null ? foeEl(e.foe) : e.ally ? allyEl(e.ally) : e.target === 'all' ? root()?.querySelector('.foes')
-    : e.actor ? allyEl(e.actor) : root()?.querySelector('.field');
-  const to = tgt ? rel(tgt) : { cx: c.r.cx, cy: c.r.cy - 80 };
+  // 카드는 쓰는 동료 머리 위로 날아가 빛으로 흩어진다(그 동료가 기술을 펼친다) — 대상 쪽 연출은 동료 동작·이펙트가 맡는다
+  const caster = e.actor ? allyEl(e.actor)?.querySelector(':scope > img') : null;
+  const tgt = caster || (e.foe != null ? foeEl(e.foe) : root()?.querySelector('.field'));
+  const r = tgt ? rel(tgt) : null, to = r ? { cx: r.cx, cy: caster ? r.y + 6 : r.cy } : { cx: c.r.cx, cy: c.r.cy - 80 };
   const dx = to.cx - c.r.cx, dy = to.cy - c.r.cy;
   ghost.animate([
-    { transform: 'translate(0,0) scale(1) rotate(0)', opacity: 1 },
-    { transform: `translate(${dx * .35}px,${dy * .35 - 18}px) scale(1.08) rotate(${dx > 0 ? -6 : 6}deg)`, opacity: 1, offset: .4 },
-    { transform: `translate(${dx}px,${dy}px) scale(.3) rotate(${dx > 0 ? 14 : -14}deg)`, opacity: .2 },
-  ], { duration: 190, delay: t0, easing: 'steps(7)', fill: 'backwards' }).onfinish = () => ghost.remove();
+    { transform: 'translate(0,0) scale(1) rotate(0)', opacity: 1, filter: 'none' },
+    { transform: `translate(${dx * .5}px,${dy * .55 - 14}px) scale(.9) rotate(${dx > 0 ? -4 : 4}deg)`, opacity: 1, offset: .45 },
+    { transform: `translate(${dx}px,${dy}px) scale(.55) rotate(0)`, opacity: 1, filter: 'brightness(2.2)', offset: .8 },
+    { transform: `translate(${dx}px,${dy - 4}px) scale(.62)`, opacity: 0, filter: 'brightness(3)' },
+  ], { duration: 240, delay: t0, easing: 'cubic-bezier(.3,.6,.3,1)', fill: 'backwards' }).onfinish = () => ghost.remove();
   const col = colOf(e.actor || e.a || e.ch);
-  at(t0 + 180, () => { ring(to.cx, to.cy, col, 6, 22, 9); if (!e.atk) sparks(to.cx, to.cy, col, 8, 1.4); });
+  at(t0 + 200, () => {
+    ring(to.cx, to.cy, col, 4, 20, 10);
+    // 흩어지는 빛 조각이 동료 쪽으로 쏟아진다
+    for (let k = 0; k < 16; k++) add({ k: 'dot', x: to.cx + rnd(-10, 10), y: to.cy + rnd(-12, 4), vx: rnd(-1.2, 1.2), vy: rnd(-.6, 1.4), g: .05, life: rnd(12, 22), col: k % 3 ? col : '#ffffff', s: k % 4 ? 1 : 2 });
+  });
 }
 // 동료 모션: 카드를 쓴 동료는 공격·스킬·방어, 맞은 동료는 피격. 전투 스프라이트(sprites/<id>_<frame>.png)가 있으면
 // 그 동작 칸으로 잠깐 바꿔 끼우고, 없으면 움직임만. 가만히 있을 때는 서기·숨쉬기 두 칸을 번갈아(슬레이 더 스파이어식 숨쉬기).
@@ -319,7 +327,7 @@ const SVGNS = 'http://www.w3.org/2000/svg';
 let arrowSvg = null, pt = null;
 function toStage(e) { const sr = stage.getBoundingClientRect(), k = sr.width / stage.offsetWidth || 1; return { x: (e.clientX - sr.left) / k, y: (e.clientY - sr.top) / k }; }
 if (stage) {
-  stage.addEventListener('pointermove', e => { pt = toStage(e); aimArrow(e.target); }, { passive: true });
+  stage.addEventListener('pointermove', e => { pt = toStage(e); if (e.movementX || e.movementY) document.body.classList.remove('nohov'); aimArrow(e.target); }, { passive: true });
   stage.addEventListener('pointerleave', () => { pt = null; aimArrow(null); });
 }
 function aimArrow(over) {

@@ -50,8 +50,9 @@
 #fx .jred{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse 70% 65% at 50% 50%,transparent 45%,rgba(200,20,40,.55))}
 /* 캐릭터 발을 배경 바닥(아래 1/3)에 — 무대를 아래로 내려 손패 뒤까지 쓴다(슬레이 더 스파이어처럼 카드가 무대 앞에 겹침).
    transform은 카메라 연출이 쓰므로 top으로 내린다 */
-#app[data-screen="combat"] .field{top:40px;z-index:1}
+#app[data-screen="combat"] .field{top:30px;z-index:1}
 #app[data-screen="combat"] .bottom .hand .card{margin-bottom:-24px}
 #app[data-screen="combat"] .bottom{position:relative;z-index:3}
-#app[data-screen="combat"] .log{position:relative;z-index:2}
+#app[data-screen="combat"] .log{position:absolute;top:34px;left:8px;right:8px;z-index:2;background:rgba(11,11,24,.78)}
 #app[data-screen="combat"]::before{background-position:center 70%}
+body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px)) rotate(var(--fr,0deg));z-index:auto}
