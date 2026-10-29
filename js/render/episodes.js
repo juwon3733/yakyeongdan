@@ -25,32 +25,42 @@ const condText = (cid, n) => {
 
 export function episodesView() {
   // 안 본 화가 있는 동료 → 가진 동료 → 아직 없는 동료 순 (원래 순서 안에서)
-  const rank = cid => EPISODES[cid].some((_, n) => epOpen(cid, n) && !P.epSeen[epKey(cid, n)]) ? 0 : P.owned[cid] ? 1 : 2;
+  const hasNew = cid => EPISODES[cid].some((_, n) => epOpen(cid, n) && !P.epSeen[epKey(cid, n)]);
+  const rank = cid => hasNew(cid) ? 0 : P.owned[cid] ? 1 : 2;
   const ids = Object.keys(EPISODES).map((k, i) => [k, i]).sort((x, y) => rank(x[0]) - rank(y[0]) || x[1] - y[1]).map(x => x[0]);
-  const rows = ids.map(cid => {
-    const w = who(cid), owned = !!P.owned[cid];
-    const eps = EPISODES[cid].map((ep, n) => {
-      const open = epOpen(cid, n), seen = !!P.epSeen[epKey(cid, n)];
-      if (!open) return `<button type="button" class="epslot lock" disabled title="${esc(condText(cid, n))}"><b>${n + 1}화</b><small>${esc(condText(cid, n))}</small></button>`;
-      return `<button type="button" class="epslot ${seen ? 'seen' : 'new'}" data-ep="${cid}:${n}"><b>${n + 1}화 · ${esc(ep.title)}</b>
-        <small>${seen ? '다시 보기' : `<span class="newt">NEW</span> 처음 보면 별 조각 +${EP_REWARD[n]}`}</small></button>`;
-    }).join('');
-    return `<div class="eprow ${owned ? '' : 'notown'}" style="--c:${w.col}">
-      <span class="face"><img class="px" src="${w.img}" alt=""></span><span class="nm">${esc(w.name)}${owned ? '' : '<small>아직 없는 동료</small>'}</span>${eps}</div>`;
+  const sel = EPISODES[S.epSel] ? S.epSel : ids[0];
+  // 왼쪽: 동료 얼굴 칸 격자. 한 화도 안 열렸으면 어둡게 + 자물쇠, 아래 점 셋 = 1~3화 (본 화 · 새 화 · 잠김)
+  const grid = ids.map(cid => {
+    const w = who(cid), lock = !epOpen(cid, 0);
+    const pips = EPISODES[cid].map((_, n) => `<i class="${!epOpen(cid, n) ? '' : P.epSeen[epKey(cid, n)] ? 'seen' : 'new'}"></i>`).join('');
+    return `<button type="button" class="epface ${lock ? 'lock' : ''} ${P.owned[cid] ? '' : 'notown'} ${cid === sel ? 'on' : ''}" style="--c:${w.col}" data-epsel="${cid}" title="${esc(w.name)}">
+      <span class="pic"><img class="px" src="${w.img}" alt=""></span>${lock ? '<span class="lk" aria-label="잠김"></span>' : ''}${hasNew(cid) ? '<span class="newt">NEW</span>' : ''}
+      <span class="nm">${esc(w.name)}</span><span class="pips">${pips}</span></button>`;
+  }).join('');
+  // 오른쪽: 고른 동료의 1~3화
+  const w = who(sel);
+  const eps = EPISODES[sel].map((ep, n) => {
+    const open = epOpen(sel, n), seen = !!P.epSeen[epKey(sel, n)];
+    if (!open) return `<button type="button" class="epslot lock" disabled><b>${n + 1}화 · ???</b><small>${esc(condText(sel, n))}</small></button>`;
+    return `<button type="button" class="epslot ${seen ? 'seen' : 'new'}" data-ep="${sel}:${n}"><b>${n + 1}화 · ${esc(ep.title)}</b>
+      <small>${seen ? '다시 보기' : `<span class="newt">NEW</span> 처음 보면 별 조각 +${EP_REWARD[n]}`}</small></button>`;
   }).join('');
   const bonds = P.bondOpen.length ? P.bondOpen.map(k => {
     const b = BOND_SCENES[k]; if (!b) return '';
     const [a, c] = k.split('+'), seen = P.bondSeen.includes(k);
     return `<button type="button" class="epslot bond ${seen ? 'seen' : 'new'}" data-bond="${k}"><b>${esc(who(a).name)} · ${esc(who(c).name)}</b><small>${esc(b.title)}${seen ? '' : ' <span class="newt">NEW</span>'}</small></button>`;
-  }).join('') : '<p class="note">인연 듀오를 처음 쓴 판이 끝나면 두 사람의 짧은 장면이 열린다.</p>';
-  return `<div class="epsel">
+  }).join('') : '<p class="note small">인연 듀오를 처음 쓴 판이 끝나면 열린다.</p>';
+  return `<div class="epsel epgrid">
     <div class="bhead"><button type="button" class="mini" data-view="base">‹ 본부</button><span class="wallet"><b>별 조각 ${P.shards}</b></span></div>
-    <h2>에피소드</h2>
-    <p class="note small">그 동료를 데리고 판을 하면 열린다. 1화: 판 1번 끝내기 · 2화: 2막 보스 격파 · 3화: 「새벽」 격파</p>
-    <div class="eplist">${rows}</div>
-    <h2>인연 장면</h2>
-    <div class="bondlist">${bonds}</div>
-    <p class="note small">나머지 동료의 에피소드는 준비 중.</p>
+    <div class="epcols">
+      <div class="epleft"><h2>에피소드</h2><div class="epfaces">${grid}</div></div>
+      <div class="epright" style="--c:${w.col}">
+        <div class="ephead"><span class="pic"><img class="px" src="${w.img}" alt=""></span><div><h3>${esc(w.name)}</h3>${P.owned[sel] ? '' : '<small class="note">아직 없는 동료</small>'}</div></div>
+        <div class="epeps">${eps}</div>
+        <h3 class="sub">인연 장면</h3>
+        <div class="bondlist">${bonds}</div>
+      </div>
+    </div>
   </div>`;
 }
 

@@ -147,6 +147,19 @@ try {
   await ev(() => { const Y = window.__yk, G = Y.S.G; Y.S.C = null; G.won = true; G.why = 'win'; G.bossKills = 3; G.clock = 330; G.act = 3; G.screen = 'result'; Y.render(); });
   await page.waitForSelector('[data-home]');
   await shot('result', 1200);
+
+  // 판 밖 화면: 에피소드 목록 · 동료 상세(숙련도) · 별 소환 · 확률
+  await ev(() => { const Y = window.__yk, P = Y.P(); Y.S.G = null; Y.S.C = null;
+    P.epProg.iris = { runs: 1, act2: true, dawn: false }; P.epSeen['iris:0'] = true; P.epProg.brick = { runs: 1, act2: false, dawn: false };
+    P.mxp.iris = 6; P.pity5 = 27; Y.S.epSel = 'iris'; Y.S.view = 'episodes'; Y.render(); });
+  await shot('episodes');
+  await ev(() => { const Y = window.__yk; Y.S.mate = 'iris'; Y.S.view = 'mates'; Y.render(); });
+  await shot('mates');
+  await ev(() => { const Y = window.__yk; Y.S.view = 'summon'; Y.render(); });
+  await shot('summon');
+  await ev(() => { const Y = window.__yk; Y.S.view = 'odds'; Y.render(); });
+  await page.click('details.fold summary');
+  await shot('odds');
   await page.close();
 } finally {
   await browser.close();
