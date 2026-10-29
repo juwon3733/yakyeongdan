@@ -10,7 +10,7 @@ import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
 import { moonImg, sprite } from './sprites.js';
 import { kwTip } from '../data/keywords.js';
 import { wearing } from '../meta.js';
-import { charArt, battleArt } from '../art.js';
+import { charArt, battleArt, artURL } from '../art.js';
 import { cardArtSrc } from './cardart.js';
 import { endlessChip } from './endless.js';
 
@@ -26,8 +26,10 @@ export const palOf = (id, alt) => { const pal = ROSTER[id]?.pal || CHARACTERS[id
 export function relicChip(id, G) {
   const d = RELICS[id], usable = d.use && !G.used[id] && (d.use !== 'moon' || S.C);
   const tip = esc(`${d.name} (${RELIC_TIER_NAME[d.tier]}) — ${d.text}${d.use ? (G.used[id] ? ' · 이번 판엔 썼다' : ' · 누르면 쓴다') : ''}`);
-  return d.use ? `<button type="button" class="relic t-${d.tier} ${usable ? 'can' : 'spent'}" data-relic="${id}" data-tip="${tip}" aria-label="${tip}" ${usable ? '' : 'disabled'}>${esc(d.name.slice(0, 1))}</button>`
-    : `<span class="relic t-${d.tier}" data-tip="${tip}" aria-label="${tip}" tabindex="0">${esc(d.name.slice(0, 1))}</span>`;
+  // 도구 그림(icons/relic_<id>.png)이 있으면 그림, 없으면 이름 첫 글자
+  const ic = artURL(`icons/relic_${id}.png`), inner = ic ? `<img class="px" src="${ic}" alt="">` : esc(d.name.slice(0, 1));
+  return d.use ? `<button type="button" class="relic t-${d.tier} ${ic ? 'hasic' : ''} ${usable ? 'can' : 'spent'}" data-relic="${id}" data-tip="${tip}" aria-label="${tip}" ${usable ? '' : 'disabled'}>${inner}</button>`
+    : `<span class="relic t-${d.tier} ${ic ? 'hasic' : ''}" data-tip="${tip}" aria-label="${tip}" tabindex="0">${inner}</span>`;
 }
 
 // 동료 얼굴 (서 있는 그림의 윗부분을 잘라 보여 줌)

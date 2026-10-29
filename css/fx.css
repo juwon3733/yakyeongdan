@@ -171,3 +171,6 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 .topbar .chain i.on{background:var(--gold);box-shadow:0 0 6px rgba(224,184,74,.8)}
 .topbar .turnno{font-size:9px;color:var(--dim)}
 .topbar .turnno b{font-family:var(--f-disp);font-weight:400;font-size:13px;color:#fff;margin-left:2px}
+/* 도구 그림 아이콘 */
+.relic.hasic{padding:0;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden}
+.relic.hasic img{width:20px;height:20px;image-rendering:pixelated;filter:drop-shadow(1px 1px 0 #000)}
