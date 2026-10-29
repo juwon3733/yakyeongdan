@@ -150,7 +150,7 @@ export function afterRender(events = []) {
       case 'combat':
         acc = 0; stopped = 0; at(t, () => setCounter(0, false));
         preloadPoses();
-        if (e.boss) { at(t, () => { showBoss(e.boss, e.line); sfx('dawn', { vol: .6 }); }); t += 1100; }
+        if (e.boss) { at(t, () => { showBoss(e.boss, e.line, root()?.querySelector('.foe.boss > img')?.getAttribute('src') || ''); sfx('dawn', { vol: .6 }); }); at(t + 420, () => shake()); t += 1600; }
         break;
       case 'play': {
         played = e;

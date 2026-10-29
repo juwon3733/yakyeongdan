@@ -27,8 +27,9 @@ export function showPhase(name, text) {
   show(`<div class="bossband phase"><i class="stripe"></i><div class="tx"><span>${name}</span><b>${text}</b></div></div>`, 1700);
 }
 // 보스 등장 띠
-export function showBoss(name, line = '') {
-  show(`<div class="bossband"><i class="stripe"></i><div class="tx"><span>보스</span><b>${name}</b>${line ? `<small>${line}</small>` : ''}</div></div>`, 1400);
+// img = 판에 그려진 보스 그림: 검은 실루엣으로 밀려 들어왔다가 번쩍 하고 드러난다
+export function showBoss(name, line = '', img = '') {
+  show(`<div class="bossband ${img ? 'hasimg' : ''}"><i class="stripe"></i>${img ? `<img class="px who" src="${img}" alt="">` : ''}<div class="tx"><span>보스</span><b>${name}</b>${line ? `<small>${line}</small>` : ''}</div></div>`, img ? 1900 : 1400);
 }
 cutEl.addEventListener('click', () => { cutEl.hidden = true; });
 // 누르면 넘기기: 떠 있는 띠(듀오·보스·2단계)를 바로 닫는다

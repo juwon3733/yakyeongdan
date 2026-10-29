@@ -60,12 +60,15 @@
 #app[data-screen="combat"] .bottom .hand .card{margin-bottom:-24px}
 #app[data-screen="combat"] .bottom{position:relative;z-index:3}
 #app[data-screen="combat"] .log{position:absolute;top:34px;left:8px;right:8px;z-index:2;background:rgba(11,11,24,.78)}
-#app[data-screen="combat"]::before{background-position:center 70%}
+/* 전투: 배경이 캐릭터·적만큼 세밀하고 밝아 인물이 묻힌다 → 배경은 채도·밝기를 낮추고 인물이 서는 줄(가운데 아래)을 한 겹 더 어둡게 */
+#app[data-screen="combat"]::before{background-position:center 70%;filter:saturate(.8) brightness(.82);
+  background-image:linear-gradient(180deg,rgba(6,6,18,.45),rgba(6,6,18,.12) 28%,rgba(6,6,18,.34) 52%,rgba(6,6,18,.42) 80%,rgba(6,6,18,.7)),var(--bgimg,none)}
 body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px)) rotate(var(--fr,0deg));z-index:auto}
 /* 가만히 있을 때: 몸 전체가 1~2px 천천히 오르내림(박자는 서로 다르게). 도트 그림은 늘이거나 기울이면 픽셀이 일그러지고 지글거리므로
    크기·회전은 쓰지 않고 위아래 이동만. 개별 속성(translate)으로 돌려서 동작(js/juice.js WAAPI transform)과 함께 돌아도 끊기지 않는다 */
 :where(.pm:not(.down), .foe:not(.gone)) > img{transform-origin:50% 100%;animation:jbob 2.8s ease-in-out infinite}
-:where(.pm:nth-of-type(2n)) > img{animation-delay:-1.3s;animation-duration:3.2s}
+:where(.pm:nth-of-type(3)) > img{animation-delay:-1.3s;animation-duration:3.2s}
+:where(.pm:nth-of-type(5)) > img{animation-delay:-.6s;animation-duration:2.5s}
 :where(.foe:not(.gone)) > img{animation-name:jbobF;animation-duration:2.2s}
 :where(.foe:nth-child(2n)) > img{animation-delay:-.9s}
 @keyframes jbob{0%,100%{translate:0 0}50%{translate:0 -1px}}
