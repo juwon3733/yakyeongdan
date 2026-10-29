@@ -4,6 +4,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import { join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { spriteBox } from './sprite-box.mjs';
 
 const ROOT = fileURLToPath(new URL('../assets/', import.meta.url));
 const DIRS = ['chars', 'sprites', 'fx', 'cards', 'cutins', 'cg', 'enemies', 'bg', 'title', 'summon', 'icons'];
@@ -21,6 +22,8 @@ if (process.argv.includes('--check')) {
   try { cur = await readFile(out, 'utf8'); } catch {}
   if (cur !== text) { console.error('assets/art.json이 실제 그림 파일과 다르다. node tools/art-index.mjs를 돌려 다시 만들 것.'); process.exit(1); }
   console.log(`art.json OK (그림 ${files.length}개)`);
+  // 그림 상자(assets/sprite_box.json, slice-sheets가 만든다)도 실제 그림과 맞는지 본다
+  if (!(await spriteBox(true))) process.exit(1);
 } else {
   await writeFile(out, text);
   console.log(`assets/art.json: 그림 ${files.length}개`);
