@@ -62,3 +62,86 @@
 @media (prefers-reduced-motion:reduce){
   #app[data-screen="reward"] .hand.big::before{animation:none}
 }
+
+/* ── 판 결과: 승리면 금빛 별가루, 패배면 살짝 잿빛 ── */
+.resultscr{position:relative;isolation:isolate;overflow:hidden}
+.resultscr > .mvp,.resultscr > .rinfo{position:relative;z-index:1}
+.resultscr.lost{filter:grayscale(.55) brightness(.92)}
+.resultscr.lost .mvp img.mvpart{filter:grayscale(.3) drop-shadow(2px 2px 0 rgba(0,0,0,.6))}
+
+/* 별가루: 점 무늬 타일을 아래로 천천히 흘린다 (계단식으로 끊어 도트 느낌) */
+.rdust{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background-image:
+    radial-gradient(circle at 12px 8px,#fff2c0 0 1px,transparent 1.5px),
+    radial-gradient(circle at 70px 30px,#f6dc84 0 1.5px,transparent 2px),
+    radial-gradient(circle at 104px 62px,#c9a040 0 1px,transparent 1.5px),
+    radial-gradient(circle at 38px 78px,#f6dc84 0 1px,transparent 1.5px),
+    radial-gradient(circle at 92px 4px,#fff 0 .8px,transparent 1.2px);
+  background-size:120px 96px;
+  -webkit-mask:linear-gradient(#000 0 55%,transparent 100%);mask:linear-gradient(#000 0 55%,transparent 100%);
+  animation:yk-dust 9s steps(48) infinite;opacity:.85}
+.rdust.far{background-size:84px 72px;background-position:30px 0;opacity:.45;animation-duration:14s;animation-name:yk-dust-far}
+@keyframes yk-dust{from{background-position:0 0}to{background-position:12px 96px}}
+@keyframes yk-dust-far{from{background-position:30px 0}to{background-position:22px 72px}}
+
+/* 제목: 승리는 크게 금색 띠 */
+.resultscr .rtitle{font-size:20px;margin:0}
+.resultscr.won .rtitle{align-self:flex-start;position:relative;padding:4px 26px 5px;font-size:26px;color:#2a1a08;letter-spacing:.08em;
+  background:linear-gradient(#f6dc84 0 45%,var(--gold) 45% 100%);border:2px solid #7a5418;
+  box-shadow:3px 3px 0 var(--shadow),inset 0 -2px 0 #b8892a,inset 0 2px 0 #fff2c0;text-shadow:1px 1px 0 #fff2c0;
+  clip-path:polygon(0 0,100% 0,calc(100% - 10px) 50%,100% 100%,0 100%,10px 50%);
+  animation:yk-title-in .35s steps(5) both}
+@keyframes yk-title-in{from{transform:scaleX(.2);opacity:0}to{transform:none;opacity:1}}
+
+/* 얻은 별 조각: 크게, 반짝이게 (숫자 세기는 juice.js countUp) */
+.resultscr .shards tr.sum td:last-child{font-size:12px;vertical-align:bottom}
+.resultscr .countup{display:inline-block;font-family:var(--f-disp);font-size:22px;line-height:1;color:#ffe08a;
+  text-shadow:1px 1px 0 #7a5418,2px 2px 0 var(--shadow);font-variant-numeric:tabular-nums;animation:yk-count-shine 1.6s steps(8) 1.2s infinite}
+@keyframes yk-count-shine{
+  0%,60%,100%{color:#ffe08a;transform:none}
+  70%{color:#fffbe6;transform:scale(1.12)}
+  80%{color:#fff2c0;transform:scale(1.04)}
+}
+
+/* MVP 칸: 은은한 빛 테두리 (흐린 그림자 대신 반투명 도트 테두리가 숨 쉰다) */
+.resultscr .mvp{box-shadow:3px 3px 0 var(--shadow),0 0 0 2px rgba(255,255,255,.08);animation:yk-mvp-glow 2.4s steps(6) infinite}
+@keyframes yk-mvp-glow{
+  0%,100%{box-shadow:3px 3px 0 var(--shadow),0 0 0 2px color-mix(in srgb,var(--c) 20%,transparent),0 0 0 4px color-mix(in srgb,var(--c) 8%,transparent)}
+  50%{box-shadow:3px 3px 0 var(--shadow),0 0 0 2px color-mix(in srgb,var(--c) 55%,transparent),0 0 0 4px color-mix(in srgb,var(--c) 25%,transparent)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .rdust,.resultscr.won .rtitle,.resultscr .countup,.resultscr .mvp{animation:none}
+}
+
+/* ── 갈무리 글꼴 맞춤: 글자 잘림·겹침 ── */
+
+/* 지도 칸(폭 108, map.js NW): 이름 12px · 시간은 둘째 줄 9px. 긴 보스 이름은 10px */
+.mapgrid .node{gap:3px;padding:1px 3px 1px 1px}
+.mapgrid .node .t{line-height:13px}
+.mapgrid .node .t.long{font-size:10px}
+.mapgrid .node .m{font-size:9px;line-height:11px;overflow:hidden;text-overflow:clip}
+#stage.bigtext .mapgrid .node .t{font-size:12px}
+#stage.bigtext .mapgrid .node .t.long{font-size:10px}
+#stage.bigtext .mapgrid .node .m{font-size:9px}
+
+/* 시간 연출(juice.js clockFx): 위 띠 바로 아래에 붙이고 「+10분」은 시계 오른쪽에 —
+   야시장 후쿠로 아이콘·이름, 지도 제목을 덮지 않게 */
+#fx .jclock{margin-top:-15px;width:26px;height:26px}
+#fx .jclock i{left:11px;top:3px;height:10px;transform-origin:1px 10px}
+#fx .jclock b{left:10px;top:11px}
+#fx .jclock span{left:32px;top:50%;transform:translateY(-50%)}
+
+/* 업적 띠: 오른쪽 아래에 한 장씩 (index.js가 차례로 띄움) */
+#achbox{top:auto;bottom:8px;right:8px}
+.achtoast{animation:achin .3s cubic-bezier(.25,.8,.35,1) both,achout .3s cubic-bezier(.25,.8,.35,1) 2.3s both}
+
+/* 파티 고르기 칸: 이름은 칸 폭 전체 한 줄, 그림 옆에 별 / 역할(낱말 단위로 두 줄까지) / 체력(꺾이지 않게), 패시브는 아래 칸 폭 전체로 */
+.partyscr .mate{grid-template-columns:30px minmax(0,1fr);grid-template-rows:auto auto auto 1fr auto;row-gap:2px;column-gap:4px;min-height:88px}
+.partyscr .mate .tx{display:contents}
+.partyscr .mate .nm{grid-row:1;grid-column:1 / -1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:12px;padding-right:10px}
+.partyscr .mate > img{grid-row:2 / span 3;grid-column:1}
+.partyscr .mate .stars{grid-row:2;grid-column:2;line-height:10px;white-space:nowrap}
+.partyscr .mate .rl{grid-row:3;grid-column:2;line-height:10px;word-break:keep-all;overflow-wrap:anywhere}
+.partyscr .mate .hp{grid-row:4;grid-column:2;font-size:9px;line-height:10px;white-space:nowrap;color:var(--ink)}
+.partyscr .mate .ps{grid-row:5;grid-column:1 / -1;line-height:11px;-webkit-line-clamp:2}

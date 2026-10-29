@@ -9,7 +9,7 @@ import { MOONS } from '../data/moons.js';
 import { sprite, moonImg } from './sprites.js';
 import { esc, cardHTML, face, hpBar, battleSrc } from './common.js';
 import { kwTip, kwOne } from '../data/keywords.js';
-import { foeArt, battleArt, spriteScale } from '../art.js';
+import { foeArt, battleArt } from '../art.js';
 import { AFFIX } from '../data/affixes.js';
 import { SET } from '../settings.js';
 import { burstProgHTML } from './burstprog.js';
@@ -132,7 +132,7 @@ export function combatView() {
     const swap = k < 2 ? `<button type="button" class="swap" data-swap="${fi - 1}" ${C.swaps >= swapLimit() ? 'disabled' : ''} title="자리 바꾸기 (바꾼 둘 방어 -${RULES.swapBlockCost})">⇄</button>` : '';
     return `<button type="button" class="pm ${M.down ? 'down' : ''} ${aims.has(p) ? 'aimed' : ''} ${lit.includes(p) ? 'lit' : ''} ${wantAlly && !M.down ? 'tg' : ''} ${C.last === p ? 'last' : ''}" style="--c:${c.col}" data-ally="${p}" ${wantAlly && !M.down ? '' : 'tabindex="-1"'}>
         <span class="row">${ROW_NAME[fi]}</span>${lit.includes(p) ? '<b class="litnm">불빛 +1</b>' : ''}
-        <img class="px" src="${battleSrc(p, M.down ? 'down' : 'idle')}" alt=""${battleArt(p) ? ` style="--sk:${spriteScale(p)}"` : ''}>
+        <img class="px" src="${battleSrc(p, M.down ? 'down' : 'idle')}" alt="">
         <span class="lab"><span class="nm">${c.name}</span>
         <span class="hpw">${blk ? `<b class="blk" title="방어">${blk}</b>` : ''}${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : `${M.hp}/${M.max}`}</span></span>
         <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span>${M.down ? '' : burstProgHTML(p)}</span></button>${swap}`;
@@ -173,7 +173,7 @@ export function combatView() {
       <div class="party">${party}</div>
       <div class="foes ${many ? 'many' : ''}">${foes}</div>
     </div>
-    <div class="log${!C.moonPick && !temperBar && !tip && !pendKeep && !relicFlag('hourglass') ? ' fade' : ''}" aria-live="polite">${C.moonPick ? `<span class="cmoonpick">월광 · 이번 전투의 달: ${Object.keys(MOONS).map(k => `<button type="button" class="mini ${G.moon === k ? 'on' : ''}" data-cmoon="${k}" title="${esc(MOONS[k].text)}"><img class="px" src="${moonImg(k)}" alt="">${MOONS[k].name}</button>`).join('')}</span>` : ''}${temperBar}${C.log.slice(-2).join(' · ') || ''}<span class="tip">${tip}</span>${pendKeep}${relicFlag('hourglass')
+    <div class="log" aria-live="polite">${C.moonPick ? `<span class="cmoonpick">월광 · 이번 전투의 달: ${Object.keys(MOONS).map(k => `<button type="button" class="mini ${G.moon === k ? 'on' : ''}" data-cmoon="${k}" title="${esc(MOONS[k].text)}"><img class="px" src="${moonImg(k)}" alt="">${MOONS[k].name}</button>`).join('')}</span>` : ''}${temperBar}<span class="logtx">${C.log.slice(-2).join(' · ') || ''}</span><span class="tip">${tip}</span>${pendKeep}${relicFlag('hourglass')
       ? `<button type="button" class="mini hg ${C.payEnergy ? 'on' : ''}" data-hg aria-pressed="${C.payEnergy}" title="깨진 모래시계: 시간 카드를 시간 대신 에너지 1로">시간 카드: ${C.payEnergy ? '에너지 1' : '시간'}</button>` : ''}</div>
     <div class="bottom">
       <span class="energy ${C.energy ? '' : 'empty'}" data-tip="에너지: 카드를 쓰는 데 든다. 턴마다 다시 찬다."><span class="orb"><i class="swirl"></i><b>${C.energy}</b><small>/${Math.max(RULES.energy, C.energy)}</small></span></span>

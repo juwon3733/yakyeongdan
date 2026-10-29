@@ -33,40 +33,57 @@ function sizeCanvas() {
   if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
 }
 // 화면 위치 → 판 안 논리 좌표
-function rel(el) {
+// 무대 좌표 상자. 전투 스프라이트(data-b가 붙은 그림)는 투명 여백을 뺀 몸 상자 — 숫자·이펙트·돌진이 허공이 아니라 몸에 붙게
+function rel(el, full) {
   const sr = stage.getBoundingClientRect(), k = sr.width / stage.offsetWidth || 1, r = el.getBoundingClientRect();
-  const x = (r.left - sr.left) / k, y = (r.top - sr.top) / k, w = r.width / k, h = r.height / k;
+  let x = (r.left - sr.left) / k, y = (r.top - sr.top) / k, w = r.width / k, h = r.height / k;
+  const b = !full && el.dataset?.b;
+  if (b) { const [bx, by, bw, bh] = b.split(' ').map(Number); x += w * bx; y += h * by; w *= bw; h *= bh; }
   return { x, y, w, h, cx: x + w / 2, cy: y + h / 2 };
 }
-// 그림 속 몸 자리: 전투 스프라이트는 칸 위쪽 절반이 비어 있어 그림 상자를 그대로 쓰면 숫자·불꽃·화살표가 머리 위 허공에 뜬다.
-// 그림마다 한 번 불투명 픽셀 테두리(비율)를 재 두고, 캐릭터·적 그림은 그 몸 상자를 기준으로 연출한다.
-const BODY = new Map();
-let bcv = null;
-function bodyFrac(img) {
-  const u = img.currentSrc || img.src;
-  if (BODY.has(u)) return BODY.get(u);
-  if (!img.complete || !img.naturalWidth) return null;
-  const w = img.naturalWidth, h = img.naturalHeight;
-  bcv ||= document.createElement('canvas');
-  bcv.width = w; bcv.height = h;
-  const c = bcv.getContext('2d', { willReadFrequently: true });
-  c.drawImage(img, 0, 0);
-  let d; try { d = c.getImageData(0, 0, w, h).data; } catch (_) { BODY.set(u, null); return null; }
-  let x0 = w, y0 = h, x1 = -1, y1 = -1;
-  for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) if (d[(y * w + x) * 4 + 3] >= 128) {
-    if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; y1 = y;
+// ---------- 몸 영역: 그림마다 불투명한 부분의 상자(0~1 비율)를 한 번 재 둔다 ----------
+// 동료는 몸 키를 모두 ALLY_H로 맞추고(시트마다 그려진 크기가 달라도 같은 키), 적은 지금 크기 그대로.
+// 그림 칸의 여백은 음수 여백으로 레이아웃에서 빼서, 자리(발 줄·가운데)는 몸 기준이 된다
+const BOX = new Map(), ALLY_H = 88;
+function bodyBox(src) {
+  if (!src || src.startsWith('data:')) return null;
+  const b = BOX.get(src); if (b) return b === 'wait' ? null : b;
+  BOX.set(src, 'wait');
+  const im = new Image();
+  im.onload = () => {
+    const W = 96, H = Math.max(1, Math.round(96 * im.naturalHeight / im.naturalWidth)), c = document.createElement('canvas');
+    c.width = W; c.height = H;
+    const g = c.getContext('2d', { willReadFrequently: true }); g.drawImage(im, 0, 0, W, H);
+    let d; try { d = g.getImageData(0, 0, W, H).data; } catch { BOX.delete(src); return; }
+    let x0 = W, y0 = H, x1 = -1, y1 = -1;
+    for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) if (d[(y * W + x) * 4 + 3] > 40) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+    BOX.set(src, x1 < 0 ? { x: 0, y: 0, w: 1, h: 1, ar: im.naturalWidth / im.naturalHeight } :
+      { x: x0 / W, y: y0 / H, w: (x1 - x0 + 1) / W, h: (y1 - y0 + 1) / H, ar: im.naturalWidth / im.naturalHeight });
+    fitSprites();
+  };
+  im.onerror = () => BOX.delete(src);
+  im.src = src;
+  return null;
+}
+function fitSprites() {
+  const A = app(); if (!A) return;
+  for (const img of A.querySelectorAll('.pm[data-ally] > img:not(.jxfade), .foe[data-fi] > img')) {
+    const id = img.parentElement.dataset.ally, key = id ? battleArt(id, 'idle') : img.getAttribute('src');
+    if (!key || img.dataset.bk === key) continue;
+    const b = bodyBox(key); if (!b) continue;
+    let iw, ih;
+    if (id) { ih = Math.round(ALLY_H / b.h); iw = Math.round(ih * b.ar); }
+    else {   // 적: css 칸 안에 들어가던(contain) 크기 그대로
+      img.style.cssText = ''; const cw = img.offsetWidth, ch = img.offsetHeight; if (!cw || !ch) continue;
+      const k = Math.min(cw, ch * b.ar); iw = Math.round(k); ih = Math.round(k / b.ar);
+    }
+    Object.assign(img.style, { width: `${iw}px`, height: `${ih}px`, objectFit: 'fill',
+      margin: `${-Math.round(ih * b.y)}px ${-Math.round(iw * (1 - b.x - b.w))}px ${-Math.round(ih * (1 - b.y - b.h))}px ${-Math.round(iw * b.x)}px` });
+    img.style.setProperty('--ft', `${Math.round((b.y + b.h) * 1000) / 10 - 1}%`);   // 발 높이(발밑 그림자·대상 빛)
+    img.dataset.b = `${b.x} ${b.y} ${b.w} ${b.h}`; img.dataset.bk = key;
   }
-  const b = x1 < 0 ? null : { x: x0 / w, y: y0 / h, w: (x1 + 1 - x0) / w, h: (y1 + 1 - y0) / h };
-  BODY.set(u, b);
-  return b;
 }
-function spot(el) {
-  const r = rel(el), b = el.tagName === 'IMG' && bodyFrac(el);
-  if (!b) return r;
-  const x = r.x + b.x * r.w, y = r.y + b.y * r.h, w = b.w * r.w, h = b.h * r.h;
-  return { x, y, w, h, cx: x + w / 2, cy: y + h / 2 };
-}
-const app =() => document.getElementById('app');
+const app = () => document.getElementById('app');
 // 지금 보이는 판(전투가 끝나 화면이 바뀌었으면 얼려 둔 전투 화면)
 let frozen = null;
 const root = () => frozen || app();
@@ -132,8 +149,10 @@ export function beforeRender() {
 export function afterRender(events = []) {
   ensure(); if (!layer) return;
   sizeCanvas();
+  fitSprites();
   setSky();
   fanHand();
+  gachaFx();
   const P = pre; pre = null;
   if (calmNow()) {   // 애니메이션 줄이기: 소리만
     for (const e of events) { soundOf(e); if (e.kind === 'phase') showPhase(e.name, e.text); if (e.kind === 'burst') showBurst(e.who, e.name); }
@@ -150,6 +169,7 @@ export function afterRender(events = []) {
       case 'combat':
         acc = 0; stopped = 0; at(t, () => setCounter(0, false));
         preloadPoses();
+        at(t, () => enterFx());
         if (e.boss) { at(t, () => { showBoss(e.boss, e.line, root()?.querySelector('.foe.boss > img')?.getAttribute('src') || ''); sfx('dawn', { vol: .6 }); }); at(t + 420, () => shake()); t += 1600; }
         break;
       case 'play': {
@@ -226,7 +246,7 @@ export function afterRender(events = []) {
 function dropFrozen(ms) {
   if (!frozen) return;
   const f = frozen;
-  at(ms, () => { if (frozen === f) frozen = null; f.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: 'steps(4)' }).onfinish = () => f.remove(); });
+  at(ms, () => { if (frozen === f) frozen = null; f.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => f.remove(); });
 }
 
 // ---------- 효과음 (애니메이션 줄이기: 바로) ----------
@@ -289,7 +309,7 @@ function flyCard(e, P, t0) {
   // 카드는 쓰는 동료 머리 위로 날아가 빛으로 흩어진다(그 동료가 기술을 펼친다) — 대상 쪽 연출은 동료 동작·이펙트가 맡는다
   const caster = e.actor ? allyEl(e.actor)?.querySelector(':scope > img') : null;
   const tgt = caster || (e.foe != null ? foeEl(e.foe) : root()?.querySelector('.field'));
-  const r = tgt ? spot(tgt) : null, to = r ? { cx: r.cx, cy: caster ? r.y + 6 : r.cy } : { cx: c.r.cx, cy: c.r.cy - 80 };
+  const r = tgt ? rel(tgt) : null, to = r ? { cx: r.cx, cy: caster ? r.y + 6 : r.cy } : { cx: c.r.cx, cy: c.r.cy - 80 };
   const dx = to.cx - c.r.cx, dy = to.cy - c.r.cy;
   ghost.animate([
     { transform: 'translate(0,0) scale(1) rotate(0)', opacity: 1, filter: 'none' },
@@ -305,55 +325,35 @@ function flyCard(e, P, t0) {
   });
 }
 // 동료 모션: 카드를 쓴 동료는 공격·스킬·방어, 맞은 동료는 피격. 전투 스프라이트(sprites/<id>_<frame>.png)가 있으면
-// 그 동작 칸으로 잠깐 바꿔 끼우고, 없으면 움직임만. 도트는 칸을 겹쳐 흐리게 바꾸면(교차 페이드) 두 그림이 녹아 섞여 보이므로 칸은 언제나 딱 바꾼다.
-// 가만히 있을 때 서기·숨쉬기 두 칸 번갈아는 두 칸이 같은 그림(조금만 다름)일 때만 — 따로 그려진 두 장이면 몸이 바뀌어 보여 서기 한 칸만 쓴다.
+// 그 동작 칸으로 잠깐 바꿔 끼우고, 없으면 움직임만. 칸은 섞지 않고 바로 바꾼다(도트가 흐물거리지 않게). 가만히 있을 때는 css 1px 위아래만.
 const busy = new WeakSet();
 const PRE = new Map();   // 미리 받은 그림(버려지지 않게 붙들어 둠)
-const keep = u => { if (!u || PRE.has(u)) return PRE.get(u); const im = new Image(); im.src = u; PRE.set(u, im); return im; };
 function preloadPoses() {
-  for (const id of S.G?.party || []) for (const k of FRAMES) { const im = keep(battleArt(id, k)); if (im) im.decode?.().then(() => bodyFrac(im)).catch(() => {}); }
+  for (const id of S.G?.party || []) { for (const k of FRAMES) { const u = battleArt(id, k); if (u) new Image().src = u; } bodyBox(battleArt(id, 'idle')); }
   // 이펙트 프레임도 미리 받아 둔다(재생 중에 그림을 바꿀 때 받다 끊기지 않게)
-  for (const n of [...(S.G?.party || []).flatMap(id => [`${id}_atk`, `${id}_skill`]), 'slash', 'explode', 'pierce', 'magic']) for (const u of fxFrames(n)) keep(u);
+  for (const n of [...(S.G?.party || []).flatMap(id => [`${id}_atk`, `${id}_skill`]), 'slash', 'explode', 'pierce', 'magic']) for (const u of fxFrames(n)) if (!PRE.has(u)) { const im = new Image(); im.src = u; PRE.set(u, im); }
 }
-function swapSrc(img, url) {
-  if (img.getAttribute('src') !== url) img.src = url;
+// 칸 바꾸기: 전 칸을 위에 잠깐 겹쳐 두고 흐리게 사라지게(교차 페이드). 동작 칸으로 들어갈 때는 바로(빠른 동작이 또렷하게), 돌아올 때·숨쉬기는 부드럽게
+function swapSrc(img, url, fade) {
+  const was = img.getAttribute('src');
+  if (was === url) return;
+  if (fade && img.parentElement && !calmNow()) {
+    const g = img.cloneNode(); g.className = 'px jxfade'; g.removeAttribute('alt');
+    // 레이아웃 좌표(offsetLeft/Top)로 놓아 부모의 transform(입체 배치)·크기 보정과 상관없이 같은 자리에
+    Object.assign(g.style, { left: `${img.offsetLeft}px`, top: `${img.offsetTop}px`, width: `${img.offsetWidth}px`, height: `${img.offsetHeight}px`, margin: '0' });
+    img.after(g);
+    g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: fade, easing: 'ease-out' }).onfinish = () => g.remove();
+  }
+  img.src = url;
 }
 function pose(id, kind, ms) {
   const img = allyEl(id)?.querySelector(':scope > img'), u = battleArt(id, kind);
   if (!img || !u) return false;
   const was = img.getAttribute('src');
-  swapSrc(img, u); busy.add(img);
-  setTimeout(() => { busy.delete(img); if (img.isConnected && img.getAttribute('src') === u) swapSrc(img, was); }, ms);
+  swapSrc(img, u, 0); busy.add(img);
+  setTimeout(() => { busy.delete(img); if (img.isConnected && img.getAttribute('src') === u) swapSrc(img, was, 0); }, ms);
   return true;
 }
-// 숨쉬기 칸이 서기 칸과 같은 그림인지: 불투명 픽셀 중 색·모양이 다른 칸이 15% 아래면 같은 그림으로 본다
-const SAME = new Map();
-function breathes(id) {
-  if (SAME.has(id)) return SAME.get(id);
-  const a = PRE.get(battleArt(id, 'idle')), b = PRE.get(battleArt(id, 'idle2'));
-  if (!a?.naturalWidth || !b?.naturalWidth || a.naturalWidth !== b.naturalWidth || a.naturalHeight !== b.naturalHeight) return false;
-  const w = a.naturalWidth, h = a.naturalHeight, c = document.createElement('canvas'); c.width = w; c.height = h;
-  const g2 = c.getContext('2d', { willReadFrequently: true });
-  let A, B; try { g2.drawImage(a, 0, 0); A = g2.getImageData(0, 0, w, h).data; g2.clearRect(0, 0, w, h); g2.drawImage(b, 0, 0); B = g2.getImageData(0, 0, w, h).data; } catch (_) { SAME.set(id, false); return false; }
-  let op = 0, df = 0;
-  for (let i = 0; i < A.length; i += 16) {
-    const p = A[i + 3] >= 128, q = B[i + 3] >= 128; if (!p && !q) continue;
-    op++; if (p !== q || Math.abs(A[i] - B[i]) + Math.abs(A[i + 1] - B[i + 1]) + Math.abs(A[i + 2] - B[i + 2]) > 60) df++;
-  }
-  const ok = op > 0 && df / op < .15;
-  SAME.set(id, ok);
-  return ok;
-}
-setInterval(() => {
-  if (calmNow() || !S.C) return;
-  for (const img of document.querySelectorAll('#app [data-ally]:not(.down) > img')) {
-    if (busy.has(img)) continue;
-    const id = img.closest('[data-ally]').dataset.ally, a = battleArt(id, 'idle'), b = battleArt(id, 'idle2');
-    if (!a || !b || !breathes(id)) continue;
-    const src = img.getAttribute('src');
-    if (src === a) swapSrc(img, b); else if (src === b) swapSrc(img, a);
-  }
-}, 700);
 // 승리: 살아 있는 동료가 승리 동작
 function winPose() {
   for (const id of S.G?.party || []) if (!S.G.members[id]?.down) pose(id, 'win', 1400);
@@ -378,7 +378,7 @@ function aimArrow(over) {
   if (!card || card.classList.contains('no')) return;
   const inst = C.hand.find(h => String(h.uid) === card.dataset.play); if (!inst) return;
   const d = cardData(inst.id), who = actorOf(d), from = who && allyEl(who)?.querySelector(':scope > img'); if (!from) return;
-  const col = colOf(who), a = spot(from), x0 = a.cx, y0 = a.y + a.h * .35;
+  const col = colOf(who), a = rel(from), x0 = a.cx, y0 = a.y + a.h * .35;
   const foes = [...A.querySelectorAll('.foe[data-foe]')], allies = [...A.querySelectorAll('.pm[data-ally]:not(.down)')];
   const want = d.target === 'ally' ? allies : d.target === 'foe' ? foes : d.target === 'all' ? foes : [];
   const hov = over?.closest?.(d.target === 'ally' ? '.pm[data-ally]' : '.foe[data-foe]');
@@ -386,7 +386,7 @@ function aimArrow(over) {
   if (hov && want.includes(hov)) tgts = [hov];
   else if (d.target === 'all') tgts = foes;
   else if (want.length === 1) tgts = want;
-  if (tgts.length) for (const t of tgts) { t.classList.add('jaimed'); const r = spot(t.querySelector(':scope > img') || t); arrow(x0, y0, r.cx, r.y + r.h * .45, col); }
+  if (tgts.length) for (const t of tgts) { t.classList.add('jaimed'); const r = rel(t.querySelector(':scope > img') || t); arrow(x0, y0, r.cx, r.y + r.h * .45, col); }
   else if (want.length && card.classList.contains('sel') && pt) arrow(x0, y0, pt.x, pt.y, col);
   else if (!want.length) { from.closest('[data-ally]')?.classList.add('jaimed'); selfRing(a, col); }
 }
@@ -432,7 +432,7 @@ function actFx(e, special = false) {
     const img = allyEl(id)?.querySelector(':scope > img'); if (!img) continue;
     const m = e.ch === 'duo' ? (e.atk ? 'finisher' : 'cast') : motionOf(d, id);
     const [cls, ms, p] = MOTION[m];
-    const col = colOf(id), r = spot(img);
+    const col = colOf(id), r = rel(img);
     if ((m === 'slash' || m === 'sweep' || m === 'finisher') && !calmNow()) {
       // 근접: 적 앞까지 돌진 → 베고 → 돌아옴, 잔상
       const dur = dash(id, img, e, m, n * 70);
@@ -477,33 +477,33 @@ const isSpecial = e => !calmNow() && (e.ch === 'duo' || cardData(e.id)?.rarity =
 const moving = new Set();
 function dash(id, img, e, m, delay = 0) {
   const tgt = e.foe != null ? foeEl(e.foe)?.querySelector(':scope > img') : root()?.querySelector('.foes');
-  const a = spot(img), b = tgt ? spot(tgt) : { x: a.x + 160, cx: a.cx + 160 };
-  // 몸 앞쪽(오른 끝)이 적 몸 앞쪽에 조금 파고드는 데까지 — 겹쳐 지나가지 않게
-  const dx = Math.round(Math.max(20, (tgt ? b.x : b.cx) + 6 - (a.x + a.w)));
-  const dur = m === 'finisher' ? 820 : m === 'sweep' ? 700 : 600, up = m === 'finisher' ? -24 : 0;
+  const a = rel(img), b = tgt ? rel(tgt) : { x: a.x + 160, cx: a.cx + 160 };
+  const dx = Math.round(Math.max(20, tgt ? b.x - (a.x + a.w) + 10 : b.cx - a.cx));   // 상대 몸 바로 앞에서 멈춤(조금만 겹침)
+  const dur = m === 'finisher' ? 820 : m === 'sweep' ? 700 : 600, up = m === 'finisher' ? -26 : 0;
   const host = img.closest('[data-ally]'); if (host) host.style.zIndex = 5;
-  // 도트는 늘이거나 기울이지 않고 이동만: 뒤로 반 발 → 튀어 나감 → 맞히고 버팀 → 뒤로 뛰어 돌아와 착지
+  // 예비(뒤로 웅크림) → 튀어 나감(몸이 앞으로 늘어남) → 도착하며 꾹 눌림 → 베고 버팀 → 뒤로 뛰어 돌아와 착지·출렁
   const an = img.animate([
     { offset: 0, transform: 'none', easing: 'cubic-bezier(.5,0,.75,.4)' },
-    { offset: .12, transform: 'translate(-8px,0)', easing: 'cubic-bezier(.2,.9,.3,1)' },
-    { offset: .26, transform: `translate(${dx}px,${up}px)`, easing: 'cubic-bezier(.2,.9,.3,1)' },
-    { offset: .34, transform: `translate(${dx + 4}px,0)`, easing: 'ease-out' },
+    { offset: .12, transform: `translate(-9px,${m === 'finisher' ? 4 : 2}px)`, easing: 'cubic-bezier(.2,.9,.3,1)' },
+    { offset: .26, transform: `translate(${dx}px,${up / 3}px)`, easing: 'cubic-bezier(.2,.9,.3,1)' },
+    { offset: .34, transform: `translate(${dx + 4}px,1px)`, easing: 'ease-out' },
     { offset: .6, transform: `translate(${dx + 6}px,0)`, easing: 'cubic-bezier(.4,0,.6,1)' },
     { offset: .8, transform: `translate(${Math.round(dx * .25)}px,-10px)`, easing: 'cubic-bezier(.5,0,.75,.4)' },
-    { offset: .9, transform: 'translate(0,1px)', easing: 'ease-out' },
+    { offset: .88, transform: 'translate(0,2px)', easing: 'ease-out' },
+    { offset: .95, transform: 'translate(0,-1px)', easing: 'ease-out' },
     { offset: 1, transform: 'none' },
   ], { duration: dur, delay });
   moving.add(an);
   an.onfinish = an.oncancel = () => { moving.delete(an); if (host) host.style.zIndex = ''; };
-  // 잔상: 출발~도착 사이에 3장
-  for (let k = 1; k <= 3; k++) at(delay + dur * (.1 + k * .05), () => afterimage(img, colOf(id)));
+  // 잔상: 출발~도착 사이에 1장
+  at(delay + dur * .2, () => afterimage(img, colOf(id)));
   return dur + delay;
 }
-// 적 돌진: 노린 동료 앞까지 왼쪽으로 갔다가 돌아온다. 첫 피격(≈150ms 뒤)에 도착, 잔상. 동료 몸 위로 겹쳐 들어가지 않게 몸 앞에서 멈춘다
+// 적 돌진: 노린 동료 앞까지 왼쪽으로 갔다가 돌아온다. 첫 피격(≈150ms 뒤)에 도착, 잔상
 function foeDash(img, id) {
   const tgt = id ? allyEl(id)?.querySelector(':scope > img') || allyEl(id) : null;
-  const a = spot(img), b = tgt ? spot(tgt) : { x: a.x - 160, w: 0 };
-  const dx = Math.round(Math.min(-20, b.x + b.w - 8 - a.x));
+  const a = rel(img), b = tgt ? rel(tgt) : { x: a.x - 160, w: 0 };
+  const dx = Math.round(Math.min(-20, b.x + b.w - 10 - a.x));   // 노린 동료 바로 앞에서 멈춤
   const dur = 560, host = img.closest('[data-fi],[data-jfi]');
   if (host) host.style.zIndex = 5;
   const an = img.animate([
@@ -511,17 +511,17 @@ function foeDash(img, id) {
     { transform: 'translate(8px,0)', offset: .1 },
     { transform: `translate(${Math.round(dx * .6)}px,0)`, offset: .2 },
     { transform: `translate(${dx}px,0)`, offset: .27 },
-    { transform: `translate(${dx - 4}px,0)`, offset: .6 },
+    { transform: `translate(${dx - 6}px,0)`, offset: .6 },
     { transform: `translate(${Math.round(dx * .3)}px,-6px)`, offset: .85 },
     { transform: 'none' },
   ], { duration: dur, easing: 'cubic-bezier(.3,.7,.3,1)' });
   moving.add(an);
   an.onfinish = an.oncancel = () => { moving.delete(an); if (host) host.style.zIndex = ''; };
-  for (let k = 1; k <= 3; k++) at(dur * (.1 + k * .05), () => afterimage(img, '#ff6a7a'));
+  at(dur * .18, () => afterimage(img, '#ff6a7a'));
 }
 function afterimage(img, col) {
   if (!img.isConnected) return;
-  const r = rel(img), g2 = document.createElement('img');
+  const r = rel(img, true), g2 = document.createElement('img');
   g2.src = img.currentSrc || img.src; g2.className = 'px jafter';
   Object.assign(g2.style, { left: `${r.x}px`, top: `${r.y}px`, width: `${r.w}px`, height: `${r.h}px`, '--c': col });
   layer.insertBefore(g2, cv);
@@ -614,7 +614,7 @@ function discardHand(P, keep, t0) {
     ghost.animate([
       { transform: 'none', opacity: 1 },
       { transform: `translate(${pr.cx - c.r.cx}px,${pr.cy - c.r.cy}px) scale(.25) rotate(${30 + d * 8}deg)`, opacity: 0 },
-    ], { duration: 240, delay: t0 + d * 40, easing: 'steps(6)', fill: 'backwards' }).onfinish = () => ghost.remove();
+    ], { duration: 240, delay: t0 + d * 40, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' }).onfinish = () => ghost.remove();
   }
 }
 // 연계 칸이 찰 때 톡 튀어 오른다
@@ -633,11 +633,11 @@ function tweenBars(P, barT) {
     const w1 = parseFloat(bar.style.width) || 0;
     if (Math.abs(w1 - w0) < .5) continue;
     const d = barT.get(k) ?? 0;
-    bar.animate([{ width: `${w0}%` }, { width: `${w1}%` }], { duration: 260, delay: d, easing: 'steps(5)', fill: 'backwards' });
+    bar.animate([{ width: `${w0}%` }, { width: `${w1}%` }], { duration: 260, delay: d, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' });
     if (w1 < w0) {
       const lag = document.createElement('b'); lag.className = 'lag'; lag.style.width = `${w0}%`;
       host.insertBefore(lag, bar);
-      lag.animate([{ width: `${w0}%` }, { width: `${w0}%`, offset: .5 }, { width: `${w1}%` }], { duration: 700, delay: d, easing: 'steps(8)', fill: 'forwards' }).onfinish = () => lag.remove();
+      lag.animate([{ width: `${w0}%` }, { width: `${w0}%`, offset: .5 }, { width: `${w1}%` }], { duration: 700, delay: d, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'forwards' }).onfinish = () => lag.remove();
     }
   }
 }
@@ -662,13 +662,13 @@ function hitFoe(e, P) {
   }
   const el = foeEl(e.i) || null;
   const r = el ? rel(el) : P?.foes.get(e.i)?.r; if (!r) return;
-  const img = el?.querySelector(':scope > img'), ir = img ? spot(img) : r;
+  const img = el?.querySelector(':scope > img'), ir = img ? rel(img) : r;
   const x = ir.cx, y = ir.cy, col = colOf(e.actor), st = styleOf(e);
   if (S.C?.all?.[e.i]?.thorns && e.dmg && e.actor) {
     at(60, () => sfx('thorns', { vol: .7 }));
     // 가시: 적에게서 친 동료 쪽으로 가시가 튄다
     const a = allyEl(e.actor);
-    if (a) { const ar = spot(a.querySelector(':scope > img') || a); for (let k = 0; k < 5; k++) add({ k: 'line', x0: x, y0: y + rnd(-8, 8), x1: ar.cx + rnd(-6, 6), y1: ar.cy + rnd(-6, 6), col: '#c0d0ff', speed: 9, life: 9, s: 1 }); }
+    if (a) { const ar = rel(a.querySelector(':scope > img') || a); for (let k = 0; k < 5; k++) add({ k: 'line', x0: x, y0: y + rnd(-8, 8), x1: ar.cx + rnd(-6, 6), y1: ar.cy + rnd(-6, 6), col: '#c0d0ff', speed: 9, life: 9, s: 1 }); }
     ring(x, y, '#c0d0ff', 10, 24, 8);
   }
   // 그림 이펙트: 그 동료 시그니처 공격 이펙트 → 없으면 공용(베기·폭발·찌르기·마법). 코드 입자는 그 위에 계속 얹는다
@@ -676,17 +676,17 @@ function hitFoe(e, P) {
   const own = e.actor && fxFrames(`${e.actor}_atk`).length;
   playFx(own ? `${e.actor}_atk` : FX_OF[st] || 'explode', x, y, big ? 96 : 72, 55, false, own ? '' : tintTo(col));
   if (st === 'slash') slashFx(x, y, col);
-  else if (st === 'boom') { const from = e.actor && allyEl(e.actor)?.querySelector(':scope > img'); if (from) tracer(spot(from).cx, spot(from).y + spot(from).h * .4, x, y, '#ffd890'); boomFx(x, y); }
-  else if (st === 'star') { const from = allyEl('sion')?.querySelector(':scope > img'); if (from) starTrail(spot(from).cx, spot(from).y + 6, x, y, col); sparks(x, y, '#fff6c8', 10, 1.6); }
+  else if (st === 'boom') { const from = e.actor && allyEl(e.actor); if (from) tracer(rel(from).cx, rel(from).y + 20, x, y, '#ffd890'); boomFx(x, y); }
+  else if (st === 'star') { const from = allyEl('sion'); if (from) starTrail(rel(from).cx, rel(from).y + 14, x, y, col); sparks(x, y, '#fff6c8', 10, 1.6); }
   else if (st === 'mist') { mistFx(x, y); sparks(x, y, '#c8ffb0', 6, 1.2); }
   else if (st === 'pierce') { tracer(x - 40, y - 50, x + 6, y + 6, '#f0f4ff'); sparks(x, y, '#ffffff', 10, 2); }
   else if (st === 'magic') { ring(x, y, col, 4, 24, 12); sparks(x, y, col, 12, 1.8); }
   else impactFx(x, y, col);
   if (e.blocked) shieldBreak(x, y - 6, e.dmg === 0);
   if (el) pulse(el.querySelector(':scope > img') || el, SET.shake ? 'jhitF' : 'jflash', 380);
-  if (e.dmg > 0) num(x, ir.y + 6, String(e.dmg), e.crit ? 'crit' : '', e.dmg);
-  else if (e.blocked) num(x, ir.y + 6, '막음', 'blk', 8);
-  if (e.bleed) at(110, () => num(x + 14, ir.y + 16, String(e.bleed), 'bleed', e.bleed));
+  if (e.dmg > 0) num(x, ir.y + ir.h * .25, String(e.dmg), e.crit ? 'crit' : '', e.dmg);
+  else if (e.blocked) num(x, ir.y + ir.h * .25, '막음', 'blk', 8);
+  if (e.bleed) at(110, () => num(x + 14, ir.y + ir.h * .25 + 10, String(e.bleed), 'bleed', e.bleed));
   sfx(e.dmg ? atkSound(e) : 'block');
   // 맞는 적의 재질 소리(js/data/enemies.js hitSound)를 공격음 위에 살짝 겹친다
   const hs = e.dmg && HIT_SFX[FOE[S.C?.all?.[e.i]?.key]?.hitSound];
@@ -696,48 +696,98 @@ function killFoe(e, P) {
   const c = P?.foes.get(e.i); if (!c) return;
   const ghost = cloneAt(c, 'jdie');
   ghost.firstElementChild.classList.remove('tg');
+  const last = !S.C || S.C.all.every(f => f.dead);
+  // 흰 번쩍 → 뒤로 튕겨 휘청 → 몸이 도트 조각으로 부서져 흩어짐. 마지막 적은 느리게(슬로 모션)
+  const dur = last ? 1100 : 700;
   ghost.animate([
-    { filter: 'brightness(1)', transform: 'none', opacity: 1 },
-    { filter: 'brightness(4)', transform: 'translateX(4px)', opacity: 1, offset: .15 },
-    { filter: 'brightness(2.5) grayscale(1)', transform: 'translateY(4px) scaleY(.9)', opacity: .8, offset: .5 },
-    { filter: 'brightness(1) grayscale(1)', transform: 'translateY(14px) scaleY(.2)', opacity: 0 },
-  ], { duration: 640, easing: 'cubic-bezier(.3,.6,.4,1)' }).onfinish = () => ghost.remove();
-  const img = ghost.querySelector('.foe > img'), r = img ? spot(img) : c.r;
-  for (let k = 0; k < 26; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: rnd(r.y, r.y + r.h), vx: rnd(-.6, .6), vy: rnd(-1.6, -.2), g: .05, life: rnd(18, 34), col: k % 3 ? '#ece8f6' : '#8a86b8', s: 1 });
-  ring(r.cx, r.cy, '#ffffff', 6, 40, 14);
+    { offset: 0, filter: 'brightness(5)', transform: 'none', opacity: 1 },
+    { offset: .12, filter: 'brightness(3)', transform: 'translate(8px,-3px)', opacity: 1 },
+    { offset: .32, filter: 'brightness(1.6)', transform: 'translate(10px,0)', opacity: 1 },
+    { offset: .55, filter: 'brightness(2.5) gray', transform: 'translate(10px,2px)', opacity: .6 },
+    { offset: 1, filter: 'brightness(3) gray', transform: 'translate(12px,4px)', opacity: 0 },
+  ], { duration: dur, easing: 'cubic-bezier(.3,.6,.4,1)' }).onfinish = () => ghost.remove();
+  const img = ghost.querySelector('.foe > img'), r = img ? rel(img) : c.r;
+  at(dur * .35, () => shatter(img, r, last ? 120 : 70));
+  ring(r.cx, r.cy, '#ffffff', 6, 44, 14);
   sfx('foe_down');
   if (e.boss) shake();
+  if (last && !calmNow()) { dim(dur + 200); slowmo(dur); }
+}
+// 그림에서 색을 뽑아 그 자리에서 도트 조각으로 흩어지게
+function shatter(img, r, n) {
+  let px = null;
+  try {
+    if (img?.complete && img.naturalWidth) {
+      const k = document.createElement('canvas'), w = 48, h = Math.round(48 * img.naturalHeight / img.naturalWidth);
+      k.width = w; k.height = h; const g2 = k.getContext('2d'); g2.drawImage(img, 0, 0, w, h);
+      const d = g2.getImageData(0, 0, w, h).data; px = [];
+      for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { const i = (y * w + x) * 4; if (d[i + 3] > 128) px.push([x / w, y / h, `rgb(${d[i]},${d[i + 1]},${d[i + 2]})`]); }
+    }
+  } catch (_) { px = null; }
+  for (let k = 0; k < n; k++) {
+    const p = px?.length ? px[(Math.random() * px.length) | 0] : [Math.random(), Math.random(), k % 3 ? '#ece8f6' : '#8a86b8'];
+    const x = r.x + p[0] * r.w, y = r.y + p[1] * r.h, a = Math.atan2(y - r.cy, x - r.cx);
+    add({ k: 'dot', x, y, vx: Math.cos(a) * rnd(.4, 1.8) + .6, vy: Math.sin(a) * rnd(.4, 1.6) - rnd(.6, 1.6), g: .06, life: rnd(20, 40), col: p[2], s: k % 5 ? 1 : 2 });
+  }
+}
+// 마지막 일격: 잠깐 모든 연출을 느리게
+function slowmo(ms) {
+  const anims = layer.getAnimations({ subtree: true }).concat(root()?.getAnimations?.({ subtree: true }) || []);
+  for (const a of anims) { try { a.playbackRate = .35; } catch (_) {} }
+  setTimeout(() => { for (const a of anims) { try { a.playbackRate = 1; } catch (_) {} } }, ms * .6);
 }
 function hurtFx(e) {
   const el = allyEl(e.id); if (!el) return;
-  const img = el.querySelector(':scope > img'), r = img ? spot(img) : rel(el), x = r.cx, y = r.cy;
+  const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el), x = r.cx, y = r.cy;
   if (e.blocked) shieldBreak(x, y - 4, e.dmg === 0);
   if (e.dmg > 0) {
     impactFx(x, y, '#ff6a7a');
     pulse(el.querySelector(':scope > img') || el, SET.shake ? 'jhitA' : 'jflash', 380);
     if (!e.down) pose(e.id, 'hurt', 380);
-    num(x, r.y + 4, String(e.dmg), 'hurt', e.dmg);
+    num(x, r.y + r.h * .25, String(e.dmg), 'hurt', e.dmg);
     if (e.dmg >= 10) { shake(); redEdge(); }
-  } else num(x, r.y + 4, '막음', 'blk', 8);
+  } else num(x, r.y + r.h * .25, '막음', 'blk', 8);
   if (e.down) {
     at(160, () => { pulse(el.querySelector(':scope > img') || el, 'jdown', 820); num(x, r.y + 18, '쓰러짐', 'down', 12); for (let k = 0; k < 14; k++) add({ k: 'dot', x: rnd(r.x, r.x + r.w), y: r.y + r.h, vx: rnd(-1, 1), vy: rnd(-1, -.2), g: .06, life: 22, col: '#6a6688', s: 1 }); });
     sfx('down');
   } else sfx(e.dmg ? 'hurt' : 'block');
+}
+// 전투 시작: 동료는 왼쪽에서 뛰어 들어와 착지, 적은 안개 속에서 흐릿하게 떠올라 또렷해진다
+function enterFx() {
+  if (calmNow()) return;
+  const A = app(); if (!A) return;
+  [...A.querySelectorAll('.pm[data-ally] > img')].reverse().forEach((img, k) => {
+    img.animate([
+      { offset: 0, transform: 'translate(-140px,0)', opacity: 0, easing: 'cubic-bezier(.2,.7,.3,1)' },
+      { offset: .55, transform: 'translate(6px,-6px)', opacity: 1, easing: 'ease-out' },
+      { offset: .72, transform: 'translate(0,1px)', easing: 'ease-out' },
+      { offset: .86, transform: 'none' }, { offset: 1, transform: 'none' },
+    ], { duration: 620, delay: k * 90, fill: 'backwards' });
+  });
+  A.querySelectorAll('.foe[data-fi] > img').forEach((img, k) => {
+    img.animate([
+      { transform: 'translateY(8px)', opacity: 0, filter: 'blur(3px) brightness(.4)' },
+      { transform: 'translateY(-2px)', opacity: .9, filter: 'blur(1px) brightness(.8)', offset: .6 },
+      { transform: 'none', opacity: 1, filter: 'none' },
+    ], { duration: 700, delay: 150 + k * 110, easing: 'ease-out', fill: 'backwards' });
+    const r = rel(img);
+    at(150 + k * 110, () => { for (let j = 0; j < 3; j++) add({ k: 'blob', x: r.cx + rnd(-14, 14), y: r.y + r.h - rnd(4, 18), vx: rnd(-.4, .4), vy: rnd(-.3, -.1), r: rnd(8, 12), col: '#8a86b8', life: 30 }); });
+  });
 }
 // 적 공격 예고: 의도 글자가 커지며 불타고, 몸을 뒤로 웅크린다. 노린 동료 발밑에 붉은 표시
 function foeWindup(e) {
   const el = foeEl(e.i); if (!el) return;
   const img = el.querySelector(':scope > img');
   pulse(el.querySelector('.intent'), 'jfire', 300);
-  if (img) img.animate([{ transform: 'none', filter: 'none' }, { transform: 'translate(6px,0)', filter: 'brightness(1.5) drop-shadow(0 0 4px #ff4a6a)' }],
+  if (img) img.animate([{ transform: 'none', filter: 'none' }, { transform: 'translate(6px,2px)', filter: 'brightness(1.5)' }],
     { duration: 240, easing: 'ease-in', fill: 'none' });
   const id = e.target ?? e.aim, a = id && allyEl(id)?.querySelector(':scope > img');
-  if (a) { const r = spot(a); add({ k: 'oval', x: r.cx, y: r.y + r.h - 3, r0: r.w * .5, r1: r.w * .3, col: '#ff4a6a', life: 14 }); }
+  if (a) { const r = rel(a); add({ k: 'oval', x: r.cx, y: r.y + r.h - 3, r0: r.w * .5, r1: r.w * .3, col: '#ff4a6a', life: 14 }); }
   sfx('turn', { vol: .3, rate: .7 });
 }
 function foeActFx(e) {
   const el = foeEl(e.i); if (!el) return;
-  const img = el.querySelector(':scope > img'), r = img ? spot(img) : rel(el);
+  const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   if (e.t === 'atk' || e.t === 'mix') {
     if (img && SET.shake && !calmNow()) { foeDash(img, e.target ?? e.aim); foeCamera(el, e.target ?? e.aim); }
     else pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 400);
@@ -756,21 +806,21 @@ function foeActFx(e) {
 }
 function tickFx(e) {
   const el = foeEl(e.i); if (!el) return;
-  const img = el.querySelector(':scope > img'), r = img ? spot(img) : rel(el);
+  const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   if (e.what === 'poison') { mistFx(r.cx, r.cy); num(r.cx, r.y + 8, String(e.dmg), 'poison', e.dmg); sfx('poison', { vol: .6 }); }
   else { flames(r.cx, r.cy + 10); num(r.cx, r.y + 8, String(e.dmg), 'burn', e.dmg); sfx('hit', { vol: .5, rate: 1.3 }); }
   pulse(el, 'jflash', 200);
 }
 function blockGain(e) {
   const el = allyEl(e.id); if (!el) return;
-  const img = el.querySelector(':scope > img'), r = img ? spot(img) : rel(el);
+  const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   shieldIcon(r.cx, r.cy, '#c9d2f0');
   num(r.cx + 12, r.y + 10, `+${e.n}`, 'blkup', 9);
   sfx('block', { vol: .6 });
 }
 function healFx(e) {
   const el = allyEl(e.id); if (!el) return;
-  const img = el.querySelector(':scope > img'), r = img ? spot(img) : rel(el);
+  const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   for (let k = 0; k < 10; k++) add({ k: 'dot', x: rnd(r.x + 4, r.x + r.w - 4), y: rnd(r.cy, r.y + r.h), vx: 0, vy: rnd(-1.2, -.5), g: 0, life: 26, col: k % 2 ? '#9af0a0' : '#e8ffe8', s: 1 });
   num(r.cx, r.y + 8, `+${e.n}`, 'heal', 10);
   sfx('heal', { vol: .7 });
@@ -784,11 +834,11 @@ function clockFx(e, back) {
   d.style.left = `${r.cx}px`; d.style.top = `${r.cy + 36}px`;
   d.innerHTML = '<i></i><b></b><span>' + (back ? `−${e.m}분` : `+${e.m}분`) + '</span>';
   layer.append(d);
-  d.querySelector('i').animate([{ transform: 'rotate(0)' }, { transform: `rotate(${back ? -360 : 360}deg)` }], { duration: 520, easing: 'steps(12)' });
+  d.querySelector('i').animate([{ transform: 'rotate(0)' }, { transform: `rotate(${back ? -360 : 360}deg)` }], { duration: 520, easing: 'cubic-bezier(.25,.8,.35,1)' });
   d.animate([{ opacity: 0, transform: 'translate(-50%,-50%) scale(.6)' }, { opacity: 1, transform: 'translate(-50%,-50%) scale(1)', offset: .15 }, { opacity: 1, transform: 'translate(-50%,-50%) scale(1)', offset: .8 }, { opacity: 0, transform: 'translate(-50%,-60%) scale(1)' }],
-    { duration: 760, easing: 'steps(10)' }).onfinish = () => d.remove();
+    { duration: 760, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => d.remove();
   const w = document.createElement('div'); w.className = `jwarm ${back ? 'back' : ''}`; layer.append(w);
-  w.animate([{ opacity: 0 }, { opacity: 1, offset: .3 }, { opacity: 0 }], { duration: 600, easing: 'steps(6)' }).onfinish = () => w.remove();
+  w.animate([{ opacity: 0 }, { opacity: 1, offset: .3 }, { opacity: 0 }], { duration: 600, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => w.remove();
   if (ck) pulse(ck, 'jtick', 500);
   sfx('clock', { rate: back ? .8 : 1 });
   if (e.dawn) at(300, () => banner('해가 뜬다', 'dawn'));
@@ -804,24 +854,24 @@ function banner(text, cls) {
     { transform: 'translate(-50%,-50%) scaleY(1)', opacity: 1, offset: .15 },
     { transform: 'translate(-50%,-50%) scaleY(1)', opacity: 1, offset: .75 },
     { transform: 'translate(-50%,-50%) scaleY(0)', opacity: 0 },
-  ], { duration: cls === 'win' ? 900 : 640, easing: 'steps(10)' }).onfinish = () => b.remove();
-  b.querySelector('span').animate([{ transform: 'translateX(-30px)' }, { transform: 'translateX(0)', offset: .2 }, { transform: 'translateX(8px)' }], { duration: cls === 'win' ? 900 : 640, easing: 'steps(10)' });
+  ], { duration: cls === 'win' ? 900 : 640, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => b.remove();
+  b.querySelector('span').animate([{ transform: 'translateX(-30px)' }, { transform: 'translateX(0)', offset: .2 }, { transform: 'translateX(8px)' }], { duration: cls === 'win' ? 900 : 640, easing: 'cubic-bezier(.25,.8,.35,1)' });
 }
 // 보상 카드가 한 장씩 내려앉는다
 function dealReward(t0) {
   const cards = app()?.querySelectorAll('[data-screen="reward"] .hand.big .card') || [];
   cards.forEach((el, k) => {
     track(el.animate([{ transform: 'translateY(-40px) rotate(-8deg) scale(.6)', opacity: 0 }, { transform: 'translateY(4px) rotate(1deg) scale(1.03)', opacity: 1, offset: .7 }, { transform: 'none', opacity: 1 }],
-      { duration: 320, delay: t0 + k * 110, easing: 'steps(8)', fill: 'backwards' }));
+      { duration: 320, delay: t0 + k * 110, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' }));
     at(t0 + k * 110, () => sfx('card', { vol: .5, rate: .9 + k * .1 }));
-    // 뒷면으로 내려앉았다가 한 장씩 뒤집힌다 (docs/11 #3)
+    // 뒷면으로 내려앉자마자 한 장씩 뒤집힌다 (docs/11 #3). 「승리」 띠는 위쪽(css .jbanner.win)이라 카드를 안 가린다
     el.classList.add('cardback');
-    const tf = t0 + cards.length * 110 + 220 + k * 140;
-    at(tf, () => { if (!hush) el.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 90, easing: 'steps(3)' }); });
-    at(tf + 90, () => { el.classList.remove('cardback'); if (!hush) el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 110, easing: 'steps(3)' }); sfx('flip', { vol: .7, rate: 1 + k * .08 }); });
+    const tf = t0 + k * 110 + 300;   // 내려앉자마자 뒤집힘(빈 뒷면이 오래 보이지 않게)
+    at(tf, () => { if (!hush) el.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 90, easing: 'cubic-bezier(.25,.8,.35,1)' }); });
+    at(tf + 90, () => { el.classList.remove('cardback'); if (!hush) el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 110, easing: 'cubic-bezier(.25,.8,.35,1)' }); sfx('flip', { vol: .7, rate: 1 + k * .08 }); });
   });
   const gold = app()?.querySelector('[data-screen="reward"] .center > .note');
-  if (gold) track(gold.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: t0, easing: 'steps(4)', fill: 'backwards' }));
+  if (gold) track(gold.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: t0, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' }));
 }
 // 결과 화면: 얻은 별 조각이 0부터 올라간다 (별 조각 줄이 하나씩 나온 뒤)
 function countUp(t0) {
@@ -837,10 +887,10 @@ function climb(act) {
   d.className = `jclimb a${act}`;
   d.innerHTML = `<i class="tw"></i><i class="st"></i><b>${ACT_NAME[act] || ''}</b>`;
   layer.append(d);
-  d.querySelector('.tw').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(160px)' }], { duration: 1400, easing: 'steps(20)' });
-  d.querySelector('.st').animate([{ backgroundPositionY: '0px' }, { backgroundPositionY: '90px' }], { duration: 1400, easing: 'steps(20)' });
-  d.querySelector('b').animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none', offset: .3 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400, easing: 'steps(12)' });
-  d.animate([{ opacity: 1 }, { opacity: 1, offset: .82 }, { opacity: 0 }], { duration: 1500, easing: 'steps(6)' }).onfinish = () => d.remove();
+  d.querySelector('.tw').animate([{ transform: 'translateY(0)' }, { transform: 'translateY(160px)' }], { duration: 1400, easing: 'cubic-bezier(.25,.8,.35,1)' });
+  d.querySelector('.st').animate([{ backgroundPositionY: '0px' }, { backgroundPositionY: '90px' }], { duration: 1400, easing: 'cubic-bezier(.25,.8,.35,1)' });
+  d.querySelector('b').animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none', offset: .3 }, { opacity: 1, offset: .8 }, { opacity: 0 }], { duration: 1400, easing: 'cubic-bezier(.25,.8,.35,1)' });
+  d.animate([{ opacity: 1 }, { opacity: 1, offset: .82 }, { opacity: 0 }], { duration: 1500, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => d.remove();
   sfx('move');
 }
 
@@ -872,7 +922,7 @@ function hitStop(lv, v) {
   for (const a of anims) a.pause();
   freeze = performance.now() + (lv >= 200 ? 260 : 190);
   const w = document.createElement('div'); w.className = 'jstop'; layer.append(w);
-  w.animate([{ opacity: 0 }, { opacity: .85, offset: .15 }, { opacity: 0 }], { duration: lv >= 200 ? 300 : 220, easing: 'steps(4)' }).onfinish = () => w.remove();
+  w.animate([{ opacity: 0 }, { opacity: .85, offset: .15 }, { opacity: 0 }], { duration: lv >= 200 ? 300 : 220, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => w.remove();
   const big = document.createElement('div'); big.className = 'jbig';
   const who = S.C ? [...S.C.burstTurn][0] : null;
   if (who) big.style.setProperty('--c', colOf(who));
@@ -883,7 +933,7 @@ function hitStop(lv, v) {
     { transform: 'translate(-50%,-50%) scale(.95)', opacity: 1, offset: .12 },
     { transform: 'translate(-50%,-50%) scale(1)', opacity: 1, offset: .7 },
     { transform: 'translate(-50%,-60%) scale(1)', opacity: 0 },
-  ], { duration: 1000, easing: 'steps(12)' }).onfinish = () => big.remove();
+  ], { duration: 1000, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => big.remove();
   if (SET.shake) shake();
   sfx('cannon', { rate: lv >= 200 ? .55 : .7, vol: .9 }); sfx('burst', { vol: .7 });
   setTimeout(() => { for (const a of anims) { try { a.play(); } catch (e) { /* 끝난 연출 */ } } }, lv >= 200 ? 260 : 190);
@@ -891,7 +941,7 @@ function hitStop(lv, v) {
 let freeze = 0;
 
 // ---------- 적 쪽 연출 ----------
-const foeR = i => { const el = foeEl(i); if (!el) return null; const img = el.querySelector(':scope > img'); return { el, r: img ? spot(img) : rel(el) }; };
+const foeR = i => { const el = foeEl(i); if (!el) return null; const img = el.querySelector(':scope > img'); return { el, r: img ? rel(img) : rel(el) }; };
 // 안개 마녀 여왕: 장막이 걷힘 (흰 안개가 흩어지고 「취약」)
 function veilFx(e) {
   const q = foeR(e.i); if (!q) return;
@@ -919,7 +969,7 @@ function rageFx(e) {
 }
 function duelFx(e) {
   const q = foeR(e.i), a = allyEl(e.id); if (!q || !a) return;
-  const ar = spot(a.querySelector(':scope > img') || a);
+  const ar = rel(a.querySelector(':scope > img') || a);
   tracer(q.r.cx, q.r.cy, ar.cx, ar.cy, '#e8f0ff'); slashFx(ar.cx, ar.cy, '#c9d2f0');
   num(q.r.cx, q.r.y - 4, '도전!', 'buf', 9);
   sfx('slash', { rate: .8 });
@@ -957,7 +1007,7 @@ function mendFx(e) {
 function summonFx(e) {
   const q = foeR(e.i); if (q) { ring(q.r.cx, q.r.cy, '#f0d040', 4, 34, 14); sparks(q.r.cx, q.r.cy, '#f0d040', 12, 1.6); }
   const t = foeEl(e.to); if (!t) return;
-  const tr = spot(t.querySelector(':scope > img') || t);
+  const tr = rel(t.querySelector(':scope > img') || t);
   pulse(t, 'jsummon', 450);
   for (let k = 0; k < 3; k++) ring(tr.cx, tr.y + tr.h - 4, k ? '#b48ae8' : '#f0d040', 2 + k * 6, 30 + k * 8, 16 + k * 4);
   if (q) add({ k: 'line', x0: q.r.cx, y0: q.r.y, x1: tr.cx, y1: tr.cy, col: '#f0d040', speed: 7, life: 12, s: 1 });
@@ -971,14 +1021,14 @@ function stealFx(e) {
     { transform: 'translate(0,0) rotate(0)', opacity: 1 },
     { transform: `translate(${(q.r.cx - from.cx) * .5}px,${(q.r.cy - from.cy) * .5 - 30}px) rotate(180deg)`, opacity: 1, offset: .5 },
     { transform: `translate(${q.r.cx - from.cx}px,${q.r.cy - from.cy}px) rotate(360deg) scale(.4)`, opacity: 0 },
-  ], { duration: 420, easing: 'steps(10)' }).onfinish = () => c.remove();
+  ], { duration: 420, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => c.remove();
   setTimeout(() => { ring(q.r.cx, q.r.cy, '#b48ae8', 4, 24, 10); num(q.r.cx, q.r.y, '훔침', 'buf', 8); }, 400);
 }
 function retargetFx(e) {
   const q = foeR(e.i); if (!q) return;
   ring(q.r.cx, q.r.cy, '#f0d040', 6, 26, 10);
   const a = e.to && allyEl(e.to); if (!a) return;
-  const ar = spot(a.querySelector(':scope > img') || a);
+  const ar = rel(a.querySelector(':scope > img') || a);
   add({ k: 'line', x0: q.r.cx, y0: q.r.cy, x1: ar.cx, y1: ar.cy, col: '#ff6a7a', speed: 8, life: 18, s: 1 });
   setTimeout(() => { pulse(a, 'jflash', 260); ring(ar.cx, ar.cy, '#ff6a7a', 4, 20, 10); }, 120);
 }
@@ -999,37 +1049,36 @@ function pulse(el, cls, ms) {
 const E = 'cubic-bezier(.25,.8,.35,1)', IN = 'cubic-bezier(.5,0,.75,.4)';
 const f = (o, t, extra = {}) => ({ offset: o, transform: t, easing: E, ...extra });
 const GLOW = c => `brightness(1.35) drop-shadow(0 0 6px ${c})`;
-// 도트 그림은 늘이거나(scale) 기울이면(rotate) 픽셀이 일그러져 「그림 한 장을 비트는」 티가 나므로 이동·밝기만 쓴다. 자세는 동작 칸(pose)이 맡는다
 const KF = {
-  // 맞음: 번쩍 → 뒤로 밀림 → 앞으로 살짝 튕김 → 잦아듦
-  jhitA: () => [f(0, 'none', { filter: 'brightness(3) sepia(1) hue-rotate(-40deg)' }), f(.1, 'translate(-14px,0)', { filter: 'brightness(1.8)' }),
-    f(.32, 'translate(4px,0)', { filter: 'none' }), f(.52, 'translate(-2px,0)'), f(.72, 'translate(1px,0)'), f(1, 'none')],
-  jhitF: () => [f(0, 'none', { filter: 'brightness(3.2)' }), f(.1, 'translate(14px,0)', { filter: 'brightness(1.8)' }),
-    f(.32, 'translate(-4px,0)', { filter: 'none' }), f(.52, 'translate(2px,0)'), f(.72, 'translate(-1px,0)'), f(1, 'none')],
-  // 시전: 살짝 내려앉았다(예비) → 떠오르며 빛 → 내려와 착지
-  jcast: () => [f(0, 'none'), f(.22, 'translateY(2px)', { easing: IN }), f(.48, 'translateY(-10px)', { filter: GLOW('var(--c)') }),
+  // 맞음: 번쩍 → 뒤로 꺾이며 밀림 → 앞으로 살짝 튕김 → 잦아듦(스프링)
+  jhitA: () => [f(0, 'none', { filter: 'brightness(3) sepia(1) hue-rotate(-40deg)' }), f(.1, 'translate(-15px,1px)', { filter: 'brightness(1.8)' }),
+    f(.32, 'translate(5px,0)', { filter: 'none' }), f(.52, 'translate(-2px,0)'), f(.72, 'translate(1px,0)'), f(1, 'none')],
+  jhitF: () => [f(0, 'none', { filter: 'brightness(3.2)' }), f(.1, 'translate(15px,1px)', { filter: 'brightness(1.8)' }),
+    f(.32, 'translate(-5px,0)', { filter: 'none' }), f(.52, 'translate(2px,0)'), f(.72, 'translate(-1px,0)'), f(1, 'none')],
+  // 시전: 웅크렸다(예비) → 솟아오르며 빛 → 내려와 살짝 눌림 → 제자리
+  jcast: () => [f(0, 'none'), f(.22, 'translateY(2px)', { easing: IN }), f(.48, 'translateY(-11px)', { filter: GLOW('var(--c)') }),
     f(.74, 'translateY(1px)', { filter: 'none' }), f(.88, 'translateY(-1px)'), f(1, 'none')],
-  jheal: () => [f(0, 'none'), f(.2, 'translateY(1px)', { easing: IN }), f(.5, 'translateY(-8px)', { filter: GLOW('#b8ffc8') }),
+  jheal: () => [f(0, 'none'), f(.2, 'translateY(1px)', { easing: IN }), f(.5, 'translateY(-9px)', { filter: GLOW('#b8ffc8') }),
     f(.75, 'translateY(-6px)', { filter: GLOW('#b8ffc8') }), f(.9, 'translateY(1px)', { filter: 'none' }), f(1, 'none')],
-  jtime: () => [f(0, 'none'), f(.2, 'translateY(-2px)', { filter: GLOW('#ffe7a0') }), f(.45, 'translateY(-6px)'), f(.7, 'translateY(-1px)', { filter: 'none' }), f(1, 'none')],
-  jdraw2: () => [f(0, 'none'), f(.2, 'translateY(1px)', { easing: IN }), f(.45, 'translateY(-8px)'), f(.7, 'translateY(1px)'), f(.85, 'translateY(-1px)'), f(1, 'none')],
-  // 방어: 반 발 물러나 버팀 → 단단히 서기
-  jguard: () => [f(0, 'none'), f(.18, 'translate(-3px,1px)', { easing: IN, filter: 'brightness(1.3) drop-shadow(0 0 5px #c9d2f0)' }),
-    f(.5, 'translate(-2px,1px)', { filter: 'drop-shadow(0 0 4px #c9d2f0)' }), f(.75, 'translate(0,0)', { filter: 'none' }), f(1, 'none')],
+  jtime: () => [f(0, 'none'), f(.2, 'translateY(-2px)', { filter: GLOW('#ffe7a0') }), f(.45, 'translateY(-6px)'), f(.7, 'translateY(-1px)', { filter: 'none' }), f(.85, 'none'), f(1, 'none')],
+  jdraw2: () => [f(0, 'none'), f(.2, 'translateY(1px)', { easing: IN }), f(.45, 'translateY(-9px)'), f(.7, 'translateY(1px)'), f(.85, 'translateY(-1px)'), f(1, 'none')],
+  // 방어: 몸을 낮추고 버팀 → 살짝 밀렸다 → 단단히 서기
+  jguard: () => [f(0, 'none'), f(.18, 'translate(-3px,3px)', { easing: IN, filter: 'brightness(1.3) drop-shadow(0 0 5px #c9d2f0)' }),
+    f(.5, 'translate(-1px,2px)', { filter: 'drop-shadow(0 0 4px #c9d2f0)' }), f(.75, 'translate(0,-1px)', { filter: 'none' }), f(1, 'none')],
   // 원거리: 겨눔 → 쏘는 반동으로 뒤로 → 되돌아옴
-  jshot: () => [f(0, 'none'), f(.15, 'translate(3px,0)', { easing: IN }), f(.3, 'translate(-12px,0)', { filter: 'brightness(1.6)' }),
+  jshot: () => [f(0, 'none'), f(.15, 'translate(3px,0)', { easing: IN }), f(.3, 'translate(-13px,0)', { filter: 'brightness(1.6)' }),
     f(.55, 'translate(3px,0)', { filter: 'none' }), f(.78, 'translate(-1px,0)'), f(1, 'none')],
-  jatk: () => [f(0, 'none'), f(.22, 'translate(-7px,0)', { easing: IN }), f(.42, 'translate(22px,0)'),
+  jatk: () => [f(0, 'none'), f(.22, 'translate(-7px,1px)', { easing: IN }), f(.42, 'translate(22px,0)'),
     f(.65, 'translate(10px,0)'), f(.85, 'translate(-2px,0)'), f(1, 'none')],
-  jsweep: () => [f(0, 'none'), f(.22, 'translate(-9px,0)', { easing: IN }), f(.48, 'translate(26px,0)'),
+  jsweep: () => [f(0, 'none'), f(.22, 'translate(-9px,1px)', { easing: IN }), f(.48, 'translate(26px,0)'),
     f(.7, 'translate(10px,0)'), f(.86, 'translate(-2px,0)'), f(1, 'none')],
-  jfin: () => [f(0, 'none'), f(.22, 'translate(-6px,2px)', { easing: IN }), f(.48, 'translate(18px,-28px)', { filter: GLOW('var(--c)') }),
-    f(.64, 'translate(30px,2px)', { filter: 'none' }), f(.82, 'translate(8px,-2px)'), f(1, 'none')],
-  jlunge: () => [f(0, 'none'), f(.22, 'translate(7px,0)', { easing: IN }), f(.42, 'translate(-24px,0)'),
+  jfin: () => [f(0, 'none'), f(.22, 'translate(-6px,4px)', { easing: IN }), f(.48, 'translate(18px,-28px)', { filter: GLOW('var(--c)') }),
+    f(.64, 'translate(30px,3px)', { filter: 'none' }), f(.82, 'translate(8px,-2px)'), f(1, 'none')],
+  jlunge: () => [f(0, 'none'), f(.22, 'translate(7px,1px)', { easing: IN }), f(.42, 'translate(-24px,0)'),
     f(.65, 'translate(-9px,0)'), f(.85, 'translate(2px,0)'), f(1, 'none')],
-  // 쓰러짐: 휘청 → 주저앉음 → 잿빛 (쓰러짐 칸이 있으면 그 그림이 자세를 맡는다)
+  // 쓰러짐: 휘청 → 무릎 꺾임 → 바닥에 닿으며 살짝 튐 → 잿빛
   jdown: () => [f(0, 'none', { filter: 'brightness(2)' }), f(.2, 'translate(-6px,0)', { filter: 'none' }), f(.45, 'translate(3px,2px)'),
-    f(.7, 'translate(0,4px)', { filter: 'grayscale(.7)' }), f(.85, 'translate(0,2px)'), f(1, 'translate(0,3px)', { filter: 'grayscale(1)' })],
+    f(.7, 'translate(0,4px)', { filter: 'gray' }), f(.85, 'translate(0,2px)'), f(1, 'translate(0,3px)', { filter: 'gray' })],
   jflash: () => [{ filter: 'brightness(3)' }, { filter: 'none' }],
 };
 // 튀어 오르는 숫자(슬레이 더 스파이어식): 튀어 올랐다 옆으로 살짝 떨어지며 사라짐.
@@ -1112,8 +1161,10 @@ function draw(p) {
 const SHIELD = ['.oooooo.', 'ocwwccco', 'ocwccc.o', 'occcccco', 'occcccco', '.occcco.', '.occcco.', '..occo..', '...oo...'];
 
 function ring(x, y, col, r0, r1, life) { add({ k: 'ring', x, y, col, r0, r1, life }); }
+// 불티: 1px 가루를 잔뜩 뿌리면 지저분해서, 개수는 줄이고 2px로 또렷하게
 function sparks(x, y, col, n = 8, sp = 1.5) {
-  for (let k = 0; k < n; k++) { const a = Math.random() * Math.PI * 2, v = rnd(.5, 1) * sp * 2; add({ k: 'dot', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: .04, life: rnd(12, 22), col: k % 3 ? col : '#ffffff', s: 1 }); }
+  n = Math.ceil(n * .6);
+  for (let k = 0; k < n; k++) { const a = Math.random() * Math.PI * 2, v = rnd(.5, 1) * sp * 2; add({ k: 'dot', x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v, g: .04, life: rnd(12, 22), col: k % 3 ? col : '#ffffff', s: 2 }); }
 }
 function slashFx(x, y, col) {
   const a0 = rnd(-2.7, -2.3);
@@ -1149,4 +1200,46 @@ export function clearFx() {
   for (const t of timers.keys()) clearTimeout(t); timers.clear();
   parts.length = 0;
   layer?.querySelectorAll('.jghost,.jnum,.jbanner,.jclock,.jwarm,.jclimb').forEach(x => x.remove());
+}
+
+// ---------- 별 소환 (js/render/base.js revealView) ----------
+// 처음: 화면 가운데로 별빛이 빨려 들며 차오름 → 가장 높은 희귀도 색으로 번쩍 → 별똥별이 칸마다 떨어짐(css .intro .drop)
+// 펼칠 때: 막 펼친 카드(.fresh)마다 빛 고리·불티, ★4 보라 반짝, ★5 금빛 기둥
+const GACHA_COL = { 3: '#cfe0ff', 4: '#c08aff', 5: '#ffd860' };
+const gsfx = (name, alt, o) => sfx(hasSfx(name) ? name : alt, o);
+function gachaFx() {
+  const A = app(); if (!A || A.dataset.screen !== 'reveal' || calmNow()) return;
+  const R = S.reveal; if (!R) return;
+  const scr = A.querySelector('.revealscr.intro');
+  if (scr) {
+    const top = Math.max(...R.list.map(r => r.rarity)), col = GACHA_COL[top];
+    const W = stage.offsetWidth, H = stage.offsetHeight, cx = W / 2, cy = H * .42;
+    gsfx('summon_charge', 'summon', { vol: .8 });
+    for (let k = 0; k < 70; k++) {   // 가장자리에서 가운데로 빨려 드는 별빛
+      const a = Math.random() * Math.PI * 2, d = rnd(140, 320), life = Math.round(rnd(26, 44)), t = rnd(0, 520);
+      at(t, () => add({ k: 'dot', x: cx + Math.cos(a) * d, y: cy + Math.sin(a) * d * .7, vx: -Math.cos(a) * d / life, vy: -Math.sin(a) * d * .7 / life, g: 0, life, col: k % 4 ? '#ffffff' : col, s: k % 3 ? 2 : 1 }));
+    }
+    for (let k = 0; k < 4; k++) at(k * 220, () => ring(cx, cy, k === 3 ? col : '#9fb4ff', 70 - k * 8, 6, 26));
+    const core = document.createElement('div'); core.className = 'gcore'; core.style.setProperty('--c', col);
+    layer.append(core);
+    core.animate([{ transform: 'translate(-50%,-50%) scale(.1)', opacity: 0 }, { transform: 'translate(-50%,-50%) scale(1)', opacity: 1, offset: .8 }, { transform: 'translate(-50%,-50%) scale(1.6)', opacity: 0 }],
+      { duration: 1100, easing: 'cubic-bezier(.5,0,.75,.4)' }).onfinish = () => core.remove();
+    at(1000, () => {
+      flash(); ring(cx, cy, col, 8, 150, 22); sparks(cx, cy, col, 30, 3);
+      gsfx('summon_drop', 'star', { vol: .8 });
+      if (top === 5) { shake(); for (let k = 0; k < 3; k++) at(k * 120, () => ring(cx, cy, '#fff6c8', 10, 110 + k * 30, 20)); }
+    });
+  }
+  // 막 펼친 카드
+  for (const el of A.querySelectorAll('.revealscr .got.fresh')) {
+    const g = +el.dataset.g || 3, col = GACHA_COL[g], d = parseFloat(getComputedStyle(el).getPropertyValue('--fd')) || 0;
+    at(d + 40, () => {
+      if (!el.isConnected) return;
+      const r = rel(el);
+      ring(r.cx, r.cy, col, 6, g === 5 ? 90 : g === 4 ? 60 : 40, 18);
+      sparks(r.cx, r.cy, col, g === 5 ? 34 : g === 4 ? 20 : 10, g === 5 ? 3 : 2);
+      if (g >= 4) for (let k = 0; k < (g === 5 ? 18 : 8); k++) add({ k: 'dot', x: r.cx + rnd(-r.w / 2, r.w / 2), y: r.y + r.h, vx: 0, vy: rnd(-3, -1.2), g: 0, life: rnd(18, 34), col: k % 2 ? col : '#ffffff', s: 2 });
+      gsfx(`summon_r${g}`, g === 3 ? 'flip' : 'star', { vol: g === 3 ? .5 : .8 });
+    });
+  }
 }

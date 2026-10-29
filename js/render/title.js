@@ -14,7 +14,7 @@ const rnd = (n => () => (n = (n * 1103515245 + 12345) >>> 0) / 4294967296)(7);
 const STARS = Array.from({ length: 46 }, () => [rnd() * 100, rnd() * 58, rnd() < .2 ? 2 : 1, Math.floor(rnd() * 8)]);
 const LAMPS = [[40, 0], [46, 1], [53, 2], [61, 0], [68, 1], [90, 2], [96, 0]];
 export function titleView() {
-  const key = artURL('title/key.png');
+  const key = artURL('title/key_px.png') || artURL('title/key.png');   // 도트 키아트가 들어오면 그걸 먼저
   const three = ['iris', 'brick', 'marta'].map((k, i) => `<img class="px sil s${i}" src="${charSrc(k)}" alt="">`).join('');
   const scene = key ? `<img class="keyart" src="${key}" alt="">` : `<div class="harbor" aria-hidden="true">
       ${STARS.map(([x, y, z, d]) => `<i class="tw d${d}" style="left:${x.toFixed(1)}%;top:${y.toFixed(1)}%;width:${z}px;height:${z}px"></i>`).join('')}
@@ -31,8 +31,7 @@ export function titleView() {
     <div class="tmenu">
       <h1><span>야</span><span>경</span><span>단</span></h1>
       <p class="note">0시에 솟는 탑을 <b>6시 해 뜨기 전에</b> 오른다</p>
-      <button type="button" class="primary ${first ? 'firstgo' : ''}" data-view="party">밤 오르기</button>
-      <button type="button" data-view="base">본부</button>
+      <button type="button" class="primary ${first ? 'firstgo' : ''}" data-view="base">시작</button>
       <button type="button" data-settings>설정</button>
       <span class="note small">별 조각 <b>${P.shards}</b> · 동료 ${Object.keys(P.owned).length}/${ROSTER_IDS.length}${S.dev ? ' · <span class="dev">개발판</span>' : ''}</span>
     </div>
@@ -74,7 +73,7 @@ export function partyView() {
     const r = ROSTER[k], c = CHARACTERS[k], on = S.picked.includes(k), ok = can(k);
     return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'} title="${c ? esc(`${c.passive.name}: ${c.passive.text}`) : ''}">
       <img class="px" src="${charSrc(k)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
-      <span class="rl">${r.role}${c ? ` · 체력 ${c.maxHp}` : ''}</span>
+      <span class="rl">${r.role}</span>${c ? `<span class="hp">체력 ${c.maxHp}</span>` : ''}
       <span class="ps" ${c ? `title="${c.passive.name}: ${c.passive.text}"` : ''}>${c ? `<b>${c.passive.name}</b> ${c.passive.short}` : '준비 중 (다음 업데이트에서 싸울 수 있다)'}</span></span></button>`;
   }).join('');
   // 고른 셋: 전투처럼 대열로 크게 선다(왼쪽 뒤 → 오른쪽 앞, 처음엔 체력이 높은 동료가 앞). 인연이 있는 동료는 빛난다.
@@ -87,9 +86,9 @@ export function partyView() {
     return r ? `<span class="chosen r${r.rarity} ${bonded.has(k) ? 'bonded' : ''} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}"><small>${slots[i]}</small><img class="px" src="${charSrc(k)}" alt=""><span>${r.name} <i class="stars">${stars(r.rarity)}</i></span></span>`
       : `<span class="chosen empty"><small>${slots[i]}</small>?</span>`;
   }).join('');
-  return `<div class="title">
+  return `<div class="title partyscr">
     <div class="tleft">
-      <div class="thead"><button type="button" class="mini" data-view="title">‹ 타이틀</button><h2>${S.mode === 'endless' ? '끝없는 탑 · 동료 셋' : '동료 셋을 고른다'}</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
+      <div class="thead"><button type="button" class="mini" data-view="base">‹ 본부</button><h2>${S.mode === 'endless' ? '끝없는 탑 · 동료 셋' : '동료 셋을 고른다'}</h2>${S.dev ? '<span class="dev">개발판: 구현된 동료 전부</span>' : ''}</div>
       <div class="pick">${mates}</div>
     </div>
     <div class="tright">

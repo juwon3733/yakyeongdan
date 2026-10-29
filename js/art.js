@@ -25,7 +25,7 @@ export function charArt(id, kind = 'stand', outfit = false) {
 }
 
 // 전투 스프라이트(전투 화면 전용 저해상도 도트): sprites/<id>_<frame>.png. 기본 의상만.
-export const FRAMES = ['idle', 'idle2', 'attack', 'skill', 'guard', 'hurt', 'down', 'win'];
+export const FRAMES = ['idle', 'windup', 'attack', 'skill', 'guard', 'hurt', 'down', 'win'];   // windup: 준비 자세(공격 직전)
 export const battleArt = (id, frame = 'idle') => artURL(`sprites/${id}_${frame}.png`);
 // 기술 이펙트 프레임: fx/<name>_1.png, _2 … (있는 것만). 동료 시그니처는 <id>_atk·<id>_skill, 공용은 slash·explode·pierce·magic
 export function fxFrames(name) {

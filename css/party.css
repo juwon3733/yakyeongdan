@@ -1,0 +1,47 @@
+/* 동료 고르기(partyView): 가챠 게임 편성 화면풍. 범위는 .partyscr 안으로만 */
+@property --pang{syntax:"<angle>";inherits:false;initial-value:0deg}
+
+/* 동료 칸: 성급별 테두리 · 마우스를 대면 살짝 떠오름 */
+.partyscr .mate{position:relative;--bg:var(--panel);border:2px solid transparent;
+  background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(#5a5e70,#5a5e70) border-box;
+  box-shadow:2px 2px 0 var(--shadow);outline:0;animation:none;
+  transition:transform .12s steps(3),box-shadow .12s steps(3)}
+.partyscr .mate.r3{background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(135deg,#e8ecf4,#8a90a4 45%,#d8dce8 55%,#6a7084) border-box}
+.partyscr .mate.r4{background:linear-gradient(var(--bg),var(--bg)) padding-box,linear-gradient(135deg,#c89af0,#6a3ab0 50%,#a070e0) border-box}
+.partyscr .mate.r5{background:linear-gradient(var(--bg),var(--bg)) padding-box,
+  conic-gradient(from var(--pang),#7a5a12,#ffe8a0 12%,#e0b84a 25%,#7a5a12 40%,#7a5a12 55%,#fff4c8 65%,#e0b84a 78%,#7a5a12) border-box;
+  animation:pspin 4s linear infinite}
+@keyframes pspin{to{--pang:360deg}}
+.partyscr .mate.r5 .nm{color:var(--gold)}
+.partyscr .mate.r4 .nm{color:#d0b0ff}
+.partyscr .mate img{background:linear-gradient(180deg,#0b0b18 55%,color-mix(in srgb,var(--c) 30%,#0b0b18))}
+.partyscr .mate:not(:disabled):hover,.partyscr .mate:not(:disabled):focus-visible{transform:translateY(-3px);box-shadow:2px 5px 0 var(--shadow)}
+.partyscr .mate:not(:disabled):active{transform:translateY(-1px);box-shadow:1px 2px 0 var(--shadow)}
+.partyscr .mate.on{--bg:#1f2042;box-shadow:2px 2px 0 var(--c),0 0 0 1px var(--c)}
+.partyscr .mate.on:not(:disabled):hover{box-shadow:2px 5px 0 var(--c),0 0 0 1px var(--c)}
+.partyscr .mate.on::after{content:"✓";position:absolute;right:3px;top:2px;font-family:var(--f-disp);font-size:10px;color:var(--c)}
+.partyscr .mate.locked{filter:grayscale(.7)}
+
+/* 오른쪽 대열: 고른 동료가 크게 선다 */
+.partyscr .tright{width:220px;background:linear-gradient(180deg,#14143a,var(--panel) 40%)}
+.partyscr .chosenrow.formation{min-height:130px;gap:2px;padding:4px 0 6px;
+  background:radial-gradient(ellipse 60% 18% at 50% 92%,rgba(224,184,74,.18),transparent 70%),linear-gradient(180deg,transparent 55%,rgba(0,0,0,.4))}
+.partyscr .formation .chosen{justify-content:flex-end}
+.partyscr .formation .chosen img{width:68px;height:102px;object-fit:contain;object-position:50% 100%}
+.partyscr .formation .chosen:nth-child(3) img{width:76px;height:114px}
+.partyscr .formation .chosen img[src^="data:"]{width:60px;height:80px}
+.partyscr .formation .chosen:nth-child(3) img[src^="data:"]{width:66px;height:88px}
+.partyscr .formation .chosen.r5 img{filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6)) drop-shadow(0 0 3px rgba(224,184,74,.7))}
+.partyscr .formation .chosen.empty{min-height:118px}
+
+/* 「출발」: 크고 금테 */
+.partyscr .go{position:relative;font-size:18px;letter-spacing:.12em;padding:9px 6px;color:#fff4c8;
+  border:3px solid transparent;
+  background:linear-gradient(180deg,#3a2a10,#1c1408) padding-box,linear-gradient(180deg,#fff0b0,#e0b84a 40%,#8a6a1a 60%,#ffe08a) border-box;
+  box-shadow:3px 3px 0 var(--shadow),inset 0 0 0 1px #5a4210;text-shadow:1px 1px 0 #000}
+.partyscr .go:not(:disabled):hover{transform:translateY(-2px);box-shadow:3px 5px 0 var(--shadow),inset 0 0 0 1px #8a6a1a}
+.partyscr .go:not(:disabled){animation:gopulse 1.6s steps(2) infinite}
+@keyframes gopulse{50%{color:#ffe060}}
+.partyscr .go:disabled{color:var(--dim);filter:grayscale(.6)}
+
+@media (prefers-reduced-motion:reduce){.partyscr .mate.r5,.partyscr .go{animation:none}.partyscr .mate,.partyscr .go{transition:none}}

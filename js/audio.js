@@ -128,6 +128,13 @@ export const HIT_SFX = {
 // 희귀 카드·듀오 필살 컷인(0.9초) 효과음: 0~0.2초 빨려 듦 → 0.7초 쾅 (sfx(CUTIN_SFX)로 부른다)
 export const CUTIN_SFX = 'special';
 
+// 짧은 징글: sfx(JINGLE_SFX.win) 식으로 부른다
+export const JINGLE_SFX = {
+  win: 'win2',        // 전투 승리 (1.5초, 밝게 올라가는 팡파르)
+  lose: 'lose',       // 판 패배 (2초, 낮게 내려가며 사라짐)
+  bossIn: 'boss_in',  // 보스 등장 (1.2초, 무거운 쿵 + 불길한 화음)
+};
+
 // UI 효과음 (0.05~0.2초): sfx(UI_SFX.hover) 식으로 부른다. 자주 나므로 SFX_GAIN으로 작게 낸다
 export const UI_SFX = {
   hover: 'ui_hover',  // 카드에 마우스를 댐: 아주 짧은 틱
@@ -277,7 +284,7 @@ function sounds(a, b) {
 // ---------- 소리 버튼 (위 띠, 파티 고르기 화면) ----------
 function placeButton() {
   if (document.querySelector('[data-sound]')) return;
-  const host = document.querySelector('.topbar [data-deck]') || document.querySelector('.thead, .bhead, .tmenu');
+  const host = document.querySelector('.topbar [data-deck]') || document.querySelector('.thead, .bhead, .tmenu, .h2top');
   if (!host) return;
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'mini'; b.dataset.sound = ''; b.dataset.lv = level; b.textContent = LABELS[level];

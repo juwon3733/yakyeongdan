@@ -59,7 +59,9 @@ try {
   await page.waitForSelector('#boot', { state: 'detached', timeout: 30000 });
   await shot('title', 800);
 
-  await page.click('[data-view="party"]');
+  await page.click('.titlescr [data-view="base"]');
+  await shot('base', 600);
+  await page.click('.h2menu [data-view="party"]:not([data-mode])');
   for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
   await shot('party');
 

@@ -55,7 +55,11 @@ async function advance(page, tag) {
   else { fail(`${tag}: 모르는 화면 ${screen}`); return false; }
   return true;
 }
-async function openParty(page) { await page.click('[data-view="party"]'); }
+// 타이틀은 「시작」 → 본부 → 「출격」(밤 오르기)
+async function openParty(page) {
+  if (await page.$('.titlescr [data-view="base"]')) await page.click('.titlescr [data-view="base"]');
+  await page.click('.h2menu [data-view="party"]:not([data-mode])');
+}
 
 // 카드 한 장 쓰기: 누르고 → 대상(동료/적) 누르기, 대상이 없으면 카드를 한 번 더
 async function playOne(page) {
@@ -566,9 +570,12 @@ try {
     const pace = await ev(() => !!document.querySelector('.topbar .chip.pace') && !!document.querySelector('.night u') && !!document.querySelector('.node .m b.pace'));
     const rig = () => ev(() => { window.__yk.fight(['ghost'], 'fight'); const C = window.__yk.S.C; C.energy = 9; C.hand = ['iris.slash', 'iris.slash'].map((id, k) => ({ uid: 9100 + k, id })); window.__yk.render(); });
     await rig();
+    // 손패 카드는 마우스를 대면 커지는 연출이 있어, 다 커진 뒤에 누른다(커지는 중에 누르면 끌기로 잡힐 때가 있다)
+    await page.hover('[data-play="9100"]'); await page.waitForTimeout(250);
     await page.click('[data-play="9100"]');
-    const once = await ev(() => !window.__yk.S.C.hand.some(h => h.uid === 9100) && window.__yk.S.C.pending == null);
+    const once = await page.waitForFunction(() => !window.__yk.S.C.hand.some(h => h.uid === 9100) && window.__yk.S.C.pending == null, null, { timeout: 1500 }).then(() => true, () => false);
     await page.click('[data-settings]'); await page.click('[data-set="quick:false"]'); await page.click('[data-close]');
+    await page.hover('[data-play="9101"]'); await page.waitForTimeout(250);
     await page.click('[data-play="9101"]');
     const twice = await ev(() => window.__yk.S.C.pending === 9101 && window.__yk.S.C.hand.some(h => h.uid === 9101));
     await page.click('[data-settings]'); await page.click('[data-set="quick:true"]'); await page.click('[data-close]');

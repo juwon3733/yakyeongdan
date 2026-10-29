@@ -1,5 +1,5 @@
 /* 적 속성 (js/data/affixes.js): 속성 색 오라, 숨은 적, 속성 칩 */
-.foe.affixed img{filter:drop-shadow(1px 0 0 var(--ax)) drop-shadow(-1px 0 0 var(--ax)) drop-shadow(0 1px 0 var(--ax)) drop-shadow(0 -1px 0 var(--ax));animation:axglow 1.6s steps(4) infinite}
+.foe.affixed img{filter:drop-shadow(1px 0 0 var(--ax)) drop-shadow(-1px 0 0 var(--ax)) drop-shadow(0 1px 0 var(--ax)) drop-shadow(0 -1px 0 var(--ax));animation:axglow 1.6s ease-in-out infinite}
 @keyframes axglow{50%{filter:drop-shadow(2px 0 0 var(--ax)) drop-shadow(-2px 0 0 var(--ax)) drop-shadow(0 2px 0 var(--ax)) drop-shadow(0 -2px 0 var(--ax))}}
 .foe.hidden img{opacity:.35}
 .foe.hidden{cursor:not-allowed}

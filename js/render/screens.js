@@ -145,10 +145,11 @@ export function resultView() {
       : `${CHARACTERS[cid]?.name || cid} ${ns.map(n => n + 1).join('·')}화`),
     ...(R.newBonds || []).map(k => `인연 장면 「${BOND_SCENES[k].title}」`)];
   const epNote = opened.length ? `<p class="epnew"><b class="newt">새 에피소드</b> ${opened.map(esc).join(' · ')}</p>` : '';
-  return `<div class="resultscr">
+  return `<div class="resultscr ${G.won ? 'won' : 'lost'}">
+    ${G.won ? '<i class="rdust" aria-hidden="true"></i><i class="rdust far" aria-hidden="true"></i>' : ''}
     <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">MVP · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}</span></div>
     <div class="rinfo">
-      <h2 style="font-size:20px">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
+      <h2 class="rtitle">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
       <p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</p>
       <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`} · 싸움 ${G.fights}번 · 달 ${MOONS[G.moon].name} · 시드 ${G.seed}</p>
       <p class="note">쓴 듀오 ${duos}</p>

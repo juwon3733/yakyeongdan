@@ -6,7 +6,7 @@
 // 이 파일(캐시 규칙)을 바꾸면 CACHE 이름을 올린다 → 옛 캐시를 지우고, 열린 화면에 「새 버전이 있어요」가 뜬다.
 const CACHE = 'yk-v1';
 const SHELL = ['./', 'index.html', 'manifest.webmanifest', 'css/game.css', 'js/main.js', 'js/pwa.js', 'icons/icon-192.png', 'icons/icon-512.png'];
-const STATIC = /\/(assets\/(audio|chars|cards|cutins|cg|enemies|bg|title|summon|icons|app)|icons|fonts)\//;
+const STATIC = /\/(assets\/(fonts|audio|chars|cards|cutins|cg|enemies|bg|title|summon|icons|app)|icons|fonts)\//;
 const WAIT_MS = 3000;
 
 self.addEventListener('install', e => {

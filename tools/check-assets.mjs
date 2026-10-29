@@ -77,6 +77,8 @@ function scanPng(b, limit) {
   return result;
 }
 
+// 새 그림이 들어올 때까지 남겨 두는 옛 파일(들어오면 지운다)
+const LEGACY = new Set(['title/key.png']);
 const norm = (s) => s.toLowerCase().replace(/\s*\(\d+\)/g, '').replace(/[\s-]+/g, '_').replace(/\.(png|jpe?g|webp)$/, '');
 
 for (const folder of folders) {
@@ -85,6 +87,7 @@ for (const folder of folders) {
   for (const f of files) {
     const rel = `${folder}/${f}`;
     const a = byPath.get(rel);
+    if (!a && LEGACY.has(rel)) continue;
     if (!a) {
       const guess = items.find((i) => i.file.startsWith(folder + '/') && norm(i.file.split('/')[1]) === norm(f));
       errors.push({ file: rel, msg: guess ? `모르는 파일명이에요. \`${guess.file.split('/')[1]}\`(으)로 바꾸세요.` : '모르는 파일명이에요. docs/PROMPTS.md의 파일명을 확인하세요.' });

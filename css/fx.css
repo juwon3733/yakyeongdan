@@ -47,32 +47,26 @@
 #app[data-screen="combat"] :is(.foe,.pm).tg > img{filter:drop-shadow(0 0 2px rgba(255,255,255,.7))}
 /* 도움말 줄은 할 말이 있을 때만 */
 #app[data-screen="combat"] .log:not(:has(> :not(.tip:empty))):not(:has(b)){visibility:hidden}
-/* 전투 기록만 있는 줄은 잠깐 보였다 사라진다(늘 떠 있으면 디버그 출력처럼 보인다) — 버튼·도움말이 있으면 그대로 */
-#app[data-screen="combat"] .log.fade{animation:logfade 3s ease-in forwards;pointer-events:none}
-@keyframes logfade{0%,70%{opacity:1}100%{opacity:0}}
-/* 불빛이 비춘 동료: 칸 네모 대신 몸 둘레 노란 도트 테두리 */
-#app[data-screen="combat"] .pm.lit{outline:0;background:none}
-#app[data-screen="combat"] .pm.lit > img{filter:drop-shadow(1px 0 0 #ffe060) drop-shadow(-1px 0 0 #ffe060) drop-shadow(0 -1px 0 #ffe060) drop-shadow(2px 2px 0 rgba(0,0,0,.55))}
 #fx .jred{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse 70% 65% at 50% 50%,transparent 45%,rgba(200,20,40,.55))}
 /* 캐릭터 발을 배경 바닥(아래 1/3)에 — 무대를 아래로 내려 손패 뒤까지 쓴다(슬레이 더 스파이어처럼 카드가 무대 앞에 겹침).
    transform은 카메라 연출이 쓰므로 top으로 내린다 */
 #app[data-screen="combat"] .field{top:30px;z-index:1}
 #app[data-screen="combat"] .bottom .hand .card{margin-bottom:-24px}
 #app[data-screen="combat"] .bottom{position:relative;z-index:3}
-#app[data-screen="combat"] .log{position:absolute;top:34px;left:8px;right:8px;z-index:2;background:rgba(11,11,24,.78)}
+/* 전투 기록 글은 숨김(디버그 같음). 달 고르기·도구 버튼처럼 누를 것만 위에 띄운다 */
+#app[data-screen="combat"] .log{position:absolute;top:34px;left:8px;right:8px;z-index:2;background:none;border:0;box-shadow:none;pointer-events:none}
+#app[data-screen="combat"] .log :is(button,a,input,label,.cmoonpick){pointer-events:auto}
+#app[data-screen="combat"] .log :is(.logtx,.tip){display:none}
 /* 전투: 배경이 캐릭터·적만큼 세밀하고 밝아 인물이 묻힌다 → 배경은 채도·밝기를 낮추고 인물이 서는 줄(가운데 아래)을 한 겹 더 어둡게 */
 #app[data-screen="combat"]::before{background-position:center 70%;filter:saturate(.8) brightness(.82);
   background-image:linear-gradient(180deg,rgba(6,6,18,.45),rgba(6,6,18,.12) 28%,rgba(6,6,18,.34) 52%,rgba(6,6,18,.42) 80%,rgba(6,6,18,.7)),var(--bgimg,none)}
 body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px)) rotate(var(--fr,0deg));z-index:auto}
-/* 가만히 있을 때: 몸 전체가 1~2px 천천히 오르내림(박자는 서로 다르게). 도트 그림은 늘이거나 기울이면 픽셀이 일그러지고 지글거리므로
-   크기·회전은 쓰지 않고 위아래 이동만. 개별 속성(translate)으로 돌려서 동작(js/juice.js WAAPI transform)과 함께 돌아도 끊기지 않는다 */
-:where(.pm:not(.down), .foe:not(.gone)) > img{transform-origin:50% 100%;animation:jbob 2.8s ease-in-out infinite}
-:where(.pm:nth-of-type(3)) > img{animation-delay:-1.3s;animation-duration:3.2s}
-:where(.pm:nth-of-type(5)) > img{animation-delay:-.6s;animation-duration:2.5s}
-:where(.foe:not(.gone)) > img{animation-name:jbobF;animation-duration:2.2s}
-:where(.foe:nth-child(2n)) > img{animation-delay:-.9s}
+/* 가만히 있을 때: 1px 위아래만(그림을 늘이거나 돌리지 않는다 — 도트가 지글거리지 않게). 개별 속성 translate라 동작(WAAPI transform)과 겹쳐도 안 끊김 */
+:where(.pm:not(.down), .foe:not(.gone)) > img:not(.jxfade){animation:jbob 2.8s ease-in-out infinite}
+:where(.pm:nth-of-type(3), .foe:nth-child(2n)) > img:not(.jxfade){animation-delay:-1.3s;animation-duration:3.2s}
+:where(.pm:nth-of-type(5)) > img:not(.jxfade){animation-delay:-.6s;animation-duration:2.5s}
+:where(.foe:not(.gone)) > img:not(.jxfade){animation-duration:2.4s}
 @keyframes jbob{0%,100%{translate:0 0}50%{translate:0 -1px}}
-@keyframes jbobF{0%,100%{translate:0 0}50%{translate:0 -2px}}
 @media (prefers-reduced-motion:reduce){:where(.pm, .foe) > img{animation:none}}
 #stage.calm :where(.pm, .foe) > img{animation:none}
 /* 적 의도: 도트 아이콘 + 큰 숫자 (js/render/combat.js intentIcon) */
@@ -182,3 +176,21 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 /* 도구 그림 아이콘 */
 .relic.hasic{padding:0;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;overflow:hidden}
 .relic.hasic img{width:20px;height:20px;image-rendering:pixelated;filter:drop-shadow(1px 1px 0 #000)}
+
+/* 선택·마지막 동료 점선 네모 없앰 — 고른 대상은 발밑 빛과 화살표로만 */
+#app[data-screen="combat"] .pm.last,#app[data-screen="combat"] .pm.aimed,#app[data-screen="combat"] .foe.tg,#app[data-screen="combat"] .foe.sel{outline:none}
+/* 입체 배치는 위치·밝기만(그림을 비정수로 줄이지 않는다) */
+#app[data-screen="combat"] .party > .pm:nth-of-type(1){transform:translate(10px,-14px)}
+#app[data-screen="combat"] .party > .pm:nth-of-type(2){transform:translate(2px,-6px)}
+#app[data-screen="combat"] .foes > .foe:nth-child(2){transform:translateY(-14px)}
+#app[data-screen="combat"] .foes > .foe:nth-child(3){transform:translateY(-4px)}
+#app[data-screen="combat"] .foes > .foe:nth-child(4){transform:translateY(-20px)}
+/* 발밑: 그림자는 실제 발 위치(--ft, js/juice.js fitSprites)에. 고를 수 있는 대상·불 켜진 동료는 네모 테두리 대신 발밑 빛 */
+#app[data-screen="combat"] :is(.pm, .foe) > img{background:radial-gradient(ellipse 40% 4% at 50% var(--ft,97%),rgba(0,0,0,.7),transparent)}
+#app[data-screen="combat"] :is(.pm.tg, .pm.lit, .foe.tg){outline:none;background:none}
+#app[data-screen="combat"] .foe.tg > img{background:radial-gradient(ellipse 46% 5% at 50% var(--ft,97%),rgba(255,90,120,.9),rgba(224,74,106,.35) 55%,transparent)}
+#app[data-screen="combat"] .pm.tg > img{background:radial-gradient(ellipse 46% 5% at 50% var(--ft,97%),rgba(110,230,170,.9),rgba(76,192,138,.35) 55%,transparent)}
+#app[data-screen="combat"] .pm.lit > img{background:radial-gradient(ellipse 46% 5% at 50% var(--ft,97%),rgba(255,230,120,.9),rgba(255,224,96,.3) 55%,transparent)}
+#app[data-screen="combat"] :is(.pm, .foe) > img{filter:none}   /* 그림마다 필터 그림자는 무거워서 뺌(발밑 그림자로 충분) */
+#app[data-screen="combat"] .log > :not(.logtx):not(.tip){background:rgba(11,11,24,.85);padding:2px 4px;box-shadow:2px 2px 0 #000}
+#fx .jbanner.win{top:17%}   /* 승리 띠는 위쪽 — 아래 보상 카드를 가리지 않게 */
