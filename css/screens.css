@@ -145,3 +145,101 @@
 .partyscr .mate .rl{grid-row:3;grid-column:2;line-height:10px;word-break:keep-all;overflow-wrap:anywhere}
 .partyscr .mate .hp{grid-row:4;grid-column:2;font-size:9px;line-height:10px;white-space:nowrap;color:var(--ink)}
 .partyscr .mate .ps{grid-row:5;grid-column:1 / -1;line-height:11px;-webkit-line-clamp:2}
+
+/* ── 에피소드 목록: 왼쪽 동료 얼굴 칸 격자 · 오른쪽 고른 동료의 1~3화 ── */
+.epgrid{overflow:hidden}
+.epcols{flex:1;min-height:0;display:flex;gap:8px}
+.epleft{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.epleft h2{margin:0}
+.epfaces{flex:1;min-height:0;overflow-y:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(52px,1fr));gap:4px;align-content:start;padding:0 2px 3px 0}
+.epface{position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;padding:2px 2px 3px;min-width:0;border-color:var(--line);border-bottom-color:var(--c)}
+.epface .pic{display:block;width:40px;height:40px;overflow:hidden;background:#0b0b18;border:1px solid #000}
+.epface .pic img{width:40px;height:auto;display:block}
+.epface .nm{font-family:var(--f-disp);font-size:9px;line-height:11px;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.epface .pips{display:flex;gap:2px}
+.epface .pips i{width:5px;height:5px;background:#2b2d55;box-shadow:1px 1px 0 #000}
+.epface .pips i.seen{background:var(--c)}
+.epface .pips i.new{background:var(--gold)}
+.epface .newt{position:absolute;top:-3px;right:-3px;margin:0;font-size:7px;box-shadow:1px 1px 0 #000;animation:yk-ep-new 1.2s steps(2) infinite}
+@keyframes yk-ep-new{50%{filter:brightness(1.35)}}
+.epface:hover,.epface:focus-visible{background:#22244a}
+.epface.on{background:#24265a;border-color:var(--c);box-shadow:2px 2px 0 var(--shadow),inset 0 0 0 1px var(--c)}
+/* 잠김: 그림을 어둡게 + 도트 자물쇠 */
+.epface.lock .pic img{filter:grayscale(1) brightness(.35)}
+.epface.lock .nm{color:var(--dim)}
+.epface.notown .pic img{filter:grayscale(1) brightness(.2)}
+.epface .lk{position:absolute;left:50%;top:15px;width:12px;height:10px;margin-left:-6px;background:#9a97bb;box-shadow:1px 1px 0 #000,inset 0 -2px 0 #6a6890}
+.epface .lk::before{content:"";position:absolute;left:2px;top:-6px;width:4px;height:5px;border:2px solid #9a97bb;border-bottom:0}
+.epface .lk::after{content:"";position:absolute;left:5px;top:3px;width:2px;height:3px;background:#161731}
+
+.epright{width:250px;flex:none;display:flex;flex-direction:column;gap:5px;background:var(--panel);border:2px solid var(--line);border-top-color:var(--c);box-shadow:3px 3px 0 var(--shadow);padding:6px;overflow-y:auto}
+.ephead{display:flex;align-items:center;gap:6px}
+.ephead .pic{width:44px;height:44px;overflow:hidden;flex:none;background:#0b0b18;border:2px solid var(--c);box-shadow:2px 2px 0 var(--shadow)}
+.ephead .pic img{width:44px;height:auto;display:block}
+.ephead h3{margin:0;font-family:var(--f-disp);font-weight:400;font-size:15px;color:var(--c);text-shadow:1px 1px 0 #000}
+.epeps{display:flex;flex-direction:column;gap:4px}
+.epeps .epslot{width:100%;padding:4px 6px}
+.epeps .epslot b{font-size:11px}
+.epeps .epslot small{font-size:8.5px}
+.epeps .epslot.seen b{color:var(--c)}
+.epright .bondlist{flex-direction:column}
+.epright .bondlist .epslot{width:100%}
+#stage.bigtext .epface .nm{font-size:10px}
+#stage.bigtext .epeps .epslot b{font-size:12px}
+#stage.bigtext .epeps .epslot small{font-size:9.5px}
+
+/* ── 동료 숙련도: 별 다섯 칸 진행 막대 + 지금 단계 보상 크게 + 나머지는 작은 칩 ── */
+.mxbox{display:flex;flex-direction:column;gap:4px;margin:4px 0 2px;padding:5px 6px;background:#101127;border:2px solid var(--line);box-shadow:2px 2px 0 var(--shadow)}
+.mxtop{display:flex;align-items:center;gap:6px}
+.mxlbl{font-family:var(--f-disp);font-size:10px;color:var(--dim)}
+.mxbar{display:flex;gap:2px}
+.mxs{position:relative;width:22px;height:18px;display:grid;place-items:center;border:1px solid #000;
+  background:linear-gradient(90deg,var(--gold) 0 var(--f),#232548 var(--f) 100%);box-shadow:1px 1px 0 var(--shadow)}
+.mxs i{font-style:normal;font-size:11px;line-height:1;color:#3a3d6e;text-shadow:none}
+.mxs.on i{color:#fff2c0;text-shadow:1px 1px 0 #7a5418}
+.mxs.on{box-shadow:1px 1px 0 var(--shadow),inset 0 1px 0 #fff2c0,inset 0 -2px 0 #b8892a}
+.mxs.cur{background:linear-gradient(90deg,#8a6a2a 0 var(--f),#232548 var(--f) 100%)}
+.mxs.cur i{color:var(--gold);animation:yk-mx-blink 1.4s steps(2) infinite}
+@keyframes yk-mx-blink{50%{color:#fff2c0}}
+.mxxp{margin-left:auto;font-size:9px;color:var(--dim);font-variant-numeric:tabular-nums}
+.mxnow{display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 6px;padding:3px 6px;border-left:3px solid var(--gold);background:rgba(232,192,96,.08)}
+.mxnow small{font-size:8px;color:var(--gold);width:100%}
+.mxnow b{font-family:var(--f-disp);font-weight:400;font-size:13px;color:var(--ink);text-shadow:1px 1px 0 #000}
+.mxnow.up{border-left-color:var(--line);background:none}
+.mxnow.up small{color:var(--dim)}
+.mxnow.up b{color:var(--dim)}
+.mxchips{display:flex;flex-wrap:wrap;gap:2px}
+.mxchip{display:inline-flex;gap:3px;align-items:center;font-size:7.5px;line-height:10px;color:var(--dim);padding:0 3px;border:1px solid var(--line);opacity:.7}
+.mxchip b{font-family:var(--f-disp);font-weight:400;color:var(--dim)}
+.mxchip.on{opacity:1;color:var(--ink);border-color:#7a5418}.mxchip.on b{color:var(--gold)}
+
+/* ── 별 소환: 확률은 한 줄, 천장은 진행 막대, 나머지는 접기 ── */
+.oddsline{display:flex;align-items:center;gap:3px;flex-wrap:wrap}
+.oddsline .oc{display:inline-flex;align-items:baseline;gap:3px;font-size:9px;padding:1px 4px;background:#101127;border:1px solid var(--line);font-variant-numeric:tabular-nums;color:var(--ink)}
+.oddsline .oc b{font-family:var(--f-disp);font-weight:400}
+.oddsline .r5 b{color:var(--gold)}.oddsline .r4 b{color:#c9a0ff}.oddsline .r3 b{color:#8fb0e0}
+.oddsline .ten{color:var(--dim)}
+.oddsline .mini{margin-left:auto}
+.oddsline.big .oc{font-size:11px;padding:2px 6px}
+.pity{display:grid;grid-template-columns:auto 1fr auto;grid-template-rows:auto auto;align-items:center;gap:1px 6px}
+.pity .plbl{font-family:var(--f-disp);font-size:10px;color:var(--gold)}
+.pity .pbar{position:relative;height:10px;background:#0b0b18;border:1px solid #000;box-shadow:1px 1px 0 var(--shadow),inset 0 0 0 1px #2b2d55}
+.pity .pbar i{position:absolute;left:0;top:0;bottom:0;background:repeating-linear-gradient(90deg,var(--gold) 0 3px,#c9a040 3px 4px);box-shadow:inset 0 2px 0 #fff2c0,inset 0 -2px 0 #8a6a2a}
+.pity .pbar u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--rose);box-shadow:1px 0 0 #000}
+.pity .pn{font-size:9px;color:var(--dim);font-variant-numeric:tabular-nums}
+.pity .pn b{font-family:var(--f-disp);font-weight:400;font-size:12px;color:var(--ink)}
+.pity .pr{grid-column:2 / -1;font-size:8px;color:var(--dim);text-align:right}
+.pity .pr b{color:var(--gold)}
+.pity.hot .pbar i{animation:yk-pity-hot 1s steps(2) infinite}
+@keyframes yk-pity-hot{50%{filter:brightness(1.3)}}
+details.fold{background:var(--panel);border:2px solid var(--line);box-shadow:2px 2px 0 var(--shadow)}
+details.fold summary{cursor:pointer;padding:3px 6px;font-family:var(--f-disp);font-size:10px;color:var(--dim);list-style:none}
+details.fold summary::-webkit-details-marker{display:none}
+details.fold summary::before{content:"▶ ";font-size:8px;color:var(--gold)}
+details.fold[open] summary::before{content:"▼ "}
+details.fold[open] summary{color:var(--ink);border-bottom:1px solid var(--line)}
+details.fold > :not(summary){margin:4px 6px 5px}
+
+@media (prefers-reduced-motion:reduce){
+  .epface .newt,.mxs.cur i,.pity.hot .pbar i{animation:none}
+}
