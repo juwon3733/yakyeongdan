@@ -117,6 +117,14 @@ async function playAmb(name, force = false) {
 // 효과음이 있는지 (manifest 기준). 아직 못 읽었으면 false → 부르는 쪽이 공용 소리로 대신한다
 export const hasSfx = name => !!manifest?.sfx?.includes(name);
 
+// 적 피격음: 적 재질별 효과음 이름 (sfx(HIT_SFX.shell) 식으로 부른다. 없으면 'hit')
+export const HIT_SFX = {
+  soft: 'hit_soft',    // 유령·구름·해파리
+  shell: 'hit_shell',  // 게·갑옷·톱니
+  beast: 'hit_beast',  // 새·고양이·고래
+  magic: 'hit_magic',  // 별·마녀·천사
+};
+
 let lastSfx = {};
 export function sfx(name, { vol = 1, rate = 1 } = {}) {
   if (!ctx || !LEVELS[level]) return;
