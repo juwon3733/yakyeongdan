@@ -444,15 +444,18 @@ function dash(id, img, e, m, delay = 0) {
   const dx = Math.max(20, (tgt ? b.x : b.cx) - a.x - a.w * .55);
   const dur = m === 'finisher' ? 820 : m === 'sweep' ? 700 : 600, up = m === 'finisher' ? -26 : 0;
   const host = img.closest('[data-ally]'); if (host) host.style.zIndex = 5;
+  // 예비(뒤로 웅크림) → 튀어 나감(몸이 앞으로 늘어남) → 도착하며 꾹 눌림 → 베고 버팀 → 뒤로 뛰어 돌아와 착지·출렁
   const an = img.animate([
-    { transform: 'none' },
-    { transform: `translate(-8px,${m === 'finisher' ? 3 : 0}px) scaleY(.94)`, offset: .1 },
-    { transform: `translate(${dx * .6}px,${up}px) scale(1.04)`, offset: .2 },
-    { transform: `translate(${dx}px,${up / 3}px) scale(1.06)`, offset: .28 },
-    { transform: `translate(${dx + 6}px,0) scale(1.06)`, offset: .62 },
-    { transform: `translate(${dx * .3}px,-6px)`, offset: .85 },
-    { transform: 'none' },
-  ], { duration: dur, delay, easing: 'cubic-bezier(.3,.7,.3,1)' });
+    { offset: 0, transform: 'none', easing: 'cubic-bezier(.5,0,.75,.4)' },
+    { offset: .12, transform: `translate(-9px,${m === 'finisher' ? 4 : 2}px) scale(1.07,.9) rotate(-3deg)`, easing: 'cubic-bezier(.2,.9,.3,1)' },
+    { offset: .26, transform: `translate(${dx}px,${up / 3}px) scale(1.1,.94) rotate(5deg)`, easing: 'cubic-bezier(.2,.9,.3,1)' },
+    { offset: .34, transform: `translate(${dx + 4}px,1px) scale(1.04,.96) rotate(2deg)`, easing: 'ease-out' },
+    { offset: .6, transform: `translate(${dx + 6}px,0) scale(1.02,.99) rotate(1deg)`, easing: 'cubic-bezier(.4,0,.6,1)' },
+    { offset: .8, transform: `translate(${dx * .25}px,-10px) scale(.97,1.04) rotate(-2deg)`, easing: 'cubic-bezier(.5,0,.75,.4)' },
+    { offset: .88, transform: 'translate(0,2px) scale(1.06,.92)', easing: 'ease-out' },
+    { offset: .95, transform: 'translate(0,-1px) scale(.99,1.02)', easing: 'ease-out' },
+    { offset: 1, transform: 'none' },
+  ], { duration: dur, delay });
   moving.add(an);
   an.onfinish = an.oncancel = () => { moving.delete(an); if (host) host.style.zIndex = ''; };
   // 잔상: 출발~도착 사이에 3장
@@ -946,9 +949,51 @@ function retargetFx(e) {
 // ---------- DOM 작은 것 ----------
 function pulse(el, cls, ms) {
   if (!el) return;
+  // 캐릭터·적 그림의 동작은 WAAPI로(가만히 숨쉬기 CSS 애니메이션과 겹쳐 돌아 끊기지 않게) — 예비 동작·오버슈트·여운이 있는 키프레임
+  if (KF[cls] && el.tagName === 'IMG') {
+    el.getAnimations().forEach(a => { if (a.id === 'jmove') a.cancel(); });
+    const an = el.animate(KF[cls](), { duration: ms, easing: 'linear', fill: cls === 'jdown' ? 'forwards' : 'none' }); an.id = 'jmove';
+    return;
+  }
   el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls);
   setTimeout(() => el.classList.remove(cls), ms);
 }
+// 몸 동작 키프레임: 발끝 기준. E = 구간마다 부드러운 감속(살짝 넘쳤다 돌아오는 느낌은 키프레임으로)
+const E = 'cubic-bezier(.25,.8,.35,1)', IN = 'cubic-bezier(.5,0,.75,.4)';
+const f = (o, t, extra = {}) => ({ offset: o, transform: t, easing: E, ...extra });
+const GLOW = c => `brightness(1.35) drop-shadow(0 0 6px ${c})`;
+const KF = {
+  // 맞음: 번쩍 → 뒤로 꺾이며 밀림 → 앞으로 살짝 튕김 → 잦아듦(스프링)
+  jhitA: () => [f(0, 'none', { filter: 'brightness(3) sepia(1) hue-rotate(-40deg)' }), f(.1, 'translate(-15px,1px) rotate(-7deg) scale(.94,1.05)', { filter: 'brightness(1.8)' }),
+    f(.32, 'translate(5px,0) rotate(2.5deg) scale(1.03,.97)', { filter: 'none' }), f(.52, 'translate(-2px,0) rotate(-1deg)'), f(.72, 'translate(1px,0) rotate(.4deg)'), f(1, 'none')],
+  jhitF: () => [f(0, 'none', { filter: 'brightness(3.2)' }), f(.1, 'translate(15px,1px) rotate(7deg) scale(.94,1.05)', { filter: 'brightness(1.8)' }),
+    f(.32, 'translate(-5px,0) rotate(-2.5deg) scale(1.03,.97)', { filter: 'none' }), f(.52, 'translate(2px,0) rotate(1deg)'), f(.72, 'translate(-1px,0) rotate(-.4deg)'), f(1, 'none')],
+  // 시전: 웅크렸다(예비) → 솟아오르며 빛 → 내려와 살짝 눌림 → 제자리
+  jcast: () => [f(0, 'none'), f(.22, 'translateY(2px) scale(1.05,.93)', { easing: IN }), f(.48, 'translateY(-11px) scale(.96,1.06)', { filter: GLOW('var(--c)') }),
+    f(.74, 'translateY(1px) scale(1.04,.96)', { filter: 'none' }), f(.88, 'translateY(-1px) scale(.99,1.01)'), f(1, 'none')],
+  jheal: () => [f(0, 'none'), f(.2, 'translateY(1px) scale(1.03,.96)', { easing: IN }), f(.5, 'translateY(-9px) scale(.98,1.03)', { filter: GLOW('#b8ffc8') }),
+    f(.75, 'translateY(-6px)', { filter: GLOW('#b8ffc8') }), f(.9, 'translateY(1px) scale(1.02,.98)', { filter: 'none' }), f(1, 'none')],
+  jtime: () => [f(0, 'none'), f(.2, 'rotate(-4deg) translateY(-2px)', { filter: GLOW('#ffe7a0') }), f(.45, 'rotate(4deg) translateY(-6px)'), f(.7, 'rotate(-1.5deg) translateY(-1px)', { filter: 'none' }), f(.85, 'rotate(.6deg)'), f(1, 'none')],
+  jdraw2: () => [f(0, 'none'), f(.2, 'translateY(1px) scale(1.05,.93)', { easing: IN }), f(.45, 'translateY(-9px) scale(.96,1.05)'), f(.7, 'translateY(1px) scale(1.05,.94)'), f(.85, 'translateY(-1px)'), f(1, 'none')],
+  // 방어: 몸을 낮추고 버팀 → 살짝 밀렸다 → 단단히 서기
+  jguard: () => [f(0, 'none'), f(.18, 'translate(-3px,3px) scale(1.06,.9)', { easing: IN, filter: 'brightness(1.3) drop-shadow(0 0 5px #c9d2f0)' }),
+    f(.5, 'translate(-1px,2px) scale(1.04,.93)', { filter: 'drop-shadow(0 0 4px #c9d2f0)' }), f(.75, 'translate(0,-1px) scale(.98,1.03)', { filter: 'none' }), f(1, 'none')],
+  // 원거리: 겨눔 → 쏘는 반동으로 뒤로 → 되돌아옴
+  jshot: () => [f(0, 'none'), f(.15, 'translate(3px,0) rotate(1deg)', { easing: IN }), f(.3, 'translate(-13px,0) rotate(-4deg) scale(1.03,.97)', { filter: 'brightness(1.6)' }),
+    f(.55, 'translate(3px,0) rotate(1deg)', { filter: 'none' }), f(.78, 'translate(-1px,0)'), f(1, 'none')],
+  jatk: () => [f(0, 'none'), f(.22, 'translate(-7px,1px) rotate(-3deg) scale(1.03,.96)', { easing: IN }), f(.42, 'translate(22px,0) rotate(4deg) scale(1.06)'),
+    f(.65, 'translate(10px,0) rotate(1deg)'), f(.85, 'translate(-2px,0) rotate(-.5deg)'), f(1, 'none')],
+  jsweep: () => [f(0, 'none'), f(.22, 'translate(-9px,1px) rotate(-9deg)', { easing: IN }), f(.48, 'translate(26px,0) rotate(11deg) scale(1.06)'),
+    f(.7, 'translate(10px,0) rotate(-3deg)'), f(.86, 'translate(-2px,0) rotate(1deg)'), f(1, 'none')],
+  jfin: () => [f(0, 'none'), f(.22, 'translate(-6px,4px) scale(1.07,.9)', { easing: IN }), f(.48, 'translate(18px,-28px) rotate(6deg) scale(.96,1.08)', { filter: GLOW('var(--c)') }),
+    f(.64, 'translate(30px,3px) rotate(-2deg) scale(1.08,.9)', { filter: 'none' }), f(.82, 'translate(8px,-2px) scale(.98,1.02)'), f(1, 'none')],
+  jlunge: () => [f(0, 'none'), f(.22, 'translate(7px,1px) rotate(3deg) scale(1.03,.96)', { easing: IN }), f(.42, 'translate(-24px,0) rotate(-4deg) scale(1.06)'),
+    f(.65, 'translate(-9px,0) rotate(-1deg)'), f(.85, 'translate(2px,0)'), f(1, 'none')],
+  // 쓰러짐: 휘청 → 무릎 꺾임 → 바닥에 닿으며 살짝 튐 → 잿빛
+  jdown: () => [f(0, 'none', { filter: 'brightness(2)' }), f(.2, 'translate(-6px,0) rotate(-6deg)', { filter: 'none' }), f(.45, 'translate(3px,2px) rotate(4deg) scale(1.02,.95)'),
+    f(.7, 'translate(0,4px) scale(1.06,.88)', { filter: 'grayscale(.7)' }), f(.85, 'translate(0,2px) scale(1.02,.93)'), f(1, 'translate(0,3px) scale(1.04,.91)', { filter: 'grayscale(1)' })],
+  jflash: () => [{ filter: 'brightness(3)' }, { filter: 'none' }],
+};
 // 튀어 오르는 숫자(슬레이 더 스파이어식): 튀어 올랐다 옆으로 살짝 떨어지며 사라짐.
 // 치명타·15 이상 피해는 크게 + 흔들림(.big), 막힌 건 회색 「막음」(.blk). 움직임은 css .jnum 키프레임.
 function num(x, y, text, cls = '', v = 6) {
