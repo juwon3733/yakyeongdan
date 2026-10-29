@@ -398,3 +398,59 @@ def _atk(cid):
 
 
 SFX.update({f'atk_{cid}': _atk(cid) for cid in ATK})
+
+
+# ---------- 적 피격음 (hit_<재질>) ----------
+# 적 생김새에 따라 맞는 소리가 다르다. 모두 0.15~0.3초로 잘라 연타해도 뭉개지지 않게.
+
+def fit(x, sec):
+    """sec초로 자르고 끝 20ms를 부드럽게 줄인다."""
+    n = int(sec * SR)
+    x = cat(x, np.zeros(max(0, n - len(x))))[:n].copy()
+    f = int(0.02 * SR)
+    x[-f:] *= np.linspace(1, 0, f)
+    return x
+
+
+def hit_soft():
+    """유령·구름·해파리: 푹 꺼지는 낮은 퍽 + 출렁이는 FM 꼬리"""
+    t = T(0.24)
+    puff = lowpass(noise(0.24), 900) * np.exp(-t / 0.05) * 0.8
+    body = np.sin(2 * np.pi * np.cumsum(70 + 120 * np.exp(-t / 0.04)) / SR) * np.exp(-t / 0.07) * 0.7
+    wob = fm(67, 0.1, 0.35, ratio=0.5, index=1.6, idecay=0.08, a=0.004, d=0.15, s=0, r=0.06, vib=0.04)
+    return fit(mix(puff, body, at(lowpass(wob, 2500), 0.015)), 0.24)
+
+
+def hit_shell():
+    """게·갑옷·톱니: 단단한 껍데기에 맞는 짧은 깡 + 금속 덜그럭"""
+    t = T(0.18)
+    crack = highpass(noise(0.18), 3000) * np.exp(-t / 0.012) * 0.7
+    clank = fm(81, 0.04, 0.55, ratio=3.53, index=4.0, idecay=0.05, a=0.001, d=0.12, s=0, r=0.05)
+    rattle = fm(88, 0.03, 0.3, ratio=2.41, index=3.0, idecay=0.03, a=0.001, d=0.06, s=0, r=0.03)
+    knock = np.sin(2 * np.pi * np.cumsum(160 + 200 * np.exp(-t / 0.01)) / SR) * np.exp(-t / 0.03) * 0.5
+    return fit(mix(crack, clank, knock, at(rattle, 0.05)), 0.18)
+
+
+def hit_beast():
+    """새·고양이·고래: 묵직한 살 타격 + 짧게 꺾여 내려가는 울음"""
+    t = T(0.26)
+    body = np.sin(2 * np.pi * np.cumsum(85 + 160 * np.exp(-t / 0.03)) / SR) * np.exp(-t / 0.07) * 0.9
+    slap = lowpass(highpass(noise(0.26), 800), 4000) * np.exp(-t / 0.02) * 0.5
+    tc = T(0.16)
+    cry = sweep_tone(900, 380, 0.16, 'sq') * np.exp(-tc / 0.07) * (0.8 + 0.2 * np.sin(2 * np.pi * 28 * tc)) * 0.22
+    return fit(mix(body, slap, at(lowpass(cry, 3000), 0.03)), 0.26)
+
+
+def hit_magic():
+    """별·마녀·천사: 마력이 깨지는 반짝 + 위아래로 갈라지는 FM 종"""
+    t = T(0.3)
+    snap = highpass(noise(0.3), 4500) * np.exp(-t / 0.018) * 0.45
+    a = fm(88, 0.05, 0.4, ratio=3.5, index=2.5, idecay=0.06, a=0.001, d=0.2, s=0, r=0.06)
+    b = fm(95, 0.05, 0.3, ratio=5.0, index=1.5, idecay=0.05, a=0.001, d=0.15, s=0, r=0.05)
+    ts = T(0.2)
+    fall = np.sin(2 * np.pi * np.cumsum(1800 * np.exp(-ts / 0.08) + 300) / SR) * np.exp(-ts / 0.08) * 0.25
+    thud = np.sin(2 * np.pi * np.cumsum(110 + 150 * np.exp(-t / 0.02)) / SR) * np.exp(-t / 0.04) * 0.4
+    return fit(mix(snap, a, thud, fall, at(b, 0.06)), 0.3)
+
+
+SFX.update({'hit_soft': hit_soft, 'hit_shell': hit_shell, 'hit_beast': hit_beast, 'hit_magic': hit_magic})
