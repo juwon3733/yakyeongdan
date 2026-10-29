@@ -150,3 +150,24 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 #app[data-screen="combat"] .pile::before{content:"";position:absolute;left:1px;top:1px;width:9px;height:12px;background:#3a3a7a;border:1px solid #000;box-shadow:2px -2px 0 -0px #5a5aa8}
 #app[data-screen="combat"] .pile.disc::before{background:#6a3a3a;box-shadow:2px -2px 0 #a85a5a}
 #app[data-screen="combat"] .pile.exh::before{background:#4a2a5a;box-shadow:none}
+
+/* ---- 위 띠(계획 6): 글자 버튼 대신 도트 아이콘, 시계는 시계 모양 ---- */
+.topbar .hi{width:15px;height:15px;flex:none;filter:drop-shadow(1px 1px 0 #000)}
+.topbar .hudb{display:inline-flex;align-items:center;gap:3px;padding:3px 6px}
+.topbar .hudb b{font-family:var(--f-disp);font-weight:400;font-size:11px}
+.topbar .clock{display:inline-flex;align-items:center;gap:3px}
+.topbar .clock .hi{width:13px;height:13px}
+/* 소리 버튼: 글자 대신 스피커 그림(켬·작게·끔) */
+.topbar [data-sound]{font-size:0;width:26px;height:22px;padding:0;position:relative}
+.topbar [data-sound]::before{content:"";position:absolute;left:5px;top:5px;width:7px;height:10px;background:#c9d2f0;clip-path:polygon(0 30%,40% 30%,100% 0,100% 100%,40% 70%,0 70%)}
+.topbar [data-sound]::after{content:"";position:absolute;left:13px;top:6px;width:6px;height:8px;border:2px solid #c9d2f0;border-left:0;border-radius:0 8px 8px 0}
+.topbar [data-sound][data-lv="1"]::after{width:3px;height:6px;top:7px}
+.topbar [data-sound][data-lv="2"]::after{border:0;width:8px;height:8px;top:6px;left:13px;border-radius:0;
+  background:linear-gradient(45deg,transparent 42%,#ff6a7a 42% 58%,transparent 58%),linear-gradient(-45deg,transparent 42%,#ff6a7a 42% 58%,transparent 58%)}
+/* 연계: 글자 칩 대신 작은 이름 + 빛나는 칸 */
+.topbar .chainbox{display:inline-flex;align-items:center;gap:3px;cursor:help}
+.topbar .chainbox small{font-size:8px;color:var(--dim)}
+.topbar .chain i{width:12px;height:8px;transform:skewX(-20deg)}
+.topbar .chain i.on{background:var(--gold);box-shadow:0 0 6px rgba(224,184,74,.8)}
+.topbar .turnno{font-size:9px;color:var(--dim)}
+.topbar .turnno b{font-family:var(--f-disp);font-weight:400;font-size:13px;color:#fff;margin-left:2px}

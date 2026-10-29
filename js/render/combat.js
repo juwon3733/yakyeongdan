@@ -186,5 +186,5 @@ export function combatView() {
 export const combatTopExtra = () => {
   const C = S.C;
   const extra = [C.turnAtk ? `<span class="chip" style="color:#ff9a8a">이번 턴 공격 +${C.turnAtk}</span>` : '', C.noDmg ? '<span class="chip" style="color:#9ad0f0">숨바꼭질</span>' : ''].join('');
-  return extra + `<span class="chip" data-tip="${esc(kwOne('연계') + '\n' + kwOne('듀오'))}">연계</span><span class="chain">${Array.from({ length: RULES.chainMax }, (_, k) => `<i class="${k < C.chain ? 'on' : ''}"></i>`).join('')}</span><span class="note">${C.turn}턴</span>`;
+  return extra + `<span class="chainbox" data-tip="${esc(kwOne('연계') + '\n' + kwOne('듀오'))}"><small>연계</small><span class="chain">${Array.from({ length: RULES.chainMax }, (_, k) => `<i class="${k < C.chain ? 'on' : ''}"></i>`).join('')}</span></span><span class="turnno">턴 <b>${C.turn}</b></span>`;
 };

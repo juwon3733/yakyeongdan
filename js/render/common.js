@@ -68,6 +68,18 @@ function paceTip(G) {
 }
 
 // 위 띠: 밤 시계 · 달 · (전투면 연계) · 덱. 지도에서는 동료 얼굴과 체력도.
+// 위 띠 도트 아이콘(12×12): 설정·덱·시계
+const HUDI = {
+  gear: ['....kkkk....', '.kk.k11k.kk.', '.k1kk11kk1k.', '.kk111111kk.', '..k11kk11k..', 'kk11k..k11kk', 'k111k..k111k', 'kk11kk.k11kk', '..k11kk11k..', '.kk111111kk.', '.k1kk11kk1k.', '.kk.kkkk.kk.'],
+  deck: ['...kkkkkkk..', '..k2222222k.', '.kkkkkkk22k.', '.k11111k22k.', '.k1kkk1k22k.', '.k11111k22k.', '.k1kkk1k2k..', '.k11111kk...', '.k1kkk1k....', '.k11111k....', '.kkkkkkk....', '............'],
+  clock: ['...kkkkkk...', '..k111111k..', '.k1111k111k.', 'k11111k1111k', 'k11111k1111k', 'k11111kkk11k', 'k1111111111k', 'k1111111111k', '.k11111111k.', '..k111111k..', '...kkkkkk...', '............'],
+};
+const HUDC = { gear: ['#c9d2f0'], deck: ['#ece6d8', '#8a90c8'], clock: ['#ffe7a0'] };
+export function hudIcon(k) {
+  let r = '';
+  HUDI[k].forEach((row, y) => [...row].forEach((ch, x) => { const c = ch === 'k' ? '#0a0a14' : ch === '1' ? HUDC[k][0] : ch === '2' ? HUDC[k][1] : ''; if (c) r += `<rect x="${x}" y="${y}" width="1" height="1" fill="${c}"/>`; }));
+  return `<svg class="hi" viewBox="0 0 12 12" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`;
+}
 export function topbar(extra = '') {
   const G = S.G, m = MOONS[G.moon];
   const mates = G.screen === 'combat' ? '' : `<span class="mates">${G.formation.map(p => {
@@ -77,7 +89,7 @@ export function topbar(extra = '') {
   // 에피소드 특별 전투: 밤 시계·별빛·도구는 의미가 없어 숨긴다
   const ep = !!G.episode;
   return `<div class="topbar ${ep ? 'ep' : ''}">
-    ${ep ? '<span class="chip eptag">에피소드 · 특별 전투</span>' : `<span class="clock ${G.clock >= dawnAt() ? 'dawn' : ''}">${fmt(G.clock)}</span>
+    ${ep ? '<span class="chip eptag">에피소드 · 특별 전투</span>' : `<span class="clock ${G.clock >= dawnAt() ? 'dawn' : ''}">${hudIcon('clock')}${fmt(G.clock)}</span>
     <span class="night" data-tip="${esc(paceTip(G))}"><i style="width:${Math.min(100, G.clock / dawnAt() * 100)}%"></i><b style="left:33.3%"></b><b style="left:66.6%"></b><u style="left:${Math.min(100, paceGoal(G) / dawnAt() * 100)}%"></u></span>${G.endless ? endlessChip(G) : paceChip(G)}`}
     ${G.depth ? `<span class="chip depthchip" title="밤의 깊이 ${G.depth}">깊이 ${G.depth}</span>` : ''}
     ${G.daily ? `<span class="chip dailychip" data-tip="${esc(`매일의 밤 「${G.daily.rule.name}」: ${G.daily.rule.text}`)}">매일 · ${esc(G.daily.rule.name)}</span>` : ''}
@@ -88,8 +100,8 @@ export function topbar(extra = '') {
     ${ep ? '' : `<span class="relics">${relicRow(G)}</span>
     <span class="gold" title="별빛 (야시장·사건에서 쓴다)">별빛 ${G.gold}</span>`}
     ${mates}
-    <button type="button" class="mini" data-settings title="설정">설정</button>
-    <button type="button" class="mini" data-deck>덱 ${G.deck.length}</button>
+    <button type="button" class="mini hudb" data-settings title="설정" aria-label="설정">${hudIcon('gear')}</button>
+    <button type="button" class="mini hudb" data-deck title="덱 보기" aria-label="덱 ${G.deck.length}장">${hudIcon('deck')}<b>${G.deck.length}</b></button>
   </div>`;
 }
 

@@ -38,7 +38,7 @@ function load(file) {
 function applyLevel() {
   if (master) master.gain.setTargetAtTime(LEVELS[level], ctx.currentTime, 0.05);
   const b = document.querySelector('[data-sound]');
-  if (b) b.textContent = LABELS[level];
+  if (b) { b.textContent = LABELS[level]; b.dataset.lv = level; }
 }
 
 function unlock() {
@@ -270,7 +270,7 @@ function placeButton() {
   const host = document.querySelector('.topbar [data-deck]') || document.querySelector('.thead, .bhead, .tmenu');
   if (!host) return;
   const b = document.createElement('button');
-  b.type = 'button'; b.className = 'mini'; b.dataset.sound = ''; b.textContent = LABELS[level];
+  b.type = 'button'; b.className = 'mini'; b.dataset.sound = ''; b.dataset.lv = level; b.textContent = LABELS[level];
   b.title = '소리: 켬 → 작게 → 끔 (M 키)';
   if (host.matches('[data-deck]')) host.before(b); else host.append(b);
 }
