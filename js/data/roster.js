@@ -44,3 +44,12 @@ export const ROSTER = {
 };
 export const ROSTER_IDS = Object.keys(ROSTER);
 export const byRarity = r => ROSTER_IDS.filter(k => ROSTER[k].rarity === r);
+
+// 역할 갈래 (파티 고르기 무대의 작은 아이콘): atk 공격 · def 방어 · heal 회복 · sup 지원. 패시브가 주로 하는 일로 정한다.
+export const ROLE_KINDS = { atk: '공격', def: '방어', heal: '회복', sup: '지원' };
+export const ROLE_KIND = {
+  iris: 'atk', brick: 'atk', raven: 'atk', noel: 'atk', sion: 'atk', akane: 'atk', nerea: 'atk', mariana: 'atk', zeno: 'atk', laila: 'atk', mimimomo: 'atk',
+  marta: 'def', sigrun: 'def', dora: 'def',
+  gordon: 'heal',
+  lunaria: 'sup', eleonore: 'sup', sebas: 'sup', tomori: 'sup', bertha: 'sup', finn: 'sup', fukuro: 'sup',
+};
