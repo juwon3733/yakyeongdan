@@ -1,6 +1,8 @@
 name: ci
 on:
+  # 실패 메일이 겹쳐 오지 않게: main·그림 브랜치에 올릴 때와 PR에서만(작업 브랜치 push는 PR이나 main에서 한 번 돈다)
   push:
+    branches: [main, 'assets/**']
   pull_request:
 jobs:
   smoke:
