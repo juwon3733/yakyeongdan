@@ -8,6 +8,7 @@
 juwon3733/yakyeongdan 최신 main을 받고 AGENTS.md대로 다음 그림 묶음을 알아서 골라 만들어 줘.
 
 - `node tools/next-batch.mjs`가 고른 「다음 묶음」을 하고, 그 묶음 브랜치를 올리면 **멈추지 말고** 다시 `node tools/next-batch.mjs`를 돌려 다음 묶음을 이어서 해. 「지금 그릴 수 있는 묶음 없음」이 나오거나 대화가 너무 길어질 때까지 계속. 묶음마다 브랜치 따로.
+- 도구가 고른 순서대로 해. 어려워 보이는 묶음(특히 전투 스프라이트 pose-…)을 건너뛰고 다른 묶음으로 가지 마. 정말 못 만들면 그 묶음 id와 이유를 끝에 적어.
 - 프롬프트는 assets/prompts.json에서 같은 id의 prompt를 한 글자도 고치지 말고 그대로 써.
 - reference_images에 적힌 PNG는 전부 첨부해. style/akane_c.png가 일러스트 그림체 기준이야. 「이미 있음」으로 나온 그림은 다시 만들지 말고 기준으로 첨부만 해.
 - 시트(battlesheet·cardsheet·foesheet·iconsheet·fxsheet)는 한 장에 격자로 여러 개를 그려. 칸 수·순서·크기는 프롬프트대로, 칸 사이 선·글자 없이, 칸 가장자리에 조금 여백을 두고 그림·효과가 칸 경계에 닿지 않게(경계에서 그대로 잘려). assets/sheets/에 시트만 넣고 `npm run art`를 돌리면 칸마다 잘린 파일이 생겨 — 잘린 파일도 같이 커밋해.
