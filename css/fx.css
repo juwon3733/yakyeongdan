@@ -191,3 +191,11 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 #app[data-screen="combat"] :is(.pm, .foe) > img{filter:none}   /* 그림마다 필터 그림자는 무거워서 뺌(발밑 그림자로 충분) */
 #app[data-screen="combat"] .log > :not(.logtx):not(.tip){background:rgba(11,11,24,.85);padding:2px 4px;box-shadow:2px 2px 0 #000}
 #fx .jbanner.win{top:17%}   /* 승리 띠는 위쪽 — 아래 보상 카드를 가리지 않게 */
+/* 캐릭터 층 (js/juice.js charLayers): 오라는 몸 뒤, 동반자는 몸 뒤 왼쪽 위에서 떠다님 */
+.pm > img.px{position:relative;z-index:1}
+.pm > .jaura,.pm > .jpet{position:absolute;z-index:0;pointer-events:none;image-rendering:auto;margin:0}
+.pm > .jaura{opacity:.85;mix-blend-mode:screen}
+.pm > .jpet{animation:jpetbob 2.6s ease-in-out infinite}
+.pm > .jpet.atk{animation:none;z-index:2}
+@keyframes jpetbob{0%,100%{translate:0 0}50%{translate:0 -4px}}
+#stage.calm .pm > .jpet{animation:none}

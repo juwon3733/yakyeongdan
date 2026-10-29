@@ -12,7 +12,7 @@ import { FOE } from './data/enemies.js';
 let hush = false;
 const sfx = (...a) => { if (!hush) sfxRaw(...a); };
 import { showPhase, showBoss, shake, showBurst } from './fx.js';
-import { battleArt, FRAMES, charArt, fxFrames } from './art.js';
+import { battleArt, FRAMES, charArt, fxFrames, artURL } from './art.js';
 import { cardData } from './data/cards.js';
 import { actorOf } from './combat.js';
 
@@ -68,7 +68,7 @@ function bodyBox(src) {
 function fitSprites() {
   const A = app(); if (!A) return;
   for (const img of A.querySelectorAll('.pm[data-ally] > img:not(.jxfade), .foe[data-fi] > img')) {
-    const id = img.parentElement.dataset.ally, key = id ? battleArt(id, 'idle') : img.getAttribute('src');
+    const id = img.parentElement.dataset.ally, key = id ? battleArt(id, 'idle') : (img.dataset.src0 ||= img.getAttribute('src'));
     if (!key || img.dataset.bk === key) continue;
     const b = bodyBox(key); if (!b) continue;
     let iw, ih;
@@ -150,6 +150,7 @@ export function afterRender(events = []) {
   ensure(); if (!layer) return;
   sizeCanvas();
   fitSprites();
+  charLayers();
   setSky();
   fanHand();
   gachaFx();
@@ -331,7 +332,7 @@ const PRE = new Map();   // 미리 받은 그림(버려지지 않게 붙들어 �
 function preloadPoses() {
   for (const id of S.G?.party || []) { for (const k of FRAMES) { const u = battleArt(id, k); if (u) new Image().src = u; } bodyBox(battleArt(id, 'idle')); }
   // 이펙트 프레임도 미리 받아 둔다(재생 중에 그림을 바꿀 때 받다 끊기지 않게)
-  for (const n of [...(S.G?.party || []).flatMap(id => [`${id}_atk`, `${id}_skill`]), 'slash', 'explode', 'pierce', 'magic']) for (const u of fxFrames(n)) if (!PRE.has(u)) { const im = new Image(); im.src = u; PRE.set(u, im); }
+  for (const n of [...(S.G?.party || []).flatMap(id => [`${id}_atk`, `${id}_skill`, `${id}_aura`, `${id}_pet_idle`, `${id}_pet_atk`, `${id}_proj`]), 'slash', 'explode', 'pierce', 'magic']) for (const u of fxFrames(n)) if (!PRE.has(u)) { const im = new Image(); im.src = u; PRE.set(u, im); }
 }
 // 칸 바꾸기: 전 칸을 위에 잠깐 겹쳐 두고 흐리게 사라지게(교차 페이드). 동작 칸으로 들어갈 때는 바로(빠른 동작이 또렷하게), 돌아올 때·숨쉬기는 부드럽게
 function swapSrc(img, url, fade) {
@@ -436,12 +437,14 @@ function actFx(e, special = false) {
     if ((m === 'slash' || m === 'sweep' || m === 'finisher') && !calmNow()) {
       // 근접: 적 앞까지 돌진 → 베고 → 돌아옴, 잔상
       const dur = dash(id, img, e, m, n * 70);
-      pose(id, 'attack', dur - 120);
+      poseSeq(id, [['windup', Math.round(dur * .12)], ['attack', Math.round(dur * .7)]]);
+      petAttack(id, e, n * 70);
       if (SET.shake) camera(id, e, m === 'finisher' || special ? 1.1 : 1.05, dur);
     } else {
       pulse(img, SET.shake || !/atk|shot|sweep|fin/.test(cls) ? cls : 'jflash', ms);
       pose(id, p, ms - 40) || (p === 'guard' && pose(id, 'skill', ms - 40));
-      if (m === 'shot') { muzzle(r, col); if (SET.shake) camera(id, e, 1.04, 420); }
+      if (m === 'shot') { muzzle(r, col); if (SET.shake) camera(id, e, 1.04, 420); projectile(id, e, r); petAttack(id, e, 0); }
+      else if (m === 'cast' || m === 'time') petAttack(id, e, 120);
       else if (m === 'guard') { guardFx(r, col); }
       else if (m === 'heal') { circle(r, '#9af0b0', 26); rise(r, '#c8ffd0', 18); }
       else { circle(r, col, special ? 34 : 26); rise(r, col, special ? 26 : 14); if (special && SET.shake) camera(id, e, 1.08, 600); }
@@ -684,6 +687,7 @@ function hitFoe(e, P) {
   else impactFx(x, y, col);
   if (e.blocked) shieldBreak(x, y - 6, e.dmg === 0);
   if (el) pulse(el.querySelector(':scope > img') || el, SET.shake ? 'jhitF' : 'jflash', 380);
+  if (img && e.dmg > 0) foePose(img, 'hurt', 360);
   if (e.dmg > 0) num(x, ir.y + ir.h * .25, String(e.dmg), e.crit ? 'crit' : '', e.dmg);
   else if (e.blocked) num(x, ir.y + ir.h * .25, '막음', 'blk', 8);
   if (e.bleed) at(110, () => num(x + 14, ir.y + ir.h * .25 + 10, String(e.bleed), 'bleed', e.bleed));
@@ -790,6 +794,7 @@ function foeActFx(e) {
   const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   if (e.t === 'atk' || e.t === 'mix') {
     if (img && SET.shake && !calmNow()) { foeDash(img, e.target ?? e.aim); foeCamera(el, e.target ?? e.aim); }
+    if (img) foePose(img, 'attack', 520);
     else pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 400);
     pulse(el.querySelector('.intent'), 'jfire', 300);
   }
@@ -1242,4 +1247,96 @@ function gachaFx() {
       gsfx(`summon_r${g}`, g === 3 ? 'flip' : 'star', { vol: g === 3 ? .5 : .8 });
     });
   }
+}
+
+// ---------- 캐릭터 층 (docs/BATTLE_PLAN.md 4단계) ----------
+// 그림이 있을 때만 켜진다: 준비 자세(sprites/<id>_windup), 적 공격·피격 자세(enemies/<적>_attack|_hurt),
+// ★5 오라(fx/<id>_aura_1..6, 몸 뒤에서 반복), 동반자(fx/<id>_pet_idle_1..3 떠다님 / _pet_atk_1..3 공격 때 따로 돌진),
+// 원거리 투사체(fx/<id>_proj_1..3, 쏜 동료 → 대상으로 날아감)
+function poseSeq(id, seq) {
+  const img = allyEl(id)?.querySelector(':scope > img'), idle = battleArt(id, 'idle');
+  if (!img || !idle) return;
+  const steps = seq.filter(([k]) => battleArt(id, k)); if (!steps.length) return;
+  busy.add(img);
+  let t = 0;
+  for (const [k, ms] of steps) { const u = battleArt(id, k); setTimeout(() => { if (img.isConnected) swapSrc(img, u, 0); }, t); t += ms; }
+  setTimeout(() => { busy.delete(img); if (img.isConnected && steps.some(([k]) => img.getAttribute('src') === battleArt(id, k))) swapSrc(img, idle, 0); }, t);
+}
+function foePose(img, kind, ms) {
+  const base = img.dataset.src0 || img.getAttribute('src') || '';
+  const m = /^assets\/(enemies\/.+)\.png$/.exec(base); if (!m) return;
+  const u = artURL(`${m[1]}_${kind}.png`); if (!u) return;
+  img.dataset.src0 = base; img.src = u;
+  setTimeout(() => { if (img.isConnected && img.getAttribute('src') === u) img.src = base; }, ms);
+}
+// 몸 상자를 .pm 안 좌표로(오라·동반자를 그 자리에 붙인다)
+function bodyIn(img) {
+  const [bx, by, bw, bh] = (img.dataset.b || '0 0 1 1').split(' ').map(Number);
+  const x = img.offsetLeft + img.offsetWidth * bx, y = img.offsetTop + img.offsetHeight * by, w = img.offsetWidth * bw, h = img.offsetHeight * bh;
+  return { x, y, w, h, cx: x + w / 2, cy: y + h / 2 };
+}
+function charLayers() {
+  const A = app(); if (!A || A.dataset.screen !== 'combat') return;
+  for (const pm of A.querySelectorAll('.pm[data-ally]')) {
+    const id = pm.dataset.ally, img = pm.querySelector(':scope > img'); if (!img || !img.dataset.b) continue;
+    const b = bodyIn(img), down = pm.classList.contains('down');
+    const aura = fxFrames(`${id}_aura`);
+    if (aura.length && !down && !pm.querySelector(':scope > .jaura')) {
+      const el = document.createElement('img'); el.className = 'jaura'; el.alt = ''; el.dataset.fx = `${id}_aura`; el.src = aura[0];
+      const sz = Math.round(b.h * 1.5);
+      Object.assign(el.style, { left: `${Math.round(b.cx - sz / 2)}px`, top: `${Math.round(b.cy - sz / 2)}px`, width: `${sz}px`, height: `${sz}px` });
+      img.before(el);
+    }
+    const pet = fxFrames(`${id}_pet_idle`);
+    if (pet.length && !down && !pm.querySelector(':scope > .jpet')) {
+      const el = document.createElement('img'); el.className = 'jpet'; el.alt = ''; el.dataset.fx = `${id}_pet_idle`; el.src = pet[0];
+      const sz = Math.round(b.h * .62);
+      Object.assign(el.style, { left: `${Math.round(b.x - sz * .55)}px`, top: `${Math.round(b.y - sz * .25)}px`, width: `${sz}px`, height: `${sz}px` });
+      img.before(el);
+    }
+  }
+}
+// 오라·동반자 프레임 돌리기(전투 화면에서만, 공격 중인 동반자는 건너뜀)
+let layerTick = 0;
+setInterval(() => {
+  const A = app(); if (!A || A.dataset.screen !== 'combat' || calmNow()) return;
+  layerTick++;
+  for (const el of A.querySelectorAll('.jaura, .jpet:not(.atk)')) { const fr = fxFrames(el.dataset.fx); if (fr.length) el.src = fr[layerTick % fr.length]; }
+}, 120);
+function petAttack(id, e, delay = 0) {
+  const pet = allyEl(id)?.querySelector(':scope > .jpet'); if (!pet || calmNow()) return;
+  const atk = fxFrames(`${id}_pet_atk`); if (!atk.length) return;
+  const tgt = e.foe != null ? foeEl(e.foe)?.querySelector(':scope > img') : root()?.querySelector('.foe[data-fi] > img');
+  const a = rel(pet), b = tgt ? rel(tgt) : { cx: a.cx + 200, cy: a.cy };
+  const dx = Math.round(b.cx - a.cx - a.w * .3), dy = Math.round(b.cy - a.cy), dur = 620;
+  at(delay, () => {
+    if (!pet.isConnected) return;
+    pet.classList.add('atk'); pet.src = atk[0];
+    const sfxName = hasSfx(`pet_${id === 'nerea' ? 'whale' : 'spirit'}`) ? `pet_${id === 'nerea' ? 'whale' : 'spirit'}` : null;
+    if (sfxName) sfx(sfxName, { vol: .7 });
+    pet.animate([
+      { transform: 'none', offset: 0 },
+      { transform: 'translate(-8px,4px)', offset: .15, easing: 'cubic-bezier(.5,0,.75,.4)' },
+      { transform: `translate(${dx}px,${dy}px)`, offset: .45, easing: 'cubic-bezier(.2,.9,.3,1)' },
+      { transform: `translate(${dx + 6}px,${dy}px)`, offset: .6 },
+      { transform: 'none', offset: 1, easing: 'cubic-bezier(.4,0,.6,1)' },
+    ], { duration: dur });
+    atk.forEach((u, i) => at(i * Math.round(dur * .2), () => { pet.src = u; }));
+    at(Math.round(dur * .45), () => { const r = rel(pet); ring(r.cx, r.cy, colOf(id), 6, 40, 14); sparks(r.cx, r.cy, '#ffffff', 14, 2.4); });
+    at(dur, () => pet.classList.remove('atk'));
+  });
+}
+function projectile(id, e, from) {
+  const fr = fxFrames(`${id}_proj`); if (!fr.length || !layer) return;
+  const tgt = e.foe != null ? foeEl(e.foe)?.querySelector(':scope > img') : root()?.querySelector('.foe[data-fi] > img'); if (!tgt) return;
+  const b = rel(tgt), x0 = from.x + from.w * .8, y0 = from.y + from.h * .4, sz = 48;
+  const el = document.createElement('img'); el.className = 'px jfx'; el.alt = ''; el.src = fr[0];
+  Object.assign(el.style, { left: `${Math.round(x0 - sz / 2)}px`, top: `${Math.round(y0 - sz / 2)}px`, width: `${sz}px`, height: `${sz}px` });
+  if (hasSfx('proj_fly')) sfx('proj_fly', { vol: .6 });
+  at(40, () => {
+    layer.insertBefore(el, cv.nextSibling);
+    const an = el.animate([{ transform: 'none' }, { transform: `translate(${Math.round(b.cx - x0)}px,${Math.round(b.cy - y0)}px)` }], { duration: 170, easing: 'cubic-bezier(.5,0,.9,.5)', fill: 'forwards' });
+    let k = 0; const iv = setInterval(() => { el.src = fr[++k % fr.length]; }, 45);
+    an.onfinish = () => { clearInterval(iv); el.remove(); };
+  });
 }
