@@ -6,7 +6,8 @@ import { S, dawnAt } from './run.js';
 import { CHARACTERS } from './data/characters.js';
 import { ACT_NAME } from './data/rules.js';
 import { calmNow, SET } from './settings.js';
-import { sfx as sfxRaw, hasSfx } from './audio.js';
+import { sfx as sfxRaw, hasSfx, HIT_SFX } from './audio.js';
+import { FOE } from './data/enemies.js';
 // 누르면 넘기기(skipFx)로 남은 연출을 한꺼번에 돌릴 때는 효과음을 겹쳐 내지 않는다
 let hush = false;
 const sfx = (...a) => { if (!hush) sfxRaw(...a); };
@@ -639,6 +640,9 @@ function hitFoe(e, P) {
   else if (e.blocked) num(x, ir.y + 6, '막음', 'blk', 8);
   if (e.bleed) at(110, () => num(x + 14, ir.y + 16, String(e.bleed), 'bleed', e.bleed));
   sfx(e.dmg ? atkSound(e) : 'block');
+  // 맞는 적의 재질 소리(js/data/enemies.js hitSound)를 공격음 위에 살짝 겹친다
+  const hs = e.dmg && HIT_SFX[FOE[S.C?.all?.[e.i]?.key]?.hitSound];
+  if (hs && hasSfx(hs)) at(30, () => sfx(hs, { vol: big ? .9 : .65 }));
 }
 function killFoe(e, P) {
   const c = P?.foes.get(e.i); if (!c) return;
