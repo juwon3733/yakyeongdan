@@ -1235,3 +1235,6 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 @keyframes jbossin{0%{transform:translateX(90px);filter:brightness(0);opacity:0}
   20%{opacity:1}55%{transform:none;filter:brightness(0)}62%{filter:brightness(3)}100%{transform:none;filter:brightness(1) drop-shadow(3px 3px 0 #000)}}
 #stage.calm #cut .bossband .who{animation:none}
+/* 장면 그림이 따로 없는 장면(휴식): 코드로 칠한 빈 방 대신 지금 막의 배경(#app --bgimg)을 어둡게 비쳐 보인다 */
+.scene .epbg.see{background:radial-gradient(ellipse 70% 60% at 50% 60%,rgba(6,6,18,.35),rgba(6,6,18,.75))}
+.scene .epbg.see i{display:none}

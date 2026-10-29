@@ -407,7 +407,7 @@ export function assetList() {
   // 전투 스프라이트: 동료마다 시트 한 장(4×2)에 8동작. 전투 화면은 일러스트 대신 이 저해상도 도트를 쓴다(js/art.js battleArt).
   const FRAMES = [
     ['idle', 'IDLE: standing in a ready battle stance'],
-    ['idle2', 'IDLE 2: the same stance a moment later, breathing in (shoulders and hair raised by one or two pixels) — used to loop with IDLE'],
+    ['idle2', 'IDLE 2: a pixel-for-pixel COPY of cell 1 with only the breath changed — shoulders, chest and hair tips raised by 1 pixel; face, hair shape, outfit, weapon angle and outline otherwise identical (it loops with IDLE every second, so any other difference shows as flicker)'],
     ['attack', `ATTACK: the peak of her basic attack, lunging or striking toward the RIGHT with her weapon, motion smear (${'${c.fx}'})`],
     ['skill', 'SKILL: casting her signature power, the effect glowing around her'],
     ['guard', 'GUARD: bracing defensively, knees bent, weapon or arm raised in front like a shield, faint barrier glow'],
@@ -422,6 +422,7 @@ export function assetList() {
     out.push(sheet('battlesheet', `${id}_battle`, batch, `${id}_battle.png`, join(STYLE.sprite, STYLE.distinct, rarityStyle(c.rarity), `${who}
 A battle sprite sheet of this ONE character: eight poses on one 1536x1024 canvas, split into eight equal cells of 384x512 (4 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text.
 ${FRAMES.map(([, t], i) => `- Cell ${i + 1} — ${t.replace('${c.fx}', c.fx)}`).join('\n')}
+All eight cells are the SAME sprite redrawn by one pixel artist: identical face, hair shape, outfit details, palette and outline in every cell — only the pose changes. The standing figure is BIG: in IDLE the body fills about 85% of the cell height (top of the head just under the top margin), never a small figure in the lower half of the cell.
 In every cell: exactly the same character size and proportions (adult about 1:6.5 head-to-body, NOT chibi), feet on the same line near the bottom of the cell, facing RIGHT toward the enemies (except HURT recoiling), the whole body and effect inside its own cell. Fully transparent background. Native resolution 96x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
       [4, 2], FRAMES.map(([f], i) => ['sprite', `${id}_sp_${f}`, `${id}_${f}.png`, i % 4, Math.floor(i / 4)]),
       { fit: 'union', must_show: '4×2: 서기·숨쉬기·공격·스킬 / 방어·피격·쓰러짐·승리, 칸마다 같은 크기·발 위치, 저해상도 도트', reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));

@@ -23,6 +23,7 @@ const ORDER = [
   'title',
   'enemy-act2', 'boss-cloud_captain', 'boss-storm_whale', 'enemy-act3', 'boss-dawn',
   'summon', 'icons',
+  ...[...FIRST, ...STAR5].map((id) => `cards-${id}`),   // 카드 그림은 손패·보상·상점·덱에 늘 보인다 — 없으면 2등신 임시 도트
   ...REST.map((id) => `char-${id}`),
   ...[...FIRST, ...REST].flatMap((id) => [`pose-${id}`, `fx-${id}`]),
   'duo',

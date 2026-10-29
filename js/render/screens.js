@@ -23,7 +23,7 @@ const SCENE_BG = { 1: ['act1', 'harbor'], 2: ['act2', 'roof'], 3: ['act3', 'drea
 function scene(bgKey, bgFile, people, inner) {
   const img = bgFile && artURL(`bg/${bgFile}.png`);
   const port = (p, side) => p ? `<img class="px sport ${side}" src="${charSrc(p, 'normal')}" alt="">` : '';
-  return `<div class="scene bg-${bgKey}"><div class="epbg" aria-hidden="true"><i></i>${img ? `<img class="bgimg" src="${img}" alt="">` : ''}</div>
+  return `<div class="scene bg-${bgKey}"><div class="epbg${bgFile ? '' : ' see'}" aria-hidden="true"><i></i>${img ? `<img class="bgimg" src="${img}" alt="">` : ''}</div>
     ${port(people[0], 'l')}${port(people[1], 'r')}<div class="center sbox">${inner}</div></div>`;
 }
 
