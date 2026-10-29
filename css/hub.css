@@ -46,13 +46,6 @@
 @keyframes firstgo{0%,100%{box-shadow:2px 2px 0 var(--shadow),0 0 0 0 var(--gold)}50%{box-shadow:2px 2px 0 var(--shadow),0 0 0 3px var(--gold)}}
 
 /* 본부: 쉬는 셋, 말풍선, 시간대, 새 소식 점, 지갑 */
-.hall{overflow:hidden}
-.hall.tm-dawn{background:linear-gradient(180deg,#3a2c50,#5a3a4a 55%,#3a2632)}
-.hallwin i{position:absolute;left:18px;top:14px;width:14px;height:14px;background:#e8ecff;box-shadow:-4px 2px 0 0 #2a2f6a inset}
-.hall.tm-dawn .hallwin{background:linear-gradient(180deg,#ffb070,#ff8a6a 60%,#c05a6a);border-color:#6a4a5a}
-.hall.tm-dawn .hallwin i{background:#ffe08a;box-shadow:0 0 0 2px rgba(255,192,96,.4);top:52px;width:18px;height:10px}
-.hlamp{position:absolute;top:40px;width:6px;height:10px;background:#ffb040;box-shadow:0 0 0 3px rgba(255,150,50,.18);animation:flick 1.4s ease-in-out infinite}
-.hlamp.l1{left:16%}.hlamp.l2{right:16%;animation-delay:-.6s}
 .resting{gap:26px;margin-bottom:6px;padding-top:34px}
 .rester{background:none;border:0;box-shadow:none;padding:0;position:relative;display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--ink)}
 .rester img{width:60px;height:80px;animation:bob 2.4s ease-in-out infinite;filter:drop-shadow(2px 2px 0 rgba(0,0,0,.5))}
