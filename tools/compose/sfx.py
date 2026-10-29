@@ -294,13 +294,41 @@ def fanfare5():
     return verb(mix(rise, fan, chord_, at(timpani(0.6, 36), 1.0), at(bell(96, 1.0, 0.35), 1.0)), 2.2, 0.4)
 
 
+def special():
+    """희귀 카드·듀오 필살 컷인(0.9초): 0~0.2초 빨려 드는 소리 → 0.7초 쾅"""
+    # 빨려 듦: 커지며 높아지는 역방향 노이즈 + 위로 휘는 FM 음
+    ts = T(0.2)
+    env = (ts / 0.2) ** 2.5
+    suck = highpass(noise(0.2), 2500) * env * 0.5
+    ph = np.cumsum(180 + 1400 * (ts / 0.2) ** 2) / SR
+    zip_ = np.sin(2 * np.pi * ph + 2.2 * np.sin(2 * np.pi * 3 * ph)) * env * 0.35
+    # 기다림(0.2~0.7초): 낮게 웅웅 차오르는 FM 저음, 쾅 직전에 뚝 끊김
+    tw = T(0.5)
+    hum_ph = np.cumsum(55 + 50 * (tw / 0.5) ** 2) / SR
+    hum = np.sin(2 * np.pi * hum_ph + 1.5 * np.sin(2 * np.pi * 2 * hum_ph)) * (0.08 + 0.25 * (tw / 0.5) ** 2)
+    hum *= 1 - np.clip((tw - 0.47) / 0.03, 0, 1)
+    trem = square(96, 0.05, 0.2)
+    ticks = mix(at(trem, 0.22), at(trem * 0.8, 0.36), at(trem * 0.6, 0.46))
+    # 쾅: 쿵 + 폭발 노이즈 + 금관 화음 한 방 + 반짝임
+    tb = T(1.0)
+    thump = np.sin(2 * np.pi * np.cumsum(38 + 160 * np.exp(-tb / 0.04)) / SR) * np.exp(-tb / 0.35)
+    blast = lowpass(noise(1.0), 2200) * np.exp(-tb / 0.22) * 0.8
+    crack = highpass(noise(0.12), 4000) * np.exp(-T(0.12) / 0.025) * 0.5
+    stab = mix(*[brass(n, 0.35, 0.5) for n in (48, 55, 60, 64, 67)])
+    shine = mix(*[at(glock(n, 0.2, 0.25), 0.05 + i * 0.05) for i, n in enumerate((84, 88, 91, 96))])
+    bang = mix(kick(1.0), thump, blast, crack, stab * 0.8, shine)
+    y = verb(mix(suck, zip_, at(hum, 0.2), ticks, at(bang, 0.7)), 0.9, 0.28)[: int(1.6 * SR)]
+    tail = T(len(y) / SR)
+    return y * np.clip((1.6 - tail) / 0.5, 0, 1)   # 1.1초부터 1.6초까지 잦아듦
+
+
 SFX = {'click': click, 'select': select, 'card': card, 'get': get, 'move': move, 'turn': turn,
        'slash': slash, 'hit': hit, 'cannon': cannon, 'block': block, 'poison': poison, 'spirit': spirit, 'mana': mana,
        'clock': clock, 'duo': duo, 'chain1': chain1, 'chain2': chain2, 'chain3': chain3,
        'hurt': hurt, 'down': down, 'heal': heal, 'foe_down': foe_down,
        'win': win, 'lose': lose, 'dawn': dawn, 'star': star,
        'boom': boom, 'summon': summon, 'steal': steal, 'foe_heal': foe_heal, 'retarget': retarget, 'thorns': thorns,
-       'flip': flip, 'constel': constel, 'burst': burst, 'fanfare5': fanfare5}
+       'flip': flip, 'constel': constel, 'burst': burst, 'fanfare5': fanfare5, 'special': special}
 
 
 # ---------- 동료별 공격음 (atk_<id>) ----------

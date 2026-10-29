@@ -125,6 +125,9 @@ export const HIT_SFX = {
   magic: 'hit_magic',  // 별·마녀·천사
 };
 
+// 희귀 카드·듀오 필살 컷인(0.9초) 효과음: 0~0.2초 빨려 듦 → 0.7초 쾅 (sfx(CUTIN_SFX)로 부른다)
+export const CUTIN_SFX = 'special';
+
 let lastSfx = {};
 export function sfx(name, { vol = 1, rate = 1 } = {}) {
   if (!ctx || !LEVELS[level]) return;
