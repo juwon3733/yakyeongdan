@@ -197,9 +197,18 @@ def win():
 
 
 def lose():
-    """판에서 짐"""
-    notes = [(0.0, 69, 0.35), (0.35, 68, 0.35), (0.7, 67, 0.35), (1.05, 62, 1.0)]
-    return verb(mix(*[at(fm(n, d, 0.45, ratio=1, index=1.2, idecay=0.3, a=0.02, d=0.8, s=0.4, r=0.4), s) for s, n, d in notes]), 1.8, 0.35)
+    """판 패배(2초): 낮게 반음씩 내려가는 FM 선율 + 단조 화음이 가라앉으며 사라짐"""
+    notes = [(0.0, 67, 0.3), (0.3, 66, 0.3), (0.6, 63, 0.3), (0.9, 60, 0.9)]
+    mel = mix(*[at(fm(n, d, 0.45, ratio=1, index=1.4, idecay=0.25, a=0.01, d=0.6, s=0.45, r=0.3, vib=0.006), s)
+                for s, n, d in notes])
+    # 받침: 낮은 단조 화음(C단조)이 처음부터 깔리고, 마지막엔 음높이가 살짝 처지며 꺼진다
+    pad = mix(*[fm(n, 1.6, 0.22, ratio=0.5, index=0.9, idecay=0.8, a=0.15, d=1.2, s=0.5, r=0.4) for n in (48, 51, 55)])
+    tb = T(1.1)
+    sink = np.sin(2 * np.pi * np.cumsum(hz(36) * (1 - 0.12 * tb / 1.1)) / SR) * np.sin(np.pi * np.clip(tb / 0.2, 0, 0.5)) * 0.35
+    y = verb(mix(mel, lowpass(pad, 1800), at(sink, 0.9)), 1.6, 0.35)
+    y = fit(y, 2.0)
+    t = T(2.0)
+    return y * np.clip((2.0 - t) / 1.0, 0, 1) ** 1.5   # 1초부터 끝까지 잦아듦
 
 
 def dawn():
@@ -522,3 +531,40 @@ def ui_page():
 
 
 SFX.update({'ui_hover': ui_hover, 'ui_pick': ui_pick, 'ui_end': ui_end, 'ui_page': ui_page})
+
+
+# ---------- 짧은 징글 (2차) ----------
+
+def win2():
+    """전투 승리(1.5초): 빠르게 올라가는 금관 팡파르 → 밝은 장화음 + 반짝임"""
+    run = [(0.0, 67, 0.08), (0.09, 72, 0.08), (0.18, 76, 0.08), (0.27, 79, 0.1)]
+    fan = mix(*[at(brass(n, d, 0.5), s) for s, n, d in run])
+    top = at(brass(84, 0.55, 0.6), 0.4)
+    chord_ = at(mix(*[brass(n, 0.6, 0.35) for n in (60, 67, 72, 76)]), 0.4)
+    shine = mix(*[at(glock(n, 0.15, 0.3), 0.42 + i * 0.05) for i, n in enumerate((88, 91, 96))])
+    bass = mix(at(square(48, 0.08, 0.35, duty=0.25), 0.0), at(square(55, 0.08, 0.35, duty=0.25), 0.18),
+               at(square(48, 0.5, 0.4, duty=0.25), 0.4))
+    y = verb(mix(fan, top, chord_, shine, lowpass(bass, 2500), at(snare(0.5), 0.4), at(kick(0.6), 0.4)), 1.0, 0.3)
+    y = fit(y, 1.5)
+    t = T(1.5)
+    return y * np.clip((1.5 - t) / 0.5, 0, 1)   # 1초부터 잦아듦
+
+
+def boss_in():
+    """보스 등장(1.2초): 무거운 쿵 + 불길한 감7·트라이톤 화음이 낮게 웅웅"""
+    tb = T(1.2)
+    thump = np.sin(2 * np.pi * np.cumsum(32 + 140 * np.exp(-tb / 0.05)) / SR) * np.exp(-tb / 0.45)
+    rumble = lowpass(noise(1.2), 400) * np.exp(-tb / 0.35) * 0.6
+    crack = highpass(noise(0.1), 3000) * np.exp(-T(0.1) / 0.02) * 0.3
+    # 화음: C·F#·A·Eb (감7) 저음 금관 + 트라이톤이 살짝 어긋나 맥놀이
+    dark = mix(*[brass(n, 0.9, 0.4) for n in (36, 42, 45, 51)])
+    beat = fm(42, 0.9, 0.3, ratio=1.0, index=1.8, idecay=0.5, a=0.05, d=1.0, s=0.5, r=0.3, detune=0.006, vib=0.01)
+    hi = at(fm(66, 0.5, 0.18, ratio=3.5, index=2.5, idecay=0.3, a=0.002, d=0.6, s=0, r=0.3), 0.05)
+    y = verb(mix(kick(1.0), thump, rumble, crack, at(lowpass(dark, 1500), 0.04), at(beat, 0.04), hi,
+                 at(timpani(0.7, 30), 0.0)), 1.2, 0.35)
+    y = fit(y, 1.2)
+    t = T(1.2)
+    return y * np.clip((1.2 - t) / 0.4, 0, 1)
+
+
+SFX.update({'win2': win2, 'boss_in': boss_in})
