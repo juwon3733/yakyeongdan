@@ -253,8 +253,11 @@ function flyCard(e, P, t0) {
 // 동료 모션: 카드를 쓴 동료는 공격·스킬·방어, 맞은 동료는 피격. 전투 스프라이트(sprites/<id>_<frame>.png)가 있으면
 // 그 동작 칸으로 잠깐 바꿔 끼우고, 없으면 움직임만. 가만히 있을 때는 서기·숨쉬기 두 칸을 번갈아(슬레이 더 스파이어식 숨쉬기).
 const busy = new WeakSet();
+const PRE = new Map();   // 미리 받은 그림(버려지지 않게 붙들어 둠)
 function preloadPoses() {
   for (const id of S.G?.party || []) for (const k of FRAMES) { const u = battleArt(id, k); if (u) new Image().src = u; }
+  // 이펙트 프레임도 미리 받아 둔다(재생 중에 그림을 바꿀 때 받다 끊기지 않게)
+  for (const n of [...(S.G?.party || []).flatMap(id => [`${id}_atk`, `${id}_skill`]), 'slash', 'explode', 'pierce', 'magic']) for (const u of fxFrames(n)) if (!PRE.has(u)) { const im = new Image(); im.src = u; PRE.set(u, im); }
 }
 // 칸 바꾸기: 전 칸을 위에 잠깐 겹쳐 두고 흐리게 사라지게(교차 페이드). 동작 칸으로 들어갈 때는 바로(빠른 동작이 또렷하게), 돌아올 때·숨쉬기는 부드럽게
 function swapSrc(img, url, fade) {

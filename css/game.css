@@ -1195,3 +1195,4 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 #app[data-screen="combat"] .foes > .foe:nth-child(4){z-index:1;transform:translateY(-22px) scale(.86);filter:brightness(.85)}
 /* 발밑 그림자를 진하게(바닥에 서 있는 느낌) */
 .pm > img,.foe > img{background:radial-gradient(ellipse 42% 5% at 50% 97%,rgba(0,0,0,.7),transparent)}
+.pm > img,.foe > img{pointer-events:none}
