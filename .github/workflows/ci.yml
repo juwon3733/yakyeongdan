@@ -21,6 +21,9 @@ jobs:
       - run: npm install --no-save playwright@1.48.2
       - run: npx playwright install --with-deps chromium
       - run: node tools/smoke.mjs
+      # 전투 프레임 재기: 95% 프레임 시간이 33ms를 넘으면 경고만(CI 기계는 느릴 수 있어 실패로 치지 않는다)
+      - run: node tools/fps.mjs
+        continue-on-error: true
       - run: npm run shots
       - uses: actions/upload-artifact@v4
         if: always()
