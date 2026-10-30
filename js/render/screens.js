@@ -9,7 +9,6 @@ import { DUOS, canUpgrade, cardData } from '../data/cards.js';
 import { RULES, ACT_NAME, SHOP } from '../data/rules.js';
 import { grantRun, P, mvpOf } from '../meta.js';
 import { cardHTML, fmt, face, esc, charSrc } from './common.js';
-import { pxNum } from './pxui.js';
 import { artURL, battleArt } from '../art.js';
 import { SUMMON } from '../data/gacha.js';
 import { dawnAt } from '../run.js';
@@ -131,7 +130,7 @@ function runBar(G) {
   const end = Math.max(dawnAt(), RULES.collapse, G.clock), pct = m => Math.min(100, m / end * 100).toFixed(1);
   const acts = [1, 2, 3].map(a => `<span class="seg a${a} ${a < G.act || G.won ? 'done' : a === G.act ? 'now' : ''}" style="left:${pct((a - 1) * dawnAt() / 3)}%;width:${pct(dawnAt() / 3)}%">${ACT_NAME[a]}</span>`).join('');
   return `<div class="runbar" aria-label="진행"><div class="track">${acts}<i class="fill ${G.won ? 'won' : ''}" style="width:${pct(G.clock)}%"></i><b class="dawnmark" style="left:${pct(dawnAt())}%" title="해 뜨는 시각"></b><u class="me${G.clock / end > .93 ? ' end' : ''}" style="left:${pct(G.clock)}%">${fmt(G.clock)}</u></div>
-    <div class="ticks"><span>00:00</span><span style="left:${pct(dawnAt())}%">${fmt(dawnAt())}</span></div></div>`;
+    <div class="ticks"><span>0:00</span><span style="left:${pct(dawnAt())}%">${fmt(dawnAt())}</span></div></div>`;
 }
 
 const WHY = { down: '모두 쓰러졌다', collapse: '7시. 탑이 무너졌다' };
@@ -150,8 +149,8 @@ function mvpPanel(id, c, st, won = true) {
   return `<div class="mvp${cg ? ' hascg' : ''}" style="--c:${c.col}">
     <span class="mvpbg" aria-hidden="true">${cg ? `<img class="cg" src="${cg}" alt="">` : '<i class="rays"></i>'}</span>
     <img class="px mvpart" src="${charSrc(id)}" alt="">
-    <span class="mvpband"><b class="nm">${esc(c.name)}</b><small>${esc(c.role)} · 피해 ${st.dmg || 0}</small></span>
-    <span class="mvpstamp" aria-label="${won ? 'MVP' : '끝까지 버틴'}">${won ? 'MVP' : '끝까지'}</span></div>`;
+    <span class="mvpband"><b class="nm">${esc(c.name)}</b><small>${esc(c.role)}</small></span>
+    ${won ? '<span class="mvpstamp" aria-label="MVP">MVP</span>' : ''}</div>`;
 }
 // 동료 셋의 피해·방어·회복 가로 막대 (항목마다 가장 큰 값을 꽉 찬 막대로)
 const STAT_KEYS = [['dmg', '피해'], ['block', '방어'], ['heal', '회복']];
@@ -182,7 +181,7 @@ export function resultView() {
     ${mvpPanel(mvp, mc, st, G.won)}
     <div class="rinfo">
       <h2 class="rtitle">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
-      <div class="rclockrow"><p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${pxNum(fmt(G.clock), { s: 5, col: G.won ? '#fff4d0' : '#ff8a8a' })}</p>${statBars(G, mvp)}</div>
+      <div class="rclockrow"><p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</p>${statBars(G, mvp)}</div>
       <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`}${G.bestTurn?.dmg ? ` · 최고의 한 턴 <b>${G.bestTurn.dmg}</b>` : ''}</p>
       ${G.duoSet.size ? `<p class="note">듀오 ${duos}</p>` : ''}
       ${epNote}

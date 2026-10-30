@@ -93,3 +93,6 @@
 .towermap .mapgrid.art .ledge{height:4px;background:linear-gradient(rgba(220,200,160,.55) 0 1px,rgba(20,14,26,.55) 1px);box-shadow:none}
 .towermap .mapgrid.art .ledge.top{background:linear-gradient(rgba(255,231,160,.8) 0 1px,rgba(90,64,24,.6) 1px)}
 .towermap .mapgrid.art .edges path.dim{opacity:.35}
+/* 앞으로 갈 칸: 회색으로 죽어 보이던 것 → 제 색은 살리고 조금만 어둡게(종류가 한눈에) + 칸 밑 돌 받침 */
+.towermap .mapgrid .node.future .ic{filter:brightness(.82) saturate(.85) drop-shadow(2px 2px 0 #000)}
+.towermap .mapgrid .node::before{content:"";position:absolute;left:50%;bottom:2px;width:26px;height:6px;transform:translateX(-50%);background:radial-gradient(ellipse 50% 50%,rgba(0,0,0,.55),transparent 75%);z-index:-1}
