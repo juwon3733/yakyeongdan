@@ -6,6 +6,7 @@ import { ROSTER, ROSTER_IDS, byRarity } from './data/roster.js';
 import { STARTER_OWNED, CHARACTERS } from './data/characters.js';
 import { SUMMON, SUMMON_ITEMS, SHARDS, ITEM_DUST, PICKUPS, PICKUP_DAYS, PICKUP_EPOCH, EXCHANGE, START_PICK_RUNS, PACK_SIZE, PACK_COUNT } from './data/gacha.js';
 import { RULES } from './data/rules.js';
+import { passXp } from './season.js';
 import { MOONS } from './data/moons.js';
 import { RELICS } from './data/relics.js';
 import { CARDS } from './data/cards.js';
@@ -343,6 +344,7 @@ export function grantRun(G) {
   if (G.granted) return G.granted;
   const r = runShards(G);
   P.shards += r.total; P.runs++;
+  r.seasonXp = passXp(G);   // 시즌 패스 별 (js/season.js)
   if (G.won) { P.wins++; if (P.best == null || G.clock < P.best) P.best = G.clock; }
   for (const k of r.newDuos) P.seenDuos.push(k);
   // 기록: 동료별 판·이긴 판, 조합별 가장 빠른 도착, 달별 승리, 밤의 깊이

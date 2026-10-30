@@ -17,6 +17,7 @@ import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
 import { artReady, hasArt } from './art.js';
+import { seasonNow, seasonOn, startSeasonBoss, seasonBossDone, claimPass } from './season.js';
 import './cardzoom.js';
 import { setHallTime } from './render/base.js';
 import { enterEndless } from './endless.js';
@@ -135,6 +136,7 @@ function play(uid, pick) {
 // 행동 뒤: 7시 붕괴, 에피소드 특별 전투 끝 (흔들림·보스 띠 등 연출은 render()의 js/juice.js가)
 function after() {
   if (S.G?.screen === 'epdone') epFightDone();   // 에피소드 특별 전투가 끝남
+  if (S.G?.screen === 'sbdone') seasonBossDone();   // 시즌 보스 판이 끝남
   checkCollapse();
 }
 
@@ -172,6 +174,8 @@ app.addEventListener('click', e => {
     if (D.view === 'summon') S.hint = null;
     S.view = D.view;
     if (D.view === 'party') S.mode = D.mode || null;   // 끝없는 탑: 동료 고르기 → 바로 탑 위로
+    if (D.tier !== undefined) S.sTier = +D.tier;   // 시즌 보스 난이도
+    if (D.view === 'season') S.seasonOut = S.seasonOut && D.keep !== undefined ? S.seasonOut : null;
     if (D.view === 'party') { S.G = null; S.C = null; S.picked = S.picked.filter(k => k && P.owned[k] || S.dev); }
     if (D.view === 'exchange') S.exMsg = '';
   }
@@ -180,11 +184,14 @@ app.addEventListener('click', e => {
     S.picked = S.picked.includes(k) ? S.picked.filter(x => x !== k) : S.picked.length < 3 ? [...S.picked, k] : S.picked;
   }
   else if ('start' in D) {
-    if (S.mode === 'endless') { newRun(S.picked.slice(), seedParam, runOptions(S.picked, 0)); enterEndless(true); }
+    if (S.mode === 'season') { if (!startSeasonBoss(S.picked.slice(), S.sTier || 0)) return; }
+    else if (S.mode === 'endless') { newRun(S.picked.slice(), seedParam, runOptions(S.picked, 0)); enterEndless(true); }
     else newRun(S.picked.slice(), seedParam, runOptions(S.picked, S.depth || 0, S.startRelic));
+    if (S.G && seasonOn()) S.G.seasonRule = seasonNow().rule.id;   // 시즌 동안 밤 오르기에도 시즌 규칙
   }
   // 「새벽」을 깬 결과 화면에서 [더 오르기]: 같은 판 그대로 끝없는 탑으로 (그 판 보상은 이미 받음)
   else if ('endless' in D) { if (S.G?.won && !S.G.endless) enterEndless(false); }
+  else if ('claimpass' in D) { const n = claimPass(); S.seasonMsg = n ? `시즌 패스 보상: 별 조각 +${n}` : ''; }
   else if (D.depth !== undefined) S.depth = +D.depth;
   else if (D.srelic) S.startRelic = D.srelic;
   // 매일의 밤: 후보 여섯 중 셋 → 오늘의 시드로 판, 규칙은 S.G.mods (js/relics.js가 도구처럼 더한다)
@@ -197,6 +204,7 @@ app.addEventListener('click', e => {
     if (party.length !== 3) return;
     newRun(party, T.seed, runOptions(party, 0));
     S.G.daily = { key: T.key, rule: T.rule }; S.G.mods = T.rule.mods;
+    if (seasonOn()) S.G.seasonRule = seasonNow().rule.id;
   }
   else if (D.cardback !== undefined) setCardBack(D.cardback || null);
   // 판 바깥: 초심자 ★5 · 교환소 · 동료 · 도감

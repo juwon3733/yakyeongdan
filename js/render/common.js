@@ -11,7 +11,7 @@ import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
 import { moonImg, sprite } from './sprites.js';
 import { kwTip } from '../data/keywords.js';
 import { wearing } from '../meta.js';
-import { charArt, battleArt, artURL } from '../art.js';
+import { charArt, battleArt, artURL, faceBox } from '../art.js';
 import { cardArtSrc } from './cardart.js';
 import { endlessChip } from './endless.js';
 
@@ -34,9 +34,15 @@ export function relicChip(id, G) {
 }
 
 // 동료 얼굴 (서 있는 그림의 윗부분을 잘라 보여 줌)
+// 얼굴 칸 그림: 상반신 그림의 얼굴 자리(assets/face_box.json)를 칸 가운데로 당겨 크게(css img.fci). z = 확대
+export function fcImg(id, z = 1.9, alt) {
+  const src = charSrc(id, 'normal', alt), f = faceBox(id);
+  if (!f || src.startsWith('data:')) return `<img class="px" src="${src}" alt="">`;
+  return `<img class="px fci" src="${src}" alt="" style="--fx:${f[0]};--fy:${f[2]};--z:${z}">`;
+}
 export function face(id, cls = '') {
   const c = CHARACTERS[id];
-  return `<span class="face ${cls}" style="--c:${c.col}"><img class="px" src="${charSrc(id, 'normal')}" alt="${esc(c.name)}"></span>`;
+  return `<span class="face ${cls}" style="--c:${c.col}" title="${esc(c.name)}">${fcImg(id, 2.3)}</span>`;
 }
 export function hpBar(m) {
   return `<span class="hpbar ${m.down ? 'down' : ''}"><i style="width:${m.hp / m.max * 100}%"></i></span>`;

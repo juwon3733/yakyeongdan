@@ -12,10 +12,11 @@ import { TALKS } from '../data/talks.js';
 import { DEPTH, DEPTH_MAX } from '../data/depth.js';
 import { P, nextRate5, epNewCount, pickupNow, starsOf, costumeOpen, wearing, packCards, packsOpen, startUp, sigOpen, sigOf, duoSpecial,
   canExchange, exchangePrice, depthOpen, startPickOpen } from '../meta.js';
-import { stars, palOf, fmt, esc, cardHTML, charSrc } from './common.js';
+import { stars, palOf, fmt, esc, cardHTML, charSrc, fcImg } from './common.js';
 import { moonImg } from './sprites.js';
 import { REST_LINES, FIRST_LINES } from '../data/hublines.js';
 import { artURL, foeArt } from '../art.js';
+import { seasonNow } from '../season.js';
 import { achTab, historyBlock } from './daily.js';
 import { dailyToday, mastery, masteryTitles, backOpen } from '../meta.js';
 import { MASTERY_REWARDS, MASTERY_XP } from '../data/mastery.js';
@@ -78,6 +79,7 @@ export function baseView() {
     </div>
     <nav class="h2menu" aria-label="본부 메뉴">
       <div class="h2col">
+        ${seasonNow()?.open ? round('data-view="season"', 'moon', `시즌 ${seasonNow().no}`, false, 'season') : ''}
         ${round('data-view="summon"', 'star', `별 소환${P.pick5 ? ' <b class="newt">★5</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">10연</b>' : ''}`, !!P.pick5, `gold ${S.hint === 'summon' ? 'hint' : ''}`)}
         ${round('data-view="mates"', 'mates', '동료', matesNew)}
         ${round('data-view="episodes"', 'book', `에피소드${epN ? ` <b class="newt">${epN}</b>` : ''}`, epN)}
@@ -98,6 +100,7 @@ export function baseView() {
 }
 // 로비 아이콘(9×9 도트): x = 색(currentColor), w = 흰 빛, d = 어두운 선
 const LOBBY_ICON = {
+  moon: ['...xxx...', '..xx.....', '.xx......', '.xx......', '.xx...w..', '.xx......', '..xx.....', '...xxx...', '.........'],
   star: ['....x....', '....x....', '...xwx...', 'xxxxwxxxx', '.xxwwwxx.', '..xxwxx..', '..xx.xx..', '.xx...xx.', '.x.....x.'],
   mates: ['.xx...xx.', 'xwwx.xwwx', 'xwwx.xwwx', '.xx...xx.', '.........', 'xxxx.xxxx', 'xxxx.xxxx', 'xxxx.xxxx', '.........'],
   book: ['.........', 'xxxx.xxxx', 'xwwx.xwwx', 'xwwx.xwwx', 'xwwx.xwwx', 'xwwx.xwwx', 'xxxxxxxxx', '....x....', '.........'],
@@ -248,11 +251,11 @@ export function exchangeView() {
     const price = exchangePrice(kind, arg), ok = canExchange(kind, arg);
     return `<button type="button" class="extile ${cls}" data-ex="${kind}:${arg ?? ''}" ${ok ? '' : 'disabled'}>${pic}<span class="nm">${name}</span>${sub ? `<small>${sub}</small>` : ''}<b class="pr">${price ?? '-'}</b></button>`;
   };
-  const face = k => `<span class="fc" style="--c:${ROSTER[k].col}"><img class="px" src="${charSrc(k, 'normal')}" alt=""></span>`;
+  const face = k => `<span class="fc" style="--c:${ROSTER[k].col}">${fcImg(k)}</span>`;
   const own = ROSTER_IDS.filter(k => P.owned[k]);
   let body = '';
   if (tab === 'char') body = [5, 4, 3].map(r => `<div class="exgrid">${byRarity(r).map(k =>
-    tile('char', k, P.owned[k] ? face(k) : `<span class="fc sil" style="--c:${ROSTER[k].col}"><img class="px" src="${charSrc(k, 'normal')}" alt=""></span>`, ROSTER[k].name,
+    tile('char', k, P.owned[k] ? face(k) : `<span class="fc sil" style="--c:${ROSTER[k].col}">${fcImg(k)}</span>`, ROSTER[k].name,
       P.owned[k] ? `${'✦'.repeat(starsOf(k))}${starsOf(k) >= SUMMON.maxStars ? ' 꽉 참' : ''}` : '', `r${r} ${P.owned[k] ? '' : 'new'}`)).join('')}</div>`).join('');
   else if (tab === 'gear') body = `<div class="exgrid">${[
     ...own.filter(k => !costumeOpen(k)).map(k => tile('costume', k, face(k), ROSTER[k].name, '두 번째 의상', 'cos')),
@@ -340,7 +343,7 @@ const CODEX = {
   mates: () => `<div class="cxfaces">${ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k], st = P.charStats[k] || { runs: 0, wins: 0 }, c = CHARACTERS[k];
     const tip = own ? `${r.name} ${'★'.repeat(r.rarity)} · ${r.role}${c?.ds ? `\n${c.ds}` : ''}\n별자리 ${starsOf(k)} · 판 ${st.runs} · 이김 ${st.wins}` : `??? ${'★'.repeat(r.rarity)}`;
-    return `<span class="cxf r${r.rarity} ${own ? '' : 'none'}" style="--c:${r.col}" data-tip="${esc(tip)}"><span class="fc"><img class="px" src="${charSrc(k, 'normal')}" alt=""></span><small>${own ? r.name : '???'}</small></span>`;
+    return `<span class="cxf r${r.rarity} ${own ? '' : 'none'}" style="--c:${r.col}" data-tip="${esc(tip)}"><span class="fc">${fcImg(k)}</span><small>${own ? r.name : '???'}</small></span>`;
   }).join('')}</div>`,
   duos: () => {
     const ks = Object.keys(DUOS), got = ks.filter(k => P.seenDuos.includes(k)).length;

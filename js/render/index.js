@@ -2,6 +2,7 @@ import { artURL } from '../art.js';
 import { S } from '../run.js';
 import { topbar } from './common.js';
 import { titleView, partyView } from './title.js';
+import { seasonView } from './season.js';
 import { baseView, summonView, revealView, pick5View, oddsView, exchangeView, matesView, codexView, recordsView } from './base.js';
 import { episodesView, epView } from './episodes.js';
 import { mapView } from './map.js';
@@ -18,12 +19,12 @@ const VIEWS = { map: mapView, combat: combatView, reward: rewardView, rest: rest
   shop: shopView, dupe: dupeView, bossrelic: bossRelicView };
 // 판 밖의 화면
 const META = { title: titleView, party: partyView, base: baseView, summon: summonView, reveal: revealView, episodes: episodesView, ep: epView,
-  pick5: pick5View, odds: oddsView, exchange: exchangeView, mates: matesView, codex: codexView, records: recordsView, tutintro: tutIntroView, daily: dailyView };
+  pick5: pick5View, odds: oddsView, season: seasonView, exchange: exchangeView, mates: matesView, codex: codexView, records: recordsView, tutintro: tutIntroView, daily: dailyView };
 
 function bgImage(G, scr) {
   const run = G && S.view === 'run' && !G.tutorial;
   const f = run ? (scr === 'combat' || scr === 'reward' ? `bg/act${G.act}.png` : scr === 'result' ? null : `bg/map${G.act}.png`)
-    : scr === 'base' || scr === 'party' || scr === 'mates' ? 'bg/hq.png' : scr === 'summon' || scr === 'reveal' || scr === 'pick5' ? 'summon/sky.png' : null;
+    : scr === 'base' || scr === 'party' || scr === 'mates' ? 'bg/hq.png' : scr === 'summon' || scr === 'reveal' || scr === 'pick5' || scr === 'season' ? 'summon/sky.png' : null;
   const u = f && artURL(f);
   return u ? `url("${new URL(u, location.href).href}")` : 'none';   // CSS 변수의 주소는 CSS 파일 기준이라 절대 주소로
 }

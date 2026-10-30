@@ -90,7 +90,7 @@ function offerFullscreen() {
   try { asked = sessionStorage.getItem('yk-fsask') === '1'; } catch (e) { /* 저장 안 됨 */ }
   if (asked || !touch || !canFullscreen() || isStandalone() || isFullscreen() || toastEl?.isConnected) return;
   try { sessionStorage.setItem('yk-fsask', '1'); } catch (e) { /* 저장 안 됨 */ }
-  toast('전체 화면으로 하면 더 크게 보여요', '전체 화면', () => toggleFullscreen(), 9000);
+  toast('전체 화면으로 하면 더 크게 보여요', '전체 화면', () => toggleFullscreen(), 5000).classList.add('top');
 }
 
 // ---------- 전투 중 화면 꺼짐 방지 (지원하면, 실패는 무시) ----------

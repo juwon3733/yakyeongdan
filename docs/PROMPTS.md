@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 8 · GPT가 그릴 그림 312장(시트 포함, 잘라 내면 866장) · 묶음 168개
+style_version 8 · GPT가 그릴 그림 316장(시트 포함, 잘라 내면 870장) · 묶음 169개
 
 ## 묶음
 
@@ -109,6 +109,7 @@ style_version 8 · GPT가 그릴 그림 312장(시트 포함, 잘라 내면 866�
 | `foepose-act1` | 1막 적 공격·피격 자세 (시트 → 적마다 2칸) | 4 |
 | `foepose-act2` | 2막 적 공격·피격 자세 (시트 → 적마다 2칸) | 4 |
 | `foepose-act3` | 3막 적 공격·피격 자세 (시트 → 적마다 2칸) | 4 |
+| `boss-star_king` | 보스 떨어진 별의 왕 | 4 |
 | `boss-lighthouse` | 보스 등대지기 | 3 |
 | `boss-cloud_captain` | 보스 구름 기사단장 | 3 |
 | `boss-fog_queen` | 보스 안개 마녀 여왕 | 3 |
@@ -1338,6 +1339,15 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `act3_foepose_2` | `assets/sheets/act3_foepose_2.png` → `clock_angel_attack.png` `clock_angel_hurt.png` `tail_comet_attack.png` `tail_comet_hurt.png` `gear_knight_attack.png` `gear_knight_hurt.png` | 1536×1024 투명 | `assets/enemies/clock_angel.png` `assets/enemies/tail_comet.png` `assets/enemies/gear_knight.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): clock_angel·tail_comet·gear_knight |
 | `act3_foepose_3` | `assets/sheets/act3_foepose_3.png` → `star_thief_attack.png` `star_thief_hurt.png` `meteor_rider_attack.png` `meteor_rider_hurt.png` `moon_shadow_attack.png` `moon_shadow_hurt.png` | 1536×1024 투명 | `assets/enemies/star_thief.png` `assets/enemies/meteor_rider.png` `assets/enemies/moon_shadow.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): star_thief·meteor_rider·moon_shadow |
 | `act3_foepose_4` | `assets/sheets/act3_foepose_4.png` → `constellation_sage_attack.png` `constellation_sage_hurt.png` | 1536×1024 투명 | `assets/enemies/constellation_sage.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): constellation_sage |
+
+## `boss-star_king` — 보스 떨어진 별의 왕
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `boss_star_king_1` | `assets/enemies/boss_star_king_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+| `boss_star_king_2` | `assets/enemies/boss_star_king_2.png` | 1024×1536 투명 | `assets/enemies/boss_star_king_1.png` `assets/style/akane_c.png` | — |
+| `boss_star_king_3` | `assets/enemies/boss_star_king_3.png` | 1024×1536 투명 | `assets/enemies/boss_star_king_1.png` `assets/style/akane_c.png` | — |
+| `boss_star_king_cutin` | `assets/cutins/boss_star_king_cutin.png` | 1536×576 | `assets/enemies/boss_star_king_1.png` `assets/style/akane_c.png` | — |
 
 ## `boss-lighthouse` — 보스 등대지기
 

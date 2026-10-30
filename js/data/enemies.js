@@ -29,6 +29,8 @@ export const FOE_PAL = {
   knight: { h: '#c8c0a0', H: '#8a8060', e: '#3a5a8a', o: '#e0e0e8', O: '#9a9aa8', a: '#e0b84a' },
   star:   { h: '#1a1a3a', H: '#0a0a1e', e: '#ffe080', o: '#3a3a7a', O: '#22224a', a: '#ffe080', skin: '#c0c0d8' },
   cat:    { h: '#141418', H: '#08080a', e: '#a0ff80', o: '#202028', O: '#101014', a: '#a0ff80', skin: '#c0c0d8' },
+  starking: { h: '#e8ecff', H: '#7a8ad8', e: '#fff6a0', o: '#2a2f6a', O: '#14183a', a: '#ffe08a' },
+  starshard: { h: '#fff6c8', H: '#c8b060', e: '#ffffff', o: '#6a5a20', O: '#3a3010', a: '#fff1b0' },
   dawn:   { h: '#ffd0a0', H: '#e08a5a', e: '#ff5a3a', o: '#ffe8d0', O: '#e0b090', a: '#ff8a3a' },
   eel:    { h: '#3a6a8a', H: '#1a3a5a', e: '#fff080', o: '#2a4a6a', O: '#14283e', a: '#fff080' },
   powder: { h: '#5a3a2a', H: '#2a1a10', e: '#ff8040', o: '#8a5a3a', O: '#5a3420', a: '#ff6030' },
@@ -116,6 +118,13 @@ export const FOE = {
                        line: '"…아직도 서 있어? 그럼 끝까지 보여 줄게. 한낮을."', clockOnce: 3, turnClock: 2, burstClock: 0, aim: 'dawn',
                        pat: [R(9), A(13), A(5, 4), R(12), U(3)] },
              pat: [A(11), A(5, 4), M(14, 14), U(4), A(24)] },
+  // 시즌 1 보스 (js/data/season.js): 떨어진 별의 왕 — 별 조각 부르기·모두 공격, 2단계 별비, 3단계 추락
+  starking: { name: '떨어진 별의 왕', hp: 190, pal: 'starking', hitSound: 'magic', long: true, crown: true, aim: 'weakest',
+             lines: ['"하늘에서 떨어진 것은 별만이 아니다."', '"너희가 밤을 지킨다고? 나는 밤 그 자체였다."', '"올라오너라. 별이 너희를 비춰 줄 테니."'],
+             phase2: { at: .6, msg: '떨어진 별의 왕이 왕관을 들어 올렸다. 별비가 쏟아진다.', aim: 'back', pat: [R(8), Z('starshard'), A(7, 3), U(3)] },
+             phase3: { at: .25, msg: '추락. 별의 왕이 마지막 빛을 끌어모은다.', line: '"…함께 떨어지자. 이 탑 아래로."', acts: 2, pat: [A(16), R(10), A(5, 4)] },
+             pat: [A(12), Z('starshard'), R(6), M(10, 12), A(6, 3)] },
+  starshard: { name: '별 조각', hp: 14, pal: 'starshard', hitSound: 'magic', small: true, deathBoom: 3, pat: [A(4), A(2, 2)] },
   // 첫 실행 튜토리얼 (js/data/tutorial.js): 약하게
   tut_ghost: { name: '아기 바다 유령', hp: 24, pal: 'sea', hitSound: 'magic', long: true, pat: [A(4), A(2, 2), A(5)] },
   tut_gull:  { name: '갈매기', hp: 10, pal: 'gull', hitSound: 'beast', aim: 'back', small: true, pat: [A(3)] },

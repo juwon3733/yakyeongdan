@@ -839,6 +839,16 @@
       ]
     },
     {
+      "id": "boss-star_king",
+      "title": "보스 떨어진 별의 왕",
+      "items": [
+        "boss_star_king_1",
+        "boss_star_king_2",
+        "boss_star_king_3",
+        "boss_star_king_cutin"
+      ]
+    },
+    {
       "id": "boss-lighthouse",
       "title": "보스 등대지기",
       "items": [
@@ -10939,6 +10949,73 @@
             512
           ]
         }
+      ]
+    },
+    {
+      "id": "boss_star_king_1",
+      "kind": "boss",
+      "batch": "boss-star_king",
+      "file": "enemies/boss_star_king_1.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nBoss sprite, 떨어진 별의 왕: season-1 boss \"The Fallen Star King\": a tall regal adult man who fell from the night sky, long white-blue hair floating like a comet tail, a cracked golden star crown, a deep-navy royal coat embroidered with constellations, a scepter tipped with a burning star, small star shards orbiting him. Facing LEFT, imposing, a big low-resolution battle sprite. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_star_king_2",
+      "kind": "boss",
+      "batch": "boss-star_king",
+      "file": "enemies/boss_star_king_2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 떨어진 별의 왕, second phase: the crown blazes, a rain of falling stars pours around him, the coat torn open showing a glowing star core in his chest. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.",
+      "reference_images": [
+        "enemies/boss_star_king_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_star_king_3",
+      "kind": "boss",
+      "batch": "boss-star_king",
+      "file": "enemies/boss_star_king_3.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 떨어진 별의 왕, third phase \"Fall\": he becomes a falling meteor himself — body wreathed in white-gold fire, hair streaming upward, the crown shattered, descending with a burning trail. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.",
+      "reference_images": [
+        "enemies/boss_star_king_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_star_king_cutin",
+      "kind": "cutin",
+      "batch": "boss-star_king",
+      "file": "cutins/boss_star_king_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "384×144",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss cut-in: close-up of the fallen star king raising his star scepter, a meteor shower streaking behind him, eyes like cold stars. Wide horizontal composition, face in the middle band (cropped to 1536x576).",
+      "reference_images": [
+        "enemies/boss_star_king_1.png",
+        "style/akane_c.png"
       ]
     },
     {
