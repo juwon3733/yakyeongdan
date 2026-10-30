@@ -12,7 +12,7 @@ import { FOE_PAL } from '../data/enemies.js';
 
 export function seasonView() {
   const s = seasonNow();
-  const head = `<div class="bhead"><button type="button" class="mini" data-view="base">‹ 본부</button><span class="wallet"><b>별 조각 ${P.shards}</b></span></div>`;
+  const head = `<div class="bhead"><button type="button" class="mini" data-view="base">‹ 본부</button><span class="wallet"><b>별 조각 ${P.shards}</b></span>${seasonNow()?.open ? '<button type="button" class="mini srankb" data-view="ranking">랭킹 ›</button>' : ''}</div>`;
   if (!s) return `<div class="seasonscr">${head}<h2>시즌</h2><p class="note">다음 시즌을 준비하고 있다.</p></div>`;
   if (!s.open) return `<div class="seasonscr">${head}<div class="sshead" style="--c:${s.col}"><small>시즌 ${s.no}</small><b>${esc(s.name)}</b><span>${s.inDays}일 뒤 시작</span></div><p class="note">${esc(s.tagline)}</p></div>`;
   const rec = seasonRec(s.id), boss = FOE[s.boss], lv = passLevel(rec), into = (rec.xp || 0) % PASS.per;
@@ -45,7 +45,6 @@ export function seasonView() {
           <div class="spxp"><i style="width:${maxed ? 100 : Math.round(into / PASS.per * 100)}%"></i><small>${maxed ? 'MAX' : `${into}/${PASS.per}`}</small></div>
           <ol class="sprow">${cells}</ol>
           <button type="button" class="${can ? 'primary' : ''}" data-claimpass ${can ? '' : 'disabled'}>보상 받기</button>${S.seasonMsg ? `<small class="smsg">${esc(S.seasonMsg)}</small>` : ''}</div>
-        <button type="button" class="srank" data-view="ranking"><b>시즌 랭킹</b> <small>매일의 밤·시즌 보스·끝없는 탑·밤 오르기 ›</small></button>
       </div>
     </div>
   </div>`;
