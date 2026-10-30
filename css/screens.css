@@ -157,9 +157,52 @@
   50%{box-shadow:3px 3px 0 var(--shadow),0 0 0 2px color-mix(in srgb,var(--c) 55%,transparent),0 0 0 4px color-mix(in srgb,var(--c) 25%,transparent)}
 }
 
+/* MVP 칸 (screens.js mvpPanel): 왼쪽 전체 높이. 뒤에 CG(★5) 또는 동료 색 빛줄기,
+   그림이 왼쪽에서 미끄러져 들어오고 → 이름 띠가 펼쳐지고 → 「MVP」 도장이 쾅(칸이 한 번 흔들림) */
+.resultscr .mvp{position:relative;width:200px;padding:0;gap:0;justify-content:flex-end;isolation:isolate;
+  background:linear-gradient(180deg,#0e0f24 0%,color-mix(in srgb,var(--c) 18%,#14152e) 100%);
+  animation:yk-mvp-glow 2.4s steps(6) infinite,yk-mvp-hit .24s steps(4) .62s both}
+.resultscr .mvpbg{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.resultscr .mvpbg .cg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 18%;image-rendering:pixelated;
+  opacity:.55;filter:saturate(1.1);-webkit-mask:linear-gradient(#000 0 55%,transparent 100%);mask:linear-gradient(#000 0 55%,transparent 100%);animation:yk-mvp-cg .5s steps(5) both}
+.resultscr .mvpbg .rays{position:absolute;left:50%;top:44%;width:360px;height:360px;margin:-180px 0 0 -180px;border-radius:50%;
+  background:repeating-conic-gradient(from 0deg,color-mix(in srgb,var(--c) 30%,transparent) 0deg 8deg,transparent 8deg 24deg);
+  -webkit-mask:radial-gradient(circle,#000 0 18%,transparent 62%);mask:radial-gradient(circle,#000 0 18%,transparent 62%);animation:yk-reward-rays 30s linear infinite}
+.resultscr .mvp img.mvpart{width:160px;height:240px;margin-bottom:-6px;animation:yk-mvp-in .4s steps(6) both}
+.resultscr .mvp.hascg img.mvpart{width:150px;height:225px}
+.resultscr .mvp img.mvpart[src^="data:"]{width:96px;height:128px;margin-bottom:6px}
+.resultscr .mvpband{position:relative;align-self:stretch;display:flex;flex-direction:column;align-items:center;padding:3px 6px 4px;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--c) 70%,#0b0b18) 18% 82%,transparent);
+  border-top:2px solid var(--c);box-shadow:inset 0 2px 0 rgba(255,255,255,.18);animation:yk-mvp-band .3s steps(5) .32s both}
+.resultscr .mvpband .nm{font-family:var(--f-disp);font-weight:400;font-size:16px;line-height:18px;color:#fff;letter-spacing:.06em;text-shadow:1px 1px 0 #000,2px 2px 0 var(--shadow)}
+.resultscr .mvpband small{font-size:8.5px;line-height:10px;color:#e8e6ff;text-shadow:1px 1px 0 #000}
+.resultscr .mvpstamp{position:absolute;right:8px;top:10px;z-index:3;padding:2px 7px 3px;font-family:var(--f-disp);font-size:20px;line-height:20px;letter-spacing:.08em;
+  color:#ffe08a;background:#7a1428;border:2px solid #ffe08a;outline:2px solid #3a0812;box-shadow:3px 3px 0 var(--shadow),inset 0 0 0 1px #c0304a;text-shadow:1px 1px 0 #3a0812;
+  transform:rotate(-12deg);animation:yk-mvp-stamp .26s steps(4) .5s both,yk-mvp-ring .3s steps(4) .74s both}
+@keyframes yk-mvp-in{from{transform:translateX(-70px);opacity:0}60%{transform:translateX(6px);opacity:1}to{transform:none}}
+@keyframes yk-mvp-cg{from{opacity:0;transform:scale(1.15)}}
+@keyframes yk-mvp-band{from{transform:scaleX(0)}to{transform:none}}
+@keyframes yk-mvp-stamp{from{transform:rotate(-24deg) scale(3.2);opacity:0}70%{transform:rotate(-10deg) scale(.88);opacity:1}to{transform:rotate(-12deg)}}
+@keyframes yk-mvp-ring{from{box-shadow:3px 3px 0 var(--shadow),inset 0 0 0 1px #c0304a,0 0 0 4px #ffe08a}to{box-shadow:3px 3px 0 var(--shadow),inset 0 0 0 1px #c0304a,0 0 0 14px rgba(255,224,138,0)}}
+@keyframes yk-mvp-hit{0%{translate:0 0}25%{translate:-3px 2px}50%{translate:3px -1px}75%{translate:-1px 1px}100%{translate:0 0}}
+
+/* 동료 기록: 피해·방어·회복 가로 막대 (screens.js statBars). 막대는 0에서 0.6초 동안 차오른다 */
+.rstats{display:grid;grid-template-columns:auto repeat(3,minmax(0,1fr));gap:1px 6px;align-items:center;max-width:380px;padding:2px 6px;
+  background:#101127;border:2px solid var(--line);box-shadow:2px 2px 0 var(--shadow)}
+.rstats .rsh{font-family:var(--f-disp);font-size:9px;line-height:10px;color:var(--k)}
+.rstats .rsn{font-family:var(--f-disp);font-size:10px;line-height:11px;white-space:nowrap}
+.rstats .rsn.me::after{content:"★";margin-left:2px;color:var(--gold)}
+.rstats .k-dmg{--k:#ef6a5a}.rstats .k-block{--k:#6aa8ef}.rstats .k-heal{--k:#5ad08a}
+.rbar{position:relative;height:8px;background:#0b0b18;border:1px solid #000;box-shadow:inset 0 0 0 1px #2b2d55}
+.rbar i{position:absolute;left:0;top:0;bottom:0;width:var(--w);background:var(--k);box-shadow:inset 0 2px 0 rgba(255,255,255,.35),inset 0 -2px 0 rgba(0,0,0,.3);
+  transform-origin:0 50%;animation:yk-bar-fill .6s steps(10) calc(.2s + var(--r) * .1s) both}
+.rbar b{position:absolute;right:2px;top:-1px;font-weight:400;font-size:8px;line-height:8px;color:#fff;text-shadow:1px 1px 0 #000;font-variant-numeric:tabular-nums}
+@keyframes yk-bar-fill{from{transform:scaleX(0)}to{transform:none}}
+
 @media (prefers-reduced-motion:reduce){
-  .rdust,.resultscr.won .rtitle,.resultscr .countup,.resultscr .mvp{animation:none}
+  .rdust,.resultscr.won .rtitle,.resultscr .countup,.resultscr .mvp,.resultscr .mvp *,.rbar i{animation:none}
 }
+#stage.calm .resultscr .mvp,#stage.calm .resultscr .mvp *,#stage.calm .rbar i{animation:none}
 
 /* ── 갈무리 글꼴 맞춤: 글자 잘림·겹침 ── */
 
@@ -290,3 +333,12 @@ details.fold > :not(summary){margin:4px 6px 5px}
 @media (prefers-reduced-motion:reduce){
   .epface .newt,.mxs.cur i,.pity.hot .pbar i{animation:none}
 }
+/* 결과: 기록 막대는 큰 시계 옆에 (세로 공간 아끼기 — 아래 버튼이 화면 밖으로 밀리지 않게) */
+.rclockrow{display:flex;align-items:center;gap:12px}
+.rclockrow .clockbig{flex:none}
+.rclockrow .rstats{flex:1;min-width:0}
+.rstats .rbar{height:7px}
+.rstats .rbar b{right:auto;left:calc(100% + 2px);top:-1px}
+.rstats .rbar{margin-right:16px}
+.resultscr .mvp{padding-bottom:18px}
+.resultscr .mvpband small{margin-top:5px}

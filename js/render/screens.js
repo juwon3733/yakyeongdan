@@ -130,10 +130,28 @@ const WHY = { down: '모두 쓰러졌다', collapse: '7시. 탑이 무너졌다'
 function metaNote(R) {
   const out = [];
   if (R.daily) out.push(`<span class="chip dailychip">매일의 밤</span> ${R.daily.best != null ? `오늘 최고 <b>${fmt(R.daily.best)}</b>` : '오늘은 아직 못 깼다'}${R.daily.first ? ' · <b class="newt">오늘 첫 격파</b>' : ''}`);
-  if (R.mastery?.length) out.push(`<span class="chip">숙련도</span> ${R.mastery.map(u => `${esc(CHARACTERS[u.id]?.name || u.id)} <b>${u.lv}</b>`).join(' · ')}`);
+  if (R.mastery?.length) out.push(`<span class="chip">숙련도</span> ${R.mastery.map(u => `${esc(CHARACTERS[u.id]?.name || u.id)} <b>${u.lv}단계</b>`).join(' · ')}`);
   // 업적이 많으면 앞의 4개만 이름으로, 나머지는 「외 n개」 (결과 화면이 판 밖으로 넘치지 않게)
   if (R.ach?.length) out.push(`<span class="chip">업적</span> ${R.ach.slice(0, 4).map(a => esc(a.name)).join(', ')}${R.ach.length > 4 ? ` 외 ${R.ach.length - 4}개` : ''} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b>`);
   return out.length ? `<div class="metanote">${out.map(x => `<p class="note">${x}</p>`).join('')}</div>` : '';
+}
+// MVP 칸: 서 있는 일러스트를 크게(★5이고 전신 CG가 있으면 CG를 배경으로) + 이름 띠 + 「MVP」 도장이 쾅
+function mvpPanel(id, c, st, won = true) {
+  const cg = c.rarity === 5 && artURL(`cg/star5_${id}.png`);
+  return `<div class="mvp${cg ? ' hascg' : ''}" style="--c:${c.col}">
+    <span class="mvpbg" aria-hidden="true">${cg ? `<img class="cg" src="${cg}" alt="">` : '<i class="rays"></i>'}</span>
+    <img class="px mvpart" src="${charSrc(id)}" alt="">
+    <span class="mvpband"><b class="nm">${esc(c.name)}</b><small>${esc(c.role)} · 피해 ${st.dmg || 0}</small></span>
+    <span class="mvpstamp" aria-label="${won ? 'MVP' : '끝까지 버틴'}">${won ? 'MVP' : '끝까지'}</span></div>`;
+}
+// 동료 셋의 피해·방어·회복 가로 막대 (항목마다 가장 큰 값을 꽉 찬 막대로)
+const STAT_KEYS = [['dmg', '피해'], ['block', '방어'], ['heal', '회복']];
+function statBars(G, mvp) {
+  const v = (p, k) => G.stats?.[p]?.[k] || 0;
+  const top = Object.fromEntries(STAT_KEYS.map(([k]) => [k, Math.max(1, ...G.party.map(p => v(p, k)))]));
+  const rows = G.party.map((p, r) => `<span class="rsn${p === mvp ? ' me' : ''}" style="color:${CHARACTERS[p].col}">${esc(CHARACTERS[p].name)}</span>${STAT_KEYS.map(([k]) =>
+    `<span class="rbar k-${k}" style="--w:${(v(p, k) / top[k] * 100).toFixed(1)}%;--r:${r}"><i></i><b>${v(p, k)}</b></span>`).join('')}`).join('');
+  return `<div class="rstats"><span></span>${STAT_KEYS.map(([k, t]) => `<span class="rsh k-${k}">${t}</span>`).join('')}${rows}</div>`;
 }
 export function resultView() {
   if (S.G.endless) return endlessResultView();
@@ -152,10 +170,10 @@ export function resultView() {
   const epNote = opened.length ? `<p class="epnew"><b class="newt">새 에피소드</b> ${opened.map(esc).join(' · ')}</p>` : '';
   return `<div class="resultscr ${G.won ? 'won' : 'lost'}">
     ${G.won ? '<i class="rdust" aria-hidden="true"></i><i class="rdust far" aria-hidden="true"></i>' : '<i class="rash" aria-hidden="true"></i><i class="rash far" aria-hidden="true"></i>'}
-    <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">${G.won ? 'MVP' : '끝까지 버틴'} · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}${st.heal ? ` · 회복 ${st.heal}` : ''}</span></div>
+    ${mvpPanel(mvp, mc, st, G.won)}
     <div class="rinfo">
       <h2 class="rtitle">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
-      <p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${pxNum(fmt(G.clock), { s: 5, col: G.won ? '#fff4d0' : '#ff8a8a' })}</p>
+      <div class="rclockrow"><p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${pxNum(fmt(G.clock), { s: 5, col: G.won ? '#fff4d0' : '#ff8a8a' })}</p>${statBars(G, mvp)}</div>
       <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`} · 싸움 ${G.fights}번 · ${MOONS[G.moon].name}${G.bestTurn?.dmg ? ` · 최고의 한 턴 <b>${G.bestTurn.dmg}</b>` : ''}</p>
       ${G.duoSet.size ? `<p class="note">듀오 ${duos}</p>` : ''}
       ${epNote}
