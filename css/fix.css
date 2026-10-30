@@ -37,3 +37,6 @@ img.px.fci{position:absolute!important;margin:0!important;max-width:none!importa
 .tlogow::after{content:"";position:absolute;inset:0;pointer-events:none;-webkit-mask:var(--lg) center/contain no-repeat;mask:var(--lg) center/contain no-repeat;background:linear-gradient(105deg,transparent 40%,rgba(255,250,225,.9) 50%,transparent 60%) 0 0/300% 100% no-repeat;animation:tlglint 4.5s steps(18) 1.2s infinite;mix-blend-mode:screen}
 @keyframes tlglint{0%{background-position:100% 0}35%,100%{background-position:0 0}}
 #stage.calm .tlogow::after{animation:none;opacity:0}
+.epbg.art{background-size:cover!important;background-position:50% 60%!important;image-rendering:auto}
+.epbg.art i{display:none}
+.epbg.art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,18,.15),rgba(6,6,18,.05) 50%,rgba(6,6,18,.55))}

@@ -457,9 +457,9 @@ button.relic.spent{opacity:.35}
 .epbox:has(.who){padding-top:10px}
 .epbox.act .who{position:static;background:none;border:0;box-shadow:none;padding:0;color:var(--c,var(--gold))}
 /* 대사 글자 하나씩 */
-.epbox.typing .tx i{font-style:normal;opacity:0;animation:eptype .01s steps(1) forwards}
+.epbox.typing .tx i{font-style:normal;opacity:1;animation:eptype .01s steps(1) backwards}   /* 지연 동안만 숨김(backwards) — 끝 상태(forwards)에 기대면 글자가 가끔 안 보인 채로 남았다 */
 .epbox.typing .more{visibility:hidden;animation:epmore 0s .6s forwards}
-@keyframes eptype{to{opacity:1}}
+@keyframes eptype{from,to{opacity:0}}
 @keyframes epmore{to{visibility:visible}}
 /* 말할 때 살짝 튀기 · 감정 */
 .epfig.talk{animation:eptalk .28s cubic-bezier(.25,.8,.35,1)}
@@ -507,7 +507,7 @@ button.relic.spent{opacity:.35}
 .bond{color:var(--dim);border:1px solid var(--line);padding:0 4px;white-space:nowrap}
 .bond i{font-style:normal;color:var(--line);margin:0 2px}
 .bond.seen{color:var(--gold);border-color:var(--gold)}
-.talk{max-width:420px;margin:2px auto;text-align:left;font-size:9px;line-height:1.5;border:1px solid var(--line);background:#0b0b18;padding:3px 6px}
+div.talk:not(.epfig){max-width:420px;margin:2px auto;text-align:left;font-size:9px;line-height:1.5;border:1px solid var(--line);background:#0b0b18;padding:3px 6px}
 .talk p{margin:0;display:flex;align-items:center;gap:4px}
 .talk b{color:var(--gold);font-weight:400;white-space:nowrap}
 .cmoonpick{display:flex;gap:3px;align-items:center;color:var(--moon)}

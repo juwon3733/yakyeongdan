@@ -9,6 +9,7 @@ import { CHARACTERS } from '../data/characters.js';
 import { FOE } from '../data/enemies.js';
 import { sprite } from './sprites.js';
 import { esc, palOf, charSrc } from './common.js';
+import { artURL } from '../art.js';
 
 // 말하는 사람 (명단 → 조연 → 이름만)
 export function who(id) {
@@ -68,6 +69,9 @@ function typed(text, fresh) {
   if (!fresh) return esc(text);
   return [...text].map((ch, k) => `<i style="animation-delay:${k * TYPE_MS}ms">${esc(ch)}</i>`).join('');
 }
+// 에피소드 장소 → 배경 그림(없으면 css의 .bg-<키> 임시 그림)
+const EP_ART = { base: 'hq', attic: 'hq', rest: 'ep_kitchen', roof: 'map1', harbor: 'ep_harbor', clock: 'ep_clocktower', convent: 'ep_convent', forge: 'ep_nightmarket', dream: 'map3', stair: 'act1' };
+const epArt = k => EP_ART[k] && artURL(`bg/${EP_ART[k]}.png`);
 export function epView() {
   const E = S.ep, line = epLine();
   const calm = calmNow();
@@ -106,8 +110,8 @@ export function epView() {
   const shake = fxOn === 'shake' && !document.getElementById('stage')?.classList.contains('noshake');
   if (line) { if (fresh) E.typing = true; E.drawn = E.i; }
   return `<div class="epscr bg-${E.bg} ${shake ? 'fx-shake' : ''}">
-    <div class="epbg" aria-hidden="true"><i></i><span class="place">${esc(EP_BG[E.bg] || '')}</span></div>
-    ${swap ? `<div class="epprev bg-${E.bgPrev}" aria-hidden="true"><div class="epbg"><i></i></div></div>` : ''}
+    <div class="epbg ${epArt(E.bg) ? 'art' : ''}" aria-hidden="true"${epArt(E.bg) ? ` style="background-image:url(${epArt(E.bg)})"` : ''}><i></i><span class="place">${esc(EP_BG[E.bg] || '')}</span></div>
+    ${swap ? `<div class="epprev bg-${E.bgPrev}" aria-hidden="true"><div class="epbg ${epArt(E.bgPrev) ? 'art' : ''}"${epArt(E.bgPrev) ? ` style="background-image:url(${epArt(E.bgPrev)})"` : ''}><i></i></div></div>` : ''}
     ${fxOn && fxOn !== 'shake' ? `<div class="epfx fx-${fxOn}" aria-hidden="true"></div>` : ''}
     ${fig(E.left, 'L')}${fig(E.right, 'R')}
     <div class="eptop"><span class="ttl">${head}</span><span class="grow"></span>
