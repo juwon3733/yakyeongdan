@@ -17,40 +17,39 @@
 
 ## 주니어 큐 (위에서부터, 큐에 그대로 붙여 넣기)
 
-지난 큐 ✅: A 적 도감, B 시즌 1 음악(season·boss_star·boss_star3·meteor), C 밸런스 보고서 + 카드 순위.
+지난 큐 ✅: A 적 도감, B 시즌 1 음악·에스텔 소리, C 밸런스 보고서·카드 순위·--patch 시뮬. (랭킹 틀은 주니어 실패 → Claude가 만듦)
 
 공통 금지(모든 작업에 붙인다): assets/ 아래 그림·json, docs/PROMPTS.md, shots/ 는 열거나 cat 하지 마. grep은 js css tools 안에서만. 긴 출력은 파일로 보내고 tail만.
 
 ### 주니어 A — 화면
-1. `feat` · **시즌 랭킹 화면 틀**
+1. `feat` · **시즌 패스 보상 줄**
    ```
-   시즌 화면(js/render/season.js)의 「시즌 랭킹 — 온라인 연결 뒤 열린다」 자리를 실제 랭킹 화면 틀로 만들어 줘. 서버는 아직 없다(Claude가 나중에 Supabase로 붙임).
-   - js/ranking.js(새로): export async function fetchBoard(board, season) — 지금은 가짜 자료(이름 20개·점수·파티 3명 id)를 돌려준다. board: 'daily'·'season_boss'·'endless'·'run'. 내 순위 { rank, score } 도 같이(가짜).
-   - 시즌 화면 오른쪽 아래 [랭킹] 버튼 → S.view = 'ranking' 화면(js/render/ranking.js 새로, js/render/index.js에 등록): 위에 탭 넷(매일의 밤·시즌 보스·끝없는 탑·밤 오르기), 1~3위는 큰 칸(금·은·동 테두리 + 파티 얼굴 셋, common.js face()), 4위부터 줄, 맨 아래 고정 줄에 내 순위.
-   - 불러오는 동안 「불러오는 중」, 실패하면 「온라인에 연결되지 않았다」 한 줄.
-   CSS는 css/screens.css. node tools/smoke.mjs, node tools/text-check.mjs 통과.
+   시즌 화면(js/render/season.js seasonView)의 시즌 패스(지금은 작은 눈금 막대 .spbar)를 보상이 보이는 가로 줄로 바꿔 줘.
+   - 30단계를 가로로 스크롤되는 칸 줄로: 칸마다 단계 번호 + 보상(js/data/season.js PASS.reward(n): 별 조각 수, 10단계마다 칭호). 5·10단계 칸은 크게, 10단계는 금테.
+   - 받은 칸은 도장(✓), 받을 수 있는 칸은 반짝임(steps 애니메이션), 아직인 칸은 어둡게. 지금 단계로 자동 스크롤.
+   - 위에 지금 단계·다음 단계까지 남은 시즌 별(rec.xp % PASS.per / PASS.per) 막대. [보상 받기] 버튼은 그대로(data-claimpass).
+   CSS는 css/season.css 끝에. node tools/smoke.mjs(시즌 블록 포함), node tools/text-check.mjs 통과.
    공통 금지: assets/ 아래 그림·json, docs/PROMPTS.md, shots/ 는 열거나 cat 하지 마. grep은 js css tools 안에서만. 긴 출력은 파일로 보내고 tail만.
    ```
 
 ### 주니어 B — 소리
-1. `feat` · **에스텔 소리**
+1. `feat` · **보스 단계 전환·승리 띠 효과음**
    ```
-   시즌 1 동료 에스텔(별똥 기사, 창검)의 소리를 tools/compose/sfx.py로 만들어 등록해 줘(PC-98 FM).
-   - atk_estelle: 에스텔 공격(다른 동료 atk_<id>와 같은 방식, 이름만 맞으면 js/juice.js가 알아서 쓴다). 창이 바람을 가르는 휘익 + 맑은 금속 찌르기, 0.3초.
-   - burst_estelle: 패시브 ③ 「유성우」 터질 때. 높은 곳에서 별 여러 개가 연달아 떨어져 터지는 소리 0.9초. js/juice.js에서 e.kind === 'burst' && e.who === 'estelle'일 때 sfx('burst_estelle') — 그 한 줄만 juice.js를 고친다(없으면 기존 소리).
-   - pass_claim: 시즌 패스 보상 받기 딩동 + 짧은 상승 아르페지오 0.6초. js/main.js 'claimpass' 처리에서 받은 게 있을 때 sfx('pass_claim').
+   tools/compose/sfx.py로 PC-98 FM 효과음 둘을 만들어 등록해 줘.
+   - boss_phase: 보스 단계 전환. 낮게 빨려 드는 소리(0.5초) → 쾅 터짐 + 금속성 울림(0.6초), 합쳐 1.1초. js/juice.js phaseFx에서 지금 sfx(hasSfx('boss_enter') ? 'boss_enter' : 'dawn', ...) 줄을 hasSfx('boss_phase')가 있으면 'boss_phase'를 쓰게 그 한 줄만 고친다.
+   - win_band: 「승리」 띠가 펼쳐질 때 짧은 금관 팡파르 0.8초. js/juice.js winBurst() 맨 앞에 if (hasSfx('win_band')) sfx('win_band', { vol: .7 }); 한 줄.
    push가 실패하면 2·4·8·16초 쉬고 다시. PR 설명에 소리 길이.
    공통 금지: assets/ 아래 그림·json, docs/PROMPTS.md, shots/ 는 열거나 cat 하지 마. grep은 js css tools 안에서만. 긴 출력은 파일로 보내고 tail만.
    ```
 
 ### 주니어 C — 도구
-1. `feat` · **수치 바꿔 보기 시뮬(--patch)**
+1. `chore` · **핀 강화안 시험(보고만)**
    ```
-   tools/sim.mjs에 --patch <파일.json>을 더해 줘: 데이터 파일을 고치지 않고 시뮬 안에서만 수치를 바꿔 승률을 비교한다.
-   - patch 형식: { "cards": { "iris.slash": { "v": [8] }, "finn.letter": { "cost": 0 } }, "chars": { "iris": { "maxHp": 40 } } } — 불러온 CARDS·CHARACTERS 객체에 덮어쓴다(깊은 병합).
-   - tools/patch-compare.mjs(새로): 같은 시드로 patch 없이/있이 두 번 돌려 「처음 동료(아이리스·브릭·마르타) 격파율」「바뀐 동료가 든 파티 격파율」「전체 격파율」을 나란히 출력.
-   - 시험용 patch 하나를 tools/patches/starter_buff.json으로: 아이리스·브릭·마르타 기본 카드(slash·guard·shot 등 시작 덱 카드) 수치 +1씩. 결과 표를 PR 설명에.
-   js/data/ 파일은 고치지 마(수치 결정은 Claude).
+   밸런스 보고서에서 핀(★3 우편배달부)이 가장 약하다(들어간 파티 격파율 약 23%, 평균 35%). tools/patch-compare.mjs로 강화안 셋을 시험해 줘.
+   - tools/patches/finn_a.json: 핀 카드 수치(js/data/cards.js finn.*의 v)만 +1~2.
+   - tools/patches/finn_b.json: 핀 패시브 숫자만(js/data/characters.js finn) — 데이터에 숫자로 있는 것만 바꿀 수 있으면, 아니면 maxHp +4로 대신.
+   - tools/patches/finn_c.json: a + b 같이.
+   각 patch를 --runs 2000으로 돌려 「핀이 든 파티 격파율」「전체 격파율」을 표로 PR 설명에. 목표는 핀 30~35%(★5는 넘지 않게). 가장 나은 안을 추천만 하고 js/data/ 는 고치지 마(결정은 Claude).
    공통 금지: assets/ 아래 그림·json, docs/PROMPTS.md, shots/ 는 열거나 cat 하지 마. grep은 js css tools 안에서만. 긴 출력은 파일로 보내고 tail만.
    ```
 
