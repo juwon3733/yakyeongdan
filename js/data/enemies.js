@@ -5,7 +5,7 @@
 //   phase2: 체력이 at 비율 아래가 되면 한 번 바뀜 { at, msg, clockOnce, ...바꿀 필드(armor·acts·aim·turnClock·pat) }
 //   line / lines: 강적·보스 앞 한 줄 대사 (lines면 그중 하나) · burstClock: 내 턴 피해가 RULES.bigTurn 이상이면 밤 시계 +분 (턴당 1번)
 //   thorns: 이 적을 친 동료가 받는 피해 · deathBoom: 쓰러질 때 모든 동료 피해
-//   ACTS[막]: easy(1층 전투), fights(그 위 전투), elites — 각 항목은 적 id 배열(1~3마리)
+//   ACTS[막]: easy(1층 전투), fights(그 위 전투), elites — 각 항목은 적 id 배열(1~5마리, 넷·다섯은 작은 적 무리)
 //   boss: 그 막 보스 후보 id (판마다 지도를 만들 때 하나를 고른다, js/map.js makeMap → map.boss)
 //   phase3: phase2와 같은 모양, 2단계 뒤 at 비율 아래에서 한 번 (depth: 밤의 깊이 그 이상에서만)
 //   mistVeil { block, vuln }: 내 턴 시작마다 방어 block, 그 턴 ③이 처음 터지면 장막이 걷혀 방어 0·취약 vuln
@@ -135,15 +135,15 @@ export const FOE = {
 export const ACTS = {
   1: { easy: [['ghost'], ['crab'], ['gull', 'gull', 'gull'], ['eel']],
        fights: [['ghost'], ['crab'], ['pirate', 'pirate'], ['gull', 'gull', 'gull'], ['ghost', 'gull'], ['eel'], ['powder', 'pirate'],
-                ['parrot', 'gull'], ['eel', 'gull'], ['crab', 'powder']],
-       elites: [['anchor'], ['witch'], ['smuggler', 'pirate']], boss: ['keeper', 'queen'] },
+                ['parrot', 'gull'], ['eel', 'gull'], ['crab', 'powder'], ['gull', 'gull', 'gull', 'gull']],
+       elites: [['anchor'], ['witch'], ['smuggler', 'pirate'], ['gull', 'gull', 'parrot', 'gull', 'gull']], boss: ['keeper', 'queen'] },
   2: { easy: [['cloud'], ['feather'], ['kite']],
        fights: [['cloud'], ['feather'], ['sheep'], ['vane'], ['cloud', 'vane'], ['jelly', 'feather'], ['kite'], ['puff', 'puff'],
-                ['kite', 'jelly'], ['sheep', 'puff']],
+                ['kite', 'jelly'], ['sheep', 'puff'], ['mistling', 'mistling', 'mistling', 'mistling']],
        elites: [['bird'], ['vaneL', 'vaneR'], ['trumpet']], boss: ['captain', 'whale'] },
   3: { easy: [['statue'], ['cat'], ['gear']],
        fights: [['statue'], ['cat'], ['archer'], ['angel'], ['angel', 'cat'], ['comet', 'comet'], ['gear'], ['thief', 'cat'],
-                ['statue', 'comet'], ['gear', 'thief']],
+                ['statue', 'comet'], ['gear', 'thief'], ['starshard', 'starshard', 'starshard', 'starshard', 'starshard']],
        elites: [['rider'], ['shadow'], ['sage']], boss: ['dawn'] },
 };
 

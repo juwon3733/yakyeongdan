@@ -131,7 +131,7 @@ export function combatView() {
     const s = [STAT[p] ? STAT[p](C) : '', ms.weak ? `약화 ${ms.weak}` : '', ms.vuln ? `취약 ${ms.vuln}` : ''].filter(Boolean).join(' · ');
     const blk = C.blocks[p];
     const swap = k < 2 ? `<button type="button" class="swap" data-swap="${fi - 1}" ${C.swaps >= swapLimit() ? 'disabled' : ''} title="자리 바꾸기 (바꾼 둘 방어 -${RULES.swapBlockCost})">⇄</button>` : '';
-    return `<button type="button" class="pm ${M.down ? 'down' : ''} ${aims.has(p) ? 'aimed' : ''} ${lit.includes(p) ? 'lit' : ''} ${wantAlly && !M.down ? 'tg' : ''} ${C.last === p ? 'last' : ''}" style="--c:${c.col}" data-ally="${p}" ${wantAlly && !M.down ? '' : 'tabindex="-1"'}>
+    return `<button type="button" class="pm ${k % 2 ? 'zb' : 'zf'} ${M.down ? 'down' : ''} ${aims.has(p) ? 'aimed' : ''} ${lit.includes(p) ? 'lit' : ''} ${wantAlly && !M.down ? 'tg' : ''} ${C.last === p ? 'last' : ''}" style="--c:${c.col}" data-ally="${p}" ${wantAlly && !M.down ? '' : 'tabindex="-1"'}>
         <span class="row">${ROW_NAME[fi]}</span>${lit.includes(p) ? '<b class="litnm">불빛 +1</b>' : ''}
         <img class="px" src="${battleSrc(p, M.down ? 'down' : 'idle')}" alt="">
         <span class="lab"><span class="nm">${c.name}</span>
@@ -139,15 +139,16 @@ export function combatView() {
         <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span>${M.down ? '' : burstProgHTML(p)}</span></button>${swap}`;
   }).join('');
   const many = C.all.length > 1;
-  const foes = C.all.map(f => {
-    if (f.dead) return `<span class="foe gone ${many ? 'sm' : ''}" data-fi="${f.i}"><span class="nm">${esc(f.name)}</span><span class="note">쓰러짐</span></span>`;
+  const foes = C.all.map((f, fk) => {
+    const zz = fk % 2 ? 'zb' : 'zf';
+    if (f.dead) return `<span class="foe ${zz} gone ${many ? 'sm' : ''}" data-fi="${f.i}"><span class="nm">${esc(f.name)}</span><span class="note">쓰러짐</span></span>`;
     const aim = aimShown(f), it = intentText(f), atk = /^공격 (\d+)(?:×(\d+))?/.exec(it);
     // 공격 의도는 흔들리고, 센 공격(한 번에 15 이상)은 붉게 빨리 (js/juice.js가 공격 직전 강조)
     const ic = atk ? `atk ${+atk[1] * (+atk[2] || 1) >= 15 ? 'big' : ''}` : '';
     // 「숨은」 속성: 첫 턴에는 고를 수 없다(다른 적이 있을 때). 속성 붙은 적은 색 오라
     const hid = f.hidden && C.all.some(g => !g.dead && !g.hidden);
     const ax = f.affixes?.length ? ` affixed" style="--ax:${AFFIX[f.affixes[0]].col}` : '';
-    return `<button type="button" class="foe ${many ? 'sm' : ''} ${C.kind === 'boss' && f.i === 0 ? 'boss' : ''} ${wantFoe && !hid ? 'tg' : ''} ${hid ? 'hidden' : ''}${ax}" ${hid ? 'aria-disabled="true" title="숨어 있어 이번 턴에는 고를 수 없다"' : `data-foe="${f.i}"`} data-fi="${f.i}">
+    return `<button type="button" class="foe ${zz} ${many ? 'sm' : ''} ${C.kind === 'boss' && f.i === 0 ? 'boss' : ''} ${wantFoe && !hid ? 'tg' : ''} ${hid ? 'hidden' : ''}${ax}" ${hid ? 'aria-disabled="true" title="숨어 있어 이번 턴에는 고를 수 없다"' : `data-foe="${f.i}"`} data-fi="${f.i}">
         <span class="intent ${ic}" data-tip="${esc(`${aim ? `${CHARACTERS[aim]?.name || ''}에게 ` : ''}${it.replace(/<[^>]+>/g, '')}\n${aim ? AIM_NAME[aimKey(f)] : ''}`.trim())}">${intentIcon(it)}${aim ? face(aim, 'sm') : ''}</span>
         <img class="px" src="${foeArt(f) || sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="lab"><span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
@@ -172,7 +173,7 @@ export function combatView() {
   const tip = tempering ? '강화할 카드를 누르면 턴을 이어 갈 수 있다.' : lit.length ? '불빛이 비춘 동료의 카드는 비용 +1.' : '';
   return `<div class="field">
       <div class="party">${party}</div>
-      <div class="foes ${many ? 'many' : ''}">${foes}</div>
+      <div class="foes ${many ? 'many' : ''}" data-n="${C.all.length}">${foes}</div>
     </div>
     <div class="log" aria-live="polite">${C.moonPick ? `<span class="cmoonpick">월광 · 이번 전투의 달: ${Object.keys(MOONS).map(k => `<button type="button" class="mini ${G.moon === k ? 'on' : ''}" data-cmoon="${k}" title="${esc(MOONS[k].text)}"><img class="px" src="${moonImg(k)}" alt="">${MOONS[k].name}</button>`).join('')}</span>` : ''}${temperBar}<span class="logtx">${C.log.slice(-2).join(' · ') || ''}</span><span class="tip">${tip}</span>${pendKeep}${relicFlag('hourglass')
       ? `<button type="button" class="mini hg ${C.payEnergy ? 'on' : ''}" data-hg aria-pressed="${C.payEnergy}" title="깨진 모래시계: 시간 카드를 시간 대신 에너지 1로">시간 카드: ${C.payEnergy ? '에너지 1' : '시간'}</button>` : ''}</div>

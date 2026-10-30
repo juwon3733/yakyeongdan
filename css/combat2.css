@@ -154,3 +154,26 @@
 #stage.calm :is(#app,.frozen)[data-screen="combat"] .pm.aimed::before{animation:none}
 /* 폭발 진행 막대 옆 「10/30」이 체력 숫자가 하나 더 있는 것처럼 보이던 것: 숫자는 도움말에만 */
 :is(#app,.frozen)[data-screen="combat"] .pm .bprog em{display:none}
+/* 끌기: 노란 테두리(.dropover)·금 테 두른 떠다니는 카드 대신 화살표만 */
+.dropover{outline:none!important}
+.card.dragghost{box-shadow:3px 3px 0 #000}
+body.aiming,body.aiming *{cursor:crosshair!important}
+:is(#app,.frozen)[data-screen="combat"] .field{outline:none!important}
+body.aiming .bottom .hand .card.sel,body.aiming #app[data-screen="combat"] .bottom .hand .card.sel{transform:translateY(-16px) scale(1.2)!important}
+/* 대열 지그재그: 동료는 앞·뒤·앞, 적은 앞·뒤·앞·뒤·앞 — 뒤에 선 쪽은 조금 위(멀리)로, 앞에 선 쪽이 겹쳐 가린다. 옛 계단식 translate 대신 */
+:is(#app,.frozen)[data-screen="combat"] .party > .pm,:is(#app,.frozen)[data-screen="combat"] .foes > .foe{transform:none}
+:is(#app,.frozen)[data-screen="combat"] .party > .pm.zb{transform:translateY(-16px);z-index:1}
+:is(#app,.frozen)[data-screen="combat"] .party > .pm.zf{z-index:2}
+:is(#app,.frozen)[data-screen="combat"] .foes > .foe.zb{transform:translateY(-18px);z-index:1}
+:is(#app,.frozen)[data-screen="combat"] .foes > .foe.zf{z-index:2}
+:is(#app,.frozen)[data-screen="combat"] .foes > .foe.zb > img{filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6)) brightness(.88)}
+/* 적 넷·다섯: 서로 겹쳐 선다 */
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="4"] > .foe{min-width:0;width:74px;margin:0 -2px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe{min-width:0;width:64px;margin:0 -4px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="4"] > .foe .hpw .hpbar,:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe .hpw .hpbar{width:60px;flex-basis:60px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe .lab .nm{display:none}
+/* 적 넷·다섯은 조금 위로 올려 오른쪽 아래 [턴 끝]에 가리지 않게, 폭을 더 좁게 */
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="4"],:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"]{margin-bottom:14px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe{width:58px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe .hpw .hpbar{width:52px;flex-basis:52px}
+:is(#app,.frozen)[data-screen="combat"] .party{margin-left:22px}   /* 맨 뒤 동료 체력이 왼쪽 아래 에너지 등불에 가리던 것 */

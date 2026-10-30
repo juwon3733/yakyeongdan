@@ -301,7 +301,7 @@ export function killCheck(f) {
     if (f.deathBoom) for (const p of living()) hurtMember(p, f.deathBoom, `${f.name}의 폭발`);
     // 쌍둥이 풍향계 (docs/12 §4): 한쪽이 쓰러지면 남은 쪽 힘 +
     // 「분열하는」: 작은 둘로 갈라진다 (한 전투 적 8마리까지)
-    if (f.ax?.split && S.C.all.length <= 6) splitFoe(f);
+    if (f.ax?.split && S.C.all.length <= 7) splitFoe(f);
     if (f.twinRage) for (const g of livingFoes()) if (g.twinRage) { g.str += f.twinRage; logMsg(`${g.name}의 힘 +${f.twinRage}`); pushFx({ kind: 'rage', i: g.i, v: f.twinRage }); }
   }
 }
@@ -550,7 +550,7 @@ function foeAct(f) {
     pushFx({ kind: 'mend', i: f.i, to: g.i, v: it.v });
   }
   else if (it.t === 'sum') {
-    if (livingFoes().length < 3 && C.all.length < 6) {
+    if (livingFoes().length < 5 && C.all.length < 8) {
       const g = makeFoe(it.id, C.all.length, (1 + (depthRule('fightHp') || 0)) * (S.G.tutorial || S.G.episode ? 1 : S.G.endless ? endlessHp('fight') : RULES.foeHpMul?.[S.G.act]?.fight || 1)); g.str = Math.max(g.str, f.str > 0 ? 0 : g.str);
       C.all.push(g); logMsg(`${f.name}이(가) <b>${g.name}</b>을(를) 불렀다`);
       pushFx({ kind: 'summon', i: f.i, to: g.i });
