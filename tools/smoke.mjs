@@ -403,9 +403,14 @@ try {
     const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
     page.on('pageerror', e => errors.push(`[season] ${e.message}`));
     await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
-    await page.goto(`http://127.0.0.1:${port}/?notut&seed=9&season=s1`);
+    await page.goto(`http://127.0.0.1:${port}/?notut&seed=9&season=s1&sintro`);
     await page.waitForSelector('#boot', { state: 'detached', timeout: 30000 });
     await page.evaluate(() => { window.__yk.reset(); window.__yk.S.view = 'base'; window.__yk.render(); });
+    // 시즌 첫 소개: 본부에 처음 오면 한 번 뜨고, [시즌 보기]로 시즌 화면
+    await page.waitForSelector('.sintro', { timeout: 3000 }).catch(() => fail('시즌 소개가 안 뜸'));
+    await page.click('[data-sintro="season"]');
+    await page.evaluate(() => { window.__yk.S.view = 'base'; window.__yk.render(); });
+    if (await page.$('.sintro:not([hidden])') && !(await page.$eval('#modal', m => m.hidden))) fail('시즌 소개가 두 번 뜸');
     await page.click('[data-view="season"]');
     await page.click('[data-tier="0"]');
     for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);

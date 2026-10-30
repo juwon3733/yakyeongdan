@@ -33,3 +33,25 @@
 .sres.lost{border-color:#c04a6a;background:rgba(42,14,20,.9)}
 .sres b{font-family:var(--f-disp);font-weight:400;font-size:14px}.sres span{font-size:9px;color:var(--gold)}
 .h2rnd.season .h2ring{border-color:#9fb4ff;color:#cfe0ff;background:radial-gradient(circle at 50% 35%,#3a4a8a,#141a3a 70%);animation:h2pulse 1.6s ease-in-out infinite}
+
+/* 시즌 첫 소개 (js/render/season.js seasonIntroModal) */
+.modal .box.sintro{width:min(560px,92%);display:flex;flex-direction:column;gap:6px;animation:siIn .5s steps(8) both}
+@keyframes siIn{from{transform:translateY(14px);opacity:0}}
+.sintro .sih{display:flex;flex-direction:column;align-items:center;text-align:center}
+.sintro .sih small{font-size:9px;color:var(--c);letter-spacing:.2em}
+.sintro .sih b{font-family:var(--f-disp);font-weight:400;font-size:28px;line-height:1.1;color:#fff;text-shadow:3px 3px 0 color-mix(in srgb,var(--c) 60%,#000)}
+.sintro .sih span{font-size:9px;color:var(--dim)}
+.sintro .sipan{display:flex;gap:8px;height:150px}
+.sintro .sic{position:relative;flex:1;overflow:hidden;border:2px solid color-mix(in srgb,var(--c) 60%,#000);box-shadow:3px 3px 0 #000;background:#08091a}
+.sintro .sic.cha{border-color:var(--cc);background:radial-gradient(ellipse at 50% 40%,color-mix(in srgb,var(--cc) 35%,#08091a),#08091a 70%)}
+.sintro .sic .art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+.sintro .sic.cha:not(.cg) .art{object-fit:contain;object-position:50% 0;height:130%;image-rendering:pixelated}
+.sintro .sic .art[src^="data:"]{object-fit:contain;image-rendering:pixelated;padding:14px}
+.sintro .sit{position:absolute;left:0;right:0;bottom:0;padding:14px 8px 5px;background:linear-gradient(transparent,rgba(4,4,16,.94));display:flex;flex-direction:column}
+.sintro .sit small{font-size:8px;color:var(--c)}
+.sintro .sit b{font-size:13px;color:#fff}
+.sintro .sit b .stars{font-style:normal;color:#ffd84a;font-size:9px}
+.sintro .sit span{font-size:8px;color:var(--dim)}
+.sintro .sirule{margin:0;font-size:9px;line-height:1.5;color:var(--ink,#e8e8f0)}
+.sintro .sirule b{color:var(--c)}
+.sintro .sibtn{display:flex;gap:6px;justify-content:center}
