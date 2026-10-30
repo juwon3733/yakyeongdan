@@ -25,7 +25,13 @@ export function seasonView() {
       <b>${t.name}</b><small>${open ? (best != null ? `최고 ${best}턴` : `첫 클리어 +${t.first}`) : '앞 단계를 깨면'}</small></button>`;
   }).join('');
   const can = lv > 0 && Array.from({ length: lv }, (_, k) => k + 1).some(n => !rec.got.includes(n));
-  const marks = Array.from({ length: PASS.tiers }, (_, k) => k + 1).map(n => `<i class="${n <= lv ? 'on' : ''} ${rec.got.includes(n) ? 'got' : ''} ${n % 5 ? '' : 'big'}"></i>`).join('');
+  const tierN = Math.min(PASS.tiers, lv + 1), maxed = lv >= PASS.tiers;
+  const cells = Array.from({ length: PASS.tiers }, (_, k) => k + 1).map(n => {
+    const r = PASS.reward(n), got = rec.got.includes(n), ready = n <= lv && !got;
+    const st = got ? 'done' : ready ? 'ready' : n === lv + 1 ? 'next' : 'lock';
+    const sz = n % 10 === 0 ? 'big gold' : n % 5 === 0 ? 'big' : '';
+    return `<li class="spc ${st} ${sz}" title="${n}단계 · 별 조각 ${r.shards}${r.title ? ` · 칭호 「${esc(r.title)}」` : ''}"><small>${n}</small><b>✦${r.shards}</b>${r.title ? '<em>칭호</em>' : ''}${got ? '<i class="stamp">✓</i>' : ''}</li>`;
+  }).join('');
   return `<div class="seasonscr" style="--c:${s.col}">
     ${head}
     <div class="sshead"><small>시즌 ${s.no} · ${s.left}일 남음</small><b>${esc(s.name)}</b><span>${esc(s.tagline)}</span></div>
@@ -35,8 +41,9 @@ export function seasonView() {
         ${result}
         <div class="stiers">${tiers}</div>
         <div class="srule"><b>시즌 규칙 · ${esc(s.rule.name)}</b> ${esc(s.rule.text)} <small>(밤 오르기·매일의 밤에도)</small></div>
-        <div class="spass"><div class="sph"><b>시즌 패스</b><span>${lv}/${PASS.tiers}단계</span><small>${into}/${PASS.per}</small></div>
-          <div class="spbar">${marks}</div>
+        <div class="spass"><div class="sph"><b>시즌 패스</b><span>${lv}/${PASS.tiers}단계</span><small>${maxed ? '모두 달성' : `${tierN}단계까지 시즌 별 ${PASS.per - into}`}</small></div>
+          <div class="spxp"><i style="width:${maxed ? 100 : Math.round(into / PASS.per * 100)}%"></i><small>${maxed ? 'MAX' : `${into}/${PASS.per}`}</small></div>
+          <ol class="sprow">${cells}</ol>
           <button type="button" class="${can ? 'primary' : ''}" data-claimpass ${can ? '' : 'disabled'}>보상 받기</button>${S.seasonMsg ? `<small class="smsg">${esc(S.seasonMsg)}</small>` : ''}</div>
         <button type="button" class="srank" data-view="ranking"><b>시즌 랭킹</b> <small>매일의 밤·시즌 보스·끝없는 탑·밤 오르기 ›</small></button>
       </div>
@@ -59,4 +66,11 @@ export function seasonIntroModal() {
     <p class="sirule"><b>시즌 규칙 「${esc(s.rule.name)}」</b> ${esc(s.rule.text)}</p>
     <div class="sibtn"><button type="button" class="primary" data-sintro="season">시즌 보기</button><button type="button" data-sintro="summon">소환하러</button><button type="button" data-close>닫기</button></div>
   </div>`;
+}
+
+// 그린 뒤: 시즌 패스 줄을 받을 칸(없으면 다음 단계)이 가운데 오게 스크롤
+export function seasonScroll(root) {
+  const row = root.querySelector('.sprow'); if (!row) return;
+  const c = row.querySelector('.spc.ready') || row.querySelector('.spc.next') || row.lastElementChild;
+  if (c) row.scrollLeft = c.offsetLeft - (row.clientWidth - c.offsetWidth) / 2;
 }
