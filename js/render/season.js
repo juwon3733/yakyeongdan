@@ -1,4 +1,4 @@
-// 시즌 화면 (js/season.js): 시즌 이름·남은 날, 시즌 보스(난이도 셋·기록·첫 클리어 보상), 시즌 규칙, 무료 시즌 패스, 랭킹(온라인 연결 뒤)
+// 시즌 화면 (js/season.js): 시즌 이름·남은 날, 시즌 보스(난이도 셋·기록·첫 클리어 보상), 시즌 규칙, 무료 시즌 패스, 랭킹(js/render/ranking.js)
 import { S } from '../run.js';
 import { P } from '../meta.js';
 import { seasonNow, seasonRec, passLevel, tierOpen } from '../season.js';
@@ -38,7 +38,7 @@ export function seasonView() {
         <div class="spass"><div class="sph"><b>시즌 패스</b><span>${lv}/${PASS.tiers}단계</span><small>${into}/${PASS.per}</small></div>
           <div class="spbar">${marks}</div>
           <button type="button" class="${can ? 'primary' : ''}" data-claimpass ${can ? '' : 'disabled'}>보상 받기</button>${S.seasonMsg ? `<small class="smsg">${esc(S.seasonMsg)}</small>` : ''}</div>
-        <div class="srank"><b>시즌 랭킹</b> <small>온라인 연결 뒤 열린다 (밤 오르기·끝없는 탑·시즌 보스·매일의 밤)</small></div>
+        <div class="srank"><span><b>시즌 랭킹</b> <small>매일의 밤·시즌 보스·끝없는 탑·밤 오르기</small></span><button type="button" class="mini" data-view="ranking">랭킹</button></div>
       </div>
     </div>
   </div>`;

@@ -388,3 +388,30 @@ details.fold > :not(summary){margin:4px 6px 5px}
 .fxarr{font-style:normal;font-size:10px;color:var(--dim)}
 .fxarr.loop{color:var(--gold);margin-left:2px}
 @media (max-width:560px){ .fxwrap{flex-direction:column} .fxside{position:static;flex:none;width:100%} }
+
+/* 시즌 랭킹 (js/render/ranking.js): 시즌 화면 [랭킹] → 탭 넷, 1~3위 큰 칸, 4위부터 줄, 맨 아래 내 순위 */
+.srank{display:flex;align-items:center;gap:6px;margin-top:auto}.srank>span{flex:1;min-width:0}
+.srank button{flex:none}
+.rankscr .rkt{font-family:var(--f-disp);font-weight:400;color:var(--gold);font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rankscr .bhead{justify-content:flex-start}
+.rktabs{display:flex;gap:4px}
+.rktabs button{flex:1;font-size:10px;padding:3px 4px}
+.rktabs button.on{border-color:var(--gold);color:var(--gold);background:#2a2410;box-shadow:2px 2px 0 #000}
+.rkbody{flex:1;min-height:0;display:flex;flex-direction:column;gap:4px}
+.rkmsg{margin:auto;font-size:11px;color:var(--dim)}.rkmsg.err{color:#ff9aa8}
+.rktops{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;flex:none}
+.rktop{--m:#c9d2f0;display:grid;grid-template-columns:auto 1fr;grid-template-rows:auto auto;column-gap:6px;align-items:center;padding:5px 7px;background:rgba(10,10,26,.85);border:2px solid var(--m);box-shadow:3px 3px 0 #000}
+.rktop.m1{--m:#ffd34a;background:rgba(42,36,16,.9)}.rktop.m2{--m:#d6deef}.rktop.m3{--m:#d08a4e}
+.rktop .rkn{grid-row:1/3;font-family:var(--f-disp);font-style:normal;font-size:20px;color:var(--m);text-shadow:2px 2px 0 #000}
+.rktop b{font-weight:400;font-size:11px;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rktop .rks{font-size:10px;color:var(--m);justify-self:end;grid-column:2;grid-row:1}
+.rktop .rkp{grid-column:2;grid-row:2;margin-top:3px}
+.rktop .rkp .face{width:28px;height:28px}.rktop .rkp .face img{width:28px;height:37px}
+.rkp{display:flex;gap:2px}
+.rklist{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:2px}
+.rkrow{display:grid;grid-template-columns:30px 1fr auto 70px;align-items:center;gap:6px;padding:2px 7px;font-size:10px;background:rgba(10,10,26,.65);border:1px solid #2c2c48}
+.rkrow .rkn{font-style:normal;font-family:var(--f-disp);color:var(--dim);text-align:right}
+.rkrow b{font-weight:400;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rkrow .rks{text-align:right;color:var(--ink)}
+.rkrow.me{flex:none;border:2px solid var(--c);background:rgba(20,20,46,.95);box-shadow:2px 2px 0 #000;padding:3px 7px}
+.rkrow.me .rkn,.rkrow.me b{color:var(--gold)}

@@ -427,6 +427,15 @@ try {
     const after = await page.evaluate(() => ({ clear: !!window.__yk.P().seasons?.s1?.clear?.normal, hardOpen: !document.querySelector('[data-tier="1"]')?.disabled }));
     if (boss.key === 'starking' && boss.rule === 'meteor' && boss.deck > 12 && after.clear) { seen.season = true; console.log(`season: 시즌 보스 ${boss.key}·${boss.rule} 덱 ${boss.deck} → 일반 클리어, 어려움 ${after.hardOpen ? '열림' : '닫힘'}`); }
     else fail(`시즌 실패 ${JSON.stringify({ boss, after })}`);
+    // 시즌 랭킹 (js/render/ranking.js, 지금은 가짜 자료): [랭킹] → 1~3위 큰 칸·4위부터 줄·내 순위 → 탭 바꾸기
+    await page.click('[data-view="ranking"]');
+    await page.waitForSelector('.rktop.m3', { timeout: 3000 }).catch(() => fail('랭킹이 안 뜸'));
+    await page.click('[data-rankboard="endless"]');
+    await page.waitForSelector('[data-rankboard="endless"].on', { timeout: 3000 });
+    await page.waitForSelector('.rktop.m1', { timeout: 3000 }).catch(() => fail('랭킹 탭을 바꾸니 안 뜸'));
+    const rk = await page.evaluate(() => ({ top: document.querySelectorAll('.rktop').length, rows: document.querySelectorAll('.rklist .rkrow').length, me: !!document.querySelector('.rkrow.me'), faces: document.querySelectorAll('.rktop .face').length }));
+    if (rk.top === 3 && rk.rows === 17 && rk.me && rk.faces === 9) console.log(`ranking: 1~3위 ${rk.top}칸·줄 ${rk.rows}·내 순위`);
+    else fail(`랭킹 ${JSON.stringify(rk)}`);
     await page.close();
   }
   // 끝없는 탑 (docs/05 §12): 「새벽」을 한 번 깬 프로필 → 본부 [끝없는 탑] → 새로 시작 → 관문(강적)을 넘어 다음 층 묶음 → 결과(층·별 조각·기록)

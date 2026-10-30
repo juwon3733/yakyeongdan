@@ -17,6 +17,7 @@ import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
 import { seasonIntroModal } from './render/season.js';
+import { setRankBoard } from './render/ranking.js';
 import { artReady, hasArt } from './art.js';
 import { seasonNow, seasonOn, startSeasonBoss, seasonBossDone, claimPass } from './season.js';
 import './cardzoom.js';
@@ -61,6 +62,8 @@ const modal = document.getElementById('modal');
 // 그리기 전후로 연출 층(js/juice.js)이 카드·체력 막대 자리를 재고, 엔진이 쌓은 연출 사건을 순서대로 보여 준다
 // 전투 중에는 화면이 꺼지지 않게 (js/pwa.js, 지원하는 기기만)
 const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); syncWake(!!S.C); seasonIntro(); };
+// 랭킹 자료(js/render/ranking.js)를 다 불러오면 다시 그림
+window.addEventListener('yk:render', () => render());
 // 시즌 첫 소개: 시즌이 열린 뒤 본부에 처음 왔을 때 한 번 (?notut 테스트판은 ?sintro 일 때만)
 function seasonIntro() {
   const s = seasonNow();
@@ -199,6 +202,7 @@ app.addEventListener('click', e => {
   }
   // 「새벽」을 깬 결과 화면에서 [더 오르기]: 같은 판 그대로 끝없는 탑으로 (그 판 보상은 이미 받음)
   else if ('endless' in D) { if (S.G?.won && !S.G.endless) enterEndless(false); }
+  else if (D.rankboard) setRankBoard(D.rankboard);   // 랭킹 탭
   else if ('claimpass' in D) { const n = claimPass(); S.seasonMsg = n ? `시즌 패스 보상: 별 조각 +${n}` : ''; }
   else if (D.depth !== undefined) S.depth = +D.depth;
   else if (D.srelic) S.startRelic = D.srelic;

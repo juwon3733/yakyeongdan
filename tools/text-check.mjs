@@ -89,14 +89,17 @@ function inspect() {
   const card = el => el.closest('.card');
   // 글자 상자(Range)는 글꼴의 위아래 여백까지 잡아 줄 간격이 좁으면 위아래 줄이 살짝 겹쳐 보인다 →
   // 세로로는 작은 쪽 높이의 35%가 넘게 겹칠 때만 겹침으로 친다.
-  const hit = (a, b) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 2 &&
-    Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) > Math.max(2, Math.min(a.height, b.height) * 0.35);
+  // 부채꼴 손패처럼 기운 카드 안에서는 글자 상자가 (글자 폭 × sin 기운 각)만큼 위아래로 부푼다 → 그만큼 더 봐준다
+  const tilt = el => { const m = el && getComputedStyle(el).transform.match(/^matrix\(([^,]+),\s*([^,]+)/); return m ? Math.abs(+m[2]) / Math.hypot(+m[1], +m[2]) : 0; };
+  const hit = (a, b, s = 0) => Math.min(a.right, b.right) - Math.max(a.left, b.left) > 2 &&
+    Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top) - Math.min(a.width, b.width) * s > Math.max(2, Math.min(a.height, b.height) * 0.35);
   for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) {
     const A = items[i], B = items[j];
     if (A.el.contains(B.el) || B.el.contains(A.el)) continue;
     const ca = card(A.el), cb = card(B.el);
     if (ca && cb && ca !== cb) continue;
-    if (A.rects.some(a => B.rects.some(b => hit(a, b)))) out.push({ kind: '겹침', sel: sel(A.el), text: A.text, other: `${sel(B.el)} 「${B.text}」` });
+    const s = ca && ca === cb ? tilt(ca) : 0;
+    if (A.rects.some(a => B.rects.some(b => hit(a, b, s)))) out.push({ kind: '겹침', sel: sel(A.el), text: A.text, other: `${sel(B.el)} 「${B.text}」` });
   }
   return out;
 }
@@ -176,6 +179,11 @@ try {
     await page.click('[data-ep="iris:0"]');
     await page.waitForSelector('[data-epnext]');
     await check('에피소드', 1200);
+  });
+  await step('시즌 랭킹', async () => {
+    await ev(() => { window.__yk.S.view = 'ranking'; window.__yk.render(); });
+    await page.waitForSelector('.rktop.m1');
+    await check('시즌 랭킹');
   });
   await page.close();
 } finally {

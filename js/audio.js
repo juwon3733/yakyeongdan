@@ -196,7 +196,7 @@ const BOSS_SONG = { keeper: 'boss1', queen: 'boss_queen', captain: 'boss2', whal
 function pickBgm() {
   const G = S.G;
   if (S.view === 'ep') return epBgm();
-  if (S.view === 'season') return 'season';              // 시즌 화면·시즌 소개
+  if (S.view === 'season' || S.view === 'ranking') return 'season';              // 시즌 화면·시즌 소개
   if (!G || S.view !== 'run') return ['base', 'summon', 'reveal', 'episodes'].includes(S.view) ? 'base' : 'title';
   if (G.screen === 'result') return G.won ? 'victory' : 'result';
   if (G.screen === 'tutdone') return 'victory';
