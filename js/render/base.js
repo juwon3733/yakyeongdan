@@ -16,6 +16,7 @@ import { stars, palOf, fmt, esc, cardHTML, charSrc } from './common.js';
 import { moonImg } from './sprites.js';
 import { REST_LINES, FIRST_LINES } from '../data/hublines.js';
 import { artURL, foeArt } from '../art.js';
+import { seasonNow } from '../season.js';
 import { achTab, historyBlock } from './daily.js';
 import { dailyToday, mastery, masteryTitles, backOpen } from '../meta.js';
 import { MASTERY_REWARDS, MASTERY_XP } from '../data/mastery.js';
@@ -78,6 +79,7 @@ export function baseView() {
     </div>
     <nav class="h2menu" aria-label="본부 메뉴">
       <div class="h2col">
+        ${seasonNow()?.open ? round('data-view="season"', 'moon', `시즌 ${seasonNow().no}`, false, 'season') : ''}
         ${round('data-view="summon"', 'star', `별 소환${P.pick5 ? ' <b class="newt">★5</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">10연</b>' : ''}`, !!P.pick5, `gold ${S.hint === 'summon' ? 'hint' : ''}`)}
         ${round('data-view="mates"', 'mates', '동료', matesNew)}
         ${round('data-view="episodes"', 'book', `에피소드${epN ? ` <b class="newt">${epN}</b>` : ''}`, epN)}
@@ -98,6 +100,7 @@ export function baseView() {
 }
 // 로비 아이콘(9×9 도트): x = 색(currentColor), w = 흰 빛, d = 어두운 선
 const LOBBY_ICON = {
+  moon: ['...xxx...', '..xx.....', '.xx......', '.xx......', '.xx...w..', '.xx......', '..xx.....', '...xxx...', '.........'],
   star: ['....x....', '....x....', '...xwx...', 'xxxxwxxxx', '.xxwwwxx.', '..xxwxx..', '..xx.xx..', '.xx...xx.', '.x.....x.'],
   mates: ['.xx...xx.', 'xwwx.xwwx', 'xwwx.xwwx', '.xx...xx.', '.........', 'xxxx.xxxx', 'xxxx.xxxx', 'xxxx.xxxx', '.........'],
   book: ['.........', 'xxxx.xxxx', 'xwwx.xwwx', 'xwwx.xwwx', 'xwwx.xwwx', 'xwwx.xwwx', 'xxxxxxxxx', '....x....', '.........'],

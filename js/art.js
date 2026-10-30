@@ -44,7 +44,7 @@ const FOE_FILE = {
   comet: 'tail_comet', gear: 'gear_knight', thief: 'star_thief', sage: 'constellation_sage',
   mistling: 'mistling', tut_ghost: 'sea_ghost', tut_gull: 'gulls',
 };
-const BOSS_FILE = { keeper: 'lighthouse', queen: 'fog_queen', captain: 'cloud_captain', whale: 'storm_whale', dawn: 'dawn' };
+const BOSS_FILE = { starking: 'star_king', keeper: 'lighthouse', queen: 'fog_queen', captain: 'cloud_captain', whale: 'storm_whale', dawn: 'dawn' };
 // 보스 컷인(cutins/boss_<파일>_cutin.png): 보스 등장 연출
 export const bossCutin = key => BOSS_FILE[key] ? artURL(`cutins/boss_${BOSS_FILE[key]}_cutin.png`) : null;
 export function foeArt(f) {

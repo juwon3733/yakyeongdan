@@ -34,7 +34,7 @@ const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false
   migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, affix: false, ach: false, history: false, endless: false, climbOn: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
   ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false, whale: false, guide: false,
-  tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false, pwa: false, backup: false, bossVar: false };
+  tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false, pwa: false, backup: false, bossVar: false, season: false };
 
 // 전투가 아닌 화면 한 걸음 (지도·보상·휴식·사건·야시장·보스 도구·달 고르기·카드 고르기)
 async function advance(page, tag) {
@@ -396,6 +396,26 @@ try {
       f.hp = 0; m.killCheck(f); window.__yk.render(); r.n = C.all.length; r.small = C.all.slice(2).every(g => g.small && g.name.startsWith('작은')); return r; });
     if (/숨은/.test(ax1.name) && ax1.noPick && ax1.chips === 3 && ax1.aura && ax2 && !ax2.hidden && ax2.guarded && ax2.n === 4 && ax2.small) { seen.affix = true; console.log(`affix: ${ax1.name} · 숨음 첫 턴 · 수호 방어 · 분열 → 작은 둘`); }
     else fail(`적 속성 실패 ${JSON.stringify({ ax1, ax2 })}`);
+    await page.close();
+  }
+  // 시즌 (docs/SEASON_PLAN.md): ?season=s1 → 본부 [시즌] → 일반 → 셋 → 시즌 보스(유성우 규칙) → 이기면 기록·첫 클리어 → 어려움이 열림
+  {
+    const page = await browser.newPage({ reducedMotion: CALM, viewport: { width: 1280, height: 720 } });
+    page.on('pageerror', e => errors.push(`[season] ${e.message}`));
+    await page.route(/fonts\.(googleapis|gstatic)\.com/, r => r.abort());
+    await page.goto(`http://127.0.0.1:${port}/?notut&seed=9&season=s1`);
+    await page.waitForSelector('#boot', { state: 'detached', timeout: 30000 });
+    await page.evaluate(() => { window.__yk.reset(); window.__yk.S.view = 'base'; window.__yk.render(); });
+    await page.click('[data-view="season"]');
+    await page.click('[data-tier="0"]');
+    for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
+    await page.click('[data-start]');
+    const boss = await page.evaluate(() => ({ key: window.__yk.S.C?.all?.[0]?.key, rule: window.__yk.S.G?.seasonRule, deck: window.__yk.S.G?.deck.length }));
+    await page.evaluate(() => window.__yk.win());
+    await page.waitForFunction(() => window.__yk.S.view === 'season');
+    const after = await page.evaluate(() => ({ clear: !!window.__yk.P().seasons?.s1?.clear?.normal, hardOpen: !document.querySelector('[data-tier="1"]')?.disabled }));
+    if (boss.key === 'starking' && boss.rule === 'meteor' && boss.deck > 12 && after.clear) { seen.season = true; console.log(`season: 시즌 보스 ${boss.key}·${boss.rule} 덱 ${boss.deck} → 일반 클리어, 어려움 ${after.hardOpen ? '열림' : '닫힘'}`); }
+    else fail(`시즌 실패 ${JSON.stringify({ boss, after })}`);
     await page.close();
   }
   // 끝없는 탑 (docs/05 §12): 「새벽」을 한 번 깬 프로필 → 본부 [끝없는 탑] → 새로 시작 → 관문(강적)을 넘어 다음 층 묶음 → 결과(층·별 조각·기록)

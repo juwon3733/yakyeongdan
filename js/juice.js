@@ -532,7 +532,7 @@ function tintTo(hex) {
   return `hue-rotate(${Math.round(h - FX_BASE_HUE)}deg)`;
 }
 // 그림 이펙트 재생: 프레임을 차례로 바꾸고 마지막에 사라진다. 그림이 없으면 아무것도 안 함(코드 입자만)
-const FX_OF = { slash: 'slash', boom: 'explode', pierce: 'pierce', star: 'magic', magic: 'magic', mist: 'magic', impact: 'explode' };
+const FX_OF = { slash: 'slash', boom: 'explode', pierce: 'pierce', star: 'magic', meteor: 'magic', magic: 'magic', mist: 'magic', impact: 'explode' };
 function playFx(name, x, y, size = 72, step = 55, behind = false, tint = '') {
   const fr = fxFrames(name); if (!fr.length || !layer) return false;
   const el = document.createElement('img'); el.className = 'px jfx' + (behind ? ' back' : ''); el.alt = '';
@@ -728,7 +728,7 @@ function tweenBars(P, barT) {
 const STYLE = { iris: 'slash', akane: 'slash', laila: 'slash', mimimomo: 'slash', sebas: 'slash', brick: 'boom', mariana: 'boom', fukuro: 'boom',
   sion: 'star', raven: 'mist', marta: 'impact', zeno: 'impact', gordon: 'impact', dora: 'impact', finn: 'impact', sigrun: 'pierce',
   noel: 'magic', lunaria: 'magic', eleonore: 'magic', tomori: 'magic', nerea: 'magic', bertha: 'impact' };
-const styleOf = e => e.counter ? 'impact' : e.slash ? 'slash' : e.gun ? 'boom' : STYLE[e.actor] || 'impact';
+const styleOf = e => e.star ? 'meteor' : e.counter ? 'impact' : e.slash ? 'slash' : e.gun ? 'boom' : STYLE[e.actor] || 'impact';
 const styleSound = s => ({ slash: 'slash', boom: 'cannon', star: 'spirit', mist: 'poison', magic: 'mana' })[s] || 'hit';
 // 동료별 공격음(sfx_atk_<id>, tools/compose/sfx.py) → 없으면 공격 갈래 공용 소리
 const atkSound = e => e.actor && hasSfx(`atk_${e.actor}`) ? `atk_${e.actor}` : styleSound(styleOf(e));
@@ -759,6 +759,7 @@ function hitFoe(e, P) {
   playFx(own ? `${e.actor}_atk` : FX_OF[st] || 'explode', x, y, big ? 96 : 72, 55, false, own ? '' : tintTo(col));
   if (st === 'slash') slashFx(x, y, col);
   else if (st === 'boom') { const from = e.actor && allyEl(e.actor); if (from) tracer(rel(from).cx, rel(from).y + 20, x, y, '#ffd890'); boomFx(x, y); }
+  else if (st === 'meteor') { starTrail(x - 90, 0, x, y, '#bcd0ff'); starTrail(x - 70, 0, x + 6, y - 4, '#ffffff'); ring(x, y, '#cfe0ff', 4, 34, 14); sparks(x, y, '#fff6c8', 16, 2.4); }
   else if (st === 'star') { const from = allyEl('sion'); if (from) starTrail(rel(from).cx, rel(from).y + 14, x, y, col); sparks(x, y, '#fff6c8', 10, 1.6); }
   else if (st === 'mist') { mistFx(x, y); sparks(x, y, '#c8ffb0', 6, 1.2); }
   else if (st === 'pierce') { tracer(x - 40, y - 50, x + 6, y + 6, '#f0f4ff'); sparks(x, y, '#ffffff', 10, 2); }

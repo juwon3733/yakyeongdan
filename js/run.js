@@ -113,7 +113,8 @@ export function checkCollapse() {
   return true;
 }
 export function endRun(won, why) {
-  if (S.G.episode) { S.C = null; S.G.episode.won = won; S.G.screen = 'epdone'; return; }   // 에피소드 특별 전투
+  if (S.G.episode) { S.C = null; S.G.episode.won = won; S.G.screen = 'epdone'; return; }
+  if (S.G.season) { S.G.season.won = won; S.G.season.turns = S.C?.turn || 0; S.C = null; S.G.screen = 'sbdone'; return; }   // 시즌 보스 판   // 에피소드 특별 전투
   if (S.G.tutorial) { S.C = null; S.G.tutorial.won = won; S.G.screen = 'tutdone'; return; }   // 첫 실행 튜토리얼
   S.C = null; S.G.won = won; S.G.why = why || (won ? 'win' : 'down'); S.G.screen = 'result'; }
 

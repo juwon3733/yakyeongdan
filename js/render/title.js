@@ -114,15 +114,15 @@ export function partyView() {
   // 패시브 글은 이름표에 커서를 대면(무대 아래 글 벽은 뺐다)
   const ps = S.picked.length ? '' : '<p class="note pempty">아래에서 동료 셋을 고른다. 처음엔 체력이 높은 동료가 앞에 선다.</p>';
   return `<div class="title partyscr p2">
-    <div class="thead"><button type="button" class="mini" data-view="base">‹ 본부</button><h2>${S.mode === 'endless' ? '끝없는 탑' : '출격 준비'}</h2>${S.dev ? '<span class="dev">개발판</span>' : ''}</div>
+    <div class="thead"><button type="button" class="mini" data-view="${S.mode === 'season' ? 'season' : 'base'}">‹ ${S.mode === 'season' ? '시즌' : '본부'}</button><h2>${S.mode === 'endless' ? '끝없는 탑' : S.mode === 'season' ? '시즌 보스' : '출격 준비'}</h2>${S.dev ? '<span class="dev">개발판</span>' : ''}</div>
     <div class="pmain">
       ${partyStage(order, bonded)}
       ${ps}
     </div>
     <div class="pside">
-      ${S.mode === 'endless' ? `<p class="note endnote">동료마다 레전더리 카드 1장 · 도구 ${ENDLESS.freshRelics}개 · 별빛 ${ENDLESS.freshGold}을 들고 시작. 층마다 적이 강해지고 규칙이 쌓인다.</p>` : runSetup()}
+      ${S.mode === 'season' ? '<p class="note endnote">동료마다 레전더리 카드 2장 · 도구 2개를 들고 바로 시즌 보스 앞. 턴 수가 기록된다.</p>' : S.mode === 'endless' ? `<p class="note endnote">동료마다 레전더리 카드 1장 · 도구 ${ENDLESS.freshRelics}개 · 별빛 ${ENDLESS.freshGold}을 들고 시작. 층마다 적이 강해지고 규칙이 쌓인다.</p>` : runSetup()}
       ${bondsOf(S.picked)}
-      <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>${S.mode === 'endless' ? '오르기' : '출발'} <small>${S.picked.length}/3</small></button>
+      <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>${S.mode === 'endless' ? '오르기' : S.mode === 'season' ? '도전' : '출발'} <small>${S.picked.length}/3</small></button>
     </div>
     <div class="pick">${mates}</div>
   </div>`;

@@ -189,6 +189,7 @@ function startTurn() {
   if (C.asleep && alive('noel')) C.mana += RULES.sleepMana + E.dark();
   if (C.late) { C.mana *= 2; C.late = false; }
   if (C.garden) for (const f of livingFoes()) f.poison += C.garden;
+  seasonTurn();
   if (isDawn()) { for (const f of livingFoes()) f.str += RULES.dawnStrPerTurn; logMsg(`<b>새벽</b>: 적의 힘 +${RULES.dawnStrPerTurn}`); }
   // 「새벽」: 내 턴 시작마다 밤 시계가 돈다
   // 안개 마녀 여왕 「안개 장막」: 내 턴 시작마다 방어 (그 턴 ③이 처음 터지면 걷힌다, effects.js burst)
@@ -711,6 +712,7 @@ function winCombat() {
   G.fights++; S.C = null;
   // 에피소드 특별 전투: 보상 없이 이야기로 돌아간다 (js/episodes.js)
   if (G.episode) { G.episode.won = true; G.screen = 'epdone'; return; }
+  if (G.season) { G.season.won = true; G.season.turns = C.turn; G.screen = 'sbdone'; return; }   // 시즌 보스 판 (js/season.js)
   const lost = G.deck.filter(id => cardData(id).inDeckWin);
   for (const id of lost) addTime(cardData(id).inDeckWin.time);
   // 쓰러진 동료는 전투가 끝나면 체력 1로(붕대 묶음이면 30%로) 일어난다
@@ -772,4 +774,12 @@ export function shownValue(d, type, base, first) {
   const L = livingFoes(), f = C.all[C.hover] && !C.all[C.hover].dead ? C.all[C.hover] : L.length === 1 ? L[0] : null;
   if (f?.vuln && d.target !== 'all') x *= RULES.vulnMul;
   return Math.floor(x);
+}
+
+// 시즌 탑 규칙 「유성우」(js/data/season.js): 내 턴 시작마다 별똥이 무작위 적에게 4, 넷 중 하나는 무작위 동료에게도 2
+function seasonTurn() {
+  const G = S.G; if (G?.seasonRule !== 'meteor') return;
+  const f = G.rng.pick(livingFoes());
+  if (f) { const d = Math.min(f.hp, 4); f.hp -= d; pushFx({ kind: 'hitFoe', i: f.i, dmg: d, blocked: 0, bleed: 0, actor: null, star: true }); logMsg(`유성우: ${f.name} 피해 ${d}`); killCheck(f); }
+  if (G.rng.next() < .25) { const p = G.rng.pick(living()); if (p) hurtMember(p, 2, '유성우'); }
 }
