@@ -16,3 +16,4 @@
 img.px.fci{position:absolute!important;margin:0!important;max-width:none!important;max-height:none!important;object-fit:fill!important;transform:none!important;image-rendering:auto;
   width:calc(var(--z) * 100%)!important;height:auto!important;aspect-ratio:2/3;
   left:calc(50% - var(--fx) * var(--z) * 100%)!important;top:calc(45% - var(--fy) * var(--z) * 150% * var(--ar,1))!important;bottom:auto!important;right:auto!important}
+.p2 .pslot .spr[src^="data:"]{width:64px!important;height:86px!important;margin-top:0!important;object-fit:contain}   /* 그림이 아직 없는 동료(임시 도트)가 무대에서 너무 크게 나오던 것 */
