@@ -113,7 +113,7 @@ export function mapView() {
   const head = G.note ? `<p class="banner ok">${G.note}</p>`
     : G.endless ? `<p class="note">탑은 무너지지 않는다 · 대신 층마다 적이 강해지고, 밤 시계가 흐를수록 여명이 짙어진다</p>`
     : isDawn() ? `<p class="banner">해가 떴다 · 적이 힘 +${RULES.dawnStartStr}으로 시작, 매 턴 +${RULES.dawnStrPerTurn} · ${fmt(RULES.collapse)}에 탑이 무너진다</p>`
-    : `<p class="note moon"><b>${MOONS[G.moon].name}</b> ${MOONS[G.moon].text}${moonFits(G) ? '' : ' <small class="dim">(이번 파티와는 상관없는 달)</small>'}</p>`;
+    : `<p class="note moon"><b>${MOONS[G.moon].name}</b> ${moonFits(G) ? moonForParty(G) : '이번 파티에는 효과가 없다.'}</p>`;
   const art = !G.endless && artURL(`bg/tower${G.act}.png`);
   return `<div class="mapwrap towermap a${G.endless ? 'e' : G.act}">
       <div class="mapgrid${art ? ' art' : ''}" style="width:${TW}px;height:${TH}px${art ? `;--tower:url('${new URL(art, location.href).href}')` : ''}">
@@ -121,7 +121,7 @@ export function mapView() {
         <svg class="edges" width="${TW}" height="${TH}" viewBox="0 0 ${TW} ${TH}" shape-rendering="crispEdges" aria-hidden="true">${lines}</svg>${ledges}${nodes}${tok}</div>
       <div class="mapside">
         <h2>${G.endless ? endlessHead(G) : ACT_NAME[G.act]}</h2>${head}${peek}
-        <div class="formation"><span class="lbl">대열 <small>두 칸을 눌러 자리 바꾸기 · 앞줄이 먼저 맞는다</small></span>${slots}</div>
+        <div class="formation"><span class="lbl" data-tip="두 칸을 눌러 자리를 바꾼다. 적은 대개 앞줄부터 노린다.">대열</span>${slots}</div>
       </div>
     </div>`;
 }
@@ -131,4 +131,13 @@ function moonFits(G) {
   const m = MOONS[G.moon]; if (!m) return true;
   const named = Object.values(CHARACTERS).filter(c => m.text.includes(c.name.split('·')[0]));
   return !named.length || m.timeCost || m.duoNeed || named.some(c => G.party.some(p => CHARACTERS[p] === c));
+}
+
+// 달 설명은 이번 파티에 있는 동료 이야기만(「시온 정령 피해 +1」처럼 없는 동료 줄이 섞여 나오던 것). 동료 이름이 없는 줄은 모두에게 해당
+function moonForParty(G) {
+  const names = Object.values(CHARACTERS).map(c => c.name), mine = (G.party || G.formation).map(p => CHARACTERS[p]?.name);
+  return MOONS[G.moon].text.split(/(?<=\.)\s*/).filter(t => { const who = names.filter(n => t.includes(n)); return !who.length || who.some(n => mine.includes(n)); })
+    .map(t => { const m = /^(.*?)(\s*[+−-]\d+분?\.)$/.exec(t); if (!m || !m[1].includes(', ')) return t;   // 「노엘 마력, 레이븐 독, 브릭 장전 +1.」
+      return m[1].split(', ').filter(x => { const w = names.find(n => x.startsWith(n)); return !w || mine.includes(w); }).join(', ') + m[2]; })
+    .map(t => t.replace(/([가-힣]+(?:·[가-힣]+)+)(의|이|가)?/g, (all, list, j) => { const keep = list.split('·').filter(n => !names.includes(n) || mine.includes(n)); return keep.length ? keep.join('·') + (j || '') : all; })).join(' ');
 }
