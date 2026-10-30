@@ -4,7 +4,7 @@
 //   pass: 무료 시즌 패스 — 판을 하면 시즌 별(xp)이 오르고 단계마다 보상
 export const SEASONS = [
   { id: 's1', no: 1, name: '유성우의 밤', start: '2026-11-01T00:00:00+09:00', days: 14, col: '#9fb4ff',
-    tagline: '별이 비처럼 떨어지는 밤, 탑 꼭대기 너머에서 무언가가 내려왔다.',
+    tagline: '별똥이 비처럼 쏟아지는 밤. 탑 꼭대기에 왕관 쓴 별 하나가 떨어졌다.',
     rule: { id: 'meteor', name: '유성우', text: '내 턴이 시작될 때마다 별똥이 떨어져 무작위 적에게 피해 4. 가끔은 동료에게도 2.' },
     boss: 'starking', chara: 'estelle', four: ['sigrun', 'iris'],   // 시즌 픽업(★5 시즌 동료 + ★4 둘)
     tiers: [

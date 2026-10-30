@@ -173,7 +173,7 @@ export const CHARACTERS = {
     ds: '별빛(돈)을 써서 세게 친다.',
     start: ['mari.coin', 'mari.loot', 'mari.rum', 'mari.cannon'],
     passive: { name: '선장의 몫',
-      lines: [['trait', '', '별빛을 확정적으로 화력으로 바꾼다.'], ['keyword', '', '전투에서 이기면 별빛 +5, 마리아나 카드로 적을 쓰러뜨리면 +5.'],
+      lines: [['trait', '', '별빛을 화력으로 바꾼다.'], ['keyword', '', '전투에서 이기면 별빛 +5, 마리아나 카드로 적을 쓰러뜨리면 +5.'],
         ['burst', '약탈의 밤', '별빛이 30 이상이면 별빛 쓰는 카드가 별빛을 쓰지 않고 최대 효과.']],
       onWin: (G, x) => x.gold(5),
       onKill: (c, f, e) => { if (c.actor === 'mariana') e.gold(5); } },

@@ -120,9 +120,9 @@ export const FOE = {
              pat: [A(11), A(5, 4), M(14, 14), U(4), A(24)] },
   // 시즌 1 보스 (js/data/season.js): 떨어진 별의 왕 — 별 조각 부르기·모두 공격, 2단계 별비, 3단계 추락
   starking: { name: '떨어진 별의 왕', hp: 330, pal: 'starking', hitSound: 'magic', long: true, crown: true, aim: 'weakest',
-             lines: ['"하늘에서 떨어진 것은 별만이 아니다."', '"너희가 밤을 지킨다고? 나는 밤 그 자체였다."', '"올라오너라. 별이 너희를 비춰 줄 테니."'],
+             lines: ['"떨어졌다고 왕이 아닌 줄 아느냐."', '"밤을 지킨다고? 이 밤하늘은 원래 내 자리다."', '"올라오너라. 여기선 너희 발밑까지 다 보인다."'],
              phase2: { at: .6, msg: '떨어진 별의 왕이 왕관을 들어 올렸다. 별비가 쏟아진다.', aim: 'back', pat: [R(8), Z('starshard'), A(7, 3), U(3)] },
-             phase3: { at: .25, msg: '추락. 별의 왕이 마지막 빛을 끌어모은다.', line: '"…함께 떨어지자. 이 탑 아래로."', acts: 2, pat: [A(16), R(10), A(5, 4)] },
+             phase3: { at: .25, msg: '추락. 별의 왕 둘레의 빛이 한 점으로 뭉친다.', line: '"…함께 떨어지자. 이 탑 아래로."', acts: 2, pat: [A(16), R(10), A(5, 4)] },
              pat: [A(14), Z('starshard'), R(7), M(12, 12), A(6, 3)] },
   starshard: { name: '별 조각', hp: 14, pal: 'starshard', hitSound: 'magic', small: true, deathBoom: 3, pat: [A(4), A(2, 2)] },
   // 첫 실행 튜토리얼 (js/data/tutorial.js): 약하게
