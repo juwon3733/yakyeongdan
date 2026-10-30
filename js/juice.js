@@ -1579,7 +1579,17 @@ function ambient() {
   const scr = A0()?.dataset.screen, on = AMB.has(scr) && !calmNow();
   if (on && !amb) { amb = document.createElement('div'); amb.className = 'jamb'; amb.innerHTML = '<i class="d1"></i><i class="d2"></i><i class="glow"></i>'; layer.prepend(amb); }
   if (amb) { amb.hidden = !on; amb.dataset.scr = scr || ''; }
+  // 타이틀·본부·소환: 몇 초마다 별똥별이 하늘을 비스듬히 가로지른다
+  if (on && ['title', 'base', 'summon', 'season'].includes(scr) && !starTimer) starTimer = setTimeout(function fall() {
+    const s2 = A0()?.dataset.screen;
+    if (!['title', 'base', 'summon', 'season'].includes(s2) || calmNow()) { starTimer = null; return; }
+    const W = stage.offsetWidth, x = rnd(W * .25, W * .95), y = rnd(10, 90), L = rnd(60, 120);
+    add({ k: 'line', x0: x, y0: y, x1: x - L, y1: y + L * .45, col: '#fff6d8', speed: 6, life: 14, s: 2 });
+    at(180, () => sparks(x - L, y + L * .45, '#fff6d8', 4, .8));
+    starTimer = setTimeout(fall, rnd(2600, 5200));
+  }, 1200);
 }
+let starTimer = null;
 
 // ---------- ★5 전용 필살 연출 (희귀 카드) — 동료마다 다른 순서. sigLead = 카드를 낸 뒤 적중까지 더 기다릴 시간 ----------
 const SIG_LEAD = { akane: 560, sion: 380, lunaria: 320, eleonore: 460, nerea: 420,
