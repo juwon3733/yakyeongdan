@@ -303,3 +303,4 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 #fx.doom::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 40px 6px rgba(255,40,40,.45);animation:jdoom 1.1s ease-in-out infinite;z-index:3}
 @keyframes jdoom{50%{box-shadow:inset 0 0 26px 2px rgba(255,40,40,.2)}}
 #stage.calm #fx.doom::after{animation:none}
+.jghost.jfly{z-index:20}

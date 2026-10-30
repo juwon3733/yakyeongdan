@@ -133,6 +133,8 @@ export function beforeRender() {
   const num = q => { const el = A.querySelector(q); return el ? +el.textContent || 0 : null; };
   pre.en = num('.energy .ennum'); pre.draw = num('.piles .pile.draw'); pre.disc = num('.piles .pile.disc');
   pre.down = new Set([...A.querySelectorAll('.pm.down[data-ally]')].map(el => el.dataset.ally));
+  pre.fly = [...A.querySelectorAll('.card[data-buycard], .card[data-take]')].map(el => ({ buy: el.dataset.buycard, take: el.dataset.take, sold: !!el.closest('.ware.sold'), r: rel(el), html: el.outerHTML, w: el.offsetWidth, h: el.offsetHeight }));
+  pre.deckN = num('[data-deck] b');   // 상태는 이미 바뀌었으니 화면에 보이던 수
   pre.st = new Map(); A.querySelectorAll('.sti').forEach(el => pre.st.set(stKey(el), +(el.querySelector('b')?.textContent) || 0));
   A.querySelectorAll('.foe[data-fi]').forEach(el => pre.foes.set(+el.dataset.fi, { r: rel(el), html: el.outerHTML, w: el.offsetWidth, h: el.offsetHeight }));
   // 전투가 끝나 다른 화면으로 넘어가면 마지막 전투 화면을 잠깐 얼려 두고 그 위에서 마무리 연출
@@ -264,6 +266,7 @@ export function afterRender(events = []) {
   tweenBars(P, barT);
   drawIn(P, turnT ?? (played ? 120 : 0));
   chainPop(P);
+  if (P?.fly?.length) flyToDeck(P);
   if (P?.st && S.C) { at(Math.min(t, 650), () => statusFx(P)); hudFx(P, t); }
   // 화면 넘어감: 전투 → 보상(승리), 막이 바뀜(올라가는 장면)
   const G = S.G;
@@ -328,6 +331,26 @@ function hudFx(P, t) {
       sfx('heal', { vol: .7 });
     });
   }
+}
+// 상점에서 산 카드·보상으로 고른 카드가 위 띠의 덱으로 빙그르 날아 들어간다
+function flyToDeck(P) {
+  const A = app(), G = S.G; if (!A || !G || calmNow()) return;
+  let c = null;
+  if (A.dataset.screen === 'shop') {
+    const wares = [...A.querySelectorAll('.shopscr .ware, .ware')].filter(w => w.querySelector('.card'));
+    c = P.fly.find(f => f.buy != null && !f.sold && wares[+f.buy]?.classList.contains('sold'));
+  } else if (P.screen === 'reward' && A.dataset.screen !== 'reward' && G.deck.length > (P.deckN ?? 1e9)) {
+    const id = String(G.deck[G.deck.length - 1]);
+    c = P.fly.find(f => f.take === id) || P.fly.find(f => f.take && id.startsWith(f.take));
+  }
+  const deck = A.querySelector('[data-deck]'); if (!c || !deck) return;
+  const d = rel(deck), g = cloneAt(c, 'jfly');
+  const dx = d.cx - c.r.cx, dy = d.cy - c.r.cy;
+  g.animate([{ transform: 'none', opacity: 1 }, { transform: `translate(${dx * .15}px,${dy * .15 - 30}px) scale(1.08) rotate(-6deg)`, offset: .3 },
+    { transform: `translate(${dx}px,${dy}px) scale(.12) rotate(200deg)`, opacity: .9 }], { duration: 620, easing: 'cubic-bezier(.5,0,.75,.4)' }).onfinish = () => {
+    g.remove(); ring(d.cx, d.cy, '#ffe08a', 4, 26, 14); sparks(d.cx, d.cy, '#ffe08a', 10, 1.8);
+    deck.animate([{ transform: 'scale(1.3)', filter: 'brightness(2)' }, { transform: 'none', filter: 'none' }], { duration: 300 });
+  };
 }
 function dropFrozen(ms) {
   if (!frozen) return;
