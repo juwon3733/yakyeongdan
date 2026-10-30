@@ -13,6 +13,7 @@
     "fps": "node tools/fps.mjs",
     "shots": "node tools/screens.mjs",
     "sim": "node tools/sim.mjs",
+    "balance": "node tools/balance-report.mjs",
     "text": "node tools/text-check.mjs",
     "next": "node tools/next-batch.mjs"
   }
