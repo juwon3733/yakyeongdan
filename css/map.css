@@ -86,3 +86,6 @@
 .towermap .slot.down{opacity:.55}
 .towermap .mapgrid .node.now:hover,.towermap .mapgrid .node.now:focus-visible,.towermap .mapgrid .node:active{background:none;box-shadow:none;outline:0;transform:none}
 .towermap .mapgrid .node.now:focus-visible .ic{outline:1px solid var(--gold);outline-offset:2px}
+/* 오르는 동료가 1층 칸 아래 도착 시각을 덮던 것: 사람은 칸 왼쪽 위, 시각은 오른쪽 아래로 */
+.towermap .maptok img{left:-68px;top:-68px}
+.towermap .node .tag{z-index:4}

@@ -63,3 +63,23 @@
 .topbar .turnno{display:inline-flex;align-items:center;gap:3px}
 .topbar .clock .pxn{display:block}
 .topbar .clock .hi{margin-right:3px}
+/* 체력 숫자: 1배 도트가 너무 작아 못 읽던 것 → 2배, 막대 위 가운데에 겹쳐 얹고 막대를 그만큼 두껍게 */
+:is(#app,.frozen)[data-screen="combat"] .hpw .hpbar{height:12px}
+:is(#app,.frozen)[data-screen="combat"] .hpw .hpbar i{background:repeating-linear-gradient(90deg,transparent 0 5px,rgba(0,0,0,.35) 5px 6px),linear-gradient(#ff8a7a 0 3px,#e0384a 3px 8px,#901828 8px)}
+:is(#app,.frozen)[data-screen="combat"] .hpw .hpbar,:is(#app,.frozen)[data-screen="combat"] .pm .lab .hpw .hpbar{width:80px;flex-basis:80px}
+:is(#app,.frozen)[data-screen="combat"] .foe .hpw .hpbar{width:84px}
+:is(#app,.frozen)[data-screen="combat"] .hpw .hp .pxn{height:12px;width:auto}
+
+/* ---- 폰 가로(큰 글자 #stage.bigtext) ---- */
+/* 카드 비용 딱지: 큰 글자 규칙(font-size)이 도트 숫자 칸을 밀어 숫자가 딱지 밖으로 나가던 것 */
+#stage.bigtext .card .cost{font-size:0;width:auto;height:auto}
+/* 야시장 카드: 큰 글자에서 그림이 칸을 다 먹어 규칙 글이 안 보이던 것 */
+#stage.bigtext .shopmain .ware .card{--ah:48px}
+#stage.bigtext .shopmain .ware .card .bd{font-size:8px}
+/* 진열대 도구: 흐리게 보이던 것(못 사는 칸 흐림이 아니라 기본) */
+.shopmain .relicware:not(:disabled){opacity:1}
+/* 출발 단추: 사람 셋이 다 차면 더 또렷하게 */
+.p2 .go:not(:disabled){filter:drop-shadow(2px 2px 0 #000) drop-shadow(0 0 4px rgba(255,210,110,.6))}
+/* 폰 가로: 옛 일러스트 시절 규칙(#stage.bigtext .foe:not(.sm) img 54×72)이 이겨 적이 동료 반만 하게 작아지던 것 */
+#stage.bigtext .foe:not(.sm) img{width:96px;height:96px}
+#stage.bigtext .foe.boss img{width:128px;height:192px}

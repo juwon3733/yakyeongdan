@@ -457,5 +457,5 @@ setInterval(() => { if (S.view === 'ep' && S.ep?.auto && S.ep.phase === 'read' &
 render();
 bootDone();   // 첫 로딩 화면: 소리를 미리 받고 걷는다 (js/pwa.js)
 // 그림 목록(assets/art.json)이 오면, 그림이 하나라도 있을 때만 다시 그린다 (없으면 임시 도트 그대로)
-// UI 키트 그림(assets/ui/…)이 있으면 css/ui.css가 CSS 네모 대신 그린 틀·버튼을 쓴다
-artReady.then(n => { if (hasArt('ui/frame.png')) stage.dataset.ui = 'kit'; if (n) render(); });
+// UI 키트 틀·단추(assets/ui/frame·btn…)는 GPT 시트에서 칸 한쪽으로 쏠려 잘려 9칸 늘이기에 쓰면 모서리가 깨진다 → 켜지 않고 css/frame.css 도트 틀을 쓴다. 로고·아이콘 조각만 쓴다
+artReady.then(n => { if (n) render(); });
