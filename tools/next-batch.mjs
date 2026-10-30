@@ -10,7 +10,7 @@ const ROOT = new URL('../assets/', import.meta.url);
 const has = (f) => existsSync(new URL(f, ROOT));
 
 // 그리는 순서(사용자가 정함: ★5부터). 앞 묶음이 있어야 그릴 수 있는 묶음은 need에 적는다.
-const STAR5 = ['akane', 'sion', 'lunaria', 'eleonore', 'nerea'];
+const STAR5 = ['estelle', 'akane', 'sion', 'lunaria', 'eleonore', 'nerea'];   // 시즌 동료 에스텔이 맨 앞(11/1 시즌 시작 전에 그림이 필요)
 const FIRST = ['iris', 'brick', 'marta'];
 const REST = ['noel', 'raven', 'mimimomo', 'sebas', 'mariana', 'tomori', 'sigrun', 'zeno', 'bertha', 'finn', 'laila', 'dora', 'gordon', 'fukuro'];
 const ORDER = [

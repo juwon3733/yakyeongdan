@@ -12,6 +12,8 @@ export const ROSTER = {
               pal: { h: '#2e2244', H: '#160e24', e: '#d0a0ff', o: '#3a2858', O: '#1e1432', a: '#e0c060' } },
   nerea:    { name: '네레아', role: '별 고래 기수', rarity: 5, col: '#5ad0d8', long: true,
               pal: { h: '#c8f0f0', H: '#7ab8c8', e: '#2a8ab8', o: '#1e3a6a', O: '#0e2244', a: '#f0e0a0' } },
+  estelle:  { name: '에스텔', role: '별똥 기사', rarity: 5, col: '#f2c46a', long: true, season: 's1',
+              pal: { h: '#f6f0e0', H: '#c8b88a', e: '#4a8ae0', o: '#e8ecf8', O: '#8a98c8', a: '#f2c46a' } },
   iris:     { name: '아이리스', role: '검사', rarity: 4, col: '#c8d4f0', long: true, pal: null },
   noel:     { name: '노엘', role: '마술사', rarity: 4, col: '#f08ac0', long: true, pal: null },
   raven:    { name: '레이븐', role: '암살자', rarity: 4, col: '#9a86d8', long: false, pal: null },
@@ -48,7 +50,7 @@ export const byRarity = r => ROSTER_IDS.filter(k => ROSTER[k].rarity === r);
 // 역할 갈래 (파티 고르기 무대의 작은 아이콘): atk 공격 · def 방어 · heal 회복 · sup 지원. 패시브가 주로 하는 일로 정한다.
 export const ROLE_KINDS = { atk: '공격', def: '방어', heal: '회복', sup: '지원' };
 export const ROLE_KIND = {
-  iris: 'atk', brick: 'atk', raven: 'atk', noel: 'atk', sion: 'atk', akane: 'atk', nerea: 'atk', mariana: 'atk', zeno: 'atk', laila: 'atk', mimimomo: 'atk',
+  estelle: 'atk', iris: 'atk', brick: 'atk', raven: 'atk', noel: 'atk', sion: 'atk', akane: 'atk', nerea: 'atk', mariana: 'atk', zeno: 'atk', laila: 'atk', mimimomo: 'atk',
   marta: 'def', sigrun: 'def', dora: 'def',
   gordon: 'heal',
   lunaria: 'sup', eleonore: 'sup', sebas: 'sup', tomori: 'sup', bertha: 'sup', finn: 'sup', fukuro: 'sup',

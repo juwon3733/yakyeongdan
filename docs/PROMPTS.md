@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 8 · GPT가 그릴 그림 316장(시트 포함, 잘라 내면 870장) · 묶음 169개
+style_version 8 · GPT가 그릴 그림 330장(시트 포함, 잘라 내면 899장) · 묶음 176개
 
 ## 묶음
 
@@ -18,6 +18,8 @@ style_version 8 · GPT가 그릴 그림 316장(시트 포함, 잘라 내면 870�
 | `extra-eleonore` | 엘레오노르 나중(웃음·진지 표정·컷인) | 3 |
 | `char-nerea` | ★★★★★ 네레아 | 2 |
 | `extra-nerea` | 네레아 나중(웃음·진지 표정·컷인) | 3 |
+| `char-estelle` | ★★★★★ 에스텔 | 2 |
+| `extra-estelle` | 에스텔 나중(웃음·진지 표정·컷인) | 3 |
 | `char-iris` | ★★★★ 아이리스 | 2 |
 | `extra-iris` | 아이리스 나중(웃음·진지 표정·컷인) | 3 |
 | `char-noel` | ★★★★ 노엘 | 2 |
@@ -57,6 +59,7 @@ style_version 8 · GPT가 그릴 그림 316장(시트 포함, 잘라 내면 870�
 | `pose-akane` | ★★★★★ 아카네 전투 스프라이트 — 몸만 (시트 1장 → 8동작) | 1 |
 | `pose-eleonore` | ★★★★★ 엘레오노르 전투 스프라이트 — 몸만 (시트 1장 → 8동작) | 1 |
 | `pose-nerea` | ★★★★★ 네레아 전투 스프라이트 — 몸만 (시트 1장 → 8동작) | 1 |
+| `pose-estelle` | ★★★★★ 에스텔 전투 스프라이트 — 몸만 (시트 1장 → 8동작) | 1 |
 | `pose-iris` | ★★★★ 아이리스 전투 스프라이트 — 몸만 (시트 1장 → 8동작) | 1 |
 | `pose-noel` | ★★★★ 노엘 전투 스프라이트 — 몸만 (시트 1장 → 8동작) | 1 |
 | `pose-raven` | ★★★★ 레이븐 전투 스프라이트 — 몸만 (시트 1장 → 8동작) | 1 |
@@ -79,6 +82,7 @@ style_version 8 · GPT가 그릴 그림 316장(시트 포함, 잘라 내면 870�
 | `cards-akane` | ★★★★★ 아카네 카드 그림 (시트 1장 → 4장) | 1 |
 | `cards-eleonore` | ★★★★★ 엘레오노르 카드 그림 (시트 1장 → 4장) | 1 |
 | `cards-nerea` | ★★★★★ 네레아 카드 그림 (시트 1장 → 4장) | 1 |
+| `cards-estelle` | ★★★★★ 에스텔 카드 그림 (시트 1장 → 4장) | 1 |
 | `cards-iris` | ★★★★ 아이리스 카드 그림 (시트 1장 → 4장) | 1 |
 | `cards-noel` | ★★★★ 노엘 카드 그림 (시트 1장 → 4장) | 1 |
 | `cards-raven` | ★★★★ 레이븐 카드 그림 (시트 1장 → 4장) | 1 |
@@ -101,7 +105,8 @@ style_version 8 · GPT가 그릴 그림 316장(시트 포함, 잘라 내면 870�
 | `style-akane` | 그림체 시안 아카네 (4장, 게임에 안 씀) | 4 |
 | `style-eleonore` | 그림체 시안 엘레오노르 (4장, 게임에 안 씀) | 4 |
 | `style-nerea` | 그림체 시안 네레아 (4장, 게임에 안 씀) | 4 |
-| `cg-star5` | ★5 전신 CG | 5 |
+| `style-estelle` | 그림체 시안 에스텔 (4장, 게임에 안 씀) | 4 |
+| `cg-star5` | ★5 전신 CG | 6 |
 | `duo` | 인연 듀오 컷인 10쌍 | 10 |
 | `enemy-act1` | 1막 적 (시트 → 한 마리씩) | 2 |
 | `enemy-act2` | 2막 적 (시트 → 한 마리씩) | 2 |
@@ -121,6 +126,7 @@ style_version 8 · GPT가 그릴 그림 316장(시트 포함, 잘라 내면 870�
 | `fx-akane` | 아카네 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
 | `fx-eleonore` | 엘레오노르 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
 | `fx-nerea` | 네레아 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
+| `fx-estelle` | 에스텔 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
 | `fx-iris` | 아이리스 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
 | `fx-noel` | 노엘 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
 | `fx-raven` | 레이븐 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
@@ -160,6 +166,7 @@ style_version 8 · GPT가 그릴 그림 316장(시트 포함, 잘라 내면 870�
 | `skin-akane` | 아카네 스킨(두 번째 의상) — 나중 | 1 |
 | `skin-eleonore` | 엘레오노르 스킨(두 번째 의상) — 나중 | 1 |
 | `skin-nerea` | 네레아 스킨(두 번째 의상) — 나중 | 1 |
+| `skin-estelle` | 에스텔 스킨(두 번째 의상) — 나중 | 1 |
 | `skin-iris` | 아이리스 스킨(두 번째 의상) — 나중 | 1 |
 | `skin-noel` | 노엘 스킨(두 번째 의상) — 나중 | 1 |
 | `skin-raven` | 레이븐 스킨(두 번째 의상) — 나중 | 1 |
@@ -379,6 +386,40 @@ Character reference sheet of 네레아 (nerea): a free-spirited star-whale rider
 | `nerea_smile` | `assets/chars/nerea_smile.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | — |
 | `nerea_serious` | `assets/chars/nerea_serious.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | — |
 | `nerea_cutin` | `assets/cutins/nerea_cutin.png` | 1536×576 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
+
+## `char-estelle` — ★★★★★ 에스텔
+
+<details><summary>설정화 프롬프트 (저장소에 올리지 않음)</summary>
+
+```
+이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.
+
+Authentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.
+
+Make it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.
+
+Give each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.
+
+Character design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.
+
+This is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.
+
+Character reference sheet of 에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue. Full body front view plus a face close-up, plain background. Native resolution about 384x256, upscaled with nearest-neighbor.
+```
+</details>
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `estelle_stand` | `assets/chars/estelle_stand.png` | 1024×1536 투명 | `assets/style/akane_c.png` | 전신, 오른쪽을 향한 전투 자세, 무기 |
+| `estelle_normal` | `assets/chars/estelle_normal.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+
+## `extra-estelle` — 에스텔 나중(웃음·진지 표정·컷인)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `estelle_smile` | `assets/chars/estelle_smile.png` | 1024×1536 투명 | `assets/chars/estelle_normal.png` `assets/style/akane_c.png` | — |
+| `estelle_serious` | `assets/chars/estelle_serious.png` | 1024×1536 투명 | `assets/chars/estelle_normal.png` `assets/style/akane_c.png` | — |
+| `estelle_cutin` | `assets/cutins/estelle_cutin.png` | 1536×576 | `assets/chars/estelle_normal.png` `assets/style/akane_c.png` | 얼굴이 가운데 띠 안 |
 
 ## `char-iris` — ★★★★ 아이리스
 
@@ -988,6 +1029,12 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 |---|---|---|---|---|
 | `nerea_body` | `assets/sheets/nerea_body.png` → `nerea_idle.png` `nerea_windup.png` `nerea_attack.png` `nerea_skill.png` `nerea_guard.png` `nerea_hurt.png` `nerea_down.png` `nerea_win.png` | 1536×1024 투명 | `assets/chars/nerea_stand.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
 
+## `pose-estelle` — ★★★★★ 에스텔 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `estelle_body` | `assets/sheets/estelle_body.png` → `estelle_idle.png` `estelle_windup.png` `estelle_attack.png` `estelle_skill.png` `estelle_guard.png` `estelle_hurt.png` `estelle_down.png` `estelle_win.png` | 1536×1024 투명 | `assets/chars/estelle_stand.png` `assets/chars/estelle_normal.png` `assets/style/akane_c.png` | 4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치 |
+
 ## `pose-iris` — ★★★★ 아이리스 전투 스프라이트 — 몸만 (시트 1장 → 8동작)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
@@ -1119,6 +1166,12 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `nerea_cards` | `assets/sheets/nerea_cards.png` → `nerea_atk.png` `nerea_guard.png` `nerea_skill.png` `nerea_special.png` | 1024×1024 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 네레아 얼굴과 화려한 기술 |
+
+## `cards-estelle` — ★★★★★ 에스텔 카드 그림 (시트 1장 → 4장)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `estelle_cards` | `assets/sheets/estelle_cards.png` → `estelle_atk.png` `estelle_guard.png` `estelle_skill.png` `estelle_special.png` | 1024×1024 | `assets/chars/estelle_normal.png` `assets/chars/estelle_stand.png` `assets/style/akane_c.png` | 2×2: 공격·방어 / 스킬·필살, 칸마다 에스텔 얼굴과 화려한 기술 |
 
 ## `cards-iris` — ★★★★ 아이리스 카드 그림 (시트 1장 → 4장)
 
@@ -1267,6 +1320,15 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `style_nerea_c` | `assets/style/nerea_c.png` | 1024×1536 투명 | `assets/style/nerea_a.png` | 시안 C — 세밀한 도트(256×384 도트 4배) |
 | `style_nerea_d` | `assets/style/nerea_d.png` | 1024×1536 투명 | `assets/style/nerea_a.png` | 시안 D — 고화질 픽셀 일러스트(색 제한 없음) |
 
+## `style-estelle` — 그림체 시안 에스텔 (4장, 게임에 안 씀)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `style_estelle_a` | `assets/style/estelle_a.png` | 1024×1536 투명 | — | 시안 A — 기준(128×192 도트 8배) |
+| `style_estelle_b` | `assets/style/estelle_b.png` | 1024×1536 투명 | `assets/style/estelle_a.png` | 시안 B — 굵은 도트(64×96 도트 16배) |
+| `style_estelle_c` | `assets/style/estelle_c.png` | 1024×1536 투명 | `assets/style/estelle_a.png` | 시안 C — 세밀한 도트(256×384 도트 4배) |
+| `style_estelle_d` | `assets/style/estelle_d.png` | 1024×1536 투명 | `assets/style/estelle_a.png` | 시안 D — 고화질 픽셀 일러스트(색 제한 없음) |
+
 ## `cg-star5` — ★5 전신 CG
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
@@ -1276,6 +1338,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `star5_akane` | `assets/cg/star5_akane.png` | 1536×864 | `assets/chars/akane_normal.png` `assets/chars/akane_stand.png` `assets/style/akane_c.png` | — |
 | `star5_eleonore` | `assets/cg/star5_eleonore.png` | 1536×864 | `assets/chars/eleonore_normal.png` `assets/chars/eleonore_stand.png` `assets/style/akane_c.png` | — |
 | `star5_nerea` | `assets/cg/star5_nerea.png` | 1536×864 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | — |
+| `star5_estelle` | `assets/cg/star5_estelle.png` | 1536×864 | `assets/chars/estelle_normal.png` `assets/chars/estelle_stand.png` `assets/style/akane_c.png` | — |
 
 ## `duo` — 인연 듀오 컷인 10쌍
 
@@ -1428,6 +1491,12 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `fx_nerea` | `assets/sheets/fx_nerea.png` → `nerea_atk_1.png` `nerea_atk_2.png` `nerea_atk_3.png` `nerea_skill_1.png` `nerea_skill_2.png` `nerea_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
+
+## `fx-estelle` — 에스텔 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `fx_estelle` | `assets/sheets/fx_estelle.png` → `estelle_atk_1.png` `estelle_atk_2.png` `estelle_atk_3.png` `estelle_skill_1.png` `estelle_skill_2.png` `estelle_skill_3.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만 |
 
 ## `fx-iris` — 아이리스 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)
 
@@ -1686,6 +1755,12 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `nerea_outfit2` | `assets/chars/nerea_outfit2.png` | 1024×1536 투명 | `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | — |
+
+## `skin-estelle` — 에스텔 스킨(두 번째 의상) — 나중
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `estelle_outfit2` | `assets/chars/estelle_outfit2.png` | 1024×1536 투명 | `assets/chars/estelle_normal.png` `assets/style/akane_c.png` | — |
 
 ## `skin-iris` — 아이리스 스킨(두 번째 의상) — 나중
 

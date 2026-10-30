@@ -6,7 +6,7 @@ import { ROSTER, ROSTER_IDS, byRarity } from './data/roster.js';
 import { STARTER_OWNED, CHARACTERS } from './data/characters.js';
 import { SUMMON, SUMMON_ITEMS, SHARDS, ITEM_DUST, PICKUPS, PICKUP_DAYS, PICKUP_EPOCH, EXCHANGE, START_PICK_RUNS, PACK_SIZE, PACK_COUNT } from './data/gacha.js';
 import { RULES } from './data/rules.js';
-import { passXp } from './season.js';
+import { passXp, seasonNow } from './season.js';
 import { MOONS } from './data/moons.js';
 import { RELICS } from './data/relics.js';
 import { CARDS } from './data/cards.js';
@@ -142,6 +142,8 @@ function rate5() {
 export const nextRate5 = rate5;
 // 지금 픽업 (2주 단위로 돌아감)
 export function pickupNow(now = Date.now()) {
+  const sn = seasonNow(now);   // 시즌 중에는 시즌 동료 픽업
+  if (sn?.open && sn.chara) return { five: sn.chara, four: sn.four || [], ends: Date.parse(sn.start) + sn.days * 86400000 };
   const span = PICKUP_DAYS * 86400000;
   const n = Math.floor((now - PICKUP_EPOCH) / span), i = ((n % PICKUPS.length) + PICKUPS.length) % PICKUPS.length;
   return { ...PICKUPS[i], ends: PICKUP_EPOCH + (n + 1) * span };

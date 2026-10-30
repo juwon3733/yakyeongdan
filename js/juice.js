@@ -725,7 +725,7 @@ function tweenBars(P, barT) {
 }
 
 // ---------- 타격 ----------
-const STYLE = { iris: 'slash', akane: 'slash', laila: 'slash', mimimomo: 'slash', sebas: 'slash', brick: 'boom', mariana: 'boom', fukuro: 'boom',
+const STYLE = { estelle: 'slash', iris: 'slash', akane: 'slash', laila: 'slash', mimimomo: 'slash', sebas: 'slash', brick: 'boom', mariana: 'boom', fukuro: 'boom',
   sion: 'star', raven: 'mist', marta: 'impact', zeno: 'impact', gordon: 'impact', dora: 'impact', finn: 'impact', sigrun: 'pierce',
   noel: 'magic', lunaria: 'magic', eleonore: 'magic', tomori: 'magic', nerea: 'magic', bertha: 'impact' };
 const styleOf = e => e.star ? 'meteor' : e.counter ? 'impact' : e.slash ? 'slash' : e.gun ? 'boom' : STYLE[e.actor] || 'impact';
@@ -1491,7 +1491,7 @@ function ambient() {
 // ---------- ★5 전용 필살 연출 (희귀 카드) — 동료마다 다른 순서. sigLead = 카드를 낸 뒤 적중까지 더 기다릴 시간 ----------
 const SIG_LEAD = { akane: 560, sion: 380, lunaria: 320, eleonore: 460, nerea: 420,
   iris: 380, noel: 360, raven: 360, mimimomo: 320, sebas: 340, mariana: 380, tomori: 320, sigrun: 520, zeno: 420, bertha: 320,
-  brick: 420, marta: 0, finn: 360, laila: 360, dora: 460, gordon: 0, fukuro: 0 };
+  estelle: 560, brick: 420, marta: 0, finn: 360, laila: 360, dora: 460, gordon: 0, fukuro: 0 };
 // 공격이 아니어도 전용 동작이 있는 동료(★3 방어·회복 레전더리), 레전더리가 없어 에픽 카드로 보여 주는 동료
 const SIG_ANY = new Set(['marta', 'gordon', 'fukuro']);
 const SIG_EXTRA = { 'laila.storm': 1 };
@@ -1844,5 +1844,25 @@ Object.assign(SIG, {
     const cols = ['#ffd060', '#ff8a6a', '#9ad8ff', '#c8a0ff', '#8affb0'];
     for (let k = 0; k < 18; k++) at(100 + k * 22, () => { const t = foes[k % Math.max(1, foes.length)] || { cx: a.cx + 120, cy: a.cy }; add({ k: 'line', x0: a.cx, y0: a.y + 6, x1: t.cx + rnd(-30, 30), y1: t.cy + rnd(-30, 20), col: cols[k % cols.length], speed: 5, life: 12, s: 2 }); });
     at(520, () => { for (const f of foes) sparks(f.cx, f.cy, '#ffe8a0', 12, 2.2); ring(a.cx, a.cy, '#ffd060', 6, 40, 14); });
+  },
+});
+
+// 에스텔(시즌 1): 별이 되어 하늘로 솟구쳤다가, 창끝을 앞세운 유성이 되어 적에게 비스듬히 꽂힘 → 흰 금빛 충돌, 별 부스러기 비
+Object.assign(SIG, {
+  estelle(id, img, e) {
+    const tgt = sigTarget(e); if (!tgt) return; const b = rel(tgt), hit = 730;
+    poseSeq(id, [['windup', 180], ['skill', 360], ['attack', 560]]); auraFlare(id, 2.6, 1000); dim(1200);
+    const a = moveTo(img, b, 1180, [[0, 0], [.1, 0, 5], [.3, .2, -170, FAST], [.5, .25, -180, IN2], [.62, 1, 0], [.82, 1], [1, 0]]);
+    at(300, () => { ring(a.cx, a.cy - 60, '#fff1b0', 6, 50, 16); for (let k = 0; k < 16; k++) add({ k: 'dot', x: a.cx + rnd(-30, 30), y: a.y + a.h, vx: rnd(-.5, .5), vy: rnd(-4, -2), g: 0, life: 20, col: k % 2 ? '#f2c46a' : '#ffffff', s: 2 }); });
+    at(420, () => zoomAt(b.cx - 40, 60, 1.12, 420, .3));
+    at(560, () => { for (let k = 0; k < 5; k++) add({ k: 'line', x0: b.cx - 130 + k * 5, y0: 0, x1: b.cx + k * 2, y1: b.y + b.h - 8, col: k % 2 ? '#ffffff' : '#f2c46a', speed: 4, life: 12, s: 2 }); });
+    at(hit, () => {
+      const gx = b.cx, gy = b.y + b.h - 4;
+      flash(); if (SET.shake) shake(); redEdge();
+      add({ k: 'oval', x: gx, y: gy, r0: 6, r1: 96, col: '#fff1b0', life: 22 }); add({ k: 'oval', x: gx, y: gy, r0: 4, r1: 60, col: '#9fc0ff', life: 16 });
+      playFx(fxFrames('estelle_atk').length ? 'estelle_atk' : 'explode', gx, b.y + b.h * .45, 190, 55);
+      ring(gx, b.cy, '#ffffff', 6, 80, 18); sparks(gx, b.cy, '#fff6c8', 36, 3.4);
+      for (let k = 0; k < 10; k++) at(80 + k * 40, () => starTrail(gx + rnd(-120, 60), 0, gx + rnd(-60, 60), gy - rnd(0, 30), k % 2 ? '#bcd0ff' : '#fff1b0'));
+    });
   },
 });

@@ -130,6 +130,25 @@ export const CHARACTERS = {
         ['burst', '대해일', '고래 크기 7 이상이면 턴 끝 물보라가 두 번, 물보라마다 모든 적 약화 1.']],
       onCombatStart: c => { c.whale = 1; } },
   },
+  // 시즌 1 「유성우의 밤」 동료 (js/data/season.js)
+  estelle: {
+    name: '에스텔', role: '별똥 기사', rarity: 5, maxHp: 36, col: '#f2c46a', long: true, pal: pal('estelle'),
+    ds: '카드를 쓸수록 유성이 쌓이고, 쌓인 유성이 공격을 세게 하고 하늘에서 떨어진다.',
+    start: ['este.slash', 'este.slash', 'este.guard', 'este.fall'],
+    passive: { name: '유성의 맹세',
+      lines: [['trait', '', '내 턴이 시작될 때 유성이 3 이상이면 별똥이 떨어져 무작위 적에게 유성×2 피해.'],
+        ['keyword', '', '에스텔 카드를 쓸 때마다 유성 +1(최대 6). 에스텔 공격 카드 피해 +유성.'],
+        ['burst', '유성우', '유성이 6이 되는 순간 모든 적 피해 10, 유성은 2로.']],
+      onCombatStart: c => { c.comet = 0; },
+      onTurnStart: (c, e) => { if ((c.comet || 0) >= 3) e.hitRandom(c.comet * 2); },
+      beforeCard: (c, card) => { if (card.ch === 'estelle' && card.atk) c.bonus += c.comet || 0; },
+      preview: (c, card) => card.ch === 'estelle' && card.atk ? c.comet || 0 : 0,
+      afterCard: (c, card, pick, e) => {
+        if (card.ch !== 'estelle') return;
+        c.comet = Math.min(6, (c.comet || 0) + 1);
+        if (c.comet >= 6) { e.burst('estelle', '유성우'); e.hitAll(10); c.comet = 2; }
+      } },
+  },
   // ---------- ★4 (나머지) ----------
   mimimomo: {
     name: '미미·모모', role: '쌍둥이', rarity: 4, maxHp: 34, col: '#ffb0a0', long: false, pal: pal('mimimomo'),

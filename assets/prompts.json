@@ -94,6 +94,24 @@
       ]
     },
     {
+      "id": "char-estelle",
+      "title": "★★★★★ 에스텔",
+      "reference_sheet_prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\nCharacter reference sheet of 에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue. Full body front view plus a face close-up, plain background. Native resolution about 384x256, upscaled with nearest-neighbor.",
+      "items": [
+        "estelle_stand",
+        "estelle_normal"
+      ]
+    },
+    {
+      "id": "extra-estelle",
+      "title": "에스텔 나중(웃음·진지 표정·컷인)",
+      "items": [
+        "estelle_smile",
+        "estelle_serious",
+        "estelle_cutin"
+      ]
+    },
+    {
       "id": "char-iris",
       "title": "★★★★ 아이리스",
       "reference_sheet_prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a 4-star character: one flashy signature prop or accessory, otherwise clean.\n\nCharacter reference sheet of 아이리스 (iris): a cool, quiet swordswoman in her early 20s. Waist-length straight black hair, pale-blue eyes, a long silver coat styled as light armor, a slim longsword, an expressionless but kind face. Accent colors: silver and pale blue. Full body front view plus a face close-up, plain background. Native resolution about 384x256, upscaled with nearest-neighbor.",
@@ -435,6 +453,13 @@
       ]
     },
     {
+      "id": "pose-estelle",
+      "title": "★★★★★ 에스텔 전투 스프라이트 — 몸만 (시트 1장 → 8동작)",
+      "items": [
+        "estelle_body"
+      ]
+    },
+    {
       "id": "pose-iris",
       "title": "★★★★ 아이리스 전투 스프라이트 — 몸만 (시트 1장 → 8동작)",
       "items": [
@@ -586,6 +611,13 @@
       "title": "★★★★★ 네레아 카드 그림 (시트 1장 → 4장)",
       "items": [
         "nerea_cards"
+      ]
+    },
+    {
+      "id": "cards-estelle",
+      "title": "★★★★★ 에스텔 카드 그림 (시트 1장 → 4장)",
+      "items": [
+        "estelle_cards"
       ]
     },
     {
@@ -758,6 +790,16 @@
       ]
     },
     {
+      "id": "style-estelle",
+      "title": "그림체 시안 에스텔 (4장, 게임에 안 씀)",
+      "items": [
+        "style_estelle_a",
+        "style_estelle_b",
+        "style_estelle_c",
+        "style_estelle_d"
+      ]
+    },
+    {
       "id": "cg-star5",
       "title": "★5 전신 CG",
       "items": [
@@ -765,7 +807,8 @@
         "star5_lunaria",
         "star5_akane",
         "star5_eleonore",
-        "star5_nerea"
+        "star5_nerea",
+        "star5_estelle"
       ]
     },
     {
@@ -937,6 +980,13 @@
       "title": "네레아 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
       "items": [
         "fx_nerea"
+      ]
+    },
+    {
+      "id": "fx-estelle",
+      "title": "에스텔 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임)",
+      "items": [
+        "fx_estelle"
       ]
     },
     {
@@ -1234,6 +1284,13 @@
       "title": "네레아 스킨(두 번째 의상) — 나중",
       "items": [
         "nerea_outfit2"
+      ]
+    },
+    {
+      "id": "skin-estelle",
+      "title": "에스텔 스킨(두 번째 의상) — 나중",
+      "items": [
+        "estelle_outfit2"
       ]
     },
     {
@@ -1879,6 +1936,111 @@
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n네레아 (nerea): a free-spirited star-whale rider woman in her mid 20s. Waist-length wavy aqua-white hair with small star clips, deep sea-blue eyes, a navy-and-white mariner-style outfit with bare shoulders and a short pleated skirt over thigh-high boots, a long flowing sea-coat embroidered with a whale constellation, a staff shaped like a harpoon with a small star lantern at its tip. A huge translucent star whale made of constellation lines and glowing stars (named Lana) swims in the sky behind her. Accent colors: sea teal and starlight gold.\nSame person, same face and hair, but in a second outfit: a white-and-gold sailor captain coat over a teal swimsuit-style top and shorts, a whale-tail pendant. Full-body standing pose facing slightly right, transparent background. Native resolution 256x384 pixels, upscaled exactly 4x to 1024x1536.",
       "reference_images": [
         "chars/nerea_normal.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "estelle_stand",
+      "kind": "stand",
+      "batch": "char-estelle",
+      "file": "chars/estelle_stand.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "256×384",
+      "note": "전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT (toward enemies), weapon ready. Fully transparent background, nothing behind the character. Feet near the bottom edge, empty margin above the head. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric.",
+      "must_show": "전신, 오른쪽을 향한 전투 자세, 무기",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "estelle_normal",
+      "kind": "portrait",
+      "batch": "char-estelle",
+      "file": "chars/estelle_normal.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "256×384",
+      "note": "허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nWaist-up portrait facing slightly to the side. Expression and pose: soft confident smile, one hand on her chest in a knight's vow, hair drifting. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric.",
+      "followup_prompt": "Same character, same style. Waist-up portrait, transparent background. Expression and pose: soft confident smile, one hand on her chest in a knight's vow, hair drifting.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "estelle_smile",
+      "kind": "portrait",
+      "batch": "extra-estelle",
+      "file": "chars/estelle_smile.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "256×384",
+      "note": "허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nWaist-up portrait facing slightly to the side. Expression and pose: bright happy smile with a little wink, a tiny shooting star passing behind her. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric.",
+      "followup_prompt": "Same character, same style. Waist-up portrait, transparent background. Expression and pose: bright happy smile with a little wink, a tiny shooting star passing behind her.",
+      "reference_images": [
+        "chars/estelle_normal.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "estelle_serious",
+      "kind": "portrait",
+      "batch": "extra-estelle",
+      "file": "chars/estelle_serious.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "256×384",
+      "note": "허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nWaist-up portrait facing slightly to the side. Expression and pose: fierce focused eyes, raising the meteor-tipped lance, cape snapping in the wind. Fully transparent background with nothing behind the character. Head, hair and arms stay inside the image with empty margin on the left, right and top; only the waist touches the bottom edge. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric.",
+      "followup_prompt": "Same character, same style. Waist-up portrait, transparent background. Expression and pose: fierce focused eyes, raising the meteor-tipped lance, cape snapping in the wind.",
+      "reference_images": [
+        "chars/estelle_normal.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "estelle_cutin",
+      "kind": "cutin",
+      "batch": "extra-estelle",
+      "file": "cutins/estelle_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "384×144",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nDramatic cut-in panel for a special move: close-up of her diving down from the night sky with the meteor lance pointed forward, hair streaming like a comet tail, a storm of falling stars behind her. Wide horizontal composition, the face and action inside the middle horizontal band (the top and bottom will be cropped to 1536x576). Speed lines made of pixels, strong accent colors (white-gold and meteor blue).",
+      "reference_images": [
+        "chars/estelle_normal.png",
+        "style/akane_c.png"
+      ],
+      "must_show": "얼굴이 가운데 띠 안"
+    },
+    {
+      "id": "estelle_outfit2",
+      "kind": "outfit",
+      "batch": "skin-estelle",
+      "file": "chars/estelle_outfit2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "256×384",
+      "note": "두 번째 의상 전신 · 투명 배경",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nSame person, same face and hair, but in a second outfit: a midnight-blue gown with silver star embroidery and a short white capelet, a star tiara. Full-body standing pose facing slightly right, transparent background. Native resolution 256x384 pixels, upscaled exactly 4x to 1024x1536.",
+      "reference_images": [
+        "chars/estelle_normal.png",
         "style/akane_c.png"
       ]
     },
@@ -4362,6 +4524,148 @@
         },
         {
           "file": "sprites/nerea_win.png",
+          "x": 1152,
+          "y": 512,
+          "w": 384,
+          "h": 512,
+          "native": [
+            96,
+            128
+          ],
+          "out": [
+            384,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "estelle_body",
+      "kind": "battlesheet",
+      "batch": "pose-estelle",
+      "file": "sheets/estelle_body.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 96×128 × 8)",
+      "note": "전투 스프라이트 4×2 — 위: 서 있기·숨쉬기·공격·스킬 / 아래: 방어·피격·쓰러짐·승리, 칸 384×512",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nA battle sprite sheet of this ONE character: eight poses on one 1536x1024 canvas, split into eight equal cells of 384x512 (4 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text.\n- Cell 1 — IDLE: standing in a ready battle stance\n- Cell 2 — WINDUP: the anticipation just before her attack — body coiled, weight on the back foot, weapon pulled back\n- Cell 3 — ATTACK: the peak of her basic attack, lunging or striking toward the RIGHT with her weapon fully extended (no slash trail or effect — drawn separately)\n- Cell 4 — SKILL: a strong casting pose (hand, weapon or staff raised), NO glow or magic effect drawn — effects are drawn separately\n- Cell 5 — GUARD: bracing defensively, knees bent, weapon or arm raised in front like a shield (no barrier effect)\n- Cell 6 — HURT: just got hit, recoiling back to the LEFT, wincing, no blood\n- Cell 7 — DOWN: knocked out, kneeling or collapsed on the ground, eyes closed, no blood\n- Cell 8 — VICTORY: a confident, stylish win pose fitting her personality\nAll eight cells are the SAME sprite redrawn by one pixel artist: identical face, hair shape, outfit details, palette and outline in every cell — only the pose changes.\nBODY ONLY: draw just the character and what she holds or wears. NO magic effects, NO glow, NO sparkles or particles, NO slash trails, NO companion creature, pet or familiar, NO projectiles, NO ground shadow — the game draws those as separate layers.\nIn every cell: exactly the same character size and proportions (adult about 1:6.5 head-to-body, NOT chibi), the figure as LARGE as the cell allows (about 70-80% of the cell height; draw it smaller if a long weapon, ponytail or cape would otherwise reach a cell edge — the game evens out the size, but nothing may touch an edge), feet on the same line near the bottom of the cell, facing RIGHT toward the enemies (except HURT recoiling), the whole body and effect inside its own cell. Fully transparent background. Native resolution 96x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "fit": "union",
+      "must_show": "4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치",
+      "reference_images": [
+        "chars/estelle_stand.png",
+        "chars/estelle_normal.png",
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "sprites/estelle_idle.png",
+          "x": 0,
+          "y": 0,
+          "w": 384,
+          "h": 512,
+          "native": [
+            96,
+            128
+          ],
+          "out": [
+            384,
+            512
+          ]
+        },
+        {
+          "file": "sprites/estelle_windup.png",
+          "x": 384,
+          "y": 0,
+          "w": 384,
+          "h": 512,
+          "native": [
+            96,
+            128
+          ],
+          "out": [
+            384,
+            512
+          ]
+        },
+        {
+          "file": "sprites/estelle_attack.png",
+          "x": 768,
+          "y": 0,
+          "w": 384,
+          "h": 512,
+          "native": [
+            96,
+            128
+          ],
+          "out": [
+            384,
+            512
+          ]
+        },
+        {
+          "file": "sprites/estelle_skill.png",
+          "x": 1152,
+          "y": 0,
+          "w": 384,
+          "h": 512,
+          "native": [
+            96,
+            128
+          ],
+          "out": [
+            384,
+            512
+          ]
+        },
+        {
+          "file": "sprites/estelle_guard.png",
+          "x": 0,
+          "y": 512,
+          "w": 384,
+          "h": 512,
+          "native": [
+            96,
+            128
+          ],
+          "out": [
+            384,
+            512
+          ]
+        },
+        {
+          "file": "sprites/estelle_hurt.png",
+          "x": 384,
+          "y": 512,
+          "w": 384,
+          "h": 512,
+          "native": [
+            96,
+            128
+          ],
+          "out": [
+            384,
+            512
+          ]
+        },
+        {
+          "file": "sprites/estelle_down.png",
+          "x": 768,
+          "y": 512,
+          "w": 384,
+          "h": 512,
+          "native": [
+            96,
+            128
+          ],
+          "out": [
+            384,
+            512
+          ]
+        },
+        {
+          "file": "sprites/estelle_win.png",
           "x": 1152,
           "y": 512,
           "w": 384,
@@ -7197,6 +7501,87 @@
       ]
     },
     {
+      "id": "estelle_cards",
+      "kind": "cardsheet",
+      "batch": "cards-estelle",
+      "file": "sheets/estelle_cards.png",
+      "width": 1024,
+      "height": 1024,
+      "transparent": false,
+      "max_colors": null,
+      "native": "512×512 (칸 256×256 × 4)",
+      "note": "카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nFour flashy skill card illustrations of 에스텔 on one 1024x1024 canvas, split into four equal square cells of 512x512 (2x2). Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, NO text anywhere (card titles below are Korean and must NOT be written).\n- Top-left cell — 공격 (공격 cards such as 「유성 베기」, 「낙하」, 「돌격」, 「꼬리별」, 「별창」): 에스텔 attacking toward the right with her weapon, the target only as a dark silhouette, a bright impact flash.\n- Top-right cell — 방어 (방어 cards such as 「별빛 방패」, 「맹세」, 「별의 가호」, 「별자리 안내」): 에스텔 a strong defensive pose protecting her allies, a glowing barrier or shield in her accent color.\n- Bottom-left cell — 스킬 (스킬 cards such as 「별 부스러기」): 에스텔 casting her signature power, the effect swirling around her.\n- Bottom-right cell — 필살 (rare cards such as 「별비」, 「별의 왕관」, 「초신성 낙하」): 에스텔 her most dramatic all-out signature move, the effect at full power filling the frame.\n에스텔 is ON-MODEL from the attached references in every cell. Visual motifs: a meteor-tipped silver lance, white-gold comet trails, falling stars streaking across the night sky, starlight impact craters. Accent colors: white-gold and meteor blue. Each cell is a complete, spectacular scene with its own dark night background, the face clearly visible and attractive, dynamic angle, big readable shapes. Keep everything important inside the middle 512x384 band of each cell — the top 64 and bottom 64 pixels of every cell will be cut off. Fine, detailed pixel art: native resolution 256x256 pixels per cell (512x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.",
+      "reference_images": [
+        "chars/estelle_normal.png",
+        "chars/estelle_stand.png",
+        "style/akane_c.png"
+      ],
+      "must_show": "2×2: 공격·방어 / 스킬·필살, 칸마다 에스텔 얼굴과 화려한 기술",
+      "cells": [
+        {
+          "file": "cards/estelle_atk.png",
+          "x": 0,
+          "y": 64,
+          "w": 512,
+          "h": 384,
+          "native": [
+            256,
+            192
+          ],
+          "out": [
+            768,
+            576
+          ]
+        },
+        {
+          "file": "cards/estelle_guard.png",
+          "x": 512,
+          "y": 64,
+          "w": 512,
+          "h": 384,
+          "native": [
+            256,
+            192
+          ],
+          "out": [
+            768,
+            576
+          ]
+        },
+        {
+          "file": "cards/estelle_skill.png",
+          "x": 0,
+          "y": 576,
+          "w": 512,
+          "h": 384,
+          "native": [
+            256,
+            192
+          ],
+          "out": [
+            768,
+            576
+          ]
+        },
+        {
+          "file": "cards/estelle_special.png",
+          "x": 512,
+          "y": 576,
+          "w": 512,
+          "h": 384,
+          "native": [
+            256,
+            192
+          ],
+          "out": [
+            768,
+            576
+          ]
+        }
+      ]
+    },
+    {
       "id": "iris_cards",
       "kind": "cardsheet",
       "batch": "cards-iris",
@@ -8904,6 +9289,72 @@
       ]
     },
     {
+      "id": "style_estelle_a",
+      "kind": "style",
+      "batch": "style-estelle",
+      "file": "style/estelle_a.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric. Up to about 48 colors.\nThis is style test 「A」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 A — 기준(128×192 도트 8배)",
+      "reference_images": []
+    },
+    {
+      "id": "style_estelle_b",
+      "kind": "style",
+      "batch": "style-estelle",
+      "file": "style/estelle_b.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Very chunky retro pixel art: native resolution only 64x96 pixels, upscaled exactly 16x with nearest-neighbor to 1024x1536. About 24 colors. Big readable pixel clusters, iconic shapes.\nThis is style test 「B」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 B — 굵은 도트(64×96 도트 16배)",
+      "reference_images": [
+        "style/estelle_a.png"
+      ]
+    },
+    {
+      "id": "style_estelle_c",
+      "kind": "style",
+      "batch": "style-estelle",
+      "file": "style/estelle_c.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Fine, detailed pixel art: native resolution 256x384 pixels, upscaled exactly 4x with nearest-neighbor to 1024x1536. Up to about 96 colors, careful pixel shading on hair, eyes and fabric, still no anti-aliasing.\nThis is style test 「C」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 C — 세밀한 도트(256×384 도트 4배)",
+      "reference_images": [
+        "style/estelle_a.png"
+      ]
+    },
+    {
+      "id": "style_estelle_d",
+      "kind": "style",
+      "batch": "style-estelle",
+      "file": "style/estelle_d.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": null,
+      "native": "시안마다 다름",
+      "note": "그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다",
+      "prompt": "이미지를 만들어줘. 최고 화질로, 색을 줄이지 말고.\n\nHigh-quality, highly detailed pixel-art style illustration, like the key visual of a premium modern pixel-art game: crisp pixel detail, rich dramatic lighting, clean anime gacha-game faces. Night sky, a tall tower rising from the sea, lanterns and stars. No text, no letters, no logo, no watermark, no UI.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nThis is a top-rarity (5-star) character: give the design the most care — an elaborate signature outfit, a striking weapon or prop, and a magical effect (glow, flames, stars, moonlight or clockwork) that makes the silhouette instantly recognizable. As a top-rarity adult woman she may be more glamorous than other characters: a curvier figure and a deeper neckline that shows some cleavage are fine here — still never explicit: no nudity, no underwear shots, no sexual poses.\n\n에스텔 (estelle): a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Accent colors: white-gold and meteor blue.\nFull-body battle stance, standing at a slight three-quarter angle facing RIGHT, weapon and signature magic effect visible, the most attractive version of this character. Fully transparent background. Premium high-detail pixel-art illustration like a modern HD pixel gacha game splash: crisp pixel detail, rich lighting and glow effects, no color limit, still visibly pixel-based (no smooth airbrush).\nThis is style test 「D」 — the four tests of this batch must show the SAME character design and pose, only the pixel resolution/detail changes.",
+      "must_show": "시안 D — 고화질 픽셀 일러스트(색 제한 없음)",
+      "reference_images": [
+        "style/estelle_a.png"
+      ]
+    },
+    {
       "id": "star5_sion",
       "kind": "cg",
       "batch": "cg-star5",
@@ -8990,6 +9441,24 @@
       "reference_images": [
         "chars/nerea_normal.png",
         "chars/nerea_stand.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "star5_estelle",
+      "kind": "cg",
+      "batch": "cg-star5",
+      "file": "cg/star5_estelle.png",
+      "width": 1536,
+      "height": 864,
+      "transparent": false,
+      "max_colors": null,
+      "native": "—",
+      "note": "★5 전신 CG · 16:9 · 화질 우선, 색 제한 없음",
+      "prompt": "이미지를 만들어줘. 최고 화질로, 색을 줄이지 말고.\n\nHigh-quality, highly detailed pixel-art style illustration, like the key visual of a premium modern pixel-art game: crisp pixel detail, rich dramatic lighting, clean anime gacha-game faces. Night sky, a tall tower rising from the sea, lanterns and stars. No text, no letters, no logo, no watermark, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nFull-body splash art of 에스텔: a beautiful, graceful knight woman in her early 20s who fell to earth with a meteor (season-1 character). Very long straight platinum-blonde hair flowing like a comet tail with a faint blue glow at the tips, clear sapphire-blue eyes with star-shaped highlights, a gentle but determined face. Elegant white-and-gold knight armor with a fitted bodice, bare shoulders, gold star-shaped pauldrons, a short layered white skirt with gold trim over thigh-high armored boots, a long translucent midnight-blue cape lined with falling-star patterns. She wields a slender silver lance-sword whose tip burns like a small meteor. A few tiny stars orbit her. Her most dramatic signature pose with her magical effect at full power (close-up of her diving down from the night sky with the meteor lance pointed forward, hair streaming like a comet tail, a storm of falling stars behind her). 16:9 composition (1536x864), the character fills the frame, night sky and tower background.",
+      "reference_images": [
+        "chars/estelle_normal.png",
+        "chars/estelle_stand.png",
         "style/akane_c.png"
       ]
     },
@@ -12251,6 +12720,115 @@
         },
         {
           "file": "fx/nerea_skill_3.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "fx_estelle",
+      "kind": "fxsheet",
+      "batch": "fx-estelle",
+      "file": "sheets/fx_estelle.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "384×256 (칸 128×128 × 6)",
+      "note": "이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512",
+      "prompt": "이미지를 만들어줘. 게임 기술 이펙트 스프라이트 시트야. 캐릭터는 그리지 마.\n\nPixel-art VFX animation frames for a premium gacha RPG battle: bold, flashy, high-contrast magical effects with bright cores (white/yellow) fading to the accent color, crisp pixel clusters, dithered glow, sparks and particles. ONLY the effect — no characters, no weapons held by anyone, no enemies, no text, no UI. Fully transparent background.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\n에스텔's signature skill effects (her motifs: a meteor-tipped silver lance, white-gold comet trails, falling stars streaking across the night sky, starlight impact craters; accent colors white-gold and meteor blue). Top row = her ATTACK HIT effect landing on an enemy, 3 frames: impact start, peak burst, fading. Bottom row = her SKILL AURA effect around her body (empty space in the middle where she stands), 3 frames: forming, full power, fading. Make them spectacular and unmistakably hers.\nOne 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.",
+      "must_show": "위 3칸 공격 타격 이펙트, 아래 3칸 스킬 오라, 캐릭터 없이 이펙트만",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "fx/estelle_atk_1.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/estelle_atk_2.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/estelle_atk_3.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/estelle_skill_1.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/estelle_skill_2.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            128,
+            128
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "fx/estelle_skill_3.png",
           "x": 1024,
           "y": 512,
           "w": 512,
