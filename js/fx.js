@@ -3,6 +3,7 @@ import { CHARACTERS } from './data/characters.js';
 import { DUOS, BOND } from './data/cards.js';
 import { charSrc } from './render/common.js';
 import { duoSpecial } from './meta.js';
+import { artURL } from './art.js';
 
 const cutEl = document.getElementById('cut');
 let cutTimer = null;
@@ -17,10 +18,17 @@ function show(html, ms = 1300) {
 export function showCut(k, bond = false, replay = false) {
   const [a, b] = k.split('+'), A = CHARACTERS[a], B = CHARACTERS[b];
   const sp = !bond && (duoSpecial(a) || duoSpecial(b));
+  const label = `<div class="tx"><span>${A.name} + ${B.name} · ${bond ? "인연의 실 · " : ""}${replay ? "인연 듀오" : "듀오 카드가 손에 들어왔다"}${sp ? ' · <i>별자리 특별판</i>' : ''}</span><b>${bond ? BOND.name : DUOS[k].name}</b></div>`;
+  // 둘이 함께 그려진 듀오 컷인 그림(cutins/duo_<a>_<b>.png)이 있으면 그 그림이 비스듬한 띠를 가득 채우며 밀려 들어온다
+  const art = !bond && (artURL(`cutins/duo_${a}_${b}.png`) || artURL(`cutins/duo_${b}_${a}.png`));
+  if (art) {
+    show(`<div class="duocut art ${sp ? 'sp' : ''}" style="--ca:${A.col};--cb:${B.col}"><i class="band"><img class="px dart" src="${art}" alt=""></i><i class="lines"></i>${label}</div>`, 1500);
+    return;
+  }
   show(`<div class="duocut ${sp ? 'sp' : ''}" style="--ca:${A.col};--cb:${B.col}">
       <i class="stripe"></i><i class="stripe s2"></i>
       <img class="px l" src="${charSrc(a)}" alt=""><img class="px r" src="${charSrc(b)}" alt="">
-      <div class="tx"><span>${A.name} + ${B.name} · ${bond ? '인연의 실 · ' : ''}${replay ? '인연 듀오' : '듀오 카드가 손에 들어왔다'}${sp ? ' · <i>별자리 특별판</i>' : ''}</span><b>${bond ? BOND.name : DUOS[k].name}</b></div></div>`, sp ? 1700 : 1350);
+      ${label}</div>`, sp ? 1700 : 1350);
 }
 // 보스 2단계 (갑옷 벗기, 해가 뜬다)
 export function showPhase(name, text) {

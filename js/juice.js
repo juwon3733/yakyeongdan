@@ -1306,7 +1306,7 @@ function redEdge() {
 }
 function flash() {
   const w = document.createElement('div'); w.className = 'jflashw'; layer.append(w);
-  w.animate([{ opacity: .5 }, { opacity: 0 }], { duration: 140, easing: 'ease-out' }).onfinish = () => w.remove();
+  w.animate([{ opacity: .28 }, { opacity: 0 }], { duration: 110, easing: 'ease-out' }).onfinish = () => w.remove();
 }
 function impactFx(x, y, col) { ring(x, y, col, 3, 18, 9); sparks(x, y, col, 10, 1.8); }
 // 포탄: 뒷줄에서 쏘면 앞 동료들 몸을 꿰뚫고 지나가 보이던 것 → 동료들 머리 위로 낮게 휘어 날아간다
