@@ -214,7 +214,7 @@ export function afterRender(events = []) {
       case 'heal': at(t, () => healFx(e)); mark('a:' + e.id, t); t += 60; break;
       case 'time': at(t, () => clockFx(e, false)); t += 140; break;
       case 'rewind': at(t, () => clockFx(e, true)); t += 140; break;
-      case 'phase': at(t, () => { showPhase(e.name, e.text); sfx('dawn', { vol: .5 }); }); t += 900; break;
+      case 'phase': at(t, () => phaseFx(e)); t += 1500; break;
       // 패시브 ③ 폭발 (docs/12_signature.md): 이름 띠 0.6초 + 폭발 효과음
       case 'burst': at(t, () => awaken(e.who, e.name)); t += 520; break;   // 폭발 각성: 멈칫 + 이름 띠 + 이번 턴 내내 몸이 빛남
       case 'foeTurn':
@@ -1794,6 +1794,31 @@ function bossIntro(e) {
   at(1250, () => { flash(); if (img) { const r = rel(img); add({ k: 'oval', x: r.cx, y: r.y + r.h - 4, r0: 6, r1: r.w * .9, col: '#ff6a7a', life: 22 }); for (let k = 0; k < 14; k++) add({ k: 'dot', x: r.cx + rnd(-r.w / 2, r.w / 2), y: r.y + r.h, vx: rnd(-1.5, 1.5), vy: rnd(-2.5, -.8), g: .1, life: 22, col: '#8a7a9a', s: 2 }); }
     if (SET.shake) shake(); });
   if (img) { const an = img.animate([{ transform: 'translateY(-60px)', opacity: 0 }, { transform: 'translateY(-60px)', opacity: 0, offset: .7 }, { transform: 'translateY(4px)', opacity: 1, offset: .82, easing: 'cubic-bezier(.6,0,.9,.4)' }, { transform: 'none', opacity: 1 }], { duration: 1500 }); an.startTime = document.timeline.currentTime; }
+}
+
+// 보스 단계 전환: 판이 어두워지고 보스에게 줌 → 빛이 보스로 빨려 듦 → 터지며 띠. 별의 왕은 2단계 별비, 3단계 추락
+const PHASE_COL = { starking: '#bcd0ff', dawn: '#ffb070' };
+function phaseFx(e) {
+  const boss = S.C?.all?.find(f => f.name === e.name), img = root()?.querySelector('.foe.boss > img');
+  if (!img || calmNow()) { showPhase(e.name, e.text); sfx('dawn', { vol: .5 }); return; }
+  const r = rel(img), col = PHASE_COL[boss?.key] || '#ff7a8a', W = stage.offsetWidth;
+  sfx(hasSfx('boss_enter') ? 'boss_enter' : 'dawn', { vol: .6 });
+  dim(1500); zoomAt(r.cx, r.cy, 1.16, 900, .45);
+  for (let k = 0; k < 40; k++) {   // 빛이 보스에게 빨려 든다
+    const a = Math.random() * Math.PI * 2, d = rnd(70, 170), life = Math.round(rnd(18, 30));
+    at(rnd(0, 420), () => add({ k: 'dot', x: r.cx + Math.cos(a) * d, y: r.cy + Math.sin(a) * d * .7, vx: -Math.cos(a) * d / life, vy: -Math.sin(a) * d * .7 / life, g: 0, life, col: k % 3 ? col : '#ffffff', s: 2 }));
+  }
+  for (let k = 0; k < 3; k++) at(k * 150, () => ring(r.cx, r.cy, col, 90 - k * 20, 8, 16));
+  const an = img.animate([{ filter: 'none' }, { filter: 'brightness(1.8) saturate(.6)', offset: .5 }, { filter: 'brightness(3) saturate(0)', offset: .62 }, { filter: 'none' }], { duration: 900 }); an.startTime = document.timeline.currentTime;
+  at(560, () => { flash(); if (SET.shake) shake(); ring(r.cx, r.cy, col, 10, 150, 24); ring(r.cx, r.cy, '#ffffff', 6, 90, 16); sparks(r.cx, r.cy, col, 26, 3); showPhase(e.name, e.text); });
+  if (boss?.key === 'starking' && e.n === 2) {   // 별비: 하늘 전체에서 별똥이 비스듬히 쏟아진다
+    for (let k = 0; k < 26; k++) at(620 + k * 34, () => { const x = rnd(40, W + 60), y = rnd(60, 220); starTrail(x + 70, -10, x, y, k % 3 ? '#bcd0ff' : '#ffffff'); at(120, () => sparks(x, y, '#fff6c8', 5, 1.6)); });
+  }
+  if (boss?.key === 'starking' && e.n === 3) {   // 추락: 보스가 무너지듯 내려앉았다가 빛을 끌어모아 다시 떠오른다
+    const fall = img.animate([{ transform: 'none' }, { transform: 'translateY(14px) scale(.96)', offset: .4, easing: 'cubic-bezier(.6,0,.9,.4)' }, { transform: 'translateY(14px) scale(.96)', offset: .6 }, { transform: 'translateY(-6px) scale(1.04)', offset: .8 }, { transform: 'none' }], { duration: 1300 }); fall.startTime = document.timeline.currentTime;
+    at(520, () => { for (let k = 0; k < 18; k++) add({ k: 'dot', x: r.cx + rnd(-r.w / 2, r.w / 2), y: r.y + r.h, vx: rnd(-1.2, 1.2), vy: rnd(-3, -1), g: .08, life: 26, col: '#8a8ab8', s: 2 }); });
+    at(900, () => { ring(r.cx, r.cy, '#fff6a0', 8, 120, 22); for (let k = 0; k < 8; k++) starTrail(r.cx, r.cy, r.cx + Math.cos(k * .785) * 120, r.cy + Math.sin(k * .785) * 80, '#fff6a0'); });
+  }
 }
 
 // ---------- ★3 전용 필살 ----------
