@@ -16,7 +16,6 @@ const REST = ['noel', 'raven', 'mimimomo', 'sebas', 'mariana', 'tomori', 'sigrun
 const ORDER = [
   // 퀄리티 계획(docs/QUALITY_PLAN.md): 늘 보이는 카드 그림 → UI 키트·로고 → 타이틀부터
   'char-estelle', 'pose-estelle', 'cg-star5',   // 시즌 1 동료(11/1 시작) 먼저 — CG는 소환 등장에 쓴다
-  ...[...STAR5, ...FIRST, ...REST].map((id) => `pose-${id}`),   // 전투 스프라이트 다시(2배 세밀한 도트, assets/redraw.json)
   ...[...STAR5, ...FIRST, ...REST].map((id) => `cards-${id}`), 'ui-kit', 'logo', 'title', 'boss-star_king',
   'tower',       // 지도 탑 — 지도 화면이 코드로 칠한 돌벽 대신 그림 탑이 된다
   'title',       // 타이틀 도트 키아트(key_px) — 첫 화면의 매끈한 애니 그림이 가장 AI 티가 난다
@@ -38,11 +37,13 @@ const ORDER = [
 for (const b of P.batches) if (!ORDER.includes(b.id) && !b.id.startsWith('style') && !b.id.startsWith('skin-')) ORDER.push(b.id);
 for (const b of P.batches) if (b.id.startsWith('skin-')) ORDER.push(b.id);   // 스킨은 맨 뒤
 
-const items = (id) => P.items.filter((i) => i.batch === id);
 // 다시 그릴 묶음(assets/redraw.json: { 묶음 id: 이 시각(월일시분) 이후 브랜치만 인정 }): 그림이 있어도 전부 남은 것으로 친다.
 //   Claude가 새 그림을 병합하면 그 묶음을 redraw.json에서 뺀다
 let REDRAW = {};
 try { REDRAW = JSON.parse(readFileSync(new URL('../assets/redraw.json', import.meta.url), 'utf8')); } catch { /* 없음 */ }
+// 다시 그리기(redraw.json)는 그림이 이미 있으니 맨 뒤로(사용자: 저화질이라도 있으니 다른 것부터)
+{ const late = [...new Set(ORDER.filter((id) => REDRAW[id]))]; for (let k = ORDER.length - 1; k >= 0; k--) if (REDRAW[ORDER[k]]) ORDER.splice(k, 1); ORDER.push(...late); }
+const items = (id) => P.items.filter((i) => i.batch === id);
 const missing = (id) => REDRAW[id] ? items(id) : items(id).filter((i) => !has(i.file));
 // 첨부해야 하는 그림(reference_images)이 아직 없으면 그 묶음은 못 그린다(같은 묶음 안에서 만들 것은 빼고).
 const blocked = (id) => {
