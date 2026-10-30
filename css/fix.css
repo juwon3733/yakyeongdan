@@ -6,3 +6,8 @@
 .summonscr .spanel details.fold[open]{max-height:84px;overflow:auto}
 .card .bd{overflow:hidden;min-height:0}   /* 긴 효과 글이 아래 동료 이름 줄로 넘치던 것 */
 .shopmain .ware .card .bd,.dkgrid .card .bd{font-size:7.5px;line-height:1.25}
+.yk-toast.top{bottom:auto;top:max(8px,env(safe-area-inset-top));left:50%;right:auto;transform:translateX(-50%)}   /* 전체 화면 권하기는 위 가운데(아래 출격·턴 끝 버튼을 가리지 않게) */
+.shopscr.s2 .shopkeep .bubble{left:6px!important;right:auto!important;transform:none!important;translate:none!important;max-width:210px;white-space:normal}   /* 말풍선이 왼쪽 밖으로 잘리던 것 */
+/* 큰 글씨(폰)에서 본부 오른쪽 아이콘 줄이 길어져 출격 버튼과 겹치던 것: 아이콘을 줄이고 두 줄로 */
+#stage.bigtext .h2col{display:grid;grid-template-columns:repeat(2,auto);gap:3px 6px;top:6px}
+#stage.bigtext .h2ring{width:30px;height:30px}
