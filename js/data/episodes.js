@@ -13,9 +13,9 @@
 
 // 여는 조건: 그 동료를 데리고 ... (P.epProg[동료] = { runs, act2, dawn })
 export const EP_COND = [
-  { key: 'runs', text: '이 동료를 데리고 판을 1번 끝내기' },
-  { key: 'act2', text: '이 동료를 데리고 2막 보스 격파' },
-  { key: 'dawn', text: '이 동료를 데리고 「새벽」 격파' },
+  { key: 'runs', text: '함께 판 한 번 끝내기' },
+  { key: 'act2', text: '함께 2막 보스 쓰러뜨리기' },
+  { key: 'dawn', text: '함께 「새벽」 쓰러뜨리기' },
 ];
 // 처음 다 본 화의 보상 (별 조각). 휴식 대화·칭호·새 표정은 M5에서.
 export const EP_REWARD = [10, 15, 25];

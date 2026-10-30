@@ -61,3 +61,23 @@
 .dparty img{width:96px;height:128px;object-fit:contain;object-position:50% 100%;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000);background:radial-gradient(ellipse 30% 4% at 50% 98%,rgba(0,0,0,.6),transparent)}
 .dparty .dslot{display:block;flex:none;width:96px;height:10px;margin-bottom:2px;background:radial-gradient(ellipse 40% 50% at 50% 50%,rgba(255,255,255,.1),transparent)}
 .dailyscr .dleft{display:flex;flex-direction:column}
+
+/* 에피소드 오른쪽: 작은 얼굴 + 글 칸 셋만 있던 빈 판 → 그 동료 큰 그림이 오른쪽에 서고, 화 칸은 그 앞에 */
+.epright{position:relative;overflow:hidden}
+.epright .epbig{position:absolute;right:-30px;bottom:-10px;width:220px;height:330px;object-fit:contain;object-position:50% 100%;image-rendering:pixelated;opacity:.55;pointer-events:none;
+  -webkit-mask:linear-gradient(90deg,transparent,#000 40%);mask:linear-gradient(90deg,transparent,#000 40%)}
+.epright > :not(.epbig){position:relative;z-index:1}
+.epright .epslot{max-width:66%}
+
+/* 동료 화면 별자리: 별 다섯 칸 + 다음 단계 한 줄 */
+.stcs{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.stc{display:grid;place-items:center;width:22px;height:22px;background:#0b0b18;border:2px solid #3a3a5a;box-shadow:2px 2px 0 #000;cursor:help;clip-path:polygon(50% 0,62% 34%,100% 38%,70% 60%,80% 100%,50% 78%,20% 100%,30% 60%,0 38%,38% 34%)}
+.stc b{font-family:var(--f-disp);font-weight:400;font-size:8px;color:#6a6a8a}
+.stc.on{background:var(--gold)}.stc.on b{color:#241404}
+.stc.next{background:#3a3014}
+.stnext{font-size:9px;color:var(--dim);margin-left:6px}
+.stc{background:#4a4870}.stc b{color:#e8e6f6}
+/* 숙련도 다른 단계 보상 칩 넷(글 벽) → 숨기고 별 막대에 커서를 대면(각 칸 title) */
+.mxchips{display:none}
+/* 큰 이름표가 그림 다리를 덮던 것 → 그림 위쪽 왼편으로 */
+.mart .mplate{bottom:auto;top:12px}

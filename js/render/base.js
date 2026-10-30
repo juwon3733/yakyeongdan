@@ -294,7 +294,7 @@ function mateDetail(k) {
     if (x.n === 2) extra = packCards(k).map((pk, i) => `<small class="${i < packsOpen(k) ? '' : 'dim'}">묶음 ${i + 1}: ${pk.map(id => CARDS[id].name).join('·')}${i < packsOpen(k) ? '' : ' (잠김)'}</small>`).join('');
     if (x.n === 3 && c) { const id = c.start.find(cid => cardData(cid).up); if (id) extra = `<small>「${cardData(id).name}」이(가) 강화판으로</small>`; }
     if (x.n === 4) { const sg = sigOf(k); if (sg) extra = `<small>「${RELICS[sg].name}」 ${esc(RELICS[sg].text)}</small>`; }
-    return `<li class="${s >= x.n ? 'on' : ''}"><b>${x.n}</b> ${x.text}${extra}</li>`;
+    return `<span class="stc ${s >= x.n ? 'on' : ''} ${s + 1 === x.n ? 'next' : ''}" data-tip="${esc(`별자리 ${x.n} · ${x.text}${extra ? `\n${extra.replace(/<[^>]+>/g, ' ').trim()}` : ''}`)}"><b>${x.n}</b></span>`;
   }).join('');
   const start = c ? c.start.map((id, i) => cardHTML(startUp(k) && i === c.start.findIndex(cid => cardData(cid).up) ? id + '+' : id, true, 'none')).join('') : '';
   const pool = c ? Object.keys(CARDS).filter(id => CARDS[id].ch === k && !c.start.includes(id)) : [];
@@ -303,7 +303,7 @@ function mateDetail(k) {
       <p class="note">${r.role} · 체력 ${c?.maxHp ?? '-'} · 별자리 ${s}/${SUMMON.maxStars} · 판 ${st.runs} · 이긴 판 ${st.wins}${P.titles.includes(k) ? ` · 칭호 「${r.name}의 새벽」` : ''}</p>
       ${c ? `<p class="ps"><b>${esc(c.passive.name)}</b></p>${(c.passive.lines || [['', '', c.passive.text]]).map(([k, n, t]) => `<p class="ps">${{ trait: '①', keyword: '②', burst: '③' }[k] || ''} ${n ? `<b>「${esc(n)}」</b> ` : ''}${esc(t)}</p>`).join('')}` : ''}${cos}</div></div>
     ${masteryBlock(k, r.name)}
-    <h3 class="sub">별자리</h3><ul class="steps">${steps}</ul>
+    <h3 class="sub">별자리</h3><div class="stcs">${steps}${s < STAR_STEPS.length ? `<span class="stnext">다음: ${STAR_STEPS[s].text}</span>` : ''}</div>
     ${c ? `<h3 class="sub">시작 카드</h3><div class="hand mini">${start}</div>
     <h3 class="sub">보상 카드 ${pool.length - locked.size}/${pool.length}</h3><div class="hand mini scroll">${pool.map(id => locked.has(id) ? `<span class="lockcard" title="카드 묶음이 열리면 나온다">${esc(CARDS[id].name)}<small>잠김</small></span>` : cardHTML(id, true, 'none')).join('')}</div>` : ''}`;
 }

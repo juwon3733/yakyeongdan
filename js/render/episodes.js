@@ -18,10 +18,7 @@ export function who(id) {
   const pal = r.pal || palOf(id), long = r.long ?? CHARACTERS[id]?.long;
   return { name: r.name, col: r.col, img: pal ? sprite(pal, long) : '' };
 }
-const condText = (cid, n) => {
-  const c = EP_COND[n], g = P.epProg[cid];
-  return n === 0 ? `${c.text} (${Math.min(1, g?.runs || 0)}/1)` : c.text;
-};
+const condText = (cid, n) => EP_COND[n].text;
 
 export function episodesView() {
   // 안 본 화가 있는 동료 → 가진 동료 → 아직 없는 동료 순 (원래 순서 안에서)
@@ -54,7 +51,7 @@ export function episodesView() {
     <div class="bhead"><button type="button" class="mini" data-view="base">‹ 본부</button><span class="wallet"><b>별 조각 ${P.shards}</b></span></div>
     <div class="epcols">
       <div class="epleft"><h2>에피소드</h2><div class="epfaces">${grid}</div></div>
-      <div class="epright" style="--c:${w.col}">
+      <div class="epright" style="--c:${w.col}">${ROSTER[sel] ? `<img class="px epbig" src="${charSrc(sel, 'stand')}" alt="" aria-hidden="true">` : ''}
         <div class="ephead"><span class="pic"><img class="px" src="${w.img}" alt=""></span><div><h3>${esc(w.name)}</h3>${P.owned[sel] ? '' : '<small class="note">아직 없는 동료</small>'}</div></div>
         <div class="epeps">${eps}</div>
         <h3 class="sub">인연 장면</h3>
