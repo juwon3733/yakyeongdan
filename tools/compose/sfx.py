@@ -724,3 +724,61 @@ def meteor():
 
 
 SFX['meteor'] = meteor
+
+
+# ---------- 시즌 1 동료 에스텔(별똥 기사, 창검) ----------
+
+def atk_estelle():
+    """에스텔 공격(0.3초): 0~0.16초 창이 바람을 가르는 휘익(위로 밝아지는 바람) → 0.13초 맑은 금속 찌르기(쨍 + FM 종 두 음)"""
+    sec = 0.3
+    ws = 0.16
+    t = T(ws)
+    shape = np.sin(np.pi * t / ws) ** 2
+    n_ = highpass(noise(ws), 1200)
+    whoosh = (lowpass(n_, 3500) * (1 - t / ws) + lowpass(n_, 8000) * (t / ws)) * shape * 0.55
+    zip_ = lowpass(sweep_tone(hz(79), hz(91), ws, 'sq'), 4500) * shape * 0.1
+    st = T(0.1)
+    stab = highpass(noise(0.1), 3500) * np.exp(-st / 0.012) * 0.6
+    ring = mix(fm(93, 0.12, 0.42, ratio=3.01, index=2.6, idecay=0.05, a=0.001, d=0.14, s=0, r=0.06),
+               at(fm(100, 0.08, 0.25, ratio=3.53, index=1.8, idecay=0.04, a=0.001, d=0.1, s=0, r=0.05), 0.02))
+    y = mix(whoosh, zip_, at(mix(stab, ring), 0.13))
+    y = fit(verb(y, 0.45, 0.22), sec)
+    return y * np.clip((sec - T(sec)) / 0.08, 0, 1)
+
+
+def burst_estelle():
+    """패시브 ③ 「유성우」(0.9초): 높은 데서 별 다섯 개가 음을 낮추며 연달아 떨어져 반짝 터짐 → 마지막 별에 쿵 + 종 화음"""
+    sec = 0.9
+    def fall(n, fs, vel):
+        t = T(fs)
+        sw = np.clip(t / 0.03, 0, 1) * (0.4 + 0.6 * t / fs)
+        whistle = np.sin(2 * np.pi * np.cumsum(hz(n + 12) * np.exp(-t / 0.08) + hz(n - 12)) / SR) * sw * 0.18
+        air = lowpass(highpass(noise(fs), 900), 6000) * sw * 0.15
+        pt = T(0.12)
+        pop = highpass(noise(0.12), 2500) * np.exp(-pt / 0.02) * 0.4
+        ding = mix(glock(n, 0.08, 0.35), at(glock(n + 7, 0.05, 0.2), 0.02))
+        return mix(whistle, air, at(mix(pop, ding) * vel, fs))
+    stars = [(0.0, 100, 0.12, 0.7), (0.09, 96, 0.12, 0.75), (0.17, 98, 0.11, 0.8),
+             (0.25, 93, 0.12, 0.85), (0.33, 91, 0.14, 1.0)]
+    seq = mix(*[at(fall(n, fs, v), s) for s, n, fs, v in stars])
+    land = 0.47
+    big = mix(kick(0.4) * 0.8, lowpass(noise(0.3), 1800) * np.exp(-T(0.3) / 0.08) * 0.5,
+              mix(*[bell(n, 0.35, 0.3) for n in (79, 86, 91)]),
+              at(mix(*[glock(n, 0.06, 0.2) for n in (96, 103)]), 0.05))
+    y = fit(verb(mix(seq, at(big, land)), 0.9, 0.32), sec)
+    return y * np.clip((sec - T(sec)) / 0.25, 0, 1)
+
+
+# ---------- 시즌 패스 ----------
+
+def pass_claim():
+    """시즌 패스 보상 받기(0.6초): 딩동(종 두 음) + 짧은 상승 아르페지오"""
+    sec = 0.6
+    dingdong = mix(bell(88, 0.25, 0.45), at(bell(84, 0.3, 0.42), 0.12))
+    arp = mix(*[at(mix(square(n, 0.05, 0.22, 0.25), glock(n + 12, 0.06, 0.18)), 0.26 + i * 0.05)
+                for i, n in enumerate((72, 76, 79, 84, 88))])
+    y = fit(verb(mix(dingdong, arp), 0.7, 0.3), sec)
+    return y * np.clip((sec - T(sec)) / 0.15, 0, 1)
+
+
+SFX.update({'atk_estelle': atk_estelle, 'burst_estelle': burst_estelle, 'pass_claim': pass_claim})
