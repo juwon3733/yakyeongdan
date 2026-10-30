@@ -86,3 +86,10 @@
 .resultscr .shards tr:not(.sum){display:none}
 .resultscr .shards{cursor:help}
 .resultscr .rinfo{overflow:auto}
+
+/* 보상: 금색 띠 + 빙빙 도는 V자 빛줄기(템플릿 티) → 도트 글 제목 한 줄 + 카드 뒤 은은한 바닥 빛 */
+:is(#app,.frozen)[data-screen="reward"] .rwscr > h2{background:none;border:0;box-shadow:none;clip-path:none;padding:0;color:#fff4d0;font-size:20px;letter-spacing:.04em;text-shadow:2px 2px 0 #000;display:flex;flex-direction:column;align-items:center;gap:2px}
+:is(#app,.frozen)[data-screen="reward"] .rwscr > h2 small{font-size:9px;color:var(--dim);letter-spacing:0;font-family:var(--f-body)}
+:is(#app,.frozen)[data-screen="reward"] .hand.big::before{animation:none;border-radius:0;width:520px;height:200px;margin:-80px 0 0 -260px;background:radial-gradient(ellipse 50% 40% at 50% 70%,rgba(255,220,140,.18),transparent 70%);-webkit-mask:none;mask:none}
+/* 덱으로 날아가는 보상 카드(js/main.js): 큰 손패 안에서와 같은 글자 크기 */
+#stage > .card.jfly2 .hd{font-size:10.5px}#stage > .card.jfly2 .bd{font-size:8.5px;line-height:1.35}#stage > .card.jfly2 .cost{width:18px;height:18px;font-size:11px}

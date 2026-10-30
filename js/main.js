@@ -290,7 +290,26 @@ app.addEventListener('click', e => {
   else if ('end' in D) endTurn();
   else if ('hg' in D) C.payEnergy = !C.payEnergy;
   else if (D.relic) useRelic(D.relic);
-  else if ('take' in D) takeReward(D.take);
+  else if ('take' in D) {
+    // 고른 카드가 위 띠 덱 단추로 날아간 뒤에 넘어간다(뚝 끊기지 않게)
+    const deck = document.querySelector('.topbar [data-deck]');
+    if (D.take && deck && !calmNow() && !mapGo) {
+      // 판(#stage) 안 논리 좌표로 옮겨 그 안에 띄운다(판 배율·글꼴 그대로)
+      const sr = stage.getBoundingClientRect(), z = sr.width / stage.offsetWidth || 1;
+      const L = el => { const x = el.getBoundingClientRect(); return { x: (x.left - sr.left) / z, y: (x.top - sr.top) / z, w: x.width / z }; };
+      const r = L(b), q = L(deck), g = b.cloneNode(true);
+      Object.assign(g.style, { position: 'absolute', left: `${r.x}px`, top: `${r.y}px`, width: `${b.offsetWidth}px`, height: `${b.offsetHeight}px`, margin: 0, zIndex: 80, pointerEvents: 'none', transformOrigin: '0 0', transition: 'none' });
+      g.style.setProperty('--ah', getComputedStyle(b).getPropertyValue('--ah')); g.classList.add('jfly2');
+      stage.append(g); b.style.visibility = 'hidden';
+      app.querySelectorAll('.hand.big .card').forEach(c => { if (c !== b) c.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(16px)' }], { duration: 200, fill: 'forwards' }); });
+      g.animate([{ transform: 'none' }, { transform: 'translateY(-20px) scale(1.06)', offset: .25 }, { transform: `translate(${q.x - r.x}px,${q.y - r.y}px) scale(${q.w / b.offsetWidth})`, opacity: .5 }],
+        { duration: 420, easing: 'cubic-bezier(.5,0,.3,1)' }).onfinish = () => { g.remove(); deck.animate([{ transform: 'scale(1.3)', filter: 'brightness(2)' }, { transform: 'none', filter: 'none' }], { duration: 220 }); };
+      sfx('card');
+      const id = D.take; mapGo = setTimeout(() => { mapGo = null; takeReward(id); after(); render(); }, 440);
+      return;
+    }
+    takeReward(D.take);
+  }
   else if (D.brelic !== undefined) pickBossRelic(D.brelic);
   else if (D.moon) pickMoon(D.moon);
   else if (D.cmoon) pickCombatMoon(D.cmoon);

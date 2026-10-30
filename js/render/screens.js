@@ -36,7 +36,7 @@ function scene(bgKey, bgFile, people, inner) {
 export function rewardView() {
   const G = S.G, R = G.reward;
   const extra = [R.gold ? `별빛 +${R.gold}` : '', R.bonus ? `모든 동료 체력 +${R.bonus}` : '', R.kind === 'boss' ? `막 보스 격파 · 모든 동료 최대 체력의 ${RULES.bossHealPct * 100}% 회복` : ''].filter(Boolean).join(' · ');
-  return `<div class="center"><h2>보상: 카드 한 장${R.kind === 'boss' ? ' (레전더리)' : ''}</h2>
+  return `<div class="center rwscr"><h2>${R.kind === 'boss' ? '레전더리 카드' : '카드 한 장'}<small>덱에 넣을 것을 고른다</small></h2>
     ${extra ? `<p class="note">${extra}</p>` : ''}
     ${R.relic ? `<p class="note">도구를 얻었다</p>${relicBox(R.relic)}` : ''}
     <div class="hand big">${R.cards.map(id => cardHTML(id, true, 'take')).join('')}</div>
