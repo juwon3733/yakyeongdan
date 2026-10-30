@@ -193,3 +193,16 @@ body.aiming .bottom .hand .card.sel,body.aiming #app[data-screen="combat"] .bott
 :is(#app,.frozen)[data-screen="combat"] .field{padding-bottom:20px}
 :is(#app,.frozen)[data-screen="combat"] .foes{margin-right:34px}
 :is(#app,.frozen)[data-screen="combat"] .foes[data-n="4"],:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"]{margin-bottom:0}
+/* 아군·적 사이 간격: 양쪽 무리를 각자 바짝 모으고(살짝 겹침) 판 양끝으로 — 가운데 빈 땅이 화살표·돌진·이펙트 자리 */
+:is(#app,.frozen)[data-screen="combat"] .field{justify-content:space-between}
+:is(#app,.frozen)[data-screen="combat"] .party{gap:0;margin-left:14px}
+:is(#app,.frozen)[data-screen="combat"] .party > .pm{margin:0 -7px}
+:is(#app,.frozen)[data-screen="combat"] .party > .swap{margin:0 -4px}
+:is(#app,.frozen)[data-screen="combat"] .foes{gap:0;margin-left:auto}
+:is(#app,.frozen)[data-screen="combat"] .foes > .foe{margin:0 -6px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="4"] > .foe{margin:0 -9px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe{margin:0 -11px}
+/* 적 넷·다섯은 겹치면 머리 위 의도·체력이 엉켜서: 덜 겹치고, 뒷줄을 더 위로 */
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="4"] > .foe{margin:0 -1px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe{margin:0 -2px}
+:is(#app,.frozen)[data-screen="combat"] .foes:is([data-n="4"],[data-n="5"]) > .foe.zb{transform:translateY(-30px)}
