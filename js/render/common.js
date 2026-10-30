@@ -156,7 +156,7 @@ export function cardHTML(inst, playable, act = 'play', idOverride, sel = false) 
   const faces = duo ? [d.a, d.b] : curse ? [] : [d.ch];
   const fc = faces.map(k => `<img class="px" src="${charSrc(k)}" alt="">`).join('');
   return `<button type="button" class="card r-${d.rarity} ${duo ? 'duo' : ''} ${curse ? 'curse' : ''} ${d.time ? 'time' : ''} ${d.up ? 'upg' : ''} ${playable ? '' : 'no'} ${down ? 'down' : ''} ${sel ? 'sel' : ''} ${dn ? 'duonext' : ''}" style="--c:${col};--c2:${col2}" data-${act}="${id}" data-cid="${esc(cid)}"${tip ? ` data-tip="${esc(tip)}"` : ''}>
-    <span class="art"><img class="px" src="${cardArtSrc(d, pals, longs)}" alt="" draggable="false"></span>
+    <span class="art"><img class="px" src="${cardArtSrc(d, pals, longs)}" alt="" draggable="false"></span>${d.rarity === 'r' ? '<i class="lgc a"></i><i class="lgc b"></i><i class="lgc c"></i><i class="lgc d"></i>' : ''}
     <span class="cost ${d.time ? 'clock' : 'gem'} ${cc}" data-n="${cost}">${/^\d+$/.test(cost) ? pxNum(cost, { s: 2, col: cc === 'up' ? '#9affb0' : cc === 'dn' ? '#ffb0a8' : '#fff4d0', low: cc ? null : '#e0c070' }) : cost}</span>
     <span class="hd"><span class="nm ${d.name.length >= 6 ? 'long' : ''}">${esc(d.name)}</span></span>
     <span class="bd">${tags}${d.target === 'all' ? cardText(d).replace(/^모든 적 /, '') : cardText(d)}</span>
