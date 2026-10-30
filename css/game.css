@@ -1175,15 +1175,8 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 :is(#app,.frozen)[data-screen="combat"] .party{align-items:flex-end;gap:0}
 /* 크기·밝기를 바꾸면 도트가 뭉개지고 체력 줄까지 줄어 들쭉날쭉해 보여서, 위아래 자리만 조금씩 어긋나게.
    동료 칸 사이에 자리 바꾸기 단추(button)가 끼어 있어 nth-of-type은 1·3·5번째가 동료다 */
-:is(#app,.frozen)[data-screen="combat"] .party > .pm:first-of-type{transform:translate(8px,-8px);z-index:1}
-:is(#app,.frozen)[data-screen="combat"] .party > .pm:not(:first-of-type):not(:last-of-type){transform:translate(2px,-4px);z-index:2}
-:is(#app,.frozen)[data-screen="combat"] .party > .pm:last-of-type{transform:translate(-6px,-2px);z-index:3}
 :is(#app,.frozen)[data-screen="combat"] .party > .swap{z-index:4}
 :is(#app,.frozen)[data-screen="combat"] .foes{align-items:flex-end}
-:is(#app,.frozen)[data-screen="combat"] .foes > .foe:nth-child(1){z-index:3;transform:translateY(-6px)}
-:is(#app,.frozen)[data-screen="combat"] .foes > .foe:nth-child(2){z-index:2;transform:translateY(-14px)}
-:is(#app,.frozen)[data-screen="combat"] .foes > .foe:nth-child(3){z-index:1;transform:translateY(-9px)}
-:is(#app,.frozen)[data-screen="combat"] .foes > .foe:nth-child(4){z-index:1;transform:translateY(-17px)}
 /* 발밑 그림자를 진하게(바닥에 서 있는 느낌) */
 .pm > img,.foe > img{background:radial-gradient(ellipse 42% 5% at 50% 97%,rgba(0,0,0,.7),transparent)}
 .pm > img,.foe > img{pointer-events:none}

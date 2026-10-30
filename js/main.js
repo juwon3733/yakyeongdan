@@ -199,7 +199,7 @@ app.addEventListener('click', e => {
   }
   // 「새벽」을 깬 결과 화면에서 [더 오르기]: 같은 판 그대로 끝없는 탑으로 (그 판 보상은 이미 받음)
   else if ('endless' in D) { if (S.G?.won && !S.G.endless) enterEndless(false); }
-  else if ('claimpass' in D) { const n = claimPass(); S.seasonMsg = n ? `시즌 패스 보상: 별 조각 +${n}` : ''; }
+  else if ('claimpass' in D) { const n = claimPass(); S.seasonMsg = n ? `시즌 패스 보상: 별 조각 +${n}` : ''; if (n) sfx('pass_claim'); }
   else if (D.depth !== undefined) S.depth = +D.depth;
   else if (D.srelic) S.startRelic = D.srelic;
   // 매일의 밤: 후보 여섯 중 셋 → 오늘의 시드로 판, 규칙은 S.G.mods (js/relics.js가 도구처럼 더한다)
@@ -358,8 +358,12 @@ app.addEventListener('pointerdown', e => {
 });
 addEventListener('pointermove', e => {
   if (!drag || e.pointerId !== drag.id) return;
+  if (drag.aim) { aimOver(e); return; }
   if (!drag.ghost) {
     if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) < 8) return;
+    // 끌면 카드는 손패에 들린 채, 쓰는 동료 → 대상(커서)으로 화살표(js/juice.js aimArrow). 모든 적 카드는 적마다, 대상 없는 카드는 자기 발밑 고리.
+    // 놓을 때 대상 위면 그 대상, 대상 없는 카드는 판 아무 데나. 카드 그림이 커서를 따라다니며 노란 테두리를 띄우던 것 대신
+    drag.aim = true; drag.el.classList.add('sel'); S.C.pending = drag.uid; aimOver(e); return;
     const r = drag.el.getBoundingClientRect(), g = drag.el.cloneNode(true);
     g.classList.add('dragghost'); g.removeAttribute('data-play');
     g.style.width = `${drag.el.offsetWidth}px`; g.style.height = `${drag.el.offsetHeight}px`;
@@ -368,10 +372,9 @@ addEventListener('pointermove', e => {
     S.C.pending = drag.uid; markTargets(true);
   }
   drag.ghost.style.left = `${e.clientX}px`; drag.ghost.style.top = `${e.clientY}px`;
-  const over = dropAt(e.clientX, e.clientY, drag.uid);
-  document.querySelectorAll('.dropover').forEach(x => x.classList.remove('dropover'));
-  over?.el?.classList.add('dropover');
 });
+// 화살표 끌기: 손패 카드 위를 지나 판으로 나가면 화살표가 커서를 따라가고, 대상 위에서는 대상에 붙는다
+function aimOver(e) { document.body.classList.add('aiming'); }
 // 놓을 곳: 적 / 동료 / (대상 없는 카드) 손패 위쪽 판
 function dropAt(x, y, uid) {
   const C = S.C; if (!C) return null;
@@ -387,8 +390,14 @@ function markTargets(on) { app.classList.toggle('dragmode', on); }
 function endDrag(e, cancel) {
   if (!drag || e.pointerId !== drag.id) return;
   const d = drag; drag = null;
-  document.querySelectorAll('.dropover').forEach(x => x.classList.remove('dropover'));
   markTargets(false);
+  if (d.aim) {
+    document.body.classList.remove('aiming');
+    eatClick = true; setTimeout(() => { eatClick = false; }, 0);
+    const tgt = cancel ? null : dropAt(e.clientX, e.clientY, d.uid);
+    if (!tgt) { S.C.pending = null; render(); return; }
+    play(d.uid, tgt.pick); after(); render(); return;
+  }
   if (!d.ghost) return;   // 끌지 않았으면 보통 click
   S.drop = { uid: d.uid, r: d.ghost.getBoundingClientRect() };   // 연출: 놓은 자리에서 대상으로 날아간다
   d.ghost.remove(); d.el.classList.remove('dragging');

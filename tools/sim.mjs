@@ -3,6 +3,7 @@
 //   node tools/sim.mjs --quick    200판 (CI: 오류만 잡고 숫자는 참고)
 //   node tools/sim.mjs --runs 500 --seed 1000 --json out.json
 //   node tools/sim.mjs --fight captain --party iris,brick,marta --act 2 --n 200   보스 하나만 시작 덱으로
+//   node tools/sim.mjs --patch tools/patches/starter_buff.json   데이터 파일을 안 고치고 수치만 바꿔 보기 (비교는 tools/patch-compare.mjs)
 //   TW=0.8 node tools/sim.mjs   봇이 밤 시계 1분을 얼마로 치는지 (기본 1.2)
 //
 // 봇: 카드 한 장씩 "써 보고 되돌리기"(상태 스냅숏)로 가장 이득인 카드를 고른다.
@@ -28,6 +29,37 @@ const JSON_OUT = opt('--json', null);
 const VERBOSE = args.includes('-v');
 const ENDLESS_ON = !args.includes('--no-endless');
 const ENDLESS_CAP = +opt('--endless-cap', 80);
+
+// ---------- --patch 파일.json: 데이터 파일은 그대로 두고 이 시뮬 안에서만 수치를 바꾼다 ----------
+//   { "cards": { "iris.slash": { "v": [9] } }, "chars": { "iris": { "maxHp": 40 } } }
+//   불러온 CARDS·CHARACTERS 객체에 깊은 병합. 배열은 칸별로 덮어씀(빠지거나 null인 칸은 원래 값) — "v": [9]는 v[0]만 바꾼다.
+//   cardData()는 처음 부를 때 캐시하므로 판을 돌리기 전에 고쳐야 한다(여기서).
+const PATCH_FILE = opt('--patch', null);
+function deepMerge(dst, src, path) {
+  for (const [k, sv] of Object.entries(src)) {
+    const dv = dst[k];
+    if (Array.isArray(sv)) {
+      const a = Array.isArray(dv) ? dv : (dst[k] = []);
+      sv.forEach((x, i) => { if (x === null || x === undefined) return; if (x && typeof x === 'object' && a[i] && typeof a[i] === 'object') deepMerge(a[i], x, `${path}.${k}[${i}]`); else a[i] = x; });
+    } else if (sv && typeof sv === 'object') {
+      if (!dv || typeof dv !== 'object') dst[k] = {};
+      deepMerge(dst[k], sv, `${path}.${k}`);
+    } else dst[k] = sv;
+  }
+}
+if (PATCH_FILE) {
+  const fs = await import('node:fs');
+  const P = JSON.parse(fs.readFileSync(PATCH_FILE, 'utf8'));
+  for (const [table, T, name] of [['cards', CARDS, '카드'], ['chars', CHARACTERS, '동료']]) {
+    for (const [id, ch] of Object.entries(P[table] || {})) {
+      if (!T[id]) { console.error(`patch: 없는 ${name} ${id}`); process.exit(1); }
+      deepMerge(T[id], ch, id);
+    }
+  }
+  const unknown = Object.keys(P).filter(k => !['cards', 'chars', 'note'].includes(k));
+  if (unknown.length) { console.error(`patch: 모르는 키 ${unknown.join(', ')} (cards·chars·note만)`); process.exit(1); }
+  console.log(`patch 적용: ${PATCH_FILE} (카드 ${Object.keys(P.cards || {}).length}장, 동료 ${Object.keys(P.chars || {}).length}명)`);
+}
 
 // ---------- 난수: 엔진의 G.rng를 상태를 저장·복원할 수 있는 같은 알고리즘으로 바꾼다 ----------
 function rngFrom(a) {
@@ -504,6 +536,8 @@ const out = {
   act1End: avg(recs.filter(r => r.bossClock[1] != null).map(r => r.bossClock[1])),
   act2End: avg(recs.filter(r => r.bossClock[2] != null).map(r => r.bossClock[2])),
   loss: why,
+  patch: PATCH_FILE,
+  parties: recs.map(r => [r.party.join(','), r.won ? 1 : 0]),   // tools/patch-compare.mjs가 파티별로 다시 셈
 };
 console.log(`야경단 시뮬레이션: ${N}판, ${secs.toFixed(1)}초 (시드 ${SEED0}부터, 동료 ${IDS.length}명 조합 ${combos.length}개 돌아가며)`);
 console.log('');

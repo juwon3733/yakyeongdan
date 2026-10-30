@@ -1769,7 +1769,7 @@ function duoFx(e, d) {
 // 판이 0.22초 멈칫 → 동료 색 번쩍 + 빛줄기 + 큰 고리 → 아래쪽 띠에 얼굴과 「폭발 이름」. 이번 턴 동안은 .pm.awaken(빛나는 몸·오르는 불티)
 function awaken(who, name) {
   const c = CHARACTERS[who]; if (!c || !layer) return;
-  sfx('burst', { vol: .9 });
+  sfx(who === 'estelle' && hasSfx('burst_estelle') ? 'burst_estelle' : 'burst', { vol: .9 });   // 에스텔 「유성우」는 전용 소리
   const img = allyEl(who)?.querySelector(':scope > img'), col = colOf(who);
   for (const a of moving) { a.pause(); setTimeout(() => { try { a.play(); } catch (_) {} }, 220); }
   freeze = Math.max(freeze, performance.now() + 220);
