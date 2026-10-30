@@ -205,7 +205,8 @@ export function afterRender(events = []) {
         // 카드를 낸 뒤 커서 아래로 밀려온 다음 카드가 크게 튀어 오르지 않게(커서를 움직이면 다시)
         document.body.classList.add('nohov');
         at(t, () => actFx(e, sp));
-        flyCard(e, P, t); t += 170; break;
+        // ★5 전용 필살은 공중에 떴다 내리찍는 등 길어서, 적중(아래 hitFoe)을 그 내리찍는 순간에 맞춰 늦춘다
+        flyCard(e, P, t); t += 170 + (sp ? sigLead(e) : 0); break;
       }
       case 'hitFoe': { const s = t; at(s, () => hitFoe(e, P)); mark('f:' + e.i, s); t += foePhase ? 90 : 75; if (!e.counter) t = addDmg((e.dmg || 0) + (e.bleed || 0), s, t); break; }
       case 'kill': { const s = t + 40; at(s, () => killFoe(e, P)); t += 160; break; }
@@ -473,6 +474,7 @@ function actFx(e, special = false) {
     auraFlare(id, special ? 2.6 : m === 'finisher' ? 2 : m === 'guard' ? 1.25 : 1.5, special ? 1100 : 650);
     const [cls, ms, p] = MOTION[m];
     const col = colOf(id), r = rel(img);
+    if (special && SIG[id] && e.ch !== 'duo' && !calmNow()) { SIG[id](id, img, e); continue; }
     if ((m === 'slash' || m === 'sweep' || m === 'finisher') && !calmNow()) {
       // 근접: 적 앞까지 돌진 → 베고 → 돌아옴, 잔상
       const dur = dash(id, img, e, m, n * 70);
@@ -791,7 +793,8 @@ function hurtFx(e) {
   if (e.blocked) shieldBreak(x, y - 4, e.dmg === 0);
   if (e.dmg > 0) {
     impactFx(x, y, '#ff6a7a');
-    pulse(el.querySelector(':scope > img') || el, SET.shake ? 'jhitA' : 'jflash', 380);
+    { const im = el.querySelector(':scope > img'), busyMove = im && [...moving].some(a => a.effect?.target === im);   // 돌진·필살 중엔 밀려나지 않고 번쩍만
+      pulse(im || el, SET.shake && !busyMove ? 'jhitA' : 'jflash', 380); }
     if (!e.down) { pose(e.id, 'hurt', 380); auraHurt(e.id); }
     num(x, r.y + r.h * .25, String(e.dmg), 'hurt', e.dmg);
     if (e.dmg >= 10) { shake(); redEdge(); }
@@ -1431,3 +1434,101 @@ function ambient() {
   if (on && !amb) { amb = document.createElement('div'); amb.className = 'jamb'; amb.innerHTML = '<i class="d1"></i><i class="d2"></i><i class="glow"></i>'; layer.prepend(amb); }
   if (amb) { amb.hidden = !on; amb.dataset.scr = scr || ''; }
 }
+
+// ---------- ★5 전용 필살 연출 (희귀 카드) — 동료마다 다른 순서. sigLead = 카드를 낸 뒤 적중까지 더 기다릴 시간 ----------
+const SIG_LEAD = { akane: 560, sion: 380, lunaria: 320, eleonore: 460, nerea: 420 };
+function sigLead(e) { const id = e.actor || e.ch; return e.ch !== 'duo' && SIG[id] && !calmNow() ? SIG_LEAD[id] || 0 : 0; }
+const sigTarget = e => (e.foe != null ? foeEl(e.foe) : null)?.querySelector(':scope > img') || root()?.querySelector('.foe[data-fi] > img');
+// 판을 한 점으로 확대했다 돌아옴(무대 좌표 x, y)
+function zoomAt(x, y, k, ms, hold = .5) {
+  const field = root()?.querySelector('.field'); if (!field) return;
+  const f = rel(field);
+  field.style.transformOrigin = `${x - f.x}px ${y - f.y}px`;
+  field.animate([{ transform: 'none' }, { transform: `scale(${k})`, offset: .3, easing: 'cubic-bezier(.2,.9,.3,1)' }, { transform: `scale(${k})`, offset: .3 + hold * .6 }, { transform: 'none' }],
+    { duration: ms, easing: 'cubic-bezier(.5,0,.75,.4)' }).onfinish = () => { field.style.transformOrigin = ''; };
+}
+const SIG = {
+  // 아카네: 웅크림 → 공중으로 솟음 → 공중에서 멈칫(줌인, 불꽃이 모임) → 적 발밑으로 내리찍음 → 땅이 갈라지며 불기둥·폭발
+  akane(id, img, e) {
+    const tgt = sigTarget(e); if (!tgt) return;
+    const a = rel(img), b = rel(tgt), host = img.closest('[data-ally]'); if (host) host.style.zIndex = 6;
+    const dx = Math.round(b.cx - a.cx - a.w * .15), up = -78, ground = Math.round((b.y + b.h) - (a.y + a.h));
+    const T = 1180, hit = 730;   // 적중 = 170 + SIG_LEAD.akane
+    poseSeq(id, [['windup', 200], ['skill', 360], ['attack', 560]]);
+    auraFlare(id, 2.8, 900);
+    dim(T);
+    add({ k: 'oval', x: a.cx, y: a.y + a.h - 2, r0: 4, r1: a.w * .8, col: '#ff8a4a', life: 16 });   // 뛰어오를 때 발밑 먼지 고리
+    for (let k = 0; k < 10; k++) add({ k: 'dot', x: a.cx + rnd(-a.w / 2, a.w / 2), y: a.y + a.h, vx: rnd(-1.2, 1.2), vy: rnd(-1.5, -.4), g: .08, life: 18, col: '#b08a6a', s: 2 });
+    const an = img.animate([
+      { offset: 0, transform: 'none' },
+      { offset: .12, transform: 'translate(0,5px)', easing: 'cubic-bezier(.2,.9,.3,1)' },
+      { offset: .3, transform: `translate(${Math.round(dx * .35)}px,${up}px)`, easing: 'cubic-bezier(.25,.8,.35,1)' },
+      { offset: .52, transform: `translate(${Math.round(dx * .4)}px,${up - 8}px)`, easing: 'cubic-bezier(.7,0,.95,.3)' },
+      { offset: .62, transform: `translate(${dx}px,${ground}px)`, easing: 'ease-out' },
+      { offset: .82, transform: `translate(${dx}px,${ground}px)`, easing: 'cubic-bezier(.4,0,.6,1)' },
+      { offset: .93, transform: `translate(${Math.round(dx * .15)}px,-10px)`, easing: 'ease-in' },
+      { offset: 1, transform: 'none' },
+    ], { duration: T });
+    an.startTime = document.timeline.currentTime;   // 그림 바꿔 끼우느라 첫 프레임이 늦어도 시계에 맞춰 시작(착지 = 적중 순간)
+    moving.add(an); an.onfinish = an.oncancel = () => { moving.delete(an); if (host) host.style.zIndex = ''; };
+    // 공중에서 줌인 + 불꽃이 몸으로 모임
+    at(T * .3, () => {
+      const r = rel(img); zoomAt(r.cx, r.cy, 1.28, 520, .55);
+      for (let k = 0; k < 26; k++) { const ang = Math.random() * Math.PI * 2, d = rnd(40, 70); add({ k: 'dot', x: r.cx + Math.cos(ang) * d, y: r.cy + Math.sin(ang) * d, vx: -Math.cos(ang) * d / 14, vy: -Math.sin(ang) * d / 14, g: 0, life: 14, col: k % 3 ? '#ff6a3a' : '#ffe08a', s: 2 }); }
+      ring(r.cx, r.cy, '#ff9a4a', 50, 8, 14);
+      if (hasSfx('windup')) sfx('windup', { vol: .8 });
+    });
+    // 내리찍는 궤적
+    at(T * .53, () => { const r = rel(img); for (let k = 0; k < 4; k++) add({ k: 'line', x0: r.cx + k * 4, y0: r.cy - 10, x1: b.cx + k * 3, y1: b.y + b.h - 6, col: k % 2 ? '#ff5a2a' : '#ffd08a', speed: 5, life: 12, s: 2 }); });
+    // 착지: 땅이 갈라지며 불기둥 + 큰 이펙트
+    at(hit, () => {
+      const gx = b.cx, gy = b.y + b.h - 4;
+      flash(); if (SET.shake) shake(); redEdge();
+      add({ k: 'oval', x: gx, y: gy, r0: 6, r1: 90, col: '#ffb060', life: 22 });
+      add({ k: 'oval', x: gx, y: gy, r0: 4, r1: 60, col: '#ffffff', life: 14 });
+      playFx('akane_atk', gx, b.y + b.h * .45, 190, 60);
+      for (let k = 0; k < 5; k++) at(k * 40, () => flames(gx + rnd(-40, 40), gy - rnd(0, 10)));
+      for (let k = 0; k < 18; k++) add({ k: 'dot', x: gx + rnd(-30, 30), y: gy, vx: rnd(-3, 3), vy: rnd(-4.5, -1.5), g: .18, life: rnd(18, 30), col: k % 3 ? '#8a6a5a' : '#ffcf7a', s: 2 });
+      sparks(gx, gy - 20, '#ffe08a', 40, 3.5);
+    });
+  },
+  // 시온: 지팡이를 들고(스킬 자세) 위로 별자리가 그어지고 → 별이 비처럼 적마다 쏟아짐
+  sion(id, img, e) {
+    const a = rel(img), foes = [...(root()?.querySelectorAll('.foe[data-fi] > img') || [])].map(x => rel(x));
+    poseSeq(id, [['skill', 700]]); auraFlare(id, 2.2, 900); dim(900);
+    zoomAt(a.cx, a.cy - 20, 1.12, 500, .4);
+    const sky = { x: a.cx + 40, y: Math.max(20, a.y - 60) };
+    for (let k = 0; k < 7; k++) at(k * 30, () => add({ k: 'dot', x: sky.x + rnd(-60, 60), y: sky.y + rnd(-20, 20), vx: 0, vy: 0, g: 0, life: 30, col: '#fff6c8', s: 2 }));
+    at(120, () => ring(sky.x, sky.y, '#9fb4ff', 10, 70, 18));
+    foes.forEach((b, i) => { for (let k = 0; k < 5; k++) at(220 + i * 70 + k * 40, () => { const x0 = b.cx + rnd(-70, -20), y0 = 10; starTrail(x0, y0, b.cx + rnd(-10, 10), b.cy + rnd(-12, 12), '#bcd0ff'); }); });
+    at(540, () => foes.forEach(b => { playFx('sion_atk', b.cx, b.cy, 120, 55); sparks(b.cx, b.cy, '#fff6c8', 16, 2.4); }));
+    petAttack(id, e, 200);
+  },
+  // 루나리아: 춤추듯 돌며(스킬 자세) 초승달 칼날 셋이 적을 가로질러 베고 → 달빛 기둥
+  lunaria(id, img, e) {
+    const a = rel(img), foes = [...(root()?.querySelectorAll('.foe[data-fi] > img') || [])].map(x => rel(x));
+    poseSeq(id, [['skill', 260], ['attack', 420]]); auraFlare(id, 2.2, 800); dim(850);
+    img.animate([{ transform: 'none' }, { transform: 'translate(0,-14px)', offset: .3 }, { transform: 'translate(10px,-4px)', offset: .6 }, { transform: 'none' }], { duration: 700, easing: 'cubic-bezier(.25,.8,.35,1)' });
+    for (let k = 0; k < 3; k++) at(140 + k * 90, () => foes.forEach(b => { const a0 = rnd(-2.8, -2.2); add({ k: 'arc', x: b.cx, y: b.cy, r: 30 + k * 8, a0, a1: a0 + 2.8, w: 7, flat: .5, col: k === 1 ? '#e8d8ff' : '#b8a0ff', life: 14 }); }));
+    at(460, () => foes.forEach(b => { playFx('lunaria_atk', b.cx, b.cy, 130, 55); for (let k = 0; k < 14; k++) add({ k: 'dot', x: b.cx + rnd(-8, 8), y: b.y + b.h, vx: 0, vy: rnd(-4, -2), g: 0, life: 22, col: k % 2 ? '#e8e0ff' : '#ffffff', s: 2 }); }));
+  },
+  // 엘레오노르: 시간이 멈춤(판이 잿빛, 시계 고리) → 바늘이 다시 돌며 적마다 터짐
+  eleonore(id, img, e) {
+    const a = rel(img), foes = [...(root()?.querySelectorAll('.foe[data-fi] > img') || [])].map(x => rel(x)), field = root()?.querySelector('.field');
+    poseSeq(id, [['skill', 620]]); auraFlare(id, 2.4, 1000);
+    if (field) field.animate([{ filter: 'none' }, { filter: 'grayscale(1) brightness(.75) contrast(1.2)', offset: .15 }, { filter: 'grayscale(1) brightness(.75) contrast(1.2)', offset: .75 }, { filter: 'none' }], { duration: 640 });
+    const cx = (a.cx + (foes[0]?.cx || a.cx + 200)) / 2, cy = a.cy - 10;
+    ring(cx, cy, '#c8a0ff', 120, 40, 26); ring(cx, cy, '#ffffff', 80, 20, 20);
+    for (let k = 0; k < 12; k++) { const ang = k / 12 * Math.PI * 2; add({ k: 'line', x0: cx, y0: cy, x1: cx + Math.cos(ang) * 70, y1: cy + Math.sin(ang) * 46, col: '#b890ff', speed: 6, life: 18, s: 1 }); }
+    at(480, () => { flash(); foes.forEach((b, i) => at(i * 60, () => { playFx('eleonore_atk', b.cx, b.cy, 140, 55); ring(b.cx, b.cy, '#d0b0ff', 6, 46, 16); sparks(b.cx, b.cy, '#ffffff', 18, 2.6); })); });
+  },
+  // 네레아: 작살을 들면(스킬 자세) 발밑에서 큰 물결이 일어 적 쪽으로 밀려감 → 물보라 기둥
+  nerea(id, img, e) {
+    const a = rel(img), foes = [...(root()?.querySelectorAll('.foe[data-fi] > img') || [])].map(x => rel(x));
+    poseSeq(id, [['skill', 300], ['attack', 400]]); auraFlare(id, 2.4, 900); dim(900);
+    const x1 = Math.max(...foes.map(b => b.x + b.w), a.cx + 200), gy = a.y + a.h;
+    for (let k = 0; k < 14; k++) at(k * 28, () => { const x = a.cx + (x1 - a.cx) * k / 13; add({ k: 'blob', x, y: gy - 14 - Math.sin(k / 13 * Math.PI) * 26, vx: 1.2, vy: -.2, r: 14, col: k % 2 ? '#4aa8e8' : '#9fe0ff', life: 22 }); for (let j = 0; j < 3; j++) add({ k: 'dot', x, y: gy - 30, vx: rnd(-1, 1.5), vy: rnd(-3, -1), g: .12, life: 20, col: '#e0f6ff', s: 2 }); });
+    at(440, () => foes.forEach(b => { playFx('nerea_atk', b.cx, b.cy, 140, 55); for (let k = 0; k < 16; k++) add({ k: 'dot', x: b.cx + rnd(-10, 10), y: b.y + b.h, vx: rnd(-1.5, 1.5), vy: rnd(-5, -2.5), g: .15, life: 26, col: k % 2 ? '#9fe0ff' : '#ffffff', s: 2 }); }));
+    petAttack(id, e, 200);
+  },
+};
