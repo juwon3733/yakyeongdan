@@ -66,4 +66,9 @@ if (!next) { console.log(todo.length ? '지금 그릴 수 있는 묶음 없음(�
 console.log(`다음 묶음: ${next}`);
 console.log(`그릴 그림 ${missing(next).length}장: ${missing(next).map((i) => i.id).join(', ')}`);
 const done = items(next).filter((i) => has(i.file));
-if (done.length) console.log(`이미 있음(다시 만들지 말고 기준으로 첨부): ${done.map((i) => i.file).join(', ')}`);
+// 그림 도구는 한 번에 5장까지만 첨부된다: 그림체 기준 1장 + reference_images 먼저, 남는 칸만큼 「이미 있음」을 기준으로
+const MAX_REF = 5;
+const room = Math.max(0, MAX_REF - 1 - Math.max(0, ...missing(next).map((i) => (i.reference_images || []).length)));
+if (done.length) console.log(`이미 있음(다시 만들지 말 것): ${done.map((i) => i.file).join(', ')}`);
+if (done.length && room) console.log(`그중 기준으로 첨부할 것(${room}장까지): ${done.slice(0, room).map((i) => i.file).join(', ')}`);
+console.log(`첨부(그림마다 최대 ${MAX_REF}장): style/akane_c.png + 그 그림의 reference_images${done.length && room ? ' + 위 기준' : ''}. 5장을 넘기지 말 것.`);
