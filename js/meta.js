@@ -78,13 +78,13 @@ export function exportSave(settings) {
 // 코드를 읽어 본다(저장은 아직 안 바꿈). { ok, err, data }
 export function readSave(code) {
   const m = String(code || '').replace(/\s+/g, '').match(/^YK(\d+)-([A-Za-z0-9+/=]+)-([0-9a-f]{8})$/);
-  if (!m) return { ok: false, err: '저장 코드 모양이 아니에요. 내보낸 코드를 처음부터 끝까지 그대로 붙여 넣어 주세요.' };
-  if (fnv(m[2]) !== m[3]) return { ok: false, err: '코드가 잘렸거나 바뀌었어요. 다시 복사해 주세요.' };
+  if (!m) return { ok: false, err: '저장 코드 모양이 아니다. 내보낸 코드를 처음부터 끝까지 그대로 붙여 넣는다.' };
+  if (fnv(m[2]) !== m[3]) return { ok: false, err: '코드가 잘렸거나 바뀌었다. 다시 복사한다.' };
   let d;
-  try { d = JSON.parse(b64d(m[2])); } catch (e) { return { ok: false, err: '코드를 읽을 수 없어요.' }; }
-  if (d?.k !== 'yakyeongdan' || !d.p) return { ok: false, err: '야경단 저장 코드가 아니에요.' };
-  if (!(d.v >= 1) || !(d.p.v >= 1)) return { ok: false, err: '알 수 없는 저장 버전이에요.' };
-  if (d.v > VERSION || d.p.v > VERSION) return { ok: false, err: '더 새 버전에서 만든 저장이에요. 게임을 새로고침해서 최신으로 만든 뒤 불러와 주세요.' };
+  try { d = JSON.parse(b64d(m[2])); } catch (e) { return { ok: false, err: '코드를 읽을 수 없다.' }; }
+  if (d?.k !== 'yakyeongdan' || !d.p) return { ok: false, err: '야경단 저장 코드가 아니다.' };
+  if (!(d.v >= 1) || !(d.p.v >= 1)) return { ok: false, err: '알 수 없는 저장 버전이다.' };
+  if (d.v > VERSION || d.p.v > VERSION) return { ok: false, err: '더 새 버전에서 만든 저장이다. 게임을 새로고침해 최신으로 만든 뒤 불러온다.' };
   return { ok: true, data: d };
 }
 // 불러오기: 지금 저장을 코드의 저장으로 바꾼다(예전 버전이면 이어받기)

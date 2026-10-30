@@ -166,7 +166,7 @@ export function combatView() {
   }).join('');
   const pendKeep = !tempering && keepN && pend && !/^(duo|bond):/.test(pend.id) && cardDef(pend).ch !== 'curse'
     ? `<button type="button" class="mini keepbtn ${marks.includes(pend.uid) ? 'on' : ''}" data-keepmark title="턴 끝에 이 카드를 버리지 않고 남긴다 (${keepN}장)">${marks.includes(pend.uid) ? '남기기 취소' : `남기기 (${marks.length}/${keepN})`}</button>` : '';
-  const temperBar = tempering ? `<span class="tempbar">담금질: 강화할 카드를 고르세요 (${C.choose.left}장) <button type="button" class="mini" data-temperauto>자동으로</button></span>` : '';
+  const temperBar = tempering ? `<span class="tempbar">담금질: 강화할 카드를 고른다 (${C.choose.left}장) <button type="button" class="mini" data-temperauto>자동으로</button></span>` : '';
   const pip = (n, on) => Array.from({ length: Math.max(n, on) }, (_, k) => `<i class="${k < on ? '' : 'off'}"></i>`).join('');
   // 기본 조작 설명은 없앴다(대상은 화살표가 알려 준다, js/juice.js aimArrow). 규칙이 바뀌는 순간만 한 줄.
   const tip = tempering ? '강화할 카드를 누르면 턴을 이어 갈 수 있다.' : lit.length ? '불빛이 비춘 동료의 카드는 비용 +1.' : '';
