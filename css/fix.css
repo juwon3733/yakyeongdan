@@ -40,3 +40,5 @@ img.px.fci{position:absolute!important;margin:0!important;max-width:none!importa
 .epbg.art{background-size:cover!important;background-position:50% 60%!important;image-rendering:auto}
 .epbg.art i{display:none}
 .epbg.art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,6,18,.15),rgba(6,6,18,.05) 50%,rgba(6,6,18,.55))}
+.scene .fire{filter:drop-shadow(0 0 6px rgba(255,150,60,.6))}
+.scene .fire::before{opacity:.75;transform-origin:50% 100%}.scene .fire::after{opacity:.6}

@@ -1580,6 +1580,7 @@ function ambient() {
   const scr = A0()?.dataset.screen, on = AMB.has(scr) && !calmNow();
   if (on && !amb) { amb = document.createElement('div'); amb.className = 'jamb'; amb.innerHTML = '<i class="d1"></i><i class="d2"></i><i class="glow"></i>'; layer.prepend(amb); }
   if (amb) { amb.hidden = !on; amb.dataset.scr = scr || ''; }
+  if (on && scr === 'rest' && !fireTimer) fireTimer = setTimeout(campfire, 200);
   // 타이틀·본부·소환: 몇 초마다 별똥별이 하늘을 비스듬히 가로지른다
   if (on && ['title', 'base', 'summon', 'season'].includes(scr) && !starTimer) starTimer = setTimeout(function fall() {
     const s2 = A0()?.dataset.screen;
@@ -1591,6 +1592,16 @@ function ambient() {
   }, 1200);
 }
 let starTimer = null;
+// 휴식 모닥불: 불꽃 알갱이가 계속 피어오르고 가끔 불티가 튄다(CSS 불 모양 위에 겹침)
+let fireTimer = null;
+function campfire() {
+  const el = app()?.querySelector('.scene .fire');
+  if (!el || calmNow()) { fireTimer = null; return; }
+  const r = rel(el, true), x = r.cx, y = r.y + r.h - 8;
+  for (let k = 0; k < 8; k++) add({ k: 'dot', x: x + rnd(-11, 11), y: y + rnd(-6, 2), vx: rnd(-.3, .3), vy: rnd(-2.2, -1), g: -.01, life: rnd(16, 30), col: ['#ff7a2a', '#ff9a4a', '#ffd060', '#fff2c0'][k % 4], s: k % 3 ? 2 : 3 });
+  if (Math.random() < .25) add({ k: 'dot', x: x + rnd(-4, 4), y: y - 10, vx: rnd(-.6, .6), vy: rnd(-2.4, -1.4), g: .02, life: rnd(30, 50), col: '#ffd060', s: 1 });
+  fireTimer = setTimeout(campfire, 90);
+}
 
 // ---------- ★5 전용 필살 연출 (희귀 카드) — 동료마다 다른 순서. sigLead = 카드를 낸 뒤 적중까지 더 기다릴 시간 ----------
 const SIG_LEAD = { akane: 560, sion: 380, lunaria: 320, eleonore: 460, nerea: 420,
