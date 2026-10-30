@@ -238,3 +238,6 @@ body.aiming .bottom .hand .card.sel,body.aiming #app[data-screen="combat"] .bott
   :is(#app,.frozen)[data-screen="combat"] :is(.pm,.foe) .lab .nm{opacity:0}
   :is(#app,.frozen)[data-screen="combat"] .party > .swap{align-self:flex-end;margin:0 -6px 40px;opacity:.5;font-size:8px;padding:0 1px}
 }
+/* 컷인 그림 없는 동료: 서 있는 그림을 띠 안 왼쪽에 상반신만(얼굴~가슴) 크게, 오른쪽으로 녹아 사라짐 */
+#fx .jskillcut .art.stand{width:62%;left:-4%;right:auto;object-position:50% 12%;-webkit-mask-image:linear-gradient(90deg,#000 55%,transparent 98%);mask-image:linear-gradient(90deg,#000 55%,transparent 98%)}
+#fx .jskillcut .art.stand.s1{left:auto;right:-4%;-webkit-mask-image:linear-gradient(270deg,#000 55%,transparent 98%);mask-image:linear-gradient(270deg,#000 55%,transparent 98%)}

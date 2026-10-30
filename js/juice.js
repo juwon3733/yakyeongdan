@@ -718,7 +718,8 @@ function skillCut(e) {
   // 그림: 인연 듀오 컷인(cutins/duo_a_b) → 동료 컷인(cutins/<id>_cutin) → 없으면 서 있는 그림을 띠 옆에
   const wide = ids.length > 1 ? artURL(`cutins/duo_${ids[0]}_${ids[1]}.png`) || artURL(`cutins/duo_${ids[1]}_${ids[0]}.png`) : charArt(ids[0], 'cutin');
   const who = wide ? `<img class="art" src="${wide}" alt="">`
-    : ids.map((id, i) => [i, charArt(id, 'stand') || battleArt(id, 'skill')]).filter(([, u]) => u).map(([i, u]) => `<img class="px who w${i}" src="${u}" alt="">`).join('');
+    // 컷인 그림이 없으면: 서 있는 그림을 띠 밖에 통째로 붙이지 않고(템플릿처럼 보였다) 띠 안에 상반신만 크게 잘라 넣는다
+    : ids.map((id, i) => [i, charArt(id, 'stand') || battleArt(id, 'skill')]).filter(([, u]) => u).map(([i, u]) => `<img class="art stand s${i}" src="${u}" alt="">`).join('');
   el.innerHTML = `<i class="band"></i>${who}<i class="lines"></i><i class="edge"></i>
     <div class="tx"><span>${ids.map(id => CHARACTERS[id]?.name).join(' + ')}</span><b>${d?.name || ''}</b></div>`;
   layer.append(el);
