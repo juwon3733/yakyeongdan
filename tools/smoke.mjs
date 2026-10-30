@@ -418,6 +418,10 @@ try {
     await page.evaluate(() => { window.__yk.S.view = 'base'; window.__yk.render(); });
     if (await page.$('.sintro:not([hidden])') && !(await page.$eval('#modal', m => m.hidden))) fail('시즌 소개가 두 번 뜸');
     await page.click('[data-view="season"]');
+    // 랭킹: 시즌 화면 → 랭킹 → 탭 바꾸기(서버 전엔 내 기록) → 시즌으로
+    await page.click('[data-view="ranking"]'); await page.click('[data-rankboard="endless"]');
+    await page.waitForSelector('.rkme, .rkpods', { timeout: 3000 }).catch(() => fail('랭킹 화면이 안 뜸'));
+    await page.click('.rankscr [data-view="season"]');
     await page.click('[data-tier="0"]');
     for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
     await page.click('[data-start]');
