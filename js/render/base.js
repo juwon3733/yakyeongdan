@@ -15,7 +15,7 @@ import { P, nextRate5, epNewCount, pickupNow, starsOf, costumeOpen, wearing, pac
 import { stars, palOf, fmt, esc, cardHTML, charSrc } from './common.js';
 import { moonImg } from './sprites.js';
 import { REST_LINES, FIRST_LINES } from '../data/hublines.js';
-import { artURL } from '../art.js';
+import { artURL, foeArt } from '../art.js';
 import { achTab, historyBlock } from './daily.js';
 import { dailyToday, mastery, masteryTitles, backOpen } from '../meta.js';
 import { MASTERY_REWARDS, MASTERY_XP } from '../data/mastery.js';
@@ -337,14 +337,14 @@ export function codexView() {
 }
 const CODEX = {
   ach: achTab,
-  mates: () => `<div class="cgrid">${ROSTER_IDS.map(k => {
+  mates: () => `<div class="cxfaces">${ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k], st = P.charStats[k] || { runs: 0, wins: 0 }, c = CHARACTERS[k];
-    return `<div class="centry ${own ? '' : 'none'} ${starRing(k)}" style="--c:${r.col}">${own ? img(k) : sil(k)}
-      <b>${own ? r.name : '???'}</b><small>${stars(r.rarity)} ${own ? r.role : ''}</small>${own && c ? `<small class="dim">${esc(c.ds || '')}</small><small>별자리 ${starsOf(k)} · 판 ${st.runs} · 승 ${st.wins}</small>` : ''}</div>`;
+    const tip = own ? `${r.name} ${'★'.repeat(r.rarity)} · ${r.role}${c?.ds ? `\n${c.ds}` : ''}\n별자리 ${starsOf(k)} · 판 ${st.runs} · 이김 ${st.wins}` : `??? ${'★'.repeat(r.rarity)}`;
+    return `<span class="cxf r${r.rarity} ${own ? '' : 'none'}" style="--c:${r.col}" data-tip="${esc(tip)}"><span class="fc"><img class="px" src="${charSrc(k, 'normal')}" alt=""></span><small>${own ? r.name : '???'}</small></span>`;
   }).join('')}</div>`,
   duos: () => {
     const ks = Object.keys(DUOS), got = ks.filter(k => P.seenDuos.includes(k)).length;
-    return `<p class="note">찾은 인연 듀오 ${got}/${ks.length}. 누르면 컷인을 다시 본다.</p><div class="dgrid">${ks.map(k => {
+    return `<p class="note">${got}/${ks.length}</p><div class="dgrid">${ks.map(k => {
       const [a, b] = k.split('+'), seen = P.seenDuos.includes(k);
       return seen ? `<button type="button" class="dcell ${duoSpecial(a) || duoSpecial(b) ? 'sp' : ''}" data-replay="${k}"><b>${esc(DUOS[k].name)}</b><small>${ROSTER[a].name}·${ROSTER[b].name}</small></button>`
         : `<span class="dcell none"><b>?</b><small>${P.owned[a] && P.owned[b] ? `${ROSTER[a].name}·${ROSTER[b].name}` : '???'}</small></span>`;
@@ -357,20 +357,21 @@ const CODEX = {
       return `<div class="crow"><b style="color:${ROSTER[k].col}">${ROSTER[k].name}</b> <small>본 ${L.filter(id => P.cardsSeen.includes(id)).length}/${L.length} · 쓴 ${L.filter(id => P.cardsUsed.includes(id)).length}</small>
         <span class="cnames">${L.map(id => `<span class="${P.cardsUsed.includes(id) ? 'used' : P.cardsSeen.includes(id) ? 'seen' : 'none'}" title="${P.cardsSeen.includes(id) ? esc(CARDS[id].text.replace(/\{[dbkn]\d\}/g, '…')) : ''}">${P.cardsSeen.includes(id) ? esc(CARDS[id].name) : '?'}</span>`).join('')}</span></div>`;
     }).join('');
-    return `<p class="note">본 카드 ${P.cardsSeen.length} · 쓴 카드 ${P.cardsUsed.length} / ${ids.length}. 굵은 글자는 쓴 카드.</p>${rows}`;
+    return `<p class="note">${P.cardsSeen.length}/${ids.length}</p>${rows}`;
   },
   foes: () => {
     const ks = Object.keys(FOE).filter(k => !k.startsWith('tut_'));   // 튜토리얼 적은 도감에 없음
-    return `<p class="note">만난 적 ${P.foesSeen.length} · 이긴 적 ${P.foesBeaten.length} / ${ks.length}</p><div class="cgrid foesg">${ks.map(k => {
+    return `<p class="note">만난 적 ${P.foesSeen.length} · 이긴 적 ${P.foesBeaten.length} / ${ks.length}</p><div class="cxfoes">${ks.map(k => {
       const seen = P.foesSeen.includes(k), beat = P.foesBeaten.includes(k);
-      return `<div class="centry ${seen ? '' : 'none'}"><b>${seen ? esc(FOE[k].name) : '???'}</b><small>${seen ? `체력 ${FOE[k].hp}${beat ? ' · 이김' : ''}` : ''}</small></div>`;
+      const u = foeArt({ key: k });
+      return `<span class="cxfoe ${seen ? '' : 'none'} ${beat ? 'beat' : ''}" data-tip="${esc(seen ? `${FOE[k].name} · 체력 ${FOE[k].hp}${beat ? ' · 이김' : ''}` : '아직 못 만난 적')}">${u ? `<img class="px" src="${u}" alt="">` : '<i></i>'}<small>${seen ? esc(FOE[k].name) : '???'}</small></span>`;
     }).join('')}</div>
-    <p class="note">속성 ${(P.affixSeen || []).length}/${Object.keys(AFFIX).length} · 강적과 2막부터 일부 적에게 붙는다. 이기면 별빛과 레전더리 카드 확률이 오른다.</p>
+    <p class="note">속성 ${(P.affixSeen || []).length}/${Object.keys(AFFIX).length}</p>
     <div class="axlist">${Object.entries(AFFIX).map(([k, a]) => { const seen = (P.affixSeen || []).includes(k); return `<div class="axi ${seen ? '' : 'unseen'}" style="--ax:${a.col}"><b>${seen ? a.pre : '???'}</b><p>${seen ? esc(a.text) : ''}</p></div>`; }).join('')}</div>`;
   },
   talks: () => {
     const L = P.talksSeen.slice().sort((a, b) => a - b).filter(i => TALKS[i]);
-    return `<p class="note">본 휴식 대화 ${L.length}/${TALKS.length}. 휴식 칸·에피소드 2화·「휴식 대화 조각」으로 열린다.</p>
+    return `<p class="note">${L.length}/${TALKS.length}</p>
       <div class="tlist">${L.map(i => `<div class="talk">${TALKS[i].lines.map(([p, t]) => `<p><b style="color:${ROSTER[p]?.col}">${ROSTER[p]?.name || p}</b> ${esc(t)}</p>`).join('')}</div>`).join('') || '<p class="note">아직 없다.</p>'}</div>`;
   },
 };

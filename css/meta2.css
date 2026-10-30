@@ -93,3 +93,20 @@
 :is(#app,.frozen)[data-screen="reward"] .hand.big::before{animation:none;border-radius:0;width:520px;height:200px;margin:-80px 0 0 -260px;background:radial-gradient(ellipse 50% 40% at 50% 70%,rgba(255,220,140,.18),transparent 70%);-webkit-mask:none;mask:none}
 /* 덱으로 날아가는 보상 카드(js/main.js): 큰 손패 안에서와 같은 글자 크기 */
 #stage > .card.jfly2 .hd{font-size:10.5px}#stage > .card.jfly2 .bd{font-size:8.5px;line-height:1.35}#stage > .card.jfly2 .cost{width:18px;height:18px;font-size:11px}
+
+/* 도감: 동료는 얼굴 칸(실루엣) 줄, 적은 실제 적 그림 */
+.cxfaces{display:flex;flex-wrap:wrap;gap:8px}
+.cxf{display:flex;flex-direction:column;align-items:center;gap:2px;width:64px;cursor:help}
+.cxf .fc{display:block;width:60px;height:60px;overflow:hidden;background:#0b0b18;border:2px solid #4a4c7a;box-shadow:2px 2px 0 #000}
+.cxf.r5 .fc{border-color:var(--gold)}.cxf.r4 .fc{border-color:#9a6ae0}
+.cxf .fc img{width:60px;height:auto;display:block;image-rendering:pixelated}
+.cxf.none .fc img{filter:brightness(0) invert(.18) sepia(.6) hue-rotate(200deg)}
+.cxf small{font-size:9px;color:#d8d4ec;text-shadow:1px 1px 0 #000}
+.cxf.none small{color:var(--dim)}
+.cxfoes{display:flex;flex-wrap:wrap;gap:4px 10px}
+.cxfoe{display:flex;flex-direction:column;align-items:center;width:72px;cursor:help}
+.cxfoe img{width:64px;height:64px;object-fit:contain;object-position:50% 100%;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000)}
+.cxfoe.none img{filter:brightness(0) invert(.15)}
+.cxfoe.beat small{color:var(--gold)}
+.cxfoe small{font-size:8.5px;color:#d8d4ec;white-space:nowrap;text-shadow:1px 1px 0 #000}
+.cxfoe i{display:block;width:64px;height:64px}
