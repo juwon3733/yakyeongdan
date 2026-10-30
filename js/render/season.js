@@ -4,8 +4,9 @@ import { P } from '../meta.js';
 import { seasonNow, seasonRec, passLevel, tierOpen } from '../season.js';
 import { PASS } from '../data/season.js';
 import { FOE } from '../data/enemies.js';
-import { foeArt, bossCutin } from '../art.js';
-import { esc } from './common.js';
+import { foeArt, bossCutin, artURL } from '../art.js';
+import { ROSTER } from '../data/roster.js';
+import { esc, charSrc } from './common.js';
 import { sprite } from './sprites.js';
 import { FOE_PAL } from '../data/enemies.js';
 
@@ -40,5 +41,22 @@ export function seasonView() {
         <div class="srank"><b>시즌 랭킹</b> <small>온라인 연결 뒤 열린다 (밤 오르기·끝없는 탑·시즌 보스·매일의 밤)</small></div>
       </div>
     </div>
+  </div>`;
+}
+
+// 시즌 첫 소개(시즌마다 한 번, 본부에서): 시즌 동료·시즌 보스·규칙. P.seasonIntro = 본 시즌 id
+export function seasonIntroModal() {
+  const s = seasonNow(); if (!s?.open) return '';
+  const ch = ROSTER[s.chara], boss = FOE[s.boss];
+  const bart = bossCutin(s.boss) || foeArt({ key: s.boss }) || sprite(FOE_PAL[boss.pal], true, true);
+  const cg = artURL(`cg/star5_${s.chara}.png`), cart = cg || charSrc(s.chara);
+  return `<div class="box sintro" role="dialog" aria-label="시즌 ${s.no} 시작" style="--c:${s.col}">
+    <div class="sih"><small>시즌 ${s.no} 시작 · ${s.left}일 남음</small><b>${esc(s.name)}</b><span>${esc(s.tagline)}</span></div>
+    <div class="sipan">
+      <div class="sic cha ${cg ? 'cg' : ''}" style="--cc:${ch.col}"><img class="art" src="${cart}" alt=""><div class="sit"><small>시즌 동료 · 픽업 소환</small><b>${esc(ch.name)} <i class="stars">${'★'.repeat(ch.rarity)}</i></b><span>${esc(ch.role)}</span></div></div>
+      <div class="sic boss"><img class="art" src="${bart}" alt=""><div class="sit"><small>시즌 보스</small><b>${esc(boss.name)}</b><span>일반 · 어려움 · 악몽</span></div></div>
+    </div>
+    <p class="sirule"><b>시즌 규칙 「${esc(s.rule.name)}」</b> ${esc(s.rule.text)}</p>
+    <div class="sibtn"><button type="button" class="primary" data-sintro="season">시즌 보기</button><button type="button" data-sintro="summon">소환하러</button><button type="button" data-close>닫기</button></div>
   </div>`;
 }

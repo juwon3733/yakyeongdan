@@ -211,6 +211,8 @@ export const DUOS = {
   eleonore_sebas: { pair: ['eleonore', 'sebas'], scene: 'the witch and the old butler sharing tea while clock hands spin backward around them' },
   zeno_marta: { pair: ['zeno', 'marta'], scene: 'the dark knight kneeling before the tall nun, golden light and black flames meeting' },
   nerea_tomori: { pair: ['nerea', 'tomori'], scene: 'the star whale following the girl\'s lantern beam across the night sea, the rider waving from its head' },
+  estelle_sigrun: { pair: ['estelle', 'sigrun'], scene: 'two lance knights diving side by side from the night sky, a silver wing trail and a white-gold comet trail crossing' },
+  estelle_sion: { pair: ['estelle', 'sion'], scene: 'the summoner raising her hand to call star spirits while the meteor knight rides down a falling star beside her' },
   bertha_nerea: { pair: ['bertha', 'nerea'], scene: 'the old guide pointing the way with her lantern cane while the star whale rider sails past on the whale, a path of light between them' },
 };
 
@@ -310,6 +312,7 @@ export const SIG_RELICS = {
   sig_dora: '모루 방패 — a tiny anvil-shaped shield',
   sig_gordon: '큰 도시락 — a big stacked lunch box tied with cloth',
   sig_nerea: '고래 귀걸이 — a teal earring shaped like a small whale tail',
+  sig_estelle: '별똥 브로치 — a white-gold star-shaped brooch with a tiny blue comet tail',
   sig_bertha: '낡은 안내 깃발 — a small faded guide pennant on a short pole',
   sig_fukuro: '행운 고양이 — a small beckoning lucky cat charm with an owl mask',
 };

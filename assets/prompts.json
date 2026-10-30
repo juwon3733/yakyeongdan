@@ -813,7 +813,7 @@
     },
     {
       "id": "duo",
-      "title": "인연 듀오 컷인 10쌍",
+      "title": "인연 듀오 컷인 12쌍",
       "items": [
         "duo_iris_marta",
         "duo_iris_akane",
@@ -824,6 +824,8 @@
         "duo_eleonore_sebas",
         "duo_zeno_marta",
         "duo_nerea_tomori",
+        "duo_estelle_sigrun",
+        "duo_estelle_sion",
         "duo_bertha_nerea"
       ]
     },
@@ -1231,7 +1233,7 @@
     },
     {
       "id": "icons-sig",
-      "title": "동료 전용 도구 아이콘 22 (시트 → 한 개씩)",
+      "title": "동료 전용 도구 아이콘 23 (시트 → 한 개씩)",
       "items": [
         "icons-sig_1",
         "icons-sig_2"
@@ -9634,6 +9636,44 @@
       "must_show": "두 사람 얼굴 둘 다"
     },
     {
+      "id": "duo_estelle_sigrun",
+      "kind": "duo",
+      "batch": "duo",
+      "file": "cutins/duo_estelle_sigrun.png",
+      "width": 1536,
+      "height": 768,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "384×192",
+      "note": "인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nDuo cut-in of 에스텔 and 시그룬: two lance knights diving side by side from the night sky, a silver wing trail and a white-gold comet trail crossing. Both characters ON-MODEL from the attached references, faces clearly visible. Wide horizontal composition; the top and bottom will be cropped to 1536x768. Speed lines made of pixels.",
+      "reference_images": [
+        "chars/estelle_normal.png",
+        "chars/sigrun_normal.png",
+        "style/akane_c.png"
+      ],
+      "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
+      "id": "duo_estelle_sion",
+      "kind": "duo",
+      "batch": "duo",
+      "file": "cutins/duo_estelle_sion.png",
+      "width": 1536,
+      "height": 768,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "384×192",
+      "note": "인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nGive each character a clearly distinct face — eye shape, brows, mouth, face shape and expression habits that fit their personality — instead of the same generic pretty face. Poses also fit the personality: a natural, specific pose with weight and intent, not a generic glamour pose.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nDuo cut-in of 에스텔 and 시온: the summoner raising her hand to call star spirits while the meteor knight rides down a falling star beside her. Both characters ON-MODEL from the attached references, faces clearly visible. Wide horizontal composition; the top and bottom will be cropped to 1536x768. Speed lines made of pixels.",
+      "reference_images": [
+        "chars/estelle_normal.png",
+        "chars/sion_normal.png",
+        "style/akane_c.png"
+      ],
+      "must_show": "두 사람 얼굴 둘 다"
+    },
+    {
       "id": "duo_bertha_nerea",
       "kind": "duo",
       "batch": "duo",
@@ -17242,8 +17282,8 @@
       "max_colors": null,
       "native": "128×128 (칸 32×32 × 16)",
       "note": "아이콘 4×4, 칸 256×256",
-      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nAn item icon sheet on one 1024x1024 canvas, split into sixteen equal square cells of 256x256 (4x4), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One icon per cell, centered, readable at small size, bold dark outline, consistent style across all icons.\n- Cell 1: 바람 깃발 — a small torn sky-blue pennant fluttering\n- Cell 2: 모루 방패 — a tiny anvil-shaped shield\n- Cell 3: 큰 도시락 — a big stacked lunch box tied with cloth\n- Cell 4: 고래 귀걸이 — a teal earring shaped like a small whale tail\n- Cell 5: 낡은 안내 깃발 — a small faded guide pennant on a short pole\n- Cell 6: 행운 고양이 — a small beckoning lucky cat charm with an owl mask\nCells 7-16 stay completely empty (transparent).\nFully transparent background. Native resolution 32x32 pixels per cell (128x128 for the whole sheet), upscaled exactly 8x with nearest-neighbor.",
-      "must_show": "4×4 칸에 아이콘 6개",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nAn item icon sheet on one 1024x1024 canvas, split into sixteen equal square cells of 256x256 (4x4), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One icon per cell, centered, readable at small size, bold dark outline, consistent style across all icons.\n- Cell 1: 바람 깃발 — a small torn sky-blue pennant fluttering\n- Cell 2: 모루 방패 — a tiny anvil-shaped shield\n- Cell 3: 큰 도시락 — a big stacked lunch box tied with cloth\n- Cell 4: 고래 귀걸이 — a teal earring shaped like a small whale tail\n- Cell 5: 별똥 브로치 — a white-gold star-shaped brooch with a tiny blue comet tail\n- Cell 6: 낡은 안내 깃발 — a small faded guide pennant on a short pole\n- Cell 7: 행운 고양이 — a small beckoning lucky cat charm with an owl mask\nCells 8-16 stay completely empty (transparent).\nFully transparent background. Native resolution 32x32 pixels per cell (128x128 for the whole sheet), upscaled exactly 8x with nearest-neighbor.",
+      "must_show": "4×4 칸에 아이콘 7개",
       "reference_images": [
         "style/akane_c.png"
       ],
@@ -17309,7 +17349,7 @@
           ]
         },
         {
-          "file": "icons/relic_sig_bertha.png",
+          "file": "icons/relic_sig_estelle.png",
           "x": 0,
           "y": 256,
           "w": 256,
@@ -17324,8 +17364,23 @@
           ]
         },
         {
-          "file": "icons/relic_sig_fukuro.png",
+          "file": "icons/relic_sig_bertha.png",
           "x": 256,
+          "y": 256,
+          "w": 256,
+          "h": 256,
+          "native": [
+            32,
+            32
+          ],
+          "out": [
+            192,
+            192
+          ]
+        },
+        {
+          "file": "icons/relic_sig_fukuro.png",
+          "x": 512,
           "y": 256,
           "w": 256,
           "h": 256,

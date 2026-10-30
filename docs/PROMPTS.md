@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 8 · GPT가 그릴 그림 330장(시트 포함, 잘라 내면 899장) · 묶음 176개
+style_version 8 · GPT가 그릴 그림 332장(시트 포함, 잘라 내면 902장) · 묶음 176개
 
 ## 묶음
 
@@ -107,7 +107,7 @@ style_version 8 · GPT가 그릴 그림 330장(시트 포함, 잘라 내면 899�
 | `style-nerea` | 그림체 시안 네레아 (4장, 게임에 안 씀) | 4 |
 | `style-estelle` | 그림체 시안 에스텔 (4장, 게임에 안 씀) | 4 |
 | `cg-star5` | ★5 전신 CG | 6 |
-| `duo` | 인연 듀오 컷인 10쌍 | 10 |
+| `duo` | 인연 듀오 컷인 12쌍 | 12 |
 | `enemy-act1` | 1막 적 (시트 → 한 마리씩) | 2 |
 | `enemy-act2` | 2막 적 (시트 → 한 마리씩) | 2 |
 | `enemy-act3` | 3막 적 (시트 → 한 마리씩) | 2 |
@@ -158,7 +158,7 @@ style_version 8 · GPT가 그릴 그림 330장(시트 포함, 잘라 내면 899�
 | `summon` | 별 소환 연출 | 4 |
 | `app` | 앱 아이콘 | 1 |
 | `icons` | 도구 아이콘 40 (시트 → 한 개씩) | 3 |
-| `icons-sig` | 동료 전용 도구 아이콘 22 (시트 → 한 개씩) | 2 |
+| `icons-sig` | 동료 전용 도구 아이콘 23 (시트 → 한 개씩) | 2 |
 | `ui-kit` | UI 키트 (시트 1장 → 틀·버튼·띠·아이콘 16개) | 1 |
 | `logo` | 「야경단」 도트 로고 | 1 |
 | `skin-sion` | 시온 스킨(두 번째 의상) — 나중 | 1 |
@@ -1340,7 +1340,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `star5_nerea` | `assets/cg/star5_nerea.png` | 1536×864 | `assets/chars/nerea_normal.png` `assets/chars/nerea_stand.png` `assets/style/akane_c.png` | — |
 | `star5_estelle` | `assets/cg/star5_estelle.png` | 1536×864 | `assets/chars/estelle_normal.png` `assets/chars/estelle_stand.png` `assets/style/akane_c.png` | — |
 
-## `duo` — 인연 듀오 컷인 10쌍
+## `duo` — 인연 듀오 컷인 12쌍
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -1353,6 +1353,8 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `duo_eleonore_sebas` | `assets/cutins/duo_eleonore_sebas.png` | 1536×768 | `assets/chars/eleonore_normal.png` `assets/chars/sebas_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
 | `duo_zeno_marta` | `assets/cutins/duo_zeno_marta.png` | 1536×768 | `assets/chars/zeno_normal.png` `assets/chars/marta_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
 | `duo_nerea_tomori` | `assets/cutins/duo_nerea_tomori.png` | 1536×768 | `assets/chars/nerea_normal.png` `assets/chars/tomori_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
+| `duo_estelle_sigrun` | `assets/cutins/duo_estelle_sigrun.png` | 1536×768 | `assets/chars/estelle_normal.png` `assets/chars/sigrun_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
+| `duo_estelle_sion` | `assets/cutins/duo_estelle_sion.png` | 1536×768 | `assets/chars/estelle_normal.png` `assets/chars/sion_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
 | `duo_bertha_nerea` | `assets/cutins/duo_bertha_nerea.png` | 1536×768 | `assets/chars/bertha_normal.png` `assets/chars/nerea_normal.png` `assets/style/akane_c.png` | 두 사람 얼굴 둘 다 |
 
 ## `enemy-act1` — 1막 적 (시트 → 한 마리씩)
@@ -1707,12 +1709,12 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `icons_2` | `assets/sheets/icons_2.png` → `relic_pistol.png` `relic_moon_shard.png` `relic_armband.png` `relic_bond_thread.png` `relic_gold_feather.png` `relic_dawn_feather.png` `relic_stopped_tower.png` `relic_star_crown.png` `relic_tide_bell.png` `relic_rope.png` `relic_crescent_pin.png` `relic_half_ribbon.png` `relic_full_mirror.png` `relic_new_ink.png` `relic_duo_scarf.png` `relic_duo_shield.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 16개 |
 | `icons_3` | `assets/sheets/icons_3.png` → `relic_sand_pendant.png` `relic_last_ticket.png` `relic_red_knot.png` `relic_watch_chain.png` `relic_moon_compass.png` `relic_twin_star.png` `relic_reverse_clock.png` `relic_star_sash.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 8개 |
 
-## `icons-sig` — 동료 전용 도구 아이콘 22 (시트 → 한 개씩)
+## `icons-sig` — 동료 전용 도구 아이콘 23 (시트 → 한 개씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
 | `icons-sig_1` | `assets/sheets/icons-sig_1.png` → `relic_sig_sion.png` `relic_sig_lunaria.png` `relic_sig_akane.png` `relic_sig_eleonore.png` `relic_sig_iris.png` `relic_sig_noel.png` `relic_sig_raven.png` `relic_sig_mimimomo.png` `relic_sig_sebas.png` `relic_sig_mariana.png` `relic_sig_tomori.png` `relic_sig_sigrun.png` `relic_sig_zeno.png` `relic_sig_brick.png` `relic_sig_marta.png` `relic_sig_finn.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 16개 |
-| `icons-sig_2` | `assets/sheets/icons-sig_2.png` → `relic_sig_laila.png` `relic_sig_dora.png` `relic_sig_gordon.png` `relic_sig_nerea.png` `relic_sig_bertha.png` `relic_sig_fukuro.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 6개 |
+| `icons-sig_2` | `assets/sheets/icons-sig_2.png` → `relic_sig_laila.png` `relic_sig_dora.png` `relic_sig_gordon.png` `relic_sig_nerea.png` `relic_sig_estelle.png` `relic_sig_bertha.png` `relic_sig_fukuro.png` | 1024×1024 투명 | `assets/style/akane_c.png` | 4×4 칸에 아이콘 7개 |
 
 ## `ui-kit` — UI 키트 (시트 1장 → 틀·버튼·띠·아이콘 16개)
 

@@ -641,7 +641,7 @@ export const DUOS = {
   'noel+raven':  { name: '악몽', target: 'foe', text: '적의 독 2배, 약화 1.', play: (c, e) => { c.foe.poison *= 2; e.foeStatus('weak', 1); } },
 };
 export const duoKey = (a, b) => [a, b].sort().join('+');
-// 나머지 인연 듀오 (처음 8명 사이 18쌍 + 새 동료 인연 16쌍 + 2차 동료 6쌍). [동료 A, 동료 B, 듀오]
+// 나머지 인연 듀오 (처음 8명 사이 18쌍 + 새 동료 인연 16쌍 + 2차 동료 6쌍 + 시즌 동료 2쌍). [동료 A, 동료 B, 듀오]
 const MORE_DUOS = [
   ['iris', 'mimimomo', { name: '세 자루 칼', atk: 1, text: '피해 {d0}씩 세 번, 연계 +1.', v: [5], play: (c, e, v) => { e.hit(v[0]); e.hit(v[0]); e.hit(v[0]); e.chain(1); } }],
   ['iris', 'sion', { name: '별을 베다', atk: 1, text: '피해 정령×6+4.', play: (c, e) => e.hit(c.spirits.length * 6 + 4) }],
@@ -685,6 +685,9 @@ const MORE_DUOS = [
   ['bertha', 'eleonore', { name: '옛 시간표', target: 'all', text: '모든 적의 행동을 다음 것으로 넘기고, 밤 시계 −10분.', play: (c, e) => { e.guideAll(1); e.rewind(10); } }],
   ['bertha', 'finn', { name: '길 잃은 편지', text: '카드 3장, 이번 턴 모든 동료 공격 +{n0}.', v: [3], play: (c, e, v) => { e.draw(3); c.turnAtk += v[0]; } }],
   ['bertha', 'nerea', { name: '첫 안내', target: 'all', text: '모든 적의 행동을 바로 전 것으로 되돌리고, 고래 크기 +2.', play: (c, e) => { e.guideAll(-1); e.whaleGrow(2); } }],
+  // 시즌 1 동료 인연 2쌍 (에스텔)
+  ['estelle', 'sigrun', { name: '하늘의 두 기사', atk: 1, text: '시그룬이 공중이 되고, 피해 {d0}씩 두 번, 유성 +2.', v: [9], play: (c, e, v) => { e.fly(); e.hit(v[0]); e.hit(v[0]); c.comet = Math.min(6, (c.comet || 0) + 2); } }],
+  ['estelle', 'sion', { name: '별을 부르는 밤', text: '정령 1, 유성 +2, 카드 1장.', play: (c, e) => { e.spirit(3); c.comet = Math.min(6, (c.comet || 0) + 2); e.draw(1); } }],
 ];
 for (const [a, b, d] of MORE_DUOS) DUOS[duoKey(a, b)] = d;
 export const BOND = { name: '합동', atk: 1, text: '피해 {d0}, 방어 {b1}.', v: [8, 8], play: (c, e, v) => { e.hit(v[0]); e.guard(v[1]); } };
