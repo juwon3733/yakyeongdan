@@ -47,3 +47,6 @@
 .dkgrid{display:grid;grid-template-columns:repeat(auto-fill,74px);gap:5px}
 .dkgrid .card,#stage.bigtext .dkgrid .card{width:74px;height:104px;--ah:46px;flex:none;margin:0}
 .dkgrid .card .bd{font-size:7.5px}
+/* 결과 시각: 전자시계 같은 큰 도트 숫자 대신 게임 글꼴 */
+.resultscr .clockbig{font-family:var(--f-disp);font-size:40px;line-height:1;color:#fff4d0;text-shadow:3px 3px 0 #000;letter-spacing:.02em}
+.resultscr.lost .clockbig{color:#ff9a9a;text-shadow:3px 3px 0 #2a0a10}
