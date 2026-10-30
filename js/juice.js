@@ -220,7 +220,7 @@ export function afterRender(events = []) {
       case 'foeTurn':
         foePhase = true;
         discardHand(P, e.keep || [], t);
-        t += 220; { const s = t; at(s, () => banner('적의 차례', 'foe')); } t += 420; break;
+        t += 220; { const s = t; at(s, () => banner('적의 차례', 'foe')); } t += 300; break;
       case 'tick': { const s = t; at(s, () => tickFx(e)); mark('f:' + e.i, s); t += 200; t = addDmg(e.dmg || 0, s, t); break; }
       // 적 쪽 연출 (짝 잃음·도전 반격·회복·부르기·훔치기·노림 바꾸기)
       case 'rage': at(t, () => rageFx(e)); t += 220; break;
@@ -241,7 +241,7 @@ export function afterRender(events = []) {
           }
         }
         // 앞 적이 돌진에서 돌아온 뒤에 다음 적 (적 차례가 한 명씩 또렷하게)
-        t = Math.max(t, foeBack) + 80;
+        t = Math.max(t, foeBack - 220);   // 앞 적이 돌아오는 동안 다음 적이 예고를 시작(겹쳐서 늘어지지 않게)
         if ((e.t === 'atk' || e.t === 'mix') && !calmNow()) {
           // 예고(의도가 불타며 들썩, 몸을 웅크림) → 돌진, 맞는 순간에 피격이 오게
           { const s = t, big = bigHit(e); at(s, () => foeWindup(e, big)); t += big ? 560 : 240; }   // 큰 공격은 힘을 모으는 예고가 길다
