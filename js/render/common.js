@@ -151,7 +151,7 @@ export function cardHTML(inst, playable, act = 'play', idOverride, sel = false) 
     // 효과 글이 이미 「모든 적 …」이면 태그를 또 붙이지 않는다(「모든 적 모든 적 피해 5」처럼 두 번 찍힘)
     d.target === 'all' ? '<span class="tg all">모든 적</span>' : '', d.exhaust && !duo ? '<span class="tg ex">소멸</span>' : ''].join('');
   const dn = !isStr && S.C && playable && act === 'play' ? duoPreview(inst) : null;
-  const rule = act === 'play' ? `${d.name} · ${who}\n${(d.time ? `[${S.C?.payEnergy && relicFlag('hourglass') ? '에너지로' : `+${S.G ? timeCost() : RULES.timeCard}분`}] ` : '') + (d.target === 'all' ? '[모든 적] ' : '') + cardText(d).replace(/<[^>]+>/g, '')}${d.exhaust && !duo ? ' [소멸]' : ''}\n` : '';
+  const rule = '';
   const tip = rule + (dn ? `지금 쓰면 듀오 「${dn}」 카드가 손에 들어온다.\n` : '') + kwTip(`${d.text || ''} ${d.time ? '시간 카드' : ''} ${d.exhaust ? '소멸' : ''} ${duo ? '듀오' : ''} ${curse ? '저주' : ''} ${(d.tags || []).includes('slash') ? '베기' : ''}`);
   const faces = duo ? [d.a, d.b] : curse ? [] : [d.ch];
   const fc = faces.map(k => `<img class="px" src="${charSrc(k)}" alt="">`).join('');
