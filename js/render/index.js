@@ -22,7 +22,7 @@ const META = { title: titleView, party: partyView, base: baseView, summon: summo
   pick5: pick5View, odds: oddsView, season: seasonView, exchange: exchangeView, mates: matesView, codex: codexView, records: recordsView, tutintro: tutIntroView, daily: dailyView };
 
 function bgImage(G, scr) {
-  const run = G && S.view === 'run' && !G.tutorial;
+  const run = G && S.view === 'run';   // 튜토리얼도 1막 배경(검은 빈 화면에 탑만 떠 있던 것)
   const f = run ? (scr === 'combat' || scr === 'reward' ? `bg/act${G.act}.png` : scr === 'result' ? null : `bg/map${G.act}.png`)
     : ['base', 'party', 'mates', 'exchange', 'codex', 'records', 'daily', 'odds', 'episodes', 'ep'].includes(scr) ? 'bg/hq.png' : scr === 'summon' || scr === 'reveal' || scr === 'pick5' || scr === 'season' ? 'summon/sky.png' : null;
   const u = f && artURL(f);

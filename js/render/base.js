@@ -23,7 +23,7 @@ import { MASTERY_REWARDS, MASTERY_XP } from '../data/mastery.js';
 import { endlessMenu, endlessRecords } from './endless.js';
 
 const pct = x => `${Math.round(x * 1000) / 10}%`;
-const wallet = () => `<span class="wallet"><b>별 조각 ${P.shards}</b> · 별가루 ${P.dust}</span>`;
+const wallet = () => `<span class="wallet"><b>별 조각 ${P.shards}</b><span class="dust"> · 별가루 ${P.dust}</span></span>`;
 const head = (back = 'base', label = '본부') => `<div class="bhead"><button type="button" class="mini" data-view="${back}">‹ ${label}</button>${wallet()}</div>`;
 const img = (id, alt) => `<img class="px" src="${charSrc(id, 'stand', alt)}" alt="">`;
 // 아직 없는 동료: 같은 그림을 검은 실루엣으로(빈 네모는 깨진 그림처럼 보인다)
@@ -226,7 +226,7 @@ export function pick5View() {
   }).join('');
   return `<div class="epsel">${head('summon', '별 소환')}
     <h2>처음 만나는 ★5 · 한 명을 고른다</h2>
-    <p class="note">하늘이 갈라졌다. 누가 내려올지 직접 고르세요.</p>
+    <p class="note">하늘이 갈라졌다. 누가 내려올지 직접 고른다.</p>
     <div class="p5row">${L}</div></div>`;
 }
 

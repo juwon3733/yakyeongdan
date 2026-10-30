@@ -411,20 +411,20 @@ modal.addEventListener('click', e => {
   if ('bimport' in D) { S.backup = S.backup?.mode === 'import' ? null : { mode: 'import', text: '', arm: false }; openSettings(); document.getElementById('backup-in')?.focus(); return; }
   if ('bcopy' in D) {
     const B = S.backup, ta = document.getElementById('backup-code');
-    const done = ok => { B.msg = ok ? '복사했어요. 새 기기의 설정 → 불러오기에 붙여 넣으세요.' : '복사가 막혀 있어요. 코드를 길게 눌러 전부 선택해 복사해 주세요.'; B.err = !ok; openSettings(); document.getElementById('backup-code')?.select(); };
+    const done = ok => { B.msg = ok ? '복사했다. 새 기기의 설정 → 불러오기에 붙여 넣는다.' : '복사가 막혀 있다. 코드를 길게 눌러 전부 골라 복사한다.'; B.err = !ok; openSettings(); document.getElementById('backup-code')?.select(); };
     if (navigator.clipboard?.writeText) navigator.clipboard.writeText(B.code).then(() => done(true), () => { ta?.select(); done(document.execCommand?.('copy')); });
     else { ta?.select(); done(document.execCommand?.('copy')); }
     return;
   }
   if ('bapply' in D) {
     const B = S.backup;
-    if (!B.arm) { const r = readSave(B.text); B.arm = r.ok; B.err = !r.ok; B.msg = r.ok ? `읽었어요 (${new Date(r.data.t).toLocaleString('ko-KR')} 저장). 한 번 더 누르면 지금 저장 대신 이걸 쓴다.` : r.err; openSettings(); return; }
+    if (!B.arm) { const r = readSave(B.text); B.arm = r.ok; B.err = !r.ok; B.msg = r.ok ? `읽었다 (${new Date(r.data.t).toLocaleString('ko-KR')} 저장). 한 번 더 누르면 지금 저장 대신 이걸 쓴다.` : r.err; openSettings(); return; }
     const r = importSave(B.text);
     if (!r.ok) { B.arm = false; B.err = true; B.msg = r.err; openSettings(); return; }
     if (r.settings) { Object.assign(SET, r.settings); saveSettings(); applySettings(); applyVolumes(); }
     S.backup = null; S.G = null; S.C = null; S.view = P.tutDone ? 'title' : 'tutintro';
     modal.hidden = true; delete modal.dataset.kind; render();
-    toast('저장을 불러왔어요', null, null, 4000);
+    toast('저장을 불러왔다', null, null, 4000);
     return;
   }
   if (D.set) {

@@ -542,7 +542,7 @@ try {
     const done = await where();
     await page.click('[data-tutfinish]');
     const fin = await ev(() => ({ view: window.__yk.S.view, tut: window.__yk.P().tutDone, runs: window.__yk.P().runs, shards: window.__yk.P().shards, hint: !!document.querySelector('button.hint[data-view="summon"]') }));
-    const ok = tip0.startsWith('①') && f0 !== f1 && evId === 'child' && hand === 'brick.load,iris.issen,marta.wall' && duo && boss && done === 'tutdone'
+    const ok = tip0.startsWith('칸을 누르면') && f0 !== f1 && evId === 'child' && hand === 'brick.load,iris.issen,marta.wall' && duo && boss && done === 'tutdone'
       && fin.view === 'base' && fin.tut && fin.runs === 0 && fin.shards === 100 && fin.hint;
     if (ok) { seen.tutorial = true; console.log('tutorial: 첫 밤 끝까지 (끌어 놓기, 대열, 사건, 듀오 「검과 방패」, 작은 보스 → 본부 [별 소환] 안내)'); }
     else fail(`튜토리얼 실패 ${JSON.stringify({ tip0: tip0.slice(0, 3), f0, f1, evId, hand, duo, boss, done, fin })}`);

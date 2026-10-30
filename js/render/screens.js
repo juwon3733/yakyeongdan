@@ -68,16 +68,16 @@ export function upgradeView() {
   const G = S.G;
   const list = G.deck.map((id, i) => [id, i]).filter(([id]) => canUpgrade(id));
   const more = G.back !== 'shop' && G.smithLeft > 1 ? ` (도라: ${G.smithLeft}장)` : '';
-  return `<div class="center"><h2>손질: 강화할 카드를 고르세요${more}</h2><p class="note">위가 지금, 아래가 강화판.</p>
+  return `<div class="center"><h2>손질: 강화할 카드를 고른다${more}</h2><p class="note">위가 지금, 아래가 강화판.</p>
     <div class="hand big scroll">${list.map(([id, i]) => `<span class="pair">${cardHTML(id, true, 'up', i)}${cardHTML(id + '+', true, 'up', i)}</span>`).join('')}</div>
     <div class="acts"><button type="button" data-up="-1">그만두기</button></div></div>`;
 }
 export function removeView() {
-  return `<div class="center"><h2>지울 카드를 고르세요</h2><div class="hand big scroll">${S.G.deck.map((id, i) => cardHTML(id, true, 'rm', i)).join('')}</div>
+  return `<div class="center"><h2>지울 카드를 고른다</h2><div class="hand big scroll">${S.G.deck.map((id, i) => cardHTML(id, true, 'rm', i)).join('')}</div>
     <div class="acts"><button type="button" data-rm="-1">그만두기</button></div></div>`;
 }
 export function dupeView() {
-  return `<div class="center"><h2>거울: 복제할 카드를 고르세요</h2><div class="hand big scroll">${S.G.deck.map((id, i) => cardHTML(id, true, 'dupe', i)).join('')}</div></div>`;
+  return `<div class="center"><h2>거울: 복제할 카드를 고른다</h2><div class="hand big scroll">${S.G.deck.map((id, i) => cardHTML(id, true, 'dupe', i)).join('')}</div></div>`;
 }
 export function shopView() {
   const G = S.G, sh = G.shop;
@@ -108,12 +108,12 @@ function specialRow(sp) {
 }
 export function bossRelicView() {
   const G = S.G;
-  return `<div class="center"><h2>보스 도구: 하나를 고르세요</h2><p class="note">강하지만 대가가 있다.</p>
+  return `<div class="center"><h2>보스 도구: 하나를 고른다</h2><p class="note">강하지만 대가가 있다.</p>
     <div class="acts col wide">${G.bossRelics.map(id => `<button type="button" class="relicpick" data-brelic="${id}">${relicBox(id)}</button>`).join('')}
     <button type="button" data-brelic="">고르지 않는다</button></div></div>`;
 }
 export function moonView() {
-  return `<div class="center"><h2>달 조각: 오늘 밤의 달을 고르세요</h2>
+  return `<div class="center"><h2>달 조각: 오늘 밤의 달을 고른다</h2>
     <div class="acts">${Object.entries(MOONS).map(([k, m]) => `<button type="button" class="moonpick ${S.G.moon === k ? 'on' : ''}" data-moon="${k}"><img class="px" src="${moonImg(k)}" alt=""><b>${m.name}</b><small>${m.text}</small></button>`).join('')}</div></div>`;
 }
 

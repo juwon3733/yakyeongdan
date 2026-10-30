@@ -198,3 +198,6 @@
 /* 에피소드 오른쪽 판: 글이 일러스트 위에 겹쳐 안 읽히던 것 → 그림은 오른쪽 끝에 더 흐리게, 왼쪽은 어두운 막으로 가림 */
 .epright .epbig{right:-70px;opacity:.32;-webkit-mask:linear-gradient(90deg,transparent,#000 45%);mask:linear-gradient(90deg,transparent,#000 45%)}
 .epright .epslot{background:rgba(10,10,26,.88)}
+/* 좁은 왼쪽 칸(동료 화면)에서 지갑 글이 세 줄로 접히던 것: 별 조각만 한 줄로 */
+.mleft .bhead .wallet{white-space:nowrap;font-size:9px}
+.mleft .bhead .wallet .dust{display:none}

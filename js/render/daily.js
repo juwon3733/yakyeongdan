@@ -35,7 +35,7 @@ export function dailyView() {
       <h2>오늘 기록</h2>
       <p class="dbest">${rec?.won ? `<b>${fmt(rec.best)}</b> 도착 · 오늘 격파 완료` : rec ? `아직 못 깼다 · ${rec.tries}번 도전` : '아직 도전 안 함'}</p>
       ${rec?.won ? '' : `<p class="note">처음 깨면 별 조각 <b>+${DAILY_SHARDS}</b></p>`}
-      <button type="button" class="primary go" data-dailystart ${picked.length === 3 ? '' : 'disabled'}>오늘 밤 오르기 (${picked.length}/3)</button>
+      <button type="button" class="primary go" data-dailystart ${picked.length === 3 ? '' : 'disabled'}>${picked.length === 3 ? '오늘 밤 오르기' : `동료 셋을 고른다 (${picked.length}/3)`}</button>
       <h3 class="sub">지난 날</h3>
       <table class="odds big">${past || '<tr><td class="note">아직 없다</td><td></td></tr>'}</table>
     </div></div>`;

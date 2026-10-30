@@ -40,7 +40,7 @@ export const swReady = (async () => {
   } catch (e) { return null; }
 })();
 let askedReload = false;
-function askUpdate(go) { toast('새 버전이 있어요', '새로고침', go); }
+function askUpdate(go) { toast('새 버전이 나왔다', '새로고침', go); }
 
 // ---------- 첫 로딩 화면: 게임이 뜨면 소리를 미리 받고(진행 막대) 걷는다 ----------
 // index.html의 #boot와 그 아래 인라인 스크립트(window.ykBoot: 실패 안내·다시 시도)와 짝.
@@ -90,7 +90,7 @@ function offerFullscreen() {
   try { asked = sessionStorage.getItem('yk-fsask') === '1'; } catch (e) { /* 저장 안 됨 */ }
   if (asked || !touch || !canFullscreen() || isStandalone() || isFullscreen() || toastEl?.isConnected) return;
   try { sessionStorage.setItem('yk-fsask', '1'); } catch (e) { /* 저장 안 됨 */ }
-  toast('전체 화면으로 하면 더 크게 보여요', '전체 화면', () => toggleFullscreen(), 5000).classList.add('top');
+  toast('전체 화면으로 하면 더 크게 보인다', '전체 화면', () => toggleFullscreen(), 5000).classList.add('top');
 }
 
 // ---------- 전투 중 화면 꺼짐 방지 (지원하면, 실패는 무시) ----------

@@ -22,7 +22,7 @@ export function settingsModal() {
     <div class="srow" data-tip="한 번 본 필살 컷인은 건너뛰고 기술 연출만 본다"><span class="lb">필살 컷인</span>${seg('cutSkip', [[false, '매번'], [true, '처음만']], SET.cutSkip)}</div>
     <div class="srow" data-tip="지금 ${calmNow() ? '줄임' : '그대로'}"><span class="lb">애니메이션 줄이기</span>${seg('calm', [['null', '기기 설정대로'], [true, '줄임'], [false, '그대로']], SET.calm ?? 'null')}</div>
     <div class="srow" data-tip="지금 ${bigTextNow() ? '크게' : '보통'} (자동: 작은 화면이면 크게)"><span class="lb">글자 크기</span>${seg('text', [['auto', '자동'], ['normal', '보통'], ['big', '크게']], SET.text)}</div>
-    <div class="srow"><span class="lb">첫 밤</span><button type="button" class="mini" data-tutreplay ${inRun ? 'disabled title="판을 마치고 다시 보세요"' : ''}>튜토리얼 다시 하기</button></div>
+    <div class="srow"><span class="lb">첫 밤</span><button type="button" class="mini" data-tutreplay ${inRun ? 'disabled title="판을 마친 뒤에 다시 볼 수 있다"' : ''}>튜토리얼 다시 하기</button></div>
     ${canFullscreen() ? `<div class="srow"><span class="lb">전체 화면</span><button type="button" class="mini" data-fs>${isFullscreen() ? '전체 화면 끄기' : '전체 화면 켜기'}</button><span class="note small">폰은 홈 화면에 추가하면 앱처럼 켜진다</span></div>` : ''}
     <div class="srow" data-tip="폰을 바꿀 때: 코드를 복사해 새 기기에 붙여 넣는다"><span class="lb">저장 백업</span><button type="button" class="mini ${S.backup?.mode === 'export' ? 'on' : ''}" data-bexport>저장 내보내기</button><button type="button" class="mini ${S.backup?.mode === 'import' ? 'on' : ''}" data-bimport>불러오기</button></div>
     ${backupBox()}
