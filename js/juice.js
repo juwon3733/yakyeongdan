@@ -307,7 +307,14 @@ function fanHand() {
     const d = k - mid;
     el.style.setProperty('--fr', `${(d * 2.6).toFixed(1)}deg`);
     el.style.setProperty('--fy', `${(d * d * 1.4).toFixed(1)}px`);
+    el.style.marginLeft = el.style.marginRight = '';
   });
+  // 손패가 많으면 더 겹쳐서 에너지와 「턴 끝」 사이에 다 들어오게(오른쪽 끝 카드가 버튼 밑에 깔려 못 누르던 것)
+  const hand = app()?.querySelector('.bottom .hand'), endc = app()?.querySelector('.bottom .endcol');
+  if (!hand || !endc || n < 2) return;
+  const hr = rel(hand), er = rel(endc), w = cards[0].offsetWidth;
+  const room = Math.min(hr.x + hr.w, er.x - 6) - hr.x, span = cards.reduce((t, c) => t + rel(c, true).w, 0) * .98;
+  if (span > room) { const m = -Math.ceil((span - room) / (n - 1) / 2) - 6; cards.forEach(c => { c.style.marginLeft = c.style.marginRight = `${m}px`; }); }
 }
 function drawIn(P, base) {
   if (!P || !S.C) return;
