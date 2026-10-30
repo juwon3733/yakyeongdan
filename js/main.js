@@ -205,6 +205,7 @@ app.addEventListener('click', e => {
   else if (D.mate) S.mate = D.mate;
   else if (D.costume) { const [k, on] = D.costume.split(':'); setCostume(k, on === '1'); }
   else if (D.ctab) S.codexTab = D.ctab;
+  else if (D.extab) { S.exTab = D.extab; S.exMsg = ''; }
   else if (D.replay) { showCut(D.replay, false, true); return; }
   else if ('home' in D) { setHallTime(!!S.G?.won); S.G = null; S.C = null; S.view = 'base'; S.baseTrio = null; }
   else if (D.restline) {   // 본부: 쉬는 동료에게 말 걸기 → 다음 대사

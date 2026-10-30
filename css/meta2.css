@@ -1,0 +1,63 @@
+/* 교환소 (js/render/base.js exchangeView): 탭 셋 + 얼굴·그림 칸에 값 보석 */
+.exscr{display:flex;flex-direction:column;gap:6px;height:100%;padding:6px 10px}
+.exhead{display:flex;align-items:center;gap:12px}
+.exhead h2{font-size:18px;color:var(--gold);text-shadow:2px 2px 0 #000}
+.extabs{display:flex;gap:4px}
+.exbody{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column;gap:8px;padding:2px}
+.exgrid{display:flex;flex-wrap:wrap;gap:6px}
+.extile{position:relative;width:74px;display:flex;flex-direction:column;align-items:center;gap:1px;padding:0 0 4px;background:none;border:0;box-shadow:none;filter:none}
+.extile .fc{display:block;width:56px;height:56px;overflow:hidden;background:#0b0b18;border:2px solid #4a4c7a;box-shadow:2px 2px 0 #000}
+.extile.r5 .fc{border-color:var(--gold)}.extile.r4 .fc{border-color:#9a6ae0}
+.extile .fc img{width:56px;height:auto;display:block;image-rendering:pixelated}
+.extile .fc.sil img{filter:brightness(0) invert(.2) sepia(.6) hue-rotate(200deg)}
+.extile .fc.ic{display:grid;place-items:center;font-family:var(--f-disp);font-size:20px;color:var(--gold)}
+.extile .fc.ic img{width:44px;height:44px}
+.extile .nm{font-size:9px;color:#fff;white-space:nowrap;text-shadow:1px 1px 0 #000;max-width:74px;overflow:hidden;text-overflow:ellipsis}
+.extile small{font-size:8px;color:var(--gold);min-height:9px}
+.extile .pr{position:absolute;top:44px;right:2px;font-family:var(--f-disp);font-weight:400;font-size:9px;color:#241404;background:#e0b84a;padding:0 3px;box-shadow:1px 1px 0 #000}
+.extile .pr::before{content:"✦ "}
+.extile.new::after{content:"";position:absolute;top:-2px;left:6px;width:6px;height:6px;background:#7dff9a;box-shadow:1px 1px 0 #000}
+.extile:not(:disabled):hover .fc{transform:translateY(-3px);border-color:#fff}
+.extile:disabled{opacity:.45}
+.extile:disabled .pr{background:#5a5a6a;color:#ddd}
+.exmsg{margin:0;color:#7dff9a;font-size:10px;text-shadow:1px 1px 0 #000}
+
+/* 기록 (recordsView): 큰 숫자 넷 + 달 넷 + 빠른 조합(얼굴 셋) */
+.recscr{display:flex;flex-direction:column;gap:8px;padding:6px 10px;overflow:auto}
+.recscr > h2{font-size:18px;text-shadow:2px 2px 0 #000}
+.rbigs{display:flex;gap:10px}
+.rbig{flex:1;display:flex;flex-direction:column;align-items:center;padding:6px 0 4px;border:5px solid transparent;border-image:var(--fr-panel) 8 fill / 5px stretch;filter:drop-shadow(2px 2px 0 #000)}
+.rbig b{font-family:var(--f-disp);font-weight:400;font-size:26px;line-height:1;color:#fff;text-shadow:2px 2px 0 #000}
+.rbig.gold b{color:var(--gold)}
+.rbig small{font-size:9px;color:var(--dim)}
+.rbig.sm{flex:none;width:96px}.rbig.sm b{font-size:18px}
+.rmid{display:flex;gap:16px;align-items:flex-start}
+.rmoons{display:flex;gap:10px}
+.rmoon{display:flex;flex-direction:column;align-items:center;gap:1px}
+.rmoon img{width:30px;height:30px}
+.rmoon b{font-family:var(--f-disp);font-weight:400;font-size:16px;color:#fff;text-shadow:1px 1px 0 #000}
+.rmoon small{font-size:8.5px;color:var(--dim)}
+.rcombos{flex:1;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
+.rcombos h3{width:100%;margin:0}
+.rcombo{display:flex;align-items:center;gap:4px}
+.rcombo .fcs{display:flex}
+.rcombo .fcs img{width:20px;height:20px;object-fit:cover;object-position:50% 0;border:1px solid #000;margin-right:-4px;background:#0b0b18}
+.rcombo b{font-family:var(--f-disp);font-weight:400;font-size:11px;color:var(--gold);margin-left:4px}
+
+/* 매일의 밤 후보 여섯: 글 욱여넣은 상자 대신 얼굴 칸 + 이름 한 줄 (자세한 건 커서를 대면) */
+.dstage{display:flex;gap:6px;padding:8px 0 0}
+.dman{position:relative;width:58px;display:flex;flex-direction:column;align-items:center;gap:2px;padding:0;background:none;border:0;box-shadow:none;filter:none}
+.dman .fc{display:block;width:54px;height:54px;overflow:hidden;background:#0b0b18;border:2px solid #4a4c7a;box-shadow:2px 2px 0 #000}
+.dman.r5 .fc{border-color:var(--gold)}.dman.r4 .fc{border-color:#9a6ae0}
+.dman .fc img{width:54px;height:auto;display:block;image-rendering:pixelated}
+.dman .nm{font-size:9px;color:#d8d4ec;white-space:nowrap;text-shadow:1px 1px 0 #000}
+.dman:not(.on) .fc img{filter:brightness(.75)}
+.dman:hover .fc{transform:translateY(-3px)}
+.dman.on .fc{border-color:var(--c);box-shadow:2px 2px 0 #000,0 0 0 2px var(--c)}
+.dman.on::after{content:"✓";position:absolute;left:0;right:0;top:14px;text-align:center;font-family:var(--f-disp);font-size:18px;color:#fff;text-shadow:2px 2px 0 #000}
+.dman .borrow{position:absolute;top:-4px;right:-2px;font-style:normal;font-family:var(--f-disp);font-size:8px;color:#241404;background:#7ab0d8;padding:0 3px;box-shadow:1px 1px 0 #000}
+/* 고른 셋: 아래 바닥에 전투 스프라이트로 선다(빈자리는 발밑 빛만) */
+.dparty{flex:1;display:flex;justify-content:center;align-items:flex-end;gap:24px;min-height:0;background:radial-gradient(ellipse 46% 18% at 50% 92%,rgba(255,200,120,.12),transparent 70%)}
+.dparty img{width:96px;height:128px;object-fit:contain;object-position:50% 100%;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000);background:radial-gradient(ellipse 30% 4% at 50% 98%,rgba(0,0,0,.6),transparent)}
+.dparty .dslot{display:block;flex:none;width:96px;height:10px;margin-bottom:2px;background:radial-gradient(ellipse 40% 50% at 50% 50%,rgba(255,255,255,.1),transparent)}
+.dailyscr .dleft{display:flex;flex-direction:column}

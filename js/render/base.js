@@ -13,6 +13,7 @@ import { DEPTH, DEPTH_MAX } from '../data/depth.js';
 import { P, nextRate5, epNewCount, pickupNow, starsOf, costumeOpen, wearing, packCards, packsOpen, startUp, sigOpen, sigOf, duoSpecial,
   canExchange, exchangePrice, depthOpen, startPickOpen } from '../meta.js';
 import { stars, palOf, fmt, esc, cardHTML, charSrc } from './common.js';
+import { moonImg } from './sprites.js';
 import { REST_LINES, FIRST_LINES } from '../data/hublines.js';
 import { artURL } from '../art.js';
 import { achTab, historyBlock } from './daily.js';
@@ -240,26 +241,32 @@ export function pick5View() {
 }
 
 // 교환소 (§5): 별가루로 직접 사기
+// 교환소: 버튼 30여 개를 줄줄이 늘어놓던 표 대신 — 위 탭 셋(동료 · 의상·묶음 · 도구·대화), 아래는 얼굴·그림 칸에 값 보석. 칸을 누르면 바로 바꾼다
 export function exchangeView() {
-  const btn = (kind, arg, label) => {
+  const tab = ['char', 'gear', 'misc'].includes(S.exTab) ? S.exTab : 'char';
+  const tile = (kind, arg, pic, name, sub, cls = '') => {
     const price = exchangePrice(kind, arg), ok = canExchange(kind, arg);
-    return `<button type="button" class="exb" data-ex="${kind}:${arg ?? ''}" ${ok ? '' : 'disabled'}><span>${label}</span><b>${price ?? '-'}</b></button>`;
+    return `<button type="button" class="extile ${cls}" data-ex="${kind}:${arg ?? ''}" ${ok ? '' : 'disabled'}>${pic}<span class="nm">${name}</span>${sub ? `<small>${sub}</small>` : ''}<b class="pr">${price ?? '-'}</b></button>`;
   };
-  const chars = [5, 4, 3].map(r => `<div class="exrow"><span class="exh">${stars(r)} 동료 · ${EXCHANGE.char[r]}</span>${byRarity(r).map(k =>
-    btn('char', k, `${ROSTER[k].name}${P.owned[k] ? ` <small>별자리 ${starsOf(k)}${starsOf(k) >= SUMMON.maxStars ? ' (꽉 참)' : ''}</small>` : ' <small>새로</small>'}`)).join('')}</div>`).join('');
+  const face = k => `<span class="fc" style="--c:${ROSTER[k].col}"><img class="px" src="${charSrc(k, 'normal')}" alt=""></span>`;
   const own = ROSTER_IDS.filter(k => P.owned[k]);
-  const costumes = own.filter(k => !costumeOpen(k)).map(k => btn('costume', k, `${ROSTER[k].name} 두 번째 의상`)).join('') || '<span class="note small">모든 동료의 의상이 열렸다</span>';
-  const packs = own.filter(k => CHARACTERS[k] && packsOpen(k) < packCards(k).length).map(k => btn('pack', k, `${ROSTER[k].name} 묶음 ${packsOpen(k) + 1}`)).join('') || '<span class="note small">열 카드 묶음이 없다</span>';
-  const relics = Object.keys(RELICS).filter(k => ['c', 'r'].includes(RELICS[k].tier) && !P.startRelics.includes(k))
-    .map(k => `<span title="${esc(RELICS[k].text)}">${btn('relic', k, `${RELICS[k].name} <small>${RELIC_TIER_NAME[RELICS[k].tier]}</small>`)}</span>`).join('') || '<span class="note small">모두 열었다</span>';
-  return `<div class="epsel">${head()}
-    <h2>교환소 <small class="note">별가루로 직접 고른다. 운이 계속 나쁠 때의 안전망.</small></h2>
+  let body = '';
+  if (tab === 'char') body = [5, 4, 3].map(r => `<div class="exgrid">${byRarity(r).map(k =>
+    tile('char', k, P.owned[k] ? face(k) : `<span class="fc sil" style="--c:${ROSTER[k].col}"><img class="px" src="${charSrc(k, 'normal')}" alt=""></span>`, ROSTER[k].name,
+      P.owned[k] ? `${'✦'.repeat(starsOf(k))}${starsOf(k) >= SUMMON.maxStars ? ' 꽉 참' : ''}` : '', `r${r} ${P.owned[k] ? '' : 'new'}`)).join('')}</div>`).join('');
+  else if (tab === 'gear') body = `<div class="exgrid">${[
+    ...own.filter(k => !costumeOpen(k)).map(k => tile('costume', k, face(k), ROSTER[k].name, '두 번째 의상', 'cos')),
+    ...own.filter(k => CHARACTERS[k] && packsOpen(k) < packCards(k).length).map(k => tile('pack', k, face(k), ROSTER[k].name, `카드 묶음 ${packsOpen(k) + 1}`, 'pack')),
+  ].join('') || '<p class="note">지금은 바꿀 것이 없다.</p>'}</div>`;
+  else body = `<div class="exgrid">${Object.keys(RELICS).filter(k => ['c', 'r'].includes(RELICS[k].tier) && !P.startRelics.includes(k)).map(k => {
+    const ic = artURL(`icons/relic_${k}.png`);
+    return `<span data-tip="${esc(RELICS[k].text)}">${tile('relic', k, `<span class="fc ic">${ic ? `<img class="px" src="${ic}" alt="">` : esc(RELICS[k].name.slice(0, 1))}</span>`, RELICS[k].name, RELIC_TIER_NAME[RELICS[k].tier], 't-' + RELICS[k].tier)}</span>`;
+  }).join('')}${tile('talk', null, '<span class="fc ic talk">…</span>', '휴식 대화', `${P.talksSeen.length}/${TALKS.length}`)}</div>`;
+  const tabs = [['char', '동료'], ['gear', '의상·묶음'], ['misc', '도구·대화']].map(([k, l]) => `<button type="button" class="mini ${k === tab ? 'on' : ''}" data-extab="${k}">${l}</button>`).join('');
+  return `<div class="epsel exscr">${head()}
+    <div class="exhead"><h2>교환소</h2><div class="extabs">${tabs}</div></div>
     ${S.exMsg ? `<p class="exmsg">${esc(S.exMsg)}</p>` : ''}
-    ${chars}
-    <div class="exrow"><span class="exh">의상 · ${EXCHANGE.costume}</span>${costumes}</div>
-    <div class="exrow"><span class="exh">카드 묶음 · ${EXCHANGE.pack}</span>${packs}</div>
-    <div class="exrow"><span class="exh">시작 도구 · 흔함 ${EXCHANGE.relic.c} · 희귀 ${EXCHANGE.relic.r}</span>${relics}</div>
-    <div class="exrow"><span class="exh">휴식 대화 조각 · ${EXCHANGE.talk}</span>${btn('talk', null, `무작위 대화 하나 (${P.talksSeen.length}/${TALKS.length})`)}</div>
+    <div class="exbody">${body}</div>
   </div>`;
 }
 
@@ -369,21 +376,19 @@ const CODEX = {
 };
 
 // 기록 (§9)
+// 기록: 글 줄 목록 대신 — 위에 큰 숫자 넷(판·이긴 판·가장 빠른 도착·최고의 한 턴), 가운데 달 넷 승수(달 그림), 아래 빠른 조합과 최근 판
 export function recordsView() {
-  const combos = Object.entries(P.rec.combo).sort((a, b) => a[1] - b[1]).slice(0, 12)
-    .map(([k, v]) => `<tr><td>${k.split('+').map(id => ROSTER[id]?.name || id).join(' · ')}</td><td>${fmt(v)}</td></tr>`).join('') || '<tr><td class="note">아직 이긴 판이 없다</td><td></td></tr>';
-  const moons = Object.keys(MOONS).map(m => `<tr><td>${MOONS[m].name}</td><td>${P.rec.moons[m] || 0}승</td></tr>`).join('');
-  const depth = depthOpen()
-    ? `<p class="note">최고 단계 <b>${P.rec.depthBest}</b> / ${DEPTH_MAX}. 다음 단계: ${P.rec.depthBest < DEPTH_MAX ? esc(DEPTH[P.rec.depthBest + 1].text) : '다 깼다'}</p>`
-    : '<p class="note">「새벽」을 한 번 이기면 밤 오르기에서 고를 수 있다.</p>';
-  return `<div class="epsel">${head()}<h2>기록</h2>
-    <div class="recs">
-      <div><h3 class="sub">조합별 가장 빠른 도착</h3><table class="odds big">${combos}</table></div>
-      <div><h3 class="sub">달별 승리</h3><table class="odds big">${moons}</table>
-        <h3 class="sub">밤의 깊이</h3>${depth}
-        ${endlessRecords()}
-        <p class="note small">판 ${P.runs} · 이긴 판 ${P.wins}${P.best != null ? ` · 가장 빠른 도착 ${fmt(P.best)}` : ''}${startPickOpen() ? '' : ' · 첫 판을 끝내면 시작 도구 고르기가 열린다'}</p>
-        <p class="note small">최고의 한 턴 ${P.life.bestTurn} · 피해 100+ 턴 ${P.life.bigTurns}번 · 업적 ${P.achDone.length}</p></div>
+  const big = (n, l, cls = '') => `<div class="rbig ${cls}"><b>${n}</b><small>${l}</small></div>`;
+  const combos = Object.entries(P.rec.combo).sort((a, b) => a[1] - b[1]).slice(0, 6)
+    .map(([k, v]) => `<div class="rcombo"><span class="fcs">${k.split('+').map(id => ROSTER[id] ? `<img class="px" src="${charSrc(id, 'normal')}" alt="${ROSTER[id].name}">` : '').join('')}</span><b>${fmt(v)}</b></div>`).join('');
+  const moons = Object.keys(MOONS).map(m => `<div class="rmoon"><img class="px" src="${moonImg(m)}" alt=""><b>${P.rec.moons[m] || 0}</b><small>${MOONS[m].name}</small></div>`).join('');
+  return `<div class="epsel recscr">${head()}<h2>기록</h2>
+    <div class="rbigs">${big(P.runs, '판')}${big(P.wins, '이긴 판', 'gold')}${big(P.best != null ? fmt(P.best) : '—', '가장 빠른 도착')}${big(P.life.bestTurn, '최고의 한 턴')}</div>
+    <div class="rmid">
+      <div class="rmoons">${moons}</div>
+      <div class="rcombos">${combos ? `<h3 class="sub">빠른 조합</h3>${combos}` : ''}</div>
+      ${depthOpen() ? big(`${P.rec.depthBest}/${DEPTH_MAX}`, '밤의 깊이', 'sm') : ''}
     </div>
+    ${endlessRecords()}
     ${historyBlock()}</div>`;
 }

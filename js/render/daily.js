@@ -8,6 +8,7 @@ import { DAILY_SHARDS } from '../data/daily.js';
 import { P, owns, dailyToday } from '../meta.js';
 import { stars, fmt, esc, charSrc } from './common.js';
 import { moonImg } from './sprites.js';
+import { battleArt } from '../art.js';
 
 const ACT = { 1: '1막', 2: '2막', 3: '3막' };
 const head = () => `<div class="bhead"><button type="button" class="mini" data-view="base">‹ 본부</button><span class="wallet"><b>별 조각 ${P.shards}</b> · 별가루 ${P.dust}</span></div>`;
@@ -16,9 +17,8 @@ export function dailyView() {
   const D = dailyToday(), picked = (S.dpicked || []).filter(k => D.cands.includes(k));
   const mates = D.cands.map(k => {
     const r = ROSTER[k], c = CHARACTERS[k], on = picked.includes(k);
-    return `<button type="button" class="mate dmate r${r.rarity} ${on ? 'on' : ''}" style="--c:${r.col}" data-dpick="${k}" aria-pressed="${on}" title="${esc(`${c.passive.name}: ${c.passive.text}`)}">
-      <img class="px" src="${charSrc(k)}" alt=""><span class="tx"><span class="nm">${r.name}</span> <span class="stars">${stars(r.rarity)}</span>
-      <span class="rl">${r.role} · 체력 ${c.maxHp}${owns(k) ? '' : ' · <b class="borrow">빌린 동료</b>'}</span></span></button>`;
+    return `<button type="button" class="dman r${r.rarity} ${on ? 'on' : ''}" style="--c:${r.col}" data-dpick="${k}" aria-pressed="${on}" data-tip="${esc(`${r.name} ${'★'.repeat(r.rarity)} · ${r.role} · 체력 ${c.maxHp}${owns(k) ? '' : ' · 빌린 동료'}\n${c.passive.name}: ${c.passive.text}`)}">
+      <span class="fc"><img class="px" src="${charSrc(k, 'normal')}" alt=""></span><span class="nm">${r.name}</span>${owns(k) ? '' : '<i class="borrow">빌림</i>'}</button>`;
   }).join('');
   const rec = D.rec;
   const past = Object.entries(P.daily).filter(([k]) => k !== D.key).sort((a, b) => b[0] < a[0] ? -1 : 1).slice(0, 7)
@@ -28,17 +28,16 @@ export function dailyView() {
       <h2>매일의 밤 <small class="note">${D.key.replace(/-/g, '.')}</small></h2>
       <div class="drule"><span class="chip">오늘의 규칙</span><b>${esc(D.rule.name)}</b><p>${esc(D.rule.text)}</p></div>
       <p class="note"><img class="px moon" src="${moonImg(D.moon)}" alt=""> 달 <b>${MOONS[D.moon].name}</b> · ${esc(MOONS[D.moon].text)}</p>
-      <p class="note">지도·달·보상이 날짜로 정해진다. 오늘 누구나 같은 밤을 오른다. 동료 후보 여섯 중 셋을 고른다(없는 동료는 빌려 온다).</p>
-      <div class="pick dpick">${mates}</div>
+      <div class="dstage">${mates}</div>
+      <div class="dparty">${[0, 1, 2].map(i => picked[i] ? `<img class="px" src="${battleArt(picked[i], 'idle') || charSrc(picked[i])}" alt="">` : '<i class="dslot"></i>').join('')}</div>
     </div>
     <div class="dright">
       <h2>오늘 기록</h2>
       <p class="dbest">${rec?.won ? `<b>${fmt(rec.best)}</b> 도착 · 오늘 격파 완료` : rec ? `아직 못 깼다 · ${rec.tries}번 도전` : '아직 도전 안 함'}</p>
-      <p class="note">${rec?.won ? '다시 올라 더 빠른 도착을 노릴 수 있다(보상은 하루 한 번).' : `처음 깨면 별 조각 <b>+${DAILY_SHARDS}</b>.`}</p>
+      ${rec?.won ? '' : `<p class="note">처음 깨면 별 조각 <b>+${DAILY_SHARDS}</b></p>`}
       <button type="button" class="primary go" data-dailystart ${picked.length === 3 ? '' : 'disabled'}>오늘 밤 오르기 (${picked.length}/3)</button>
       <h3 class="sub">지난 날</h3>
       <table class="odds big">${past || '<tr><td class="note">아직 없다</td><td></td></tr>'}</table>
-      <p class="note small">매일의 밤을 깬 날 ${P.life.dailyWins}일</p>
     </div></div>`;
 }
 

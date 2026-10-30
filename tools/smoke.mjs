@@ -335,6 +335,7 @@ try {
     await page.evaluate(() => { window.__yk.dust(200); window.__yk.S.view = 'exchange'; window.__yk.render(); });
     const d0 = await page.evaluate(() => window.__yk.P().dust);
     await page.click('[data-ex="char:dora"]');
+    await page.click('[data-extab="misc"]');   // 도구는 「도구·대화」 탭
     await page.click('[data-ex="relic:umbrella"]');
     const ex = await page.evaluate(() => ({ dora: !!window.__yk.P().owned.dora, umb: window.__yk.P().startRelics.includes('umbrella'), dust: window.__yk.P().dust }));
     if (ex.dora && ex.umb && ex.dust === d0 - 80 - 20 && await page.$('.exmsg')) { seen.exchange = true; console.log('meta: 교환소 → 도라 · 우산'); }
