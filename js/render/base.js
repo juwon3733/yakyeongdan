@@ -134,7 +134,7 @@ function pityBar(r5) {
 export function oddsView() {
   const pk = pickupNow();
   const c4 = SUMMON.rate4 * SUMMON.char4Share, c3 = (1 - SUMMON.rate5 - SUMMON.rate4) * SUMMON.char3Share;
-  const row = (r, list, each) => `<tr><th>${stars(r)}</th><td>${list.map(k => `${ROSTER[k].name}${k === pk.five || pk.four.includes(k) ? '<b class="pkmark">픽업</b>' : ''}`).join(' · ')}</td><td>${each}</td></tr>`;
+  const row = (r, list, each) => `<tr><th>${stars(r)}</th><td class="ofaces">${list.map(k => `<span class="oface ${k === pk.five || pk.four.includes(k) ? 'pk' : ''}" style="--c:${ROSTER[k].col}" title="${esc(ROSTER[k].name)}"><span class="of">${fcImg(k, 1.7)}</span><small>${ROSTER[k].name}</small>${k === pk.five || pk.four.includes(k) ? '<b class="pkmark">픽업</b>' : ''}</span>`).join('')}</td><td>${each}</td></tr>`;
   const n4 = byRarity(4).length - 2;
   return `<div class="epsel">
     ${head('summon', '별 소환')}
