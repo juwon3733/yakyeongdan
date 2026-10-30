@@ -284,3 +284,8 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 
 /* 승리·턴 띠 글자: 금색 오프셋 그림자로 두 겹처럼 보이던 것 → 다른 큰 제목과 같은 검은 2px 그림자 */
 #fx .jbanner span{text-shadow:2px 2px 0 #000,-1px 0 0 #000,0 -1px 0 #000;color:#fff4d0}
+/* 승리 띠: 뒤로 금빛 빛줄기가 돌고, 글자 위로 빛이 한 번 쓸고 지나간다 (juice.js winBurst) */
+#fx .jbanner.win{overflow:visible}
+#fx .jbanner.win span{position:relative}
+#fx .jbanner.win span::after{content:"";position:absolute;inset:-4px -10px;background:linear-gradient(100deg,transparent 42%,rgba(255,250,220,.85) 50%,transparent 58%) 0 0/300% 100% no-repeat;mix-blend-mode:screen;pointer-events:none;animation:jwinSweep .7s steps(10) .15s both}
+@keyframes jwinSweep{from{background-position:100% 0}to{background-position:0 0}}
