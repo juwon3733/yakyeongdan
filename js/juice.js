@@ -262,7 +262,7 @@ export function afterRender(events = []) {
   chainPop(P);
   // 화면 넘어감: 전투 → 보상(승리), 막이 바뀜(올라가는 장면)
   const G = S.G;
-  if (P && G && P.screen === 'combat' && G.screen === 'reward') { at(t + 120, () => { sfx('win'); winPose(); }); at(t + 520, () => banner('승리', 'win')); dealReward(t + 820); }
+  if (P && G && P.screen === 'combat' && G.screen === 'reward') { at(t + 120, () => { sfx('win'); winPose(); }); at(t + 520, () => { banner('승리', 'win'); winBurst(); }); dealReward(t + 820); }
   if (G && G.screen === 'result' && P && P.screen !== 'result') countUp(frozen ? t + 650 : 0);
   if (G && S.view === 'run' && G.screen === 'map' && !G.tutorial && P && (P.seed !== G.seed || P.act !== G.act)) {
     const t0 = P.seed !== G.seed ? 0 : t + 200;
@@ -768,7 +768,7 @@ function hitFoe(e, P) {
   playFx(own ? `${e.actor}_atk` : FX_OF[st] || 'explode', x, y, big ? 96 : 72, 55, false, own ? '' : tintTo(col));
   if (st === 'slash') slashFx(x, y, col);
   else if (st === 'boom') { const from = e.actor && allyEl(e.actor); if (from) tracer(rel(from).cx, rel(from).y + 20, x, y, '#ffd890'); boomFx(x, y); }
-  else if (st === 'meteor') { starTrail(x - 90, 0, x, y, '#bcd0ff'); starTrail(x - 70, 0, x + 6, y - 4, '#ffffff'); ring(x, y, '#cfe0ff', 4, 34, 14); sparks(x, y, '#fff6c8', 16, 2.4); }
+  else if (st === 'meteor') { if (hasSfx('meteor')) sfx('meteor', { vol: .6 }); starTrail(x - 90, 0, x, y, '#bcd0ff'); starTrail(x - 70, 0, x + 6, y - 4, '#ffffff'); ring(x, y, '#cfe0ff', 4, 34, 14); sparks(x, y, '#fff6c8', 16, 2.4); }
   else if (st === 'star') { const from = allyEl('sion'); if (from) starTrail(rel(from).cx, rel(from).y + 14, x, y, col); sparks(x, y, '#fff6c8', 10, 1.6); }
   else if (st === 'mist') { mistFx(x, y); sparks(x, y, '#c8ffb0', 6, 1.2); }
   else if (st === 'pierce') { tracer(x - 40, y - 50, x + 6, y + 6, '#f0f4ff'); sparks(x, y, '#ffffff', 10, 2); }
@@ -962,6 +962,15 @@ function banner(text, cls) {
     { transform: 'translate(-50%,-50%) scaleY(0)', opacity: 0 },
   ], { duration: cls === 'win' ? 900 : 640, easing: 'cubic-bezier(.25,.8,.35,1)' }).onfinish = () => b.remove();
   b.querySelector('span').animate([{ transform: 'translateX(-30px)' }, { transform: 'translateX(0)', offset: .2 }, { transform: 'translateX(8px)' }], { duration: cls === 'win' ? 900 : 640, easing: 'cubic-bezier(.25,.8,.35,1)' });
+}
+// 승리 띠가 펼쳐질 때: 금빛 번쩍 + 띠 뒤로 빛줄기 + 별가루가 양옆으로 터진다
+function winBurst() {
+  if (calmNow()) return;
+  const W = stage.offsetWidth, H = stage.offsetHeight, x = W / 2, y = H * .17;
+  flash(); ring(x, y, '#ffe08a', 10, 160, 22); ring(x, y, '#ffffff', 6, 100, 14);
+  for (let k = 0; k < 2; k++) { add({ k: 'line', x0: x - 20, y0: y, x1: x - 260, y1: y + rnd(-6, 6), col: k ? '#ffe08a' : '#ffffff', speed: 6, life: 12, s: 3 }); add({ k: 'line', x0: x + 20, y0: y, x1: x + 260, y1: y + rnd(-6, 6), col: k ? '#ffe08a' : '#ffffff', speed: 6, life: 12, s: 3 }); }
+  for (let k = 0; k < 36; k++) { const sd = k % 2 ? 1 : -1; add({ k: 'dot', x: x + sd * rnd(30, 90), y: y + rnd(-14, 14), vx: sd * rnd(1.5, 4.5), vy: rnd(-2.6, .4), g: .07, life: Math.round(rnd(22, 40)), col: k % 3 ? '#ffe08a' : '#ffffff', s: k % 4 ? 2 : 3 }); }
+  at(260, () => sparks(x, y, '#fff6c8', 14, 2));
 }
 // 보상 카드가 한 장씩 내려앉는다
 function dealReward(t0) {
