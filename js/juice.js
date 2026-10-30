@@ -206,7 +206,7 @@ export function afterRender(events = []) {
         document.body.classList.add('nohov');
         at(t, () => actFx(e, sp));
         // ★5 전용 필살은 공중에 떴다 내리찍는 등 길어서, 적중(아래 hitFoe)을 그 내리찍는 순간에 맞춰 늦춘다
-        flyCard(e, P, t); t += 170 + (sp ? sigLead(e) : 0); break;
+        flyCard(e, P, t); t += 230 + (sp ? sigLead(e) : 0); break;   // 카드가 크게 펼쳐졌다 날아가는 동안
       }
       case 'hitFoe': { const s = t; at(s, () => hitFoe(e, P)); mark('f:' + e.i, s); t += foePhase ? 90 : 75; if (!e.counter) t = addDmg((e.dmg || 0) + (e.bleed || 0), s, t); break; }
       case 'kill': { const s = t + 40; at(s, () => killFoe(e, P)); t += 160; break; }
@@ -341,14 +341,19 @@ function flyCard(e, P, t0) {
   const tgt = caster || (e.foe != null ? foeEl(e.foe) : root()?.querySelector('.field'));
   const r = tgt ? rel(tgt) : null, to = r ? { cx: r.cx, cy: caster ? r.y + 6 : r.cy } : { cx: c.r.cx, cy: c.r.cy - 80 };
   const dx = to.cx - c.r.cx, dy = to.cy - c.r.cy;
+  // 손에서 떠올라 크게 펼쳐 카드 그림을 보여 준 뒤(레전더리는 더 크고 오래), 쓰는 동료 머리 위로 날아가 빛으로 흩어진다
+  const leg = cardData(e.id)?.rarity === 'r' || e.ch === 'duo', K = leg ? 1.75 : 1.4, D = leg ? 380 : 300;
   ghost.animate([
-    { transform: 'translate(0,0) scale(1) rotate(0)', opacity: 1, filter: 'none' },
-    { transform: `translate(${dx * .5}px,${dy * .55 - 14}px) scale(.9) rotate(${dx > 0 ? -4 : 4}deg)`, opacity: 1, offset: .45 },
-    { transform: `translate(${dx}px,${dy}px) scale(.55) rotate(0)`, opacity: 1, filter: 'brightness(2.2)', offset: .8 },
-    { transform: `translate(${dx}px,${dy - 4}px) scale(.62)`, opacity: 0, filter: 'brightness(3)' },
-  ], { duration: 240, delay: t0, easing: 'cubic-bezier(.3,.6,.3,1)', fill: 'backwards' }).onfinish = () => ghost.remove();
+    { transform: 'translate(0,0) scale(1)', opacity: 1, filter: 'none' },
+    { transform: `translate(0,-34px) scale(${K})`, opacity: 1, filter: 'brightness(1.25)', offset: .3, easing: 'cubic-bezier(.2,.9,.3,1)' },
+    { transform: `translate(0,-38px) scale(${K})`, opacity: 1, filter: 'brightness(1.1)', offset: .48, easing: 'cubic-bezier(.6,0,.9,.5)' },
+    { transform: `translate(${dx}px,${dy}px) scale(.5)`, opacity: 1, filter: 'brightness(2.4)', offset: .86 },
+    { transform: `translate(${dx}px,${dy - 4}px) scale(.6)`, opacity: 0, filter: 'brightness(3)' },
+  ], { duration: D, delay: t0, fill: 'backwards' }).onfinish = () => ghost.remove();
+  if (leg) at(t0 + D * .3, () => { const g = ghost.getBoundingClientRect(), sr = stage.getBoundingClientRect(), k = sr.width / stage.offsetWidth || 1;
+    const x = (g.left + g.width / 2 - sr.left) / k, y = (g.top + g.height / 2 - sr.top) / k; ring(x, y, '#ffe090', 10, 70, 14); sparks(x, y, '#fff1b0', 16, 2.4); });
   const col = colOf(e.actor || e.a || e.ch);
-  at(t0 + 200, () => {
+  at(t0 + D - 40, () => {
     ring(to.cx, to.cy, col, 4, 20, 10);
     // 흩어지는 빛 조각이 동료 쪽으로 쏟아진다
     for (let k = 0; k < 16; k++) add({ k: 'dot', x: to.cx + rnd(-10, 10), y: to.cy + rnd(-12, 4), vx: rnd(-1.2, 1.2), vy: rnd(-.6, 1.4), g: .05, life: rnd(12, 22), col: k % 3 ? col : '#ffffff', s: k % 4 ? 1 : 2 });
@@ -959,6 +964,12 @@ function dealReward(t0) {
     el.classList.add('cardback');
     const tf = t0 + k * 110 + 300;   // 내려앉자마자 뒤집힘(빈 뒷면이 오래 보이지 않게)
     at(tf, () => { if (!hush) el.animate([{ transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }], { duration: 90, easing: 'cubic-bezier(.25,.8,.35,1)' }); });
+    if (el.classList.contains('r-r') && !hush) at(tf + 90, () => {   // 레전더리: 금빛 기둥 + 별 소리
+      const r = rel(el); sfx('star', { vol: .9, rate: 1.2 });
+      const p = document.createElement('div'); p.className = 'jpillar'; Object.assign(p.style, { left: `${r.cx - 30}px`, top: '0px', height: `${r.y + r.h}px` }); layer.append(p);
+      p.animate([{ opacity: 0, transform: 'scaleX(.2)' }, { opacity: 1, transform: 'scaleX(1)', offset: .2 }, { opacity: 0, transform: 'scaleX(1.3)' }], { duration: 900, easing: 'ease-out' }).onfinish = () => p.remove();
+      ring(r.cx, r.cy, '#ffe090', 10, 90, 18); sparks(r.cx, r.cy, '#fff1b0', 26, 3);
+    });
     at(tf + 90, () => { el.classList.remove('cardback'); if (!hush) el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 110, easing: 'cubic-bezier(.25,.8,.35,1)' }); sfx('flip', { vol: .7, rate: 1 + k * .08 }); });
   });
   const gold = app()?.querySelector('[data-screen="reward"] .center > .note');

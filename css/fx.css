@@ -280,3 +280,4 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 #stage.calm .card.r-r > .lgc{animation:none}
 .card.r-r{overflow:visible}
 .card.r-r > .art{overflow:hidden}
+#fx .jpillar{position:absolute;width:60px;z-index:4;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,226,140,.75) 40%,#fff6d0 50%,rgba(255,226,140,.75) 60%,transparent);mix-blend-mode:screen;transform-origin:50% 100%}

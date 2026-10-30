@@ -5,7 +5,7 @@ import { TALKS } from '../data/talks.js';
 import { MOONS } from '../data/moons.js';
 import { CHARACTERS } from '../data/characters.js';
 import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
-import { DUOS, canUpgrade } from '../data/cards.js';
+import { DUOS, canUpgrade, cardData } from '../data/cards.js';
 import { RULES, ACT_NAME, SHOP } from '../data/rules.js';
 import { grantRun, P, mvpOf } from '../meta.js';
 import { cardHTML, fmt, face, esc, charSrc } from './common.js';
@@ -169,11 +169,23 @@ export function resultView() {
       <div class="acts"><button type="button" class="primary" data-home>본부로</button><button type="button" data-view="party">다시 오르기</button>${climbOnButton(G)}</div>
     </div></div>`;
 }
+// 덱: 동료별로 묶어(대열 순서, 저주·듀오는 끝) 레전더리 → 에픽 → 레어 순, 카드 그림이 보이게 격자로
+const RORD = { r: 0, duo: 0, u: 1, c: 2, curse: 3 };
+function deckGroups(deck) {
+  const by = new Map();
+  for (const id of deck) { const d = cardData(id), k = d.ch === 'duo' ? 'duo' : d.ch; if (!by.has(k)) by.set(k, []); by.get(k).push(id); }
+  const order = [...(S.G.formation || []), 'duo', 'curse'].filter(k => by.has(k)).concat([...by.keys()].filter(k => !(S.G.formation || []).includes(k) && k !== 'duo' && k !== 'curse'));
+  return order.map(k => {
+    const ids = by.get(k).sort((a, b) => (RORD[cardData(a).rarity] ?? 2) - (RORD[cardData(b).rarity] ?? 2) || cardData(a).name.localeCompare(cardData(b).name));
+    const nm = k === 'duo' ? '듀오' : k === 'curse' ? '저주' : (CHARACTERS[k]?.name || k), col = CHARACTERS[k]?.col || '#c9d2f0';
+    return `<div class="dkgrp" style="--c:${col}"><h3>${nm} <small>${ids.length}</small></h3><div class="dkgrid">${ids.map(id => cardHTML(id, true, 'none')).join('')}</div></div>`;
+  }).join('');
+}
 export function deckModal() {
   const G = S.G;
   return `<div class="box" role="dialog" aria-label="덱"><h2>도구 ${G.relics.length}개 · 별빛 ${G.gold}</h2>
     <div class="relicall">${G.relics.map(id => relicBox(id, G.used[id] ? ' (썼다)' : '')).join('')}</div>
     <h2>덱 ${G.deck.length}장</h2>
-    <div class="hand big">${G.deck.slice().sort().map(id => cardHTML(id, true, 'none')).join('')}</div>
+    ${deckGroups(G.deck)}
     <button type="button" data-close>닫기</button></div>`;
 }
