@@ -96,3 +96,8 @@
 /* 앞으로 갈 칸: 회색으로 죽어 보이던 것 → 제 색은 살리고 조금만 어둡게(종류가 한눈에) + 칸 밑 돌 받침 */
 .towermap .mapgrid .node.future .ic{filter:brightness(.82) saturate(.85) drop-shadow(2px 2px 0 #000)}
 .towermap .mapgrid .node::before{content:"";position:absolute;left:50%;bottom:2px;width:26px;height:6px;transform:translateX(-50%);background:radial-gradient(ellipse 50% 50%,rgba(0,0,0,.55),transparent 75%);z-index:-1}
+/* 지도: 갈 수 없는 위층 칸은 더 어둡게(지금 고를 칸만 또렷), 고를 칸은 살짝 들썩 */
+.towermap .mapgrid .node.future .ic{filter:brightness(.62) saturate(.7) drop-shadow(2px 2px 0 #000)}
+.towermap .mapgrid .node.now .ic{animation:yk-nodebob 1.2s steps(2) infinite}
+@keyframes yk-nodebob{50%{transform:translateY(-2px)}}
+#stage.calm .towermap .mapgrid .node.now .ic{animation:none}

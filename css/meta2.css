@@ -214,3 +214,5 @@
 .dparty .dslot{width:72px;height:104px;margin-bottom:4px;background:none;border:2px dashed rgba(201,210,240,.25);position:relative}
 .dparty .dslot::after{content:"?";position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-disp);font-style:normal;font-size:28px;color:rgba(201,210,240,.25)}
 .dparty{border-top:0;margin-top:14px;padding-bottom:10px}
+/* 교환소: 안 가진 동료마다 붙던 초록 네모(뜻을 알 수 없음) 제거 */
+.extile.new::after{display:none}

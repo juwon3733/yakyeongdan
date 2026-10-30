@@ -307,7 +307,8 @@ function sounds(a, b) {
 // ---------- 소리 버튼 (위 띠, 파티 고르기·본부 밖 화면 머리줄) — 타이틀·본부 메뉴에는 넣지 않는다(M 키·설정으로) ----------
 function placeButton() {
   if (document.querySelector('[data-sound]')) return;
-  const host = document.querySelector('.topbar [data-deck]') || document.querySelector('.thead, .bhead');
+  // 판 위 띠(전투·지도 등)에만. 본부 밖 화면 머리줄마다 제목 옆에 떠 있던 단추는 뺐다(설정 음량·M 키로)
+  const host = document.querySelector('.topbar [data-deck]');
   if (!host) return;
   const b = document.createElement('button');
   b.type = 'button'; b.className = 'mini'; b.dataset.sound = ''; b.dataset.lv = level; b.textContent = LABELS[level];
