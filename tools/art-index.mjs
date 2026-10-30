@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 import { spriteBox } from './sprite-box.mjs';
 
 const ROOT = fileURLToPath(new URL('../assets/', import.meta.url));
-const DIRS = ['chars', 'sprites', 'fx', 'cards', 'cutins', 'cg', 'enemies', 'bg', 'title', 'summon', 'icons'];
+const DIRS = ['chars', 'sprites', 'fx', 'cards', 'cutins', 'cg', 'enemies', 'bg', 'title', 'summon', 'icons', 'ui'];
 const files = [];
 for (const d of DIRS) {
   let names = [];

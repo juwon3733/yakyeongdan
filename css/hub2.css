@@ -104,3 +104,7 @@
 @keyframes yk-cur{50%{transform:translateX(3px)}}
 .tmenu > .note{text-shadow:1px 1px 0 #000}
 .tmenu button:focus-visible{outline:0}
+/* 도트 로고 그림(ui/logo.png)이 있으면: 글자 간판 꾸밈(별)은 끄고 원본 반 크기(정수배) */
+.tmenu h1:has(.tlogo)::after{display:none}
+.tmenu h1 .tlogo{width:288px;height:96px;margin-left:-14px}
+.tmenu button.firstgo,.tmenu button.firstgo:hover{animation:none;box-shadow:none;outline:0;border:0}
