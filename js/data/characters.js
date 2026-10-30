@@ -138,7 +138,7 @@ export const CHARACTERS = {
     passive: { name: '유성의 맹세',
       lines: [['trait', '', '전투를 유성 2로 시작. 내 턴이 시작될 때 유성이 2 이상이면 별똥이 떨어져 무작위 적에게 유성×4 피해.'],
         ['keyword', '', '에스텔 카드를 쓸 때마다 유성 +1(최대 6). 에스텔 공격 카드 피해 +유성.'],
-        ['burst', '유성우', '유성이 6이 되는 순간 모든 적 피해 20, 유성은 4로.']],
+        ['burst', '유성우', '유성이 6이 되는 순간 모든 적 피해 20, 유성은 3으로.']],
       onCombatStart: c => { c.comet = 2; },
       onTurnStart: (c, e) => { if ((c.comet || 0) >= 2) e.hitRandom(c.comet * 4); },
       beforeCard: (c, card) => { if (card.ch === 'estelle' && card.atk) c.bonus += c.comet || 0; },
@@ -146,7 +146,7 @@ export const CHARACTERS = {
       afterCard: (c, card, pick, e) => {
         if (card.ch !== 'estelle') return;
         c.comet = Math.min(6, (c.comet || 0) + 1);
-        if (c.comet >= 6) { e.burst('estelle', '유성우'); e.hitAll(20); c.comet = 4; }
+        if (c.comet >= 6) { e.burst('estelle', '유성우'); e.hitAll(20); c.comet = 3; }
       } },
   },
   // ---------- ★4 (나머지) ----------
@@ -173,10 +173,12 @@ export const CHARACTERS = {
     ds: '별빛(돈)을 써서 세게 친다.',
     start: ['mari.coin', 'mari.loot', 'mari.rum', 'mari.cannon'],
     passive: { name: '선장의 몫',
-      lines: [['trait', '', '별빛을 화력으로 바꾼다.'], ['keyword', '', '전투에서 이기면 별빛 +5, 마리아나 카드로 적을 쓰러뜨리면 +5.'],
+      lines: [['trait', '', '별빛을 화력으로 바꾼다.'], ['keyword', '', '마리아나 공격 피해 +3. 전투에서 이기면 별빛 +5, 마리아나 카드로 적을 쓰러뜨리면 +5.'],
         ['burst', '약탈의 밤', '별빛이 30 이상이면 별빛 쓰는 카드가 별빛을 쓰지 않고 최대 효과.']],
       onWin: (G, x) => x.gold(5),
-      onKill: (c, f, e) => { if (c.actor === 'mariana') e.gold(5); } },
+      onKill: (c, f, e) => { if (c.actor === 'mariana') e.gold(5); },
+      beforeCard: (c, card) => { if (card.ch === 'mariana' && card.atk) c.bonus += 3; },
+      preview: (c, card) => card.ch === 'mariana' && card.atk ? 3 : 0 },
   },
   tomori: {
     name: '토모리', role: '등대지기의 손녀', rarity: 4, maxHp: 28, col: '#f0d040', long: true, pal: pal('tomori'),
@@ -252,9 +254,10 @@ export const CHARACTERS = {
     ds: '전투 중에 손패 카드를 강화한다.',
     start: ['dora.hammer', 'dora.hammer', 'dora.temper', 'dora.repair'],
     passive: { name: '손질',
-      lines: [['trait', '', '전투 중에 카드를 강화한다(담금질). 휴식 칸 손질은 1장 더.'],
+      lines: [['trait', '', '전투 중에 카드를 강화한다(담금질). 휴식 칸 손질은 1장 더. 전투 시작에 방어 8.'],
         ['burst', '명장', '한 전투에 담금질 3번째부터 「++」(강화판 수치 +50%)가 된다.']],
-      smithExtra: 1 },
+      smithExtra: 1,
+      onCombatStart: (c, e) => { e.guard(8, 'dora'); } },
   },
   gordon: {
     name: '고든', role: '요리사', rarity: 3, maxHp: 40, col: '#e0d0b0', long: false, pal: pal('gordon'),
