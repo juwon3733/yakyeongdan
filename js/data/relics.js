@@ -78,7 +78,7 @@ export const RELICS = {
   sig_bertha:   { name: '낡은 안내 깃발', tier: 'sig', owner: 'bertha', text: '강적 칸에 드는 시간 −8분.', eliteTime: -8 },
   sig_fukuro:   { name: '행운 고양이', tier: 'sig', owner: 'fukuro', text: '전투에서 이기면 별빛 +6.', winGold: 6 },
 };
-export const RELIC_TIER_NAME = { start: '시작', c: '흔함', u: '보통', r: '희귀', boss: '보스', sig: '전용' };
+export const RELIC_TIER_NAME = { start: '시작', c: '레어', u: '에픽', r: '레전더리', boss: '보스', sig: '전용' };
 // 강적·사건·야시장에서 나오는 도구 등급 확률 (흔함 50 / 보통 35 / 희귀 15)
 export const RELIC_ODDS = { c: .5, u: .35, r: .15 };
 export const START_RELIC = 'old_watch';

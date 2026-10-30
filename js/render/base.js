@@ -155,9 +155,9 @@ export function oddsView() {
       <tr><th>등급</th><td>나오는 것</td><td>확률</td></tr>
       ${row(5, byRarity(5), `${pct(SUMMON.rate5)} (픽업 ${ROSTER[pk.five].name} ${pct(SUMMON.rate5 * SUMMON.pickShare5)}, 나머지 셋 각 ${pct(SUMMON.rate5 * (1 - SUMMON.pickShare5) / 3)})`)}
       ${row(4, byRarity(4), `동료 ${pct(c4)} (그중 ${pct(SUMMON.pickShare4)}는 픽업 둘 중 하나, 나머지는 ★4 ${n4 + 2}명 중 하나)`)}
-      <tr><th>★4</th><td>동료 의상 · 희귀 도구 · 카드 묶음</td><td>${pct(SUMMON.rate4 - c4)} (셋 같은 확률)</td></tr>
+      <tr><th>★4</th><td>동료 의상 · 레전더리 도구 · 카드 묶음</td><td>${pct(SUMMON.rate4 - c4)} (셋 같은 확률)</td></tr>
       ${row(3, byRarity(3), `동료 ${pct(c3)} (${byRarity(3).length}명 같은 확률)`)}
-      <tr><th>★3</th><td>흔한 도구 · 별가루 10 · 휴식 대화 조각</td><td>${pct(1 - SUMMON.rate5 - SUMMON.rate4 - c3)} (셋 같은 확률)</td></tr>
+      <tr><th>★3</th><td>레어 도구 · 별가루 10 · 휴식 대화 조각</td><td>${pct(1 - SUMMON.rate5 - SUMMON.rate4 - c3)} (셋 같은 확률)</td></tr>
     </table></details>
     <details class="fold"><summary>천장 · 확정 규칙</summary>
     <ul class="note rules">
@@ -365,7 +365,7 @@ const CODEX = {
       const seen = P.foesSeen.includes(k), beat = P.foesBeaten.includes(k);
       return `<div class="centry ${seen ? '' : 'none'}"><b>${seen ? esc(FOE[k].name) : '???'}</b><small>${seen ? `체력 ${FOE[k].hp}${beat ? ' · 이김' : ''}` : ''}</small></div>`;
     }).join('')}</div>
-    <p class="note">속성 ${(P.affixSeen || []).length}/${Object.keys(AFFIX).length} · 강적과 2막부터 일부 적에게 붙는다. 이기면 별빛과 희귀 카드 확률이 오른다.</p>
+    <p class="note">속성 ${(P.affixSeen || []).length}/${Object.keys(AFFIX).length} · 강적과 2막부터 일부 적에게 붙는다. 이기면 별빛과 레전더리 카드 확률이 오른다.</p>
     <div class="axlist">${Object.entries(AFFIX).map(([k, a]) => { const seen = (P.affixSeen || []).includes(k); return `<div class="axi ${seen ? '' : 'unseen'}" style="--ax:${a.col}"><b>${seen ? a.pre : '???'}</b><p>${seen ? esc(a.text) : ''}</p></div>`; }).join('')}</div>`;
   },
   talks: () => {

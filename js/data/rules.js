@@ -59,7 +59,7 @@ export const REWARD = {
   odds: { fight: { r: .08, u: .32 }, elite: { r: .15, u: .45 }, boss: { r: 1, u: 0 } },
   pityStep: .02,
 };
-export const RARITY_NAME = { c: '흔함', u: '보통', r: '희귀', curse: '저주', duo: '듀오' };
+export const RARITY_NAME = { c: '레어', u: '에픽', r: '레전더리', curse: '저주', duo: '듀오' };
 export const NODE = {
   fight: { name: '전투', min: 12 },
   elite: { name: '강적', min: 22 },

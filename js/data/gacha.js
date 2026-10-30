@@ -23,9 +23,9 @@ export const SUMMON = {
 //   talk 도감 휴식 대화 하나 · dust 별가루
 export const SUMMON_ITEMS = {
   4: [ { kind: 'costume', name: '동료 의상', text: '가진 동료 하나의 두 번째 의상' },
-       { kind: 'relic', tier: 'r', name: '희귀 도구', text: '판을 시작할 때 고를 수 있는 희귀 도구' },
+       { kind: 'relic', tier: 'r', name: '레전더리 도구', text: '판을 시작할 때 고를 수 있는 레전더리 도구' },
        { kind: 'pack', name: '카드 묶음', text: '가진 동료 하나의 보상 카드 2장 추가' } ],
-  3: [ { kind: 'relic', tier: 'c', name: '흔한 도구', text: '판을 시작할 때 고를 수 있는 흔한 도구' },
+  3: [ { kind: 'relic', tier: 'c', name: '레어 도구', text: '판을 시작할 때 고를 수 있는 레어 도구' },
        { kind: 'dust', name: '별가루 10', text: '교환소에서 쓰는 별가루', dust: 10 },
        { kind: 'talk', name: '휴식 대화 조각', text: '도감에서 다시 보는 휴식 대화 하나' } ],
 };

@@ -120,7 +120,7 @@ export function partyView() {
       ${ps}
     </div>
     <div class="pside">
-      ${S.mode === 'endless' ? `<p class="note endnote">동료마다 희귀 카드 1장 · 도구 ${ENDLESS.freshRelics}개 · 별빛 ${ENDLESS.freshGold}을 들고 시작. 층마다 적이 강해지고 규칙이 쌓인다.</p>` : runSetup()}
+      ${S.mode === 'endless' ? `<p class="note endnote">동료마다 레전더리 카드 1장 · 도구 ${ENDLESS.freshRelics}개 · 별빛 ${ENDLESS.freshGold}을 들고 시작. 층마다 적이 강해지고 규칙이 쌓인다.</p>` : runSetup()}
       ${bondsOf(S.picked)}
       <button type="button" class="primary go" data-start ${S.picked.length === 3 ? '' : 'disabled'}>${S.mode === 'endless' ? '오르기' : '출발'} <small>${S.picked.length}/3</small></button>
     </div>
