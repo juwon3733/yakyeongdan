@@ -965,6 +965,7 @@ function banner(text, cls) {
 }
 // 승리 띠가 펼쳐질 때: 금빛 번쩍 + 띠 뒤로 빛줄기 + 별가루가 양옆으로 터진다
 function winBurst() {
+  if (hasSfx('win_band')) sfx('win_band', { vol: .7 });
   if (calmNow()) return;
   const W = stage.offsetWidth, H = stage.offsetHeight, x = W / 2, y = H * .17;
   flash(); ring(x, y, '#ffe08a', 10, 160, 22); ring(x, y, '#ffffff', 6, 100, 14);
@@ -1811,7 +1812,7 @@ function phaseFx(e) {
   const boss = S.C?.all?.find(f => f.name === e.name), img = root()?.querySelector('.foe.boss > img');
   if (!img || calmNow()) { showPhase(e.name, e.text); sfx('dawn', { vol: .5 }); return; }
   const r = rel(img), col = PHASE_COL[boss?.key] || '#ff7a8a', W = stage.offsetWidth;
-  sfx(hasSfx('boss_enter') ? 'boss_enter' : 'dawn', { vol: .6 });
+  sfx(hasSfx('boss_phase') ? 'boss_phase' : hasSfx('boss_enter') ? 'boss_enter' : 'dawn', { vol: .6 });
   dim(1500); zoomAt(r.cx, r.cy, 1.16, 900, .45);
   for (let k = 0; k < 40; k++) {   // 빛이 보스에게 빨려 든다
     const a = Math.random() * Math.PI * 2, d = rnd(70, 170), life = Math.round(rnd(18, 30));
