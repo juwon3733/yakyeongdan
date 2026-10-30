@@ -347,6 +347,12 @@ try {
     const cos = await page.evaluate(() => window.__yk.P().costume.iris === 1 && document.querySelectorAll('.stcs .stc.on').length === 5);
     await page.evaluate(() => { window.__yk.S.view = 'codex'; window.__yk.render(); });
     for (const t of ['mates', 'duos', 'cards', 'foes', 'talks']) await page.click(`[data-ctab="${t}"]`);
+    // 도감 「적」: 막 묶음 넷(시즌 1 포함), 만난 적 칸을 누르면 행동 패턴 아이콘 줄
+    await page.click('[data-ctab="foes"]');
+    await page.evaluate(() => { const P = window.__yk.P(); if (!P.foesSeen.includes('keeper')) P.foesSeen.push('keeper'); window.__yk.render(); });
+    await page.click('[data-cfoe="keeper"]');
+    const fx = await page.evaluate(() => ({ grp: document.querySelectorAll('.fxgrp').length, big: !!document.querySelector('.fxcell.big[data-cfoe="starking"]'), steps: document.querySelectorAll('.fxside .fxstep .ii').length }));
+    if (fx.grp < 4 || !fx.big || fx.steps < 4) fail(`도감 적 칸 확인 실패 ${JSON.stringify(fx)}`); else console.log(`meta: 도감 적 ${JSON.stringify(fx)}`);
     await page.click('[data-ctab="duos"]');
     if (await page.$('[data-replay]')) await page.click('[data-replay]');
     await page.evaluate(() => { window.__yk.S.view = 'records'; window.__yk.render(); window.__yk.S.view = 'odds'; window.__yk.render(); });

@@ -10,6 +10,7 @@ import { FOE } from './data/enemies.js';
 import { AFFIX, AFFIX_RULE } from './data/affixes.js';
 import { MOONS } from './data/moons.js';
 import { RULES, REWARD, AIM_NAME } from './data/rules.js';
+import { P, save } from './meta.js';
 
 let uid = 1;
 export const newInst = id => ({ uid: uid++, id });
@@ -42,6 +43,7 @@ export function startCombat(ids, kind) {
     * (G.tutorial || G.episode ? 1 : G.endless ? endlessHp(kind) : RULES.foeHpMul?.[G.act]?.[kind] || 1);
   const foes = ids.map((k, i) => makeFoe(k, i, hpMul));
   rollAffixes(foes, kind);
+  if (!G.tutorial) { P.foesSeen ||= []; for (const k of ids) if (!P.foesSeen.includes(k)) P.foesSeen.push(k); save(); }   // 도감 「적」: 만난 적
   const C = S.C = {
     kind, all: foes, tf: null, hover: null,
     draw: G.rng.shuffle(G.deck.map(id => ({ uid: uid++, id }))), hand: [], disc: [], exh: [],

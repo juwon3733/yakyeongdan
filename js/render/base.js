@@ -5,7 +5,9 @@ import { CHARACTERS } from '../data/characters.js';
 import { SUMMON, STAR_STEPS, EXCHANGE, PICKUP_DAYS } from '../data/gacha.js';
 import { CARDS, DUOS, cardData } from '../data/cards.js';
 import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
-import { FOE } from '../data/enemies.js';
+import { FOE, FOE_PAL, ACTS } from '../data/enemies.js';
+import { AIM_NAME } from '../data/rules.js';
+import { intentIcon } from './combat.js';
 import { AFFIX } from '../data/affixes.js';
 import { MOONS } from '../data/moons.js';
 import { TALKS } from '../data/talks.js';
@@ -13,7 +15,7 @@ import { DEPTH, DEPTH_MAX } from '../data/depth.js';
 import { P, nextRate5, epNewCount, pickupNow, starsOf, costumeOpen, wearing, packCards, packsOpen, startUp, sigOpen, sigOf, duoSpecial,
   canExchange, exchangePrice, depthOpen, startPickOpen } from '../meta.js';
 import { stars, palOf, fmt, esc, cardHTML, charSrc, fcImg } from './common.js';
-import { moonImg } from './sprites.js';
+import { moonImg, sprite } from './sprites.js';
 import { REST_LINES, FIRST_LINES } from '../data/hublines.js';
 import { artURL, foeArt } from '../art.js';
 import { seasonNow } from '../season.js';
@@ -348,22 +350,73 @@ const CODEX = {
     }).join('');
     return `<p class="note">${P.cardsSeen.length}/${ids.length}</p>${rows}`;
   },
-  foes: () => {
-    const ks = Object.keys(FOE).filter(k => !k.startsWith('tut_'));   // 튜토리얼 적은 도감에 없음
-    return `<p class="note">만난 적 ${P.foesSeen.length} · 이긴 적 ${P.foesBeaten.length} / ${ks.length}</p><div class="cxfoes">${ks.map(k => {
-      const seen = P.foesSeen.includes(k), beat = P.foesBeaten.includes(k);
-      const u = foeArt({ key: k });
-      return `<span class="cxfoe ${seen ? '' : 'none'} ${beat ? 'beat' : ''}" data-tip="${esc(seen ? `${FOE[k].name} · 체력 ${FOE[k].hp}${beat ? ' · 이김' : ''}` : '아직 못 만난 적')}">${u ? `<img class="px" src="${u}" alt="">` : '<i></i>'}<small>${seen ? esc(FOE[k].name) : '???'}</small></span>`;
-    }).join('')}</div>
-    <p class="note">속성 ${(P.affixSeen || []).length}/${Object.keys(AFFIX).length}</p>
-    <div class="axlist">${Object.entries(AFFIX).map(([k, a]) => { const seen = (P.affixSeen || []).includes(k); return `<div class="axi ${seen ? '' : 'unseen'}" style="--ax:${a.col}"><b>${seen ? a.pre : '???'}</b><p>${seen ? esc(a.text) : ''}</p></div>`; }).join('')}</div>`;
-  },
+  foes: foesTab,
   talks: () => {
     const L = P.talksSeen.slice().sort((a, b) => a - b).filter(i => TALKS[i]);
     return `<p class="note">${L.length}/${TALKS.length}</p>
       <div class="tlist">${L.map(i => `<div class="talk">${TALKS[i].lines.map(([p, t]) => `<p><b style="color:${ROSTER[p]?.col}">${ROSTER[p]?.name || p}</b> ${esc(t)}</p>`).join('')}</div>`).join('') || '<p class="note">아직 없다.</p>'}</div>`;
   },
 };
+
+// 도감 「적」: 막별 격자(보스·강적은 두 배 칸) + 누른 적의 행동 패턴(전투 의도 아이콘과 같은 모양)
+const SEASON_FOES = ['starking', 'starshard'];
+const BOSS_FOES = new Set([...Object.values(ACTS).flatMap(A => A.boss), 'starking']);
+const BIG_FOES = new Set([...Object.values(ACTS).flatMap(A => A.elites.flat()), ...BOSS_FOES]);
+const FOE_GROUPS = (() => {
+  const summons = k => [FOE[k].pat, FOE[k].phase2?.pat, FOE[k].phase3?.pat].flat().filter(it => it?.t === 'sum').map(it => it.id);
+  const placed = new Set(SEASON_FOES), out = [];
+  for (const a of [1, 2, 3]) {
+    const A = ACTS[a], L = [];
+    const add = k => { if (FOE[k] && !placed.has(k)) { placed.add(k); L.push(k); } };
+    [...A.easy, ...A.fights, ...A.elites].flat().concat(A.boss).forEach(add);
+    for (const k of L.slice()) summons(k).forEach(add);   // 부하(안개 그림자 등)도 그 막에
+    out.push([['', '1막 항구층', '2막 구름층', '3막 별층'][a], L]);
+  }
+  out.push(['시즌 1', SEASON_FOES.filter(k => FOE[k])]);
+  const rest = Object.keys(FOE).filter(k => !placed.has(k) && !k.startsWith('tut_'));   // 튜토리얼 적은 도감에 없음
+  if (rest.length) out.push(['그 밖', rest]);
+  return out;
+})();
+const foeImg = k => foeArt({ key: k }) || sprite(FOE_PAL[FOE[k].pal], FOE[k].long, FOE[k].crown);
+const ST_NM = { weak: '약화', vuln: '취약' };
+// 행동 하나 → 전투 의도 글(js/combat.js one()과 같은 꼴) → intentIcon. 아이콘만으로 모자란 행동은 아래 작은 글
+function patStep(it) {
+  const [txt, sub] = it.t === 'atk' ? [`공격 ${it.v}${it.n > 1 ? '×' + it.n : ''}`] : it.t === 'blk' ? [`방어 ${it.v}`] : it.t === 'buf' ? [`힘 +${it.v}`]
+    : it.t === 'deb' ? [`${ST_NM[it.s]} ${it.v}`, ST_NM[it.s]] : it.t === 'curse' ? [`저주 ${it.n}`, `저주 「${CARDS[it.card]?.name || ''}」`]
+    : it.t === 'time' ? [`밤 시계 +${it.v}분`, '밤 시계'] : it.t === 'aoe' ? [`모두 공격 ${it.v}`, '모두'] : it.t === 'boom' ? [`자폭 ${it.v}`, '자폭']
+    : it.t === 'gblk' ? [`모든 적 방어 ${it.v}`, '모든 적'] : it.t === 'mend' ? [`적 회복 ${it.v}`, '적 회복']
+    : it.t === 'sum' ? ['', `부르기: ${FOE[it.id]?.name || ''}`] : it.t === 'steal' ? ['', '카드 훔치기'] : it.t === 'aim' ? ['', `노림: ${AIM_NAME[it.a]}`]
+    : [`공격 ${it.v} · 방어 ${it.b}`];
+  return `<span class="fxstep" title="${esc(sub || txt)}"><span class="fxic">${intentIcon(txt)}</span>${sub ? `<small>${esc(sub)}</small>` : ''}</span>`;
+}
+const patRow = (pat, label) => `<div class="fxpat">${label ? `<em>${esc(label)}</em>` : ''}<span class="fxsteps">${pat.map(patStep).join('<i class="fxarr">›</i>')}<i class="fxarr loop" title="처음으로">↺</i></span></div>`;
+function foeDetail(k) {
+  const d = FOE[k];
+  if (!d) return '<div class="fxside empty"><p class="note">칸을 누르면 행동 패턴</p></div>';
+  if (!P.foesSeen.includes(k)) return `<div class="fxside"><span class="fxbig none"><img class="px" src="${foeImg(k)}" alt=""><b>?</b></span><h3>???</h3><p class="note">아직 못 만난 적</p></div>`;
+  const tag = BOSS_FOES.has(k) ? ' <span class="chip boss">보스</span>' : BIG_FOES.has(k) ? ' <span class="chip elite">강적</span>' : '';
+  const ph = [d.phase2 && ['2단계', d.phase2], d.phase3 && ['3단계', d.phase3]].filter(Boolean);
+  const extra = [d.armor && `피해 감소 ${d.armor}`, d.thorns && `가시 ${d.thorns}`, d.acts > 1 && `행동 ×${d.acts}`].filter(Boolean).map(x => ` · ${x}`).join('');
+  return `<div class="fxside"><span class="fxbig"><img class="px" src="${foeImg(k)}" alt=""></span>
+    <h3>${esc(d.name)}${tag}</h3><p class="fxhp">체력 ${d.hp}${extra}${P.foesBeaten.includes(k) ? ' · <b class="gold">이김</b>' : ''}</p>
+    <p class="fxaim">노림: ${esc(AIM_NAME[d.aim] || AIM_NAME.front)}</p>
+    ${patRow(d.pat, ph.length ? '1단계' : '')}
+    ${ph.map(([n, p]) => p.pat ? patRow(p.pat, `${n} · 체력 ${Math.round(p.at * 100)}% 아래`) : `<div class="fxpat"><em>${n} · 체력 ${Math.round(p.at * 100)}% 아래</em><small>${esc(p.msg || '')}</small></div>`).join('')}</div>`;
+}
+function foesTab() {
+  P.foesSeen ||= [];
+  const all = FOE_GROUPS.flatMap(g => g[1]), cur = S.codexFoe && FOE[S.codexFoe] ? S.codexFoe : null;
+  const groups = FOE_GROUPS.map(([name, L]) => `<div class="fxgrp"><h3 class="sub">${name} <small>${L.filter(k => P.foesSeen.includes(k)).length}/${L.length}</small></h3><div class="fxgrid">${L.map(k => {
+    const seen = P.foesSeen.includes(k), beat = P.foesBeaten.includes(k);
+    return `<button type="button" class="fxcell${BIG_FOES.has(k) ? ' big' : ''}${seen ? '' : ' none'}${beat ? ' beat' : ''}${cur === k ? ' on' : ''}" data-cfoe="${k}">
+      <span class="fxpic"><img class="px" src="${foeImg(k)}" alt="">${seen ? '' : '<b>?</b>'}</span>
+      <small class="nm">${seen ? esc(FOE[k].name) : '???'}</small>${seen ? `<small class="hp">체력 ${FOE[k].hp}</small>` : ''}</button>`;
+  }).join('')}</div></div>`).join('');
+  return `<p class="note">만난 적 ${all.filter(k => P.foesSeen.includes(k)).length} · 이긴 적 ${all.filter(k => P.foesBeaten.includes(k)).length} / ${all.length}</p>
+    <div class="fxwrap"><div class="fxlist">${groups}</div>${foeDetail(cur)}</div>
+    <p class="note">속성 ${(P.affixSeen || []).length}/${Object.keys(AFFIX).length}</p>
+    <div class="axlist">${Object.entries(AFFIX).map(([k, a]) => { const seen = (P.affixSeen || []).includes(k); return `<div class="axi ${seen ? '' : 'unseen'}" style="--ax:${a.col}"><b>${seen ? a.pre : '???'}</b><p>${seen ? esc(a.text) : ''}</p></div>`; }).join('')}</div>`;
+}
 
 // 기록 (§9)
 // 기록: 글 줄 목록 대신 — 위에 큰 숫자 넷(판·이긴 판·가장 빠른 도착·최고의 한 턴), 가운데 달 넷 승수(달 그림), 아래 빠른 조합과 최근 판
