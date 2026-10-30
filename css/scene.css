@@ -42,3 +42,18 @@
 .resultscr .mvp .note{font-size:9px;text-shadow:1px 1px 0 #000}
 .resultscr.lost .mvp{box-shadow:none}
 .scene .sbody{position:relative}
+/* 휴식: 동료들이 땅 없이 허공에 떠 보이던 것 → 돌바닥 턱 + 모닥불 빛이 바닥과 동료 발치에 번짐 */
+.scene.bg-rest .sground::before{content:"";position:absolute;left:-8px;right:-8px;bottom:-10px;height:34px;z-index:-1;pointer-events:none;
+  background:linear-gradient(#5a4a5e 0 2px,#2c2234 2px 5px,#1a1424 5px 100%),repeating-linear-gradient(90deg,transparent 0 46px,#0e0a16 46px 48px)}
+.scene.bg-rest .sground::after{content:"";position:absolute;left:50%;bottom:-6px;width:360px;height:120px;transform:translateX(-50%);z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 50% 46% at 50% 100%,rgba(255,150,60,.34),rgba(255,120,40,.1) 60%,transparent 75%);animation:yk-fireglow 1.6s steps(4) infinite}
+.scene.bg-rest .fire{width:52px;height:48px;transform:scale(1.25);transform-origin:50% 100%;margin:0 14px}
+.scene.bg-rest .sman img{filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6)) sepia(.25) saturate(1.1)}
+@keyframes yk-fireglow{50%{opacity:.8}}
+#stage.calm .scene.bg-rest .sground::after{animation:none}
+/* 휴식 대화: 작은 얼굴 아이콘을 붙인 채팅 기록 대신 이름 + 대사 */
+.scene .talk p{margin:0 0 1px}
+.scene .talk p b{margin-right:6px}
+.scene:not(:has(.sman.speak)) .sman img{filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6))}
+.scene.bg-rest .sground::before{background:linear-gradient(rgba(90,74,94,.9) 0 2px,rgba(30,22,38,.92) 2px 6px,rgba(14,10,22,.96) 40%,rgba(14,10,22,.0)),repeating-linear-gradient(90deg,transparent 0 46px,rgba(0,0,0,.35) 46px 48px)}
+.scene .acts button small{margin-left:8px;font-size:.8em;opacity:.85}

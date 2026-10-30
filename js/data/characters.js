@@ -273,12 +273,11 @@ export const CHARACTERS = {
 };
 
 // 패시브 글 (docs/12_signature.md): ① 특색 · ② 키워드 · ③ 「이름」 폭발. 화면은 text(한 줄) 또는 lines(줄마다)를 쓴다.
-const MARK = { trait: '①', keyword: '②', burst: '③' };
 for (const c of Object.values(CHARACTERS)) {
   const p = c.passive;
-  if (p.lines) p.text = p.lines.map(([k, n, t]) => `${MARK[k]} ${n ? `「${n}」 ` : ''}${t}`).join(' ');
+  if (p.lines) p.text = p.lines.map(([k, n, t]) => `${k === 'burst' ? '폭발 · ' : ''}${n ? `${n}: ` : ''}${t}`).join(' ');
   const b = p.lines?.find(l => l[0] === 'burst');
-  p.short = b ? `· ③ 「${b[1]}」` : p.text;   // 파티 고르기 칸처럼 좁은 곳: ③ 이름만 (전체 글은 title)
+  p.short = b ? `· 폭발 ${b[1]}` : p.text;   // 파티 고르기 칸처럼 좁은 곳: ③ 이름만 (전체 글은 title)
 }
 
 // 처음부터 가진 동료. 나머지는 별 소환으로 (js/meta.js). 개발판(DEV)에선 구현된 동료를 전부 고를 수 있다.

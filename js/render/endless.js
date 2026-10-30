@@ -27,14 +27,14 @@ export function endlessResultView() {
   const mvp = mvpOf(G);
   const mc = CHARACTERS[mvp], st = G.stats[mvp];
   const rules = endlessRules().map(r => `<span class="chip" title="${esc(r.text)}">${esc(r.name)}</span>`).join('') || '<span class="note">없음</span>';
-  const ach = R.ach?.length ? `<p class="note"><span class="chip">업적</span> ${R.ach.map(a => `「${esc(a.name)}」`).join(' ')} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b></p>` : '';
+  const ach = R.ach?.length ? `<p class="note"><span class="chip">업적</span> ${R.ach.map(a => esc(a.name)).join(', ')} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b></p>` : '';
   return `<div class="resultscr endresult">
     <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">MVP · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}${st.heal ? ` · 회복 ${st.heal}` : ''}</span></div>
     <div class="rinfo">
       <h2 style="font-size:20px">끝없는 탑에서 멈췄다</h2>
       <p class="clockbig endfloor">${E.floor}<small>층</small></p>
       <p class="note">${R.newBest ? '<b class="newt">최고 기록</b> · ' : ''}최고 ${R.best}층 · 이 조합 최고 ${R.combo}층 · 탑 위 보스 ${E.bosses}번 · 밤 시계 ${fmt(G.clock)}</p>
-      <p class="note">${E.fresh ? '본부에서 새로 올랐다' : '「새벽」을 넘어 이어 올랐다'} · 쌓인 규칙 ${rules}</p>
+      <p class="note">${E.fresh ? '본부에서 새로 올랐다' : '새벽을 넘어 이어 올랐다'} · 쌓인 규칙 ${rules}</p>
       ${G.bestTurn?.dmg ? `<p class="note">최고의 한 턴 <b>${G.bestTurn.dmg}</b></p>` : ''}
       ${ach}
       <table class="shards">${R.lines.map(([t, v], i) => `<tr style="--i:${i}"><td>${t}</td><td>+${v}</td></tr>`).join('')}<tr class="sum" style="--i:${R.lines.length}"><td>얻은 별 조각${E.floor * ENDLESS.shards.perFloor > ENDLESS.shards.cap ? ` <small>(층 상한 ${ENDLESS.shards.cap})</small>` : ''}</td><td>+<b class="countup" data-to="${R.total}">${R.total}</b></td></tr></table>
@@ -45,7 +45,7 @@ export function endlessResultView() {
 
 // 「새벽」 격파 결과 화면의 [더 오르기]
 export const climbOnButton = G => G.won && !G.endless && !G.daily && endlessOpen()
-  ? `<button type="button" class="endgo" data-endless title="「새벽」 너머로 계속 오른다. 탑은 무너지지 않지만 층마다 적이 강해지고 규칙이 쌓인다.">더 오르기 · 끝없는 탑</button>` : '';
+  ? `<button type="button" class="endgo" data-endless title="새벽 너머로 계속 오른다. 탑은 무너지지 않지만 층마다 적이 강해지고 규칙이 쌓인다.">더 오르기 · 끝없는 탑</button>` : '';
 
 // 본부 메뉴 버튼
 export const endlessMenu = () => endlessOpen()

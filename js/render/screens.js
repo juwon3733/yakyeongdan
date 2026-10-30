@@ -9,6 +9,7 @@ import { DUOS, canUpgrade, cardData } from '../data/cards.js';
 import { RULES, ACT_NAME, SHOP } from '../data/rules.js';
 import { grantRun, P, mvpOf } from '../meta.js';
 import { cardHTML, fmt, face, esc, charSrc } from './common.js';
+import { pxNum } from './pxui.js';
 import { artURL, battleArt } from '../art.js';
 import { SUMMON } from '../data/gacha.js';
 import { dawnAt } from '../run.js';
@@ -44,27 +45,23 @@ export function rewardView() {
 }
 export function restView() {
   const R = RULES.rest, G = S.G;
-  const who = G.formation.map(p => {
-    const M = G.members[p], gain = Math.min(M.max - M.hp, Math.ceil(M.max * restPct(M.wasDown)));
-    return `<span class="mt">${face(p)}<span>${CHARACTERS[p].name} ${M.hp}/${M.max} <b>+${gain}</b>${M.wasDown ? ' (쓰러졌던 동료)' : ''}</span></span>`;
-  }).join('');
   const talk = G.restTalk != null ? TALKS[G.restTalk] : null;
   // 대화가 있으면 말하는 둘, 없으면 대열 앞·가운데 둘이 모닥불 곁에
   const pair = talk ? [...new Set(talk.lines.map(([p]) => p))].slice(0, 2) : G.formation.slice(0, 2);
   return scene('rest', null, pair, `<h2>휴식</h2>
-    ${talk ? `<div class="talk">${talk.lines.map(([p, t]) => `<p>${face(p, 'sm')}<b>${CHARACTERS[p].name}</b> ${esc(t)}</p>`).join('')}</div>` : ''}
+    ${talk ? `<div class="talk">${talk.lines.map(([p, t]) => `<p><b style="color:${CHARACTERS[p].col}">${CHARACTERS[p].name}</b>${esc(t)}</p>`).join('')}</div>` : ''}
     <div class="acts">
-      <button type="button" class="primary" data-rest="heal">쉬기: 각자 최대 체력의 ${Math.round(restPct(false) * 100)}% (쓰러졌던 동료 ${Math.round(restPct(true) * 100)}%)</button>
+      <button type="button" class="primary" data-rest="heal" data-tip="각자 최대 체력의 ${Math.round(restPct(false) * 100)}%, 쓰러졌던 동료는 ${Math.round(restPct(true) * 100)}%">쉬기: 체력 회복 <small>${(g => g.length ? g.join(', ') : '모두 멀쩡하다')(G.formation.map(p => [p, Math.min(G.members[p].max - G.members[p].hp, Math.ceil(G.members[p].max * restPct(G.members[p].wasDown)))]).filter(([, n]) => n > 0).map(([p, n]) => `${CHARACTERS[p].name} +${n}`))}</small></button>
       <button type="button" data-rest="nap">낮잠: ${napTime()}분 되찾기</button>
       <button type="button" data-rest="smith" ${G.deck.some(canUpgrade) ? '' : 'disabled'}>손질: 카드 1장 강화</button></div>`);
 }
 const val = (v, x) => typeof v === 'function' ? v(x) : v;
 export function eventView() {
   const G = S.G, e = G.event.def, x = eventApi();
-  // 동료 전용 선택지가 있으면 그 동료, 없으면 사건을 함께 보는 동료(event.mate)
+  // 동료 전용 선택지가 있을 때만 그 동료 얼굴. 내레이션에 얼굴을 붙이면 그 동료가 말하는 것처럼 보여서 뺐다
   const need = G.event.opts.find(o => o.need)?.need;
   const [bk, bf] = SCENE_BG[Math.min(3, G.act)] || SCENE_BG[1];
-  return scene(bf, bk, [need || G.event.mate], `<h2>${e.title}</h2><p class="note evtext">${val(e.text, x)}</p>
+  return scene(bf, bk, [need], `<h2>${e.title}</h2><p class="note evtext">${val(e.text, x)}</p>
     <div class="acts col">${G.event.opts.map((o, i) => `<button type="button" data-opt="${i}" ${o.can && !o.can(x) ? 'disabled' : ''}>${o.need ? `<span class="needtag" style="color:${CHARACTERS[o.need].col}">${CHARACTERS[o.need].name}</span> ` : ''}${val(o.t, x)}</button>`).join('')}</div>`);
 }
 export function upgradeView() {
@@ -135,7 +132,7 @@ function metaNote(R) {
   if (R.daily) out.push(`<span class="chip dailychip">매일의 밤</span> ${R.daily.best != null ? `오늘 최고 <b>${fmt(R.daily.best)}</b>` : '오늘은 아직 못 깼다'}${R.daily.first ? ' · <b class="newt">오늘 첫 격파</b>' : ''}`);
   if (R.mastery?.length) out.push(`<span class="chip">숙련도</span> ${R.mastery.map(u => `${esc(CHARACTERS[u.id]?.name || u.id)} <b>${u.lv}</b>`).join(' · ')}`);
   // 업적이 많으면 앞의 4개만 이름으로, 나머지는 「외 n개」 (결과 화면이 판 밖으로 넘치지 않게)
-  if (R.ach?.length) out.push(`<span class="chip">업적</span> ${R.ach.slice(0, 4).map(a => `「${esc(a.name)}」`).join(' ')}${R.ach.length > 4 ? ` 외 ${R.ach.length - 4}개` : ''} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b>`);
+  if (R.ach?.length) out.push(`<span class="chip">업적</span> ${R.ach.slice(0, 4).map(a => esc(a.name)).join(', ')}${R.ach.length > 4 ? ` 외 ${R.ach.length - 4}개` : ''} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b>`);
   return out.length ? `<div class="metanote">${out.map(x => `<p class="note">${x}</p>`).join('')}</div>` : '';
 }
 export function resultView() {
@@ -149,23 +146,22 @@ export function resultView() {
   const byCid = {};
   for (const e of R.newEps || []) (byCid[e.cid] ||= []).push(e.n);
   const opened = [...Object.entries(byCid).map(([cid, ns]) => ns.length === 1
-      ? `${CHARACTERS[cid]?.name || cid} ${ns[0] + 1}화 「${EPISODES[cid][ns[0]].title}」`
+      ? `${CHARACTERS[cid]?.name || cid} ${ns[0] + 1}화 ${EPISODES[cid][ns[0]].title}`
       : `${CHARACTERS[cid]?.name || cid} ${ns.map(n => n + 1).join('·')}화`),
-    ...(R.newBonds || []).map(k => `인연 장면 「${BOND_SCENES[k].title}」`)];
+    ...(R.newBonds || []).map(k => `인연 장면 ${BOND_SCENES[k].title}`)];
   const epNote = opened.length ? `<p class="epnew"><b class="newt">새 에피소드</b> ${opened.map(esc).join(' · ')}</p>` : '';
   return `<div class="resultscr ${G.won ? 'won' : 'lost'}">
     ${G.won ? '<i class="rdust" aria-hidden="true"></i><i class="rdust far" aria-hidden="true"></i>' : '<i class="rash" aria-hidden="true"></i><i class="rash far" aria-hidden="true"></i>'}
     <div class="mvp" style="--c:${mc.col}"><img class="px mvpart" src="${charSrc(mvp)}" alt=""><span class="nm">${G.won ? 'MVP' : '끝까지 버틴'} · ${mc.name}</span><span class="note">피해 ${st.dmg} · 방어 ${st.block}${st.heal ? ` · 회복 ${st.heal}` : ''}</span></div>
     <div class="rinfo">
       <h2 class="rtitle">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
-      <p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</p>
+      <p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${pxNum(fmt(G.clock), { s: 5, col: G.won ? '#fff4d0' : '#ff8a8a' })}</p>
       <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`} · 싸움 ${G.fights}번 · ${MOONS[G.moon].name}${G.bestTurn?.dmg ? ` · 최고의 한 턴 <b>${G.bestTurn.dmg}</b>` : ''}</p>
       ${G.duoSet.size ? `<p class="note">듀오 ${duos}</p>` : ''}
       ${epNote}
       ${metaNote(R)}
       ${runBar(G)}
       <table class="shards" data-tip="${esc(R.lines.map(([t, v]) => `${t} +${v}`).join('\n'))}">${R.lines.map(([t, v], i) => `<tr style="--i:${i}"><td>${t}</td><td>+${v}</td></tr>`).join('')}<tr class="sum" style="--i:${R.lines.length}"><td>얻은 별 조각</td><td>+<b class="countup" data-to="${R.total}">${R.total}</b></td></tr></table>
-      ${P.shards >= SUMMON.tenCost ? '<p class="note"><b class="ok10">10연 소환을 할 수 있다</b></p>' : ''}
       <div class="acts"><button type="button" class="primary" data-home>본부로</button><button type="button" data-view="party">다시 오르기</button>${climbOnButton(G)}</div>
     </div></div>`;
 }
@@ -185,9 +181,9 @@ function deckGroups(deck) {
 }
 export function deckModal() {
   const G = S.G;
-  return `<div class="box" role="dialog" aria-label="덱"><h2>도구 ${G.relics.length}개 · 별빛 ${G.gold}</h2>
-    <div class="relicall">${G.relics.map(id => relicBox(id, G.used[id] ? ' (썼다)' : '')).join('')}</div>
-    <h2>덱 ${G.deck.length}장</h2>
+  return `<div class="box dkbox" role="dialog" aria-label="덱"><button type="button" class="mini dkclose" data-close>닫기</button>
+    <h2>덱 ${G.deck.length}장 <small>별빛 ✦${G.gold}</small></h2>
     ${deckGroups(G.deck)}
-    <button type="button" data-close>닫기</button></div>`;
+    <h2>도구 ${G.relics.length}개</h2>
+    <div class="relicall">${G.relics.map(id => relicBox(id, G.used[id] ? ' (썼다)' : '')).join('')}</div></div>`;
 }

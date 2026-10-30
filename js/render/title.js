@@ -33,7 +33,6 @@ export function titleView() {
       <p class="note">0시에 솟는 탑을 <b>6시 해 뜨기 전에</b> 오른다</p>
       <button type="button" class="primary ${first ? 'firstgo' : ''}" data-view="base">시작</button>
       <button type="button" data-settings>설정</button>
-      <span class="note small">별 조각 <b>${P.shards}</b> · 동료 ${Object.keys(P.owned).length}/${ROSTER_IDS.length}${S.dev ? ' · <span class="dev">개발판</span>' : ''}</span>
     </div>
   </div>`;
 }
@@ -44,9 +43,9 @@ function bondsOf(picked) {
   for (let i = 0; i < picked.length; i++) for (let j = i + 1; j < picked.length; j++) {
     const k = duoKey(picked[i], picked[j]), d = DUOS[k]; if (!d) continue;
     const seen = P.seenDuos?.includes(k);
-    out.push(`<span class="bond ${seen ? 'seen' : ''}" title="${esc(seen ? d.text.replace(/\{[dbkn]\d\}/g, '…') : '아직 못 찾은 듀오')}">${ROSTER[picked[i]].name}<i>━</i>${ROSTER[picked[j]].name} 「${seen ? esc(d.name) : '?'}」</span>`);
+    out.push(`<span class="bond ${seen ? 'seen' : ''}" title="${esc(seen ? d.text.replace(/\{[dbkn]\d\}/g, '…') : '아직 못 찾은 듀오')}">${ROSTER[picked[i]].name}<i>━</i>${ROSTER[picked[j]].name}${seen ? ` <small>${esc(d.name)}</small>` : ''}</span>`);
   }
-  return picked.length > 1 ? `<div class="bonds"><span class="note small">인연</span>${out.join('') || '<span class="note small">이 셋 사이엔 인연이 없다 (연계만 찬다)</span>'}</div>` : '';
+  return picked.length > 1 ? `<div class="bonds"><span class="note small">인연 듀오</span>${out.join('') || '<span class="note small">이 셋 사이엔 인연이 없다 (연계만 찬다)</span>'}</div>` : '';
 }
 
 // 밤의 깊이(「새벽」을 한 번 이기면) · 시작 도구 고르기(판을 한 번 끝내면)
@@ -114,7 +113,7 @@ export function partyView() {
   // 패시브 글은 이름표에 커서를 대면(무대 아래 글 벽은 뺐다)
   const ps = S.picked.length ? '' : '<p class="note pempty">아래에서 동료 셋을 고른다. 처음엔 체력이 높은 동료가 앞에 선다.</p>';
   return `<div class="title partyscr p2">
-    <div class="thead"><button type="button" class="mini" data-view="${S.mode === 'season' ? 'season' : 'base'}">‹ ${S.mode === 'season' ? '시즌' : '본부'}</button><h2>${S.mode === 'endless' ? '끝없는 탑' : S.mode === 'season' ? '시즌 보스' : '출격 준비'}</h2>${S.dev ? '<span class="dev">개발판</span>' : ''}</div>
+    <div class="thead"><button type="button" class="mini" data-view="${S.mode === 'season' ? 'season' : 'base'}">‹ ${S.mode === 'season' ? '시즌' : '본부'}</button><h2>${S.mode === 'endless' ? '끝없는 탑' : S.mode === 'season' ? '시즌 보스' : '출격 준비'}</h2></div>
     <div class="pmain">
       ${partyStage(order, bonded)}
       ${ps}

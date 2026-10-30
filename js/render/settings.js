@@ -65,7 +65,7 @@ export function tutDoneView() {
     <div class="sky" aria-hidden="true"><span class="tower"></span><span class="moonbig"></span></div>
     <div class="tbox">
       <h1>${won ? '첫 밤을 넘겼다' : '첫 밤은 여기까지'}</h1>
-      <p>${won ? '작은 보스를 쓰러뜨렸다.' : '이번엔 졌지만 하는 법은 다 봤다.'} 진짜 밤은 막 셋, 꼭대기의 「새벽」까지다.</p>
+      <p>${won ? '작은 보스를 쓰러뜨렸다.' : '이번엔 졌지만 하는 법은 다 봤다.'} 진짜 밤은 막 셋, 꼭대기의 새벽까지다.</p>
       <p class="note">첫 선물 <b>별 조각 100</b>이 본부에 있다. 본부의 <b>[별 소환]</b>에서 10연으로 동료를 불러 보자.</p>
       <div class="acts"><button type="button" class="primary" data-tutfinish>본부로</button></div>
     </div>
