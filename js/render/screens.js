@@ -133,7 +133,7 @@ const WHY = { down: '모두 쓰러졌다', collapse: '7시. 탑이 무너졌다'
 function metaNote(R) {
   const out = [];
   if (R.daily) out.push(`<span class="chip dailychip">매일의 밤</span> ${R.daily.best != null ? `오늘 최고 <b>${fmt(R.daily.best)}</b>` : '오늘은 아직 못 깼다'}${R.daily.first ? ' · <b class="newt">오늘 첫 격파</b>' : ''}`);
-  for (const u of R.mastery || []) out.push(`<span class="chip">숙련도</span> ${esc(CHARACTERS[u.id]?.name || u.id)} <b>${u.lv}단계</b>`);
+  if (R.mastery?.length) out.push(`<span class="chip">숙련도</span> ${R.mastery.map(u => `${esc(CHARACTERS[u.id]?.name || u.id)} <b>${u.lv}</b>`).join(' · ')}`);
   // 업적이 많으면 앞의 4개만 이름으로, 나머지는 「외 n개」 (결과 화면이 판 밖으로 넘치지 않게)
   if (R.ach?.length) out.push(`<span class="chip">업적</span> ${R.ach.slice(0, 4).map(a => `「${esc(a.name)}」`).join(' ')}${R.ach.length > 4 ? ` 외 ${R.ach.length - 4}개` : ''} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b>`);
   return out.length ? `<div class="metanote">${out.map(x => `<p class="note">${x}</p>`).join('')}</div>` : '';
@@ -159,14 +159,13 @@ export function resultView() {
     <div class="rinfo">
       <h2 class="rtitle">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
       <p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</p>
-      <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`} · 싸움 ${G.fights}번 · 달 ${MOONS[G.moon].name} · 시드 ${G.seed}</p>
-      <p class="note">쓴 듀오 ${duos}</p>
-      ${G.bestTurn?.dmg ? `<p class="note">오늘 밤 최고의 한 턴 <b>${G.bestTurn.dmg}</b>${G.bestTurn.bursts.length ? ` · 터진 패시브 ${G.bestTurn.bursts.map(id => CHARACTERS[id].name).join('·')}` : ''}${G.bigTurns ? ` · 피해 ${RULES.bigTurn}+ 턴 ${G.bigTurns}번` : ''}</p>` : ''}
+      <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`} · 싸움 ${G.fights}번 · ${MOONS[G.moon].name}${G.bestTurn?.dmg ? ` · 최고의 한 턴 <b>${G.bestTurn.dmg}</b>` : ''}</p>
+      ${G.duoSet.size ? `<p class="note">듀오 ${duos}</p>` : ''}
       ${epNote}
       ${metaNote(R)}
       ${runBar(G)}
-      <table class="shards">${R.lines.map(([t, v], i) => `<tr style="--i:${i}"><td>${t}</td><td>+${v}</td></tr>`).join('')}<tr class="sum" style="--i:${R.lines.length}"><td>얻은 별 조각</td><td>+<b class="countup" data-to="${R.total}">${R.total}</b></td></tr></table>
-      <p class="note">지금 별 조각 <b>${P.shards}</b> · ${P.shards >= SUMMON.tenCost ? '<b class="ok10">10연 소환을 할 수 있다</b>' : `10연까지 ${SUMMON.tenCost - P.shards}`}</p>
+      <table class="shards" data-tip="${esc(R.lines.map(([t, v]) => `${t} +${v}`).join('\n'))}">${R.lines.map(([t, v], i) => `<tr style="--i:${i}"><td>${t}</td><td>+${v}</td></tr>`).join('')}<tr class="sum" style="--i:${R.lines.length}"><td>얻은 별 조각</td><td>+<b class="countup" data-to="${R.total}">${R.total}</b></td></tr></table>
+      ${P.shards >= SUMMON.tenCost ? '<p class="note"><b class="ok10">10연 소환을 할 수 있다</b></p>' : ''}
       <div class="acts"><button type="button" class="primary" data-home>본부로</button><button type="button" data-view="party">다시 오르기</button>${climbOnButton(G)}</div>
     </div></div>`;
 }

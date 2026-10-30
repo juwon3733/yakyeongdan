@@ -716,7 +716,7 @@ function hitFoe(e, P) {
     at(60, () => sfx('thorns', { vol: .7 }));
     // 가시: 적에게서 친 동료 쪽으로 가시가 튄다
     const a = allyEl(e.actor);
-    if (a) { const ar = rel(a.querySelector(':scope > img') || a); for (let k = 0; k < 5; k++) add({ k: 'line', x0: x, y0: y + rnd(-8, 8), x1: ar.cx + rnd(-6, 6), y1: ar.cy + rnd(-6, 6), col: '#c0d0ff', speed: 9, life: 9, s: 1 }); }
+    if (a) { const ar = rel(a.querySelector(':scope > img') || a); for (let k = 0; k < 3; k++) at(k * 40, () => add({ k: 'line', x0: x, y0: y + rnd(-10, 10), x1: ar.cx + rnd(-8, 8), y1: ar.cy + rnd(-12, 12), col: '#c0d0ff', speed: 7, life: 9, s: 1, nohead: true })); }   // 가시 셋이 차례로(겹쳐 흰 덩어리로 보이던 것)
     ring(x, y, '#c0d0ff', 10, 24, 8);
   }
   // 그림 이펙트: 그 동료 시그니처 공격 이펙트 → 없으면 공용(베기·폭발·찌르기·마법). 코드 입자는 그 위에 계속 얹는다
@@ -1210,8 +1210,8 @@ function draw(p) {
     const len = Math.hypot(p.x1 - p.x0, p.y1 - p.y0) / 2, step = 1 / Math.max(8, len);
     if (f > .8 && (p.age & 1)) return;
     for (let s = tail; s <= head; s += step) {
-      const k = (s - tail) / Math.max(.001, head - tail), w = k > .85 ? 2 : (p.s || 1);
-      g.fillStyle = k > .85 ? '#ffffff' : p.col;
+      const k = (s - tail) / Math.max(.001, head - tail), hd = k > .85 && !p.nohead, w = hd ? 2 : (p.s || 1);
+      g.fillStyle = hd ? '#ffffff' : p.col;
       g.fillRect(Math.round((p.x0 + (p.x1 - p.x0) * s) / 2), Math.round((p.y0 + (p.y1 - p.y0) * s - Math.sin(s * Math.PI) * (p.arc || 0)) / 2) - (w > 1 ? 1 : 0), 1, w);
     }
   } else if (p.k === 'icon') {   // 방패 도트
@@ -1423,7 +1423,7 @@ function screenWipe() {
     { duration: 380, easing: 'cubic-bezier(.6,0,.3,1)', fill: 'forwards' }).onfinish = () => w.remove();
 }
 // 배경이 있는 화면(본부·출격 준비·소환·지도·타이틀)에 떠오르는 먼지·불티와 등불 깜빡임 — css #fx .jamb
-const AMB = new Set(['base', 'party', 'summon', 'reveal', 'map', 'title', 'mates', 'episodes', 'rest', 'event', 'shop']);
+const AMB = new Set(['base', 'party', 'summon', 'reveal', 'map', 'title', 'mates', 'episodes', 'rest', 'event', 'shop', 'codex', 'records', 'exchange', 'daily', 'odds', 'result']);
 let amb = null;
 function ambient() {
   if (!layer) return;

@@ -344,7 +344,7 @@ try {
     await page.evaluate(() => { window.__yk.stars('iris', 5); window.__yk.S.view = 'mates'; window.__yk.render(); });
     await page.click('[data-mate="iris"]');
     await page.click('[data-costume="iris:1"]');
-    const cos = await page.evaluate(() => window.__yk.P().costume.iris === 1 && document.querySelectorAll('.steps li.on').length === 5);
+    const cos = await page.evaluate(() => window.__yk.P().costume.iris === 1 && document.querySelectorAll('.stcs .stc.on').length === 5);
     await page.evaluate(() => { window.__yk.S.view = 'codex'; window.__yk.render(); });
     for (const t of ['mates', 'duos', 'cards', 'foes', 'talks']) await page.click(`[data-ctab="${t}"]`);
     await page.click('[data-ctab="duos"]');

@@ -81,3 +81,8 @@
 .mxchips{display:none}
 /* 큰 이름표가 그림 다리를 덮던 것 → 그림 위쪽 왼편으로 */
 .mart .mplate{bottom:auto;top:12px}
+
+/* 결과: 별 조각 내역 줄(계산서)은 숨기고 합계만 크게 — 내역은 커서를 대면. 단추가 아래로 잘리던 것 */
+.resultscr .shards tr:not(.sum){display:none}
+.resultscr .shards{cursor:help}
+.resultscr .rinfo{overflow:auto}
