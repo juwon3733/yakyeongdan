@@ -178,7 +178,9 @@ function deckGroups(deck) {
   return order.map(k => {
     const ids = by.get(k).sort((a, b) => (RORD[cardData(a).rarity] ?? 2) - (RORD[cardData(b).rarity] ?? 2) || cardData(a).name.localeCompare(cardData(b).name));
     const nm = k === 'duo' ? '듀오' : k === 'curse' ? '저주' : (CHARACTERS[k]?.name || k), col = CHARACTERS[k]?.col || '#c9d2f0';
-    return `<div class="dkgrp" style="--c:${col}"><h3>${nm} <small>${ids.length}</small></h3><div class="dkgrid">${ids.map(id => cardHTML(id, true, 'none')).join('')}</div></div>`;
+    // 같은 카드는 한 장만 보이고 뒤에 겹친 장 수만큼 카드 등이 비치며 ×N
+    const uniq = [...new Set(ids)], cnt = id => ids.filter(x => x === id).length;
+    return `<div class="dkgrp" style="--c:${col}"><h3>${nm} <small>${ids.length}</small></h3><div class="dkgrid">${uniq.map(id => cnt(id) > 1 ? `<span class="dkstack" style="--n:${Math.min(3, cnt(id) - 1)}">${cardHTML(id, true, 'none')}<b class="dkn">×${cnt(id)}</b></span>` : cardHTML(id, true, 'none')).join('')}</div></div>`;
   }).join('');
 }
 export function deckModal() {

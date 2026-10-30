@@ -135,7 +135,7 @@ export function combatView() {
         <span class="row">${ROW_NAME[fi]}</span>${lit.includes(p) ? '<b class="litnm">불빛 +1</b>' : ''}
         <img class="px" src="${battleSrc(p, M.down ? 'down' : 'idle')}" alt="">
         <span class="lab"><span class="nm">${c.name}</span>
-        <span class="hpw">${blk ? `<b class="blk" title="방어">${blk}</b>` : ''}${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : pxNum(`${M.hp}/${M.max}`, { s: 1 })}</span></span>
+        <span class="hpw">${blk ? `<b class="blk" title="방어">${blk}</b>` : ''}${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : pxNum(`${M.hp}/${M.max}`, { s: 2 })}</span></span>
         <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span>${M.down ? '' : burstProgHTML(p)}</span></button>${swap}`;
   }).join('');
   const many = C.all.length > 1;
@@ -151,7 +151,7 @@ export function combatView() {
         <span class="intent ${ic}" data-tip="${esc(`다음 행동: ${it.replace(/<[^>]+>/g, '')}. ${aim ? `노림: ${AIM_NAME[aimKey(f)]} (얼굴이 맞을 동료).` : ''}`)}">${intentIcon(it)}${aim ? face(aim, 'sm') : ''}</span>
         <img class="px" src="${foeArt(f) || sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="lab"><span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
-        <span class="hpw">${f.block ? `<b class="blk" title="방어">${f.block}</b>` : ''}<span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span><span class="hp">${pxNum(`${f.hp}/${f.max}`, { s: 1 })}</span><span hidden>${f.hp}/${f.max}</span></span>
+        <span class="hpw">${f.block ? `<b class="blk" title="방어">${f.block}</b>` : ''}<span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span><span class="hp">${pxNum(`${f.hp}/${f.max}`, { s: 2 })}</span><span hidden>${f.hp}/${f.max}</span></span>
         <span class="st">${foeTraits(f)}${foeSt(f)}</span></span>
       </button>`;
   }).join('');

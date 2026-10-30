@@ -74,7 +74,7 @@ function fitSprites() {
     let iw, ih;
     if (id) { ih = Math.round(ALLY_H / b.h); iw = Math.round(ih * b.ar); }
     else {   // 적: css 칸 안에 들어가던(contain) 크기 그대로
-      img.style.cssText = ''; const cw = img.offsetWidth, ch = img.offsetHeight; if (!cw || !ch) continue;
+      img.style.cssText = ''; const cs = getComputedStyle(img), cw = parseFloat(cs.width) || img.offsetWidth, ch = parseFloat(cs.height) || img.offsetHeight; if (!cw || !ch) continue;   // 배치 크기(offset)는 좁은 화면에서 flex에 눌려 작아진다 → css에 적힌 크기로
       const k = Math.min(cw, ch * b.ar); iw = Math.round(k); ih = Math.round(k / b.ar);
     }
     Object.assign(img.style, { width: `${iw}px`, height: `${ih}px`, objectFit: 'fill',

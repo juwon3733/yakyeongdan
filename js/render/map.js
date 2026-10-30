@@ -99,7 +99,7 @@ export function mapView() {
   // 파티 맨 앞(쓰러지지 않은) 동료의 전투 스프라이트: 지난 칸(1층이면 탑 문 앞)에 서 있다가, 칸을 고르면 계단을 타고 올라간다(main.js mapMove)
   const lead = G.formation.find(p => !G.members[p]?.down) || G.formation[0];
   const from = G.row > 0 && P[G.row - 1]?.[G.took[G.row - 1]];
-  const at = from || { x: TW / 2, y: TH };
+  const at = from || { x: 62, y: TH };   // 1층: 탑 왼쪽 아래 바닥(칸·시각을 가리지 않게)
   const spr = lead && (battleArt(lead, 'idle') || charSrc(lead));
   const tok = can.length && lead ? `<span class="maptok" style="left:${at.x}px;top:${at.y}px"><img class="px" src="${spr}" alt=""></span>` : '';
   // 대열 칸: 위→아래 = 앞·가운데·뒤 (지도 오른쪽 판)
