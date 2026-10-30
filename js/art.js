@@ -45,6 +45,8 @@ const FOE_FILE = {
   mistling: 'mistling', tut_ghost: 'sea_ghost', tut_gull: 'gulls',
 };
 const BOSS_FILE = { keeper: 'lighthouse', queen: 'fog_queen', captain: 'cloud_captain', whale: 'storm_whale', dawn: 'dawn' };
+// 보스 컷인(cutins/boss_<파일>_cutin.png): 보스 등장 연출
+export const bossCutin = key => BOSS_FILE[key] ? artURL(`cutins/boss_${BOSS_FILE[key]}_cutin.png`) : null;
 export function foeArt(f) {
   const b = BOSS_FILE[f.key];
   if (b) return (f.p3 && artURL(`enemies/boss_${b}_3.png`)) || (f.p2 && artURL(`enemies/boss_${b}_2.png`)) || artURL(`enemies/boss_${b}_1.png`);

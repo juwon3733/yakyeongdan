@@ -12,7 +12,7 @@ import { FOE } from './data/enemies.js';
 let hush = false;
 const sfx = (...a) => { if (!hush) sfxRaw(...a); };
 import { showPhase, showBoss, shake, showBurst } from './fx.js';
-import { battleArt, FRAMES, charArt, fxFrames, artURL } from './art.js';
+import { battleArt, FRAMES, charArt, fxFrames, artURL, bossCutin } from './art.js';
 import { cardData } from './data/cards.js';
 import { actorOf } from './combat.js';
 
@@ -195,7 +195,7 @@ export function afterRender(events = []) {
         acc = 0; stopped = 0; at(t, () => setCounter(0, false));
         preloadPoses();
         at(t, () => enterFx());
-        if (e.boss) { at(t, () => { showBoss(e.boss, e.line, root()?.querySelector('.foe.boss > img')?.getAttribute('src') || ''); sfx('dawn', { vol: .6 }); }); at(t + 420, () => shake()); t += 1600; }
+        if (e.boss) { at(t, () => bossIntro(e)); t += 1700; }
         break;
       case 'play': {
         played = e;
@@ -1709,4 +1709,21 @@ function awaken(who, name) {
   layer.append(el);
   el.animate([{ opacity: 0, transform: 'translateX(-40px)' }, { opacity: 1, transform: 'none', offset: .15 }, { opacity: 1, transform: 'translateX(6px)', offset: .8 }, { opacity: 0, transform: 'translateX(16px)' }],
     { duration: 1100, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => el.remove();
+}
+
+// ---------- 보스 등장: 판이 어두워지고 보스 컷인 그림이 띠로 그어지며 이름이 쾅, 한 줄 대사. 보스 그림은 위에서 내려앉으며 땅이 울림 ----------
+function bossIntro(e) {
+  const key = S.C?.all?.find(f => f.boss || FOE[f.key]?.boss)?.key || S.C?.all?.[0]?.key, wide = key && bossCutin(key);
+  const img = root()?.querySelector('.foe.boss > img');
+  if (!wide || !layer) { showBoss(e.boss, e.line, img?.getAttribute('src') || ''); sfx('dawn', { vol: .6 }); at(420, () => shake()); return; }
+  sfx(hasSfx('boss_enter') ? 'boss_enter' : 'dawn', { vol: .8 });
+  dim(1700);
+  const el = document.createElement('div'); el.className = 'jbossin';
+  el.innerHTML = `<i class="band"></i><img class="art" src="${wide}" alt=""><i class="edge"></i><div class="tx"><span>보스</span><b>${e.boss}</b>${e.line ? `<small>${e.line}</small>` : ''}</div>`;
+  layer.append(el);
+  el.animate([{ opacity: 0 }, { opacity: 1, offset: .06 }, { opacity: 1, offset: .86 }, { opacity: 0 }], { duration: 1600 }).onfinish = () => el.remove();
+  at(220, () => { if (SET.shake) shake(); });
+  at(1250, () => { flash(); if (img) { const r = rel(img); add({ k: 'oval', x: r.cx, y: r.y + r.h - 4, r0: 6, r1: r.w * .9, col: '#ff6a7a', life: 22 }); for (let k = 0; k < 14; k++) add({ k: 'dot', x: r.cx + rnd(-r.w / 2, r.w / 2), y: r.y + r.h, vx: rnd(-1.5, 1.5), vy: rnd(-2.5, -.8), g: .1, life: 22, col: '#8a7a9a', s: 2 }); }
+    if (SET.shake) shake(); });
+  if (img) { const an = img.animate([{ transform: 'translateY(-60px)', opacity: 0 }, { transform: 'translateY(-60px)', opacity: 0, offset: .7 }, { transform: 'translateY(4px)', opacity: 1, offset: .82, easing: 'cubic-bezier(.6,0,.9,.4)' }, { transform: 'none', opacity: 1 }], { duration: 1500 }); an.startTime = document.timeline.currentTime; }
 }
