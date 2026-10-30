@@ -1,6 +1,7 @@
 // 밸런스 보고서: tools/sim.mjs를 돌려 docs/BALANCE.md 표를 만든다 (수치는 고치지 않고 보고만).
 //   node tools/balance-report.mjs           동료마다 약 400판 (전체 약 3067판) · 시즌 보스 난이도마다 400판
 //   node tools/balance-report.mjs --quick   동료마다 약 100판
+// 처음 동료(아이리스·브릭·마르타) 고정 파티 본판도 400판(--quick 100판) 따로 돌린다.
 // 본판은 끝없는 탑 없이(--no-endless) 돌린다. 별자리는 0(sim 기본).
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, rmSync, mkdtempSync } from 'node:fs';
@@ -8,7 +9,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CHARACTERS } from '../js/data/characters.js';
-import { DUOS } from '../js/data/cards.js';
+import { DUOS, cardData } from '../js/data/cards.js';
 
 const args = process.argv.slice(2);
 const QUICK = args.includes('--quick');
@@ -16,6 +17,8 @@ const N = QUICK ? 100 : 400;
 const SIM = fileURLToPath(new URL('./sim.mjs', import.meta.url));
 const DOC = fileURLToPath(new URL('../docs/BALANCE.md', import.meta.url));
 const IDS = Object.keys(CHARACTERS);
+const STARTERS = 'iris,brick,marta';
+const MIN_PLAYS = 30;   // 카드별 표: 쓴 횟수가 이보다 적은 카드는 뺀다
 const name = id => CHARACTERS[id].name;
 const pct = x => Number.isFinite(x) ? (x * 100).toFixed(1) + '%' : '-';
 const sim = a => execFileSync(process.execPath, [SIM, ...a], { encoding: 'utf8', maxBuffer: 64 << 20, stdio: ['ignore', 'pipe', 'inherit'] });
@@ -28,6 +31,11 @@ const jf = join(dir, 'sim.json');
 process.stderr.write(`본판 ${runs}판…\n`);
 sim(['--runs', String(runs), '--no-endless', '--json', jf]);
 const R = JSON.parse(readFileSync(jf, 'utf8'));
+// 처음 동료 셋 파티 본판 (★3·★4만으로 깰 수 있는지 기준선)
+process.stderr.write(`처음 동료 본판 ${N}판…\n`);
+const jf2 = join(dir, 'start.json');
+sim(['--runs', String(N), '--no-endless', '--party', STARTERS, '--json', jf2]);
+const RS = JSON.parse(readFileSync(jf2, 'utf8'));
 rmSync(dir, { recursive: true, force: true });
 
 // 2) 시즌 보스: 무작위 파티 / 처음 동료
@@ -36,7 +44,7 @@ const season = party => {
   return [...out.matchAll(/시즌 보스 (\S+): 이김 (\d+)% · 평균 ([\d.]+)턴/g)].map(m => ({ tier: m[1], win: m[2] + '%', turns: m[3] }));
 };
 process.stderr.write('시즌 보스…\n');
-const sRand = season(null), sStart = season('iris,brick,marta');
+const sRand = season(null), sStart = season(STARTERS);
 const secs = ((Date.now() - t0) / 1000).toFixed(0);
 
 // ---------- 표 ----------
@@ -72,7 +80,30 @@ for (const r of rows.filter(r => CHARACTERS[r.id].rarity === 5)) L.push(`| ★5 
 const t5 = R.tiers['★5 포함'], t34 = R.tiers['★5 없음'];
 if (t5) L.push(`| ★5 한 명 이상 | ${t5.runs} | ${pct(t5.win)} |`);
 if (t34) L.push(`| **★3·★4만** | ${t34.runs} | **${pct(t34.win)}** |`);
+L.push(`| **처음 동료 (아이리스·브릭·마르타) 고정** | ${RS.runs} | **${pct(RS.winRate)}** |`);
 L.push('');
+L.push(`처음 동료 셋만으로 본판 ${RS.runs}판 「새벽」 격파 ${pct(RS.winRate)} (전체 ${pct(R.winRate)}와 ${((RS.winRate - R.winRate) * 100 >= 0 ? '+' : '') + ((RS.winRate - R.winRate) * 100).toFixed(1)}%p) — ★3·★4만으로 깰 수 있는지 기준선.`);
+L.push('');
+
+// 카드별
+const cards = Object.entries(R.cards || {}).filter(([, c]) => c.plays >= MIN_PLAYS).map(([id, c]) => ({ id, ...c })).sort((a, b) => b.win - a.win || b.runs - a.runs);
+const owner = id => { const ch = cardData(id)?.ch; return CHARACTERS[ch]?.name || (ch === 'curse' ? '저주' : ch || '-'); };
+const cardTable = list => {
+  L.push('| 순위 | 카드 | 동료 | 덱에 있던 판 | 쓴 횟수 | 격파율 | 전체와 차이 |');
+  L.push('|---|---|---|---|---|---|---|');
+  list.forEach((c, i) => { const d = (c.win - R.winRate) * 100; L.push(`| ${i + 1} | ${cardData(c.id)?.name || c.id} (\`${c.id}\`) | ${owner(c.id)} | ${c.runs} | ${c.plays} | ${pct(c.win)} | ${(d >= 0 ? '+' : '') + d.toFixed(1)}%p |`); });
+  L.push('');
+};
+L.push('## 카드별 (본판이 끝났을 때 그 카드가 덱에 있던 판의 「새벽」 격파율)');
+L.push('');
+L.push(`쓴 횟수 ${MIN_PLAYS}번 미만은 뺌 (${cards.length}장 대상). 강화한 카드는 원래 카드로 셈. 시작 카드는 그 동료가 낀 판 전체에 들어가므로 동료 격파율에 가깝다.`);
+L.push('');
+L.push('### 높은 10장');
+L.push('');
+cardTable(cards.slice(0, 10));
+L.push('### 낮은 10장');
+L.push('');
+cardTable(cards.slice(-10).reverse());
 
 // 시즌 보스
 L.push('## 시즌 보스 난이도');
