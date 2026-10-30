@@ -233,3 +233,8 @@ body.aiming .bottom .hand .card.sel,body.aiming #app[data-screen="combat"] .bott
   background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(0,0,0,.45),transparent 75%)}
 /* 손패: 쉬는 카드는 아래 ⅓이 화면 밖이라 효과 글이 반만 잘려 보이던 것 → 쉬는 동안은 그림·이름·비용만, 효과 글은 커서를 대 커졌을 때 */
 .bottom .hand .card:not(:hover):not(.sel) .bd{visibility:hidden}
+/* 폰(마우스 없음): 작아진 인물 몸 위에 이름표가 늘 겹쳐 보이던 것 → 이름은 숨기고, 자리 바꾸기 ⇄는 발 높이에 작게 */
+@media (hover:none){
+  :is(#app,.frozen)[data-screen="combat"] :is(.pm,.foe) .lab .nm{opacity:0}
+  :is(#app,.frozen)[data-screen="combat"] .party > .swap{align-self:flex-end;margin:0 -6px 40px;opacity:.5;font-size:8px;padding:0 1px}
+}
