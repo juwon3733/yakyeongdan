@@ -17,6 +17,7 @@ import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
 import { seasonIntroModal } from './render/season.js';
+import { fetchBoard } from './ranking.js';
 import { artReady, hasArt } from './art.js';
 import { seasonNow, seasonOn, startSeasonBoss, seasonBossDone, claimPass } from './season.js';
 import './cardzoom.js';
@@ -61,6 +62,12 @@ const modal = document.getElementById('modal');
 // 그리기 전후로 연출 층(js/juice.js)이 카드·체력 막대 자리를 재고, 엔진이 쌓은 연출 사건을 순서대로 보여 준다
 // 전투 중에는 화면이 꺼지지 않게 (js/pwa.js, 지원하는 기기만)
 const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); syncWake(!!S.C); seasonIntro(); };
+// 랭킹: 불러오는 동안 「불러오는 중」, 다 오면 다시 그린다(늦게 온 다른 탭 결과는 버림)
+function loadRank(board) {
+  S.rank = { board, state: 'loading' };
+  fetchBoard(board).then(data => { if (S.rank?.board !== board) return; S.rank = { board, state: 'ok', data }; if (S.view === 'ranking') render(); })
+    .catch(() => { if (S.rank?.board === board) { S.rank = { board, state: 'ok', data: { online: false, me: null } }; if (S.view === 'ranking') render(); } });
+}
 // 시즌 첫 소개: 시즌이 열린 뒤 본부에 처음 왔을 때 한 번 (?notut 테스트판은 ?sintro 일 때만)
 function seasonIntro() {
   const s = seasonNow();
@@ -180,6 +187,7 @@ app.addEventListener('click', e => {
   if ('tutfinish' in D) { finishTutorial(); render(); return; }
   if (D.view) {
     if (D.view === 'summon') S.hint = null;
+    if (D.view === 'ranking') loadRank(S.rank?.board || 'daily');
     S.view = D.view;
     if (D.view === 'party') S.mode = D.mode || null;   // 끝없는 탑: 동료 고르기 → 바로 탑 위로
     if (D.tier !== undefined) S.sTier = +D.tier;   // 시즌 보스 난이도
@@ -199,6 +207,7 @@ app.addEventListener('click', e => {
   }
   // 「새벽」을 깬 결과 화면에서 [더 오르기]: 같은 판 그대로 끝없는 탑으로 (그 판 보상은 이미 받음)
   else if ('endless' in D) { if (S.G?.won && !S.G.endless) enterEndless(false); }
+  else if ('rankboard' in D) loadRank(D.rankboard);
   else if ('claimpass' in D) { const n = claimPass(); S.seasonMsg = n ? `시즌 패스 보상: 별 조각 +${n}` : ''; if (n) sfx('pass_claim'); }
   else if (D.depth !== undefined) S.depth = +D.depth;
   else if (D.srelic) S.startRelic = D.srelic;

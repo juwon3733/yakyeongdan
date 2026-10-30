@@ -38,7 +38,7 @@ export function seasonView() {
         <div class="spass"><div class="sph"><b>시즌 패스</b><span>${lv}/${PASS.tiers}단계</span><small>${into}/${PASS.per}</small></div>
           <div class="spbar">${marks}</div>
           <button type="button" class="${can ? 'primary' : ''}" data-claimpass ${can ? '' : 'disabled'}>보상 받기</button>${S.seasonMsg ? `<small class="smsg">${esc(S.seasonMsg)}</small>` : ''}</div>
-        <div class="srank"><b>시즌 랭킹</b> <small>온라인 연결 뒤 열린다 (밤 오르기·끝없는 탑·시즌 보스·매일의 밤)</small></div>
+        <button type="button" class="srank" data-view="ranking"><b>시즌 랭킹</b> <small>매일의 밤·시즌 보스·끝없는 탑·밤 오르기 ›</small></button>
       </div>
     </div>
   </div>`;
