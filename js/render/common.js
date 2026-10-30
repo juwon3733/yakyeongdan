@@ -1,4 +1,5 @@
 import { S, timeCost, dawnAt } from '../run.js';
+import { pxNum } from './pxui.js';
 import { actorOf, costOf, shownValue, duoPreview } from '../combat.js';
 import { cardData } from '../data/cards.js';
 import { CHARACTERS } from '../data/characters.js';
@@ -150,12 +151,13 @@ export function cardHTML(inst, playable, act = 'play', idOverride, sel = false) 
     // 효과 글이 이미 「모든 적 …」이면 태그를 또 붙이지 않는다(「모든 적 모든 적 피해 5」처럼 두 번 찍힘)
     d.target === 'all' ? '<span class="tg all">모든 적</span>' : '', d.exhaust && !duo ? '<span class="tg ex">소멸</span>' : ''].join('');
   const dn = !isStr && S.C && playable && act === 'play' ? duoPreview(inst) : null;
-  const tip = (dn ? `지금 쓰면 듀오 「${dn}」 카드가 손에 들어온다.\n` : '') + kwTip(`${d.text || ''} ${d.time ? '시간 카드' : ''} ${d.exhaust ? '소멸' : ''} ${duo ? '듀오' : ''} ${curse ? '저주' : ''} ${(d.tags || []).includes('slash') ? '베기' : ''}`);
+  const rule = act === 'play' ? `${d.name} · ${who}\n${(d.time ? `[${S.C?.payEnergy && relicFlag('hourglass') ? '에너지로' : `+${S.G ? timeCost() : RULES.timeCard}분`}] ` : '') + (d.target === 'all' ? '[모든 적] ' : '') + cardText(d).replace(/<[^>]+>/g, '')}${d.exhaust && !duo ? ' [소멸]' : ''}\n` : '';
+  const tip = rule + (dn ? `지금 쓰면 듀오 「${dn}」 카드가 손에 들어온다.\n` : '') + kwTip(`${d.text || ''} ${d.time ? '시간 카드' : ''} ${d.exhaust ? '소멸' : ''} ${duo ? '듀오' : ''} ${curse ? '저주' : ''} ${(d.tags || []).includes('slash') ? '베기' : ''}`);
   const faces = duo ? [d.a, d.b] : curse ? [] : [d.ch];
   const fc = faces.map(k => `<img class="px" src="${charSrc(k)}" alt="">`).join('');
   return `<button type="button" class="card r-${d.rarity} ${duo ? 'duo' : ''} ${curse ? 'curse' : ''} ${d.time ? 'time' : ''} ${d.up ? 'upg' : ''} ${playable ? '' : 'no'} ${down ? 'down' : ''} ${sel ? 'sel' : ''} ${dn ? 'duonext' : ''}" style="--c:${col};--c2:${col2}" data-${act}="${id}" data-cid="${esc(cid)}"${tip ? ` data-tip="${esc(tip)}"` : ''}>
     <span class="art"><img class="px" src="${cardArtSrc(d, pals, longs)}" alt="" draggable="false"></span>
-    <span class="cost ${d.time ? 'clock' : 'gem'} ${cc}">${cost}</span>
+    <span class="cost ${d.time ? 'clock' : 'gem'} ${cc}" data-n="${cost}">${/^\d+$/.test(cost) ? pxNum(cost, { s: 2, col: cc === 'up' ? '#9affb0' : cc === 'dn' ? '#ffb0a8' : '#fff4d0', low: cc ? null : '#e0c070' }) : cost}</span>
     <span class="hd"><span class="nm ${d.name.length >= 6 ? 'long' : ''}">${esc(d.name)}</span></span>
     <span class="bd">${tags}${d.target === 'all' ? cardText(d).replace(/^모든 적 /, '') : cardText(d)}</span>
     <span class="who"><span class="fc">${fc}</span><span class="wn">${down ? '쓰러짐' : who}</span></span></button>`;
