@@ -28,7 +28,7 @@ h2{font-size:14px;color:var(--gold)}
 /* 판 */
 #stage{position:absolute;left:50%;top:50%;width:640px;height:360px;transform:translate(-50%,-50%) scale(var(--s,1));
   transform-origin:center;background:var(--stage);overflow:hidden;border:1px solid var(--line)}
-#app{position:absolute;inset:0;display:flex;flex-direction:column}
+:is(#app,.frozen){position:absolute;inset:0;display:flex;flex-direction:column}
 .body{flex:1;min-height:0;display:flex;flex-direction:column;padding:6px 8px 8px;gap:6px}
 #rotate{display:none}
 @media (orientation:portrait) and (max-width:820px){
@@ -648,10 +648,10 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s ease-
 /* 애니메이션 줄이기 */
 #stage.calm,#stage.calm *{animation:none!important;transition:none!important}
 /* 튜토리얼 전투: 도움말 줄 높이만큼 그림을 줄여 판이 넘치지 않게 */
-#app.tut[data-screen="combat"] .pm img{width:33px;height:44px}
-#app.tut[data-screen="combat"] .foe img{width:48px;height:64px}
-#app.tut[data-screen="combat"] .foe.sm img{width:36px;height:48px}
-#app.tut[data-screen="combat"] .pm .row{display:none}
+:is(#app,.frozen).tut[data-screen="combat"] .pm img{width:33px;height:44px}
+:is(#app,.frozen).tut[data-screen="combat"] .foe img{width:48px;height:64px}
+:is(#app,.frozen).tut[data-screen="combat"] .foe.sm img{width:36px;height:48px}
+:is(#app,.frozen).tut[data-screen="combat"] .pm .row{display:none}
 
 /* 글자 크게 (설정 「크게」, 또는 「자동」이면 판 배율 1.5 미만인 작은 화면 = 폰 가로).
    논리 픽셀 기준으로 작은 글자를 1.5~2px씩 키우고, 카드·동료 칸을 조금 넓힌다. */
@@ -729,18 +729,18 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s ease-
 .mapgrid .node{gap:0;justify-content:center}
 .mapgrid .node .t,.mapgrid .node .m{line-height:1.2}
 /* 판은 절대 스크롤되지 않는다(포커스로 밀려 올라가는 것 막기). 넘치는 목록은 그 안에서 스크롤 */
-#stage,#app{overflow:clip}
+#stage,:is(#app,.frozen){overflow:clip}
 .title .tleft{min-height:0}
 .title .pick{flex:1;min-height:0;overflow-y:auto;padding-right:2px}
 #stage.bigtext .foe:not(.sm) img{width:54px;height:72px}
 /* 튜토리얼 전투(글자 크게여도): 그림을 더 줄인다 */
-#stage #app.tut[data-screen="combat"] .foe img{width:44px;height:58px}
-#stage #app.tut[data-screen="combat"] .foe.sm img{width:34px;height:45px}
-#stage #app.tut[data-screen="combat"] .pm img{width:30px;height:40px}
-#app.tut[data-screen="combat"] .foe .st{min-height:0}
-#app.tut[data-screen="combat"] .foe{padding:2px 6px;gap:1px}
-#app.tut[data-screen="combat"] .pm{padding:2px 2px 3px}
-#app.tut[data-screen="combat"] .body{padding-top:3px;gap:3px}
+#stage :is(#app,.frozen).tut[data-screen="combat"] .foe img{width:44px;height:58px}
+#stage :is(#app,.frozen).tut[data-screen="combat"] .foe.sm img{width:34px;height:45px}
+#stage :is(#app,.frozen).tut[data-screen="combat"] .pm img{width:30px;height:40px}
+:is(#app,.frozen).tut[data-screen="combat"] .foe .st{min-height:0}
+:is(#app,.frozen).tut[data-screen="combat"] .foe{padding:2px 6px;gap:1px}
+:is(#app,.frozen).tut[data-screen="combat"] .pm{padding:2px 2px 3px}
+:is(#app,.frozen).tut[data-screen="combat"] .body{padding-top:3px;gap:3px}
 
 /* ===== 손맛·연출 (js/juice.js) — 계단식(steps) 움직임, transform 위주 ===== */
 #fx{position:absolute;inset:0;z-index:14;pointer-events:none;overflow:hidden}
@@ -933,9 +933,9 @@ button.hint{outline:2px solid #7ad0f0;outline-offset:2px;animation:hint 1s ease-
 #stage.bigtext .foe img{width:80px;height:120px}
 #stage.bigtext .foe.sm img{width:62px;height:93px}
 #stage.bigtext .foe.sm{width:auto;min-width:92px}
-#app.tut[data-screen="combat"] .pm img{width:52px;height:78px}
-#app.tut[data-screen="combat"] .foe img{width:64px;height:96px}
-#app.tut[data-screen="combat"] .foe.sm img{width:48px;height:72px}
+:is(#app,.frozen).tut[data-screen="combat"] .pm img{width:52px;height:78px}
+:is(#app,.frozen).tut[data-screen="combat"] .foe img{width:64px;height:96px}
+:is(#app,.frozen).tut[data-screen="combat"] .foe.sm img{width:48px;height:72px}
 
 /* ---- 사건·휴식 무대 (docs/11 #3): 배경 + 동료 상반신 + 가운데 글 상자 ---- */
 .scene{position:relative;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:-4px -8px -6px}
@@ -1053,8 +1053,8 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 #stage.bigtext .pm img{width:96px;height:144px}
 #stage.bigtext .foe img{width:88px;height:132px}
 #stage.bigtext .foe.sm img{width:72px;height:108px}
-#app.tut[data-screen="combat"] .pm img,#stage #app.tut[data-screen="combat"] .pm img{width:84px;height:126px}
-#app.tut[data-screen="combat"] .foe img,#stage #app.tut[data-screen="combat"] .foe img{width:80px;height:120px}
+:is(#app,.frozen).tut[data-screen="combat"] .pm img,#stage :is(#app,.frozen).tut[data-screen="combat"] .pm img{width:84px;height:126px}
+:is(#app,.frozen).tut[data-screen="combat"] .foe img,#stage :is(#app,.frozen).tut[data-screen="combat"] .foe img{width:80px;height:120px}
 /* 이름·체력 한 줄, 체력 막대, 상태·③ 한 줄 → 그림 150이 판(179) 안에 들어간다 */
 .pm .lab{flex-direction:row;flex-wrap:wrap;justify-content:center;column-gap:4px;row-gap:1px;margin-top:-3px}
 .pm .lab .hpbar{flex:0 0 76px;order:3}
@@ -1103,7 +1103,7 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 .field{padding:0 28px 6px;justify-content:space-between;align-items:flex-end}
 .party{gap:2px}
 .pm{width:80px}
-.pm img,#stage.bigtext .pm img,#app.tut[data-screen="combat"] .pm img,#stage #app.tut[data-screen="combat"] .pm img{width:72px;height:96px;margin:0;image-rendering:pixelated}
+.pm img,#stage.bigtext .pm img,:is(#app,.frozen).tut[data-screen="combat"] .pm img,#stage :is(#app,.frozen).tut[data-screen="combat"] .pm img{width:72px;height:96px;margin:0;image-rendering:pixelated}
 .pm .lab{margin-top:2px}
 .pm .lab .hpbar{flex-basis:60px;width:60px}
 .pm .lab .s{max-width:80px}
@@ -1111,7 +1111,7 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 .swap{margin:0 -8px 28px}
 .foes{gap:6px}
 .foe{min-width:96px}
-.foe img,#stage.bigtext .foe img,#app.tut[data-screen="combat"] .foe img,#stage #app.tut[data-screen="combat"] .foe img{width:96px;height:96px;image-rendering:pixelated}
+.foe img,#stage.bigtext .foe img,:is(#app,.frozen).tut[data-screen="combat"] .foe img,#stage :is(#app,.frozen).tut[data-screen="combat"] .foe img{width:96px;height:96px;image-rendering:pixelated}
 .foe.sm{min-width:80px}
 .foe.sm img,#stage.bigtext .foe.sm img{width:72px;height:72px}
 .foe img[src^="data:"],#stage.bigtext .foe img[src^="data:"]{width:48px;height:64px;margin-top:32px}
@@ -1164,26 +1164,26 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 #fx .jfx{position:absolute;z-index:3;pointer-events:none;image-rendering:pixelated;object-fit:contain}
 #fx .jfx.back{z-index:0}
 /* 배경 그림 (js/render/index.js --bgimg): 도트 정수배로 꽉 채우고, 글·카드가 잘 보이게 위아래를 살짝 어둡게 */
-#app{isolation:isolate}
-#app::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;image-rendering:pixelated;
+:is(#app,.frozen){isolation:isolate}
+:is(#app,.frozen)::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;image-rendering:pixelated;
   background-image:linear-gradient(180deg,rgba(6,6,18,.35),rgba(6,6,18,.1) 40%,rgba(6,6,18,.55)),var(--bgimg,none);background-size:cover;background-position:center}
-#app[data-screen="combat"] .field{background:none}
+:is(#app,.frozen)[data-screen="combat"] .field{background:none}
 /* 전투 스프라이트 몸 크기 보정(--sk): 그림 칸을 키우되 자리(레이아웃)는 그대로 — 위·양옆으로만 넘친다 */
 .pm > img[style*="--sk"]{width:calc(72px * var(--sk));height:calc(96px * var(--sk));margin:calc(96px * (1 - var(--sk))) calc(36px * (1 - var(--sk))) 0}
 /* ---- 입체 배치: 무대 바닥 위에 비스듬히 — 뒤쪽일수록 위·작게·어둡게, 앞쪽일수록 아래·크게 (사선 진형) ---- */
-#app[data-screen="combat"] .field{perspective:600px}
-#app[data-screen="combat"] .party{align-items:flex-end;gap:0}
+:is(#app,.frozen)[data-screen="combat"] .field{perspective:600px}
+:is(#app,.frozen)[data-screen="combat"] .party{align-items:flex-end;gap:0}
 /* 크기·밝기를 바꾸면 도트가 뭉개지고 체력 줄까지 줄어 들쭉날쭉해 보여서, 위아래 자리만 조금씩 어긋나게.
    동료 칸 사이에 자리 바꾸기 단추(button)가 끼어 있어 nth-of-type은 1·3·5번째가 동료다 */
-#app[data-screen="combat"] .party > .pm:first-of-type{transform:translate(8px,-8px);z-index:1}
-#app[data-screen="combat"] .party > .pm:not(:first-of-type):not(:last-of-type){transform:translate(2px,-4px);z-index:2}
-#app[data-screen="combat"] .party > .pm:last-of-type{transform:translate(-6px,-2px);z-index:3}
-#app[data-screen="combat"] .party > .swap{z-index:4}
-#app[data-screen="combat"] .foes{align-items:flex-end}
-#app[data-screen="combat"] .foes > .foe:nth-child(1){z-index:3;transform:translateY(-6px)}
-#app[data-screen="combat"] .foes > .foe:nth-child(2){z-index:2;transform:translateY(-14px)}
-#app[data-screen="combat"] .foes > .foe:nth-child(3){z-index:1;transform:translateY(-9px)}
-#app[data-screen="combat"] .foes > .foe:nth-child(4){z-index:1;transform:translateY(-17px)}
+:is(#app,.frozen)[data-screen="combat"] .party > .pm:first-of-type{transform:translate(8px,-8px);z-index:1}
+:is(#app,.frozen)[data-screen="combat"] .party > .pm:not(:first-of-type):not(:last-of-type){transform:translate(2px,-4px);z-index:2}
+:is(#app,.frozen)[data-screen="combat"] .party > .pm:last-of-type{transform:translate(-6px,-2px);z-index:3}
+:is(#app,.frozen)[data-screen="combat"] .party > .swap{z-index:4}
+:is(#app,.frozen)[data-screen="combat"] .foes{align-items:flex-end}
+:is(#app,.frozen)[data-screen="combat"] .foes > .foe:nth-child(1){z-index:3;transform:translateY(-6px)}
+:is(#app,.frozen)[data-screen="combat"] .foes > .foe:nth-child(2){z-index:2;transform:translateY(-14px)}
+:is(#app,.frozen)[data-screen="combat"] .foes > .foe:nth-child(3){z-index:1;transform:translateY(-9px)}
+:is(#app,.frozen)[data-screen="combat"] .foes > .foe:nth-child(4){z-index:1;transform:translateY(-17px)}
 /* 발밑 그림자를 진하게(바닥에 서 있는 느낌) */
 .pm > img,.foe > img{background:radial-gradient(ellipse 42% 5% at 50% 97%,rgba(0,0,0,.7),transparent)}
 .pm > img,.foe > img{pointer-events:none}
@@ -1232,7 +1232,7 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 @keyframes jbossin{0%{transform:translateX(90px);filter:brightness(0);opacity:0}
   20%{opacity:1}55%{transform:none;filter:brightness(0)}62%{filter:brightness(3)}100%{transform:none;filter:brightness(1) drop-shadow(3px 3px 0 #000)}}
 #stage.calm #cut .bossband .who{animation:none}
-/* 장면 그림이 따로 없는 장면(휴식): 코드로 칠한 빈 방 대신 지금 막의 배경(#app --bgimg)을 어둡게 비쳐 보인다 */
+/* 장면 그림이 따로 없는 장면(휴식): 코드로 칠한 빈 방 대신 지금 막의 배경(:is(#app,.frozen) --bgimg)을 어둡게 비쳐 보인다 */
 .scene .epbg.see{background:radial-gradient(ellipse 70% 60% at 50% 60%,rgba(6,6,18,.35),rgba(6,6,18,.75))}
 .scene .epbg.see i{display:none}
 /* 못 얻은 동료(도감·동료): 실루엣 — 검게 칠하고 동료 색 테두리 빛만 살짝 */

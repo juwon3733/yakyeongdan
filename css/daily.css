@@ -55,7 +55,7 @@
 .mcell.mx5{box-shadow:inset 0 0 0 2px var(--gold),2px 2px 0 var(--shadow)}
 
 /* 카드 뒷면 (숙련도 4): 보상 뒤집기 뒷면 무늬 색 */
-#app[style*="--back-c"] .card.cardback::before{
+:is(#app,.frozen)[style*="--back-c"] .card.cardback::before{
   background:radial-gradient(circle at 50% 42%,var(--back-c) 0 4px,transparent 5px),repeating-linear-gradient(45deg,#1c1a40 0 4px,color-mix(in srgb,var(--back-c) 30%,#1c1a40) 4px 8px);
   box-shadow:inset 0 0 0 2px #0b0b18,inset 0 0 0 4px var(--back-c)}
 

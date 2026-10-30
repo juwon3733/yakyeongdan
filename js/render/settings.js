@@ -18,6 +18,7 @@ export function settingsModal() {
     <div class="srow"><label for="set-sfx">효과음</label><input id="set-sfx" type="range" min="0" max="1" step="0.05" value="${SET.sfx}" data-vol="sfx"><output id="out-sfx">${pct(SET.sfx)}</output></div>
     <div class="srow" data-tip="대상이 하나뿐인 카드는 한 번 눌러 바로 쓴다"><span class="lb">빠른 사용</span>${seg('quick', [[true, '켬'], [false, '끔']], SET.quick)}</div>
     <div class="srow"><span class="lb">화면 흔들림</span>${seg('shake', [[true, '켬'], [false, '끔']], SET.shake)}</div>
+    <div class="srow" data-tip="한 번 본 필살 컷인은 건너뛰고 기술 연출만 본다"><span class="lb">필살 컷인</span>${seg('cutSkip', [[false, '매번'], [true, '처음만']], SET.cutSkip)}</div>
     <div class="srow" data-tip="지금 ${calmNow() ? '줄임' : '그대로'}"><span class="lb">애니메이션 줄이기</span>${seg('calm', [['null', '기기 설정대로'], [true, '줄임'], [false, '그대로']], SET.calm ?? 'null')}</div>
     <div class="srow" data-tip="지금 ${bigTextNow() ? '크게' : '보통'} (자동: 작은 화면이면 크게)"><span class="lb">글자 크기</span>${seg('text', [['auto', '자동'], ['normal', '보통'], ['big', '크게']], SET.text)}</div>
     <div class="srow"><span class="lb">첫 밤</span><button type="button" class="mini" data-tutreplay ${inRun ? 'disabled title="판을 마치고 다시 보세요"' : ''}>튜토리얼 다시 하기</button></div>

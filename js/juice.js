@@ -198,10 +198,10 @@ export function afterRender(events = []) {
         if (e.boss) { at(t, () => bossIntro(e)); t += 1700; }
         break;
       case 'play': {
-        played = e;
+        played = e; if (e.ch !== 'curse') lastHitter = e.ch === 'duo' ? e.a : (e.actor || e.ch);
         // 필살(희귀 카드·듀오): 스킬 컷인을 먼저 띄우고 그다음 기술 (카오스 제로 나이트메어식 연출)
         const sp = isSpecial(e);
-        if (sp) { at(t, () => skillCut(e)); t += 760; }
+        if (sp && !(SET.cutSkip && seenCut.has(cutKey(e)))) { seenCut.add(cutKey(e)); saveSeenCut(); at(t, () => skillCut(e)); t += 760; }
         // 카드를 낸 뒤 커서 아래로 밀려온 다음 카드가 크게 튀어 오르지 않게(커서를 움직이면 다시)
         document.body.classList.add('nohov');
         at(t, () => actFx(e, sp));
@@ -244,7 +244,7 @@ export function afterRender(events = []) {
         t = Math.max(t, foeBack) + 80;
         if ((e.t === 'atk' || e.t === 'mix') && !calmNow()) {
           // 예고(의도가 불타며 들썩, 몸을 웅크림) → 돌진, 맞는 순간에 피격이 오게
-          { const s = t; at(s, () => foeWindup(e)); } t += 240;
+          { const s = t, big = bigHit(e); at(s, () => foeWindup(e, big)); t += big ? 560 : 240; }   // 큰 공격은 힘을 모으는 예고가 길다
           { const s = t; at(s, () => foeActFx(e)); } t += 150; foeBack = t + 430;
         } else { const s = t; at(s, () => foeActFx(e)); t += e.t === 'atk' || e.t === 'mix' ? 150 : 260; }
         break; }
@@ -262,7 +262,7 @@ export function afterRender(events = []) {
   chainPop(P);
   // 화면 넘어감: 전투 → 보상(승리), 막이 바뀜(올라가는 장면)
   const G = S.G;
-  if (P && G && P.screen === 'combat' && G.screen === 'reward') { at(t + 120, () => { banner('승리', 'win'); sfx('win'); winPose(); }); dealReward(t + 420); }
+  if (P && G && P.screen === 'combat' && G.screen === 'reward') { at(t + 120, () => { sfx('win'); winPose(); }); at(t + 520, () => banner('승리', 'win')); dealReward(t + 820); }
   if (G && G.screen === 'result' && P && P.screen !== 'result') countUp(frozen ? t + 650 : 0);
   if (G && S.view === 'run' && G.screen === 'map' && !G.tutorial && P && (P.seed !== G.seed || P.act !== G.act)) {
     const t0 = P.seed !== G.seed ? 0 : t + 200;
@@ -385,8 +385,18 @@ function pose(id, kind, ms) {
   return true;
 }
 // 승리: 살아 있는 동료가 승리 동작
+// 승리: 살아 있는 동료가 승리 자세. 마지막 일격을 넣은 동료(없으면 앞줄)에게 판이 다가가며 빛·불티, 오라가 크게
+let lastHitter = null;
 function winPose() {
-  for (const id of S.G?.party || []) if (!S.G.members[id]?.down) pose(id, 'win', 1400);
+  for (const id of S.G?.party || []) if (!S.G.members[id]?.down) pose(id, 'win', 1600);
+  const alive = (S.G?.formation || []).filter(id => !S.G.members[id]?.down);
+  const mvp = alive.includes(lastHitter) ? lastHitter : alive[0];
+  const img = mvp && allyEl(mvp)?.querySelector(':scope > img'); if (!img || calmNow()) return;
+  const r = rel(img), col = colOf(mvp);
+  zoomAt(r.cx, r.cy, 1.22, 1300, .7);
+  auraFlare(mvp, 2.4, 1200);
+  ring(r.cx, r.cy, col, 6, 70, 22); ring(r.cx, r.cy, '#ffffff', 4, 46, 16);
+  for (let k = 0; k < 24; k++) at(k * 25, () => add({ k: 'dot', x: r.x + rnd(0, r.w), y: r.y + r.h - rnd(0, 10), vx: rnd(-.4, .4), vy: rnd(-2.6, -1.2), g: 0, life: rnd(20, 34), col: k % 3 ? col : '#fff6c8', s: 2 }));
 }
 // ---------- 대상 화살표 (슬레이 더 스파이어식): 손패 카드에 마우스를 대거나 고르면 쓰는 동료 → 대상으로 화살표 ----------
 // 대상을 고르는 카드는 커서를 따라가다 고를 수 있는 대상 위에서 붙고, 모든 적 카드는 적마다, 대상 없는 카드는 쓰는 동료 자신을 감싼다.
@@ -397,6 +407,17 @@ if (stage) {
   stage.addEventListener('pointermove', e => { pt = toStage(e); if (e.movementX || e.movementY) document.body.classList.remove('nohov'); aimArrow(e.target); }, { passive: true });
   stage.addEventListener('pointerleave', () => { pt = null; aimArrow(null); });
 }
+// 레전더리 카드에 커서를 대면 그 동료가 준비 자세 + 오라가 살짝 커짐(쓰기 전부터 기대감). 카드가 바뀔 때만
+let readyFor = null;
+function readyPose(who, d, uid) {
+  if (readyFor === uid) return; readyFor = uid;
+  if (!(d.rarity === 'r' || SIG_EXTRA[d.id]) || d.ch === 'duo') return;
+  const img = allyEl(who)?.querySelector(':scope > img'); if (!img) return;
+  if (battleArt(who, 'windup')) { const was = img.getAttribute('src'), u = battleArt(who, 'windup'); swapSrc(img, u, 0); busy.add(img);
+    setTimeout(() => { busy.delete(img); if (img.isConnected && img.getAttribute('src') === u) swapSrc(img, was, 0); }, 520); }
+  auraFlare(who, 1.35, 700);
+  const r = rel(img); add({ k: 'oval', x: r.cx, y: r.y + r.h - 2, r0: 4, r1: r.w * .55, col: colOf(who), life: 16 });
+}
 function aimArrow(over) {
   ensure(); if (!layer) return;
   if (!arrowSvg) { arrowSvg = document.createElementNS(SVGNS, 'svg'); arrowSvg.setAttribute('class', 'jarrow'); layer.append(arrowSvg); }
@@ -405,10 +426,11 @@ function aimArrow(over) {
   const C = S.C, A = app();
   if (!C || !A || calmNow() || A.dataset.screen !== 'combat') return;
   const card = A.querySelector('.bottom .hand .card.sel') || (over && over.closest?.('.bottom .hand .card[data-play]'));
-  if (!card || card.classList.contains('no')) return;
+  if (!card || card.classList.contains('no')) { readyFor = null; return; }
   const inst = C.hand.find(h => String(h.uid) === card.dataset.play); if (!inst) return;
   const d = cardData(inst.id), who = actorOf(d), from = who && allyEl(who)?.querySelector(':scope > img'); if (!from) return;
   const col = colOf(who), a = rel(from), x0 = a.cx, y0 = a.y + a.h * .35;
+  readyPose(who, d, inst.uid);
   const foes = [...A.querySelectorAll('.foe[data-foe]')], allies = [...A.querySelectorAll('.pm[data-ally]:not(.down)')];
   const want = d.target === 'ally' ? allies : d.target === 'foe' ? foes : d.target === 'all' ? foes : [];
   const hov = over?.closest?.(d.target === 'ally' ? '.pm[data-ally]' : '.foe[data-foe]');
@@ -517,6 +539,10 @@ function playFx(name, x, y, size = 72, step = 55, behind = false, tint = '') {
     { duration: fr.length * step + 120, easing: 'ease-out' }).onfinish = () => el.remove();
   return true;
 }
+// 본 컷인(카드마다) — 「필살 컷인: 처음만」이면 두 번째부터 건너뜀. 판을 넘어 기억(localStorage)
+const cutKey = e => String(e.id).replace(/\+$/, '');
+const seenCut = new Set((() => { try { return JSON.parse(localStorage.getItem('yk-cuts') || '[]'); } catch { return []; } })());
+const saveSeenCut = () => { try { localStorage.setItem('yk-cuts', JSON.stringify([...seenCut])); } catch { /* 저장 안 됨 */ } };
 const isSpecial = e => !calmNow() && (e.ch === 'duo' || cardData(e.id)?.rarity === 'r' || !!SIG_EXTRA[String(e.id).replace(/\+$/, '')]);
 // 돌진: 그림만 적 앞까지 갔다가 돌아온다. 맞히는 순간(카드가 날아간 뒤 ≈170ms)에 도착
 const moving = new Set();
@@ -828,15 +854,26 @@ function enterFx() {
   });
 }
 // 적 공격 예고: 의도 글자가 커지며 불타고, 몸을 뒤로 웅크린다. 노린 동료 발밑에 붉은 표시
-function foeWindup(e) {
+// 큰 공격(파티 체력의 큰 몫 또는 여러 번 치기·모두 치기): 예고를 길고 크게
+function bigHit(e) {
+  const f = S.C?.all?.[e.i], v = Array.isArray(e.v) ? e.v[0] : +e.v || 0, total = v * (e.n || 1);
+  return !!f && (!!(f.boss || FOE[f.key]?.boss) || total >= 12 || (e.n || 1) >= 3);
+}
+function foeWindup(e, big = false) {
   const el = foeEl(e.i); if (!el) return;
   const img = el.querySelector(':scope > img');
-  pulse(el.querySelector('.intent'), 'jfire', 300);
-  if (img) img.animate([{ transform: 'none', filter: 'none' }, { transform: 'translate(6px,2px)', filter: 'brightness(1.5)' }],
-    { duration: 240, easing: 'ease-in', fill: 'none' });
+  pulse(el.querySelector('.intent'), 'jfire', big ? 520 : 300);
+  if (img) img.animate([{ transform: 'none', filter: 'none' }, { transform: 'translate(6px,2px)', filter: big ? 'brightness(1.8) drop-shadow(0 0 6px #ff3a5a)' : 'brightness(1.5)' }],
+    { duration: big ? 520 : 240, easing: 'ease-in', fill: 'none' });
   const id = e.target ?? e.aim, a = id && allyEl(id)?.querySelector(':scope > img');
-  if (a) { const r = rel(a); add({ k: 'oval', x: r.cx, y: r.y + r.h - 3, r0: r.w * .5, r1: r.w * .3, col: '#ff4a6a', life: 14 }); }
-  sfx('turn', { vol: .3, rate: .7 });
+  if (a) { const r = rel(a); add({ k: 'oval', x: r.cx, y: r.y + r.h - 3, r0: r.w * .5, r1: r.w * .3, col: '#ff4a6a', life: 14 });
+    if (big) { add({ k: 'oval', x: r.cx, y: r.y + r.h - 3, r0: r.w * .2, r1: r.w * .75, col: '#ff2a4a', life: 30 }); for (let k = 0; k < 3; k++) at(k * 150, () => add({ k: 'oval', x: r.cx, y: r.y + r.h - 3, r0: r.w * .9, r1: r.w * .2, col: '#ff6a7a', life: 14 })); } }
+  if (big && img) {   // 빛이 적 몸으로 빨려 들며 모임 + 화면 가장자리 붉게
+    const r = rel(img);
+    for (let k = 0; k < 22; k++) { const ang = Math.random() * Math.PI * 2, d = rnd(40, 70); at(k * 12, () => add({ k: 'dot', x: r.cx + Math.cos(ang) * d, y: r.cy + Math.sin(ang) * d, vx: -Math.cos(ang) * d / 16, vy: -Math.sin(ang) * d / 16, g: 0, life: 16, col: k % 3 ? '#ff4a6a' : '#ffd0d8', s: 2 })); }
+    redEdge(); zoomAt(r.cx, r.cy, 1.06, 520, .5);
+  }
+  sfx('turn', { vol: big ? .6 : .3, rate: big ? .5 : .7 });
 }
 function foeActFx(e) {
   const el = foeEl(e.i); if (!el) return;

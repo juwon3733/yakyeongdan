@@ -5,7 +5,7 @@ const prefersCalm = () => { try { return matchMedia('(prefers-reduced-motion: re
 
 // text: 'auto'(작은 화면이면 크게) · 'normal' · 'big'. calm: null이면 기기 설정(prefers-reduced-motion)을 따른다.
 // quick: 빠른 사용 — 대상이 하나뿐인 카드는 한 번 눌러 바로 쓴다.
-export const SET = { music: .8, sfx: .8, shake: true, calm: null, text: 'auto', quick: true };
+export const SET = { music: .8, sfx: .8, shake: true, calm: null, text: 'auto', quick: true, cutSkip: true };   // cutSkip: 한 번 본 필살 컷인은 건너뜀(기술 연출은 그대로)
 try { Object.assign(SET, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { /* 저장 안 됨 */ }
 
 export function saveSettings() {

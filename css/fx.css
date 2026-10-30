@@ -1,31 +1,31 @@
 /* 전투 화면 정리 (Claude 영역, docs/JUNIOR_TASKS.md): 슬레이 더 스파이어처럼 글자를 줄이고 발밑에 체력 막대 하나.
    이름·대열은 마우스를 대거나 고를 때만, 방어는 막대 왼쪽 파란 방패, 자리 바꾸기 ⇄는 대열에 마우스를 댈 때만. */
-#app[data-screen="combat"] .pm .row{position:absolute;top:-2px;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .15s;font-size:7.5px;color:var(--dim)}
-#app[data-screen="combat"] .pm:hover .row,#app[data-screen="combat"] .pm.tg .row{opacity:1}
-#app[data-screen="combat"] .pm .litnm{position:absolute;top:-2px;left:50%;transform:translateX(-50%);z-index:3;font-weight:400;font-size:8px;color:#ffe060;text-shadow:1px 1px 0 #000;white-space:nowrap}
-#app[data-screen="combat"] :is(.pm,.foe) .lab .nm{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:2px;opacity:0;transition:opacity .15s;pointer-events:none;white-space:nowrap;
+:is(#app,.frozen)[data-screen="combat"] .pm .row{position:absolute;top:-2px;left:50%;transform:translateX(-50%);opacity:0;transition:opacity .15s;font-size:7.5px;color:var(--dim)}
+:is(#app,.frozen)[data-screen="combat"] .pm:hover .row,:is(#app,.frozen)[data-screen="combat"] .pm.tg .row{opacity:1}
+:is(#app,.frozen)[data-screen="combat"] .pm .litnm{position:absolute;top:-2px;left:50%;transform:translateX(-50%);z-index:3;font-weight:400;font-size:8px;color:#ffe060;text-shadow:1px 1px 0 #000;white-space:nowrap}
+:is(#app,.frozen)[data-screen="combat"] :is(.pm,.foe) .lab .nm{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);margin-bottom:2px;opacity:0;transition:opacity .15s;pointer-events:none;white-space:nowrap;
   background:rgba(7,8,26,.85);padding:0 4px;border:1px solid var(--line)}
-#app[data-screen="combat"] :is(.pm,.foe):is(:hover,.tg) .lab .nm{opacity:1}
-#app[data-screen="combat"] :is(.pm,.foe) .lab{position:relative}
+:is(#app,.frozen)[data-screen="combat"] :is(.pm,.foe):is(:hover,.tg) .lab .nm{opacity:1}
+:is(#app,.frozen)[data-screen="combat"] :is(.pm,.foe) .lab{position:relative}
 /* 체력: 막대 안에 숫자 */
-#app[data-screen="combat"] .hpw{order:2;position:relative;display:flex;align-items:center;gap:2px;flex:0 0 auto}
-#app[data-screen="combat"] .hpw .hpbar{width:66px;height:9px;flex:none;background:#1a0c14;border:1px solid #000;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
-#app[data-screen="combat"] .foe .hpw .hpbar{width:72px}
-#app[data-screen="combat"] .hpw .hpbar i{background:linear-gradient(180deg,#ff6a7a,#c0304a)}
-#app[data-screen="combat"] .hpw .hp{position:absolute;right:0;left:0;top:50%;transform:translateY(-50%);text-align:center;font-size:7.5px;line-height:1;color:#fff;text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000;pointer-events:none;z-index:2;font-family:var(--f-disp)}
-#app[data-screen="combat"] .hpw .blk+.hpbar+.hp{left:16px}
-#app[data-screen="combat"] .hpw .blk{position:static;transform:none;display:flex;align-items:center;justify-content:center;width:14px;height:14px;padding:0;border:0;font-family:var(--f-disp);font-weight:400;font-size:8px;color:#fff;
+:is(#app,.frozen)[data-screen="combat"] .hpw{order:2;position:relative;display:flex;align-items:center;gap:2px;flex:0 0 auto}
+:is(#app,.frozen)[data-screen="combat"] .hpw .hpbar{width:66px;height:9px;flex:none;background:#1a0c14;border:1px solid #000;box-shadow:0 0 0 1px rgba(255,255,255,.12)}
+:is(#app,.frozen)[data-screen="combat"] .foe .hpw .hpbar{width:72px}
+:is(#app,.frozen)[data-screen="combat"] .hpw .hpbar i{background:linear-gradient(180deg,#ff6a7a,#c0304a)}
+:is(#app,.frozen)[data-screen="combat"] .hpw .hp{position:absolute;right:0;left:0;top:50%;transform:translateY(-50%);text-align:center;font-size:7.5px;line-height:1;color:#fff;text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000;pointer-events:none;z-index:2;font-family:var(--f-disp)}
+:is(#app,.frozen)[data-screen="combat"] .hpw .blk+.hpbar+.hp{left:16px}
+:is(#app,.frozen)[data-screen="combat"] .hpw .blk{position:static;transform:none;display:flex;align-items:center;justify-content:center;width:14px;height:14px;padding:0;border:0;font-family:var(--f-disp);font-weight:400;font-size:8px;color:#fff;
   background:#3a6ad0;clip-path:polygon(50% 0,100% 15%,92% 70%,50% 100%,8% 70%,0 15%);text-shadow:1px 1px 0 #000}
-#app[data-screen="combat"] .pm.down .hpw{opacity:.5}
+:is(#app,.frozen)[data-screen="combat"] .pm.down .hpw{opacity:.5}
 /* 자리 바꾸기 ⇄: 대열에 마우스를 댈 때만 */
-#app[data-screen="combat"] .party .swap{opacity:0;transition:opacity .15s}
-#app[data-screen="combat"] .party:hover .swap,#app[data-screen="combat"] .party .swap:focus-visible{opacity:.9}
-@media (hover:none){#app[data-screen="combat"] .party .swap{opacity:.55}#app[data-screen="combat"] :is(.pm,.foe) .lab .nm{opacity:.85}}
-#app[data-screen="combat"] .hpw{width:max-content}
-#app[data-screen="combat"] .pm .lab .hpw .hpbar{flex:none}
+:is(#app,.frozen)[data-screen="combat"] .party .swap{opacity:0;transition:opacity .15s}
+:is(#app,.frozen)[data-screen="combat"] .party:hover .swap,:is(#app,.frozen)[data-screen="combat"] .party .swap:focus-visible{opacity:.9}
+@media (hover:none){:is(#app,.frozen)[data-screen="combat"] .party .swap{opacity:.55}:is(#app,.frozen)[data-screen="combat"] :is(.pm,.foe) .lab .nm{opacity:.85}}
+:is(#app,.frozen)[data-screen="combat"] .hpw{width:max-content}
+:is(#app,.frozen)[data-screen="combat"] .pm .lab .hpw .hpbar{flex:none}
 /* 동료 아래 색 줄 대신 발밑 그림자만 */
-#app[data-screen="combat"] .pm,#app[data-screen="combat"] .foe{border-bottom:0;box-shadow:none}
-#app[data-screen="combat"] .pm.aimed .hpw .hpbar{box-shadow:0 0 0 1px var(--rose)}
+:is(#app,.frozen)[data-screen="combat"] .pm,:is(#app,.frozen)[data-screen="combat"] .foe{border-bottom:0;box-shadow:none}
+:is(#app,.frozen)[data-screen="combat"] .pm.aimed .hpw .hpbar{box-shadow:0 0 0 1px var(--rose)}
 /* 고른 카드(대상을 고르는 중)는 조금만 들어 올린다 — 크게 키우면 적·동료를 가려 대상을 못 누른다 */
 .bottom .hand .card.sel:not(:hover){transform:translateY(-12px) rotate(0deg) scale(1.15)}
 .bottom .hand .card.sel{pointer-events:auto}
@@ -35,30 +35,30 @@
 #fx .jarrow .head{fill:var(--c);stroke:#000;stroke-width:1}
 #fx .jarrow .self{fill:none;stroke:var(--c);stroke-width:2.5;stroke-dasharray:5 4;animation:jarrowrun .6s linear infinite}
 @keyframes jarrowrun{to{stroke-dashoffset:-12}}
-#app[data-screen="combat"] .jaimed > img{filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px var(--c,#ff6a7a)) brightness(1.15)}
-#app[data-screen="combat"] .foe.jaimed{--c:#ff6a7a}
+:is(#app,.frozen)[data-screen="combat"] .jaimed > img{filter:drop-shadow(0 0 2px #fff) drop-shadow(0 0 4px var(--c,#ff6a7a)) brightness(1.15)}
+:is(#app,.frozen)[data-screen="combat"] .foe.jaimed{--c:#ff6a7a}
 /* 손패 카드: 그림 크게, 아래 이름·희귀도 줄 없앰(얼굴·색 띠가 누구 카드인지 알려 준다) */
 .bottom .hand .card,#stage.bigtext .bottom .hand .card{--ah:44px}
 .bottom .hand .card .who{display:none}
 .bottom .hand .card .art img{object-position:50% 30%}
 .card .tg.ex{background:#4a2a3a;color:#ffb8c8}
 /* 고를 수 있는 대상: 네모 테두리 대신 그림만 빛나게(화살표가 붙으면 더 밝게) */
-#app[data-screen="combat"] :is(.foe,.pm).tg{outline:0;background:none}
-#app[data-screen="combat"] :is(.foe,.pm).tg > img{filter:drop-shadow(0 0 2px rgba(255,255,255,.7))}
+:is(#app,.frozen)[data-screen="combat"] :is(.foe,.pm).tg{outline:0;background:none}
+:is(#app,.frozen)[data-screen="combat"] :is(.foe,.pm).tg > img{filter:drop-shadow(0 0 2px rgba(255,255,255,.7))}
 /* 도움말 줄은 할 말이 있을 때만 */
-#app[data-screen="combat"] .log:not(:has(> :not(.tip:empty))):not(:has(b)){visibility:hidden}
+:is(#app,.frozen)[data-screen="combat"] .log:not(:has(> :not(.tip:empty))):not(:has(b)){visibility:hidden}
 #fx .jred{position:absolute;inset:0;z-index:5;pointer-events:none;background:radial-gradient(ellipse 70% 65% at 50% 50%,transparent 45%,rgba(200,20,40,.55))}
 /* 캐릭터 발을 배경 바닥(아래 1/3)에 — 무대를 아래로 내려 손패 뒤까지 쓴다(슬레이 더 스파이어처럼 카드가 무대 앞에 겹침).
    transform은 카메라 연출이 쓰므로 top으로 내린다 */
-#app[data-screen="combat"] .field{top:30px;z-index:1}
-#app[data-screen="combat"] .bottom .hand .card{margin-bottom:-24px}
-#app[data-screen="combat"] .bottom{position:relative;z-index:3}
+:is(#app,.frozen)[data-screen="combat"] .field{top:30px;z-index:1}
+:is(#app,.frozen)[data-screen="combat"] .bottom .hand .card{margin-bottom:-24px}
+:is(#app,.frozen)[data-screen="combat"] .bottom{position:relative;z-index:3}
 /* 전투 기록 글은 숨김(디버그 같음). 달 고르기·도구 버튼처럼 누를 것만 위에 띄운다 */
-#app[data-screen="combat"] .log{position:absolute;top:34px;left:8px;right:8px;z-index:2;background:none;border:0;box-shadow:none;pointer-events:none}
-#app[data-screen="combat"] .log :is(button,a,input,label,.cmoonpick){pointer-events:auto}
-#app[data-screen="combat"] .log :is(.logtx,.tip){display:none}
+:is(#app,.frozen)[data-screen="combat"] .log{position:absolute;top:34px;left:8px;right:8px;z-index:2;background:none;border:0;box-shadow:none;pointer-events:none}
+:is(#app,.frozen)[data-screen="combat"] .log :is(button,a,input,label,.cmoonpick){pointer-events:auto}
+:is(#app,.frozen)[data-screen="combat"] .log :is(.logtx,.tip){display:none}
 /* 전투: 배경이 캐릭터·적만큼 세밀하고 밝아 인물이 묻힌다 → 배경은 채도·밝기를 낮추고 인물이 서는 줄(가운데 아래)을 한 겹 더 어둡게 */
-#app[data-screen="combat"]::before{background-position:center 70%;filter:saturate(.8) brightness(.82);
+:is(#app,.frozen)[data-screen="combat"]::before{background-position:center 70%;filter:saturate(.8) brightness(.82);
   background-image:linear-gradient(180deg,rgba(6,6,18,.45),rgba(6,6,18,.12) 28%,rgba(6,6,18,.34) 52%,rgba(6,6,18,.42) 80%,rgba(6,6,18,.7)),var(--bgimg,none)}
 body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px)) rotate(var(--fr,0deg));z-index:auto}
 /* 가만히 있을 때: 1px 위아래만(그림을 늘이거나 돌리지 않는다 — 도트가 지글거리지 않게). 개별 속성 translate라 동작(WAAPI transform)과 겹쳐도 안 끊김 */
@@ -70,26 +70,26 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 @media (prefers-reduced-motion:reduce){:where(.pm, .foe) > img{animation:none}}
 #stage.calm :where(.pm, .foe) > img{animation:none}
 /* 적 의도: 도트 아이콘 + 큰 숫자 (js/render/combat.js intentIcon) */
-#app[data-screen="combat"] .foe .intent{display:flex;align-items:center;gap:2px;margin-bottom:-6px;padding:0;background:none;font-size:inherit;animation:none}
-#app[data-screen="combat"] .foe .intent .iv{display:flex;align-items:center;gap:1px}
-#app[data-screen="combat"] .foe .intent .ii{width:18px;height:18px;filter:drop-shadow(1px 1px 0 #000)}
-#app[data-screen="combat"] .foe .intent .iv b{font-family:var(--f-disp);font-weight:400;font-size:13px;color:#fff;line-height:1;
+:is(#app,.frozen)[data-screen="combat"] .foe .intent{display:flex;align-items:center;gap:2px;margin-bottom:-6px;padding:0;background:none;font-size:inherit;animation:none}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent .iv{display:flex;align-items:center;gap:1px}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent .ii{width:18px;height:18px;filter:drop-shadow(1px 1px 0 #000)}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent .iv b{font-family:var(--f-disp);font-weight:400;font-size:13px;color:#fff;line-height:1;
   text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000,1px 1px 0 #000}
-#app[data-screen="combat"] .foe .intent .iv b i{font-style:normal;font-size:10px;color:#ffd0d8}
-#app[data-screen="combat"] .foe .intent .iv.all .ii{filter:drop-shadow(1px 1px 0 #000) drop-shadow(3px -2px 0 rgba(232,236,255,.45))}
-#app[data-screen="combat"] .foe .intent .two{font-size:8px;color:#ffd0a0;text-shadow:1px 1px 0 #000}
-#app[data-screen="combat"] .foe .intent .face{margin-left:2px;opacity:.9}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent .iv b i{font-style:normal;font-size:10px;color:#ffd0d8}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent .iv.all .ii{filter:drop-shadow(1px 1px 0 #000) drop-shadow(3px -2px 0 rgba(232,236,255,.45))}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent .two{font-size:8px;color:#ffd0a0;text-shadow:1px 1px 0 #000}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent .face{margin-left:2px;opacity:.9}
 /* 공격 의도는 칼이 들썩, 센 공격은 붉게 빨리 떨림 */
-#app[data-screen="combat"] .foe .intent.atk .ii{animation:jintent 1.2s ease-in-out infinite;transform-origin:50% 80%}
-#app[data-screen="combat"] .foe .intent.big .ii{animation-duration:.5s;filter:drop-shadow(1px 1px 0 #000) drop-shadow(0 0 3px #ff3a5a)}
-#app[data-screen="combat"] .foe .intent.big .iv b{color:#ffb0bc}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent.atk .ii{animation:jintent 1.2s ease-in-out infinite;transform-origin:50% 80%}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent.big .ii{animation-duration:.5s;filter:drop-shadow(1px 1px 0 #000) drop-shadow(0 0 3px #ff3a5a)}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent.big .iv b{color:#ffb0bc}
 @keyframes jintent{0%,100%{transform:rotate(0) translateY(0)}50%{transform:rotate(-10deg) translateY(-1px)}}
 /* 상태 아이콘 (js/render/combat.js stIcon): 체력 막대 아래 한 줄 */
-#app[data-screen="combat"] .sti{display:inline-flex;align-items:center;gap:0;margin:0 1px}
-#app[data-screen="combat"] .sti .ii{width:15px;height:15px;filter:drop-shadow(1px 1px 0 #000)}
-#app[data-screen="combat"] .sti b{font-family:var(--f-disp);font-weight:400;font-size:10px;color:#fff;line-height:1;margin-left:-2px;text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000}
-#app[data-screen="combat"] .foe .lab .st{display:flex;flex-wrap:wrap;justify-content:center;gap:1px}
-#app[data-screen="combat"] .chip{font-size:7.5px;padding:0 2px}
+:is(#app,.frozen)[data-screen="combat"] .sti{display:inline-flex;align-items:center;gap:0;margin:0 1px}
+:is(#app,.frozen)[data-screen="combat"] .sti .ii{width:15px;height:15px;filter:drop-shadow(1px 1px 0 #000)}
+:is(#app,.frozen)[data-screen="combat"] .sti b{font-family:var(--f-disp);font-weight:400;font-size:10px;color:#fff;line-height:1;margin-left:-2px;text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000}
+:is(#app,.frozen)[data-screen="combat"] .foe .lab .st{display:flex;flex-wrap:wrap;justify-content:center;gap:1px}
+:is(#app,.frozen)[data-screen="combat"] .chip{font-size:7.5px;padding:0 2px}
 
 /* ---- 카드 틀 (계획 4): 종이색 대신 밤 테마 — 짙은 남색 몸통, 동료 색 안쪽 테두리, 금속 모서리, 이름 띠는 동료 색 그라디언트.
    희귀도는 바깥 테두리 빛으로만(흔함 강철·보통 보라·희귀 금, 희귀는 빛이 테두리를 따라 돎) ---- */
@@ -129,30 +129,30 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 .card.duo{background:linear-gradient(180deg,#2e2a1e,#1a1712 70%)}
 
 /* ---- 에너지 구슬·턴 끝 버튼 (계획 5) ---- */
-#app[data-screen="combat"] .energy{position:relative;justify-content:center;width:56px;align-self:center}
-#app[data-screen="combat"] .energy .orb{position:relative;display:flex;align-items:baseline;justify-content:center;width:46px;height:46px;border-radius:50%;
+:is(#app,.frozen)[data-screen="combat"] .energy{position:relative;justify-content:center;width:56px;align-self:center}
+:is(#app,.frozen)[data-screen="combat"] .energy .orb{position:relative;display:flex;align-items:baseline;justify-content:center;width:46px;height:46px;border-radius:50%;
   background:radial-gradient(circle at 38% 32%,#fff6d0 0,#ffd860 18%,#e09a20 52%,#7a3a08 100%);box-shadow:0 0 0 2px #000,0 0 0 3px #b07a20,0 0 12px rgba(255,200,80,.55);padding-top:9px}
-#app[data-screen="combat"] .energy .swirl{position:absolute;inset:3px;border-radius:50%;border:2px dashed rgba(255,250,220,.5);animation:jorb 6s linear infinite;pointer-events:none}
+:is(#app,.frozen)[data-screen="combat"] .energy .swirl{position:absolute;inset:3px;border-radius:50%;border:2px dashed rgba(255,250,220,.5);animation:jorb 6s linear infinite;pointer-events:none}
 @keyframes jorb{to{transform:rotate(360deg)}}
-#app[data-screen="combat"] .energy .orb b{position:relative;font-family:var(--f-disp);font-weight:400;font-size:20px;line-height:1;color:#fff;text-shadow:1px 0 0 #5a2a00,-1px 0 0 #5a2a00,0 1px 0 #5a2a00,0 -1px 0 #5a2a00,2px 2px 0 #3a1a00}
-#app[data-screen="combat"] .energy .orb small{position:relative;font-family:var(--f-disp);font-size:9px;color:#fff3c0;text-shadow:1px 1px 0 #3a1a00}
-#app[data-screen="combat"] .energy.empty .orb{background:radial-gradient(circle at 38% 32%,#8a8070 0,#4a4238 50%,#1a1612 100%);box-shadow:0 0 0 2px #000,0 0 0 3px #4a3a20}
-#app[data-screen="combat"] .energy.empty .swirl{animation:none;opacity:.3}
-#app[data-screen="combat"] .energy > i,#app[data-screen="combat"] .energy > small{display:none}
+:is(#app,.frozen)[data-screen="combat"] .energy .orb b{position:relative;font-family:var(--f-disp);font-weight:400;font-size:20px;line-height:1;color:#fff;text-shadow:1px 0 0 #5a2a00,-1px 0 0 #5a2a00,0 1px 0 #5a2a00,0 -1px 0 #5a2a00,2px 2px 0 #3a1a00}
+:is(#app,.frozen)[data-screen="combat"] .energy .orb small{position:relative;font-family:var(--f-disp);font-size:9px;color:#fff3c0;text-shadow:1px 1px 0 #3a1a00}
+:is(#app,.frozen)[data-screen="combat"] .energy.empty .orb{background:radial-gradient(circle at 38% 32%,#8a8070 0,#4a4238 50%,#1a1612 100%);box-shadow:0 0 0 2px #000,0 0 0 3px #4a3a20}
+:is(#app,.frozen)[data-screen="combat"] .energy.empty .swirl{animation:none;opacity:.3}
+:is(#app,.frozen)[data-screen="combat"] .energy > i,:is(#app,.frozen)[data-screen="combat"] .energy > small{display:none}
 /* 턴 끝: 금테 두른 큰 버튼, 쓸 카드가 없으면 빛나며 부름 */
-#app[data-screen="combat"] .endbtn{position:relative;min-width:64px;padding:9px 10px;font-family:var(--f-disp);font-size:13px;color:#fff;letter-spacing:.06em;
+:is(#app,.frozen)[data-screen="combat"] .endbtn{position:relative;min-width:64px;padding:9px 10px;font-family:var(--f-disp);font-size:13px;color:#fff;letter-spacing:.06em;
   background:linear-gradient(180deg,#3a2a6a,#1e1640);border:2px solid #e0b84a;box-shadow:0 3px 0 #000,inset 0 1px 0 rgba(255,255,255,.25);text-shadow:1px 1px 0 #000;
   transition:transform .08s,box-shadow .08s}
-#app[data-screen="combat"] .endbtn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 0 #000,0 0 10px rgba(224,184,74,.5),inset 0 1px 0 rgba(255,255,255,.3)}
-#app[data-screen="combat"] .endbtn:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #000}
-#app[data-screen="combat"] .endbtn.ready{animation:jendready 1.2s ease-in-out infinite}
+:is(#app,.frozen)[data-screen="combat"] .endbtn:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 4px 0 #000,0 0 10px rgba(224,184,74,.5),inset 0 1px 0 rgba(255,255,255,.3)}
+:is(#app,.frozen)[data-screen="combat"] .endbtn:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #000}
+:is(#app,.frozen)[data-screen="combat"] .endbtn.ready{animation:jendready 1.2s ease-in-out infinite}
 @keyframes jendready{50%{box-shadow:0 3px 0 #000,0 0 14px 2px rgba(255,214,110,.75);border-color:#fff2b0}}
 /* 뽑을·버린 더미: 작은 카드 뭉치 아이콘 + 숫자 */
-#app[data-screen="combat"] .piles{display:flex;gap:5px;margin-top:3px}
-#app[data-screen="combat"] .pile{position:relative;min-width:18px;height:14px;padding:0 3px 0 13px;font-family:var(--f-disp);font-size:9px;line-height:14px;color:#fff;text-shadow:1px 1px 0 #000}
-#app[data-screen="combat"] .pile::before{content:"";position:absolute;left:1px;top:1px;width:9px;height:12px;background:#3a3a7a;border:1px solid #000;box-shadow:2px -2px 0 -0px #5a5aa8}
-#app[data-screen="combat"] .pile.disc::before{background:#6a3a3a;box-shadow:2px -2px 0 #a85a5a}
-#app[data-screen="combat"] .pile.exh::before{background:#4a2a5a;box-shadow:none}
+:is(#app,.frozen)[data-screen="combat"] .piles{display:flex;gap:5px;margin-top:3px}
+:is(#app,.frozen)[data-screen="combat"] .pile{position:relative;min-width:18px;height:14px;padding:0 3px 0 13px;font-family:var(--f-disp);font-size:9px;line-height:14px;color:#fff;text-shadow:1px 1px 0 #000}
+:is(#app,.frozen)[data-screen="combat"] .pile::before{content:"";position:absolute;left:1px;top:1px;width:9px;height:12px;background:#3a3a7a;border:1px solid #000;box-shadow:2px -2px 0 -0px #5a5aa8}
+:is(#app,.frozen)[data-screen="combat"] .pile.disc::before{background:#6a3a3a;box-shadow:2px -2px 0 #a85a5a}
+:is(#app,.frozen)[data-screen="combat"] .pile.exh::before{background:#4a2a5a;box-shadow:none}
 
 /* ---- 위 띠(계획 6): 글자 버튼 대신 도트 아이콘, 시계는 시계 모양 ---- */
 .topbar .hi{width:15px;height:15px;flex:none;filter:drop-shadow(1px 1px 0 #000)}
@@ -180,15 +180,15 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 .relic.hasic img{width:20px;height:20px;image-rendering:pixelated;filter:drop-shadow(1px 1px 0 #000)}
 
 /* 선택·마지막 동료 점선 네모 없앰 — 고른 대상은 발밑 빛과 화살표로만 */
-#app[data-screen="combat"] .pm.last,#app[data-screen="combat"] .pm.aimed,#app[data-screen="combat"] .foe.tg,#app[data-screen="combat"] .foe.sel{outline:none}
+:is(#app,.frozen)[data-screen="combat"] .pm.last,:is(#app,.frozen)[data-screen="combat"] .pm.aimed,:is(#app,.frozen)[data-screen="combat"] .foe.tg,:is(#app,.frozen)[data-screen="combat"] .foe.sel{outline:none}
 /* 발밑: 그림자는 실제 발 위치(--ft, js/juice.js fitSprites)에. 고를 수 있는 대상·불 켜진 동료는 네모 테두리 대신 발밑 빛 */
-#app[data-screen="combat"] :is(.pm, .foe) > img{background:radial-gradient(ellipse 40% 4% at 50% var(--ft,97%),rgba(0,0,0,.7),transparent)}
-#app[data-screen="combat"] :is(.pm.tg, .pm.lit, .foe.tg){outline:none;background:none}
-#app[data-screen="combat"] .foe.tg > img{background:radial-gradient(ellipse 46% 5% at 50% var(--ft,97%),rgba(255,90,120,.9),rgba(224,74,106,.35) 55%,transparent)}
-#app[data-screen="combat"] .pm.tg > img{background:radial-gradient(ellipse 46% 5% at 50% var(--ft,97%),rgba(110,230,170,.9),rgba(76,192,138,.35) 55%,transparent)}
-#app[data-screen="combat"] .pm.lit > img{background:radial-gradient(ellipse 46% 5% at 50% var(--ft,97%),rgba(255,230,120,.9),rgba(255,224,96,.3) 55%,transparent)}
-#app[data-screen="combat"] :is(.pm, .foe) > img{filter:none}   /* 그림마다 필터 그림자는 무거워서 뺌(발밑 그림자로 충분) */
-#app[data-screen="combat"] .log > :not(.logtx):not(.tip){background:rgba(11,11,24,.85);padding:2px 4px;box-shadow:2px 2px 0 #000}
+:is(#app,.frozen)[data-screen="combat"] :is(.pm, .foe) > img{background:radial-gradient(ellipse 40% 4% at 50% var(--ft,97%),rgba(0,0,0,.7),transparent)}
+:is(#app,.frozen)[data-screen="combat"] :is(.pm.tg, .pm.lit, .foe.tg){outline:none;background:none}
+:is(#app,.frozen)[data-screen="combat"] .foe.tg > img{background:radial-gradient(ellipse 46% 5% at 50% var(--ft,97%),rgba(255,90,120,.9),rgba(224,74,106,.35) 55%,transparent)}
+:is(#app,.frozen)[data-screen="combat"] .pm.tg > img{background:radial-gradient(ellipse 46% 5% at 50% var(--ft,97%),rgba(110,230,170,.9),rgba(76,192,138,.35) 55%,transparent)}
+:is(#app,.frozen)[data-screen="combat"] .pm.lit > img{background:radial-gradient(ellipse 46% 5% at 50% var(--ft,97%),rgba(255,230,120,.9),rgba(255,224,96,.3) 55%,transparent)}
+:is(#app,.frozen)[data-screen="combat"] :is(.pm, .foe) > img{filter:none}   /* 그림마다 필터 그림자는 무거워서 뺌(발밑 그림자로 충분) */
+:is(#app,.frozen)[data-screen="combat"] .log > :not(.logtx):not(.tip){background:rgba(11,11,24,.85);padding:2px 4px;box-shadow:2px 2px 0 #000}
 #fx .jbanner.win{top:17%}   /* 승리 띠는 위쪽 — 아래 보상 카드를 가리지 않게 */
 /* 캐릭터 층 (js/juice.js charLayers): 오라는 몸 뒤, 동반자는 몸 뒤 왼쪽 위에서 떠다님 */
 .pm > img.px{position:relative;z-index:1}
@@ -234,7 +234,7 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 .topbar .moon{cursor:help}
 .topbar .gold{display:flex;align-items:center;gap:3px;font-family:var(--f-disp);font-size:13px}
 .topbar .gold .gico{width:10px;height:10px;background:#ffe9a0;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);filter:drop-shadow(0 0 3px #ffd860)}
-#app[data-screen="combat"] .topbar{background:linear-gradient(180deg,rgba(8,8,22,.92),rgba(8,8,22,.55));border-bottom:0}
+:is(#app,.frozen)[data-screen="combat"] .topbar{background:linear-gradient(180deg,rgba(8,8,22,.92),rgba(8,8,22,.55));border-bottom:0}
 /* 턴 띠: 화면을 가로지르는 얇은 줄 대신 짧고 굵은 비스듬한 띠 — 왼쪽에서 들어와 글자가 쾅 (js/juice.js banner) */
 #fx .jbanner{width:auto;min-width:220px;padding:6px 40px;border:0;transform-origin:50% 50%;
   background:linear-gradient(90deg,transparent,rgba(10,10,26,.95) 14%,rgba(10,10,26,.95) 86%,transparent);clip-path:polygon(6% 0,100% 0,94% 100%,0 100%)}
@@ -263,3 +263,9 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 #fx .jbossin .tx span{font-size:10px;letter-spacing:.4em;color:#ffb0c0}
 #fx .jbossin .tx b{font-family:var(--f-disp);font-weight:400;font-size:40px;line-height:1;color:#fff;text-shadow:3px 3px 0 var(--c),-1px -1px 0 #000}
 #fx .jbossin .tx small{font-size:11px;color:#ffe0e8;text-shadow:1px 1px 0 #000;margin-top:2px}
+/* 손패의 레전더리 카드: 금빛이 카드 위를 천천히 훑고, 가끔 반짝 */
+.bottom .hand .card.r-r .art::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 35%,rgba(255,240,180,.45) 50%,transparent 65%);background-size:300% 100%;animation:jleg 3.2s ease-in-out infinite;mix-blend-mode:screen}
+.bottom .hand .card.r-r .art{position:relative}
+.bottom .hand .card.r-r{box-shadow:0 0 6px rgba(240,200,96,.55)}
+@keyframes jleg{0%,60%{background-position:120% 0}100%{background-position:-60% 0}}
+#stage.calm .bottom .hand .card.r-r .art::after{animation:none;display:none}

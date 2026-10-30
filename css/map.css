@@ -1,6 +1,6 @@
 /* 탑 지도 (js/render/map.js): 아래(1층)에서 위(꼭대기)로 오르는 탑. 칸 = 돌 난간 위 아이콘, 층 사이 = 꺾인 계단.
    글 상자를 늘어놓는 대신 탑 그림이 화면의 주인공 — 이름·시간은 고를 수 있는 칸에만 한 줄. game.css·screens.css의 옛 지도 규칙을 덮는다 */
-#app[data-screen="map"]::before{filter:blur(1px) brightness(.5) saturate(.8)}
+:is(#app,.frozen)[data-screen="map"]::before{filter:blur(1px) brightness(.5) saturate(.8)}
 .towermap{position:relative;display:flex;flex-direction:row;align-items:flex-end;justify-content:flex-start;gap:20px;height:100%;padding:0 0 0 70px}
 .towermap .mapgrid{position:relative;flex:none;margin:0}
 

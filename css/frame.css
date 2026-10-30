@@ -33,5 +33,5 @@
 .towermap .formation .slot{background:none}
 
 /* 전투: 동료 발밑 글(「베기 1 · 다음 베기」 같은 상태 글)은 평소엔 숨기고, 그 동료에 커서를 대거나 고를 때만 — 캐릭터 밑에 글이 늘 깔려 있던 것 */
-#app[data-screen="combat"] .pm .lab .s{opacity:0;transition:opacity .12s steps(2)}
-#app[data-screen="combat"] .pm:hover .lab .s,#app[data-screen="combat"] .pm.tg .lab .s,#app[data-screen="combat"] .pm.lit .lab .s{opacity:1}
+:is(#app,.frozen)[data-screen="combat"] .pm .lab .s{opacity:0;transition:opacity .12s steps(2)}
+:is(#app,.frozen)[data-screen="combat"] .pm:hover .lab .s,:is(#app,.frozen)[data-screen="combat"] .pm.tg .lab .s,:is(#app,.frozen)[data-screen="combat"] .pm.lit .lab .s{opacity:1}
