@@ -5,7 +5,7 @@
 지도 곡 셋(map1~3)은 같은 주제를 막마다 조를 올리고 악기를 바꿔 편곡한다.
 """
 from synth import (Track, NOTE, chord, root, mel, epiano, bell, bass, pluck_bass, brass, lead, flute, pad, strings,
-                   pulse, square, harp, glock)
+                   pulse, square, harp, glock, fm, lowpass)
 
 NAMES = ['C', 'C#', 'D', 'Eb', 'E', 'F', 'F#', 'G', 'Ab', 'A', 'Bb', 'B']
 
@@ -578,8 +578,135 @@ def dawn3():
     return tr
 
 
+# ---------- 시즌 1 「유성우의 밤」 ----------
+
+def organ(n, dur, vel):
+    """파이프 오르간풍 FM: 지속음 위에 옥타브·12도 배음을 겹친다"""
+    k = dict(ratio=1, index=0.8, idecay=20, a=0.03, d=1.0, s=0.95, r=0.18)
+    y = fm(n, dur, vel, **k)
+    y += fm(n + 12, dur, vel * 0.5, **k)
+    y += fm(n + 19, dur, vel * 0.25, **k)
+    return lowpass(y, 3600)
+
+
+def bars68(prog):
+    """6/8 화음 진행: 마디마다 화음 하나(6) 또는 둘(3+3). [(이름, 시작 8분, 길이)]"""
+    out = []
+    for item in prog:
+        names = item.split()
+        out.append([(c, i * 6 / len(names), 6 / len(names)) for i, c in enumerate(names)])
+    return out
+
+
+def season():
+    """시즌 1 「유성우의 밤」 시즌 화면: 맑고 넓은 밤하늘. 느린 6/8(8분=144, 점4분=48), 종·글로켄 반짝임, 24마디=1분"""
+    tr = Track(144, 24, beats_per_bar=6)
+    prog = ['Emaj9', 'C#m9', 'Amaj9', 'B7sus4', 'Emaj9', 'G#m7', 'Amaj7', 'B7sus4 B7',
+            'Amaj7', 'B6', 'C#m7', 'G#m7', 'Amaj9', 'F#m9', 'B7sus4', 'B7',
+            'Cmaj7', 'D', 'Emaj9', 'C#m9', 'Amaj7', 'F#m9', 'B7sus4', 'B7sus4 B7']
+    tr.bus('bell', 0.25, 0.42, 0.6); tr.bus('fl', -0.2, 0.34, 0.55); tr.bus('harp', -0.4, 0.34, 0.5)
+    tr.bus('pad', 0, 0.2, 0.7); tr.bus('gl', 0.45, 0.22, 0.7); tr.bus('bass', 0, 0.5, 0.2); tr.bus('dr', 0.15, 0.3, 0.5)
+    for b, bar in enumerate(bars68(prog)):
+        for name, at, beats in bar:
+            s = b * 6 + at
+            notes = chord(name, 4)
+            tr.note('bass', bass, s, beats * 0.95, root(name, 2), 0.55)
+            for n in chord(name, 3)[:3]:
+                tr.note('pad', pad, s, beats - 0.1, n, 0.45)
+            # 하프: 8분마다 위로 올랐다 내려오는 물결
+            for k in range(int(beats)):
+                idx = [0, 1, 2, 4, 2, 1][(int(at) + k) % 6]
+                n = notes[idx % len(notes)] + 12 * (idx // len(notes)) - 12
+                tr.note('harp', harp, s + k, 1.4, n, 0.42 if k == 0 else 0.32)
+        # 반짝임: 글로켄이 마디마다 높은 화음음을 두세 번 흩뿌린다 (마디마다 자리를 조금씩 바꿈)
+        top = chord(bar[-1][0], 6)
+        for j, (at, i) in enumerate([(1.5, 2), (4, 0), (5.5, 1)] if b % 2 else [(2, 1), (3.5, 2), (5, 0)]):
+            tr.note('gl', glock, b * 6 + at, 0.5, top[(i + b) % len(top)], 0.28 - 0.04 * j)
+    mel_a = ['b:3 g#:2 e:1', 'g#:4 c#^:2', 'c#^:3 b:2 a:1', 'f#:6',
+             'b:3 g#:2 b:1', 'd#^:4 e^:2', 'c#^:3 e^:2 c#^:1', 'b:6']
+    mel_b = ['a:2 c#^:2 e^:2', 'g#^:4 f#^:2', 'e^:3 g#:2 c#^:1', 'd#^:6',
+             'c#^:2 e^:2 a^:2', 'g#^:3 f#^:2 e^:1', 'e^:3 f#^:2 a^:1', 'f#^:4 d#^:2']
+    mel_c = ['e^:3 g^:2 b^:1', 'a^:4 f#^:2', 'g#^:6', 'e^:3 d#^:2 c#^:1',
+             'c#^:2 e^:2 g#^:2', 'a^:3 g#^:2 f#^:1', 'e^:4 f#^:2', 'd#^:3 f#^:2 b:1']
+    melody(tr, 'bell', bell, 0, mel_a + mel_b + mel_c, octave=5, vel=0.5)
+    melody(tr, 'fl', flute, 8, mel_b + mel_c, octave=4, vel=0.42)
+    # 북은 거의 없이: 둘째 단락부터 셰이커 숨결, 셋째 단락 머리에 심벌 부풂
+    for b in range(8, 24):
+        tr.drum('dr', 'shaker', b * 6 + 3, 0.35)
+        tr.drum('dr', 'shaker', b * 6 + 5, 0.22)
+    for b in (0, 8, 16):
+        tr.drum('dr', 'timp', b * 6, 0.25)
+    tr.drum('dr', 'cym', 16 * 6, 0.3)
+    return tr
+
+
+STAR_PROG = ['Fm', 'Db', 'Bbm', 'C7', 'Fm', 'Dbmaj7', 'Gb', 'C7',
+             'Db', 'Eb', 'Cm7', 'Fm', 'Bbm', 'Gb', 'Db', 'C7sus4 C7']
+STAR_MEL = ['c^^:1.5 ab^:.5 f^ c^', 'db^^:1.5 ab^:.5 f^ db^', 'bb^:1.5 f^:.5 db^ bb', 'c^:2 e^ g^',
+            'c^^:1.5 ab^:.5 f^ c^', 'c^^:1.5 ab^:.5 f^ db^', 'bb^:1.5 gb^:.5 db^ bb', 'g^:2 e^:2',
+            'f^:2 ab^ db^^', 'eb^^:1.5 bb^:.5 g^ eb^', 'g^:2 bb^ eb^^', 'f^^:1.5 c^^:.5 ab^ f^',
+            'f^^:1.5 db^^:.5 bb^ f^', 'gb^^:1.5 db^^:.5 bb^ gb^', 'f^^:1.5 db^^:.5 ab^ f^', 'f^:2 e^:2']
+
+
+def fall(tr, bus, inst, prog, octave=5, step=0.25, vel=0.4, dur=0.35, start_bar=0):
+    """떨어지는 별: 박마다 위에서 아래로 내리긋는 화음 아르페지오, 박이 지날수록 시작음이 한 칸씩 내려간다"""
+    per = int(round(1 / step))
+    for b, bar in enumerate(chords_per_bar(prog)):
+        for name, at, beats in bar:
+            tones = sorted({n + 12 * o for n in chord(name, octave - 1)[:4] for o in (0, 1)}, reverse=True)
+            for k in range(int(beats)):
+                for i in range(per):
+                    n = tones[(k + i) % len(tones)]
+                    tr.note(bus, inst, (start_bar + b) * 4 + at + k + i * step, dur, n, vel * (1.0 if i == 0 else 0.75))
+
+
+def boss_star():
+    """시즌 보스 「떨어진 별의 왕」 1·2단계: 장엄한 오르간과 금관, 종소리로 쏟아지는 하행 아르페지오가 주제. 150"""
+    tr = Track(150, 16)
+    prog = STAR_PROG
+    tr.bus('org', 0, 0.3, 0.45); tr.bus('br', 0.05, 0.52, 0.32); tr.bus('fall', 0.4, 0.26, 0.5)
+    tr.bus('str', -0.35, 0.24, 0.4); tr.bus('bass', 0, 0.74, 0.06); tr.bus('dr', 0, 0.6, 0.18)
+    block(tr, 'org', organ, prog, [(0, 3.9)], octave=3, vel=0.45)
+    fall(tr, 'fall', bell, prog, octave=6, vel=0.32)
+    block(tr, 'str', strings, prog, [(0, 1.4), (1.5, 0.4), (2, 1.9)], octave=4, vel=0.32, top=3)
+    basses(tr, 'bass', bass, prog, [(0, 1.4, 0), (1.5, 0.4, 0), (2, 0.45, 12), (2.5, 0.45, 0), (3, 0.9, 7)], vel=0.78)
+    melody(tr, 'br', brass, 0, STAR_MEL, octave=3, vel=0.62)
+    melody(tr, 'br', brass, 8, STAR_MEL[8:], octave=2, vel=0.4)
+    drums(tr, 'dr', {'kick': [0, 2, 2.5], 'snare': [1, 3], 'hat': [(x * 0.5, 0.3 if x % 2 else 0.42) for x in range(8)],
+                     'timp': [(0, 0.55), (2, 0.3)]}, 16)
+    for b in (7, 15):
+        roll(tr, 'dr', b, 0.5, 3.0)
+    for b in (0, 32):
+        tr.drum('dr', 'cym', b, 0.6)
+    return tr
+
+
+def boss_star3():
+    """「떨어진 별의 왕」 3단계(체력 25% 아래, 두 번 행동): 같은 주제를 한 음 올려 빠르고 높게, 별비는 16분 두 겹, 북은 두 배. 172"""
+    tp = 2
+    tr = Track(172, 16)
+    prog = transpose(STAR_PROG, tp)
+    tr.bus('org', 0, 0.26, 0.4); tr.bus('br', 0.05, 0.54, 0.28); tr.bus('ld', -0.1, 0.3, 0.3)
+    tr.bus('fall', 0.4, 0.26, 0.45); tr.bus('gl', -0.4, 0.18, 0.45); tr.bus('bass', 0, 0.78, 0.05)
+    tr.bus('dr', 0, 0.64, 0.12)
+    block(tr, 'org', organ, prog, [(0, 1.9), (2, 1.9)], octave=3, vel=0.42)
+    fall(tr, 'fall', bell, prog, octave=6, vel=0.3, dur=0.25)
+    fall(tr, 'gl', glock, prog, octave=6, step=0.125, vel=0.22, dur=0.12)
+    basses(tr, 'bass', bass, prog, [(i * 0.25, 0.22, 12 if i % 4 == 2 else 0) for i in range(16)], vel=0.66)
+    melody(tr, 'br', brass, 0, STAR_MEL, octave=3, vel=0.64, tp=tp)
+    melody(tr, 'ld', lead, 0, STAR_MEL, octave=4, vel=0.34, legato=0.7, tp=tp)
+    drums(tr, 'dr', {'kick': [x * 0.5 for x in range(8)], 'snare': [1, 3, (1.75, 0.3), (3.5, 0.4), (3.75, 0.45)],
+                     'hat': [(x * 0.25, 0.25 if x % 2 else 0.4) for x in range(16)], 'timp': [(0, 0.6), (1, 0.3), (2, 0.45), (3, 0.3)]}, 16)
+    for b in (3, 7, 11, 15):
+        roll(tr, 'dr', b, 0.6, 2.5 if b % 8 == 7 else 3.0)
+    for b in (0, 16, 32, 48):
+        tr.drum('dr', 'cym', b, 0.62)
+    return tr
+
+
 SONGS = {'title': title, 'base': base, 'map1': map1, 'map2': map2, 'map3': map3, 'battle': battle, 'battle2': battle2, 'battle3': battle3, 'elite': elite,
          'boss1': boss1, 'boss2': boss2, 'dawn': dawn, 'victory': victory, 'result': result,
          'rest': rest, 'event': event, 'ep_daily': ep_daily, 'ep_warm': ep_warm, 'ep_tense': ep_tense,
          'tutorial': tutorial, 'dawn2': dawn2,
-         'boss_queen': boss_queen, 'boss_whale': boss_whale, 'dawn3': dawn3}
+         'boss_queen': boss_queen, 'boss_whale': boss_whale, 'dawn3': dawn3,
+         'season': season, 'boss_star': boss_star, 'boss_star3': boss_star3}
