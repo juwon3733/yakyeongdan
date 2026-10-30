@@ -21,6 +21,7 @@ import { fetchBoard } from './ranking.js';
 import { artReady, hasArt } from './art.js';
 import { seasonNow, seasonOn, startSeasonBoss, seasonBossDone, claimPass } from './season.js';
 import './cardzoom.js';
+import { CARDS } from './data/cards.js';
 import { setHallTime } from './render/base.js';
 import { enterEndless } from './endless.js';
 
@@ -40,6 +41,8 @@ if (S.dev) window.__yk = {
   // 에피소드: 동료의 3화를 모두 연다 / 바로 재생
   epUnlock: cid => { P.epProg[cid] = { runs: 1, act2: true, dawn: true }; save(); render(); },
   ep: (cid, n) => { openEp(cid, n); render(); },
+  // 연출 점검: 그 동료의 레전더리 공격 카드 id (tools 캡처용)
+  legend: id => Object.keys(CARDS).find(k => CARDS[k].ch === id && CARDS[k].rarity === 'r' && CARDS[k].atk) || Object.keys(CARDS).find(k => CARDS[k].ch === id && CARDS[k].rarity === 'r'),
   // 판 바깥: 별가루·별자리·이긴 판 수 바꾸기, 예전 저장(v1) 이어받기 흉내
   dust: n => { P.dust += n; save(); render(); },
   stars: (id, n) => { P.owned[id] = { stars: n }; save(); render(); },
