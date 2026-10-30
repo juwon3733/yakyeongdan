@@ -447,6 +447,7 @@
 "sprites/brick_idle.png",
 "sprites/brick_skill.png",
 "sprites/brick_win.png",
+"sprites/brick_windup.png",
 "sprites/dora_attack.png",
 "sprites/dora_down.png",
 "sprites/dora_guard.png",
