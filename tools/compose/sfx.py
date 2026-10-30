@@ -696,3 +696,31 @@ def aura_on():
 
 
 SFX.update({'windup': windup, 'proj_fly': proj_fly, 'pet_whale': pet_whale, 'pet_spirit': pet_spirit, 'aura_on': aura_on})
+
+
+# ---------- 시즌 1 「유성우의 밤」 ----------
+
+def meteor():
+    """유성우 규칙 별똥(0.4초): 0~0.26초 높은 데서 휘익 내려오는 하강 + 바람 꼬리 → 0.26초 반짝 터짐(종 화음 + 흩어지는 불티)"""
+    sec = 0.4
+    fs = 0.26
+    t = T(fs)
+    swell = np.clip(t / 0.05, 0, 1) * (0.4 + 0.6 * t / fs)
+    whistle = np.sin(2 * np.pi * np.cumsum(2600 * np.exp(-t / 0.12) + 380) / SR) * swell * 0.3
+    # 바람 꼬리: 잡음을 음 높이에 맞춰 위에서 아래로 깎아 내린다(조각마다 저역 통과)
+    air = np.zeros(len(t))
+    raw = highpass(noise(fs), 600)
+    seg = len(t) // 6
+    for i in range(6):
+        sl = slice(i * seg, len(t) if i == 5 else (i + 1) * seg)
+        air[sl] = lowpass(raw, 7000 - i * 1000)[sl]
+    air *= swell * 0.22
+    bt = T(sec - fs)
+    pop = highpass(noise(sec - fs), 2500) * np.exp(-bt / 0.025) * 0.45
+    ring = mix(bell(91, 0.08, 0.35), at(glock(98, 0.05, 0.3), 0.02), at(glock(103, 0.04, 0.22), 0.05),
+               at(glock(95, 0.04, 0.16), 0.08))
+    y = mix(whistle, air, at(mix(pop, ring), fs))
+    return fit(verb(y, 0.6, 0.28), sec)
+
+
+SFX['meteor'] = meteor

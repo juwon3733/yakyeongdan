@@ -400,6 +400,7 @@ function finish(rec, stats, seed, party) {
   if (G.clock >= RULES.dawn) rec.over6 = true;
   if (rec.won) { rec.bossClock[3] = G.clock; rec.bossKill[3] = 1; }
   rec.noon = !!G.noonBeat;
+  rec.deck = [...new Set(G.deck.map(id => id.replace(/\++$/, '')))];   // 본판이 끝났을 때 덱 (강화 표시 뺀 종류)
   for (const k of runMade) stats.duoRuns[k] = (stats.duoRuns[k] || 0) + 1;
   // 끝없는 탑 (docs/05 §12): 「새벽」을 깬 판은 그대로 이어 올라 도달 층을 잰다 (--no-endless로 끔)
   if (rec.won && ENDLESS_ON) {
@@ -470,6 +471,8 @@ for (let a = 0; a < IDS.length; a++) for (let b = a + 1; b < IDS.length; b++) fo
   const p = [IDS[a], IDS[b], IDS[c]];
   if (!ONLY || p.every(id => CHARACTERS[id].rarity === ONLY)) combos.push(p);
 }
+// --party a,b,c : 본판도 그 파티 하나만 (처음 동료 기준선 등)
+if (opt('--party', null)) combos.splice(0, combos.length, opt('--party').split(','));
 // 조합 순서를 시드로 섞어서 판 수가 적어도 동료가 고르게 나오게
 { const r = rngFrom(SEED0 * 2654435761); r.shuffle(combos); }
 
@@ -592,12 +595,22 @@ for (const k of Object.keys(DUOS)) {
   const [a, b] = k.split('+'), rs = recs.filter(r => r.party.includes(a) && r.party.includes(b));
   console.log(`| ${DUOS[k].name} (${CHARACTERS[a].name}·${CHARACTERS[b].name}) | ${pct(stats.duoRuns[k] || 0, rs.length)} | ${stats.duoMade[k] || 0} | ${stats.duoPlayed[k] || 0} |`);
 }
+// 카드별: 본판이 끝났을 때 그 카드가 덱에 있던 판의 「새벽」 격파율 (쓴 횟수 30번 미만은 뺌)
+out.cards = {};
+for (const r of recs) for (const id of r.deck || []) { const c = out.cards[id] ||= { runs: 0, wins: 0 }; c.runs++; if (r.won) c.wins++; }
+for (const [id, c] of Object.entries(out.cards)) { c.win = c.wins / c.runs; c.plays = stats.plays[id] || 0; }
+function cardRows() { return Object.entries(out.cards).filter(([, c]) => c.plays >= 30).map(([id, c]) => ({ id, ...c })).sort((a, b) => b.win - a.win || b.runs - a.runs); }
 if (!QUICK) {
   console.log('\n보상 카드 선택률 (나온 횟수 중 고른 비율, 높은 순 / 낮은 순 10개)');
   const rows = Object.keys(stats.offered).map(id => [id, (stats.taken[id] || 0) / stats.offered[id], stats.offered[id]]).sort((a, b) => b[1] - a[1]);
   const fmt = ([id, r, n]) => `${CARDS[id]?.name || id}(${id}) ${(r * 100).toFixed(0)}% / ${n}`;
   console.log('높음: ' + rows.slice(0, 10).map(fmt).join(', '));
   console.log('낮음: ' + rows.slice(-10).map(fmt).join(', '));
+  console.log('\n덱에 있을 때 격파율 (쓴 횟수 30번 이상, 높은 순 / 낮은 순 10개)');
+  const cr = cardRows();
+  const cf = c => `${cardData(c.id)?.name || c.id}(${c.id}) ${(c.win * 100).toFixed(0)}% / ${c.runs}판`;
+  console.log('높음: ' + cr.slice(0, 10).map(cf).join(', '));
+  console.log('낮음: ' + cr.slice(-10).reverse().map(cf).join(', '));
   console.log('\n많이 쓴 카드 10개: ' + Object.entries(stats.plays).sort((a, b) => b[1] - a[1]).slice(0, 10).map(([k, v]) => `${cardData(k)?.name || k} ${v}`).join(', '));
 }
 if (JSON_OUT) { const fs = await import('node:fs'); fs.writeFileSync(JSON_OUT, JSON.stringify({ ...out, stats }, null, 1)); }

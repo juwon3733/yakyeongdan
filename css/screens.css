@@ -342,3 +342,49 @@ details.fold > :not(summary){margin:4px 6px 5px}
 .rstats .rbar{margin-right:16px}
 .resultscr .mvp{padding-bottom:18px}
 .resultscr .mvpband small{margin-top:5px}
+/* 도감 「적」: 막별 격자(보스·강적 두 배 칸) + 오른쪽 행동 패턴 */
+.fxwrap{display:flex;align-items:flex-start;gap:10px}
+.fxlist{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.fxgrp h3.sub small{color:var(--dim);font-family:inherit;font-size:9px}
+.fxgrid{display:grid;grid-template-columns:repeat(auto-fill,64px);grid-auto-rows:78px;grid-auto-flow:dense;gap:4px}
+.fxcell{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:0;padding:2px;min-width:0;
+  background:var(--panel);border:2px solid var(--line);box-shadow:2px 2px 0 #000;color:inherit;font:inherit;cursor:pointer}
+.fxcell.big{grid-column:span 2;grid-row:span 2;border-color:#b06ae0}
+.fxcell:hover,.fxcell:focus-visible{border-color:var(--gold)}
+.fxcell.on{border-color:var(--gold);background:#2a2440;transform:translate(1px,1px);box-shadow:1px 1px 0 #000}
+.fxpic{position:relative;flex:1;min-height:0;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.fxpic img{max-width:100%;max-height:100%;width:48px;height:48px;object-fit:contain;object-position:50% 100%;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000)}
+.fxcell.big .fxpic img{width:112px;height:112px}
+.fxcell.none .fxpic img,.fxbig.none img{filter:brightness(0) drop-shadow(1px 1px 0 #3a3458)}
+.fxpic b,.fxbig b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--f-disp);font-weight:400;font-size:18px;color:#8a84b0;text-shadow:2px 2px 0 #000}
+.fxcell.big .fxpic b{font-size:30px}
+.fxcell small{font-size:8px;line-height:1.15;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-shadow:1px 1px 0 #000}
+.fxcell .nm{color:#e8e4f8}
+.fxcell .hp{color:var(--dim)}
+.fxcell.none .nm{color:#6a6488}
+.fxcell.beat .nm{color:var(--gold)}
+.fxside{position:sticky;top:0;flex:0 0 210px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px;
+  background:var(--panel);border:2px solid var(--line);box-shadow:3px 3px 0 #000}
+.fxside.empty{min-height:80px;justify-content:center}
+.fxside h3{margin:0;font-size:12px;color:#fff;text-align:center}
+.fxside .chip.boss{color:var(--rose)}
+.fxside .chip.elite{color:#b06ae0}
+.fxside p{margin:0;font-size:9px;text-align:center}
+.fxside .fxaim{color:var(--dim)}
+.fxbig{position:relative;display:flex;align-items:flex-end;justify-content:center;height:96px}
+.fxbig img{height:96px;width:auto;max-width:180px;object-fit:contain;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000)}
+.fxpat{width:100%;border-top:1px dashed var(--line);padding-top:3px;display:flex;flex-direction:column;gap:2px}
+.fxpat em{font-style:normal;font-size:8.5px;color:var(--gold)}
+.fxpat > small{font-size:8.5px;color:var(--dim)}
+.fxsteps{display:flex;flex-wrap:wrap;align-items:center;gap:2px 1px}
+.fxstep{display:inline-flex;flex-direction:column;align-items:center;gap:0;padding:1px 2px;background:#0e0c1a;border:1px solid var(--line)}
+.fxstep small{font-size:7px;color:#cfc8ec;white-space:nowrap}
+.fxic{display:flex;align-items:center;gap:1px}
+.fxic .iv{display:flex;align-items:center;gap:1px}
+.fxic .ii{width:16px;height:16px;filter:drop-shadow(1px 1px 0 #000)}
+.fxic .iv b{display:flex;align-items:center;font-family:var(--f-disp);font-weight:400;font-size:11px;color:#fff;line-height:1}
+.fxic .iv b i{font-style:normal;font-size:9px;color:#ffd0d8}
+.fxic .iv.all .ii{filter:drop-shadow(1px 1px 0 #000) drop-shadow(3px -2px 0 rgba(232,236,255,.45))}
+.fxarr{font-style:normal;font-size:10px;color:var(--dim)}
+.fxarr.loop{color:var(--gold);margin-left:2px}
+@media (max-width:560px){ .fxwrap{flex-direction:column} .fxside{position:static;flex:none;width:100%} }

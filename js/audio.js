@@ -151,6 +151,11 @@ export const SKILL_SFX = {
   auraOn: 'aura_on',         // 오라 켜지는 낮은 웅 (0.4초)
 };
 
+// 시즌 1 「유성우의 밤」: sfx(SEASON_SFX.meteor) — 유성우 규칙 별똥 (0.4초, 0~0.26초 휘익 하강 → 0.26초 반짝 터짐)
+export const SEASON_SFX = {
+  meteor: 'meteor',
+};
+
 // UI 효과음 (0.05~0.2초): sfx(UI_SFX.hover) 식으로 부른다. 자주 나므로 SFX_GAIN으로 작게 낸다
 export const UI_SFX = {
   hover: 'ui_hover',  // 카드에 마우스를 댐: 아주 짧은 틱
@@ -186,11 +191,12 @@ function epBgm() {
 }
 // 일반 전투: 같은 주제를 막마다 조·악기·빠르기를 바꿔 편곡 (1 금관 144 · 2 FM 리드 152 · 3 금관+종 160)
 const BATTLE_SONG = { 1: 'battle', 2: 'battle2', 3: 'battle3' };
-// 보스별 곡 (막 보스 변형: 안개 마녀 여왕·폭풍 고래)
-const BOSS_SONG = { keeper: 'boss1', queen: 'boss_queen', captain: 'boss2', whale: 'boss_whale' };
+// 보스별 곡 (막 보스 변형: 안개 마녀 여왕·폭풍 고래, 시즌 1 보스: 떨어진 별의 왕)
+const BOSS_SONG = { keeper: 'boss1', queen: 'boss_queen', captain: 'boss2', whale: 'boss_whale', starking: 'boss_star' };
 function pickBgm() {
   const G = S.G;
   if (S.view === 'ep') return epBgm();
+  if (S.view === 'season') return 'season';              // 시즌 화면·시즌 소개
   if (!G || S.view !== 'run') return ['base', 'summon', 'reveal', 'episodes'].includes(S.view) ? 'base' : 'title';
   if (G.screen === 'result') return G.won ? 'victory' : 'result';
   if (G.screen === 'tutdone') return 'victory';
@@ -199,6 +205,7 @@ function pickBgm() {
     if (S.C.kind === 'boss') {
       const b = S.C.all[0];
       if (b?.key === 'dawn') return b.p3 ? 'dawn3' : b.p2 ? 'dawn2' : 'dawn';
+      if (b?.key === 'starking' && b.p3) return 'boss_star3';   // 3단계(체력 25% 아래, 두 번 행동)
       return BOSS_SONG[b?.key] || `boss${Math.min(2, G.act)}`;
     }
     if (G.tutorial) return 'tutorial';

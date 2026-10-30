@@ -23,7 +23,10 @@
   "boss_whale": 26.66667,
   "dawn3": 22.85714,
   "battle2": 25.26315,
-  "battle3": 24.0
+  "battle3": 24.0,
+  "season": 60.0,
+  "boss_star": 25.6,
+  "boss_star3": 22.32558
  },
  "sfx": [
   "atk_akane",
@@ -78,6 +81,7 @@
   "hurt",
   "lose",
   "mana",
+  "meteor",
   "move",
   "pet_spirit",
   "pet_whale",

@@ -1099,7 +1099,7 @@ input,textarea{-webkit-user-select:text;user-select:text;-webkit-touch-callout:d
 #stage.bigtext .foe.sm img[src^="data:"]{width:62px;height:82px;margin-top:26px}
 
 /* ---- 슬레이 더 스파이어처럼 (docs/06): 무대가 넓게 보이고 캐릭터·카드는 작게, 카드는 겹친 부채꼴 — 커서를 대거나 고르면 크게 ---- */
-/* 전투 캐릭터는 일러스트가 아니라 전투 스프라이트(원본 96×128 = 판 1:1, 적 128×128) */
+/* 전투 캐릭터는 일러스트가 아니라 전투 스프라이트(원본 192×256 = 판 2배 세밀, 적 256×256) */
 .field{padding:0 28px 6px;justify-content:space-between;align-items:flex-end}
 .party{gap:2px}
 .pm{width:80px}

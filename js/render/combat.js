@@ -103,7 +103,7 @@ function iconSvg(k) {
   }));
   return (iconCache[k] = `<svg class="ii" viewBox="0 0 16 16" shape-rendering="crispEdges" aria-hidden="true">${r}</svg>`);
 }
-function intentIcon(text) {
+export function intentIcon(text) {
   const t = String(text).replace(/<[^>]+>/g, '').trim();
   let m;
   const two = /행동 ×(\d+)/.exec(t), extra = two ? `<small class="two">×${two[1]}행동</small>` : '';
