@@ -391,9 +391,10 @@ function swapSrc(img, url, fade) {
 function pose(id, kind, ms) {
   const img = allyEl(id)?.querySelector(':scope > img'), u = battleArt(id, kind);
   if (!img || !u) return false;
-  const was = img.getAttribute('src');
+  // 다른 동작 도중(공격하다 반격에 맞음 등)이면 끝나고 그 동작으로 돌아가 굳지 않게 서기 자세로
+  const was = img.getAttribute('src'), back = /_(windup|attack|skill|guard|hurt|cast|win)\.png$/.test(was || '') ? battleArt(id, 'idle') || was : was;
   swapSrc(img, u, 0); busy.add(img);
-  setTimeout(() => { busy.delete(img); if (img.isConnected && img.getAttribute('src') === u) swapSrc(img, was, 0); }, ms);
+  setTimeout(() => { busy.delete(img); if (img.isConnected && img.getAttribute('src') === u) swapSrc(img, back, 0); }, ms);
   return true;
 }
 // 승리: 살아 있는 동료가 승리 동작
@@ -475,7 +476,8 @@ const RANGED = new Set(['boom', 'star', 'magic']);
 export function motionOf(d, actor) {
   if (!d) return 'cast';
   const t = String(d.text || '');
-  if (d.time) return 'time';
+  // 시간을 쓰는 공격(일섬 등)도 공격 동작으로 — 시계 연출은 'time' 사건이 따로 맡는다
+  if (d.time && !d.atk) return 'time';
   if (d.atk && d.target === 'all') return 'sweep';
   if (d.atk && d.exhaust) return 'finisher';
   if (d.atk) return RANGED.has(STYLE[actor]) ? 'shot' : 'slash';
@@ -1204,7 +1206,7 @@ const KF = {
   // 쓰러짐: 휘청 → 무릎 꺾임 → 바닥에 닿으며 살짝 튐 → 잿빛
   jdown: () => [f(0, 'none', { filter: 'brightness(2)' }), f(.2, 'translate(-6px,0)', { filter: 'none' }), f(.45, 'translate(3px,2px)'),
     f(.7, 'translate(0,4px)', { filter: 'gray' }), f(.85, 'translate(0,2px)'), f(1, 'translate(0,3px)', { filter: 'gray' })],
-  jflash: () => [{ filter: 'brightness(3)' }, { filter: 'none' }],
+  jflash: () => [{ filter: 'brightness(2)' }, { filter: 'none' }],
 };
 // 튀어 오르는 숫자(슬레이 더 스파이어식): 튀어 올랐다 옆으로 살짝 떨어지며 사라짐.
 // 치명타·15 이상 피해는 크게 + 흔들림(.big), 막힌 건 회색 「막음」(.blk). 움직임은 css .jnum 키프레임.
