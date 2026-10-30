@@ -1,0 +1,6 @@
+{
+  "note": "참고용: 핀 패시브 데이터 숫자 fightTime -5 → -10만 바꿈. js/data는 그대로.",
+  "chars": {
+    "finn": { "passive": { "fightTime": -10 } }
+  }
+}
