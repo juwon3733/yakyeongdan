@@ -474,7 +474,7 @@ function actFx(e, special = false) {
     auraFlare(id, special ? 2.6 : m === 'finisher' ? 2 : m === 'guard' ? 1.25 : 1.5, special ? 1100 : 650);
     const [cls, ms, p] = MOTION[m];
     const col = colOf(id), r = rel(img);
-    if (special && SIG[id] && e.ch !== 'duo' && !calmNow()) { SIG[id](id, img, e); continue; }
+    if (special && SIG[id] && e.ch !== 'duo' && d?.atk && !calmNow()) { SIG[id](id, img, e); continue; }   // 전용 필살은 공격 카드만
     if ((m === 'slash' || m === 'sweep' || m === 'finisher') && !calmNow()) {
       // 근접: 적 앞까지 돌진 → 베고 → 돌아옴, 잔상
       const dur = dash(id, img, e, m, n * 70);
@@ -1436,8 +1436,9 @@ function ambient() {
 }
 
 // ---------- ★5 전용 필살 연출 (희귀 카드) — 동료마다 다른 순서. sigLead = 카드를 낸 뒤 적중까지 더 기다릴 시간 ----------
-const SIG_LEAD = { akane: 560, sion: 380, lunaria: 320, eleonore: 460, nerea: 420 };
-function sigLead(e) { const id = e.actor || e.ch; return e.ch !== 'duo' && SIG[id] && !calmNow() ? SIG_LEAD[id] || 0 : 0; }
+const SIG_LEAD = { akane: 560, sion: 380, lunaria: 320, eleonore: 460, nerea: 420,
+  iris: 380, noel: 360, raven: 360, mimimomo: 320, sebas: 340, mariana: 380, tomori: 320, sigrun: 520, zeno: 420, bertha: 320 };
+function sigLead(e) { const id = e.actor || e.ch; return e.ch !== 'duo' && SIG[id] && cardData(e.id)?.atk && !calmNow() ? SIG_LEAD[id] || 0 : 0; }
 const sigTarget = e => (e.foe != null ? foeEl(e.foe) : null)?.querySelector(':scope > img') || root()?.querySelector('.foe[data-fi] > img');
 // 판을 한 점으로 확대했다 돌아옴(무대 좌표 x, y)
 function zoomAt(x, y, k, ms, hold = .5) {
@@ -1532,3 +1533,100 @@ const SIG = {
     petAttack(id, e, 200);
   },
 };
+
+// ---------- ★4 전용 필살(짧게) ----------
+const allFoes = () => [...(root()?.querySelectorAll('.foe[data-fi] > img') || [])].map(x => rel(x));
+// 대상 앞까지 갔다 돌아오는 몸 움직임(시계에 맞춰 시작). keys: [시간 비율, 대상 쪽 거리 비율, 위로(px)]
+function moveTo(img, b, T, keys) {
+  const a = rel(img), host = img.closest('[data-ally]'); if (host) host.style.zIndex = 6;
+  const dx = Math.round(b.x - (a.x + a.w) + 12), dy = Math.round((b.y + b.h) - (a.y + a.h));
+  const an = img.animate(keys.map(([o, k, up = 0, ease]) => ({ offset: o, transform: `translate(${Math.round(dx * k)}px,${Math.round(dy * Math.min(1, k) + up)}px)`, ...(ease ? { easing: ease } : {}) })), { duration: T });
+  an.startTime = document.timeline.currentTime;
+  moving.add(an); an.onfinish = an.oncancel = () => { moving.delete(an); if (host) host.style.zIndex = ''; };
+  return a;
+}
+const FAST = 'cubic-bezier(.2,.9,.3,1)', IN2 = 'cubic-bezier(.7,0,.95,.3)';
+Object.assign(SIG, {
+  // 아이리스: 적 앞으로 미끄러져 은빛 베기 셋을 엇갈려 긋고 마지막에 크게 한 번
+  iris(id, img, e) {
+    const tgt = sigTarget(e); if (!tgt) return; const b = rel(tgt), hit = 550;
+    poseSeq(id, [['windup', 120], ['attack', 700]]); dim(900);
+    const a = moveTo(img, b, 1000, [[0, 0], [.12, -.05, 2], [.22, 1, 0, FAST], [.3, .96], [.38, 1.02], [.46, .98], [.62, 1.04], [.82, 1, 0, IN2], [1, 0]]);
+    at(150, () => afterimage(img, colOf(id)));
+    for (let k = 0; k < 3; k++) at(260 + k * 80, () => { const a0 = k % 2 ? rnd(-.6, -.2) : rnd(-2.8, -2.4); add({ k: 'arc', x: b.cx, y: b.cy, r: 26 + k * 4, a0, a1: a0 + 2.4, w: 5, flat: .6, col: '#dfe8ff', life: 10 }); sfx('slash', { vol: .5, rate: 1.1 + k * .1 }); });
+    at(hit, () => { flash(); add({ k: 'arc', x: b.cx, y: b.cy, r: 46, a0: -2.9, a1: .3, w: 8, flat: .45, col: '#ffffff', life: 14 }); sparks(b.cx, b.cy, '#e8f0ff', 24, 3); zoomAt(b.cx, b.cy, 1.12, 360, .3); });
+  },
+  // 노엘: 베개를 안고 둥실 떠올라 잠들면, 분홍 꿈별이 베개에서 적마다 쏟아짐
+  noel(id, img, e) {
+    const a = rel(img), foes = allFoes(); poseSeq(id, [['skill', 800]]); auraFlare(id, 2, 900); dim(850);
+    const an = img.animate([{ transform: 'none' }, { transform: 'translate(0,-16px)', offset: .3, easing: FAST }, { transform: 'translate(0,-18px)', offset: .8 }, { transform: 'none' }], { duration: 900 }); an.startTime = document.timeline.currentTime;
+    for (let k = 0; k < 6; k++) at(k * 60, () => add({ k: 'blob', x: a.cx + rnd(-20, 20), y: a.y + rnd(0, 20), vx: rnd(-.3, .3), vy: -.4, r: rnd(6, 9), col: '#f0d8ff', life: 26 }));
+    foes.forEach((b, i) => { for (let k = 0; k < 4; k++) at(200 + i * 60 + k * 50, () => starTrail(a.cx + 10, a.y + 20, b.cx + rnd(-10, 10), b.cy + rnd(-10, 10), '#ffa8e0')); });
+    at(500, () => foes.forEach(b => { ring(b.cx, b.cy, '#ffb8f0', 6, 34, 14); sparks(b.cx, b.cy, '#fff0ff', 14, 2); }));
+  },
+  // 레이븐: 깃털로 흩어져 사라졌다가 적 뒤에서 나타나 독침, 검은 깃털이 칼처럼 흩날림
+  raven(id, img, e) {
+    const tgt = sigTarget(e); if (!tgt) return; const b = rel(tgt), a = rel(img), host = img.closest('[data-ally]'); if (host) host.style.zIndex = 6;
+    poseSeq(id, [['windup', 160], ['attack', 640]]);
+    const dx = Math.round(b.x + b.w - 10 - a.x), dy = Math.round((b.y + b.h) - (a.y + a.h));
+    const an = img.animate([{ transform: 'none', opacity: 1 }, { transform: 'none', opacity: 0, offset: .18 }, { transform: `translate(${dx}px,${dy}px) scaleX(-1)`, opacity: 0, offset: .3 }, { transform: `translate(${dx}px,${dy}px) scaleX(-1)`, opacity: 1, offset: .4 }, { transform: `translate(${dx}px,${dy}px) scaleX(-1)`, opacity: 1, offset: .75 }, { transform: 'none', opacity: 0, offset: .85 }, { transform: 'none', opacity: 1 }], { duration: 1000 });
+    an.startTime = document.timeline.currentTime; moving.add(an); an.onfinish = an.oncancel = () => { moving.delete(an); if (host) host.style.zIndex = ''; };
+    const feathers = (x, y) => { for (let k = 0; k < 14; k++) add({ k: 'line', x0: x, y0: y, x1: x + rnd(-50, 50), y1: y + rnd(-40, 30), col: k % 3 ? '#1a1424' : '#7a5aa0', speed: 6, life: 14, s: 2 }); };
+    at(60, () => feathers(a.cx, a.cy)); at(320, () => feathers(b.cx + b.w * .4, b.cy));
+    at(530, () => { flash(); mistFx(b.cx, b.cy); sparks(b.cx, b.cy, '#c8ffb0', 16, 2.4); });
+  },
+  // 미미·모모: 둘이 양쪽에서 교차해 X자로 베기
+  mimimomo(id, img, e) {
+    const tgt = sigTarget(e); if (!tgt) return; const b = rel(tgt);
+    poseSeq(id, [['windup', 100], ['attack', 600]]); dim(800);
+    moveTo(img, b, 900, [[0, 0], [.15, -.05], [.3, 1, -6, FAST], [.7, 1], [1, 0]]);
+    at(330, () => { add({ k: 'arc', x: b.cx, y: b.cy, r: 34, a0: -2.4, a1: -.2, w: 6, flat: 1, col: '#ff9ac8', life: 12 }); sfx('slash', { vol: .5 }); });
+    at(400, () => { add({ k: 'arc', x: b.cx, y: b.cy, r: 34, a0: -.9, a1: 1.3, w: 6, flat: 1, col: '#9ad8ff', life: 12 }); sfx('slash', { vol: .5, rate: 1.2 }); });
+    at(490, () => { flash(); ring(b.cx, b.cy, '#ffffff', 4, 40, 12); sparks(b.cx, b.cy, '#ffe0f0', 18, 2.6); });
+  },
+  // 세바스: 정중히 인사 → 한순간 판이 멈추고(흰 선) 지팡이칼 일섬이 여러 번 그어짐
+  sebas(id, img, e) {
+    const tgt = sigTarget(e); if (!tgt) return; const b = rel(tgt);
+    poseSeq(id, [['guard', 200], ['attack', 600]]); dim(850);
+    moveTo(img, b, 900, [[0, 0], [.2, 0, 3], [.32, 1, 0, 'steps(1)'], [.75, 1], [.76, 0, 0, 'steps(1)'], [1, 0]]);
+    at(300, () => { flash(); for (let k = 0; k < 6; k++) { const y = b.y + b.h * (.2 + k * .12); add({ k: 'line', x0: b.x - 30, y0: y + rnd(-6, 6), x1: b.x + b.w + 30, y1: y - rnd(10, 24), col: k % 2 ? '#ffffff' : '#e8e0c8', speed: 3, life: 10, s: 1 }); } });
+    at(480, () => { ring(b.cx, b.cy, '#f0e8d0', 6, 44, 14); sparks(b.cx, b.cy, '#ffffff', 20, 2.6); });
+  },
+  // 마리아나: 단총을 들면 뒤에서 배의 대포가 일제 사격 — 포탄 셋이 적마다 터짐
+  mariana(id, img, e) {
+    const a = rel(img), foes = allFoes(); poseSeq(id, [['skill', 300], ['attack', 400]]); dim(900);
+    muzzle(a, '#ffd890'); if (SET.shake) shake();
+    foes.forEach((b, i) => { for (let k = 0; k < 3; k++) at(140 + i * 40 + k * 90, () => { tracer(a.x - 20, a.y - 30 - k * 10, b.cx + rnd(-8, 8), b.cy + rnd(-8, 8), '#ffd890'); }); });
+    at(520, () => foes.forEach(b => { boomFx(b.cx, b.cy); for (let k = 0; k < 8; k++) add({ k: 'dot', x: b.cx, y: b.cy, vx: rnd(-2.5, 2.5), vy: rnd(-3, -1), g: .15, life: 22, col: '#ffd040', s: 2 }); }));
+  },
+  // 토모리: 등불을 높이 들면 등대 불빛이 적을 쓸고 지나감
+  tomori(id, img, e) {
+    const a = rel(img), foes = allFoes(); poseSeq(id, [['skill', 700]]); auraFlare(id, 2, 800);
+    const sx = a.cx + 6, sy = a.y + 8;
+    for (let k = 0; k < 8; k++) at(80 + k * 40, () => foes.forEach(b => add({ k: 'line', x0: sx, y0: sy, x1: b.cx + rnd(-16, 16), y1: b.cy + rnd(-20, 20), col: k % 2 ? '#fff4c0' : '#ffd060', speed: 3, life: 10, s: 2 })));
+    at(480, () => foes.forEach(b => { ring(b.cx, b.cy, '#fff0a0', 6, 40, 14); sparks(b.cx, b.cy, '#fffbe0', 14, 2); }));
+  },
+  // 시그룬: 날개처럼 높이 솟아 화면 밖으로 → 창을 앞세워 하늘에서 비스듬히 꽂힘, 흰 깃털 폭발
+  sigrun(id, img, e) {
+    const tgt = sigTarget(e); if (!tgt) return; const b = rel(tgt), hit = 690;
+    poseSeq(id, [['windup', 160], ['skill', 300], ['attack', 500]]); auraFlare(id, 2.4, 900); dim(1100);
+    moveTo(img, b, 1150, [[0, 0], [.1, 0, 5], [.32, .3, -150, FAST], [.48, .35, -160, IN2], [.6, 1, 0], [.8, 1], [1, 0]]);
+    at(380, () => { for (let k = 0; k < 4; k++) add({ k: 'line', x0: b.cx - 90 + k * 6, y0: 0, x1: b.cx + k * 3, y1: b.y + b.h - 8, col: k % 2 ? '#ffffff' : '#d8e8ff', speed: 5, life: 12, s: 2 }); });
+    at(hit, () => { flash(); if (SET.shake) shake(); add({ k: 'oval', x: b.cx, y: b.y + b.h - 4, r0: 6, r1: 80, col: '#ffffff', life: 20 });
+      for (let k = 0; k < 20; k++) add({ k: 'line', x0: b.cx, y0: b.cy, x1: b.cx + rnd(-70, 70), y1: b.cy + rnd(-60, 20), col: '#f4f8ff', speed: 7, life: 14, s: 1 }); sparks(b.cx, b.cy, '#ffffff', 26, 3.2); });
+  },
+  // 제노: 대검을 크게 치켜들어(용의 눈이 빛남) 검은 불꽃 반달을 모든 적에게 휘두름
+  zeno(id, img, e) {
+    const a = rel(img), foes = allFoes(); poseSeq(id, [['windup', 260], ['attack', 500]]); auraFlare(id, 2.4, 900); dim(1000);
+    zoomAt(a.cx, a.cy - 10, 1.15, 420, .4);
+    at(120, () => { add({ k: 'dot', x: a.cx + 4, y: a.y + 14, vx: 0, vy: 0, g: 0, life: 18, col: '#ffd040', s: 3 }); ring(a.cx + 4, a.y + 14, '#ffd040', 2, 14, 10); });
+    at(320, () => { const L = foes[foes.length - 1] || a; for (let k = 0; k < 3; k++) add({ k: 'arc', x: (a.cx + L.cx) / 2, y: a.cy, r: 110 + k * 10, a0: -2.6, a1: -.3, w: 9 - k * 2, flat: .4, col: k ? '#5a1a3a' : '#ff4a6a', life: 16 }); });
+    at(560, () => foes.forEach(b => { flames(b.cx, b.cy + 8); flames(b.cx + 8, b.cy); sparks(b.cx, b.cy, '#ff6a8a', 16, 2.6); }));
+  },
+  // 베르타: 등불 지팡이로 길을 가리키면 빛 발자국이 적까지 이어지고 화살표 빛이 꽂힘
+  bertha(id, img, e) {
+    const a = rel(img), foes = allFoes(); poseSeq(id, [['skill', 700]]); auraFlare(id, 1.8, 700);
+    foes.forEach((b, i) => { for (let k = 1; k <= 6; k++) at(60 + k * 45 + i * 30, () => { const x = a.cx + (b.cx - a.cx) * k / 7, y = a.y + a.h - 4 + (b.y + b.h - a.y - a.h) * k / 7; add({ k: 'oval', x, y, r0: 2, r1: 6, col: '#ffe090', life: 18 }); }); });
+    at(400, () => foes.forEach(b => { for (let k = 0; k < 3; k++) add({ k: 'line', x0: b.cx - 40, y0: b.cy - 30 - k * 8, x1: b.cx, y1: b.cy, col: '#fff0b0', speed: 4, life: 10, s: 2 }); ring(b.cx, b.cy, '#ffe090', 4, 30, 12); }));
+  },
+});
