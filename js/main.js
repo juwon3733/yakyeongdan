@@ -16,7 +16,7 @@ import { startTutorial, skipTutorial, finishTutorial, tutorialPending } from './
 import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
-import { seasonIntroModal } from './render/season.js';
+import { seasonIntroModal, seasonScroll } from './render/season.js';
 import { fetchBoard } from './ranking.js';
 import { artReady, hasArt } from './art.js';
 import { seasonNow, seasonOn, startSeasonBoss, seasonBossDone, claimPass } from './season.js';
@@ -61,7 +61,7 @@ const app = document.getElementById('app');
 const modal = document.getElementById('modal');
 // 그리기 전후로 연출 층(js/juice.js)이 카드·체력 막대 자리를 재고, 엔진이 쌓은 연출 사건을 순서대로 보여 준다
 // 전투 중에는 화면이 꺼지지 않게 (js/pwa.js, 지원하는 기기만)
-const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); syncWake(!!S.C); seasonIntro(); };
+const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); syncWake(!!S.C); seasonScroll(app); seasonIntro(); };
 // 랭킹: 불러오는 동안 「불러오는 중」, 다 오면 다시 그린다(늦게 온 다른 탭 결과는 버림)
 function loadRank(board) {
   S.rank = { board, state: 'loading' };
