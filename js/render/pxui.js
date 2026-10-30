@@ -47,11 +47,11 @@ const LANTERN = [
 export function lantern(on) {
   const pal = on ? { K: '#0a0810', M: '#4a4866', H: '#8886a8', G: '#3a2a18', g: '#c86a20', f: '#ff9a3a', y: '#ffe08a', W: '#ffffff' }
     : { K: '#0a0810', M: '#3a3850', H: '#5a5878', G: '#141220', g: '#241a24', f: '#2a1e28', y: '#2a1e28', W: '#2a1e28' };
-  return pxArt(LANTERN, pal, 3, 'lant');
+  return pxArt(LANTERN, pal, 2, 'lant');
 }
 // 작은 불꽃 칸(에너지 한 칸)
 const FLAME = ['..#..', '.#y#.', '#yWy#', '#yyy#', '.###.'];
 export const flame = on => pxArt(FLAME, on ? { '#': '#ff9a3a', y: '#ffe08a', W: '#ffffff' } : { '#': '#3a2e3a', y: '#2a2230', W: '#2a2230' }, 2, `fl ${on ? 'on' : ''}`);
 // 모래시계(턴 끝)
 const GLASS = ['KKKKKKKKK', 'KBBBBBBBK', '.KsssssK.', '..KsssK..', '...KsK...', '....K....', '...K.K...', '..K.s.K..', '.K.sss.K.', 'KBBBBBBBK', 'KKKKKKKKK'];
-export const hourglass = () => pxArt(GLASS, { K: '#1a0e04', B: '#c8902c', s: '#ffe08a' }, 2, 'hg');
+export const hourglass = () => pxArt(GLASS, { K: '#1a0e04', B: '#c8902c', s: '#ffe08a' }, 1, 'hg');
