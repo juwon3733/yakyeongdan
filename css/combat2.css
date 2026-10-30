@@ -177,3 +177,19 @@ body.aiming .bottom .hand .card.sel,body.aiming #app[data-screen="combat"] .bott
 :is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe{width:58px}
 :is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe .hpw .hpbar{width:52px;flex-basis:52px}
 :is(#app,.frozen)[data-screen="combat"] .party{margin-left:22px}   /* 맨 뒤 동료 체력이 왼쪽 아래 에너지 등불에 가리던 것 */
+/* 인물 크기: 동료 몸 키 88→70(js/juice.js ALLY_H), 적 칸 96→76 · 작은 적 72→58 · 보스 128×192→104×156. 판이 비어 보여도 인물이 작아야 연출이 산다 */
+:is(#app,.frozen)[data-screen="combat"] .foe > img,#stage.bigtext :is(#app,.frozen)[data-screen="combat"] .foe:not(.sm) > img{width:76px;height:76px}
+:is(#app,.frozen)[data-screen="combat"] .foe.sm > img,#stage.bigtext :is(#app,.frozen)[data-screen="combat"] .foe.sm > img{width:58px;height:58px}
+:is(#app,.frozen)[data-screen="combat"] .foe.boss > img,#stage.bigtext :is(#app,.frozen)[data-screen="combat"] .foe.boss > img{width:104px;height:156px}
+:is(#app,.frozen)[data-screen="combat"] .pm{width:66px}
+:is(#app,.frozen)[data-screen="combat"] .foe{min-width:70px}
+:is(#app,.frozen)[data-screen="combat"] .foe.sm{min-width:62px}
+:is(#app,.frozen)[data-screen="combat"] .hpw .hpbar,:is(#app,.frozen)[data-screen="combat"] .pm .lab .hpw .hpbar{width:58px;flex-basis:58px;height:8px}
+:is(#app,.frozen)[data-screen="combat"] .foe .hpw .hpbar{width:60px;flex-basis:60px}
+:is(#app,.frozen)[data-screen="combat"] .hpw .hp,:is(#app,.frozen)[data-screen="combat"] .hpw .hp small{font-size:8px}
+:is(#app,.frozen)[data-screen="combat"] .party{gap:6px}
+:is(#app,.frozen)[data-screen="combat"] .foes{gap:10px}
+/* 인물이 작아진 만큼 서는 줄을 조금 올리고(손패·[턴 끝]과 안 겹치게), 적 무리는 [턴 끝] 위쪽 끝에서 멈춘다 */
+:is(#app,.frozen)[data-screen="combat"] .field{padding-bottom:20px}
+:is(#app,.frozen)[data-screen="combat"] .foes{margin-right:34px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="4"],:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"]{margin-bottom:0}
