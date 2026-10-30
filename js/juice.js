@@ -130,6 +130,10 @@ export function beforeRender() {
   A.querySelectorAll('.bottom .hand .card[data-play]').forEach(el => pre.hand.set(+el.dataset.play, { r: rel(el), html: el.outerHTML, w: el.offsetWidth, h: el.offsetHeight }));
   A.querySelectorAll('[data-ally] .hpbar i').forEach(el => pre.bars.set('a:' + el.closest('[data-ally]').dataset.ally, parseFloat(el.style.width) || 0));
   A.querySelectorAll('[data-fi] .foehp i').forEach(el => pre.bars.set('f:' + el.closest('[data-fi]').dataset.fi, parseFloat(el.style.width) || 0));
+  const num = q => { const el = A.querySelector(q); return el ? +el.textContent || 0 : null; };
+  pre.en = num('.energy .ennum'); pre.draw = num('.piles .pile.draw'); pre.disc = num('.piles .pile.disc');
+  pre.down = new Set([...A.querySelectorAll('.pm.down[data-ally]')].map(el => el.dataset.ally));
+  pre.st = new Map(); A.querySelectorAll('.sti').forEach(el => pre.st.set(stKey(el), +(el.querySelector('b')?.textContent) || 0));
   A.querySelectorAll('.foe[data-fi]').forEach(el => pre.foes.set(+el.dataset.fi, { r: rel(el), html: el.outerHTML, w: el.offsetWidth, h: el.offsetHeight }));
   // 전투가 끝나 다른 화면으로 넘어가면 마지막 전투 화면을 잠깐 얼려 두고 그 위에서 마무리 연출
   if (pre.combatDom && !S.C && S.fxq.length) {
@@ -260,6 +264,7 @@ export function afterRender(events = []) {
   tweenBars(P, barT);
   drawIn(P, turnT ?? (played ? 120 : 0));
   chainPop(P);
+  if (P?.st && S.C) { at(Math.min(t, 650), () => statusFx(P)); hudFx(P, t); }
   // 화면 넘어감: 전투 → 보상(승리), 막이 바뀜(올라가는 장면)
   const G = S.G;
   if (P && G && P.screen === 'combat' && G.screen === 'reward') { at(t + 120, () => { sfx('win'); winPose(); }); at(t + 520, () => { banner('승리', 'win'); winBurst(); }); dealReward(t + 820); }
@@ -272,6 +277,57 @@ export function afterRender(events = []) {
   if (G && S.view === 'run') { shown.seed = G.seed; shown.act = G.act; }
   if (!S.C) at(frozen ? t + 650 : 0, () => setCounter(0, false));
   dropFrozen(frozen ? t + 650 : 0);
+}
+// 상태 이상이 새로 걸리거나 늘면: 그 아이콘이 크게 튀었다 박히고, 색 고리·불티가 터진다
+const stKey = el => { const h = el.closest('[data-fi],[data-ally]'); return `${h?.dataset.fi ?? 'a' + h?.dataset.ally}|${el.dataset.tip || ''}`; };
+function statusFx(P) {
+  const A = app(); if (!A) return;
+  let n = 0;
+  A.querySelectorAll('.sti').forEach(el => {
+    const v = +(el.querySelector('b')?.textContent) || 0, was = P.st.get(stKey(el));
+    if (was != null && v <= was) return;
+    if (n++ > 6) return;
+    const r = rel(el), col = getComputedStyle(el).getPropertyValue('--sc').trim() || '#ffffff', d = n * 40;
+    at(d, () => { ring(r.cx, r.cy, col, 2, 16, 12); sparks(r.cx, r.cy, col, 6, 1.4);
+      el.animate([{ transform: 'scale(2.2)', filter: 'brightness(2.5)' }, { transform: 'scale(.9)', offset: .6 }, { transform: 'none', filter: 'none' }], { duration: 360, easing: 'cubic-bezier(.2,.8,.3,1)' }); });
+  });
+}
+// 에너지 등불·더미 섞기·동료 쓰러짐/일어남 (화면 숫자가 바뀐 것을 보고)
+function hudFx(P, t) {
+  const A = app(); if (!A || P.screen !== 'combat') return;
+  const num = q => { const el = A.querySelector(q); return el ? +el.textContent || 0 : null; };
+  const en = num('.energy .ennum'), lamp = A.querySelector('.energy');
+  if (lamp && P.en != null && en != null && en !== P.en) {
+    const r = rel(lamp);
+    if (en < P.en) {   // 썼다: 불씨가 꺼지며 연기
+      for (let k = 0; k < 6; k++) add({ k: 'dot', x: r.cx + rnd(-4, 4), y: r.y + r.h * .35, vx: rnd(-.3, .3), vy: rnd(-1.2, -.5), g: -.01, life: rnd(16, 26), col: k % 2 ? '#8a8098' : '#ffb050', s: 2 });
+    } else at(Math.max(0, t - 200), () => {   // 다시 찼다: 금빛 고리 + 불꽃
+      ring(r.cx, r.y + r.h * .4, '#ffd060', 4, 26, 14); sparks(r.cx, r.y + r.h * .4, '#ffe08a', 10, 1.8);
+      lamp.animate([{ filter: 'brightness(2)' }, { filter: 'none' }], { duration: 420 });
+    });
+  }
+  // 버린 더미가 뽑을 더미로 섞여 들어갔다: 카드 뒷면 조각이 오른쪽 아래에서 왼쪽으로 촤르륵
+  const dr = num('.piles .pile.draw'), di = num('.piles .pile.disc');
+  if (P.disc && di === 0 && dr > (P.draw ?? 0)) {
+    const a = A.querySelector('.piles .pile.disc'), b = A.querySelector('.piles .pile.draw');
+    if (a && b) { const ra = rel(a), rb = rel(b); for (let k = 0; k < 10; k++) at(k * 30, () => add({ k: 'line', x0: ra.cx, y0: ra.cy, x1: rb.cx, y1: rb.cy, col: k % 2 ? '#c8b8ff' : '#ffffff', speed: 4, life: 10, s: 2 })); at(330, () => ring(rb.cx, rb.cy, '#c8b8ff', 3, 18, 12)); }
+  }
+  for (const el of A.querySelectorAll('.pm[data-ally]')) {
+    const id = el.dataset.ally, img = el.querySelector(':scope > img'), downNow = el.classList.contains('down');
+    if (!img || downNow === P.down.has(id)) continue;
+    const r = rel(img);
+    if (downNow) at(Math.min(t, 600), () => {   // 쓰러짐: 무릎 꿇듯 주저앉고 흙먼지, 색이 빠진다
+      img.animate([{ transform: 'translateY(-6px)', filter: 'brightness(2)' }, { transform: 'translateY(2px)', filter: 'grayscale(1) brightness(.7)', offset: .5 }, { transform: 'none' }], { duration: 600, easing: 'cubic-bezier(.4,0,.6,1)' });
+      for (let k = 0; k < 12; k++) add({ k: 'dot', x: r.cx + rnd(-r.w / 2, r.w / 2), y: r.y + r.h, vx: rnd(-1.2, 1.2), vy: rnd(-1.6, -.4), g: .08, life: 22, col: '#8a7a6a', s: 2 });
+      sfx('foe_down', { vol: .5, rate: .7 });
+    });
+    else at(Math.min(t, 600), () => {   // 일어남: 위에서 빛기둥이 내려와 감싼다
+      add({ k: 'line', x0: r.cx, y0: 0, x1: r.cx, y1: r.y + r.h, col: '#fff6c8', speed: 9, life: 16, s: 6 });
+      ring(r.cx, r.y + r.h, '#fff6c8', 6, 40, 18); sparks(r.cx, r.cy, '#fff6c8', 16, 2);
+      img.animate([{ filter: 'brightness(3)' }, { filter: 'none' }], { duration: 700 });
+      sfx('heal', { vol: .7 });
+    });
+  }
 }
 function dropFrozen(ms) {
   if (!frozen) return;
@@ -804,7 +860,9 @@ function killFoe(e, P) {
   ring(r.cx, r.cy, '#ffffff', 6, 44, 14);
   sfx('foe_down');
   if (e.boss) shake();
-  if (last && !calmNow()) { dim(dur + 200); slowmo(dur); }
+  if (last && !calmNow()) { dim(dur + 200); slowmo(dur); zoomAt(r.cx, r.cy, 1.1, dur, .4); }
+  // 혼이 빠져나가듯 빛 알갱이가 위로
+  for (let k = 0; k < (last ? 18 : 9); k++) at(dur * .3 + k * 25, () => add({ k: 'dot', x: r.cx + rnd(-r.w * .3, r.w * .3), y: r.cy + rnd(-r.h * .2, r.h * .3), vx: rnd(-.2, .2), vy: rnd(-1.6, -.7), g: -.01, life: rnd(24, 40), col: k % 3 ? '#fff6d0' : '#ffffff', s: 2 }));
 }
 // 그림에서 색을 뽑아 그 자리에서 도트 조각으로 흩어지게
 function shatter(img, r, n) {

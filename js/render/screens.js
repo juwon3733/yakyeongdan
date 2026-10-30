@@ -41,7 +41,15 @@ export function rewardView() {
     ${extra ? `<p class="note">${extra}</p>` : ''}
     ${R.relic ? `<p class="note">도구를 얻었다</p>${relicBox(R.relic)}` : ''}
     <div class="hand big">${R.cards.map(id => cardHTML(id, true, 'take')).join('')}</div>
-    <div class="acts"><button type="button" data-take="">건너뛰기</button></div></div>`;
+    <div class="acts"><button type="button" data-take="">건너뛰기</button></div>${winParty(G)}</div>`;
+}
+// 보상 화면 왼쪽 아래: 이긴 동료들이 승리 자세로 남아 있다(쓰러진 동료는 쓰러진 자세). 대열 뒤 → 앞 순서로 왼쪽부터
+function winParty(G) {
+  const row = G.formation.slice().reverse().map((id, i) => {
+    const down = G.members[id]?.down, src = battleArt(id, down ? 'down' : 'win') || battleArt(id, 'idle');
+    return src ? `<img class="rwp ${down ? 'down' : ''}" style="--i:${i}" src="${src}" alt="">` : '';
+  }).join('');
+  return row ? `<div class="rwparty" aria-hidden="true">${row}<i class="rwglow"></i></div>` : '';
 }
 export function restView() {
   const R = RULES.rest, G = S.G;
