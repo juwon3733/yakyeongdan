@@ -1,0 +1,6 @@
+{
+  "note": "시험용 B: 핀 패시브 숫자. 데이터에 숫자로 있는 패시브 값은 fightTime(-5)뿐이고 속달 버스트(카드 2장·공격 +2)는 js/combat.js에 박혀 있어 patch로 못 바꿈 → 지시대로 maxHp 36→40으로 대신. js/data는 그대로.",
+  "chars": {
+    "finn": { "maxHp": 40 }
+  }
+}

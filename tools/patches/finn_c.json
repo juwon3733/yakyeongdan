@@ -1,0 +1,13 @@
+{
+  "note": "시험용 C: A(카드 수치) + B(maxHp 40) 같이. js/data는 그대로.",
+  "cards": {
+    "finn.letter": { "v": [16], "up": { "v": [19] } },
+    "finn.parcel": { "v": [13], "up": { "v": [16] } },
+    "finn.bag":    { "v": [10], "up": { "v": [12] } },
+    "finn.run":    { "v": [10], "up": { "v": [13] } },
+    "finn.last":   { "v": [7],  "up": { "v": [9] } }
+  },
+  "chars": {
+    "finn": { "maxHp": 40 }
+  }
+}
