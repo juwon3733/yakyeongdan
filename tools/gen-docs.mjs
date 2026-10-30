@@ -101,7 +101,7 @@ export function build() {
   const R = AFFIX_RULE;
   out.push('### 속성', '',
     `강적 전투는 첫 적에 속성 ${R.elite}개(밤의 깊이 「강적 속성 2개」 단계부터 ${R.eliteDeep}개). 일반 전투는 ${Object.entries(R.fight).filter(([, p]) => p).map(([a, p]) => `${a}막 ${Math.round(p * 100)}%`).join(' · ')} 확률로 작은 적이 아닌 하나에 1개. 보스·튜토리얼·에피소드 특별 전투에는 붙지 않는다.`, '',
-    `속성 하나마다 이기면 별빛 +${R.gold}, 희귀 카드 확률 +${Math.round(R.rare * 100)}%p. 이름 앞에 수식어가 붙는다(예: 「단단한 닻 거인」).`, '',
+    `속성 하나마다 이기면 별빛 +${R.gold}, 레전더리 카드 확률 +${Math.round(R.rare * 100)}%p. 이름 앞에 수식어가 붙는다(예: 「단단한 닻 거인」).`, '',
     '| 수식어 | 효과 |', '|---|---|', ...Object.values(AFFIX).map(a => `| ${a.pre} | ${a.text} |`), '', END);
   return out.join('\n');
 }

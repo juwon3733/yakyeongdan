@@ -216,7 +216,7 @@ export function afterRender(events = []) {
       case 'rewind': at(t, () => clockFx(e, true)); t += 140; break;
       case 'phase': at(t, () => { showPhase(e.name, e.text); sfx('dawn', { vol: .5 }); }); t += 900; break;
       // 패시브 ③ 폭발 (docs/12_signature.md): 이름 띠 0.6초 + 폭발 효과음
-      case 'burst': at(t, () => { showBurst(e.who, e.name); sfx('burst', { vol: .8 }); }); t += 220; break;
+      case 'burst': at(t, () => awaken(e.who, e.name)); t += 520; break;   // 폭발 각성: 멈칫 + 이름 띠 + 이번 턴 내내 몸이 빛남
       case 'foeTurn':
         foePhase = true;
         discardHand(P, e.keep || [], t);
@@ -468,6 +468,7 @@ function auraHurt(id) {
 function actFx(e, special = false) {
   const d = cardData(e.id);
   const who = e.ch === 'duo' ? [e.a, e.b] : [e.actor || e.ch];
+  if (e.ch === 'duo' && special && !calmNow() && allyEl(e.a) && allyEl(e.b)) { duoFx(e, d); return; }   // 인연 듀오: 둘이 함께 움직이는 합동기
   for (const [n, id] of who.entries()) {
     const img = allyEl(id)?.querySelector(':scope > img'); if (!img) continue;
     const m = e.ch === 'duo' ? (e.atk ? 'finisher' : 'cast') : motionOf(d, id);
@@ -1352,6 +1353,7 @@ function charLayers() {
     const id = pm.dataset.ally, img = pm.querySelector(':scope > img'); if (!img || !img.dataset.b) continue;
     const b = bodyIn(img), down = pm.classList.contains('down'), M = S.G?.members?.[id];
     pm.classList.toggle('lowhp', !!M && !M.down && M.hp / M.max < .3);   // 위기: 오라가 불안하게 깜빡
+    pm.classList.toggle('awaken', !!S.C?.burstTurn?.has(id) && !down);   // 폭발 각성한 턴: 몸이 빛나고 불티가 오른다
     const aura = fxFrames(`${id}_aura`);
     if (aura.length && !down && !pm.querySelector(':scope > .jaura')) {
       const el = document.createElement('img'); el.className = 'jaura'; el.alt = ''; el.dataset.fx = `${id}_aura`; el.src = aura[0];
@@ -1376,6 +1378,8 @@ setInterval(() => {
   const A = app(); if (!A || A.dataset.screen !== 'combat' || calmNow()) return;
   layerTick++;
   for (const el of A.querySelectorAll('.jaura, .jpet:not(.atk)')) { const fr = fxFrames(el.dataset.fx); if (fr.length) el.src = fr[layerTick % fr.length]; }
+  if (layerTick % 2) for (const pm of A.querySelectorAll('.pm.awaken')) { const im = pm.querySelector(':scope > img'); if (!im) continue; const r = rel(im), c = colOf(pm.dataset.ally);
+    for (let k = 0; k < 2; k++) add({ k: 'dot', x: r.x + rnd(r.w * .15, r.w * .85), y: r.y + r.h - rnd(0, r.h * .3), vx: 0, vy: rnd(-1.6, -.8), g: 0, life: rnd(16, 26), col: k ? c : '#ffffff', s: 2 }); }
 }, 120);
 function petAttack(id, e, delay = 0) {
   const pet = allyEl(id)?.querySelector(':scope > .jpet'); if (!pet || calmNow()) return;
@@ -1438,7 +1442,11 @@ function ambient() {
 // ---------- ★5 전용 필살 연출 (희귀 카드) — 동료마다 다른 순서. sigLead = 카드를 낸 뒤 적중까지 더 기다릴 시간 ----------
 const SIG_LEAD = { akane: 560, sion: 380, lunaria: 320, eleonore: 460, nerea: 420,
   iris: 380, noel: 360, raven: 360, mimimomo: 320, sebas: 340, mariana: 380, tomori: 320, sigrun: 520, zeno: 420, bertha: 320 };
-function sigLead(e) { const id = e.actor || e.ch; return e.ch !== 'duo' && SIG[id] && cardData(e.id)?.atk && !calmNow() ? SIG_LEAD[id] || 0 : 0; }
+function sigLead(e) {
+  if (calmNow()) return 0;
+  if (e.ch === 'duo') return cardData(e.id)?.atk ? DUO_LEAD : 0;
+  const id = e.actor || e.ch; return SIG[id] && cardData(e.id)?.atk ? SIG_LEAD[id] || 0 : 0;
+}
 const sigTarget = e => (e.foe != null ? foeEl(e.foe) : null)?.querySelector(':scope > img') || root()?.querySelector('.foe[data-fi] > img');
 // 판을 한 점으로 확대했다 돌아옴(무대 좌표 x, y)
 function zoomAt(x, y, k, ms, hold = .5) {
@@ -1630,3 +1638,75 @@ Object.assign(SIG, {
     at(400, () => foes.forEach(b => { for (let k = 0; k < 3; k++) add({ k: 'line', x0: b.cx - 40, y0: b.cy - 30 - k * 8, x1: b.cx, y1: b.cy, col: '#fff0b0', speed: 4, life: 10, s: 2 }); ring(b.cx, b.cy, '#ffe090', 4, 30, 12); }));
   },
 });
+
+// ---------- 인연 듀오 합동기 ----------
+// 공격 듀오: A가 적 앞으로 파고들어 올려 베어 적을 띄움 → B가 근접이면 뛰어올라 내리찍고, 원거리면 공중의 적에 집중 사격 → 두 색이 섞인 큰 폭발.
+// 그 밖(방어·회복·상태) 듀오: 둘이 함께 시전, 머리 위로 두 빛이 이어지고 가운데서 합쳐져 퍼짐.
+const DUO_LEAD = 540;
+const isRanged = id => RANGED.has(STYLE[id]) || STYLE[id] === 'boom';
+function duoFx(e, d) {
+  // 띄우는 쪽(A)은 근접 동료가 맡는다(원거리 동료는 뒤에서 쏘는 마무리)
+  const [A, B] = isRanged(e.a) && !isRanged(e.b) ? [e.b, e.a] : [e.a, e.b];
+  const ia = allyEl(A)?.querySelector(':scope > img'), ib = allyEl(B)?.querySelector(':scope > img');
+  if (!ia || !ib) return;
+  const ca = colOf(A), cb = colOf(B), ra = rel(ia), rb = rel(ib);
+  auraFlare(A, 2.6, 1100); auraFlare(B, 2.6, 1100); dim(1300);
+  if (!d?.atk) {
+    poseSeq(A, [['skill', 800]]); poseSeq(B, [['skill', 800]]);
+    const mx = (ra.cx + rb.cx) / 2, my = Math.min(ra.y, rb.y) - 16;
+    for (let k = 0; k < 10; k++) at(k * 30, () => { add({ k: 'line', x0: ra.cx, y0: ra.y + 6, x1: mx, y1: my, col: k % 2 ? ca : '#ffffff', speed: 4, life: 10, s: 2 }); add({ k: 'line', x0: rb.cx, y0: rb.y + 6, x1: mx, y1: my, col: k % 2 ? cb : '#ffffff', speed: 4, life: 10, s: 2 }); });
+    at(320, () => { flash(); ring(mx, my, ca, 4, 60, 18); ring(mx, my, cb, 8, 90, 22); sparks(mx, my, '#ffffff', 24, 2.6);
+      for (const r of [ra, rb]) circle(r, '#ffffff', 30); });
+    return;
+  }
+  const tgt = sigTarget(e); if (!tgt) return;
+  const b = rel(tgt), hit = 170 + DUO_LEAD;
+  // A: 파고들어 올려 베기
+  poseSeq(A, [['windup', 120], ['attack', 700]]);
+  moveTo(ia, b, 1100, [[0, 0], [.1, -.05, 3], [.22, 1, 0, FAST], [.34, 1, -10], [.62, 1, -6], [.8, 1, 0, IN2], [1, 0]]);
+  at(250, () => { add({ k: 'arc', x: b.cx - 6, y: b.cy + 10, r: 34, a0: .6, a1: -2.2, w: 7, flat: .9, col: ca, life: 12 }); sparks(b.cx, b.cy, ca, 12, 2.2); sfx('slash', { vol: .6 }); });
+  // 적이 떠오름
+  at(270, () => { const fa = tgt.animate([{ transform: 'none' }, { transform: 'translate(4px,-38px)', offset: .35, easing: 'cubic-bezier(.2,.9,.3,1)' }, { transform: 'translate(6px,-44px)', offset: .75 }, { transform: 'none' }], { duration: 560 }); fa.startTime = document.timeline.currentTime; });
+  // B: 근접이면 뛰어올라 내리찍기, 원거리면 공중 사격
+  if (isRanged(B)) {
+    poseSeq(B, [['skill', 260], ['attack', 500]]);
+    for (let k = 0; k < 6; k++) at(330 + k * 45, () => { const r = rel(ib); tracer(r.x + r.w * .8, r.y + r.h * .35, b.cx + rnd(-8, 8), b.cy - 40 + rnd(-8, 8), k % 2 ? cb : '#ffffff'); });
+    at(330, () => muzzle(rel(ib), cb));
+  } else {
+    poseSeq(B, [['windup', 300], ['attack', 600]]);
+    moveTo(ib, b, 1150, [[0, 0], [.22, 0, 4], [.42, .7, -90, FAST], [.6, 1, -20, IN2], [.8, 1], [1, 0]]);
+    at(600, () => { const r = rel(ib); for (let k = 0; k < 3; k++) add({ k: 'line', x0: r.cx, y0: r.cy, x1: b.cx + k * 3, y1: b.cy - 20, col: cb, speed: 4, life: 10, s: 2 }); });
+  }
+  zoomAt(b.cx, b.cy - 20, 1.18, 700, .5);
+  // 합동 적중: 두 색 폭발
+  at(hit, () => {
+    flash(); if (SET.shake) shake(); redEdge();
+    ring(b.cx, b.cy, ca, 6, 70, 18); ring(b.cx, b.cy, cb, 10, 100, 22);
+    playFx(fxFrames(`${A}_atk`).length ? `${A}_atk` : 'slash', b.cx - 10, b.cy, 150, 55);
+    at(60, () => playFx(fxFrames(`${B}_atk`).length ? `${B}_atk` : 'explode', b.cx + 10, b.cy - 6, 170, 55));
+    sparks(b.cx, b.cy, ca, 20, 3.2); sparks(b.cx, b.cy, cb, 20, 3.2);
+  });
+}
+
+// ---------- 패시브 ③ 폭발 각성 ----------
+// 판이 0.22초 멈칫 → 동료 색 번쩍 + 빛줄기 + 큰 고리 → 아래쪽 띠에 얼굴과 「폭발 이름」. 이번 턴 동안은 .pm.awaken(빛나는 몸·오르는 불티)
+function awaken(who, name) {
+  const c = CHARACTERS[who]; if (!c || !layer) return;
+  sfx('burst', { vol: .9 });
+  const img = allyEl(who)?.querySelector(':scope > img'), col = colOf(who);
+  for (const a of moving) { a.pause(); setTimeout(() => { try { a.play(); } catch (_) {} }, 220); }
+  freeze = Math.max(freeze, performance.now() + 220);
+  if (img) {
+    const r = rel(img);
+    pulse(img, 'jflash', 300); auraFlare(who, 2.8, 900);
+    ring(r.cx, r.cy, col, 6, 90, 22); ring(r.cx, r.cy, '#ffffff', 4, 60, 16);
+    for (let k = 0; k < 16; k++) { const a = k / 16 * Math.PI * 2; add({ k: 'line', x0: r.cx, y0: r.cy, x1: r.cx + Math.cos(a) * 80, y1: r.cy + Math.sin(a) * 60, col: k % 2 ? col : '#ffffff', speed: 4, life: 12, s: 2 }); }
+    if (SET.shake) shake();
+  }
+  const el = document.createElement('div'); el.className = 'jawake'; el.style.setProperty('--c', col);
+  const face = charArt(who, 'normal');
+  el.innerHTML = `${face ? `<img src="${face}" alt="">` : ''}<span>${c.name}</span><b>「${name}」</b>`;
+  layer.append(el);
+  el.animate([{ opacity: 0, transform: 'translateX(-40px)' }, { opacity: 1, transform: 'none', offset: .15 }, { opacity: 1, transform: 'translateX(6px)', offset: .8 }, { opacity: 0, transform: 'translateX(16px)' }],
+    { duration: 1100, easing: 'cubic-bezier(.2,.8,.3,1)' }).onfinish = () => el.remove();
+}
