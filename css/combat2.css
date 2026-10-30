@@ -231,3 +231,5 @@ body.aiming .bottom .hand .card.sel,body.aiming #app[data-screen="combat"] .bott
 :is(#app,.frozen)[data-screen="combat"] .field{padding-bottom:10px}
 :is(#app,.frozen)[data-screen="combat"] .party::after,:is(#app,.frozen)[data-screen="combat"] .foes::after{content:"";position:absolute;left:-6%;right:-6%;bottom:30px;height:22px;z-index:-1;pointer-events:none;
   background:radial-gradient(ellipse 50% 50% at 50% 50%,rgba(0,0,0,.45),transparent 75%)}
+/* 손패: 쉬는 카드는 아래 ⅓이 화면 밖이라 효과 글이 반만 잘려 보이던 것 → 쉬는 동안은 그림·이름·비용만, 효과 글은 커서를 대 커졌을 때 */
+.bottom .hand .card:not(:hover):not(.sel) .bd{visibility:hidden}

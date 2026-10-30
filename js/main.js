@@ -138,7 +138,9 @@ addEventListener('pointerdown', e => { if (!e.target.closest('[data-tip],[title]
 addEventListener('keydown', e => { if (e.key === 'Escape') hideTip(); });
 // 누르면 넘기기 (docs/11 #1): 판 위를 누르면 남은 연출(배너·적 행동·띠)을 바로 끝낸다. 누른 것(카드·버튼)은 그대로 처리된다.
 // 손패 카드를 누를 때는 넘기지 않는다 (남은 연출이 카드를 옮기면 누른 자리 아래 카드가 바뀔 수 있다)
-stage.addEventListener('pointerdown', e => { if (modal.hidden && !e.target.closest?.('.hand .card')) { skipFx(); hideCut(); } }, true);
+// 연출 넘기기로 쓴 누르기는 그 아래 단추를 누르지 않는다 — [턴 끝]을 연달아 누르면 적 차례 연출을 넘긴 그 클릭이 새 턴까지 끝내 버리던 것
+let skippedAt = -1e9, endAt = -1e9, endC = null;
+stage.addEventListener('pointerdown', e => { if (modal.hidden && !e.target.closest?.('.hand .card')) { if (skipFx()) skippedAt = performance.now(); hideCut(); } }, true);
 fit();
 
 // 듀오 컷인: 카드가 날아가 맞은 뒤에 띄운다 (애니메이션 줄이기면 바로)
@@ -313,7 +315,11 @@ app.addEventListener('click', e => {
   }
   else if (D.swap !== undefined) swapInCombat(+D.swap);
   else if (D.slot !== undefined) pickSlot(+D.slot);
-  else if ('end' in D) endTurn();
+  else if ('end' in D) {
+    const t = performance.now();
+    if (S.C === endC && (t - endAt < 700 || (t - skippedAt < 600 && skippedAt - endAt < 8000))) return;   // 방금 턴을 끝낸 직후, 또는 적 차례 연출을 넘긴 그 클릭(내 카드 연출을 넘긴 클릭은 그대로 턴 끝)
+    endAt = t; endC = S.C; endTurn();
+  }
   else if ('hg' in D) C.payEnergy = !C.payEnergy;
   else if (D.relic) useRelic(D.relic);
   else if ('take' in D) {
