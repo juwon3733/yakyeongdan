@@ -33,27 +33,19 @@
 .card .cost::after{display:none}
 .card .cost .pxn{display:block;position:relative}
 
-/* 손패 카드: 그림이 카드 전체를 채우고, 이름은 아래 도장 딱지 하나. 규칙 글·주인 줄은 커서를 대 크게 볼 때만 */
-.bottom .hand .card{--ah:100%}
-.bottom .hand .card .art{position:absolute;inset:0;height:auto}
-.bottom .hand .card .art img{object-position:50% 30%}
-.bottom .hand .card .hd{position:absolute;left:0;right:0;bottom:0;z-index:1;background:linear-gradient(transparent,rgba(8,6,14,.92) 45%);color:#fff;border:0;padding:6px 2px 1px;justify-content:center;text-shadow:1px 1px 0 #000}
-.bottom .hand .card .hd::before{display:none}
-.bottom .hand .card .bd,.bottom .hand .card .who{display:none}
-.bottom .hand .card:not(.no):hover .bd,.bottom .hand .card.sel .bd{display:block;position:absolute;left:0;right:0;bottom:12px;z-index:1;background:rgba(8,6,14,.9);color:#e8e4f4;font-size:5.5px;line-height:1.3;padding:2px 3px;border-top:1px solid var(--c)}
-.bottom .hand .card:not(.no):hover .hd,.bottom .hand .card.sel .hd{background:rgba(8,6,14,.95)}
 /* 턴 끝: 옛 보라 판 + 금 테 → 놋쇠 열쇠판(frame.css 틀) */
 :is(#app,.frozen)[data-screen="combat"] .endbtn{border:4px solid transparent;border-image:var(--fr-btn-gold) 4 fill / 4px stretch;color:#241404;text-shadow:1px 1px 0 #ffe7a0;letter-spacing:0;filter:drop-shadow(2px 2px 0 #000)}
 :is(#app,.frozen)[data-screen="combat"] .endbtn:hover:not(:disabled){border-image-source:var(--fr-btn-gold-hi);transform:none}
 :is(#app,.frozen)[data-screen="combat"] .endbtn:active:not(:disabled){border-image-source:var(--fr-btn-down);color:#e8e4f4;text-shadow:1px 1px 0 #000;transform:translateY(1px)}
 :is(#app,.frozen)[data-screen="combat"] .endbtn.ready{animation:yk-endready 1.2s steps(2) infinite}
 @keyframes yk-endready{50%{filter:drop-shadow(2px 2px 0 #000) drop-shadow(0 0 4px #ffd060) brightness(1.15)}}
-/* 손패 카드 아래쪽은 화면 밖으로 내려가 있어, 이름 딱지는 보이는 높이(아래에서 위로) 위에 올린다. 크게 보면 맨 아래로 */
-.bottom .hand .card .hd{bottom:24px;background:rgba(8,6,14,.82);padding:1px 2px;font-size:6.5px}
-.bottom .hand .card:not(.no):hover .hd,.bottom .hand .card.sel .hd{bottom:0}
-/* 크게 본 카드: 동료 색 2px 바깥 선(웹 단추 같은 테두리) 빼기, 규칙 글은 그림 아래쪽 1/3에만 */
+/* 크게 본 카드: 동료 색 2px 바깥 선(웹 단추 같은 테두리) 빼기 */
 .bottom .hand .card:not(.no):hover,.bottom .hand .card.sel{box-shadow:3px 3px 0 #000}
-.bottom .hand .card:not(.no):hover .bd,.bottom .hand .card.sel .bd{bottom:10px;max-height:38%;overflow:hidden;font-size:5px;line-height:1.25;padding:1px 3px;background:linear-gradient(transparent,rgba(8,6,14,.9) 18%)}
-.bottom .hand .card:not(.no):hover .hd,.bottom .hand .card.sel .hd{font-size:6px;background:rgba(8,6,14,.95);border-top:1px solid var(--c)}
-/* 크게 봐도 카드는 그림 + 이름만 — 규칙 글은 옆 도움말 상자(첫 줄 이름·주인, 둘째 줄 효과)로 */
-.bottom .hand .card:not(.no):hover .bd,.bottom .hand .card.sel .bd{display:none}
+/* 크게 본 카드가 아래 24px(화면 밖으로 내려간 손패 몫)만큼 잘려 규칙 글이 안 보이던 것 → 그만큼 더 올린다 */
+.bottom .hand .card:not(.no):hover,.bottom .hand .card.sel,#app[data-screen="combat"] .bottom .hand .card:not(.no):hover{transform:translateY(-30px) rotate(0deg) scale(1.9)}
+/* 크게 본 카드는 그림을 줄여 규칙 글이 다 들어가게(손패에선 그림을 크게, 읽을 때는 글을) */
+.bottom .hand .card:not(.no):hover,.bottom .hand .card.sel{--ah:30px}
+.bottom .hand .card:not(.no):hover .bd,.bottom .hand .card.sel .bd{font-size:5.5px;line-height:1.3}
+.bottom .hand .card:not(.no):hover .who,.bottom .hand .card.sel .who{display:none}
+.bottom .hand .card:not(.no):hover,.bottom .hand .card.sel{--ah:26px}
+#stage .bottom .hand .card:not(.no):hover .bd,#stage .bottom .hand .card.sel .bd{font-size:5px;line-height:1.3;padding:1px 2px 0}
