@@ -122,3 +122,13 @@
 .shopmain .relicware .rbox > span:last-child{font-size:0;line-height:0}
 .shopmain .relicware .rbox > span:last-child b{font-size:9.5px;line-height:1.2;white-space:nowrap}
 .shopmain .relicware .rbox > span:last-child small{display:none}
+
+/* 튜토리얼 첫 화면 (tutIntroView): 그림 배경 + 바닥에 선 셋 + 타이틀과 같은 글자 메뉴 */
+.tutintro.t2{background:#07081a}
+.tutintro.t2 .tbg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.6)}
+.tutintro.t2::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(6,6,18,.8),rgba(6,6,18,.2) 50%,transparent),linear-gradient(transparent 60%,rgba(6,6,18,.6));pointer-events:none}
+.tutintro.t2 .trio2{position:absolute;right:40px;bottom:16px;z-index:1;display:flex;gap:10px;align-items:flex-end}
+.tutintro.t2 .trio2 img{width:96px;height:128px;object-fit:contain;object-position:50% 100%;image-rendering:pixelated;filter:drop-shadow(2px 2px 0 #000);background:radial-gradient(ellipse 30% 4% at 50% 98%,rgba(0,0,0,.6),transparent)}
+.tutintro.t2 .tmenu{z-index:2}
+/* 탑 오르는 동료가 1층 칸 아래 도착 시각을 덮던 것 → 칸 왼쪽으로 더 비켜 선다 */
+.towermap .maptok img{left:-60px}

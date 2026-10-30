@@ -4,6 +4,7 @@ import { SET, calmNow, bigTextNow } from '../settings.js';
 import { tutTip } from '../tutorial.js';
 import { ROSTER } from '../data/roster.js';
 import { palOf, esc, charSrc } from './common.js';
+import { artURL, battleArt } from '../art.js';
 import { canFullscreen, isFullscreen } from '../pwa.js';
 
 const pct = v => `${Math.round(v * 100)}%`;
@@ -43,16 +44,17 @@ function backupBox() {
 
 // 처음 켰을 때: 짧은 첫 밤으로 하는 법을 익힌다
 export function tutIntroView() {
-  const trio = ['iris', 'brick', 'marta'].map(k => `<img class="px" src="${charSrc(k)}" alt="">`).join('');
-  return `<div class="tutintro">
-    <div class="sky" aria-hidden="true"><span class="tower"></span><span class="moonbig"></span></div>
-    <div class="tbox">
-      <h1>야경단</h1>
-      <p>매일 밤 0시, 바다 위로 탑이 솟는다. 해 뜨는 6시 전에 꼭대기에 닿아야 도시에 아침이 온다.</p>
-      <p class="note">먼저 <b>짧은 첫 밤</b>(약 5분)으로 하는 법을 익힌다. 동료 셋, 칸 넷.</p>
-      <div class="trio">${trio}</div>
-      <div class="acts"><button type="button" class="primary" data-tutstart>첫 밤 시작</button><button type="button" data-tutskip>건너뛰기</button></div>
-      <p class="note small">튜토리얼은 설정에서 다시 할 수 있다.</p>
+  // 첫 화면: 큰 글 상자 + 코드로 그린 사각 탑·네모 달 대신 — 항구 배경(1막 지도 그림)에 셋이 바닥에 서고, 왼쪽에 제목과 한 줄, 글자 메뉴
+  const bg = artURL('bg/map1.png'), key = artURL('title/key_px.png') || bg;
+  const trio = ['brick', 'iris', 'marta'].map(k => `<img class="px" src="${battleArt(k, 'idle') || charSrc(k)}" alt="">`).join('');
+  return `<div class="tutintro t2">
+    ${key ? `<img class="px tbg" src="${key}" alt="" aria-hidden="true">` : ''}
+    <div class="trio2">${trio}</div>
+    <div class="tmenu">
+      <h1><span>야</span><span>경</span><span>단</span></h1>
+      <p class="note">0시에 솟는 탑을 <b>6시 해 뜨기 전에</b> 오른다</p>
+      <button type="button" class="primary" data-tutstart>첫 밤 시작</button>
+      <button type="button" data-tutskip>건너뛰기</button>
     </div>
   </div>`;
 }
