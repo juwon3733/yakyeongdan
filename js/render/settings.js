@@ -11,6 +11,7 @@ const pct = v => `${Math.round(v * 100)}%`;
 const seg = (k, opts, cur) => `<span class="seg" role="group">${opts.map(([v, label]) =>
   `<button type="button" class="mini ${String(cur) === String(v) ? 'on' : ''}" data-set="${k}:${v}" aria-pressed="${String(cur) === String(v)}">${label}</button>`).join('')}</span>`;
 
+import { online, me } from '../net.js';
 export function settingsModal() {
   const inRun = !!S.G;
   return `<div class="sheet settings" role="dialog" aria-label="설정">
@@ -24,12 +25,21 @@ export function settingsModal() {
     <div class="srow" data-tip="지금 ${bigTextNow() ? '크게' : '보통'} (자동: 작은 화면이면 크게)"><span class="lb">글자 크기</span>${seg('text', [['auto', '자동'], ['normal', '보통'], ['big', '크게']], SET.text)}</div>
     <div class="srow"><span class="lb">첫 밤</span><button type="button" class="mini" data-tutreplay ${inRun ? 'disabled title="판을 마친 뒤에 다시 볼 수 있다"' : ''}>튜토리얼 다시 하기</button></div>
     ${canFullscreen() ? `<div class="srow"><span class="lb">전체 화면</span><button type="button" class="mini" data-fs>${isFullscreen() ? '전체 화면 끄기' : '전체 화면 켜기'}</button><span class="note small">폰은 홈 화면에 추가하면 앱처럼 켜진다</span></div>` : ''}
+    ${netRow()}
     <div class="srow" data-tip="폰을 바꿀 때: 코드를 복사해 새 기기에 붙여 넣는다"><span class="lb">저장 백업</span><button type="button" class="mini ${S.backup?.mode === 'export' ? 'on' : ''}" data-bexport>저장 내보내기</button><button type="button" class="mini ${S.backup?.mode === 'import' ? 'on' : ''}" data-bimport>불러오기</button></div>
     ${backupBox()}
     <div class="srow danger"><span class="lb">저장 지우기</span><button type="button" class="mini" data-wipe ${S.wipeArm ? 'aria-pressed="true"' : ''}>${S.wipeArm ? '한 번 더 누르면 모두 지운다' : '동료·별 조각·기록 지우기'}</button></div>
   </div>`;
 }
 
+// 온라인 계정(js/net.js): 서버 설정 전엔 안내만, 로그인 전엔 아이디·비번, 로그인 뒤엔 저장 올리기·받기
+function netRow() {
+  const N = S.net || {}, msg = N.msg ? `<p class="bmsg ${N.err ? 'err' : ''}" role="status">${esc(N.msg)}</p>` : '';
+  if (!online()) return '<div class="srow"><span class="lb">온라인 계정</span><span class="note small">서버 연결 준비 중 — 열리면 아이디로 로그인해 랭킹·저장 동기화</span></div>';
+  const u = me();
+  if (u) return `<div class="srow"><span class="lb">온라인 계정</span><b class="netid">${esc(u.name)}</b><button type="button" class="mini" data-netpush ${N.busy ? 'disabled' : ''}>저장 올리기</button><button type="button" class="mini ${N.pullArm ? 'primary' : ''}" data-netpull ${N.busy ? 'disabled' : ''}>${N.pullArm ? '한 번 더: 서버 저장으로 덮어쓰기' : '저장 받기'}</button><button type="button" class="mini" data-netout>로그아웃</button></div>${msg}`;
+  return `<div class="srow netin"><span class="lb">온라인 계정</span><input id="net-id" placeholder="아이디" maxlength="12" autocomplete="username" value="${esc(N.id || '')}"><input id="net-pw" type="password" placeholder="비밀번호(6자 이상)" autocomplete="current-password"><button type="button" class="mini primary" data-netin ${N.busy ? 'disabled' : ''}>로그인</button><button type="button" class="mini" data-netup ${N.busy ? 'disabled' : ''}>가입</button></div>${msg}`;
+}
 // 저장 백업 칸: 내보내기(코드 + 복사) / 불러오기(붙여 넣기 + 두 번 눌러 적용)
 function backupBox() {
   const B = S.backup; if (!B) return '';

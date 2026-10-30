@@ -17,7 +17,8 @@ import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
 import { seasonIntroModal, seasonScroll } from './render/season.js';
-import { fetchBoard } from './ranking.js';
+import { fetchBoard, reportScores } from './ranking.js';
+import { signIn, signUp, signOut, pushSave, pullSave } from './net.js';
 import { artReady, hasArt } from './art.js';
 import { seasonNow, seasonOn, startSeasonBoss, seasonBossDone, claimPass } from './season.js';
 import './cardzoom.js';
@@ -451,6 +452,34 @@ modal.addEventListener('click', e => {
     const done = ok => { B.msg = ok ? '복사했다. 새 기기의 설정 → 불러오기에 붙여 넣는다.' : '복사가 막혀 있다. 코드를 길게 눌러 전부 골라 복사한다.'; B.err = !ok; openSettings(); document.getElementById('backup-code')?.select(); };
     if (navigator.clipboard?.writeText) navigator.clipboard.writeText(B.code).then(() => done(true), () => { ta?.select(); done(document.execCommand?.('copy')); });
     else { ta?.select(); done(document.execCommand?.('copy')); }
+    return;
+  }
+  // 온라인 계정 (js/net.js)
+  if ('netin' in D || 'netup' in D) {
+    const id = document.getElementById('net-id')?.value.trim() || '', pw = document.getElementById('net-pw')?.value || '';
+    S.net = { id, busy: true }; openSettings();
+    ('netup' in D ? signUp(id, pw) : signIn(id, pw))
+      .then(u => { S.net = { msg: `${u.name}(으)로 접속했다.` }; reportScores(); })
+      .catch(e => { S.net = { id, err: true, msg: String(e.message || e) }; })
+      .finally(() => { if (!modal.hidden && modal.dataset.kind === 'settings') openSettings(); });
+    return;
+  }
+  if ('netout' in D) { signOut(); S.net = { msg: '로그아웃했다.' }; openSettings(); return; }
+  if ('netpush' in D) {
+    S.net = { busy: true }; openSettings();
+    pushSave(exportSave(SET)).then(() => { S.net = { msg: '서버에 저장했다.' }; }).catch(e => { S.net = { err: true, msg: String(e.message || e) }; })
+      .finally(() => { if (!modal.hidden) openSettings(); });
+    return;
+  }
+  if ('netpull' in D) {
+    if (!S.net?.pullArm) { S.net = { pullArm: true, msg: '서버 저장을 받으면 이 기기 저장을 덮어쓴다.' }; openSettings(); return; }
+    S.net = { busy: true }; openSettings();
+    pullSave().then(row => {
+      if (!row) { S.net = { err: true, msg: '서버에 저장이 없다.' }; return; }
+      const r = importSave(row.data); if (!r.ok) { S.net = { err: true, msg: r.err }; return; }
+      if (r.settings) { Object.assign(SET, r.settings); saveSettings(); applySettings(); applyVolumes(); }
+      S.net = null; S.G = null; S.C = null; S.view = 'title'; modal.hidden = true; delete modal.dataset.kind; render();
+    }).catch(e => { S.net = { err: true, msg: String(e.message || e) }; }).finally(() => { if (!modal.hidden) openSettings(); });
     return;
   }
   if ('bapply' in D) {

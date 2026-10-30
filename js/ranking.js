@@ -5,6 +5,7 @@
 import { P, dailyToday } from './meta.js';
 import { seasonNow, seasonRec } from './season.js';
 import { ROSTER_IDS } from './data/roster.js';
+import { online, me, submitScore, topScores, myRank } from './net.js';
 
 export const BOARDS = [
   { id: 'daily', name: '매일의 밤' },
@@ -45,11 +46,23 @@ function fake(board) {
   return { online: true, rows, me: { ...(myRecord(board) || { score: 0, text: '기록 없음' }), rank: 37 } };
 }
 
+// 판의 「시즌」 칸: 매일의 밤은 그날, 나머지는 지금 시즌(없으면 all)
+const seasonKey = board => board === 'daily' ? `d${dailyToday().key}` : (seasonNow()?.open ? seasonNow().id : 'all');
+// 내 최고 기록을 서버에 올린다(더 좋을 때만 서버가 바꾼다)
+export async function reportScores() {
+  if (!online() || !me()) return;
+  for (const b of BOARDS) { const r = myRecord(b.id); if (r) await submitScore(seasonKey(b.id), b.id, r.score, { text: r.text }).catch(() => {}); }
+}
+
 export async function fetchBoard(board) {
   if (typeof location !== 'undefined' && new URLSearchParams(location.search).has('fakerank')) {
     await new Promise(r => setTimeout(r, 300));
     return fake(board);
   }
-  // 서버가 붙으면 여기서 불러온다(Supabase scores 표, supabase/schema.sql)
-  return { online: false, rows: [], me: myRecord(board) };
+  const mine = myRecord(board);
+  if (!online()) return { online: false, rows: [], me: mine };
+  await reportScores();
+  const key = seasonKey(board), list = await topScores(key, board);
+  const rows = list.map((x, i) => ({ rank: i + 1, name: x.username, score: x.score, text: x.detail?.text || String(x.score), party: x.detail?.party || [], me: x.user_id === me()?.id }));
+  return { online: true, login: !!me(), rows, me: mine ? { ...mine, rank: me() ? await myRank(key, board, mine.score) : null } : null };
 }

@@ -3,6 +3,7 @@ import { S } from '../run.js';
 import { BOARDS } from '../ranking.js';
 import { seasonNow } from '../season.js';
 import { esc, face } from './common.js';
+import { CHARACTERS } from '../data/characters.js';
 
 export function rankingView() {
   const R = S.rank || { board: 'daily', state: 'loading' }, s = seasonNow();
@@ -16,11 +17,11 @@ export function rankingView() {
       <div class="rkme solo"><small>내 기록</small><b>${me ? esc(me.text) : '아직 기록 없음'}</b></div></div>`;
   } else {
     const rows = R.data.rows, top = rows.slice(0, 3), rest = rows.slice(3);
-    const pod = top.map(r => `<div class="rkpod p${r.rank}"><i class="rkn">${r.rank}</i><span class="rkf">${r.party.map(id => face(id)).join('')}</span><b>${esc(r.name)}</b><small>${esc(r.text)}</small></div>`).join('');
-    const list = rest.map(r => `<li><i>${r.rank}</i><b>${esc(r.name)}</b><span class="rkf">${r.party.map(id => face(id)).join('')}</span><small>${esc(r.text)}</small></li>`).join('');
+    const pod = top.map(r => `<div class="rkpod p${r.rank}"><i class="rkn">${r.rank}</i><span class="rkf">${(r.party || []).filter(id => CHARACTERS[id]).map(id => face(id)).join('')}</span><b>${esc(r.name)}</b><small>${esc(r.text)}</small></div>`).join('');
+    const list = rest.map(r => `<li><i>${r.rank}</i><b>${esc(r.name)}</b><span class="rkf">${(r.party || []).filter(id => CHARACTERS[id]).map(id => face(id)).join('')}</span><small>${esc(r.text)}</small></li>`).join('');
     const me = R.data.me;
     body = `<div class="rkpods">${pod}</div><ol class="rklist">${list}</ol>
-      <div class="rkme"><i>${me?.rank ?? '-'}</i><b>나</b><small>${me ? esc(me.text) : '기록 없음'}</small></div>`;
+      <div class="rkme"><i>${me?.rank ?? '-'}</i><b>${R.data.login === false ? '로그인하면 순위에 오른다(설정 → 온라인 계정)' : '나'}</b><small>${me ? esc(me.text) : '기록 없음'}</small></div>`;
   }
   return `<div class="rankscr" style="--c:${s?.col || '#9fb4ff'}">${head}<div class="rtabs">${tabs}</div><div class="rkbody">${body}</div></div>`;
 }
