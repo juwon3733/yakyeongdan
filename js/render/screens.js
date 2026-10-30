@@ -86,7 +86,7 @@ export function shopView() {
   const G = S.G, sh = G.shop;
   const cards = sh.cards.map((c, i) => `<span class="ware ${c.sold ? 'sold' : ''}">${cardHTML(c.id, !c.sold && G.gold >= c.price, 'buycard', i)}
     <span class="price ${G.gold >= c.price ? '' : 'short'}">${c.sold ? '팔림' : `<i class="gico"></i>${c.price}${c.sale ? ' <b>반값</b>' : ''}`}</span></span>`).join('');
-  const relics = sh.relics.map((r, i) => `<button type="button" class="ware relicware ${r.sold ? 'sold' : ''}" data-buyrelic="${i}" ${r.sold || G.gold < r.price ? 'disabled' : ''}>
+  const relics = sh.relics.map((r, i) => `<button type="button" class="ware relicware ${r.sold ? 'sold' : ''}" data-tip="${esc(`${RELICS[r.id].name} (${RELIC_TIER_NAME[RELICS[r.id].tier]}) — ${RELICS[r.id].text}`)}" data-buyrelic="${i}" ${r.sold || G.gold < r.price ? 'disabled' : ''}>
     ${relicBox(r.id)}<span class="price">${r.sold ? '팔림' : `<i class="gico"></i>${r.price}`}</span></button>`).join('');
   // 야시장: 왼쪽에 상인 후쿠로(그림 + 말풍선), 오른쪽 진열대(카드 줄·도구 줄), 값은 별빛 아이콘
   return `<div class="shopscr s2">

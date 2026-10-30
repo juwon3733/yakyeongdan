@@ -110,3 +110,15 @@
 .cxfoe.beat small{color:var(--gold)}
 .cxfoe small{font-size:8.5px;color:#d8d4ec;white-space:nowrap;text-shadow:1px 1px 0 #000}
 .cxfoe i{display:block;width:64px;height:64px}
+
+/* 야시장 오른쪽 아래 단추 셋: 줄보다 키가 커서 위로 넘쳐 다섯째 카드 값을 덮던 것 → 작게, 아래에 붙여 2칸 + 나간다 */
+.shopmain .services{display:grid;grid-template-columns:1fr 1fr;gap:3px;align-self:flex-end;justify-content:stretch;width:176px}
+.shopmain .services button{font-size:9px;padding:2px 4px;white-space:nowrap}
+.shopmain .services button.primary{grid-column:1 / -1;font-size:11px}
+.shopmain .wares{position:relative;z-index:1}
+/* 진열대 도구: 그림 + 이름만(설명은 커서를 대면) — 좁은 칸에 설명 글이 세로로 흘러내리던 것 */
+.shopmain .relicware{max-width:none;flex-direction:column;align-items:center;gap:2px;padding:4px 6px}
+.shopmain .relicware .rbox{flex-direction:column;align-items:center;gap:1px;text-align:center}
+.shopmain .relicware .rbox > span:last-child{font-size:0;line-height:0}
+.shopmain .relicware .rbox > span:last-child b{font-size:9.5px;line-height:1.2;white-space:nowrap}
+.shopmain .relicware .rbox > span:last-child small{display:none}
