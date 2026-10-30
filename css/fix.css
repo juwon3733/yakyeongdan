@@ -23,3 +23,5 @@ img.px.fci{position:absolute!important;margin:0!important;max-width:none!importa
 #stage .card .art img[src*="assets/cards/"]{image-rendering:auto!important}
 .matescr .mcell .nm{font-size:7px!important;letter-spacing:-.07em;text-overflow:clip!important;max-width:none!important;margin:0 -3px}
 .matescr .mcell .mfc{position:relative;display:block;align-self:stretch;flex:1;min-height:30px;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,color-mix(in srgb,var(--c) 30%,#10112a),#0b0b18 75%)}
+/* 지도 꼭대기 보스 이름: 위 띠에 가려지지 않게 칸 오른쪽에 */
+.towermap .node .tag.boss{top:50%!important;left:calc(100% + 6px)!important;transform:translateY(-50%)!important}
