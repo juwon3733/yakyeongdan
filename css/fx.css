@@ -299,3 +299,7 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 @keyframes rwBob{50%{transform:translateY(-2px)}}
 #stage.calm .rwparty .rwp{animation:none}
 .rwscr > :not(.rwparty){position:relative;z-index:1}
+/* 7시(붕괴) 30분 전: 화면 가장자리가 붉게 맥박 (juice.js setSky) */
+#fx.doom::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 40px 6px rgba(255,40,40,.45);animation:jdoom 1.1s ease-in-out infinite;z-index:3}
+@keyframes jdoom{50%{box-shadow:inset 0 0 26px 2px rgba(255,40,40,.2)}}
+#stage.calm #fx.doom::after{animation:none}

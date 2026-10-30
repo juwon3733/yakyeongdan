@@ -4,7 +4,7 @@
 // 설정: 애니메이션 줄이기면 소리만, 화면 흔들림 끔이면 밀림·흔들림 없이.
 import { S, dawnAt } from './run.js';
 import { CHARACTERS } from './data/characters.js';
-import { ACT_NAME } from './data/rules.js';
+import { ACT_NAME, RULES } from './data/rules.js';
 import { calmNow, SET } from './settings.js';
 import { sfx as sfxRaw, hasSfx, HIT_SFX, CUTIN_SFX } from './audio.js';
 import { FOE } from './data/enemies.js';
@@ -354,6 +354,7 @@ function setSky() {
   const c = on ? G.clock : 0, d = on ? dawnAt() : 360;
   sky.classList.toggle('late', on && c >= d - 60 && c < d);
   sky.classList.toggle('dawn', on && c >= d);
+  layer?.classList.toggle('doom', on && c >= RULES.collapse - 30);   // 7시(붕괴) 30분 전: 화면 가장자리가 붉게 맥박
 }
 
 // ---------- 손패: 부채꼴, 뽑을 때 덱에서 날아옴 ----------
@@ -952,7 +953,9 @@ function foeActFx(e) {
   const el = foeEl(e.i); if (!el) return;
   const img = el.querySelector(':scope > img'), r = img ? rel(img) : rel(el);
   if (e.t === 'atk' || e.t === 'mix') {
-    if (img && SET.shake && !calmNow()) { foeDash(img, e.target ?? e.aim); foeCamera(el, e.target ?? e.aim); }
+    const key = S.C?.all?.[e.i]?.key, caster = FOE[key]?.hitSound === 'magic' && !FOE[key]?.boss;
+    if (img && caster && !calmNow()) foeCast(img, r, e.target ?? e.aim, e.n || 1);   // 마법 쓰는 적: 제자리에서 빛을 모아 쏜다
+    else if (img && SET.shake && !calmNow()) { foeDash(img, e.target ?? e.aim); foeCamera(el, e.target ?? e.aim); }
     if (img) foePose(img, 'attack', 520);
     else pulse(img || el, SET.shake ? 'jlunge' : 'jflash', 400);
     pulse(el.querySelector('.intent'), 'jfire', 300);
@@ -967,6 +970,13 @@ function foeActFx(e) {
   else if (e.t === 'mend') { ring(r.cx, r.cy, '#7dff9a', 6, 28, 12); sfx('foe_heal', { vol: .7 }); }
   else if (e.t === 'sum' || e.t === 'aim') { ring(r.cx, r.cy, '#f0d040', 6, 30, 12); sfx(e.t === 'sum' ? 'summon' : 'retarget', { vol: .7 }); }
   else if (e.t === 'steal') { ring(r.cx, r.cy, '#b48ae8', 6, 30, 12); sfx('steal'); }
+}
+// 마법 적: 몸이 한 번 빛나며 떠오르고 → 보라 빛 구슬이 노린 동료에게 날아간다(맞는 순간은 hurt 사건이 그린다)
+function foeCast(img, r, id, n) {
+  const tgt = id ? allyEl(id)?.querySelector(':scope > img') : null, b = tgt ? rel(tgt) : { cx: r.cx - 200, cy: r.cy };
+  const an = img.animate([{ transform: 'none', filter: 'none' }, { transform: 'translateY(-5px)', filter: 'brightness(1.8) drop-shadow(0 0 6px #b48ae8)', offset: .4 }, { transform: 'none', filter: 'none' }], { duration: 420 }); an.startTime = document.timeline.currentTime;
+  ring(r.cx, r.cy, '#b48ae8', 30, 4, 10);
+  for (let k = 0; k < Math.min(4, n); k++) at(60 + k * 70, () => { add({ k: 'line', x0: r.cx, y0: r.cy, x1: b.cx, y1: b.cy, col: k % 2 ? '#e0c8ff' : '#b48ae8', speed: 7, life: 9, s: 3 }); sparks(r.cx, r.cy, '#e0c8ff', 5, 1.4); });
 }
 function tickFx(e) {
   const el = foeEl(e.i); if (!el) return;

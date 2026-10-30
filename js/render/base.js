@@ -268,7 +268,7 @@ export function matesView() {
   const grid = ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k];
     return `<button type="button" class="mcell r${r.rarity} ${k === sel ? 'on' : ''} ${own ? '' : 'none'} ${starRing(k)} mx${own ? mastery(k) : 0}" style="--c:${r.col}" ${own ? `data-mate="${k}"` : 'disabled'} title="${esc(r.name)}">
-      ${own ? img(k) : sil(k)}<span class="nm">${own ? r.name : '?'}</span>${own ? `<span class="st">${'✦'.repeat(starsOf(k))}</span>` : ''}</button>`;
+      ${own ? `<span class="mfc">${fcImg(k, 1.5)}</span>` : sil(k)}<span class="nm">${own ? r.name : '?'}</span>${own ? `<span class="st">${'✦'.repeat(starsOf(k))}</span>` : ''}</button>`;
   }).join('');
   return `<div class="matescr">
     <div class="mleft">${head()}<h2>동료</h2><div class="mgrid">${grid}</div></div>
