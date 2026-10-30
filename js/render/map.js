@@ -116,7 +116,7 @@ export function mapView() {
     : `<p class="note moon"><b>${MOONS[G.moon].name}</b> ${MOONS[G.moon].text}${moonFits(G) ? '' : ' <small class="dim">(이번 파티와는 상관없는 달)</small>'}</p>`;
   const art = !G.endless && artURL(`bg/tower${G.act}.png`);
   return `<div class="mapwrap towermap a${G.endless ? 'e' : G.act}">
-      <div class="mapgrid${art ? ' art' : ''}" style="width:${TW}px;height:${TH}px${art ? `;--tower:url('${art}')` : ''}">
+      <div class="mapgrid${art ? ' art' : ''}" style="width:${TW}px;height:${TH}px${art ? `;--tower:url('${new URL(art, location.href).href}')` : ''}">
         <i class="towerbody" aria-hidden="true"></i><i class="spire" aria-hidden="true"></i><i class="door" aria-hidden="true"></i>
         <svg class="edges" width="${TW}" height="${TH}" viewBox="0 0 ${TW} ${TH}" shape-rendering="crispEdges" aria-hidden="true">${lines}</svg>${ledges}${nodes}${tok}</div>
       <div class="mapside">

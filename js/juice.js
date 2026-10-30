@@ -982,8 +982,9 @@ function dealReward(t0) {
     });
     at(tf + 90, () => { el.classList.remove('cardback'); if (!hush) el.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 110, easing: 'cubic-bezier(.25,.8,.35,1)' }); sfx('flip', { vol: .7, rate: 1 + k * .08 }); });
   });
-  const gold = app()?.querySelector('[data-screen="reward"] .center > .note');
-  if (gold) track(gold.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 200, delay: t0, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' }));
+  // 제목·별빛·건너뛰기는 「승리」 띠가 걷힌 뒤에(띠 뒤로 제목이 비쳐 겹쳐 보이던 것)
+  app()?.querySelectorAll('[data-screen="reward"] .center > :not(.hand)').forEach(el =>
+    track(el.animate([{ opacity: 0, transform: 'translateY(-4px)' }, { opacity: 1, transform: 'none' }], { duration: 220, delay: t0 + 620, easing: 'cubic-bezier(.25,.8,.35,1)', fill: 'backwards' })));
 }
 // 결과 화면: 얻은 별 조각이 0부터 올라간다 (별 조각 줄이 하나씩 나온 뒤)
 function countUp(t0) {

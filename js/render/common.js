@@ -102,7 +102,7 @@ export function topbar(extra = '') {
     ${ep ? '<span class="chip eptag">에피소드 · 특별 전투</span>' : `<span class="clock ${G.clock >= dawnAt() ? 'dawn' : ''}">${hudIcon('clock')}${pxNum(fmt(G.clock), { s: 2 })}</span>
     <span class="night" data-tip="${esc(paceTip(G))}"><i style="width:${Math.min(100, G.clock / dawnAt() * 100)}%"></i><b style="left:33.3%"></b><b style="left:66.6%"></b><u style="left:${Math.min(100, paceGoal(G) / dawnAt() * 100)}%"></u></span>${G.endless ? endlessChip(G) : paceChip(G)}`}
     ${G.depth ? `<span class="chip depthchip" title="밤의 깊이 ${G.depth}">깊이 ${G.depth}</span>` : ''}
-    ${G.daily ? `<span class="chip dailychip" data-tip="${esc(`매일의 밤 「${G.daily.rule.name}」: ${G.daily.rule.text}`)}">매일 · ${esc(G.daily.rule.name)}</span>` : ''}
+    ${G.daily ? `<span class="chip dailychip" data-tip="${esc(`매일의 밤 · ${G.daily.rule.name}: ${G.daily.rule.text}`)}">매일 · ${esc(G.daily.rule.name)}</span>` : ''}
     <img class="px moon" src="${moonImg(G.moon)}" alt="${esc(m.name)}" data-tip="${esc(`${m.name}: ${m.text}`)}">
     ${extra}
     <span class="grow"></span>

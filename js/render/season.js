@@ -33,7 +33,7 @@ export function seasonView() {
       <div class="sside">
         ${result}
         <div class="stiers">${tiers}</div>
-        <div class="srule"><b>시즌 규칙 「${esc(s.rule.name)}」</b> ${esc(s.rule.text)} <small>(밤 오르기·매일의 밤에도)</small></div>
+        <div class="srule"><b>시즌 규칙 · ${esc(s.rule.name)}</b> ${esc(s.rule.text)} <small>(밤 오르기·매일의 밤에도)</small></div>
         <div class="spass"><div class="sph"><b>시즌 패스</b><span>${lv}/${PASS.tiers}단계</span><small>${into}/${PASS.per}</small></div>
           <div class="spbar">${marks}</div>
           <button type="button" class="${can ? 'primary' : ''}" data-claimpass ${can ? '' : 'disabled'}>보상 받기</button>${S.seasonMsg ? `<small class="smsg">${esc(S.seasonMsg)}</small>` : ''}</div>

@@ -18,7 +18,7 @@ export function who(id) {
   const pal = r.pal || palOf(id), long = r.long ?? CHARACTERS[id]?.long;
   return { name: r.name, col: r.col, img: pal ? sprite(pal, long) : '' };
 }
-const condText = (cid, n) => EP_COND[n].text;
+const condText = (cid, n) => EP_COND[n].text.replace(/[「」]/g, '');
 
 export function episodesView() {
   // 안 본 화가 있는 동료 → 가진 동료 → 아직 없는 동료 순 (원래 순서 안에서)

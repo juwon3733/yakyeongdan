@@ -68,45 +68,32 @@ export function baseView() {
   const tm = hallTime();
   const matesNew = own.length > (+ls('yk-mates-seen') || 3);
   const epN = epNewCount();
-  // 로비(모바일 가챠식): 가운데 대표 동료, 오른쪽 둥근 도트 아이콘 메뉴, 오른쪽 아래 큰 출격, 왼쪽 아래 작은 칩. 설명 글은 없앤다
-  const ico = k => `<svg class="h2px" viewBox="0 0 9 9" aria-hidden="true">${(LOBBY_ICON[k] || []).map((row, y) => [...row].map((c, x) => c === '.' ? '' : `<rect x="${x}" y="${y}" width="1" height="1" fill="${c === 'w' ? '#fff' : c === 'd' ? '#2a1a04' : 'currentColor'}"/>`).join('')).join('')}</svg>`;
-  const round = (attrs, k, label, on = false, cls = '') =>
-    `<button type="button" class="h2rnd ${cls}" ${attrs}><span class="h2ring">${ico(k)}</span><span class="h2lb">${dot(on)}${label}</span></button>`;
-  return `<div class="hub2 tm-${tm}">
+  // 본부: 왼쪽은 옛 게임식 글자 메뉴(고른 줄 앞에 ▸), 오른쪽 무대에 동료 셋. 둥근 아이콘·칩 묶음은 쓰지 않는다
+  const item = (attrs, label, on = false, cls = '') => `<button type="button" class="h3i ${cls}" ${attrs}>${label}${dot(on)}</button>`;
+  return `<div class="hub2 hub3 tm-${tm}">
     <div class="h2stage">
       <div class="h2top">${walletBump()}</div>
       <div class="h2cast">${side}${leadBtn}</div>
     </div>
-    <nav class="h2menu" aria-label="본부 메뉴">
-      <div class="h2col">
-        ${seasonNow()?.open ? round('data-view="season"', 'moon', `시즌 ${seasonNow().no}`, false, 'season') : ''}
-        ${round('data-view="summon"', 'star', `별 소환${P.pick5 ? ' <b class="newt">★5</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">10연</b>' : ''}`, !!P.pick5, `gold ${S.hint === 'summon' ? 'hint' : ''}`)}
-        ${round('data-view="mates"', 'mates', '동료', matesNew)}
-        ${round('data-view="episodes"', 'book', `에피소드${epN ? ` <b class="newt">${epN}</b>` : ''}`, epN)}
-        ${round('data-view="records"', 'scroll', '기록')}
-        ${round('data-settings', 'gear', '설정')}
-      </div>
-      <button type="button" class="h2go primary" data-view="party"><span class="h2gotx">출격</span><small>동료 셋을 골라 탑으로</small></button>
-      <div class="h2sub">
-        <button type="button" class="mini" data-view="daily">${dot(!dailyToday().rec?.won)}매일의 밤</button>
-        <button type="button" class="mini" data-view="exchange">${dot(P.dust >= Math.min(EXCHANGE.char[3], EXCHANGE.talk))}교환소</button>
-        <button type="button" class="mini" data-view="codex">도감</button>
-        ${endlessMenu().replace('type="button"', 'type="button" class="mini"')}
-        <button type="button" class="mini" data-view="title">타이틀</button>
-      </div>
+    <nav class="h2menu h3menu" aria-label="본부 메뉴">
+      <p class="h3where">야경단 본부 <small>${tm === 'dawn' ? '새벽' : '밤'}</small></p>
+      <button type="button" class="h3go" data-view="party">출격<small>동료 셋을 골라 탑으로</small></button>
+      ${endlessMenu().replace('type="button"', 'type="button" class="h3i"')}
+      ${item('data-view="daily"', '매일의 밤', !dailyToday().rec?.won)}
+      <i class="h3gap"></i>
+      ${seasonNow()?.open ? item('data-view="season"', `시즌 ${seasonNow().no}`, true, 'season') : ''}
+      ${item('data-view="summon"', `별 소환${P.pick5 ? ' <b class="newt">★5</b>' : ''}${S.hint === 'summon' ? ' <b class="newt">10연</b>' : ''}`, !!P.pick5, S.hint === 'summon' ? 'hint' : '')}
+      ${item('data-view="mates"', '동료', matesNew)}
+      ${item('data-view="episodes"', `에피소드${epN ? ` <b class="newt">${epN}</b>` : ''}`, epN)}
+      ${item('data-view="exchange"', '교환소', P.dust >= Math.min(EXCHANGE.char[3], EXCHANGE.talk))}
+      ${item('data-view="codex"', '도감')}
+      ${item('data-view="records"', '기록')}
+      <i class="h3gap"></i>
+      ${item('data-settings', '설정', false, 'sm')}
+      ${item('data-view="title"', '타이틀', false, 'sm')}
     </nav>
-    <div class="tutbar h2help" role="note"><span class="lb">도움말</span><span class="tx">동료를 누르면 말을 건다.</span></div>
   </div>`;
 }
-// 로비 아이콘(9×9 도트): x = 색(currentColor), w = 흰 빛, d = 어두운 선
-const LOBBY_ICON = {
-  moon: ['...xxx...', '..xx.....', '.xx......', '.xx......', '.xx...w..', '.xx......', '..xx.....', '...xxx...', '.........'],
-  star: ['....x....', '....x....', '...xwx...', 'xxxxwxxxx', '.xxwwwxx.', '..xxwxx..', '..xx.xx..', '.xx...xx.', '.x.....x.'],
-  mates: ['.xx...xx.', 'xwwx.xwwx', 'xwwx.xwwx', '.xx...xx.', '.........', 'xxxx.xxxx', 'xxxx.xxxx', 'xxxx.xxxx', '.........'],
-  book: ['.........', 'xxxx.xxxx', 'xwwx.xwwx', 'xwwx.xwwx', 'xwwx.xwwx', 'xwwx.xwwx', 'xxxxxxxxx', '....x....', '.........'],
-  scroll: ['.xxxxxxx.', 'x.......x', '.xwwwwwx.', '.x.....x.', '.xwwwww..', '.x.....x.', '.xwwww.x.', 'x.......x', '.xxxxxxx.'],
-  gear: ['...x.x...', '.xxxxxxx.', '.xx...xx.', 'xx..w..xx', '.x.www.x.', 'xx..w..xx', '.xx...xx.', '.xxxxxxx.', '...x.x...'],
-};
 
 export function summonView() {
   const r5 = nextRate5(), pk = pickupNow();
@@ -255,7 +242,7 @@ export function exchangeView() {
   const own = ROSTER_IDS.filter(k => P.owned[k]);
   let body = '';
   if (tab === 'char') body = [5, 4, 3].map(r => `<div class="exgrid">${byRarity(r).map(k =>
-    tile('char', k, P.owned[k] ? face(k) : `<span class="fc sil" style="--c:${ROSTER[k].col}">${fcImg(k)}</span>`, ROSTER[k].name,
+    tile('char', k, P.owned[k] ? face(k) : `<span class="fc sil" style="--c:${ROSTER[k].col}">${fcImg(k, 1.15)}</span>`, ROSTER[k].name,
       P.owned[k] ? `${'✦'.repeat(starsOf(k))}${starsOf(k) >= SUMMON.maxStars ? ' 꽉 참' : ''}` : '', `r${r} ${P.owned[k] ? '' : 'new'}`)).join('')}</div>`).join('');
   else if (tab === 'gear') body = `<div class="exgrid">${[
     ...own.filter(k => !costumeOpen(k)).map(k => tile('costume', k, face(k), ROSTER[k].name, '두 번째 의상', 'cos')),
@@ -295,16 +282,16 @@ function mateDetail(k) {
   const steps = STAR_STEPS.map(x => {
     let extra = '';
     if (x.n === 2) extra = packCards(k).map((pk, i) => `<small class="${i < packsOpen(k) ? '' : 'dim'}">묶음 ${i + 1}: ${pk.map(id => CARDS[id].name).join('·')}${i < packsOpen(k) ? '' : ' (잠김)'}</small>`).join('');
-    if (x.n === 3 && c) { const id = c.start.find(cid => cardData(cid).up); if (id) extra = `<small>「${cardData(id).name}」이(가) 강화판으로</small>`; }
-    if (x.n === 4) { const sg = sigOf(k); if (sg) extra = `<small>「${RELICS[sg].name}」 ${esc(RELICS[sg].text)}</small>`; }
+    if (x.n === 3 && c) { const id = c.start.find(cid => cardData(cid).up); if (id) extra = `<small>${cardData(id).name} 강화판으로 시작</small>`; }
+    if (x.n === 4) { const sg = sigOf(k); if (sg) extra = `<small>${RELICS[sg].name}: ${esc(RELICS[sg].text)}</small>`; }
     return `<span class="stc ${s >= x.n ? 'on' : ''} ${s + 1 === x.n ? 'next' : ''}" data-tip="${esc(`별자리 ${x.n} · ${x.text}${extra ? `\n${extra.replace(/<[^>]+>/g, ' ').trim()}` : ''}`)}"><b>${x.n}</b></span>`;
   }).join('');
   const start = c ? c.start.map((id, i) => cardHTML(startUp(k) && i === c.start.findIndex(cid => cardData(cid).up) ? id + '+' : id, true, 'none')).join('') : '';
   const pool = c ? Object.keys(CARDS).filter(id => CARDS[id].ch === k && !c.start.includes(id)) : [];
   const locked = new Set(packCards(k).slice(packsOpen(k)).flat());
   return `<div class="mhead ${starRing(k)}" style="--c:${r.col}">${img(k)}<div><h2>${r.name} <span class="stars">${stars(r.rarity)}</span></h2>
-      <p class="note">${r.role} · 체력 ${c?.maxHp ?? '-'} · 별자리 ${s}/${SUMMON.maxStars} · 판 ${st.runs} · 이긴 판 ${st.wins}${P.titles.includes(k) ? ` · 칭호 「${r.name}의 새벽」` : ''}</p>
-      ${c ? `<p class="ps"><b>${esc(c.passive.name)}</b></p>${(c.passive.lines || [['', '', c.passive.text]]).map(([k, n, t]) => `<p class="ps">${{ trait: '①', keyword: '②', burst: '③' }[k] || ''} ${n ? `<b>「${esc(n)}」</b> ` : ''}${esc(t)}</p>`).join('')}` : ''}${cos}</div></div>
+      <p class="note">${r.role} · 체력 ${c?.maxHp ?? '-'} · 별자리 ${s}/${SUMMON.maxStars} · 판 ${st.runs} · 이긴 판 ${st.wins}${P.titles.includes(k) ? ` · 칭호 ${r.name}의 새벽` : ''}</p>
+      ${c ? `<p class="ps"><b>${esc(c.passive.name)}</b></p>${(c.passive.lines || [['', '', c.passive.text]]).map(([k, n, t]) => `<p class="ps ${k}">${k === 'burst' ? '<i class="pstag">폭발</i>' : ''}${n ? `<b>${esc(n)}</b> ` : ''}${esc(t)}</p>`).join('')}` : ''}${cos}</div></div>
     ${masteryBlock(k, r.name)}
     <h3 class="sub">별자리</h3><div class="stcs">${steps}${s < STAR_STEPS.length ? `<span class="stnext">다음: ${STAR_STEPS[s].text}</span>` : ''}</div>
     ${c ? `<h3 class="sub">시작 카드</h3><div class="hand mini">${start}</div>
@@ -343,7 +330,7 @@ const CODEX = {
   mates: () => `<div class="cxfaces">${ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k], st = P.charStats[k] || { runs: 0, wins: 0 }, c = CHARACTERS[k];
     const tip = own ? `${r.name} ${'★'.repeat(r.rarity)} · ${r.role}${c?.ds ? `\n${c.ds}` : ''}\n별자리 ${starsOf(k)} · 판 ${st.runs} · 이김 ${st.wins}` : `??? ${'★'.repeat(r.rarity)}`;
-    return `<span class="cxf r${r.rarity} ${own ? '' : 'none'}" style="--c:${r.col}" data-tip="${esc(tip)}"><span class="fc">${fcImg(k)}</span><small>${own ? r.name : '???'}</small></span>`;
+    return `<span class="cxf r${r.rarity} ${own ? '' : 'none'}" style="--c:${r.col}" data-tip="${esc(tip)}"><span class="fc">${fcImg(k, own ? 1.9 : 1.15)}</span><small>${own ? r.name : '???'}</small></span>`;
   }).join('')}</div>`,
   duos: () => {
     const ks = Object.keys(DUOS), got = ks.filter(k => P.seenDuos.includes(k)).length;

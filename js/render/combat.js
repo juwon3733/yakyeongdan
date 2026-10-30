@@ -44,7 +44,7 @@ const chip = (v, nm, col) => !v ? '' : SICON[nm] ? stIcon(SICON[nm], v, kwOne(nm
   : `<span class="chip" style="color:${col}" data-tip="${esc(kwOne(nm.replace(/ −$/, '')))}">${nm} ${v}</span>`;
 const stIcon = (k, v, tip, col) => `<span class="sti" style="--sc:${col || '#fff'}" data-tip="${esc(tip)}">${iconSvg(k)}<b>${v}</b></span>`;
 // 적 특징 (데이터 필드 → 짧은 이름 + 설명)
-const axChip = k => `<span class="chip trait ax" style="--ax:${AFFIX[k].col}" data-tip="${esc(`속성 「${AFFIX[k].pre}」: ${AFFIX[k].text}`)}">${AFFIX[k].pre}</span>`;
+const axChip = k => `<span class="chip trait ax" style="--ax:${AFFIX[k].col}" data-tip="${esc(`${AFFIX[k].pre}: ${AFFIX[k].text}`)}">${AFFIX[k].pre}</span>`;
 const foeTraits = f => (f.affixes || []).map(axChip).join('') + [
   f.noPoisonWhileBlock ? ['단단한 껍데기', '방어가 남아 있는 동안 독이 들지 않는다.'] : null,
   f.armor ? [`갑옷 ${f.armor}`, `공격 한 번마다 받는 피해 -${f.armor}.`] : null,
@@ -54,14 +54,14 @@ const foeTraits = f => (f.affixes || []).map(axChip).join('') + [
   f.thorns ? [`가시 ${f.thorns}`, `이 적을 친 동료가 ${f.thorns} 피해를 받는다.`] : null,
   f.deathBoom ? ['쓰러지며 폭발', `쓰러질 때 모든 동료에게 ${f.deathBoom} 피해.`] : null,
   f.stolen?.length ? [`훔친 카드 ${f.stolen.length}`, '이 적을 쓰러뜨리면 훔친 카드가 버린 더미로 돌아온다.'] : null,
-  f.huntBurst ? ['③ 사냥', '③이 터진 동료를 그 턴 노린다.'] : null,
+  f.huntBurst ? ['폭발 사냥', '폭발이 터진 동료를 그 턴 노린다.'] : null,
   f.heavyTime ? ['시계 감기', `내 턴 피해가 ${f.heavyTime.over} 이상이면 밤 시계를 ${f.heavyTime.add}분 더 돌린다.`] : null,
   f.twinRage ? ['짝', `짝이 쓰러지면 남은 쪽 힘 +${f.twinRage}.`] : null,
   f.duel ? [`도전 ${f.duel}`, `가장 많이 친 동료를 노리고, 그 동료에게 맞으면 ${f.duel} 반격.`] : null,
-  f.mistVeil ? [`안개 장막 ${f.mistVeil.block}`, `내 턴 시작마다 방어 ${f.mistVeil.block}. 그 턴 ③이 처음 터지면 장막이 걷혀 방어 0, 취약 ${f.mistVeil.vuln}.`] : null,
+  f.mistVeil ? [`안개 장막 ${f.mistVeil.block}`, `내 턴 시작마다 방어 ${f.mistVeil.block}. 그 턴 폭발이 처음 터지면 장막이 걷혀 방어 0, 취약 ${f.mistVeil.vuln}.`] : null,
   f.stagger ? ['비틀거림', '내 턴 피해가 100 이상이면 다음 행동 하나를 건너뛴다.'] : null,
   f.phase2 && !f.p2 ? ['2단계', `체력이 ${Math.round(f.phase2.at * 100)}% 아래가 되면 모습이 바뀐다.`] : null,
-  f.phase3 && f.p2 && !f.p3 && (S.G.depth || 0) >= (f.phase3.depth || 0) ? ['3단계', `체력이 ${Math.round(f.phase3.at * 100)}% 아래가 되면 「한낮」.`] : null,
+  f.phase3 && f.p2 && !f.p3 && (S.G.depth || 0) >= (f.phase3.depth || 0) ? ['3단계', `체력이 ${Math.round(f.phase3.at * 100)}% 아래가 되면 한낮으로 바뀐다.`] : null,
 ].filter(Boolean).map(([n, t]) => { const m = /^(가시|갑옷) (\d+)$/.exec(n); return m ? stIcon(SICON[m[1]], m[2], `${n}: ${t}`, '#c8d0ff') : `<span class="chip trait" data-tip="${esc(`${n}: ${t}`)}">${n}</span>`; }).join('');
 const foeSt = f => chip(f.skip, '멈춤', '#b48ae8') + chip(f.dim ? Math.round(f.dim * 100) + '%' : 0, '빛 −', '#f0d040') + chip(f.bounty, '현상금', '#e0a050') + chip(f.poison, '독', '#9af07a') + chip(f.burn, '화상', '#ff9a4a') + chip(f.bleed, '출혈', '#ff6a6a')
   + chip(f.str, '힘', '#ff9a8a') + chip(f.weak, '약화', '#f08ac0') + chip(f.vuln, '취약', '#ffd060');

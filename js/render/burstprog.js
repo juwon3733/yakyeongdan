@@ -3,6 +3,7 @@
 import { S } from '../run.js';
 import { CHARACTERS } from '../data/characters.js';
 import { esc } from './common.js';
+import { flame } from './pxui.js';
 
 const maxFoe = k => Math.max(0, ...(S.C?.all || []).filter(f => !f.dead).map(f => f[k] || 0));
 export const BURST_PROG = {
@@ -41,6 +42,6 @@ export function burstProgHTML(p) {
   const body = need <= 6
     ? Array.from({ length: need }, (_, i) => `<i class="${i < k || on ? 'f' : ''}"></i>`).join('')
     : `<u><s style="width:${on ? 100 : Math.round(k / need * 100)}%"></s></u><em>${cur || 0}/${need}</em>`;
-  const tip = `③ 「${ln[1]}」: ${ln[2]}\n지금 ${cur || 0} / ${need}${on ? ' · 이번 턴 터짐' : ''}`;
-  return `<span class="bprog ${on ? 'on' : ready ? 'ready' : near ? 'near' : ''}" data-tip="${esc(tip)}"><b>③</b>${body}</span>`;
+  const tip = `폭발 · ${ln[1]}: ${ln[2]}\n지금 ${cur || 0} / ${need}${on ? ' · 이번 턴 터짐' : ''}`;
+  return `<span class="bprog ${on ? 'on' : ready ? 'ready' : near ? 'near' : ''}" data-tip="${esc(tip)}">${flame(on || ready)}${body}</span>`;
 }

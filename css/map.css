@@ -89,3 +89,7 @@
 /* 오르는 동료가 1층 칸 아래 도착 시각을 덮던 것: 사람은 칸 왼쪽 위, 시각은 오른쪽 아래로 */
 .towermap .maptok img{left:-68px;top:-68px}
 .towermap .node .tag{z-index:4}
+/* 탑 그림이 있으면: 회색 선반이 그림 위를 가로질러 보이던 것 → 어두운 반투명 돌 턱(위만 살짝 밝게) */
+.towermap .mapgrid.art .ledge{height:4px;background:linear-gradient(rgba(220,200,160,.55) 0 1px,rgba(20,14,26,.55) 1px);box-shadow:none}
+.towermap .mapgrid.art .ledge.top{background:linear-gradient(rgba(255,231,160,.8) 0 1px,rgba(90,64,24,.6) 1px)}
+.towermap .mapgrid.art .edges path.dim{opacity:.35}

@@ -24,7 +24,7 @@ const META = { title: titleView, party: partyView, base: baseView, summon: summo
 function bgImage(G, scr) {
   const run = G && S.view === 'run' && !G.tutorial;
   const f = run ? (scr === 'combat' || scr === 'reward' ? `bg/act${G.act}.png` : scr === 'result' ? null : `bg/map${G.act}.png`)
-    : scr === 'base' || scr === 'party' || scr === 'mates' ? 'bg/hq.png' : scr === 'summon' || scr === 'reveal' || scr === 'pick5' || scr === 'season' ? 'summon/sky.png' : null;
+    : ['base', 'party', 'mates', 'exchange', 'codex', 'records', 'daily', 'odds', 'episodes', 'ep'].includes(scr) ? 'bg/hq.png' : scr === 'summon' || scr === 'reveal' || scr === 'pick5' || scr === 'season' ? 'summon/sky.png' : null;
   const u = f && artURL(f);
   return u ? `url("${new URL(u, location.href).href}")` : 'none';   // CSS 변수의 주소는 CSS 파일 기준이라 절대 주소로
 }

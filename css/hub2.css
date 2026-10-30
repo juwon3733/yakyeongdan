@@ -108,3 +108,36 @@
 .tmenu h1:has(.tlogo)::after{display:none}
 .tmenu h1 .tlogo{width:288px;height:96px;margin-left:-14px}
 .tmenu button.firstgo,.tmenu button.firstgo:hover{animation:none;box-shadow:none;outline:0;border:0}
+/* 본부 v3: 왼쪽 글자 메뉴(타이틀과 같은 ▸ 커서) + 오른쪽 무대. 둥근 아이콘·칩·도움말 띠 없음 */
+.hub3{grid-template-rows:minmax(0,1fr)}
+.hub3::before{background:linear-gradient(90deg,rgba(6,6,18,.92) 0,rgba(6,6,18,.78) 150px,rgba(6,6,18,0) 290px),linear-gradient(0deg,rgba(6,6,18,.55),transparent 28%)}
+.hub3.tm-dawn::before{background:linear-gradient(90deg,rgba(24,10,22,.92) 0,rgba(24,10,22,.75) 150px,rgba(24,10,22,0) 290px),linear-gradient(0deg,rgba(255,150,90,.12),transparent 40%)}
+.hub3 .h2top{left:auto;right:10px;top:8px;background:none;border:0;box-shadow:none;padding:0;text-shadow:1px 1px 0 #000;font-size:10px}
+.hub3 .h2cast{left:150px}
+.h3menu{display:flex;flex-direction:column;align-items:flex-start;padding:18px 0 0 22px;gap:1px}
+.h3where{margin:0 0 10px;font-family:var(--f-disp);font-size:10px;color:var(--dim);letter-spacing:.1em;text-shadow:1px 1px 0 #000}
+.h3where small{color:var(--gold);margin-left:4px}
+.h3menu button{position:relative;background:none;border:0;box-shadow:none;padding:2px 0 2px 14px;width:max-content;color:#d8d4ec;font-size:13px;line-height:1.25;text-shadow:2px 2px 0 #000;
+  animation:h3in .35s cubic-bezier(.2,.8,.3,1) backwards;filter:none}
+.h3menu button::before{content:"▸";position:absolute;left:0;color:var(--gold);opacity:0}
+.h3menu button:hover,.h3menu button:focus-visible{color:#fff;transform:none;outline:0}
+.h3menu button:hover::before,.h3menu button:focus-visible::before{opacity:1;animation:yk-cur .8s steps(2) infinite}
+.h3menu button small{font-size:8px;color:var(--dim);margin-left:6px}
+.h3menu .h3go{font-family:var(--f-disp);font-size:24px;color:#fff4d0;letter-spacing:.12em;padding-left:16px;margin-bottom:4px;display:flex;align-items:baseline;flex-direction:column}
+.h3menu .h3go::before{opacity:1;top:6px;animation:yk-cur .8s steps(2) infinite}
+.h3menu .h3go small{margin:0;letter-spacing:0;font-family:var(--f-body)}
+.h3menu .sm{font-size:10px;color:var(--dim)}
+.h3menu .season{color:#cfe0ff}
+.h3menu .hint{color:var(--gold)}
+.h3menu .ndot{position:static;display:inline-block;margin-left:4px;vertical-align:2px}
+.h3gap{display:block;height:8px}
+.h3menu > :nth-child(3){animation-delay:.04s}.h3menu > :nth-child(4){animation-delay:.08s}.h3menu > :nth-child(6){animation-delay:.12s}.h3menu > :nth-child(7){animation-delay:.16s}
+.h3menu > :nth-child(8){animation-delay:.2s}.h3menu > :nth-child(9){animation-delay:.24s}.h3menu > :nth-child(10){animation-delay:.28s}
+@keyframes h3in{from{opacity:0;translate:-10px 0}to{opacity:1;translate:0 0}}
+#stage.calm .h3menu button{animation:none}
+#stage.bigtext .h3menu button{font-size:15px}
+#stage.bigtext .h3menu .sm{font-size:12px}
+.hub3 .h2name{display:none}
+.h3menu .h3go{padding-left:22px}
+.h3menu .h3go::before{top:9px}
+.hub3 .h2side.s1{left:calc(50% + 40px)}
