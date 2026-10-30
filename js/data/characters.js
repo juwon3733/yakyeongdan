@@ -136,17 +136,17 @@ export const CHARACTERS = {
     ds: '카드를 쓸수록 유성이 쌓이고, 쌓인 유성이 공격을 세게 하고 하늘에서 떨어진다.',
     start: ['este.slash', 'este.slash', 'este.guard', 'este.fall'],
     passive: { name: '유성의 맹세',
-      lines: [['trait', '', '전투를 유성 2로 시작. 내 턴이 시작될 때 유성이 2 이상이면 별똥이 떨어져 무작위 적에게 유성×3 피해.'],
+      lines: [['trait', '', '전투를 유성 2로 시작. 내 턴이 시작될 때 유성이 2 이상이면 별똥이 떨어져 무작위 적에게 유성×4 피해.'],
         ['keyword', '', '에스텔 카드를 쓸 때마다 유성 +1(최대 6). 에스텔 공격 카드 피해 +유성.'],
-        ['burst', '유성우', '유성이 6이 되는 순간 모든 적 피해 15, 유성은 3으로.']],
+        ['burst', '유성우', '유성이 6이 되는 순간 모든 적 피해 20, 유성은 4로.']],
       onCombatStart: c => { c.comet = 2; },
-      onTurnStart: (c, e) => { if ((c.comet || 0) >= 2) e.hitRandom(c.comet * 3); },
+      onTurnStart: (c, e) => { if ((c.comet || 0) >= 2) e.hitRandom(c.comet * 4); },
       beforeCard: (c, card) => { if (card.ch === 'estelle' && card.atk) c.bonus += c.comet || 0; },
       preview: (c, card) => card.ch === 'estelle' && card.atk ? c.comet || 0 : 0,
       afterCard: (c, card, pick, e) => {
         if (card.ch !== 'estelle') return;
         c.comet = Math.min(6, (c.comet || 0) + 1);
-        if (c.comet >= 6) { e.burst('estelle', '유성우'); e.hitAll(15); c.comet = 3; }
+        if (c.comet >= 6) { e.burst('estelle', '유성우'); e.hitAll(20); c.comet = 4; }
       } },
   },
   // ---------- ★4 (나머지) ----------
