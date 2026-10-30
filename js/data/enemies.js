@@ -126,7 +126,7 @@ export const FOE = {
              pat: [A(14), Z('starshard'), R(7), M(12, 12), A(6, 3)] },
   starshard: { name: '별 조각', hp: 14, pal: 'starshard', hitSound: 'magic', small: true, deathBoom: 3, pat: [A(4), A(2, 2)] },
   // 첫 실행 튜토리얼 (js/data/tutorial.js): 약하게
-  tut_ghost: { name: '아기 바다 유령', hp: 24, pal: 'sea', hitSound: 'magic', long: true, pat: [A(4), A(2, 2), A(5)] },
+  tut_ghost: { name: '아기 바다 유령', hp: 32, pal: 'sea', hitSound: 'magic', long: true, pat: [A(4), A(2, 2), A(5)] },
   tut_gull:  { name: '갈매기', hp: 10, pal: 'gull', hitSound: 'beast', aim: 'back', small: true, pat: [A(3)] },
   tut_lamp:  { name: '떠도는 등불', hp: 60, pal: 'keeper', hitSound: 'magic', crown: true, line: '"작은 불빛이라고 얕보지 마."',
                pat: [A(6), B(6), A(3, 2), A(7)] },

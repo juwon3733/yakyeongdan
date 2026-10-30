@@ -17,9 +17,9 @@
 const pv = (c, v) => c.pair ? (v + 4) * c.pairMul : 0;
 export const CARDS = {
   // 아이리스 — 베기
-  'iris.slash':  { ch: 'iris', name: '베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [8, 4], up: { v: [11, 4] },
+  'iris.slash':  { ch: 'iris', name: '베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [9, 4], up: { v: [12, 4] },
     text: '피해 {d0}. 이번 턴 세 번째 베기부터 +{n1}.', play: (c, e, v) => { e.hit(v[0] + (c.slashes >= 2 ? v[1] : 0) + e.sheath()); e.slash(1); } },
-  'iris.parry':  { ch: 'iris', name: '흘려 베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [4, 4], up: { v: [5, 5] },
+  'iris.parry':  { ch: 'iris', name: '흘려 베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [5, 5], up: { v: [7, 6] },
     text: '피해 {d0}, 방어 {b1}. 베기.', play: (c, e, v) => { e.hit(v[0] + e.sheath()); e.guard(v[1]); e.slash(1); } },
   'iris.issen':  { ch: 'iris', name: '일섬', cost: 0, time: 1, atk: 1, slash: 1, rarity: 'u', v: [12], up: { v: [16] },
     text: '피해 {d0}. 베기.', play: (c, e, v) => { e.hit(v[0] + e.sheath()); e.slash(1); } },
@@ -74,7 +74,7 @@ export const CARDS = {
   // 마르타 — 방어·반격
   'marta.wall':  { ch: 'marta', name: '기도의 벽', cost: 1, rarity: 'c', v: [7], up: { v: [10], target: 'ally', text: '고른 동료 방어 {b0}.' },
     text: '방어 {b0}.', play: (c, e, v) => e.guardTarget(v[0]) },
-  'marta.fist':  { ch: 'marta', name: '철권', cost: 1, atk: 1, rarity: 'c', v: [7], up: { v: [10] },
+  'marta.fist':  { ch: 'marta', name: '철권', cost: 1, atk: 1, rarity: 'c', v: [9], up: { v: [12] },
     text: '피해 {d0}.', play: (c, e, v) => e.hit(v[0]) },
   'marta.confess':{ ch: 'marta', name: '고해', cost: 0, time: 1, target: 'ally', rarity: 'u', v: [12, 4], up: { v: [16, 6] },
     text: '마르타 방어 {b0}. 고른 동료 체력 {n1} 회복.', play: (c, e, v) => { e.guard(v[0]); e.heal(v[1]); } },

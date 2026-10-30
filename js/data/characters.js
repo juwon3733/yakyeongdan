@@ -20,30 +20,30 @@ import { ROSTER } from './roster.js';
 const pal = k => ROSTER[k].pal;
 export const CHARACTERS = {
   iris: {
-    name: '아이리스', role: '검사', rarity: 4, maxHp: 36, col: '#c8d4f0', long: true,
+    name: '아이리스', role: '검사', rarity: 4, maxHp: 38, col: '#c8d4f0', long: true,
     ds: '베기를 이어서 쓸수록 세진다.',
     pal: { h: '#1c1c2a', H: '#0c0c16', e: '#8ab0ff', o: '#c8d0e8', O: '#8a92b0', a: '#f0f4ff' },
     start: ['iris.slash', 'iris.slash', 'iris.edge', 'iris.issen'],
     passive: { name: '검의 리듬',
-      lines: [['trait', '', '아이리스 카드끼리 이어 써도 연계가 끊기지 않는다.'], ['keyword', '', '매 턴 첫 베기 피해 +6.'],
+      lines: [['trait', '', '아이리스 카드끼리 이어 써도 연계가 끊기지 않는다.'], ['keyword', '', '매 턴 첫 베기 피해 +8.'],
         ['burst', '무한일섬', '한 턴에 베기 3번째부터 베기 피해 2배.']],
       beforeCard: (c, card, e) => {
         if (!e.isSlash(card)) return;
-        if (!c.irisRhythm) { c.bonus += 6; c.irisRhythm = true; }
+        if (!c.irisRhythm) { c.bonus += 8; c.irisRhythm = true; }
         if (c.slashes >= 2) { c.cardMul *= 2; e.burst('iris', '무한일섬'); }
       },
-      preview: (c, card) => card.slash && !c.irisRhythm ? 6 : 0,
+      preview: (c, card) => card.slash && !c.irisRhythm ? 8 : 0,
       onTurnStart: c => { c.irisRhythm = false; } },
   },
   brick: {
-    name: '브릭', role: '대포', rarity: 3, maxHp: 32, col: '#ef6352', long: false,
+    name: '브릭', role: '대포', rarity: 3, maxHp: 34, col: '#ef6352', long: false,
     ds: '장전을 쌓았다가 한 번에 쏜다.',
     pal: { h: '#d0463a', H: '#902a24', e: '#ffd060', o: '#5a4a3a', O: '#3a2e24', a: '#e0b84a' },   // 붉은 단발, 작업복
     start: ['brick.load', 'brick.load', 'brick.fire', 'brick.over'],
     passive: { name: '여분 탄약',
-      lines: [['trait', '', '다른 동료 공격에 장전 1을 실어 보낸다: 그 공격 피해 +6 (턴당 1번). 전투 시작에 장전 1.'],
+      lines: [['trait', '', '다른 동료 공격에 장전 1을 실어 보낸다: 그 공격 피해 +6 (턴당 1번). 전투 시작에 장전 2.'],
         ['burst', '전탄', '장전 6 이상에서 발사·일제 사격·최후의 포탄을 쓰면 모든 적에게.']],
-      onCombatStart: c => { c.loaded += 1; },
+      onCombatStart: c => { c.loaded += 2; },
       beforeCard: (c, card, e) => { c.fullLoad = !!card.fire && c.loaded >= 6; if (c.fullLoad) e.burst('brick', '전탄'); } },
   },
   marta: {
@@ -52,9 +52,9 @@ export const CHARACTERS = {
     pal: { h: '#ecc860', H: '#b08a30', e: '#5a7ab0', o: '#1e1e28', O: '#0e0e16', a: '#f0f0f0' },   // 금발 땋은 장발, 수녀복
     start: ['marta.wall', 'marta.wall', 'marta.fist', 'marta.confess'],
     passive: { name: '수호',
-      lines: [['trait', '', '적의 노림을 자기에게 끌어오고(대신 맞기), 방어를 공격으로 바꾼다(심판). 전투 시작에 방어 8.'],
+      lines: [['trait', '', '적의 노림을 자기에게 끌어오고(대신 맞기), 방어를 공격으로 바꾼다(심판). 전투 시작에 방어 12.'],
         ['burst', '철의 성녀', '방어 30 이상으로 턴을 끝내면 그 방어가 다음 턴까지 남고, 이번 적 턴 반격이 모든 적에게.']],
-      onCombatStart: (c, e) => { e.guard(8); } },
+      onCombatStart: (c, e) => { e.guard(12); } },
   },
   noel: {
     name: '노엘', role: '마술사', rarity: 4, maxHp: 26, col: '#f08ac0', long: true,
