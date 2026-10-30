@@ -17,39 +17,44 @@
 
 ## 주니어 큐 (위에서부터, 큐에 그대로 붙여 넣기)
 
-지난 큐 ✅: A 적 도감, B 시즌 1 음악·에스텔 소리, C 밸런스 보고서·카드 순위·--patch 시뮬. (랭킹 틀은 주니어 실패 → Claude가 만듦)
+지난 큐 ✅: A 적 도감·시즌 패스 줄, B 시즌 음악·에스텔 소리·보스 단계/승리 띠 소리, C 밸런스 보고서·카드 순위·--patch 시뮬. (랭킹 틀·핀 강화는 Claude가 함)
 
 공통 금지(모든 작업에 붙인다): assets/ 아래 그림·json, docs/PROMPTS.md, shots/ 는 열거나 cat 하지 마. grep은 js css tools 안에서만. 긴 출력은 파일로 보내고 tail만.
 
 ### 주니어 A — 화면
-1. `feat` · **시즌 패스 보상 줄**
+1. `feat` · **덱 보기 다듬기**
    ```
-   시즌 화면(js/render/season.js seasonView)의 시즌 패스(지금은 작은 눈금 막대 .spbar)를 보상이 보이는 가로 줄로 바꿔 줘.
-   - 30단계를 가로로 스크롤되는 칸 줄로: 칸마다 단계 번호 + 보상(js/data/season.js PASS.reward(n): 별 조각 수, 10단계마다 칭호). 5·10단계 칸은 크게, 10단계는 금테.
-   - 받은 칸은 도장(✓), 받을 수 있는 칸은 반짝임(steps 애니메이션), 아직인 칸은 어둡게. 지금 단계로 자동 스크롤.
-   - 위에 지금 단계·다음 단계까지 남은 시즌 별(rec.xp % PASS.per / PASS.per) 막대. [보상 받기] 버튼은 그대로(data-claimpass).
-   CSS는 css/season.css 끝에. node tools/smoke.mjs(시즌 블록 포함), node tools/text-check.mjs 통과.
+   판 중 [덱] 모달(js/render/screens.js deckModal)을 게임답게: 지금은 카드가 줄줄이 나열된다.
+   - 위에 거르기 버튼: 전체 · 동료별(파티 셋 얼굴) · 종류별(공격·방어·스킬·저주). S.deckFilter에 기억, 다시 열어도 유지.
+   - 같은 카드는 한 장으로 묶고 오른쪽 위에 ×개수 도장, 강화된 카드는 따로.
+   - 카드에 마우스를 대면 지금 손패 확대처럼 크게(js/cardzoom.js 쓰는 법을 따름).
+   - 위쪽 도구 줄은 그대로.
+   CSS는 css/screens.css. node tools/smoke.mjs(덱 열기 포함), node tools/text-check.mjs 통과.
    공통 금지: assets/ 아래 그림·json, docs/PROMPTS.md, shots/ 는 열거나 cat 하지 마. grep은 js css tools 안에서만. 긴 출력은 파일로 보내고 tail만.
    ```
 
 ### 주니어 B — 소리
-1. `feat` · **보스 단계 전환·승리 띠 효과음**
+1. `feat` · **에피소드·휴식 환경음**
    ```
-   tools/compose/sfx.py로 PC-98 FM 효과음 둘을 만들어 등록해 줘.
-   - boss_phase: 보스 단계 전환. 낮게 빨려 드는 소리(0.5초) → 쾅 터짐 + 금속성 울림(0.6초), 합쳐 1.1초. js/juice.js phaseFx에서 지금 sfx(hasSfx('boss_enter') ? 'boss_enter' : 'dawn', ...) 줄을 hasSfx('boss_phase')가 있으면 'boss_phase'를 쓰게 그 한 줄만 고친다.
-   - win_band: 「승리」 띠가 펼쳐질 때 짧은 금관 팡파르 0.8초. js/juice.js winBurst() 맨 앞에 if (hasSfx('win_band')) sfx('win_band', { vol: .7 }); 한 줄.
+   tools/compose/ambience.py로 환경음 4개를 만들어(16초 반복, 다른 amb_와 같은 방식) js/audio.js pickAmb에 연결해 줘.
+   - amb_harbor_town: 항구 거리(잔잔한 파도 + 멀리 종소리) — 에피소드 장소 harbor
+   - amb_convent: 수녀원(촛불 타는 소리 + 낮은 오르간 울림) — convent
+   - amb_clock: 시계탑(큰 톱니 째깍 + 바람) — clock
+   - amb_campfire: 모닥불 타닥 소리 — 판 안 휴식 화면(G.screen === 'rest')
+   연결: 지금 pickAmb는 에피소드(S.view === 'ep')면 null. S.ep.bg가 harbor·convent·clock이면 위 소리, 나머지는 null 그대로. 휴식이면 amb_campfire.
    push가 실패하면 2·4·8·16초 쉬고 다시. PR 설명에 소리 길이.
    공통 금지: assets/ 아래 그림·json, docs/PROMPTS.md, shots/ 는 열거나 cat 하지 마. grep은 js css tools 안에서만. 긴 출력은 파일로 보내고 tail만.
    ```
 
 ### 주니어 C — 도구
-1. `chore` · **핀 강화안 시험(보고만)**
+1. `feat` · **화면 바뀜 검사(사진 비교)**
    ```
-   밸런스 보고서에서 핀(★3 우편배달부)이 가장 약하다(들어간 파티 격파율 약 23%, 평균 35%). tools/patch-compare.mjs로 강화안 셋을 시험해 줘.
-   - tools/patches/finn_a.json: 핀 카드 수치(js/data/cards.js finn.*의 v)만 +1~2.
-   - tools/patches/finn_b.json: 핀 패시브 숫자만(js/data/characters.js finn) — 데이터에 숫자로 있는 것만 바꿀 수 있으면, 아니면 maxHp +4로 대신.
-   - tools/patches/finn_c.json: a + b 같이.
-   각 patch를 --runs 2000으로 돌려 「핀이 든 파티 격파율」「전체 격파율」을 표로 PR 설명에. 목표는 핀 30~35%(★5는 넘지 않게). 가장 나은 안을 추천만 하고 js/data/ 는 고치지 마(결정은 Claude).
+   tools/shot-diff.mjs(새로): npm run shots로 찍은 shots/*.png를 지난번 기준(shots/base/*.png, 없으면 지금 것을 기준으로 저장)과 픽셀 비교해서, 화면마다 바뀐 비율(%)을 표로 출력하고 바뀐 곳을 빨갛게 칠한 사진을 shots/diff/에 저장.
+   - 애니메이션 때문에 조금씩 다르니 2% 미만은 「같음」으로.
+   - --update 로 기준을 지금 사진으로 바꾼다.
+   - PNG 읽기·쓰기는 tools/png.mjs(이미 있음)를 쓴다. 다른 패키지 설치 금지.
+   - package.json에 "shotdiff": "node tools/shot-diff.mjs".
+   사진은 열어 보지 말고 표만 PR 설명에.
    공통 금지: assets/ 아래 그림·json, docs/PROMPTS.md, shots/ 는 열거나 cat 하지 마. grep은 js css tools 안에서만. 긴 출력은 파일로 보내고 tail만.
    ```
 
