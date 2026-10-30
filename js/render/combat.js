@@ -107,7 +107,7 @@ function intentIcon(text) {
   const t = String(text).replace(/<[^>]+>/g, '').trim();
   let m;
   const two = /행동 ×(\d+)/.exec(t), extra = two ? `<small class="two">×${two[1]}행동</small>` : '';
-  const out = (k, n, cls = '') => `<span class="iv ${cls}">${iconSvg(k)}${n != null ? `<b>${n}</b>` : ''}</span>`;
+  const out = (k, n, cls = '') => `<span class="iv ${cls}">${iconSvg(k)}${n != null ? `<b>${/^[\d+]+$/.test(String(n)) ? pxNum(n, { s: 2 }) : n}</b>` : ''}</span>`;
   if ((m = /^공격 (\d+) · 방어 (\d+)/.exec(t))) return out('sword', m[1]) + out('shield', m[2]) + extra;
   if ((m = /^모두 공격 (\d+)/.exec(t))) return out('sword', m[1], 'all') + extra;
   if ((m = /^공격 (\d+)(?:×(\d+))?/.exec(t))) return out('sword', m[2] ? `${m[1]}<i>×${m[2]}</i>` : m[1]) + extra;
@@ -135,7 +135,7 @@ export function combatView() {
         <span class="row">${ROW_NAME[fi]}</span>${lit.includes(p) ? '<b class="litnm">불빛 +1</b>' : ''}
         <img class="px" src="${battleSrc(p, M.down ? 'down' : 'idle')}" alt="">
         <span class="lab"><span class="nm">${c.name}</span>
-        <span class="hpw">${blk ? `<b class="blk" title="방어">${blk}</b>` : ''}${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : `${M.hp}/${M.max}`}</span></span>
+        <span class="hpw">${blk ? `<b class="blk" title="방어">${blk}</b>` : ''}${hpBar(M)}<span class="hp">${M.down ? '쓰러짐' : pxNum(`${M.hp}/${M.max}`, { s: 1 })}</span></span>
         <span class="s"${s ? ` data-tip="${esc(kwTip(s))}"` : ''}>${s}</span>${M.down ? '' : burstProgHTML(p)}</span></button>${swap}`;
   }).join('');
   const many = C.all.length > 1;
@@ -151,7 +151,7 @@ export function combatView() {
         <span class="intent ${ic}" data-tip="${esc(`다음 행동: ${it.replace(/<[^>]+>/g, '')}. ${aim ? `노림: ${AIM_NAME[aimKey(f)]} (얼굴이 맞을 동료).` : ''}`)}">${intentIcon(it)}${aim ? face(aim, 'sm') : ''}</span>
         <img class="px" src="${foeArt(f) || sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="lab"><span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
-        <span class="hpw">${f.block ? `<b class="blk" title="방어">${f.block}</b>` : ''}<span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span><span class="hp">${f.hp}/${f.max}</span></span>
+        <span class="hpw">${f.block ? `<b class="blk" title="방어">${f.block}</b>` : ''}<span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span><span class="hp">${pxNum(`${f.hp}/${f.max}`, { s: 1 })}</span><span hidden>${f.hp}/${f.max}</span></span>
         <span class="st">${foeTraits(f)}${foeSt(f)}</span></span>
       </button>`;
   }).join('');
@@ -187,5 +187,5 @@ export function combatView() {
 export const combatTopExtra = () => {
   const C = S.C;
   const extra = [C.turnAtk ? `<span class="chip" style="color:#ff9a8a">이번 턴 공격 +${C.turnAtk}</span>` : '', C.noDmg ? '<span class="chip" style="color:#9ad0f0">숨바꼭질</span>' : ''].join('');
-  return extra + `<span class="chainbox" data-tip="${esc(kwOne('연계') + '\n' + kwOne('듀오'))}"><small>연계</small><span class="chain">${Array.from({ length: RULES.chainMax }, (_, k) => `<i class="${k < C.chain ? 'on' : ''}"></i>`).join('')}</span></span><span class="turnno">턴 <b>${C.turn}</b></span>`;
+  return extra + `<span class="chainbox" data-tip="${esc(kwOne('연계') + '\n' + kwOne('듀오'))}"><small>연계</small><span class="chain">${Array.from({ length: RULES.chainMax }, (_, k) => `<i class="${k < C.chain ? 'on' : ''}"></i>`).join('')}</span></span><span class="turnno">턴 <b>${pxNum(C.turn, { s: 2 })}</b></span>`;
 };
