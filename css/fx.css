@@ -281,3 +281,8 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 .card.r-r{overflow:visible}
 .card.r-r > .art{overflow:hidden}
 #fx .jpillar{position:absolute;width:60px;z-index:4;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,226,140,.75) 40%,#fff6d0 50%,rgba(255,226,140,.75) 60%,transparent);mix-blend-mode:screen;transform-origin:50% 100%}
+/* 얼굴 칸(js/render/common.js fcImg): 상반신 그림의 얼굴 자리를 칸 가운데로, 크게. 칸은 정사각형 가까이(--ar = 가로÷세로) */
+img.fci{display:block;width:100%!important;height:100%!important;max-width:none;margin:0!important;object-fit:cover;object-position:50% 0;image-rendering:auto;
+  transform-origin:calc(var(--fx) * 100%) calc(var(--fy) * 150% * var(--ar,1));
+  transform:translate(calc((.5 - var(--fx)) * 100%), calc(45% - var(--fy) * 150% * var(--ar,1))) scale(var(--z,1.9))}
+:has(> img.fci){overflow:hidden}

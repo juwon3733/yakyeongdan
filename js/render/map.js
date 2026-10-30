@@ -113,7 +113,7 @@ export function mapView() {
   const head = G.note ? `<p class="banner ok">${G.note}</p>`
     : G.endless ? `<p class="note">탑은 무너지지 않는다 · 대신 층마다 적이 강해지고, 밤 시계가 흐를수록 여명이 짙어진다</p>`
     : isDawn() ? `<p class="banner">해가 떴다 · 적이 힘 +${RULES.dawnStartStr}으로 시작, 매 턴 +${RULES.dawnStrPerTurn} · ${fmt(RULES.collapse)}에 탑이 무너진다</p>`
-    : `<p class="note moon"><b>${MOONS[G.moon].name}</b> ${MOONS[G.moon].text}</p>`;
+    : `<p class="note moon"><b>${MOONS[G.moon].name}</b> ${MOONS[G.moon].text}${moonFits(G) ? '' : ' <small class="dim">(이번 파티와는 상관없는 달)</small>'}</p>`;
   const art = !G.endless && artURL(`bg/tower${G.act}.png`);
   return `<div class="mapwrap towermap a${G.endless ? 'e' : G.act}">
       <div class="mapgrid${art ? ' art' : ''}" style="width:${TW}px;height:${TH}px${art ? `;--tower:url('${art}')` : ''}">
@@ -124,4 +124,11 @@ export function mapView() {
         <div class="formation"><span class="lbl">대열 <small>두 칸을 눌러 자리 바꾸기 · 앞줄이 먼저 맞는다</small></span>${slots}</div>
       </div>
     </div>`;
+}
+
+// 이 달이 이번 파티에 쓸모가 있나: 이름이 적힌 동료가 파티에 있거나, 동료와 상관없는 효과(시간·듀오)면 쓸모 있음
+function moonFits(G) {
+  const m = MOONS[G.moon]; if (!m) return true;
+  const named = Object.values(CHARACTERS).filter(c => m.text.includes(c.name.split('·')[0]));
+  return !named.length || m.timeCost || m.duoNeed || named.some(c => G.party.some(p => CHARACTERS[p] === c));
 }

@@ -3,9 +3,13 @@
 // 파일 이름 규칙은 js/asset_prompts.js·AGENTS.md와 같다.
 import { cardArtKind } from './cardkind.js';
 let INDEX = new Set();
-export const artReady = (typeof fetch === 'function' && typeof location !== 'undefined' && location.protocol !== 'file:'
-  ? fetch('assets/art.json').then(r => (r.ok ? r.json() : [])).catch(() => [])
-  : Promise.resolve([])).then(list => { INDEX = new Set(Array.isArray(list) ? list : []); return INDEX.size; });
+const web = typeof fetch === 'function' && typeof location !== 'undefined' && location.protocol !== 'file:';
+const getJson = (u, d) => web ? fetch(u).then(r => (r.ok ? r.json() : d)).catch(() => d) : Promise.resolve(d);
+// 얼굴 자리(tools/face-box.mjs): 상반신 그림에서 [가로 가운데, 머리 꼭대기, 얼굴 가운데 높이]
+let FACE = {};
+export const faceBox = id => FACE[id] || null;
+export const artReady = Promise.all([getJson('assets/art.json', []), getJson('assets/face_box.json', {})])
+  .then(([list, fb]) => { INDEX = new Set(Array.isArray(list) ? list : []); FACE = fb || {}; return INDEX.size; });
 
 // 전투 스프라이트 몸 크기 보정(tools/slice-sheets.mjs가 잰 값): GPT가 칸 안에 작게 그린 동료도 같은 키로 보이게
 let SCALE = {};

@@ -5,7 +5,7 @@ import { DUOS, duoKey } from '../data/cards.js';
 import { P, owns, duoSpecial, depthOpen, depthMax, startPickOpen, startRelicChoices } from '../meta.js';
 import { RELICS } from '../data/relics.js';
 import { DEPTH } from '../data/depth.js';
-import { stars, palOf, esc, charSrc } from './common.js';
+import { stars, palOf, esc, charSrc, fcImg } from './common.js';
 import { artURL, battleArt } from '../art.js';
 import { ENDLESS } from '../data/endless.js';
 
@@ -106,7 +106,7 @@ export function partyView() {
     const r = ROSTER[k], c = CHARACTERS[k], on = S.picked.includes(k), ok = can(k);
     const tip = c ? `${r.name} ${'★'.repeat(r.rarity)} · ${r.role} · 체력 ${c.maxHp}\n${c.passive.name}: ${c.passive.text}` : `${r.name} · 준비 중`;
     return `<button type="button" class="mate r${r.rarity} ${on ? 'on' : ''} ${ok ? '' : 'locked'} ${duoSpecial(k) ? 'star5' : ''}" style="--c:${r.col}" ${ok ? `data-pick="${k}" aria-pressed="${on}"` : 'disabled'} data-tip="${esc(tip)}" aria-label="${r.name}">
-      <span class="fc"><img class="px" src="${charSrc(k, 'normal')}" alt=""></span><span class="nm">${r.name}</span></button>`;
+      <span class="fc">${fcImg(k)}</span><span class="nm">${r.name}</span></button>`;
   }).join('');
   const bonded = new Set();
   S.picked.forEach(a => S.picked.forEach(b => { if (a !== b && DUOS[duoKey(a, b)]) { bonded.add(a); bonded.add(b); } }));

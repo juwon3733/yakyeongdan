@@ -1,0 +1,8 @@
+/* 점검 손질(맨 마지막에 읽음 — 앞 파일들보다 이긴다) */
+.tmenu h1{margin-bottom:12px}   /* 「경」(아래로 4px 내려 놓은 글자)이 소개 줄에 닿던 것 */
+.shopkeep .bubble{top:46px}     /* 상인 말풍선이 위 띠의 시간(+10분)과 겹치던 것 */
+.summonscr .spanel details.fold{overflow:hidden}
+.summonscr .spanel details.fold:not([open]) > :not(summary){display:none}   /* 접힌 혜택 글이 아래 버튼 위로 새던 것 */
+.summonscr .spanel details.fold[open]{max-height:84px;overflow:auto}
+.card .bd{overflow:hidden;min-height:0}   /* 긴 효과 글이 아래 동료 이름 줄로 넘치던 것 */
+.shopmain .ware .card .bd,.dkgrid .card .bd{font-size:7.5px;line-height:1.25}

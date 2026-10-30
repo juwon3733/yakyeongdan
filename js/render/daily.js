@@ -6,7 +6,7 @@ import { MOONS } from '../data/moons.js';
 import { ACHIEVEMENTS, ACH_GROUP } from '../data/achievements.js';
 import { DAILY_SHARDS } from '../data/daily.js';
 import { P, owns, dailyToday } from '../meta.js';
-import { stars, fmt, esc, charSrc } from './common.js';
+import { stars, fmt, esc, charSrc, fcImg } from './common.js';
 import { moonImg } from './sprites.js';
 import { battleArt } from '../art.js';
 
@@ -18,7 +18,7 @@ export function dailyView() {
   const mates = D.cands.map(k => {
     const r = ROSTER[k], c = CHARACTERS[k], on = picked.includes(k);
     return `<button type="button" class="dman r${r.rarity} ${on ? 'on' : ''}" style="--c:${r.col}" data-dpick="${k}" aria-pressed="${on}" data-tip="${esc(`${r.name} ${'★'.repeat(r.rarity)} · ${r.role} · 체력 ${c.maxHp}${owns(k) ? '' : ' · 빌린 동료'}\n${c.passive.name}: ${c.passive.text}`)}">
-      <span class="fc"><img class="px" src="${charSrc(k, 'normal')}" alt=""></span><span class="nm">${r.name}</span>${owns(k) ? '' : '<i class="borrow">빌림</i>'}</button>`;
+      <span class="fc">${fcImg(k)}</span><span class="nm">${r.name}</span>${owns(k) ? '' : '<i class="borrow">빌림</i>'}</button>`;
   }).join('');
   const rec = D.rec;
   const past = Object.entries(P.daily).filter(([k]) => k !== D.key).sort((a, b) => b[0] < a[0] ? -1 : 1).slice(0, 7)
