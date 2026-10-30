@@ -57,3 +57,10 @@
 .scene:not(:has(.sman.speak)) .sman img{filter:drop-shadow(2px 2px 0 rgba(0,0,0,.6))}
 .scene.bg-rest .sground::before{background:linear-gradient(rgba(90,74,94,.9) 0 2px,rgba(30,22,38,.92) 2px 6px,rgba(14,10,22,.96) 40%,rgba(14,10,22,.0)),repeating-linear-gradient(90deg,transparent 0 46px,rgba(0,0,0,.35) 46px 48px)}
 .scene .acts button small{margin-left:8px;font-size:.8em;opacity:.85}
+/* 사건 창: 글 한 줄인데 창이 커서 가운데가 텅 비던 것 → 창은 내용만큼, 선택지는 글 바로 아래 */
+.scene .swin{min-height:0}
+.scene .sbody .acts,.scene .sbody .acts.col{margin-top:8px}
+.scene:not(:has(.sface)) .swin{min-height:0;padding:8px 14px 10px}
+/* 사건에서도 동료가 물 위에 떠 보이던 것: 발밑 바닥 턱(휴식과 같은 돌바닥, 위로 갈수록 투명) */
+.scene .sground::before{content:"";position:absolute;left:-8px;right:-8px;bottom:-10px;height:34px;z-index:-1;pointer-events:none;
+  background:linear-gradient(rgba(90,74,94,.9) 0 2px,rgba(30,22,38,.92) 2px 6px,rgba(14,10,22,.96) 40%,rgba(14,10,22,0)),repeating-linear-gradient(90deg,transparent 0 46px,rgba(0,0,0,.35) 46px 48px)}

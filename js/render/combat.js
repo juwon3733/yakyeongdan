@@ -148,7 +148,7 @@ export function combatView() {
     const hid = f.hidden && C.all.some(g => !g.dead && !g.hidden);
     const ax = f.affixes?.length ? ` affixed" style="--ax:${AFFIX[f.affixes[0]].col}` : '';
     return `<button type="button" class="foe ${many ? 'sm' : ''} ${C.kind === 'boss' && f.i === 0 ? 'boss' : ''} ${wantFoe && !hid ? 'tg' : ''} ${hid ? 'hidden' : ''}${ax}" ${hid ? 'aria-disabled="true" title="숨어 있어 이번 턴에는 고를 수 없다"' : `data-foe="${f.i}"`} data-fi="${f.i}">
-        <span class="intent ${ic}" data-tip="${esc(`다음 행동: ${it.replace(/<[^>]+>/g, '')}. ${aim ? `노림: ${AIM_NAME[aimKey(f)]} (얼굴이 맞을 동료).` : ''}`)}">${intentIcon(it)}${aim ? face(aim, 'sm') : ''}</span>
+        <span class="intent ${ic}" data-tip="${esc(`${aim ? `${CHARACTERS[aim]?.name || ''}에게 ` : ''}${it.replace(/<[^>]+>/g, '')}\n${aim ? AIM_NAME[aimKey(f)] : ''}`.trim())}">${intentIcon(it)}${aim ? face(aim, 'sm') : ''}</span>
         <img class="px" src="${foeArt(f) || sprite(FOE_PAL[f.pal], f.long, f.crown)}" alt="">
         <span class="lab"><span class="nm">${esc(f.name)}${C.kind === 'boss' ? ' <span class="chip" style="color:var(--rose)">보스</span>' : C.kind === 'elite' ? ' <span class="chip" style="color:#b06ae0">강적</span>' : ''}</span>
         <span class="hpw">${f.block ? `<b class="blk" title="방어">${f.block}</b>` : ''}<span class="hpbar foehp"><i style="width:${f.hp / f.max * 100}%"></i></span><span class="hp">${f.hp}<small>/${f.max}</small></span></span>

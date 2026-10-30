@@ -66,18 +66,19 @@ export function eventView() {
 }
 export function upgradeView() {
   const G = S.G;
-  const list = G.deck.map((id, i) => [id, i]).filter(([id]) => canUpgrade(id));
-  const more = G.back !== 'shop' && G.smithLeft > 1 ? ` (도라: ${G.smithLeft}장)` : '';
-  return `<div class="center"><h2>손질: 강화할 카드를 고른다${more}</h2><p class="note">위가 지금, 아래가 강화판.</p>
-    <div class="hand big scroll">${list.map(([id, i]) => `<span class="pair">${cardHTML(id, true, 'up', i)}${cardHTML(id + '+', true, 'up', i)}</span>`).join('')}</div>
+  // 같은 카드는 한 번만, 지금 ▸ 강화판을 옆으로 나란히(위·아래 두 줄로 두 벌씩 늘어놓아 화면 밖으로 넘치던 것)
+  const seen = new Set(), list = G.deck.map((id, i) => [id, i]).filter(([id]) => canUpgrade(id) && !seen.has(id) && seen.add(id));
+  const more = G.back !== 'shop' && G.smithLeft > 1 ? ` <small>${G.smithLeft}장</small>` : '';
+  return `<div class="center upscr"><h2>강화할 카드${more}</h2>
+    <div class="hand big scroll upgrid">${list.map(([id, i]) => `<span class="upone">${cardHTML(id, true, 'up', i)}<i class="uparr">▸</i>${cardHTML(id + '+', true, 'up', i)}</span>`).join('')}</div>
     <div class="acts"><button type="button" data-up="-1">그만두기</button></div></div>`;
 }
 export function removeView() {
-  return `<div class="center"><h2>지울 카드를 고른다</h2><div class="hand big scroll">${S.G.deck.map((id, i) => cardHTML(id, true, 'rm', i)).join('')}</div>
+  return `<div class="center"><h2>지울 카드</h2><div class="hand big scroll">${S.G.deck.map((id, i) => cardHTML(id, true, 'rm', i)).join('')}</div>
     <div class="acts"><button type="button" data-rm="-1">그만두기</button></div></div>`;
 }
 export function dupeView() {
-  return `<div class="center"><h2>거울: 복제할 카드를 고른다</h2><div class="hand big scroll">${S.G.deck.map((id, i) => cardHTML(id, true, 'dupe', i)).join('')}</div></div>`;
+  return `<div class="center"><h2>복제할 카드</h2><div class="hand big scroll">${S.G.deck.map((id, i) => cardHTML(id, true, 'dupe', i)).join('')}</div></div>`;
 }
 export function shopView() {
   const G = S.G, sh = G.shop;

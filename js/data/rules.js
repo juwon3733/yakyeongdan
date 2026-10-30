@@ -69,7 +69,7 @@ export const NODE = {
   boss:  { name: '보스', min: 15 },
 };
 // 노림 이름 (docs/04_enemies.md 끝 「노림」 표)
-export const AIM_NAME = { front: '앞줄', back: '뒤를 노림', weakest: '가장 약한', last: '방금 친 동료', light: '불빛이 비춘 동료', taunt: '대신 맞기',
-  cycle: '앞→가운데→뒤 차례로', dawn: '큰 공격은 체력이 가장 높은 동료, 연타는 나눠서', top: '가장 많이 친 동료(도전)', burst: '폭발이 터진 동료' };
+export const AIM_NAME = { front: '앞줄부터 노린다', back: '뒷줄부터 노린다', weakest: '체력이 가장 낮은 동료를 노린다', last: '방금 때린 동료를 노린다', light: '불빛이 비춘 동료를 노린다', taunt: '대신 맞는 동료를 노린다',
+  cycle: '앞·가운데·뒤를 차례로 노린다', dawn: '큰 공격은 체력이 가장 높은 동료, 연타는 나눠서', top: '자기를 가장 많이 친 동료를 노린다', burst: '폭발이 터진 동료를 노린다' };
 export const ROW_NAME = ['앞', '가운데', '뒤'];
 export const ACT_NAME = { 1: '1막 · 항구층', 2: '2막 · 구름층', 3: '3막 · 별층', 4: '끝없는 탑' };

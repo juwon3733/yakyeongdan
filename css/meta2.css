@@ -201,3 +201,19 @@
 /* 좁은 왼쪽 칸(동료 화면)에서 지갑 글이 세 줄로 접히던 것: 별 조각만 한 줄로 */
 .mleft .bhead .wallet{white-space:nowrap;font-size:9px}
 .mleft .bhead .wallet .dust{display:none}
+/* 강화·지우기 고르기: 큰 카드 두 줄이 화면 밖으로 넘치던 것 → 작은 카드 격자, 강화판 숫자는 초록 */
+.upscr .upgrid,.center .hand.big.scroll{flex-wrap:wrap;justify-content:center;gap:6px;max-height:252px;overflow-y:auto;padding:4px}
+.center .hand.big.scroll .card{width:86px;height:124px;--ah:58px}
+.center .hand.big.scroll .card .bd{font-size:7px}
+.center .hand.big.scroll .card .hd{font-size:8.5px}
+.upscr h2 small{font-size:10px;color:var(--dim);margin-left:6px}
+.upscr .upone{display:inline-flex;align-items:center;gap:2px;padding:3px;background:rgba(8,8,22,.6);box-shadow:2px 2px 0 #000}
+.upscr .upone .card:first-child{filter:brightness(.7) saturate(.7)}
+.upscr .upone .uparr{font-style:normal;color:var(--gold);font-size:10px}
+.upscr .upone:hover .card{filter:none}
+.upscr .upgrid{gap:8px 10px}
+/* 이름 끝에 「+」가 이미 붙는 강화 카드에 노란 점까지 또 붙던 것 */
+.card.upg .nm::after{display:none}
+:is(#app,.frozen) .center .hand.big.scroll .card,#stage.bigtext :is(#app,.frozen) .center .hand.big.scroll .card{width:96px;height:138px;--ah:64px}
+:is(#app,.frozen) .center .hand.big.scroll .card .bd{font-size:7.5px;line-height:1.3}
+:is(#app,.frozen) .center .hand.big.scroll .card .hd{font-size:9px}

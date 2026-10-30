@@ -146,3 +146,11 @@
 .topbar .chain i.on{background:var(--gold);border-color:#fff2c0;box-shadow:0 0 4px rgba(224,184,74,.7)}
 .topbar .chain i.full{background:#ffe08a;border-color:#fff}
 .topbar .turnno{color:#b8b4d8;font-size:9px}
+/* 노림 받는 동료: 발밑에 뜻 모를 붉은 밑줄(상자 아래 테두리)이 깜빡이던 것 → 밑줄 없이 발밑 그림자만 붉게 */
+:is(#app,.frozen)[data-screen="combat"] .pm.aimed{box-shadow:none;border-bottom-color:transparent;animation:none}
+:is(#app,.frozen)[data-screen="combat"] .pm.aimed::before{content:"";position:absolute;left:50%;bottom:44px;width:84px;height:10px;transform:translateX(-50%);z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 50% 50%,rgba(255,70,90,.55),transparent 70%);animation:yk-aimglow 1s steps(3) infinite}
+@keyframes yk-aimglow{50%{opacity:.5}}
+#stage.calm :is(#app,.frozen)[data-screen="combat"] .pm.aimed::before{animation:none}
+/* 폭발 진행 막대 옆 「10/30」이 체력 숫자가 하나 더 있는 것처럼 보이던 것: 숫자는 도움말에만 */
+:is(#app,.frozen)[data-screen="combat"] .pm .bprog em{display:none}

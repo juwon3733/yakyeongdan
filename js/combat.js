@@ -235,7 +235,7 @@ function one(it, v) {
   if (it.t === 'mend') return `적 회복 ${it.v}`;
   if (it.t === 'sum') return `부르기: ${FOE[it.id].name}`;
   if (it.t === 'steal') return `카드 훔치기`;
-  if (it.t === 'aim') return `노림 바꿈: ${AIM_NAME[it.a]}`;
+  if (it.t === 'aim') return `이제 ${AIM_NAME[it.a]}`;
   return `공격 ${v} · 방어 ${it.b}`;
 }
 
@@ -564,7 +564,7 @@ function foeAct(f) {
       pushFx({ kind: 'steal', i: f.i, card: h.id });
     }
   }
-  else if (it.t === 'aim') { f.aim = it.a; logMsg(`${f.name}의 노림: ${AIM_NAME[it.a]}`); pushFx({ kind: 'retarget', i: f.i, to: aimTarget(f) }); }
+  else if (it.t === 'aim') { f.aim = it.a; logMsg(`${f.name}: ${AIM_NAME[it.a]}`); pushFx({ kind: 'retarget', i: f.i, to: aimTarget(f) }); }
   else { enemyHit(f, it.v); f.block += it.b; }
 }
 
