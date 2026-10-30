@@ -206,3 +206,23 @@ body.aiming .bottom .hand .card.sel,body.aiming #app[data-screen="combat"] .bott
 :is(#app,.frozen)[data-screen="combat"] .foes[data-n="4"] > .foe{margin:0 -1px}
 :is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe{margin:0 -2px}
 :is(#app,.frozen)[data-screen="combat"] .foes:is([data-n="4"],[data-n="5"]) > .foe.zb{transform:translateY(-30px)}
+/* 숫자 크기: 도트 SVG 숫자(2~3배 블록)가 너무 커서 → 게임 글꼴로 작게. 카드 비용 9px, 적 의도 10px, 에너지 12px, 턴·더미 9~10px */
+.card .cost,#stage.bigtext .card .cost{font-family:var(--f-disp);font-weight:400;font-size:9px;line-height:1;color:#fff4d0;padding:2px 4px 3px 3px;text-shadow:1px 1px 0 #000}
+.card .cost span,.card .cost{z-index:3}
+.card .cost{isolation:isolate}
+.card .cost::before{z-index:-1}
+.card .cost.up{color:#9affb0}.card .cost.dn{color:#ffb0a8}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent .iv b,#app[data-screen="combat"] .foe .intent .iv b{font-family:var(--f-disp);font-weight:400;font-size:10px;line-height:1;color:#fff;
+  text-shadow:1px 0 0 #000,-1px 0 0 #000,0 1px 0 #000,0 -1px 0 #000;display:inline}
+:is(#app,.frozen)[data-screen="combat"] .foe .intent .ii{width:12px;height:12px}
+.topbar .turnno b,.topbar .turnno{font-family:var(--f-disp);font-size:9px}
+.topbar .turnno b{font-size:11px;color:#fff4d0}
+:is(#app,.frozen)[data-screen="combat"] .pile{font-family:var(--f-disp);font-size:9px}
+/* 에너지 등불: 3배 → 2배 크기, 숫자는 등불 유리 안에 게임 글꼴 */
+:is(#app,.frozen)[data-screen="combat"] .energy.en2{width:44px}
+.energy.en2 .ennum{top:13px;font-family:var(--f-disp);font-size:12px;line-height:1;color:#fff4d0;text-shadow:1px 0 0 #3a1a04,-1px 0 0 #3a1a04,0 1px 0 #3a1a04,0 -1px 0 #3a1a04}
+.energy.en2.empty .ennum{color:#8a8098}
+.energy.en2 .fl{width:8px;height:auto}
+/* [턴 끝] 버튼도 숫자들과 같이 한 단계 작게 */
+:is(#app,.frozen)[data-screen="combat"] .endbtn{padding:3px 7px;font-size:10px;gap:4px}
+.energy.en2 .ennum{font-size:13px}

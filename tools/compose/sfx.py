@@ -782,3 +782,44 @@ def pass_claim():
 
 
 SFX.update({'atk_estelle': atk_estelle, 'burst_estelle': burst_estelle, 'pass_claim': pass_claim})
+
+
+# ---------- 보스 단계·승리 띠 ----------
+
+def boss_phase():
+    """보스 단계 전환(1.1초): 0~0.5초 낮게 빨려 드는 소리 → 쾅 터짐 + 금속성 울림(0.6초)"""
+    sec = 1.1
+    # 빨려 듦: 낮은 FM 저음이 위로 휘며 커지고, 거꾸로 부는 노이즈가 모여든다
+    ts = T(0.5)
+    env = (ts / 0.5) ** 2
+    ph = np.cumsum(40 + 90 * (ts / 0.5) ** 2) / SR
+    growl = np.sin(2 * np.pi * ph + 2.5 * env * np.sin(2 * np.pi * 1.5 * ph)) * (0.15 + 0.5 * env)
+    suck = lowpass(noise(0.5), 600) * env * 0.35
+    suck = highpass(suck, 120)
+    zip_ = sweep_tone(90, 420, 0.5, 'sin') * env * 0.2
+    pull = mix(growl, suck, zip_)
+    pull *= 1 - np.clip((ts - 0.48) / 0.02, 0, 1)   # 쾅 직전에 뚝
+    # 쾅: 쿵 + 폭발 + 금속성 울림(FM 비정수 비율 종 두 겹)
+    tb = T(0.6)
+    thump = np.sin(2 * np.pi * np.cumsum(36 + 150 * np.exp(-tb / 0.04)) / SR) * np.exp(-tb / 0.25)
+    blast = lowpass(noise(0.6), 2000) * np.exp(-tb / 0.15) * 0.8
+    crack = highpass(noise(0.1), 3500) * np.exp(-T(0.1) / 0.02) * 0.5
+    metal = mix(fm(55, 0.6, 0.45, ratio=2.76, index=4.0, idecay=0.3, a=0.002, d=0.8, s=0, r=0.3),
+                fm(67, 0.6, 0.3, ratio=3.41, index=3.0, idecay=0.2, a=0.002, d=0.6, s=0, r=0.3))
+    bang = mix(kick(0.6), thump, blast, crack, metal)
+    y = fit(verb(mix(pull, at(bang, 0.5)), 0.8, 0.28), sec)
+    return y * np.clip((sec - T(sec)) / 0.3, 0, 1)
+
+
+def win_band():
+    """승리 띠(0.8초): 짧은 금관 팡파르 — 빠른 셋잇단 상승 → 장화음 한 방"""
+    sec = 0.8
+    notes = [(0.0, 67, 0.07), (0.08, 72, 0.07), (0.16, 76, 0.07)]
+    run = mix(*[at(brass(n, d, 0.5), s) for s, n, d in notes])
+    chord_ = at(mix(*[brass(n, 0.5, 0.42) for n in (60, 67, 72, 76, 79)]), 0.25)
+    shine = mix(*[at(glock(n, 0.15, 0.2), 0.25 + i * 0.04) for i, n in enumerate((84, 88, 91))])
+    y = fit(verb(mix(run, chord_, shine, at(snare(0.3) * 0.5, 0.25)), 0.7, 0.28), sec)
+    return y * np.clip((sec - T(sec)) / 0.25, 0, 1)
+
+
+SFX.update({'boss_phase': boss_phase, 'win_band': win_band})
