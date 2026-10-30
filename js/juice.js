@@ -44,7 +44,7 @@ function rel(el, full) {
 // ---------- 몸 영역: 그림마다 불투명한 부분의 상자(0~1 비율)를 한 번 재 둔다 ----------
 // 동료는 몸 키를 모두 ALLY_H로 맞추고(시트마다 그려진 크기가 달라도 같은 키), 적은 지금 크기 그대로.
 // 그림 칸의 여백은 음수 여백으로 레이아웃에서 빼서, 자리(발 줄·가운데)는 몸 기준이 된다
-const BOX = new Map(), ALLY_H = 88;
+const BOX = new Map(), ALLY_H = 70;   // 슬레이 더 스파이어처럼 판에 비해 작게(88이면 화면 키의 ¼ 넘게 차서 꽉 차 보였다)
 function bodyBox(src) {
   if (!src || src.startsWith('data:')) return null;
   const b = BOX.get(src); if (b) return b === 'wait' ? null : b;
