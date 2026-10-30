@@ -17,13 +17,20 @@ for (const s of items.filter((i) => i.cells)) {
   if (!fs.existsSync(src)) continue;
   let img = decodePng(fs.readFileSync(src));
   if (img.w !== s.width || img.h !== s.height) { console.error(`${s.file}: 크기 ${img.w}×${img.h} — ${s.width}×${s.height}이어야 해요. 건너뜀.`); process.exitCode = 1; continue; }
-  // 1) 칸마다 원본 도트 크기로 줄인다(도트 블록 가운데 색)
+  // 1) 칸마다 원본 도트 크기로 줄인다 — 블록 평균(불투명 칸이 절반 이상이면 불투명, 색은 불투명 픽셀 평균).
+  //    가운데 점 하나만 뽑으면 GPT 그림(정확한 도트 격자가 아님)의 선이 끊기고 얼굴이 뭉개진다
   const nat = s.cells.map((c) => {
     const [nw, nh] = c.native, px = new Uint8Array(nw * nh * 4);
     for (let y = 0; y < nh; y++) for (let x = 0; x < nw; x++) {
-      const sx = Math.min(img.w - 1, Math.floor(c.x + (x + .5) * c.w / nw)), sy = Math.min(img.h - 1, Math.floor(c.y + (y + .5) * c.h / nh));
-      const si = (sy * img.w + sx) * 4, o = (y * nw + x) * 4;
-      if (img.data[si + 3] >= 128) { px[o] = img.data[si]; px[o + 1] = img.data[si + 1]; px[o + 2] = img.data[si + 2]; px[o + 3] = 255; }
+      const sx0 = Math.floor(c.x + x * c.w / nw), sx1 = Math.max(sx0 + 1, Math.floor(c.x + (x + 1) * c.w / nw));
+      const sy0 = Math.floor(c.y + y * c.h / nh), sy1 = Math.max(sy0 + 1, Math.floor(c.y + (y + 1) * c.h / nh));
+      let n = 0, op = 0, r = 0, g = 0, b = 0;
+      for (let sy = sy0; sy < Math.min(sy1, img.h); sy++) for (let sx = sx0; sx < Math.min(sx1, img.w); sx++) {
+        const si = (sy * img.w + sx) * 4; n++;
+        if (img.data[si + 3] >= 128) { op++; r += img.data[si]; g += img.data[si + 1]; b += img.data[si + 2]; }
+      }
+      const o = (y * nw + x) * 4;
+      if (op * 2 >= n && op) { px[o] = Math.round(r / op); px[o + 1] = Math.round(g / op); px[o + 2] = Math.round(b / op); px[o + 3] = 255; }
     }
     return { c, nw, nh, px };
   });
@@ -46,7 +53,7 @@ for (const s of items.filter((i) => i.cells)) {
   if (s.fit === 'union') {
     const idle = nat[0]; let top = idle.nh, bot = -1;
     for (let y = 0; y < idle.nh; y++) for (let x = 0; x < idle.nw; x++) if (idle.px[(y * idle.nw + x) * 4 + 3]) { top = Math.min(top, y); bot = Math.max(bot, y); }
-    if (bot >= 0) scale[s.id.replace(/_battle$/, '')] = +Math.min(2.4, Math.max(1, 112 / (bot - top + 1))).toFixed(2);
+    if (bot >= 0) scale[s.id.replace(/_battle$/, '')] = +Math.min(2.4, Math.max(1, 112 * idle.nh / 128 / (bot - top + 1))).toFixed(2);   // 원본 128 높이 기준 112
   }
   // 3) 정수배로 키워 저장(빈 칸은 만들지 않음)
   for (const { c, nw, nh, px } of nat) {

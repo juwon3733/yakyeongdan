@@ -27,13 +27,13 @@ export const STYLE = {
 export const SPEC = {
   stand:    { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '전투 서 있는 전신 · 투명 배경 · 발끝이 아래 끝 근처, 머리 위 여백' },
   portrait: { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '허리 위 상반신 · 투명 배경 · 양옆·위 여백, 허리만 아래 끝에 닿음' },
-  sprite:   { w: 384,  h: 512,  native: '96×128',  scale: 4, transparent: true,  colors: 64,  folder: 'sprites', note: '전투용 도트 캐릭터(일러스트보다 굵은 도트) · 전투 스프라이트 시트에서 잘라 냄 · 발이 칸 아래 근처' },
+  sprite:   { w: 384,  h: 512,  native: '192×256', scale: 2, transparent: true,  colors: 256, folder: 'sprites', note: '전투용 도트 캐릭터(일러스트보다 굵은 도트) · 전투 스프라이트 시트에서 잘라 냄 · 발이 칸 아래 근처' },
   outfit:   { w: 1024, h: 1536, native: '256×384', scale: 4, transparent: true,  colors: 256, folder: 'chars', note: '두 번째 의상 전신 · 투명 배경' },
   cutin:    { w: 1536, h: 576,  native: '384×144', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄' },
   duo:      { w: 1536, h: 768,  native: '384×192', scale: 4, transparent: false, colors: 256, folder: 'cutins', note: '인연 듀오 · 두 사람 한 장 · 1536×1024로 만든 뒤 위아래를 잘라 냄' },
   cg:       { w: 1536, h: 864,  native: '—', scale: 0, transparent: false, colors: Infinity, folder: 'cg', note: '★5 전신 CG · 16:9 · 화질 우선, 색 제한 없음' },
-  enemy:    { w: 512,  h: 512,  native: '128×128', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
-  elite:    { w: 512,  h: 512,  native: '128×128', scale: 4, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
+  enemy:    { w: 512,  h: 512,  native: '256×256', scale: 2, transparent: true,  colors: 256, folder: 'enemies', note: '일반 적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
+  elite:    { w: 512,  h: 512,  native: '256×256', scale: 2, transparent: true,  colors: 256, folder: 'enemies', note: '강적 · 적 시트(foesheet)에서 잘라 냄 · 투명 배경' },
   boss:     { w: 1024, h: 1536, native: '128×192', scale: 8, transparent: true,  colors: 256, folder: 'enemies', note: '보스 전투 스프라이트(저해상도 도트) · 투명 배경' },
   tower:    { w: 1200, h: 1272, native: '300×318', scale: 4, transparent: true, colors: 64, folder: 'bg', note: '지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다' },
   bg:       { w: 1280, h: 720,  native: '640×360', scale: 2, transparent: false, colors: 256, folder: 'bg', note: '배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)' },
@@ -45,13 +45,13 @@ export const SPEC = {
   icon:     { w: 192,  h: 192,  native: '32×32',   scale: 6, transparent: true,  colors: 64,  folder: 'icons', note: '도구 아이콘 · 아이콘 시트(iconsheet)에서 잘라 냄 · 투명 배경' },
   appicon:  { w: 1024, h: 1024, native: '64×64',   scale: 16, transparent: false, colors: 64, folder: 'app', note: '앱 아이콘(홈 화면·PWA) · 64×64 도트를 16배 · 정사각 꽉 차게, 가운데 80% 안에 주요 모양(둥근 모서리로 잘려도 되게) · node tools/make-icons.mjs가 icons/icon-192·512.png로 만든다' },
   style:    { w: 1024, h: 1536, native: '시안마다 다름', scale: 0, transparent: true, colors: Infinity, folder: 'style', note: '그림체 시안(게임에 안 씀) · 같은 캐릭터를 도트 굵기만 바꿔 4장 · 사용자가 골라 기준 화풍을 정한다' },
-  card:     { w: 768,  h: 576,  native: '256×192', scale: 3, transparent: false, colors: 256, folder: 'cards', note: '카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
-  fx:       { w: 512,  h: 512,  native: '128×128', scale: 4, transparent: true,  colors: 128, folder: 'fx', note: '기술 이펙트 한 프레임(캐릭터 없이 효과만) · 이펙트 시트에서 잘라 냄 · 프레임을 차례로 돌려 움직인다' },
+  card:     { w: 512,  h: 384,  native: '512×384', scale: 1, transparent: false, colors: 256, folder: 'cards', note: '카드 그림(카드 위쪽 일러스트, 4:3) · 동료마다 공격·방어·스킬·필살 4장을 같은 종류 카드가 같이 씀 · 1536×1024로 만든 뒤 가운데 4:3을 잘라 192×144로 줄이고 4배' },
+  fx:       { w: 512,  h: 512,  native: '256×256', scale: 2, transparent: true,  colors: 256, folder: 'fx', note: '기술 이펙트 한 프레임(캐릭터 없이 효과만) · 이펙트 시트에서 잘라 냄 · 프레임을 차례로 돌려 움직인다' },
   // 시트: GPT가 한 장에 여러 개를 그리고, tools/slice-sheets.mjs가 칸마다 잘라 위 종류의 파일로 만든다(npm run art).
-  battlesheet: { w: 1536, h: 1024, native: '384×256 (칸 96×128 × 8)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '전투 스프라이트 4×2 — 위: 서 있기·숨쉬기·공격·스킬 / 아래: 방어·피격·쓰러짐·승리, 칸 384×512' },
-  cardsheet: { w: 1024, h: 1024, native: '512×512 (칸 256×256 × 4)', scale: 2, transparent: false, colors: Infinity, folder: 'sheets', note: '카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀' },
-  foesheet:  { w: 1536, h: 1024, native: '384×256 (칸 128×128 × 6)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '적 3×2, 칸 512×512' },
-  fxsheet:  { w: 1536, h: 1024, native: '384×256 (칸 128×128 × 6)', scale: 4, transparent: true, colors: Infinity, folder: 'sheets', note: '이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512' },
+  battlesheet: { w: 1536, h: 1024, native: '768×512 (칸 192×256 × 8)', scale: 2, transparent: true, colors: Infinity, folder: 'sheets', note: '전투 스프라이트 4×2 — 위: 서 있기·숨쉬기·공격·스킬 / 아래: 방어·피격·쓰러짐·승리, 칸 384×512' },
+  cardsheet: { w: 1024, h: 1024, native: '1024×1024 (칸 512×512 × 4)', scale: 1, transparent: false, colors: Infinity, folder: 'sheets', note: '카드 그림 2×2 — 왼쪽 위 공격·오른쪽 위 방어·왼쪽 아래 스킬·오른쪽 아래 필살, 칸 512×512 중 가운데 512×384만 씀' },
+  foesheet:  { w: 1536, h: 1024, native: '768×512 (칸 256×256 × 6)', scale: 2, transparent: true, colors: Infinity, folder: 'sheets', note: '적 3×2, 칸 512×512' },
+  fxsheet:  { w: 1536, h: 1024, native: '768×512 (칸 256×256 × 6)', scale: 2, transparent: true, colors: Infinity, folder: 'sheets', note: '이펙트 3×2 — 프레임 순서대로(왼→오, 위→아래), 칸 512×512' },
   iconsheet: { w: 1024, h: 1024, native: '128×128 (칸 32×32 × 16)', scale: 8, transparent: true, colors: Infinity, folder: 'sheets', note: '아이콘 4×4, 칸 256×256' },
 };
 
@@ -439,7 +439,7 @@ A battle sprite sheet of this ONE character: eight poses on one 1536x1024 canvas
 ${FRAMES.map(([, t], i) => `- Cell ${i + 1} — ${t.replace('${c.fx}', c.fx)}`).join('\n')}
 All eight cells are the SAME sprite redrawn by one pixel artist: identical face, hair shape, outfit details, palette and outline in every cell — only the pose changes.
 BODY ONLY: draw just the character and what she holds or wears. NO magic effects, NO glow, NO sparkles or particles, NO slash trails, NO companion creature, pet or familiar, NO projectiles, NO ground shadow — the game draws those as separate layers.
-In every cell: exactly the same character size and proportions (adult about 1:6.5 head-to-body, NOT chibi), the figure as LARGE as the cell allows (about 70-80% of the cell height; draw it smaller if a long weapon, ponytail or cape would otherwise reach a cell edge — the game evens out the size, but nothing may touch an edge), feet on the same line near the bottom of the cell, facing RIGHT toward the enemies (except HURT recoiling), the whole body and effect inside its own cell. Fully transparent background. Native resolution 96x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
+In every cell: exactly the same character size and proportions (adult about 1:6.5 head-to-body, NOT chibi), the figure as LARGE as the cell allows (about 70-80% of the cell height; draw it smaller if a long weapon, ponytail or cape would otherwise reach a cell edge — the game evens out the size, but nothing may touch an edge), feet on the same line near the bottom of the cell, facing RIGHT toward the enemies (except HURT recoiling), the whole body and effect inside its own cell. Fully transparent background. Native resolution 192x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.`),
       [4, 2], FRAMES.map(([f], i) => ['sprite', `${id}_sp_${f}`, `${id}_${f}.png`, i % 4, Math.floor(i / 4)]),
       { fit: 'union', must_show: '4×2: 서기·준비·공격·스킬 / 방어·피격·쓰러짐·승리, 몸만(이펙트·동반자 없음), 칸 높이 70~80%(무기가 길면 더 작게, 칸 경계에 닿지 않는 게 먼저), 칸마다 같은 크기·발 위치', reference_images: [`chars/${id}_stand.png`, `chars/${id}_normal.png`] }));
   }
@@ -510,7 +510,7 @@ ${c.name} is ON-MODEL from the attached references in every cell. Visual motifs:
       out.push(sheet('foesheet', `${act}_foes_${n + 1}`, batch, `${act}_foes_${n + 1}.png`, join(STYLE.pixel, STYLE.handmade, part.some(([, , d]) => /woman/.test(d)) ? STYLE.character : '',
         `An enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.
 ${part.map(([k, , d], i) => `- Cell ${i + 1}: ${k === 'elite' ? 'ELITE (bigger and more imposing, fills more of the cell): ' : ''}${d}`).join('\n')}
-${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transparent).\n` : ''}Fully transparent background. Low-resolution battle sprites (chunkier pixels than character illustrations, like premium 16-bit era RPG battle sprites, about 32 colors each, clean dark outline): native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`),
+${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transparent).\n` : ''}Fully transparent background. Low-resolution battle sprites (chunkier pixels than character illustrations, like premium 16-bit era RPG battle sprites, about 64 colors each, clean dark outline): native resolution 256x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.`),
         [3, 2], part.map(([k, id], i) => [k, id, `${id}.png`, i % 3, Math.floor(i / 3)]),
         { must_show: `3×2 칸에 ${part.map(([, id]) => id).join('·')}` }));
     }
@@ -524,7 +524,7 @@ ${part.length < 6 ? `Cells ${part.length + 1}-6 stay completely empty (transpare
       out.push(sheet('foesheet', `${act}_foepose_${n + 1}`, batch, `${act}_foepose_${n + 1}.png`, join(STYLE.pixel, STYLE.handmade, STYLE.onModel,
         `Battle poses for ${part.length} enemies, ON-MODEL from the attached enemy sprites (same design, colors, pixel size and body size as the attached sprite — only the pose changes). One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows). Column N is enemy N. TOP row = ATTACK pose (lunging or striking toward the LEFT at the party, mouth/claws/weapon forward). BOTTOM row = HURT pose (recoiling back to the RIGHT, flinching, eyes squeezed). Keep about 6% empty margin inside every cell edge. No effects, no text, no borders. All facing LEFT.
 ${part.map(([, d], i) => `- Column ${i + 1}: ${d}`).join('\n')}
-${part.length < 3 ? `Columns ${part.length + 1}-3 stay completely empty (transparent).\n` : ''}Fully transparent background. Native 128x128 pixels per cell, upscaled exactly 4x with nearest-neighbor.`),
+${part.length < 3 ? `Columns ${part.length + 1}-3 stay completely empty (transparent).\n` : ''}Fully transparent background. Native 256x256 pixels per cell, upscaled exactly 2x with nearest-neighbor.`),
         [3, 2], part.flatMap(([id], i) => [['enemy', `${id}_attack`, `${id}_attack.png`, i, 0], ['enemy', `${id}_hurt`, `${id}_hurt.png`, i, 1]]),
         { must_show: `열마다 적 하나(위 공격·아래 피격): ${part.map(([id]) => id).join('·')}`, reference_images: part.map(([id]) => `enemies/${id}.png`) }));
     }
@@ -544,7 +544,7 @@ ${part.length < 3 ? `Columns ${part.length + 1}-3 stay completely empty (transpa
   // 기술 이펙트: 공용 4종(6프레임) + 동료마다 시그니처 이펙트(공격 3프레임 / 스킬 3프레임). 프레임을 차례로 돌려 터뜨린다(js/juice.js playFx).
   const fxCells = (name, n) => Array.from({ length: n }, (_, i) => ['fx', `fx_${name}_${i + 1}`, `${name}_${i + 1}.png`, i % 3, Math.floor(i / 3)]);
   const fxSheet = (batch, id, prompt, cells, must) => out.push(sheet('fxsheet', id, batch, `${id}.png`, join(STYLE.vfx, STYLE.handmade, prompt + `
-One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 128x128 pixels per cell (384x256 for the whole sheet), upscaled exactly 4x with nearest-neighbor.`), [3, 2], cells, { must_show: must }));
+One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep about 6% empty margin inside every cell edge; nothing touches a cell edge. No borders, no grid lines, no labels. Each effect centered in its cell. Native resolution 256x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.`), [3, 2], cells, { must_show: must }));
   const COMMON_FX = {
     slash: 'a sword SLASH hit: a wide crescent slash arc (white core, pale blue edge) appearing, flashing brightest, then breaking into sparks and fading',
     explode: 'an EXPLOSION hit: a small bright flash, expanding fireball with smoke ring, debris and embers, then dissipating smoke',
