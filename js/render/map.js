@@ -78,7 +78,7 @@ export function mapView() {
     const on = r + 1 === G.row && G.took[r] === i && can.includes(j);
     const open = r >= G.row && reach[r].has(i);
     const cls = trail ? 'trail' : on ? 'on' : open ? 'open' : 'dim';
-    return { cls, svg: `<path ${on ? `data-to="${r + 1},${j}" ` : ''}d="M${a.x} ${a.y - NS}V${mid}H${b.x}V${b.y}" class="${cls}"/>` };
+    return { cls, svg: `<path ${on ? `data-to="${r + 1},${j}" ` : ''}d="M${a.x} ${a.y - NS}C${a.x} ${mid},${b.x} ${mid},${b.x} ${b.y}" class="${cls}"/>` };
   }))).sort((x, y) => LAYER[x.cls] - LAYER[y.cls]).map(l => l.svg).join('');   // 밝은 길이 흐린 길 위에
   // 층마다 난간(돌 선반) + 층 이름
   const ledges = M.rows.map((row, r) => {
@@ -118,7 +118,7 @@ export function mapView() {
   return `<div class="mapwrap towermap a${G.endless ? 'e' : G.act}">
       <div class="mapgrid${art ? ' art' : ''}" style="width:${TW}px;height:${TH}px${art ? `;--tower:url('${new URL(art, location.href).href}')` : ''}">
         <i class="towerbody" aria-hidden="true"></i><i class="spire" aria-hidden="true"></i><i class="door" aria-hidden="true"></i>
-        <svg class="edges" width="${TW}" height="${TH}" viewBox="0 0 ${TW} ${TH}" shape-rendering="crispEdges" aria-hidden="true">${lines}</svg>${ledges}${nodes}${tok}</div>
+        <svg class="edges" width="${TW}" height="${TH}" viewBox="0 0 ${TW} ${TH}" aria-hidden="true">${lines}</svg>${ledges}${nodes}${tok}</div>
       <div class="mapside">
         <h2>${G.endless ? endlessHead(G) : ACT_NAME[G.act]}</h2>${head}${peek}
         <div class="formation"><span class="lbl" data-tip="두 칸을 눌러 자리를 바꾼다. 적은 대개 앞줄부터 노린다.">대열</span>${slots}</div>

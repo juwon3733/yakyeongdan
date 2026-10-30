@@ -44,3 +44,4 @@ img.px.fci{position:absolute!important;margin:0!important;max-width:none!importa
 .scene .fire::before{opacity:.75;transform-origin:50% 100%}.scene .fire::after{opacity:.6}
 .srow.netin input{width:84px;font:inherit;font-size:9px;padding:2px 4px;background:#0b0b18;color:var(--ink,#e8e8f0);border:1px solid var(--line)}
 .srow .netid{color:var(--gold);font-weight:400;margin-right:4px}
+.towermap .edges path.dim{opacity:.35!important}
