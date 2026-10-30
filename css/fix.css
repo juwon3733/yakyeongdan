@@ -11,3 +11,8 @@
 /* 큰 글씨(폰)에서 본부 오른쪽 아이콘 줄이 길어져 출격 버튼과 겹치던 것: 아이콘을 줄이고 두 줄로 */
 #stage.bigtext .h2col{display:grid;grid-template-columns:repeat(2,auto);gap:3px 6px;top:6px}
 #stage.bigtext .h2ring{width:30px;height:30px}
+/* 얼굴 칸(js/render/common.js fcImg): 칸 너비의 z배로 그림을 놓고, 얼굴 자리(--fx,--fy)가 칸 가로 50%·세로 45%에 오게. 그림은 2:3(1024×1536) */
+:has(> img.fci){position:relative;overflow:hidden}
+img.px.fci{position:absolute!important;margin:0!important;max-width:none!important;max-height:none!important;object-fit:fill!important;transform:none!important;image-rendering:auto;
+  width:calc(var(--z) * 100%)!important;height:auto!important;aspect-ratio:2/3;
+  left:calc(50% - var(--fx) * var(--z) * 100%)!important;top:calc(45% - var(--fy) * var(--z) * 150% * var(--ar,1))!important;bottom:auto!important;right:auto!important}
