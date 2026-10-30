@@ -226,13 +226,17 @@ export const CHARACTERS = {
   },
   // ---------- ★3 (나머지) ----------
   finn: {
-    name: '핀', role: '우편배달부', rarity: 3, maxHp: 36, col: '#7aa0d0', long: false, pal: pal('finn'),
+    name: '핀', role: '우편배달부', rarity: 3, maxHp: 38, col: '#7aa0d0', long: false, pal: pal('finn'),
     ds: '핀의 카드는 언제나 연계를 잇는다.',
     start: ['finn.letter', 'finn.letter', 'finn.fast', 'finn.parcel'],
     passive: { name: '지름길',
-      lines: [['trait', '', '핀 카드는 연계에서 누구 카드로든 친다. 핀 카드를 사이에 두고 인연이 없는 두 동료 카드를 이어 쓰면 「합동」 카드(전투당 1번). 지도 전투 칸 −5분.'],
+      lines: [['keyword', '', '핀 카드를 쓰면 바로 다음 다른 동료 공격 피해 +4.'], ['trait', '', '핀 카드는 연계에서 누구 카드로든 친다. 핀 카드를 사이에 두고 인연이 없는 두 동료 카드를 이어 쓰면 「합동」 카드(전투당 1번). 지도 전투 칸 −5분.'],
         ['burst', '속달', '연계 3칸이 찬 뒤 서로 다른 동료 카드를 2장 더 이어 쓰면 카드 2장, 이번 턴 모든 공격 +2.']],
-      fightTime: -5 },
+      fightTime: -5,
+      // 배달 완료: 핀 카드를 쓰면 바로 다음 다른 동료 공격 피해 +4
+      afterCard: (c, card) => { if (card.ch === 'finn') c.finnBoost = 4; },
+      beforeCard: (c, card) => { if (card.ch !== 'finn' && card.atk && c.finnBoost) { c.bonus += c.finnBoost; c.finnBoost = 0; } },
+      preview: (c, card) => card.ch !== 'finn' && card.atk ? c.finnBoost || 0 : 0 },
   },
   laila: {
     name: '라일라', role: '구름 기사단 탈영병', rarity: 3, maxHp: 32, col: '#9ad0f0', long: true, pal: pal('laila'),

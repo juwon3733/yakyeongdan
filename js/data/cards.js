@@ -502,7 +502,7 @@ export const CARDS = {
     text: '모든 적의 행동을 바로 전 것으로 되돌리고 취약 {n0}. 소멸.', play: (c, e, v) => { e.guideAll(-1); e.foeStatusAll('vuln', v[0]); } },
 
   // ===== ★3 핀 — 핀의 카드는 언제나 연계를 잇는다(link) =====
-  'finn.letter':  { ch: 'finn', link: 1, name: '편지 던지기', cost: 1, atk: 1, rarity: 'c', v: [14], up: { v: [17] },
+  'finn.letter':  { ch: 'finn', link: 1, name: '편지 던지기', cost: 1, atk: 1, rarity: 'c', v: [16], up: { v: [19] },
     text: '피해 {d0}. 연계를 잇는다.', play: (c, e, v) => e.hit(v[0]) },
   'finn.fast':    { ch: 'finn', link: 1, name: '빠른 배달', cost: 0, rarity: 'c', v: [2], up: { v: [3] },
     text: '카드 {n0}장, 연계 +1.', play: (c, e, v) => { e.draw(v[0]); e.chain(1); } },
