@@ -25,3 +25,10 @@ img.px.fci{position:absolute!important;margin:0!important;max-width:none!importa
 .matescr .mcell .mfc{position:relative;display:block;align-self:stretch;flex:1;min-height:30px;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,color-mix(in srgb,var(--c) 30%,#10112a),#0b0b18 75%)}
 /* 지도 꼭대기 보스 이름: 위 띠에 가려지지 않게 칸 오른쪽에 */
 .towermap .node .tag.boss{top:50%!important;left:calc(100% + 6px)!important;transform:translateY(-50%)!important}
+/* 소환 확률: 동료 이름 줄 → 얼굴 칸 */
+.odds td.ofaces{display:flex;flex-wrap:wrap;gap:3px}
+.oface{position:relative;display:flex;flex-direction:column;align-items:center;width:40px}
+.oface .of{position:relative;display:block;width:28px;height:28px;overflow:hidden;border:1px solid var(--c);background:#0b0b18;box-shadow:1px 1px 0 #000}
+.oface small{font-size:7px;letter-spacing:-.05em;white-space:nowrap;color:#d8d4ec}
+.oface.pk .of{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),1px 1px 0 #000}
+.oface .pkmark{position:absolute;top:-5px;right:2px;font-size:7px;line-height:9px;padding:0 2px;background:var(--gold);color:#1a1206;font-weight:400}
