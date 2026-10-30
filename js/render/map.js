@@ -13,7 +13,8 @@ import { segStart } from '../endless.js';
 // 탑 지도: 아래(1층)에서 위(꼭대기)로 오른다. 칸은 글 상자가 아니라 탑 바깥 돌 난간에 놓인 아이콘, 층 사이는 계단.
 // 이름·시간은 고를 수 있는 칸에만 작게, 나머지는 커서를 대면(data-tip). 맨 앞 동료의 전투 스프라이트가 계단을 타고 오른다.
 // 탑 그림(bg/tower<막>.png)이 있으면 그 그림, 없으면 코드로 칠한 돌벽.
-const TW = 300, TH = 318, NS = 40;
+const TW = 300, NS = 40;
+let TH = 318;   // 튜토리얼은 위에 도움말 줄이 있어 낮게(mapView)
 
 // 칸 종류 도트 아이콘(16×16, 2배로 그림). 글자 하나 = 한 픽셀, '.'는 비움.
 const ICON = {
@@ -62,6 +63,7 @@ const LAYER = { dim: 0, open: 1, trail: 2, on: 3 };
 const foot = (r, j, n, rows) => ({ x: Math.round(TW / 2 + (j - (n - 1) / 2) * Math.min(78, (TW - 70) / Math.max(1, n - 1))), y: Math.round(TH - 22 - r * (TH - 74) / (rows - 1)) });
 
 export function mapView() {
+  TH = S.G?.tutorial ? 284 : 318;
   const G = S.G, M = G.map, rows = M.rows.length, can = reachable(G.row);
   const P = M.rows.map((row, r) => row.map((_, j) => foot(r, j, row.length, rows)));
   // 지금 자리에서 앞으로 닿을 수 있는 칸(층마다 번호 모음)
