@@ -76,8 +76,7 @@ export function baseView() {
       <div class="h2cast">${side}${leadBtn}</div>
     </div>
     <nav class="h2menu h3menu" aria-label="본부 메뉴">
-      <p class="h3where">야경단 본부 <small>${tm === 'dawn' ? '새벽' : '밤'}</small></p>
-      <button type="button" class="h3go" data-view="party">출격<small>동료 셋을 골라 탑으로</small></button>
+      <button type="button" class="h3go" data-view="party">출격</button>
       ${endlessMenu().replace('type="button"', 'type="button" class="h3i"')}
       ${item('data-view="daily"', '매일의 밤', !dailyToday().rec?.won)}
       <i class="h3gap"></i>
@@ -210,7 +209,7 @@ export function revealView() {
     R.focus = null;   // 한 번만
   }
   return `<div class="revealscr ${intro ? 'intro' : ''} ${top === 5 && R.open.some((o, i) => o && R.list[i].rarity === 5) ? 'sky5' : ''} ${done ? 'done' : ''}">
-    <h2>${R.list.length === 10 ? '10연 소환' : '소환'} ${top === 5 ? '· 하늘이 갈라진다' : top === 4 ? '· 보랏빛 별똥' : ''}</h2>
+    <h2>${R.list.length === 10 ? '10연 소환' : '소환'} </h2>
     <div class="drops n${R.list.length}">${items}</div>
     <div class="acts">${done ? next : '<button type="button" data-revealall>모두 넘기기</button>'}</div>
     ${focus}
@@ -226,7 +225,7 @@ export function pick5View() {
   }).join('');
   return `<div class="epsel">${head('summon', '별 소환')}
     <h2>처음 만나는 ★5 · 한 명을 고른다</h2>
-    <p class="note">하늘이 갈라졌다. 누가 내려올지 직접 고른다.</p>
+    <p class="note">★5 동료 하나를 고른다.</p>
     <div class="p5row">${L}</div></div>`;
 }
 
@@ -290,7 +289,7 @@ function mateDetail(k) {
   const pool = c ? Object.keys(CARDS).filter(id => CARDS[id].ch === k && !c.start.includes(id)) : [];
   const locked = new Set(packCards(k).slice(packsOpen(k)).flat());
   return `<div class="mhead ${starRing(k)}" style="--c:${r.col}">${img(k)}<div><h2>${r.name} <span class="stars">${stars(r.rarity)}</span></h2>
-      <p class="note">${r.role} · 체력 ${c?.maxHp ?? '-'} · 별자리 ${s}/${SUMMON.maxStars} · 판 ${st.runs} · 이긴 판 ${st.wins}${P.titles.includes(k) ? ` · 칭호 ${r.name}의 새벽` : ''}</p>
+      <p class="note">${r.role} · 체력 ${c?.maxHp ?? '-'}${P.titles.includes(k) ? ` · 칭호 ${r.name}의 새벽` : ''}</p>
       ${c ? `<p class="ps"><b>${esc(c.passive.name)}</b></p>${(c.passive.lines || [['', '', c.passive.text]]).map(([k, n, t]) => `<p class="ps ${k}">${k === 'burst' ? '<i class="pstag">폭발</i>' : ''}${n ? `<b>${esc(n)}</b> ` : ''}${esc(t)}</p>`).join('')}` : ''}${cos}</div></div>
     ${masteryBlock(k, r.name)}
     <h3 class="sub">별자리</h3><div class="stcs">${steps}${s < STAR_STEPS.length ? `<span class="stnext">다음: ${STAR_STEPS[s].text}</span>` : ''}</div>

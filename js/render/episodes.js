@@ -46,7 +46,7 @@ export function episodesView() {
     const b = BOND_SCENES[k]; if (!b) return '';
     const [a, c] = k.split('+'), seen = P.bondSeen.includes(k);
     return `<button type="button" class="epslot bond ${seen ? 'seen' : 'new'}" data-bond="${k}"><b>${esc(who(a).name)} · ${esc(who(c).name)}</b><small>${esc(b.title)}${seen ? '' : ' <span class="newt">NEW</span>'}</small></button>`;
-  }).join('') : '<p class="note small">인연 듀오를 처음 쓴 판이 끝나면 열린다.</p>';
+  }).join('') : '';
   return `<div class="epsel epgrid">
     <div class="bhead"><button type="button" class="mini" data-view="base">‹ 본부</button><span class="wallet"><b>별 조각 ${P.shards}</b></span></div>
     <div class="epcols">
@@ -54,8 +54,7 @@ export function episodesView() {
       <div class="epright" style="--c:${w.col}">${ROSTER[sel] ? `<img class="px epbig" src="${charSrc(sel, 'stand')}" alt="" aria-hidden="true">` : ''}
         <div class="ephead"><span class="pic"><img class="px" src="${w.img}" alt=""></span><div><h3>${esc(w.name)}</h3>${P.owned[sel] ? '' : '<small class="note">아직 없는 동료</small>'}</div></div>
         <div class="epeps">${eps}</div>
-        <h3 class="sub">인연 장면</h3>
-        <div class="bondlist">${bonds}</div>
+        ${bonds ? `<h3 class="sub">인연 장면</h3><div class="bondlist">${bonds}</div>` : ''}
       </div>
     </div>
   </div>`;

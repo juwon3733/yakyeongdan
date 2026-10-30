@@ -30,7 +30,6 @@ export function titleView() {
     ${scene}
     <div class="tmenu">
       <h1>${artURL('ui/logo.png') ? `<img class="px tlogo" src="${artURL('ui/logo.png')}" alt="야경단">` : '<span>야</span><span>경</span><span>단</span>'}</h1>
-      <p class="note">0시에 솟는 탑을 <b>6시 해 뜨기 전에</b> 오른다</p>
       <button type="button" class="primary ${first ? 'firstgo' : ''}" data-view="base">시작</button>
       <button type="button" data-settings>설정</button>
     </div>

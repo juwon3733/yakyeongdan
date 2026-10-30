@@ -37,7 +37,7 @@ function scene(bgKey, bgFile, people, inner) {
 export function rewardView() {
   const G = S.G, R = G.reward;
   const extra = [R.gold ? `별빛 +${R.gold}` : '', R.bonus ? `모든 동료 체력 +${R.bonus}` : '', R.kind === 'boss' ? `막 보스 격파 · 모든 동료 최대 체력의 ${RULES.bossHealPct * 100}% 회복` : ''].filter(Boolean).join(' · ');
-  return `<div class="center rwscr"><h2>${R.kind === 'boss' ? '레전더리 카드' : '카드 한 장'}<small>덱에 넣을 것을 고른다</small></h2>
+  return `<div class="center rwscr"><h2>${R.kind === 'boss' ? '레전더리 카드' : '카드 한 장'}</h2>
     ${extra ? `<p class="note">${extra}</p>` : ''}
     ${R.relic ? `<p class="note">도구를 얻었다</p>${relicBox(R.relic)}` : ''}
     <div class="hand big">${R.cards.map(id => cardHTML(id, true, 'take')).join('')}</div>
@@ -108,7 +108,7 @@ function specialRow(sp) {
 }
 export function bossRelicView() {
   const G = S.G;
-  return `<div class="center"><h2>보스 도구: 하나를 고른다</h2><p class="note">강하지만 대가가 있다.</p>
+  return `<div class="center"><h2>보스 도구</h2>
     <div class="acts col wide">${G.bossRelics.map(id => `<button type="button" class="relicpick" data-brelic="${id}">${relicBox(id)}</button>`).join('')}
     <button type="button" data-brelic="">고르지 않는다</button></div></div>`;
 }
@@ -174,7 +174,7 @@ export function resultView() {
     <div class="rinfo">
       <h2 class="rtitle">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
       <div class="rclockrow"><p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${pxNum(fmt(G.clock), { s: 5, col: G.won ? '#fff4d0' : '#ff8a8a' })}</p>${statBars(G, mvp)}</div>
-      <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`} · 싸움 ${G.fights}번 · ${MOONS[G.moon].name}${G.bestTurn?.dmg ? ` · 최고의 한 턴 <b>${G.bestTurn.dmg}</b>` : ''}</p>
+      <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`}${G.bestTurn?.dmg ? ` · 최고의 한 턴 <b>${G.bestTurn.dmg}</b>` : ''}</p>
       ${G.duoSet.size ? `<p class="note">듀오 ${duos}</p>` : ''}
       ${epNote}
       ${metaNote(R)}
