@@ -933,7 +933,7 @@ function healFx(e) {
 }
 // 시간 카드: 위 띠 시계에서 바늘이 한 바퀴, 화면이 살짝 밝아진다(새벽이 가까워짐). 되돌리기는 거꾸로, 푸르게.
 function clockFx(e, back) {
-  const ck = document.querySelector('#app .topbar .clock');
+  const ck = document.querySelector('#app .topbar .nsky .ntime');
   const r = ck ? rel(ck) : { cx: 40, cy: 15 };
   const d = document.createElement('div');
   d.className = `jclock ${back ? 'back' : ''}`;

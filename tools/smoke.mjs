@@ -596,7 +596,7 @@ try {
     await openParty(page);
     for (const k of ['iris', 'brick', 'marta']) await page.click(`[data-pick="${k}"]`);
     await page.click('[data-start]'); await page.waitForSelector('[data-node="0,0"]');
-    const pace = await ev(() => !!document.querySelector('.topbar .pace') && !!document.querySelector('.night u') && !!document.querySelector('.node .tag b.pace'));
+    const pace = await ev(() => !!document.querySelector('.topbar .nsky[class*=pace-]') && !!document.querySelector('.nstrip .ngoal') && !!document.querySelector('.node .tag b.pace'));
     const rig = () => ev(() => { window.__yk.fight(['ghost'], 'fight'); const C = window.__yk.S.C; C.energy = 9; C.hand = ['iris.slash', 'iris.slash'].map((id, k) => ({ uid: 9100 + k, id })); window.__yk.render(); });
     await rig();
     // 손패 카드는 마우스를 대면 커지는 연출이 있어, 다 커진 뒤에 누른다(커지는 중에 누르면 끌기로 잡힐 때가 있다)

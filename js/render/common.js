@@ -16,7 +16,7 @@ import { cardArtSrc } from './cardart.js';
 import { endlessChip } from './endless.js';
 
 export const esc = s => String(s).replace(/[&<>"]/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]));
-export const fmt = m => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(m % 60).padStart(2, '0')}`;
+export const fmt = m => `${Math.floor(m / 60)}:${String(m % 60).padStart(2, '0')}`;   // 0:12 (앞자리 0을 붙인 00:12는 전자시계처럼 보여서)
 export const stars = n => '★'.repeat(n);
 // 임시 도트 색: 명단(roster)에 있으면 그것, 없으면 전투 데이터의 색. 두 번째 의상을 입었으면 옷 색을 바꾼다(그림이 오기 전 임시).
 const shade = (hex, k) => '#' + [1, 3, 5].map(i => Math.round(parseInt(hex.slice(i, i + 2), 16) * k).toString(16).padStart(2, '0')).join('');
@@ -66,12 +66,16 @@ export function paceOf(G, clock = G.clock, at) {
   const d = clock - paceGoal(G, at);
   return d > PACE_SLACK ? 'late' : d < -PACE_SLACK ? 'early' : 'ok';
 }
-function paceChip(G) {
-  if (G.tutorial) return '';
-  const d = G.clock - paceGoal(G), k = paceOf(G);
-  const t = k === 'late' ? `늦음 +${d}분` : k === 'early' ? `여유 ${-d}분` : '알맞음';
-  // 글자 칩 대신 시계 옆 작은 신호(초록 여유·금 알맞음·빨강 늦음), 자세한 건 마우스를 대면
-  return `<span class="pace ${k}" data-tip="${esc(`${t} — ${paceTip(G)}`)}" aria-label="${t}"></span>`;
+// 밤 시계: 시계 아이콘 + 계산기 숫자 + 눈금 막대 대신, 0시~새벽까지의 밤하늘 띠. 그 판의 달이 지금 시각 자리에 떠 있고
+// 오른쪽 끝(새벽)은 해가 올라오는 빛. 막 경계는 띠 아래 작은 눈금, 페이스 목표는 금색 점. 시각은 게임 글꼴로 「0:12」
+function nightSky(G, m) {
+  const D = dawnAt(), x = v => Math.max(0, Math.min(100, v / D * 100)).toFixed(1);
+  const h = Math.floor(G.clock / 60), mm = String(G.clock % 60).padStart(2, '0');
+  const tip = esc(paceTip(G));
+  return `<span class="nsky ${G.clock >= D ? 'dawn' : ''} ${G.endless || G.tutorial ? '' : 'pace-' + paceOf(G)}">
+    <b class="ntime" data-tip="${tip}">${h}:${mm}</b>
+    <span class="nstrip" data-tip="${tip}" style="--p:${x(G.clock)}%"><i class="npast"></i><i class="ntick" style="left:33.3%"></i><i class="ntick" style="left:66.6%"></i>${G.tutorial || G.endless ? '' : `<i class="ngoal" style="left:${x(paceGoal(G))}%"></i>`}<img class="px nmoon" src="${moonImg(G.moon)}" alt="${esc(m.name)}" data-tip="${esc(`${m.name}: ${m.text}`)}"></span>
+  </span>${G.endless ? endlessChip(G) : ''}`;
 }
 function paceTip(G) {
   return `밤 시계 페이스: 막마다 목표 ${fmt(Math.round(dawnAt() / 3))} · ${fmt(Math.round(dawnAt() / 3 * 2))} · ${fmt(dawnAt())}. 지금 층의 목표 시각은 ${fmt(paceGoal(G))}. 늦으면 시간 카드를 아끼고 낮잠을 고려.`;
@@ -99,11 +103,9 @@ export function topbar(extra = '') {
   // 에피소드 특별 전투: 밤 시계·별빛·도구는 의미가 없어 숨긴다
   const ep = !!G.episode;
   return `<div class="topbar ${ep ? 'ep' : ''}">
-    ${ep ? '<span class="chip eptag">에피소드 · 특별 전투</span>' : `<span class="clock ${G.clock >= dawnAt() ? 'dawn' : ''}">${hudIcon('clock')}${pxNum(fmt(G.clock), { s: 2 })}</span>
-    <span class="night" data-tip="${esc(paceTip(G))}"><i style="width:${Math.min(100, G.clock / dawnAt() * 100)}%"></i><b style="left:33.3%"></b><b style="left:66.6%"></b><u style="left:${Math.min(100, paceGoal(G) / dawnAt() * 100)}%"></u></span>${G.endless ? endlessChip(G) : paceChip(G)}`}
+    ${ep ? '<span class="chip eptag">에피소드 · 특별 전투</span>' : nightSky(G, m)}
     ${G.depth ? `<span class="chip depthchip" title="밤의 깊이 ${G.depth}">깊이 ${G.depth}</span>` : ''}
     ${G.daily ? `<span class="chip dailychip" data-tip="${esc(`매일의 밤 · ${G.daily.rule.name}: ${G.daily.rule.text}`)}">매일 · ${esc(G.daily.rule.name)}</span>` : ''}
-    <img class="px moon" src="${moonImg(G.moon)}" alt="${esc(m.name)}" data-tip="${esc(`${m.name}: ${m.text}`)}">
     ${extra}
     <span class="grow"></span>
     ${ep ? '' : `<span class="relics">${relicRow(G)}</span>
