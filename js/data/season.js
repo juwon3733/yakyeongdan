@@ -9,8 +9,8 @@ export const SEASONS = [
     boss: 'starking', chara: 'estelle', four: ['sigrun', 'iris'],   // 시즌 픽업(★5 시즌 동료 + ★4 둘)
     tiers: [
       { id: 'normal', name: '일반', hp: 1, first: 100 },
-      { id: 'hard', name: '어려움', hp: 1.6, first: 150, atk: 1.25 },
-      { id: 'night', name: '악몽', hp: 2.4, first: 250, atk: 1.5 },
+      { id: 'hard', name: '어려움', hp: 1.25, first: 150, atk: 1.4 },
+      { id: 'night', name: '악몽', hp: 1.9, first: 250, atk: 2.3 },
     ] },
 ];
 // 시즌 패스: 30단계, 단계마다 xp 100. 판 결과로 얻는 시즌 별(js/season.js passXp)

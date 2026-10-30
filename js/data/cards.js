@@ -422,11 +422,11 @@ export const CARDS = {
 
   // ===== ★5 네레아 — 별 고래 (내 턴 끝마다 물보라: 모든 적 피해 고래 크기×3, 크기는 전투마다 1에서 시작, 최대 8) =====
   // 에스텔 (시즌 1): 유성 c.comet — 에스텔 카드마다 +1(패시브), 공격 피해 +유성
-  'este.slash':  { ch: 'estelle', name: '유성 베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [6], up: { v: [9] },
+  'este.slash':  { ch: 'estelle', name: '유성 베기', cost: 1, atk: 1, slash: 1, rarity: 'c', v: [7], up: { v: [10] },
     text: '피해 {d0}.', play: (c, e, v) => e.hit(v[0]) },
   'este.guard':  { ch: 'estelle', name: '별빛 방패', cost: 1, rarity: 'c', v: [7], up: { v: [10] },
     text: '방어 {b0}.', play: (c, e, v) => e.guard(v[0]) },
-  'este.fall':   { ch: 'estelle', name: '낙하', cost: 0, time: 1, atk: 1, rarity: 'c', v: [4], up: { v: [6] },
+  'este.fall':   { ch: 'estelle', name: '낙하', cost: 0, time: 1, atk: 1, rarity: 'c', v: [5], up: { v: [7] },
     text: '피해 {d0}, 유성 +1.', play: (c, e, v) => { e.hit(v[0]); c.comet = Math.min(6, (c.comet || 0) + 1); } },
   'este.charge': { ch: 'estelle', name: '돌격', cost: 1, atk: 1, rarity: 'c', v: [5], up: { v: [8] },
     text: '피해 {d0}, 카드 1장.', play: (c, e, v) => { e.hit(v[0]); e.draw(1); } },

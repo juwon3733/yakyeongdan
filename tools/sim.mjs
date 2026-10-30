@@ -429,6 +429,36 @@ if (opt('--fight', null)) {
   process.exit(0);
 }
 
+// 시즌 보스 (js/season.js와 같은 준비): node tools/sim.mjs --season [--n 300]
+//   시작 덱 + 동료마다 레전더리 2장 + 도구 2개, 유성우 규칙, 난이도마다 체력·힘 배수. 무작위 파티로 난이도별 승률·턴
+if (args.includes('--season')) {
+  const { startCombat } = await import('../js/combat.js');
+  const { SEASONS, SEASON_RUN } = await import('../js/data/season.js');
+  const { rollRelic } = await import('../js/relics.js');
+  const s = SEASONS[0], ids = Object.keys(CHARACTERS), n = +opt('--n', 300);
+  const only = opt('--party', null);
+  for (const tier of s.tiers) {
+    let won = 0, turnsT = 0, wonTurns = 0; const st = { plays: {}, duoMade: {}, duoPlayed: {}, deathAt: {}, fightTurns: {} };
+    for (let k = 0; k < n; k++) {
+      const r0 = rngFrom(4242 + k * 31);
+      const party = only ? only.split(',') : r0.shuffle(ids.slice()).slice(0, 3);
+      newRun(party, 5000 + k); S.G.rng = rngFrom(S.G.rng.state);
+      S.G.seasonRule = s.rule.id; S.G.season = { id: s.id, tier: tier.id };
+      for (const p of party) { const leg = Object.keys(CARDS).filter(id => CARDS[id].ch === p && CARDS[id].rarity === 'r');
+        for (let j = 0; j < SEASON_RUN.legends && leg.length; j++) S.G.deck.push(leg.splice(S.G.rng.int(leg.length), 1)[0]); }
+      for (let j = 0; j < SEASON_RUN.relics; j++) { const rr = rollRelic(S.G.rng, ['u', 'r']); if (rr) S.G.relics.push(rr); }
+      startCombat([s.boss], 'boss');
+      for (const f of S.C.all) { f.max = f.hp = Math.round((FOE[f.key]?.hp || f.hp) * tier.hp); if (tier.atk) f.str = (f.str || 0) + Math.round((tier.atk - 1) * 6); }
+      const tag = S.C._tag = ++combatTag; let t = 0;
+      while (sameCombat(tag) && S.G.screen === 'combat' && t++ < 60) playTurn(st);
+      const w = S.G.season?.won ?? (S.G.screen !== 'result' && S.G.screen !== 'sbdone' ? true : false);
+      turnsT += t; if (S.G.screen === 'sbdone' ? S.G.season.won : w) { won++; wonTurns += t; }
+    }
+    console.log(`시즌 보스 ${tier.name}: 이김 ${(100 * won / n).toFixed(0)}% · 평균 ${(turnsT / n).toFixed(1)}턴 · 이긴 판 ${won ? (wonTurns / won).toFixed(1) : '-'}턴`);
+  }
+  process.exit(0);
+}
+
 // ---------- 돌리기 ----------
 // --depth N : 밤의 깊이 (「새벽」 3단계는 5 이상)
 const DEPTH = +opt('--depth', 0);
