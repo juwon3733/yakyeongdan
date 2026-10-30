@@ -21,3 +21,5 @@ img.px.fci{position:absolute!important;margin:0!important;max-width:none!importa
    도트 그대로(pixelated)로 줄이면 늘린 해상도가 버려져 예전처럼 거칠어진다. 임시 도트(data:)는 그대로 */
 #stage img[src*="assets/sprites/"],#stage img[src*="assets/enemies/"],#stage img[src*="assets/fx/"]{image-rendering:auto!important}
 #stage .card .art img[src*="assets/cards/"]{image-rendering:auto!important}
+.matescr .mcell .nm{font-size:7px!important;letter-spacing:-.07em;text-overflow:clip!important;max-width:none!important;margin:0 -3px}
+.matescr .mcell .mfc{position:relative;display:block;align-self:stretch;flex:1;min-height:30px;overflow:hidden;background:radial-gradient(ellipse at 50% 40%,color-mix(in srgb,var(--c) 30%,#10112a),#0b0b18 75%)}

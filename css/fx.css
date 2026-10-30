@@ -289,3 +289,17 @@ body.nohov .bottom .hand .card:not(.sel):hover{transform:translateY(var(--fy,0px
 #fx .jbanner.win span{position:relative}
 #fx .jbanner.win span::after{content:"";position:absolute;inset:-4px -10px;background:linear-gradient(100deg,transparent 42%,rgba(255,250,220,.85) 50%,transparent 58%) 0 0/300% 100% no-repeat;mix-blend-mode:screen;pointer-events:none;animation:jwinSweep .7s steps(10) .15s both}
 @keyframes jwinSweep{from{background-position:100% 0}to{background-position:0 0}}
+/* 보상 화면: 이긴 동료가 왼쪽 아래에 승리 자세로 (screens.js winParty) — 하나씩 폴짝 내려앉고, 발밑에 금빛 */
+.rwscr{position:relative}
+.rwparty{position:absolute;left:6px;bottom:4px;display:flex;align-items:flex-end;gap:0;pointer-events:none;z-index:0}
+.rwparty .rwp{width:66px;height:88px;object-fit:contain;object-position:50% 100%;image-rendering:auto;margin-right:-14px;filter:drop-shadow(0 2px 0 rgba(0,0,0,.6));animation:rwIn .45s cubic-bezier(.2,.9,.3,1.3) calc(.25s + var(--i) * .12s) both,rwBob 2.4s ease-in-out calc(1s + var(--i) * .3s) infinite}
+.rwparty .rwp.down{filter:grayscale(.7) brightness(.6);animation:rwIn .45s ease-out calc(.25s + var(--i) * .12s) both}
+.rwparty .rwglow{position:absolute;left:0;right:0;bottom:-2px;height:10px;background:radial-gradient(ellipse at 50% 50%,rgba(255,216,120,.45),transparent 70%);z-index:-1}
+@keyframes rwIn{from{transform:translateY(-24px);opacity:0}}
+@keyframes rwBob{50%{transform:translateY(-2px)}}
+#stage.calm .rwparty .rwp{animation:none}
+.rwscr > :not(.rwparty){position:relative;z-index:1}
+/* 7시(붕괴) 30분 전: 화면 가장자리가 붉게 맥박 (juice.js setSky) */
+#fx.doom::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 40px 6px rgba(255,40,40,.45);animation:jdoom 1.1s ease-in-out infinite;z-index:3}
+@keyframes jdoom{50%{box-shadow:inset 0 0 26px 2px rgba(255,40,40,.2)}}
+#stage.calm #fx.doom::after{animation:none}
