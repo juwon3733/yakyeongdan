@@ -15,7 +15,7 @@
 :has(> img.fci){position:relative;overflow:hidden}
 img.px.fci{position:absolute!important;margin:0!important;max-width:none!important;max-height:none!important;object-fit:fill!important;transform:none!important;image-rendering:auto;
   width:calc(var(--z) * 100%)!important;height:auto!important;aspect-ratio:2/3;
-  left:calc(50% - var(--fx) * var(--z) * 100%)!important;top:calc(45% - var(--fy) * var(--z) * 150% * var(--ar,1))!important;bottom:auto!important;right:auto!important}
+  left:calc(50% - var(--fx) * var(--z) * 100%)!important;top:calc(36% - var(--fy) * var(--z) * 150% * var(--ar,1))!important;bottom:auto!important;right:auto!important}
 .p2 .pslot .spr[src^="data:"]{width:64px!important;height:86px!important;margin-top:0!important;object-fit:contain}   /* 그림이 아직 없는 동료(임시 도트)가 무대에서 너무 크게 나오던 것 */
 /* 전투 스프라이트·적·이펙트는 원본 2배 세밀(192×256·256×256) — 판 배율과 상관없이 늘 부드럽게 맞춘다.
    도트 그대로(pixelated)로 줄이면 늘린 해상도가 버려져 예전처럼 거칠어진다. 임시 도트(data:)는 그대로 */

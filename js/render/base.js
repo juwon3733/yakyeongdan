@@ -268,7 +268,7 @@ export function matesView() {
   const grid = ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k];
     return `<button type="button" class="mcell r${r.rarity} ${k === sel ? 'on' : ''} ${own ? '' : 'none'} ${starRing(k)} mx${own ? mastery(k) : 0}" style="--c:${r.col}" ${own ? `data-mate="${k}"` : 'disabled'} title="${esc(r.name)}">
-      ${own ? `<span class="mfc">${fcImg(k, 1.5)}</span>` : sil(k)}<span class="nm">${own ? r.name : '?'}</span>${own ? `<span class="st">${'✦'.repeat(starsOf(k))}</span>` : ''}</button>`;
+      ${own ? `<span class="mfc">${fcImg(k, 1.15)}</span>` : sil(k)}<span class="nm">${own ? r.name : '?'}</span>${own ? `<span class="st">${'✦'.repeat(starsOf(k))}</span>` : ''}</button>`;
   }).join('');
   return `<div class="matescr">
     <div class="mleft">${head()}<h2>동료</h2><div class="mgrid">${grid}</div></div>
@@ -331,7 +331,7 @@ const CODEX = {
   mates: () => `<div class="cxfaces">${ROSTER_IDS.map(k => {
     const r = ROSTER[k], own = !!P.owned[k], st = P.charStats[k] || { runs: 0, wins: 0 }, c = CHARACTERS[k];
     const tip = own ? `${r.name} ${'★'.repeat(r.rarity)} · ${r.role}${c?.ds ? `\n${c.ds}` : ''}\n별자리 ${starsOf(k)} · 판 ${st.runs} · 이김 ${st.wins}` : `??? ${'★'.repeat(r.rarity)}`;
-    return `<span class="cxf r${r.rarity} ${own ? '' : 'none'}" style="--c:${r.col}" data-tip="${esc(tip)}"><span class="fc">${fcImg(k, own ? 1.9 : 1.15)}</span><small>${own ? r.name : '???'}</small></span>`;
+    return `<span class="cxf r${r.rarity} ${own ? '' : 'none'}" style="--c:${r.col}" data-tip="${esc(tip)}"><span class="fc">${fcImg(k, own ? 1.3 : 1.15)}</span><small>${own ? r.name : '???'}</small></span>`;
   }).join('')}</div>`,
   duos: () => {
     const ks = Object.keys(DUOS), got = ks.filter(k => P.seenDuos.includes(k)).length;

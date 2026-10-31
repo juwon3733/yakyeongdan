@@ -26,7 +26,7 @@ export const palOf = (id, alt) => { const pal = ROSTER[id]?.pal || CHARACTERS[id
 // 도구 표시 (그림이 없으면 이름 첫 글자). 판마다 한 번 누르는 도구는 버튼.
 export function relicChip(id, G) {
   const d = RELICS[id], usable = d.use && !G.used[id] && (d.use !== 'moon' || S.C);
-  const tip = esc(`${d.name} (${RELIC_TIER_NAME[d.tier]}) — ${d.text}${d.use ? (G.used[id] ? ' · 이번 판엔 썼다' : ' · 누르면 쓴다') : ''}`);
+  const tip = esc(`${d.name}\n${d.text}${d.use && G.used[id] ? '\n이번 판엔 썼다' : ''}`);   // 「(시작) — … · 누르면 쓴다」처럼 기호로 이어 붙이던 것 대신 이름·효과 두 줄
   // 도구 그림(icons/relic_<id>.png)이 있으면 그림, 없으면 이름 첫 글자
   const ic = artURL(`icons/relic_${id}.png`), inner = ic ? `<img class="px" src="${ic}" alt="">` : esc(d.name.slice(0, 1));
   return d.use ? `<button type="button" class="relic t-${d.tier} ${ic ? 'hasic' : ''} ${usable ? 'can' : 'spent'}" data-relic="${id}" data-tip="${tip}" aria-label="${tip}" ${usable ? '' : 'disabled'}>${inner}</button>`
@@ -35,7 +35,7 @@ export function relicChip(id, G) {
 
 // 동료 얼굴 (서 있는 그림의 윗부분을 잘라 보여 줌)
 // 얼굴 칸 그림: 상반신 그림의 얼굴 자리(assets/face_box.json)를 칸 가운데로 당겨 크게(css img.fci). z = 확대
-export function fcImg(id, z = 1.9, alt) {
+export function fcImg(id, z = 1.3, alt) {   // 1.9면 얼굴만 꽉 차 보여서 어깨까지 보이게
   const src = charSrc(id, 'normal', alt), f = faceBox(id);
   if (!f || src.startsWith('data:')) return `<img class="px" src="${src}" alt="">`;
   return `<img class="px fci" src="${src}" alt="" style="--fx:${f[0]};--fy:${f[2]};--z:${z}">`;
