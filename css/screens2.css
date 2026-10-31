@@ -54,3 +54,7 @@
 .epbox{background:rgba(10,10,26,.92);color:var(--ink);border:2px solid #4a4c7a;box-shadow:0 0 0 2px #000,3px 3px 0 2px rgba(0,0,0,.5)}
 .epbox.narr .tx{color:#b8b4d8}
 .epbox .more{color:var(--gold)}
+/* MVP 발밑: 회색 받침판(빈 상자처럼 보였다) → 바닥 그림자만, 이름은 그림 위에 */
+.resultscr .mvp::after,.resultscr .mvp .mvpbg::after{background:none!important}
+.resultscr .mvpband{background:none;border-top:0;box-shadow:none;margin-top:-30px}
+.resultscr .mvp .mvpart{filter:drop-shadow(3px 3px 0 rgba(0,0,0,.6))}

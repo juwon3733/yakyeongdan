@@ -184,7 +184,7 @@ export function resultView() {
     <div class="rinfo">
       <h2 class="rtitle">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
       <div class="rclockrow"><p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</p>${statBars(G, mvp)}</div>
-      <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${actName(G)}에서 멈췄다`}${G.bestTurn?.dmg ? ` · 최고의 한 턴 <b>${G.bestTurn.dmg}</b>` : ''}</p>
+      ${G.won ? (G.bestTurn?.dmg ? `<p class="note">최고의 한 턴 <b>${G.bestTurn.dmg}</b></p>` : '') : `<p class="note">${actName(G)}에서 멈췄다${G.bestTurn?.dmg ? ` · 최고의 한 턴 <b>${G.bestTurn.dmg}</b>` : ''}</p>`}
       ${G.duoSet.size ? `<p class="note">듀오 ${duos}</p>` : ''}
       ${epNote}
       ${metaNote(R)}
