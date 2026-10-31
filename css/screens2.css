@@ -50,3 +50,7 @@
 /* 결과 시각: 전자시계 같은 큰 도트 숫자 대신 게임 글꼴 */
 .resultscr .clockbig{font-family:var(--f-disp);font-size:40px;line-height:1;color:#fff4d0;text-shadow:3px 3px 0 #000;letter-spacing:.02em}
 .resultscr.lost .clockbig{color:#ff9a9a;text-shadow:3px 3px 0 #2a0a10}
+/* 에피소드 대화 창: 밝은 크림색 종이(다른 화면과 따로 놀던 것) → 다른 장면 창과 같은 어두운 도트 창, 내레이션은 흐린 기울임 */
+.epbox{background:rgba(10,10,26,.92);color:var(--ink);border:2px solid #4a4c7a;box-shadow:0 0 0 2px #000,3px 3px 0 2px rgba(0,0,0,.5)}
+.epbox.narr .tx{color:#b8b4d8}
+.epbox .more{color:var(--gold)}

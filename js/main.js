@@ -529,6 +529,8 @@ addEventListener('keydown', e => {
   else if (S.view === 'ep' && S.ep?.phase === 'read' && modal.hidden && (e.key === ' ' || e.key === 'Enter') && !e.target.closest?.('button')) { e.preventDefault(); epAdvance(); render(); }
 });
 // 에피소드 [자동]: 1.8초마다 다음 줄
+// 에피소드: 대화 창뿐 아니라 그림(배경·인물) 아무 데나 눌러도 다음 줄 (위 단추줄은 제외)
+app.addEventListener('click', e => { if (S.view === 'ep' && S.ep?.phase === 'read' && modal.hidden && !e.target.closest('button, a, .ephead, [data-epnext]') && e.target.closest('.epscene, .epview, .epstage, #app')) { epAdvance(); render(); } });
 setInterval(() => { if (S.view === 'ep' && S.ep?.auto && S.ep.phase === 'read' && modal.hidden && !epTyping()) { epAdvance(); render(); } }, 1800);
 
 render();
