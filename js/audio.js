@@ -181,16 +181,19 @@ export function sfx(name, { vol = 1, rate = 1 } = {}) {
 
 // ---------- 화면 → 곡 ----------
 // 에피소드: 대본에 bgm(화 전체) 또는 줄 명령 { bgm } 이 있으면 그 곡, 없으면 분위기 기본(인연 장면·3화 뭉클, 나머지 일상)
-const EP_SONGS = ['ep_daily', 'ep_warm', 'ep_tense', 'base', 'rest', 'event', 'title', 'result', 'victory'];
+const EP_SONGS = ['ep_daily', 'ep_warm', 'ep_tense', 'story', 'base', 'rest', 'event', 'title', 'result', 'victory'];
 function epBgm() {
   const E = S.ep;
   if (!E) return 'ep_daily';
   if (E.phase === 'fight' || E.phase === 'lost') return 'ep_tense';
   if (E.bgm && EP_SONGS.includes(E.bgm)) return E.bgm;
+  if (E.kind === 'story') return 'story';                // 본편 장 이야기 장면
   return E.kind === 'bond' || E.n === 2 ? 'ep_warm' : 'ep_daily';
 }
 // 일반 전투: 같은 주제를 막마다 조·악기·빠르기를 바꿔 편곡 (1 금관 144 · 2 FM 리드 152 · 3 금관+종 160)
 const BATTLE_SONG = { 1: 'battle', 2: 'battle2', 3: 'battle3' };
+// 본편 2장 운하 도시·3장 별바다 끝: 장마다 지도·일반(강적 포함) 전투 곡. 끝없는 탑·튜토리얼·에피소드 전투는 제외, 보스 곡은 BOSS_SONG 그대로
+const CHAPTER_SONG = { 2: { map: 'map_ch2', battle: 'battle_ch2' }, 3: { map: 'map_ch3', battle: 'battle_ch3' } };
 // 보스별 곡 (막 보스 변형: 안개 마녀 여왕·폭풍 고래, 시즌 1 보스: 떨어진 별의 왕,
 // 본편 2장: 수문장·멈춘 태엽 기사 → 운하, 침묵의 종지기 → 종 / 3장: 얼어붙은 등대지기·오로라 파수꾼 → 얼음, 첫 밤)
 const BOSS_SONG = { keeper: 'boss1', queen: 'boss_queen', captain: 'boss2', whale: 'boss_whale', starking: 'boss_star',
@@ -206,6 +209,7 @@ function pickBgm() {
   if (G.screen === 'result') return G.won ? 'victory' : 'result';
   if (G.screen === 'tutdone') return 'victory';
   if (G.episode) return 'battle';                        // 에피소드 특별 전투
+  const ch = !G.endless && !G.tutorial ? CHAPTER_SONG[G.chapter] : null;
   if (G.screen === 'combat' && S.C) {
     if (S.C.kind === 'boss') {
       const b = S.C.all[0];
@@ -214,6 +218,7 @@ function pickBgm() {
       return BOSS_SONG[b?.key] || `boss${Math.min(2, G.act)}`;
     }
     if (G.tutorial) return 'tutorial';
+    if (ch) return ch.battle;
     if (S.C.kind === 'elite') return 'elite';
     return BATTLE_SONG[G.endless ? (G.endless.seg - 1) % 3 + 1 : Math.min(3, G.act)] || 'battle';
   }
@@ -221,6 +226,7 @@ function pickBgm() {
   if (G.screen === 'rest') return 'rest';
   if (G.screen === 'event' || G.screen === 'shop') return 'event';
   if (['remove', 'dupe', 'upgrade'].includes(G.screen) && want) return want;   // 야시장·사건·휴식에서 이어지는 고르기 화면은 곡 유지
+  if (ch) return ch.map;
   if (G.endless) return `map${(G.endless.seg - 1) % 3 + 1}`;   // 끝없는 탑: 층 묶음마다 막 지도 곡을 돌아가며
   return `map${Math.min(3, G.act)}`;
 }
