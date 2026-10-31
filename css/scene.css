@@ -64,3 +64,6 @@
 /* 사건에서도 동료가 물 위에 떠 보이던 것: 발밑 바닥 턱(휴식과 같은 돌바닥, 위로 갈수록 투명) */
 .scene .sground::before{content:"";position:absolute;left:-8px;right:-8px;bottom:-10px;height:34px;z-index:-1;pointer-events:none;
   background:linear-gradient(rgba(90,74,94,.9) 0 2px,rgba(30,22,38,.92) 2px 6px,rgba(14,10,22,.96) 40%,rgba(14,10,22,0)),repeating-linear-gradient(90deg,transparent 0 46px,rgba(0,0,0,.35) 46px 48px)}
+/* 사건: 동료가 물·하늘 높이에 얇은 턱 위로 떠 보이던 것 → 배경 그림의 바닥(부두·다리·광장)이 대화 창 바로 위, 발밑에 오게 아래 기준으로 끌어올림 */
+.scene .epbg .bgimg{top:auto;bottom:24%;height:124%;object-position:50% 100%}
+.scene:has(.bgimg) .sground::before{height:18px;bottom:-6px;opacity:.6}

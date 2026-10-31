@@ -241,3 +241,7 @@ body.aiming .bottom .hand .card.sel,body.aiming #app[data-screen="combat"] .bott
 /* 컷인 그림 없는 동료: 서 있는 그림을 띠 안 왼쪽에 상반신만(얼굴~가슴) 크게, 오른쪽으로 녹아 사라짐 */
 #fx .jskillcut .art.stand{width:62%;left:-4%;right:auto;object-position:50% 12%;-webkit-mask-image:linear-gradient(90deg,#000 55%,transparent 98%);mask-image:linear-gradient(90deg,#000 55%,transparent 98%)}
 #fx .jskillcut .art.stand.s1{left:auto;right:-4%;-webkit-mask-image:linear-gradient(270deg,#000 55%,transparent 98%);mask-image:linear-gradient(270deg,#000 55%,transparent 98%)}
+/* 보상 화면 동료 셋: 왼쪽 아래 구석에 작게 겹쳐 잘려 보이던 것 → 전투 때 서 있던 자리·크기 그대로, 바닥에 그림자 */
+.rwparty{left:10px;bottom:36px;gap:0}
+.rwparty .rwp{width:60px;height:80px;margin-right:-12px}
+.rwparty .rwglow{bottom:-4px;height:14px;background:radial-gradient(ellipse at 50% 50%,rgba(0,0,0,.5),transparent 70%)}
