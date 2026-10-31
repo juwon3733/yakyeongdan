@@ -74,6 +74,8 @@
  "foe_boss_star_king_3": [7,0,124,189],
  "foe_boss_storm_whale_1": [2,14,126,180],
  "foe_boss_storm_whale_2": [2,4,126,189],
+ "foe_boss_warden_1": [2,5,125,187],
+ "foe_boss_warden_2": [4,2,126,187],
  "foe_bridge_troll": [19,44,492,491],
  "foe_canal_rats": [20,161,491,492],
  "foe_captain_parrot": [36,129,475,492],
