@@ -24,7 +24,8 @@ const META = { title: titleView, party: partyView, base: baseView, summon: summo
 
 function bgImage(G, scr) {
   const run = G && S.view === 'run';   // 튜토리얼도 1막 배경(검은 빈 화면에 탑만 떠 있던 것)
-  const f = run ? (scr === 'combat' || scr === 'reward' ? `bg/act${G.act}.png` : scr === 'result' ? null : `bg/map${G.act}.png`)
+  const ac = G?.endless ? (G.endless.seg - 1) % 3 + 1 : G?.act;   // 끝없는 탑: 층 묶음마다 1·2·3막 배경을 돌아가며
+  const f = run ? (scr === 'combat' || scr === 'reward' ? `bg/act${ac}.png` : scr === 'result' ? null : `bg/map${ac}.png`)
     : ['base', 'party', 'mates', 'exchange', 'codex', 'records', 'daily', 'odds', 'episodes', 'ep'].includes(scr) ? 'bg/hq.png' : scr === 'summon' || scr === 'reveal' || scr === 'pick5' || scr === 'season' || scr === 'ranking' ? 'summon/sky.png' : null;
   const u = f && artURL(f);
   return u ? `url("${new URL(u, location.href).href}")` : 'none';   // CSS 변수의 주소는 CSS 파일 기준이라 절대 주소로

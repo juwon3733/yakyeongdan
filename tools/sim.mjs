@@ -29,6 +29,16 @@ const JSON_OUT = opt('--json', null);
 const VERBOSE = args.includes('-v');
 const ENDLESS_ON = !args.includes('--no-endless');
 const ENDLESS_CAP = +opt('--endless-cap', 80);
+// --grow L: 파티 모두 레벨 L + 재능(짝수 레벨마다 1점, 칼날 → 방패 → 별 순으로 앞에서부터) — 키운 동료가 얼마나 센지
+const GROW = +opt('--grow', 0);
+const { BRANCHES, LV_HP, LV_POWER, talentPoints } = await import('../js/data/growth.js');
+function growFx(lv) {
+  if (!lv) return {};
+  const fx = { hp: Math.floor((lv - 1) * LV_HP), atk: LV_POWER.filter(l => lv >= l).length, blk: LV_POWER.filter(l => lv >= l).length };
+  let pts = talentPoints(lv);
+  for (const b of BRANCHES) for (const n of b.nodes) { if (pts < n.cost) break; pts -= n.cost; for (const [f, v] of Object.entries(n.fx)) fx[f] = f === 'legendMul' ? v : (fx[f] || 0) + v; }
+  return fx;
+}
 
 // ---------- --patch 파일.json: 데이터 파일은 그대로 두고 이 시뮬 안에서만 수치를 바꾼다 ----------
 //   { "cards": { "iris.slash": { "v": [9] } }, "chars": { "iris": { "maxHp": 40 } } }
@@ -378,7 +388,7 @@ function chooseBossRelic() {
 let runMade = new Set();   // 이번 판에 생긴 듀오(짝)
 function playRun(party, seed, stats) {
   runMade = new Set();
-  newRun(party, seed, { depth: DEPTH });
+  newRun(party, seed, { depth: DEPTH, grow: GROW ? Object.fromEntries(party.map(p => [p, growFx(GROW)])) : undefined });
   S.G.rng = rngFrom(S.G.rng.state);
   const rec = { party, seed, won: false, why: '', bossReach: [0, 0, 0, 0], bossClock: [null, null, null, null], over6: false, clock: 0, duos: 0, act: 1, fights: 0, boss: [null, null, null, null], bossKill: [0, 0, 0, 0] };
   drive(rec, stats, 4000);

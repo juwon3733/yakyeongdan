@@ -138,6 +138,7 @@ const WHY = { down: '모두 쓰러졌다', collapse: '7시. 탑이 무너졌다'
 function metaNote(R) {
   const out = [];
   if (R.daily) out.push(`<span class="chip dailychip">매일의 밤</span> ${R.daily.best != null ? `오늘 최고 <b>${fmt(R.daily.best)}</b>` : '오늘은 아직 못 깼다'}${R.daily.first ? ' · <b class="newt">오늘 첫 격파</b>' : ''}`);
+  if (R.levels?.xp) out.push(`<span class="chip lvchip">경험치</span> 동료마다 +${R.levels.xp}${R.levels.ups.length ? ` · <b class="newt">레벨 업</b> ${R.levels.ups.map(u => `${esc(CHARACTERS[u.id]?.name || u.id)} <b>Lv.${u.lv}</b>`).join(' · ')}` : ''}`);
   if (R.mastery?.length) out.push(`<span class="chip">숙련도</span> ${R.mastery.map(u => `${esc(CHARACTERS[u.id]?.name || u.id)} <b>${u.lv}단계</b>`).join(' · ')}`);
   // 업적이 많으면 앞의 4개만 이름으로, 나머지는 「외 n개」 (결과 화면이 판 밖으로 넘치지 않게)
   if (R.ach?.length) out.push(`<span class="chip">업적</span> ${R.ach.slice(0, 4).map(a => esc(a.name)).join(', ')}${R.ach.length > 4 ? ` 외 ${R.ach.length - 4}개` : ''} <b>+${R.ach.reduce((t, a) => t + a.r, 0)}</b>`);

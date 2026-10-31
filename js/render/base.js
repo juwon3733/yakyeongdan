@@ -20,7 +20,8 @@ import { REST_LINES, FIRST_LINES } from '../data/hublines.js';
 import { artURL, foeArt } from '../art.js';
 import { seasonNow } from '../season.js';
 import { achTab, historyBlock } from './daily.js';
-import { dailyToday, mastery, masteryTitles, backOpen } from '../meta.js';
+import { dailyToday, mastery, masteryTitles, backOpen, growRec, growthFx, talentLeft } from '../meta.js';
+import { LV_MAX, lvNeed, LV_POWER, LV_HP, BRANCHES, needOf } from '../data/growth.js';
 import { MASTERY_REWARDS, MASTERY_XP } from '../data/mastery.js';
 import { endlessMenu, endlessRecords } from './endless.js';
 
@@ -291,14 +292,29 @@ function mateDetail(k) {
   const pool = c ? Object.keys(CARDS).filter(id => CARDS[id].ch === k && !c.start.includes(id)) : [];
   const locked = new Set(packCards(k).slice(packsOpen(k)).flat());
   return `<div class="mhead ${starRing(k)}" style="--c:${r.col}">${img(k)}<div><h2>${r.name} <span class="stars">${stars(r.rarity)}</span></h2>
-      <p class="note">${r.role} · 체력 ${c?.maxHp ?? '-'}${P.titles.includes(k) ? ` · 칭호 ${r.name}의 새벽` : ''}</p>
+      <p class="note">${r.role} · 체력 ${c ? c.maxHp + growthFx(k).hp : '-'}${c && growthFx(k).hp ? ` <small>(+${growthFx(k).hp})</small>` : ''}${P.titles.includes(k) ? ` · 칭호 ${r.name}의 새벽` : ''}</p>
       ${c ? `<p class="ps"><b>${esc(c.passive.name)}</b></p>${(c.passive.lines || [['', '', c.passive.text]]).map(([k, n, t]) => `<p class="ps ${k}">${k === 'burst' ? '<i class="pstag">폭발</i>' : ''}${n ? `<b>${esc(n)}</b> ` : ''}${esc(t)}</p>`).join('')}` : ''}${cos}</div></div>
+    ${growthBlock(k)}
     ${masteryBlock(k, r.name)}
     <h3 class="sub">별자리</h3><div class="stcs">${steps}${s < STAR_STEPS.length ? `<span class="stnext">다음: ${STAR_STEPS[s].text}</span>` : ''}</div>
     ${c ? `<h3 class="sub">시작 카드</h3><div class="hand mini">${start}</div>
     <h3 class="sub">보상 카드 ${pool.length - locked.size}/${pool.length}</h3><div class="hand mini scroll">${pool.map(id => locked.has(id) ? `<span class="lockcard" title="카드 묶음이 열리면 나온다">${esc(CARDS[id].name)}<small>잠김</small></span>` : cardHTML(id, true, 'none')).join('')}</div>` : ''}`;
 }
 
+// 레벨·재능 (js/data/growth.js): 경험치 막대 + 갈래 셋 × 4칸(배운 칸 빛남, 배울 수 있는 칸 반짝, 잠긴 칸 어둡게)
+function growthBlock(k) {
+  const g = growRec(k), fx = growthFx(k), left = talentLeft(k), need = g.lv < LV_MAX ? lvNeed(g.lv) : 0;
+  const pow = LV_POWER.filter(l => g.lv >= l).length;
+  const tree = BRANCHES.map(b => `<div class="tbr" style="--bc:${b.col}"><b class="tbn">${b.name}</b>${b.nodes.map(n => {
+    const on = g.tal.includes(n.id), req = needOf(n.id), can = !on && (!req || g.tal.includes(req)) && left >= n.cost;
+    return `<button type="button" class="tnode ${on ? 'on' : can ? 'can' : 'lock'}" data-talent="${k}:${n.id}" ${on || !can ? 'aria-disabled="true"' : ''} data-tip="${esc(`${n.name} (재능 ${n.cost})\n${n.text}`)}"><span>${esc(n.name)}</span><small>${n.cost}</small></button>`;
+  }).join('<i class="tlink"></i>')}</div>`).join('');
+  return `<h3 class="sub">레벨 <b class="lvn">Lv.${g.lv}</b>${g.lv < LV_MAX ? ` <small class="lvx">${g.xp}/${need}</small>` : ' <small class="lvx">최대</small>'}</h3>
+    <div class="lvbar"><span class="lvf" style="width:${g.lv < LV_MAX ? Math.round(g.xp / need * 100) : 100}%"></span></div>
+    <p class="note small lvfx">체력 +${Math.floor((g.lv - 1) * LV_HP)}${pow ? ` · 공격·방어 카드 +${pow}` : ''} · 다음 힘: ${LV_POWER.find(l => l > g.lv) ? `${LV_POWER.find(l => l > g.lv)}레벨` : '다 열림'}</p>
+    <h3 class="sub">재능 <small class="tleft">${left}점 남음 (짝수 레벨마다 1점)</small>${g.tal.length ? `<button type="button" class="mini treset" data-talreset="${k}">초기화</button>` : ''}</h3>
+    <div class="talent">${tree}</div>`;
+}
 // 숙련도: 별 다섯 칸 진행 막대(다음 칸은 점수만큼 차오름) + 지금 단계 보상은 크게, 나머지 단계는 작은 칩
 function masteryBlock(k, name) {
   const lv = mastery(k), xp = P.mxp[k] || 0, prev = lv ? MASTERY_XP[lv - 1] : 0, next = MASTERY_XP[lv];

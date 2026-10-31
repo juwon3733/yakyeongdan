@@ -2,7 +2,7 @@
 import { S, newRun, checkCollapse } from './run.js';
 import { goNode, reachable, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, specialBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
 import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, targetableFoes, devWin, pickCombatMoon, applyAffix } from './combat.js';
-import { summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw, exportSave, readSave, importSave, dailyToday, setCardBack } from './meta.js';
+import { endlessOpen, learnTalent, resetTalents, summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw, exportSave, readSave, importSave, dailyToday, setCardBack } from './meta.js';
 import { bootDone, syncWake, insets, toggleFullscreen, toast } from './pwa.js';
 import { temperPick } from './effects.js';
 import { render as draw } from './render/index.js';
@@ -17,6 +17,7 @@ import { settingsModal } from './render/settings.js';
 import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
 import { seasonIntroModal, seasonScroll } from './render/season.js';
+import { dawnBreakModal } from './render/endless.js';
 import { fetchBoard, reportScores } from './ranking.js';
 import { signIn, signUp, signOut, pushSave, pullSave } from './net.js';
 import { artReady, hasArt } from './art.js';
@@ -65,7 +66,14 @@ const app = document.getElementById('app');
 const modal = document.getElementById('modal');
 // 그리기 전후로 연출 층(js/juice.js)이 카드·체력 막대 자리를 재고, 엔진이 쌓은 연출 사건을 순서대로 보여 준다
 // 전투 중에는 화면이 꺼지지 않게 (js/pwa.js, 지원하는 기기만)
-const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); syncWake(!!S.C); seasonScroll(app); seasonIntro(); };
+const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); syncWake(!!S.C); seasonScroll(app); seasonIntro(); dawnBreak(); };
+// 「새벽」을 넘으면 결과 화면 위에 「계속 오르기」 창(판은 기본으로 이어진다). 매일의 밤은 「새벽」에서 끝
+function dawnBreak() {
+  const G = S.G;
+  if (S.view !== 'run' || G?.screen !== 'result' || !G.won || G.endless || G.daily || G.tutorial || G.breakShown || !modal.hidden || !endlessOpen() || (qs.has('notut') && !qs.has('dawnbreak'))) return;   // 점검 도구(?notut)는 ?dawnbreak일 때만
+  G.breakShown = true;
+  setTimeout(() => { if (S.G === G && G.screen === 'result' && modal.hidden) { modal.innerHTML = dawnBreakModal(G); modal.hidden = false; modal.dataset.kind = 'dawn'; } }, 1400);
+}
 // 랭킹: 불러오는 동안 「불러오는 중」, 다 오면 다시 그린다(늦게 온 다른 탭 결과는 버림)
 function loadRank(board) {
   S.rank = { board, state: 'loading' };
@@ -213,6 +221,8 @@ app.addEventListener('click', e => {
   }
   // 「새벽」을 깬 결과 화면에서 [더 오르기]: 같은 판 그대로 끝없는 탑으로 (그 판 보상은 이미 받음)
   else if ('endless' in D) { if (S.G?.won && !S.G.endless) enterEndless(false); }
+  else if ('talent' in D) { const [id, k] = D.talent.split(':'); if (learnTalent(id, k)) { sfx('get'); S.talentFx = k; } else sfx('click', { vol: .5 }); }
+  else if ('talreset' in D) resetTalents(D.talreset);
   else if ('rankboard' in D) loadRank(D.rankboard);
   else if ('claimpass' in D) { const n = claimPass(); S.seasonMsg = n ? `시즌 패스 보상: 별 조각 +${n}` : ''; if (n) sfx('pass_claim'); }
   else if (D.depth !== undefined) S.depth = +D.depth;
@@ -225,7 +235,7 @@ app.addEventListener('click', e => {
   else if ('dailystart' in D) {
     const T = dailyToday(), party = (S.dpicked || []).filter(k => T.cands.includes(k));
     if (party.length !== 3) return;
-    newRun(party, T.seed, runOptions(party, 0));
+    newRun(party, T.seed, runOptions(party, 0, undefined, { noGrow: true }));   // 매일의 밤은 모두 같은 조건(성장 없음)
     S.G.daily = { key: T.key, rule: T.rule }; S.G.mods = T.rule.mods;
     if (seasonOn()) S.G.seasonRule = seasonNow().rule.id;
   }
@@ -442,6 +452,7 @@ modal.addEventListener('click', e => {
   if (e.target === modal || e.target.closest('[data-close]')) { closeModal(); return; }
   const b = e.target.closest('button'); if (!b || b.disabled) return;
   const D = b.dataset;
+  if ('endless' in D) { closeModal(); if (S.G?.won && !S.G.endless) { enterEndless(false); render(); } return; }
   if ('sintro' in D) { closeModal(); S.view = D.sintro; if (D.sintro === 'summon') S.hint = null; render(); return; }
   // 전체 화면 · 저장 백업 (js/pwa.js · js/meta.js)
   if ('fs' in D) { toggleFullscreen().then(() => { if (!modal.hidden) openSettings(); }); return; }

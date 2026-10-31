@@ -1,7 +1,7 @@
 // 카드·패시브가 쓰는 효과 도우미. 데이터는 이 함수들만 부른다.
 // C.actor = 지금 효과를 내는 동료(카드 주인, 패시브 주인), C.target = 'ally' 카드에서 고른 동료,
 // C.tf = 고른 적의 번호. 피해 계산은 combat.js의 dmgToFoe가 한다.
-import { S, healMember, member, alive, living, logMsg, addTime as runAddTime, rewind as runRewind, gainGold, moonFx, pushFx } from './run.js';
+import { S, healMember, member, alive, living, logMsg, addTime as runAddTime, rewind as runRewind, gainGold, moonFx, pushFx, growthOf } from './run.js';
 import { MOONS } from './data/moons.js';
 import { RELICS } from './data/relics.js';
 import { RULES } from './data/rules.js';
@@ -54,7 +54,7 @@ export function pierce(f, n) {
 }
 export function guard(n, who = S.C.actor) {
   const C = S.C; if (!who || !alive(who)) return;
-  const v = Math.max(0, n + (who === C.actor ? boost() : 0));
+  const v = Math.max(0, n + (who === C.actor ? boost() : 0) + (who === C.actor && C.curCard?.ch === who ? growthOf(who).blk || 0 : 0));   // 동료 성장: 자기 방어 카드 +
   C.blocks[who] += v; stat(C.actor || who, 'block', v);
   if (v > 0) pushFx({ kind: 'block', id: who, n: v });
 }
@@ -329,6 +329,7 @@ export function burst(id, name) {
   if (C.burstTurn.has(id)) return;
   C.burstTurn.add(id);
   logMsg(`<b>${CHARACTERS[id].name} 「${name}」</b>`);
+  if (growthOf(id).burstHeal) for (const p of living()) healMember(p, growthOf(id).burstHeal);   // 재능 「각성의 여운」
   pushFx({ kind: 'burst', who: id, name });
   // 안개 마녀 여왕 「안개 장막」: 그 턴 ③이 처음 터지면 걷힌다 (방어 0, 취약)
   for (const f of livingFoes()) if (f.mistVeil && f.veilUp) {

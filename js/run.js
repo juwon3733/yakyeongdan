@@ -18,7 +18,7 @@ export function newRun(party, seed = newSeed(), opts = {}) {
   const rng = makeRng(seed), depth = opts.depth || 0;
   const startHp = depthRuleAt(depth, 'startHp') || 0;
   const members = Object.fromEntries(party.map(p => {
-    const max = CHARACTERS[p].maxHp;
+    const max = CHARACTERS[p].maxHp + (opts.grow?.[p]?.hp || 0);   // 동료 레벨·재능(js/data/growth.js)
     return [p, { hp: Math.max(1, max + startHp), max, down: false, wasDown: false, feather: false, lost: 0 }];
   }));
   const deck = party.flatMap(p => {
@@ -37,9 +37,11 @@ export function newRun(party, seed = newSeed(), opts = {}) {
     duoSet: new Set(), stats: Object.fromEntries(party.map(p => [p, { dmg: 0, block: 0, heal: 0 }])),
     floors: 0, elites: 0, bossKills: 0, removes: 0, seenEvents: [], note: '', moonPick: false, shop: null,
     haggle: 0, nextFight: null, smithLeft: 0,
+    grow: opts.grow || {},   // 동료 성장 효과 { 동료: { hp, atk, blk, firstAtk, legendMul, startBlock, undying, gold, firstDraw, burstHeal, firstEnergy } }
     // 도감·기록용 (meta.js grantRun이 모은다)
     offered: new Set(), played: new Set(), foesMet: new Set(), foesBeat: new Set(), affixSeen: new Set(), talks: new Set(),
   };
+  S.G.gold += Object.values(S.G.grow).reduce((t, g) => t + (g.gold || 0), 0);
   S.G.map = makeMap(rng, moon, 1);
   S.G.nextMap = makeMap(rng, moon, 2);
   S.G.nextElite = pickElite();
@@ -57,6 +59,8 @@ const defaultFormation = party => party.slice().sort((a, b) => CHARACTERS[b].max
 
 export const member = id => S.G.members[id];
 export const alive = id => !!S.G.members[id] && !S.G.members[id].down;
+// 동료 성장 효과(없으면 빈 것)
+export const growthOf = id => S.G?.grow?.[id] || {};
 export const living = () => S.G.formation.filter(alive);   // 앞에서 뒤 순서
 export const swapFormation = (i, j) => { const F = S.G.formation; [F[i], F[j]] = [F[j], F[i]]; };
 

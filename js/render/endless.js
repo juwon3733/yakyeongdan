@@ -47,6 +47,17 @@ export function endlessResultView() {
 export const climbOnButton = G => G.won && !G.endless && !G.daily && endlessOpen()
   ? `<button type="button" class="endgo" data-endless title="새벽 너머로 계속 오른다. 탑은 무너지지 않지만 층마다 적이 강해지고 규칙이 쌓인다.">더 오르기 · 끝없는 탑</button>` : '';
 
+// 「새벽」을 넘은 순간 뜨는 창: 판은 끝나지 않고 탑 위로 계속 오른다(기본). [여기서 마치기]면 결과 화면
+export function dawnBreakModal(G) {
+  const R = G.granted, ups = R?.levels?.ups || [];
+  return `<div class="box dawnbreak" role="dialog" aria-label="새벽을 넘었다">
+    <small class="dbk">${'★'.repeat(3)}</small><h2>새벽을 넘었다</h2>
+    <p class="dbt">탑은 끝나지 않았다. 새벽 너머로 계속 오른다 — 층마다 규칙이 하나씩 쌓이고 적이 강해진다.</p>
+    ${R ? `<p class="dbr">별 조각 <b>+${R.total}</b>${R.levels?.xp ? ` · 경험치 +${R.levels.xp}` : ''}${ups.length ? ` · <b class="newt">레벨 업</b> ${ups.map(u => `${esc(CHARACTERS[u.id]?.name || u.id)} Lv.${u.lv}`).join(' · ')}` : ''}</p>` : ''}
+    <div class="dbb"><button type="button" class="primary" data-endless>계속 오르기</button><button type="button" data-close>여기서 마치기</button></div>
+  </div>`;
+}
+
 // 본부 메뉴 버튼
 export const endlessMenu = () => endlessOpen()
   ? `<button type="button" data-view="party" data-mode="endless">끝없는 탑 <small>최고 ${P.rec.endlessBest || 0}층</small></button>` : '';
