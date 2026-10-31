@@ -129,4 +129,12 @@ if (process.env.GITHUB_ACTIONS) {
   errors.forEach((e) => console.log(`::error file=assets/${e.file}::${e.msg}`));
   warnings.forEach((w) => console.log(`::warning file=assets/${w.file}::${w.msg}`));
 }
+// 사람 눈으로 봐야 하는 의심(경계 침범·단계 인물 바뀜·배경 사람·적 방향)도 같이 — 경고만, 실패시키지 않는다
+try {
+  const { runAudit } = await import('./art-audit.mjs');
+  const audit = runAudit();
+  console.log(audit.md);
+  if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, audit.md + '\n');
+  if (process.env.GITHUB_ACTIONS) audit.rows.forEach(([f, m]) => console.log(`::warning file=${f}::${m}`));
+} catch (e) { console.log(`(그림 눈검사를 못 돌렸어요: ${e.message})`); }
 process.exit(errors.length ? 1 : 0);
