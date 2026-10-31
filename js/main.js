@@ -70,7 +70,7 @@ const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); af
 // 「새벽」을 넘으면 결과 화면 위에 「계속 오르기」 창(판은 기본으로 이어진다). 매일의 밤은 「새벽」에서 끝
 function dawnBreak() {
   const G = S.G;
-  if (S.view !== 'run' || G?.screen !== 'result' || !G.won || G.endless || G.daily || G.tutorial || G.breakShown || !modal.hidden || !endlessOpen()) return;
+  if (S.view !== 'run' || G?.screen !== 'result' || !G.won || G.endless || G.daily || G.tutorial || G.breakShown || !modal.hidden || !endlessOpen() || (qs.has('notut') && !qs.has('dawnbreak'))) return;   // 점검 도구(?notut)는 ?dawnbreak일 때만
   G.breakShown = true;
   setTimeout(() => { if (S.G === G && G.screen === 'result' && modal.hidden) { modal.innerHTML = dawnBreakModal(G); modal.hidden = false; modal.dataset.kind = 'dawn'; } }, 1400);
 }

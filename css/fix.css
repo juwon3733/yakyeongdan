@@ -76,3 +76,4 @@ img.px.fci{position:absolute!important;margin:0!important;max-width:none!importa
 .dawnbreak .dbb{display:flex;gap:8px;margin-top:4px}
 .dawnbreak .dbb .primary{font-size:13px;padding:5px 18px}
 .dawnbreak .newt{color:#1a1206!important;background:var(--gold);padding:0 3px}
+.dawnbreak .dbr{white-space:normal;max-width:100%;line-height:1.5}
