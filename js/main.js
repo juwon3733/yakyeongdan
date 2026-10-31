@@ -2,7 +2,7 @@
 import { S, newRun, checkCollapse } from './run.js';
 import { goNode, reachable, takeReward, rest, chooseOpt, removeCard, pickSlot, upgradeCard, dupeCard, shopBuy, specialBuy, leaveShop, pickBossRelic, pickMoon, useRelic } from './map.js';
 import { playCard, endTurn, swapInCombat, targetOf, usable, startCombat, livingFoes, targetableFoes, devWin, pickCombatMoon, applyAffix } from './combat.js';
-import { endlessOpen, learnTalent, resetTalents, summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw, exportSave, readSave, importSave, dailyToday, setCardBack } from './meta.js';
+import { chapterNext, endlessOpen, learnTalent, resetTalents, summon, P, resetProfile, save, choose5, exchange, setCostume, runOptions, loadRaw, exportSave, readSave, importSave, dailyToday, setCardBack } from './meta.js';
 import { bootDone, syncWake, insets, toggleFullscreen, toast } from './pwa.js';
 import { temperPick } from './effects.js';
 import { render as draw } from './render/index.js';
@@ -14,16 +14,16 @@ import { sfx, applyVolumes } from './audio.js';
 import { SET, applySettings, setOption, calmNow, saveSettings } from './settings.js';
 import { startTutorial, skipTutorial, finishTutorial, tutorialPending } from './tutorial.js';
 import { settingsModal } from './render/settings.js';
-import { openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
+import { openStory, openEp, openBond, epAdvance, epTyping, epSkip, epStartFight, epFightDone, epSkipFight } from './episodes.js';
 import { epLogModal } from './render/episodes.js';
 import { seasonIntroModal, seasonScroll } from './render/season.js';
-import { dawnBreakModal } from './render/endless.js';
 import { fetchBoard, reportScores } from './ranking.js';
 import { signIn, signUp, signOut, pushSave, pullSave } from './net.js';
 import { artReady, hasArt } from './art.js';
 import { seasonNow, seasonOn, startSeasonBoss, seasonBossDone, claimPass } from './season.js';
 import './cardzoom.js';
 import { CARDS } from './data/cards.js';
+import { CHAPTERS } from './data/chapters.js';
 import { setHallTime } from './render/base.js';
 import { enterEndless } from './endless.js';
 
@@ -66,14 +66,7 @@ const app = document.getElementById('app');
 const modal = document.getElementById('modal');
 // 그리기 전후로 연출 층(js/juice.js)이 카드·체력 막대 자리를 재고, 엔진이 쌓은 연출 사건을 순서대로 보여 준다
 // 전투 중에는 화면이 꺼지지 않게 (js/pwa.js, 지원하는 기기만)
-const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); syncWake(!!S.C); seasonScroll(app); seasonIntro(); dawnBreak(); };
-// 「새벽」을 넘으면 결과 화면 위에 「계속 오르기」 창(판은 기본으로 이어진다). 매일의 밤은 「새벽」에서 끝
-function dawnBreak() {
-  const G = S.G;
-  if (S.view !== 'run' || G?.screen !== 'result' || !G.won || G.endless || G.daily || G.tutorial || G.breakShown || !modal.hidden || !endlessOpen() || (qs.has('notut') && !qs.has('dawnbreak'))) return;   // 점검 도구(?notut)는 ?dawnbreak일 때만
-  G.breakShown = true;
-  setTimeout(() => { if (S.G === G && G.screen === 'result' && modal.hidden) { modal.innerHTML = dawnBreakModal(G); modal.hidden = false; modal.dataset.kind = 'dawn'; } }, 1400);
-}
+const render = () => { beforeRender(); const fx = S.fxq.splice(0); draw(app); afterRender(fx); if (tipFor && !tipFor.isConnected) hideTip(); syncWake(!!S.C); seasonScroll(app); seasonIntro(); };
 // 랭킹: 불러오는 동안 「불러오는 중」, 다 오면 다시 그린다(늦게 온 다른 탭 결과는 버림)
 function loadRank(board) {
   S.rank = { board, state: 'loading' };
@@ -164,9 +157,19 @@ function play(uid, pick) {
 }
 // 행동 뒤: 7시 붕괴, 에피소드 특별 전투 끝 (흔들림·보스 띠 등 연출은 render()의 js/juice.js가)
 function after() {
+  storyBeats();
   if (S.G?.screen === 'epdone') epFightDone();   // 에피소드 특별 전투가 끝남
   if (S.G?.screen === 'sbdone') seasonBossDone();   // 시즌 보스 판이 끝남
   checkCollapse();
+}
+
+// 본편 장 이야기: 3막에 오르면 「마지막 보스 앞」, 장을 처음 깨면 「장 끝」(결과 화면 앞). 본 것은 다시 안 뜬다(에피소드 목록에서 다시 보기)
+function storyBeats() {
+  const G = S.G; if (!G || S.view !== 'run' || G.endless || G.daily || G.tutorial || G.episode || G.season || qs.has('notut')) return;
+  const st = CHAPTERS[G.chapter || 1]?.story, seen = P.storySeen || [];
+  if (!st) return;
+  if (G.screen === 'map' && G.act === 3 && !G.storyBoss) { G.storyBoss = true; if (!seen.includes(st.boss)) openStory(st.boss, 'run'); }
+  else if (G.screen === 'result' && G.won && !G.storyEnd) { G.storyEnd = true; if (!seen.includes(st.end)) openStory(st.end, 'run'); }
 }
 
 // 지도에서 칸을 고르면: 맨 앞 동료 표지가 길을 따라 0.4초에 미끄러져 가고, 칸이 한 번 번쩍인 뒤 넘어간다.
@@ -216,7 +219,12 @@ app.addEventListener('click', e => {
   else if ('start' in D) {
     if (S.mode === 'season') { if (!startSeasonBoss(S.picked.slice(), S.sTier || 0)) return; }
     else if (S.mode === 'endless') { newRun(S.picked.slice(), seedParam, runOptions(S.picked, 0)); enterEndless(true); }
-    else newRun(S.picked.slice(), seedParam, runOptions(S.picked, S.depth || 0, S.startRelic));
+    else {
+      const ch = Math.min(S.chapter || chapterNext(), chapterNext());
+      newRun(S.picked.slice(), seedParam, runOptions(S.picked, S.depth || 0, S.startRelic, { chapter: ch }));
+      const st = CHAPTERS[ch].story.start;   // 장 첫 판: 시작 이야기
+      if (!(P.storySeen || []).includes(st) && !qs.has('notut')) openStory(st, 'run');
+    }
     if (S.G && seasonOn()) S.G.seasonRule = seasonNow().rule.id;   // 시즌 동안 밤 오르기에도 시즌 규칙
   }
   // 「새벽」을 깬 결과 화면에서 [더 오르기]: 같은 판 그대로 끝없는 탑으로 (그 판 보상은 이미 받음)
@@ -259,6 +267,9 @@ app.addEventListener('click', e => {
   else if (D.epsel) S.epSel = D.epsel;
   else if (D.bond) openBond(D.bond);
   else if ('epnext' in D) epAdvance();
+  else if ('story' in D) openStory(D.story, 'episodes');
+  else if ('storydone' in D) { const E = S.ep; if (E) { P.storySeen ||= []; if (!P.storySeen.includes(E.key)) { P.storySeen.push(E.key); save(); } } S.view = E?.next || 'episodes'; S.ep = null; }
+  else if ('chapter' in D) { S.chapter = +D.chapter; }
   else if ('epskip' in D) epSkip();
   else if ('epauto' in D) S.ep.auto = !S.ep.auto;
   else if ('epfight' in D) epStartFight();
@@ -452,7 +463,6 @@ modal.addEventListener('click', e => {
   if (e.target === modal || e.target.closest('[data-close]')) { closeModal(); return; }
   const b = e.target.closest('button'); if (!b || b.disabled) return;
   const D = b.dataset;
-  if ('endless' in D) { closeModal(); if (S.G?.won && !S.G.endless) { enterEndless(false); render(); } return; }
   if ('sintro' in D) { closeModal(); S.view = D.sintro; if (D.sintro === 'summon') S.hint = null; render(); return; }
   // 전체 화면 · 저장 백업 (js/pwa.js · js/meta.js)
   if ('fs' in D) { toggleFullscreen().then(() => { if (!modal.hidden) openSettings(); }); return; }

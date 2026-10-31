@@ -6,7 +6,8 @@ import { MOONS } from '../data/moons.js';
 import { CHARACTERS } from '../data/characters.js';
 import { RELICS, RELIC_TIER_NAME } from '../data/relics.js';
 import { DUOS, canUpgrade, cardData } from '../data/cards.js';
-import { RULES, ACT_NAME, SHOP } from '../data/rules.js';
+import { RULES, SHOP } from '../data/rules.js';
+import { actName, chapterOf } from '../data/chapters.js';
 import { grantRun, P, mvpOf } from '../meta.js';
 import { cardHTML, fmt, face, esc, charSrc } from './common.js';
 import { artURL, battleArt } from '../art.js';
@@ -14,7 +15,7 @@ import { SUMMON } from '../data/gacha.js';
 import { dawnAt } from '../run.js';
 import { moonImg } from './sprites.js';
 import { EPISODES, BOND_SCENES } from '../data/episodes.js';
-import { endlessResultView, climbOnButton } from './endless.js';
+import { endlessResultView } from './endless.js';
 
 const relicBox = (id, extra = '') => { const d = RELICS[id]; return `<span class="rbox t-${d.tier}">${(ic => `<span class="relic t-${d.tier} ${ic ? 'hasic' : ''}">${ic ? `<img class="px" src="${ic}" alt="">` : esc(d.name.slice(0, 1))}</span>`)(artURL(`icons/relic_${id}.png`))}<span><b>${esc(d.name)}</b> <small>${RELIC_TIER_NAME[d.tier]}</small><br>${esc(d.text)}${extra}</span></span>`; };
 
@@ -128,7 +129,7 @@ export function moonView() {
 // 결과 화면 진행 막대 (docs/11 #3): 0:00 → 도착(또는 멈춘) 시각. 막 셋 구간과 6:00 눈금, 멈춘 막 표시.
 function runBar(G) {
   const end = Math.max(dawnAt(), RULES.collapse, G.clock), pct = m => Math.min(100, m / end * 100).toFixed(1);
-  const acts = [1, 2, 3].map(a => `<span class="seg a${a} ${a < G.act || G.won ? 'done' : a === G.act ? 'now' : ''}" style="left:${pct((a - 1) * dawnAt() / 3)}%;width:${pct(dawnAt() / 3)}%">${ACT_NAME[a]}</span>`).join('');
+  const acts = [1, 2, 3].map(a => `<span class="seg a${a} ${a < G.act || G.won ? 'done' : a === G.act ? 'now' : ''}" style="left:${pct((a - 1) * dawnAt() / 3)}%;width:${pct(dawnAt() / 3)}%">${actName(G, a)}</span>`).join('');
   return `<div class="runbar" aria-label="진행"><div class="track">${acts}<i class="fill ${G.won ? 'won' : ''}" style="width:${pct(G.clock)}%"></i><b class="dawnmark" style="left:${pct(dawnAt())}%" title="해 뜨는 시각"></b><u class="me${G.clock / end > .93 ? ' end' : ''}" style="left:${pct(G.clock)}%">${fmt(G.clock)}</u></div>
     <div class="ticks"><span>0:00</span><span style="left:${pct(dawnAt())}%">${fmt(dawnAt())}</span></div></div>`;
 }
@@ -183,13 +184,13 @@ export function resultView() {
     <div class="rinfo">
       <h2 class="rtitle">${G.won ? '새벽을 넘었다' : WHY[G.why] || '탑에서 떨어졌다'}</h2>
       <div class="rclockrow"><p class="clockbig ${G.clock >= RULES.dawn ? 'dawn' : ''}">${fmt(G.clock)}</p>${statBars(G, mvp)}</div>
-      <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${ACT_NAME[G.act]}에서 멈췄다`}${G.bestTurn?.dmg ? ` · 최고의 한 턴 <b>${G.bestTurn.dmg}</b>` : ''}</p>
+      <p class="note">${G.won ? `꼭대기에 닿은 시각${G.clock >= RULES.dawn ? ' (해가 뜬 뒤)' : ' (해 뜨기 전)'}` : `${actName(G)}에서 멈췄다`}${G.bestTurn?.dmg ? ` · 최고의 한 턴 <b>${G.bestTurn.dmg}</b>` : ''}</p>
       ${G.duoSet.size ? `<p class="note">듀오 ${duos}</p>` : ''}
       ${epNote}
       ${metaNote(R)}
       ${runBar(G)}
       <table class="shards" data-tip="${esc(R.lines.map(([t, v]) => `${t} +${v}`).join('\n'))}">${R.lines.map(([t, v], i) => `<tr style="--i:${i}"><td>${t}</td><td>+${v}</td></tr>`).join('')}<tr class="sum" style="--i:${R.lines.length}"><td>얻은 별 조각</td><td>+<b class="countup" data-to="${R.total}">${R.total}</b></td></tr></table>
-      <div class="acts"><button type="button" class="primary" data-home>본부로</button><button type="button" data-view="party">다시 오르기</button>${climbOnButton(G)}</div>
+      <div class="acts"><button type="button" class="primary" data-home>본부로</button><button type="button" data-view="party">다시 오르기</button></div>
     </div></div>`;
 }
 // 덱: 동료별로 묶어(대열 순서, 저주·듀오는 끝) 레전더리 → 에픽 → 레어 순, 카드 그림이 보이게 격자로

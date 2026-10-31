@@ -854,6 +854,48 @@
       ]
     },
     {
+      "id": "enemy-ch2_act1",
+      "title": "2장 1막 적 (시트 → 한 마리씩)",
+      "items": [
+        "ch2_act1_foes_1"
+      ]
+    },
+    {
+      "id": "enemy-ch2_act2",
+      "title": "2장 2막 적 (시트 → 한 마리씩)",
+      "items": [
+        "ch2_act2_foes_1"
+      ]
+    },
+    {
+      "id": "enemy-ch2_act3",
+      "title": "2장 3막 적 (시트 → 한 마리씩)",
+      "items": [
+        "ch2_act3_foes_1"
+      ]
+    },
+    {
+      "id": "enemy-ch3_act1",
+      "title": "3장 1막 적 (시트 → 한 마리씩)",
+      "items": [
+        "ch3_act1_foes_1"
+      ]
+    },
+    {
+      "id": "enemy-ch3_act2",
+      "title": "3장 2막 적 (시트 → 한 마리씩)",
+      "items": [
+        "ch3_act2_foes_1"
+      ]
+    },
+    {
+      "id": "enemy-ch3_act3",
+      "title": "3장 3막 적 (시트 → 한 마리씩)",
+      "items": [
+        "ch3_act3_foes_1"
+      ]
+    },
+    {
       "id": "foepose-act1",
       "title": "1막 적 공격·피격 자세 (시트 → 적마다 2칸)",
       "items": [
@@ -927,6 +969,62 @@
         "boss_storm_whale_1",
         "boss_storm_whale_2",
         "boss_storm_whale_cutin"
+      ]
+    },
+    {
+      "id": "boss-floodgate",
+      "title": "보스 수문장",
+      "items": [
+        "boss_floodgate_1",
+        "boss_floodgate_2",
+        "boss_floodgate_cutin"
+      ]
+    },
+    {
+      "id": "boss-clockknight",
+      "title": "보스 멈춘 태엽 기사",
+      "items": [
+        "boss_clockknight_1",
+        "boss_clockknight_2",
+        "boss_clockknight_cutin"
+      ]
+    },
+    {
+      "id": "boss-bellkeeper",
+      "title": "보스 침묵의 종지기",
+      "items": [
+        "boss_bellkeeper_1",
+        "boss_bellkeeper_2",
+        "boss_bellkeeper_3",
+        "boss_bellkeeper_cutin"
+      ]
+    },
+    {
+      "id": "boss-frostkeeper",
+      "title": "보스 얼어붙은 등대지기",
+      "items": [
+        "boss_frostkeeper_1",
+        "boss_frostkeeper_2",
+        "boss_frostkeeper_cutin"
+      ]
+    },
+    {
+      "id": "boss-warden",
+      "title": "보스 오로라 파수꾼",
+      "items": [
+        "boss_warden_1",
+        "boss_warden_2",
+        "boss_warden_cutin"
+      ]
+    },
+    {
+      "id": "boss-firstnight",
+      "title": "보스 첫 밤",
+      "items": [
+        "boss_firstnight_1",
+        "boss_firstnight_2",
+        "boss_firstnight_3",
+        "boss_firstnight_cutin"
       ]
     },
     {
@@ -1187,6 +1285,30 @@
         "bg_ep_lighthouse",
         "bg_ep_kitchen",
         "bg_ep_harbor"
+      ]
+    },
+    {
+      "id": "bg-ch2",
+      "title": "2장 배경 (전투 3 · 지도 3)",
+      "items": [
+        "bg_ch2_act1",
+        "bg_ch2_act2",
+        "bg_ch2_act3",
+        "bg_ch2_map1",
+        "bg_ch2_map2",
+        "bg_ch2_map3"
+      ]
+    },
+    {
+      "id": "bg-ch3",
+      "title": "3장 배경 (전투 3 · 지도 3)",
+      "items": [
+        "bg_ch3_act1",
+        "bg_ch3_act2",
+        "bg_ch3_act3",
+        "bg_ch3_map1",
+        "bg_ch3_map2",
+        "bg_ch3_map3"
       ]
     },
     {
@@ -10272,6 +10394,660 @@
       ]
     },
     {
+      "id": "ch2_act1_foes_1",
+      "kind": "foesheet",
+      "batch": "enemy-ch2_act1",
+      "file": "sheets/ch2_act1_foes_1.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "768×512 (칸 256×256 × 6)",
+      "note": "적 3×2, 칸 512×512",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nAn enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.\n- Cell 1: 뱃사공 유령 — a pale ghost gondolier in a striped shirt and straw hat, rowing with a long oar, misty canal water around his feet\n- Cell 2: 가면 무희 — a graceful masquerade dancer with a white porcelain mask and a flowing ribbon dress, mid-twirl (adult woman, modest outfit)\n- Cell 3: 운하 쥐 떼 — three plump canal rats wearing tiny bandanas, one holding a stolen coin\n- Cell 4: 등불 물고기 — a round glowing fish with a lantern fin and spiky scales, floating\n- Cell 5: ELITE (bigger and more imposing, fills more of the cell): 다리 문지기 — a hulking stone-and-brass bridge gatekeeper with a toll lantern and a giant key\n- Cell 6: ELITE (bigger and more imposing, fills more of the cell): 가면 무도회 주인 — a tall elegant adult masquerade host in a long coat with a golden mask and a cane, an aura of ribbons\nFully transparent background. Low-resolution battle sprites (chunkier pixels than character illustrations, like premium 16-bit era RPG battle sprites, about 64 colors each, clean dark outline): native resolution 256x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.",
+      "must_show": "3×2 칸에 gondola_ghost·mask_dancer·canal_rats·lamp_fish·bridge_troll·masque_host",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "enemies/gondola_ghost.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/mask_dancer.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/canal_rats.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/lamp_fish.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/bridge_troll.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/masque_host.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch2_act2_foes_1",
+      "kind": "foesheet",
+      "batch": "enemy-ch2_act2",
+      "file": "sheets/ch2_act2_foes_1.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "768×512 (칸 256×256 × 6)",
+      "note": "적 3×2, 칸 512×512",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nAn enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.\n- Cell 1: 태엽 인형병 — a wind-up toy soldier doll with a big brass key in its back and a bayonet\n- Cell 2: 태엽 고양이 — a sleek clockwork cat made of brass plates and springs, glowing blue eyes\n- Cell 3: 기름 덩어리 — a dark glossy oil slime with gears floating inside it\n- Cell 4: 뻐꾸기 시계 — a living cuckoo clock with tiny legs, the cuckoo bird shouting out of the door\n- Cell 5: ELITE (bigger and more imposing, fills more of the cell): 거인 자동인형 — a huge brass automaton with furnace-glow chest, riveted arms and pipes venting steam\n- Cell 6: ELITE (bigger and more imposing, fills more of the cell): 땜장이 유령 — a hunched ghost tinkerer with goggles, many tools floating around him\nFully transparent background. Low-resolution battle sprites (chunkier pixels than character illustrations, like premium 16-bit era RPG battle sprites, about 64 colors each, clean dark outline): native resolution 256x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.",
+      "must_show": "3×2 칸에 clockwork_doll·spring_cat·oil_blob·cuckoo_clock·giant_automaton·tinker_ghost",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "enemies/clockwork_doll.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/spring_cat.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/oil_blob.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/cuckoo_clock.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/giant_automaton.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/tinker_ghost.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch2_act3_foes_1",
+      "kind": "foesheet",
+      "batch": "enemy-ch2_act3",
+      "file": "sheets/ch2_act3_foes_1.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "768×512 (칸 256×256 × 6)",
+      "note": "적 3×2, 칸 512×512",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nAn enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.\n- Cell 1: 성가대 유령 — a pale ghost choir singer in a white robe holding a hymn book, notes floating\n- Cell 2: 종 박쥐 — two small bats with tiny bronze bells hanging from their feet\n- Cell 3: 유리 성자 — a stained-glass saint statue come alive, glowing colored glass panels, a halo\n- Cell 4: 달빛 나방 — a large pale moth with silver moon-pattern wings, glittering dust\n- Cell 5: ELITE (bigger and more imposing, fills more of the cell): 오르간 연주자 — a ghost organist fused with huge pipe organ pipes, playing with long fingers\n- Cell 6: ELITE (bigger and more imposing, fills more of the cell): 돌 괴수 — a cathedral stone gargoyle with cracked wings and glowing eyes, perched\nFully transparent background. Low-resolution battle sprites (chunkier pixels than character illustrations, like premium 16-bit era RPG battle sprites, about 64 colors each, clean dark outline): native resolution 256x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.",
+      "must_show": "3×2 칸에 choir_ghost·bell_bats·glass_saint·moon_moth·ghost_organist·stone_gargoyle",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "enemies/choir_ghost.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/bell_bats.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/glass_saint.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/moon_moth.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/ghost_organist.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/stone_gargoyle.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch3_act1_foes_1",
+      "kind": "foesheet",
+      "batch": "enemy-ch3_act1",
+      "file": "sheets/ch3_act1_foes_1.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "768×512 (칸 256×256 × 6)",
+      "note": "적 3×2, 칸 512×512",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nAn enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.\n- Cell 1: 서리 도깨비불 — a floating blue frost will-o-wisp with an icy crown of flame\n- Cell 2: 얼음 게 — a crab with a shell of clear blue ice crystals\n- Cell 3: 눈부엉이 — a fluffy white snow owl with frost-tipped feathers\n- Cell 4: 얼음바다 물범 — a round grey seal with a frosty mustache and icicle whiskers\n- Cell 5: ELITE (bigger and more imposing, fills more of the cell): 얼음 기사 — a tall knight in jagged ice armor holding a frozen greatsword\n- Cell 6: ELITE (bigger and more imposing, fills more of the cell): 눈보라 마녀 — an adult snow witch in a white fur cloak, long pale hair whipping in a blizzard, an ice staff\nFully transparent background. Low-resolution battle sprites (chunkier pixels than character illustrations, like premium 16-bit era RPG battle sprites, about 64 colors each, clean dark outline): native resolution 256x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.",
+      "must_show": "3×2 칸에 frost_wisp·ice_crab·snow_owl·ice_seal·ice_knight·blizzard_witch",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "enemies/frost_wisp.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/ice_crab.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/snow_owl.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/ice_seal.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/ice_knight.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/blizzard_witch.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch3_act2_foes_1",
+      "kind": "foesheet",
+      "batch": "enemy-ch3_act2",
+      "file": "sheets/ch3_act2_foes_1.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "768×512 (칸 256×256 × 6)",
+      "note": "적 3×2, 칸 512×512",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nAn enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.\n- Cell 1: 오로라 요정 — a tiny fairy with green-violet aurora wings, trailing ribbons of light\n- Cell 2: 수정 골렘 — a golem made of glowing aurora crystals, heavy fists\n- Cell 3: 하늘 가오리 — a manta ray gliding through the night sky, aurora-colored fins\n- Cell 4: 메아리 그림자 — a dark silhouette that repeats itself in fading after-images\n- Cell 5: ELITE (bigger and more imposing, fills more of the cell): 폭풍 비룡 — a slender storm drake with crackling lightning on its scales, wings spread\n- Cell 6: ELITE (bigger and more imposing, fills more of the cell): 쌍둥이 오로라 — two spirits of green and violet light twisting around each other\nFully transparent background. Low-resolution battle sprites (chunkier pixels than character illustrations, like premium 16-bit era RPG battle sprites, about 64 colors each, clean dark outline): native resolution 256x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.",
+      "must_show": "3×2 칸에 aurora_sprite·crystal_golem·sky_ray·echo_shadow·storm_drake·twin_aurora",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "enemies/aurora_sprite.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/crystal_golem.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/sky_ray.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/echo_shadow.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/storm_drake.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/twin_aurora.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ch3_act3_foes_1",
+      "kind": "foesheet",
+      "batch": "enemy-ch3_act3",
+      "file": "sheets/ch3_act3_foes_1.png",
+      "width": 1536,
+      "height": 1024,
+      "transparent": true,
+      "max_colors": null,
+      "native": "768×512 (칸 256×256 × 6)",
+      "note": "적 3×2, 칸 512×512",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nAn enemy sprite sheet on one 1536x1024 canvas, split into six equal square cells of 512x512 (3 columns x 2 rows), reading order left to right, top to bottom. Keep an empty transparent margin of about 6% inside every cell edge — no part of a figure or effect may touch or cross a cell edge (the sheet is cut exactly on the cell lines). No borders, no grid lines, no gutters, no labels or text. One enemy per cell, the whole body inside its cell, feet near the bottom of the cell, all facing LEFT (toward the party). Cute-but-menacing gacha-game monster designs.\n- Cell 1: 밤그림자 — a hooded shade of pure night with star-like eyes, a long scythe of dark light\n- Cell 2: 빈 별 — a hollow black star with a glowing pink core, cracking\n- Cell 3: 잠꾸러기 꿈 — a drowsy cloud-like dream creature in a nightcap, yawning, stars around it\n- Cell 4: 그믐 기사 — a knight in crescent-moon black armor with a dark shield\n- Cell 5: ELITE (bigger and more imposing, fills more of the cell): 일식 — a towering figure whose head is a black sun with a fiery corona ring\n- Cell 6: ELITE (bigger and more imposing, fills more of the cell): 악몽 — a shifting phantom with many smiling masks floating around a dark cloak\nFully transparent background. Low-resolution battle sprites (chunkier pixels than character illustrations, like premium 16-bit era RPG battle sprites, about 64 colors each, clean dark outline): native resolution 256x256 pixels per cell (768x512 for the whole sheet), upscaled exactly 2x with nearest-neighbor.",
+      "must_show": "3×2 칸에 night_shade·void_star·dream_sleeper·dark_knight·eclipse_lord·nightmare_mask",
+      "reference_images": [
+        "style/akane_c.png"
+      ],
+      "cells": [
+        {
+          "file": "enemies/night_shade.png",
+          "x": 0,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/void_star.png",
+          "x": 512,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/dream_sleeper.png",
+          "x": 1024,
+          "y": 0,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/dark_knight.png",
+          "x": 0,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/eclipse_lord.png",
+          "x": 512,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        },
+        {
+          "file": "enemies/nightmare_mask.png",
+          "x": 1024,
+          "y": 512,
+          "w": 512,
+          "h": 512,
+          "native": [
+            512,
+            512
+          ],
+          "out": [
+            512,
+            512
+          ]
+        }
+      ]
+    },
+    {
       "id": "act1_foepose_1",
       "kind": "foesheet",
       "batch": "foepose-act1",
@@ -11724,6 +12500,340 @@
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss cut-in: extreme close-up of the giant golden eye reflecting the tiny night-watch party, lightning crackling across the navy hide. Wide horizontal composition, face in the middle band (cropped to 1536x576).",
       "reference_images": [
         "enemies/boss_storm_whale_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_floodgate_1",
+      "kind": "boss",
+      "batch": "boss-floodgate",
+      "file": "enemies/boss_floodgate_1.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBoss sprite, 수문장: chapter-2 act-1 boss \"Floodgate Warden\": a giant guardian made of a canal lock gate, brass wheels and green-weathered stone, water pouring from its seams, two huge iron arms. Facing LEFT, imposing, a big low-resolution battle sprite. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_floodgate_2",
+      "kind": "boss",
+      "batch": "boss-floodgate",
+      "file": "enemies/boss_floodgate_2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 수문장, second phase: the floodgates on its chest burst open, torrents of water spraying everywhere, glowing teal eyes. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.",
+      "reference_images": [
+        "enemies/boss_floodgate_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_floodgate_cutin",
+      "kind": "cutin",
+      "batch": "boss-floodgate",
+      "file": "cutins/boss_floodgate_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "384×144",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss cut-in: the floodgate warden raising its iron arms as a wall of canal water rises behind it. Wide horizontal composition, face in the middle band (cropped to 1536x576).",
+      "reference_images": [
+        "enemies/boss_floodgate_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_clockknight_1",
+      "kind": "boss",
+      "batch": "boss-clockknight",
+      "file": "enemies/boss_clockknight_1.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nBoss sprite, 멈춘 태엽 기사: chapter-2 act-2 boss \"Stopped Clockwork Knight\": a tall knight in brass clockwork armor, a big clock face on the chest frozen at midnight, a long gear-edged sword. Facing LEFT, imposing, a big low-resolution battle sprite. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_clockknight_2",
+      "kind": "boss",
+      "batch": "boss-clockknight",
+      "file": "enemies/boss_clockknight_2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 멈춘 태엽 기사, second phase: the knight has wound its own key, gears spinning fast, steam bursting from the joints, the clock hands racing. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.",
+      "reference_images": [
+        "enemies/boss_clockknight_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_clockknight_cutin",
+      "kind": "cutin",
+      "batch": "boss-clockknight",
+      "file": "cutins/boss_clockknight_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "384×144",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss cut-in: the clockwork knight drawing its gear-edged sword, its chest clock frozen at midnight. Wide horizontal composition, face in the middle band (cropped to 1536x576).",
+      "reference_images": [
+        "enemies/boss_clockknight_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_bellkeeper_1",
+      "kind": "boss",
+      "batch": "boss-bellkeeper",
+      "file": "enemies/boss_bellkeeper_1.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nBoss sprite, 침묵의 종지기: chapter-2 final boss \"The Silent Bellkeeper\": a tall gaunt hooded bell-ringer in dark robes with bronze chains, holding a giant cracked church bell with both arms, glowing pale eyes. Facing LEFT, imposing, a big low-resolution battle sprite. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_bellkeeper_2",
+      "kind": "boss",
+      "batch": "boss-bellkeeper",
+      "file": "enemies/boss_bellkeeper_2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 침묵의 종지기, second phase: the bellkeeper slams the cracked bell, a silent shockwave of pale blue rings around it, robes torn by the wind. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.",
+      "reference_images": [
+        "enemies/boss_bellkeeper_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_bellkeeper_3",
+      "kind": "boss",
+      "batch": "boss-bellkeeper",
+      "file": "enemies/boss_bellkeeper_3.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 침묵의 종지기, third phase: the bell is shaking and glowing gold from inside, the bellkeeper desperately holding it shut, cracks of light. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.",
+      "reference_images": [
+        "enemies/boss_bellkeeper_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_bellkeeper_cutin",
+      "kind": "cutin",
+      "batch": "boss-bellkeeper",
+      "file": "cutins/boss_bellkeeper_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "384×144",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss cut-in: the silent bellkeeper hugging the huge cracked bell under the moonlit cathedral rafters. Wide horizontal composition, face in the middle band (cropped to 1536x576).",
+      "reference_images": [
+        "enemies/boss_bellkeeper_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_frostkeeper_1",
+      "kind": "boss",
+      "batch": "boss-frostkeeper",
+      "file": "enemies/boss_frostkeeper_1.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nBoss sprite, 얼어붙은 등대지기: chapter-3 act-1 boss \"The Frozen Lighthousekeeper\": an old keeper frozen into a pillar of ice, a lighthouse lamp of blue cold fire in one hand, icicle beard. Facing LEFT, imposing, a big low-resolution battle sprite. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_frostkeeper_2",
+      "kind": "boss",
+      "batch": "boss-frostkeeper",
+      "file": "enemies/boss_frostkeeper_2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 얼어붙은 등대지기, second phase: the lamp bursts into bright blue flame, frost cracking off his body, a cold beam sweeping. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.",
+      "reference_images": [
+        "enemies/boss_frostkeeper_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_frostkeeper_cutin",
+      "kind": "cutin",
+      "batch": "boss-frostkeeper",
+      "file": "cutins/boss_frostkeeper_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "384×144",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss cut-in: the frozen keeper lifting a lamp of blue cold fire on an icy island at night. Wide horizontal composition, face in the middle band (cropped to 1536x576).",
+      "reference_images": [
+        "enemies/boss_frostkeeper_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_warden_1",
+      "kind": "boss",
+      "batch": "boss-warden",
+      "file": "enemies/boss_warden_1.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nBoss sprite, 오로라 파수꾼: chapter-3 act-2 boss \"Aurora Warden\": an adult woman sentinel in armor of flowing aurora light, long hair like green and violet curtains of light, a spear of light. Facing LEFT, imposing, a big low-resolution battle sprite. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_warden_2",
+      "kind": "boss",
+      "batch": "boss-warden",
+      "file": "enemies/boss_warden_2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 오로라 파수꾼, second phase: she has spread the aurora curtain like great wings, healing light swirling around her. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.",
+      "reference_images": [
+        "enemies/boss_warden_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_warden_cutin",
+      "kind": "cutin",
+      "batch": "boss-warden",
+      "file": "cutins/boss_warden_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "384×144",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss cut-in: the aurora warden spreading curtains of green and violet light across a canyon sky. Wide horizontal composition, face in the middle band (cropped to 1536x576).",
+      "reference_images": [
+        "enemies/boss_warden_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_firstnight_1",
+      "kind": "boss",
+      "batch": "boss-firstnight",
+      "file": "enemies/boss_firstnight_1.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nBoss sprite, 첫 밤: chapter-3 final boss \"The First Night\": a serene, very tall adult woman made of the night sky, long hair full of stars, a gown of deep indigo, sitting on a throne of stars; tired gentle eyes. Facing LEFT, imposing, a big low-resolution battle sprite. Fully transparent background. Native resolution 128x192 pixels, upscaled exactly 8x with nearest-neighbor to 1024x1536.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_firstnight_2",
+      "kind": "boss",
+      "batch": "boss-firstnight",
+      "file": "enemies/boss_firstnight_2.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 첫 밤, second phase: she has pulled all the stars down around her, the sky behind her empty, holding a crescent moon like a blade. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.",
+      "reference_images": [
+        "enemies/boss_firstnight_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_firstnight_3",
+      "kind": "boss",
+      "batch": "boss-firstnight",
+      "file": "enemies/boss_firstnight_3.png",
+      "width": 1024,
+      "height": 1536,
+      "transparent": true,
+      "max_colors": 256,
+      "native": "128×192",
+      "note": "보스 전투 스프라이트(저해상도 도트) · 투명 배경",
+      "prompt": "이미지를 만들어줘. 전투용 저해상도 도트 스프라이트야.\n\nAuthentic LOW-RESOLUTION pixel-art battle sprites, like premium 16-bit era RPG / Slay-the-Spire-sized battle characters: chunky readable pixels, about 32 colors per sprite, clean dark 1-pixel outline, simple 2-3 tone shading, strong silhouette. Much simpler than the attached detailed illustrations — keep the same person (face, hair, colors, outfit, weapon) but simplified for small size. No anti-aliasing, no blur, no text, no UI.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss sprite, 첫 밤, third phase: she glows softly from within, the first light of dawn leaking through her, calm and exhausted. Same person as the attached first-phase sprite, same pixel size. Facing LEFT. Fully transparent background. Native 128x192, upscaled 8x to 1024x1536.",
+      "reference_images": [
+        "enemies/boss_firstnight_1.png",
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "boss_firstnight_cutin",
+      "kind": "cutin",
+      "batch": "boss-firstnight",
+      "file": "cutins/boss_firstnight_cutin.png",
+      "width": 1536,
+      "height": 576,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "384×144",
+      "note": "가로로 긴 얼굴·상체 클로즈업 · 1536×1024로 만든 뒤 가운데 띠를 잘라 냄",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nCharacter design in the style of modern Japanese anime mobile gacha games: large expressive eyes with bright highlights, attractive face, stylish proportions, glossy hair with highlight strands, fashionable outfit with detailed accessories and a clear, appealing silhouette. Female characters mostly have long hair. Adult women (18 and over) are attractive and stylish in gacha-game fashion with moderate skin exposure: fitted outfits that may show bare shoulders, midriff or legs (short skirts, side slits, thigh-high boots), but the figure and exposure are not emphasized — confident and elegant, never explicit: no cleavage focus, no nudity, no underwear shots, no sexual poses. Characters under 18 are drawn modestly and age-appropriately: covered shoulders and midriff, knee-length or longer skirts, no fan-service at all. Adults and teenagers have realistic proportions for their age (adults about 1:7 head-to-body), NOT chibi, NOT baby-faced. Keep it crisp low-resolution pixel art, not a smooth illustration.\n\nDraw this character ON-MODEL from the attached reference image: the same face, eye color, hairstyle and hair color, outfit, accessories, weapon and age. Do not redesign anything.\n\nBoss cut-in: the First Night rising from her throne of stars, hair spilling into the night sky. Wide horizontal composition, face in the middle band (cropped to 1536x576).",
+      "reference_images": [
+        "enemies/boss_firstnight_1.png",
         "style/akane_c.png"
       ]
     },
@@ -16204,6 +17314,198 @@
       "native": "640×360",
       "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: 에피소드 장소: 항구 거리 — a sloped harbor town street at night, the tower visible far out at sea. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 pixels, full color, limited palette of about 64 colors, upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch2_act1",
+      "kind": "bg",
+      "batch": "bg-ch2",
+      "file": "bg/ch2_act1.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: a narrow night canal street in a sleeping city: gondolas, arched bridges, closed shutters, lamps reflected in still water. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch2_act2",
+      "kind": "bg",
+      "batch": "bg-ch2",
+      "file": "bg/ch2_act2.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: a clockwork workshop at night: huge frozen gears, workbenches, wind-up toys, warm brass light. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch2_act3",
+      "kind": "bg",
+      "batch": "bg-ch2",
+      "file": "bg/ch2_act3.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: a moonlit cathedral nave: tall stained glass, pipe organ, a huge cracked bell hanging high. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch2_map1",
+      "kind": "bg",
+      "batch": "bg-ch2",
+      "file": "bg/ch2_map1.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: a canal city seen from above at night, a clocktower stopped at midnight in the center. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch2_map2",
+      "kind": "bg",
+      "batch": "bg-ch2",
+      "file": "bg/ch2_map2.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: the clockwork district rising in tiers, chimneys and gears, seen from outside at night. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch2_map3",
+      "kind": "bg",
+      "batch": "bg-ch2",
+      "file": "bg/ch2_map3.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: a gothic cathedral on a hill above the canal city, moon behind its bell tower. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch3_act1",
+      "kind": "bg",
+      "batch": "bg-ch3",
+      "file": "bg/ch3_act1.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: an icy lighthouse island at the edge of a star sea, snow and frozen waves, a dead lighthouse. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch3_act2",
+      "kind": "bg",
+      "batch": "bg-ch3",
+      "file": "bg/ch3_act2.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: an aurora canyon: crystal cliffs, green and violet aurora curtains, a narrow sky bridge. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch3_act3",
+      "kind": "bg",
+      "batch": "bg-ch3",
+      "file": "bg/ch3_act3.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: a throne room made of stars floating in a void, steps of light, galaxies all around. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch3_map1",
+      "kind": "bg",
+      "batch": "bg-ch3",
+      "file": "bg/ch3_map1.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: a lone frozen island with a lighthouse in a sea full of stars. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch3_map2",
+      "kind": "bg",
+      "batch": "bg-ch3",
+      "file": "bg/ch3_map2.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: a deep canyon of crystal under aurora lights, seen from far. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
+      "reference_images": [
+        "style/akane_c.png"
+      ]
+    },
+    {
+      "id": "bg_ch3_map3",
+      "kind": "bg",
+      "batch": "bg-ch3",
+      "file": "bg/ch3_map3.png",
+      "width": 1280,
+      "height": 720,
+      "transparent": false,
+      "max_colors": 256,
+      "native": "640×360",
+      "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: a staircase of stars rising to a floating throne at the edge of the universe. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.",
       "reference_images": [
         "style/akane_c.png"
       ]

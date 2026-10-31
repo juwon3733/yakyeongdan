@@ -77,3 +77,5 @@ img.px.fci{position:absolute!important;margin:0!important;max-width:none!importa
 .dawnbreak .dbb .primary{font-size:13px;padding:5px 18px}
 .dawnbreak .newt{color:#1a1206!important;background:var(--gold);padding:0 3px}
 .dawnbreak .dbr{white-space:normal;max-width:100%;line-height:1.5}
+.chsel .chbtns{display:inline-flex;gap:3px}.chsel .chbtns .mini.on{background:var(--cc);color:#1a1206}.chsel .chname{margin-left:6px}.chsel .chname b{font-weight:400}
+.chtag{display:block;font-size:9px;letter-spacing:.1em;font-family:var(--f-body)}

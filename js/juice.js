@@ -4,7 +4,8 @@
 // 설정: 애니메이션 줄이기면 소리만, 화면 흔들림 끔이면 밀림·흔들림 없이.
 import { S, dawnAt } from './run.js';
 import { CHARACTERS } from './data/characters.js';
-import { ACT_NAME, RULES } from './data/rules.js';
+import { RULES } from './data/rules.js';
+import { actName, chapterOf } from './data/chapters.js';
 import { calmNow, SET } from './settings.js';
 import { sfx as sfxRaw, hasSfx, HIT_SFX, CUTIN_SFX } from './audio.js';
 import { FOE } from './data/enemies.js';
@@ -1104,7 +1105,7 @@ function climb(act) {
   const d = document.createElement('div');
   d.className = `jclimb a${act}`;
   if (sky) d.style.setProperty('--sky', `url("${new URL(sky, location.href).href}")`);   // CSS 변수 주소는 CSS 파일 기준이라 절대 주소로
-  d.innerHTML = `<i class="sk"></i><i class="tw"><i class="lg"></i></i>${spr ? `<img class="px who" src="${spr}" alt="">` : ''}<b>${act <= 3 ? `<small>${act}막</small>` : ''}${(ACT_NAME[act] || '').replace(/^\d+막\s*·\s*/, '')}</b>`;
+  d.innerHTML = `<i class="sk"></i><i class="tw"><i class="lg"></i></i>${spr ? `<img class="px who" src="${spr}" alt="">` : ''}<b>${act <= 3 ? `<small>${act}막</small>` : ''}${(actName(S.G, act) || '').replace(/^\d+막\s*·\s*/, '')}</b>`;
   layer.append(d);
   const E = 'cubic-bezier(.3,.1,.3,1)';
   d.querySelector('.tw').animate([{ backgroundPositionY: '0px' }, { backgroundPositionY: '192px' }], { duration: 1500, easing: E });
@@ -1117,9 +1118,9 @@ function climb(act) {
 
 // 막의 1층 지도: 「1막 · 항구층」 띠가 위에서 내려왔다 올라간다 (0.9초, css/screens.css .mapact)
 function actBand(act) {
-  const w = app()?.querySelector('.mapwrap'); if (!w || !ACT_NAME[act]) return;
+  const w = app()?.querySelector('.mapwrap'); if (!w || !actName(S.G, act)) return;
   const d = document.createElement('div');
-  d.className = 'mapact'; d.innerHTML = `<b>${ACT_NAME[act]}</b>`;
+  d.className = 'mapact'; d.innerHTML = `<b>${actName(S.G, act)}</b>`;
   d.addEventListener('animationend', () => d.remove());
   w.append(d);
 }

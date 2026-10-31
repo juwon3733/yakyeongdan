@@ -5,6 +5,7 @@ import { S, newRun } from './run.js';
 import { startCombat } from './combat.js';
 import { P, save, epKey, epExtra } from './meta.js';
 import { EPISODES, BOND_SCENES, EP_REWARD } from './data/episodes.js';
+import { STORY } from './data/chapters.js';
 
 const isLine = it => Array.isArray(it);
 
@@ -17,6 +18,8 @@ function open(src, meta) {
 }
 export const openEp = (cid, n) => open(EPISODES[cid][n], { kind: 'ep', cid, n });
 export const openBond = k => open(BOND_SCENES[k], { kind: 'bond', key: k });
+// 본편 장 이야기(js/data/chapters.js STORY): next = 다 보고 돌아갈 화면('run' 판 안 · 'episodes' 목록)
+export const openStory = (k, next = 'episodes') => open(STORY[k], { kind: 'story', key: k, next });
 
 // 말하는 사람 자리: 비어 있는 쪽, 둘 다 차 있으면 방금 말하지 않은 쪽을 바꾼다
 function seat(E, who) {
@@ -103,5 +106,6 @@ function finish() {
   if (E.kind === 'ep') {
     const k = epKey(E.cid, E.n);
     if (!P.epSeen[k]) { P.epSeen[k] = true; E.reward = EP_REWARD[E.n]; P.shards += E.reward; E.extra = epExtra(E.cid, E.n); save(); }
-  } else if (!P.bondSeen.includes(E.key)) { P.bondSeen.push(E.key); save(); }
+  } else if (E.kind === 'story') { P.storySeen ||= []; if (!P.storySeen.includes(E.key)) { P.storySeen.push(E.key); save(); } }
+  else if (!P.bondSeen.includes(E.key)) { P.bondSeen.push(E.key); save(); }
 }
