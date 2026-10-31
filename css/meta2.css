@@ -164,7 +164,7 @@
 .got:not(.item):not(.choose)::before{content:"";position:absolute;left:0;right:0;bottom:0;height:55%;z-index:1;background:linear-gradient(transparent,rgba(8,6,18,.92) 55%)}
 /* 덱 보기: 닫기가 맨 아래(스크롤 끝)에만 있던 것 → 오른쪽 위에 붙어 다님 */
 .dkbox{position:relative}
-.dkbox .dkclose{position:sticky;top:0;float:right;z-index:5;margin:0 0 -20px}
+.dkbox .dkclose{position:sticky;top:0;align-self:flex-end;flex:none;width:auto;z-index:5;margin:0 0 -26px}   /* 상자가 세로 flex라 float가 안 먹고 단추가 한 줄을 꽉 채우던 것 */
 .dkbox h2 small{font-size:10px;color:var(--gold);margin-left:8px}
 /* 교환소·도감·기록·매일의 밤·확률·에피소드: 검은 별밭 빈 화면 대신 본부 안을 흐리게 깔아 「본부 안의 방」으로 */
 :is(#app,.frozen):is([data-screen="exchange"],[data-screen="codex"],[data-screen="records"],[data-screen="daily"],[data-screen="odds"],[data-screen="episodes"])::before{
