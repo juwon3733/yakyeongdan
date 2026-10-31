@@ -311,8 +311,8 @@ function growthBlock(k) {
   }).join('<i class="tlink"></i>')}</div>`).join('');
   return `<h3 class="sub">레벨 <b class="lvn">Lv.${g.lv}</b>${g.lv < LV_MAX ? ` <small class="lvx">${g.xp}/${need}</small>` : ' <small class="lvx">최대</small>'}</h3>
     <div class="lvbar"><span class="lvf" style="width:${g.lv < LV_MAX ? Math.round(g.xp / need * 100) : 100}%"></span></div>
-    <p class="note small lvfx">체력 +${Math.floor((g.lv - 1) * LV_HP)}${pow ? ` · 공격·방어 카드 +${pow}` : ''} · 다음 힘: ${LV_POWER.find(l => l > g.lv) ? `${LV_POWER.find(l => l > g.lv)}레벨` : '다 열림'}</p>
-    <h3 class="sub">재능 <small class="tleft">${left}점 남음 (짝수 레벨마다 1점)</small>${g.tal.length ? `<button type="button" class="mini treset" data-talreset="${k}">초기화</button>` : ''}</h3>
+    ${g.lv > 1 ? `<p class="note small lvfx">체력 +${Math.floor((g.lv - 1) * LV_HP)}${pow ? ` · 공격·방어 카드 +${pow}` : ''}</p>` : ''}
+    <h3 class="sub">재능 ${left ? `<small class="tleft">${left}점</small>` : ''}${g.tal.length ? `<button type="button" class="mini treset" data-talreset="${k}">초기화</button>` : ''}</h3>
     <div class="talent">${tree}</div>`;
 }
 // 숙련도: 별 다섯 칸 진행 막대(다음 칸은 점수만큼 차오름) + 지금 단계 보상은 크게, 나머지 단계는 작은 칩
