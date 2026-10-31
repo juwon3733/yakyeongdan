@@ -32,7 +32,12 @@
   "boss_bell2": 44.65116,
   "boss_ice": 54.85714,
   "boss_firstnight": 58.18181,
-  "boss_firstnight2": 51.89188
+  "boss_firstnight2": 51.89188,
+  "map_ch2": 60.0,
+  "battle_ch2": 38.4,
+  "map_ch3": 65.45454,
+  "battle_ch3": 36.0,
+  "story": 60.0
  },
  "sfx": [
   "atk_akane",
