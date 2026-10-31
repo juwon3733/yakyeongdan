@@ -340,8 +340,8 @@ try {
     const ex = await page.evaluate(() => ({ dora: !!window.__yk.P().owned.dora, umb: window.__yk.P().startRelics.includes('umbrella'), dust: window.__yk.P().dust }));
     if (ex.dora && ex.umb && ex.dust === d0 - 80 - 20 && await page.$('.exmsg')) { seen.exchange = true; console.log('meta: 교환소 → 도라 · 우산'); }
     else fail(`교환소 구매 실패 ${JSON.stringify({ d0, ...ex })}`);
-    // 동료 화면: 별자리 4로 두고 의상 갈아입기, 도감 탭 전부, 기록, 확률
-    await page.evaluate(() => { window.__yk.stars('iris', 5); window.__yk.S.view = 'mates'; window.__yk.render(); });
+    // 동료 화면: 별자리 6(두 번째 의상)으로 두고 의상 갈아입기, 도감 탭 전부, 기록, 확률
+    await page.evaluate(() => { window.__yk.stars('iris', 6); window.__yk.S.view = 'mates'; window.__yk.render(); });
     await page.click('[data-mate="iris"]');
     await page.click('[data-costume="iris:1"]');
     const cos = await page.evaluate(() => window.__yk.P().costume.iris === 1 && document.querySelectorAll('.stcs .stc.on').length === 5);
