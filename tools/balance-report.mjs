@@ -3,6 +3,7 @@
 //   node tools/balance-report.mjs --quick   동료마다 약 100판
 // 처음 동료(아이리스·브릭·마르타) 고정 파티 본판도 400판(--quick 100판) 따로 돌린다.
 // 본판은 끝없는 탑 없이(--no-endless) 돌린다. 별자리는 0(sim 기본).
+// 본편 장: 장 1·2·3 × (키우기 전 / 레벨 10 / 레벨 20 / 레벨 20 + 별자리 6) 무작위 파티 300판(--quick 100판)씩.
 import { execFileSync } from 'node:child_process';
 import { readFileSync, writeFileSync, rmSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -10,6 +11,8 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { CHARACTERS } from '../js/data/characters.js';
 import { DUOS, cardData } from '../js/data/cards.js';
+import { CHAPTERS } from '../js/data/chapters.js';
+import { FOE } from '../js/data/enemies.js';
 
 const args = process.argv.slice(2);
 const QUICK = args.includes('--quick');
@@ -36,6 +39,25 @@ process.stderr.write(`처음 동료 본판 ${N}판…\n`);
 const jf2 = join(dir, 'start.json');
 sim(['--runs', String(N), '--no-endless', '--party', STARTERS, '--json', jf2]);
 const RS = JSON.parse(readFileSync(jf2, 'utf8'));
+// 본편 장: 장 × 키운 정도마다 마지막 보스 격파율과 어디서 졌나
+const CH_N = QUICK ? 100 : 300;
+const GROWS = [
+  { key: 'base', label: '키우기 전', a: [] },
+  { key: 'lv10', label: '레벨 10', a: ['--grow', '10'] },
+  { key: 'lv20', label: '레벨 20', a: ['--grow', '20'] },
+  { key: 'lv20s6', label: '레벨 20 + 별자리 6', a: ['--grow', '20', '--star', '6'] },
+];
+// 목표 (수치 고칠 때 기준): [장, 키운 정도, 하한, 상한]
+const CH_GOALS = [[1, 'base', 0.30, 0.40], [2, 'lv10', 0.40, 0.50], [3, 'lv20', 0.35, 0.45]];
+const CH = {};
+for (const ch of [1, 2, 3]) for (const g of GROWS) {
+  process.stderr.write(`${ch}장 ${g.label} ${CH_N}판…
+`);
+  const f = join(dir, `ch${ch}_${g.key}.json`);
+  sim(['--runs', String(CH_N), '--no-endless', '--chapter', String(ch), ...g.a, '--json', f]);
+  const j = JSON.parse(readFileSync(f, 'utf8'));
+  (CH[ch] ||= {})[g.key] = { runs: j.runs, win: j.winRate, deathAt: j.stats.deathAt || {} };
+}
 rmSync(dir, { recursive: true, force: true });
 
 // 2) 시즌 보스: 무작위 파티 / 처음 동료
@@ -112,6 +134,41 @@ L.push('| 난이도 | 무작위 파티 | 처음 동료 (아이리스·브릭·�
 L.push('|---|---|---|');
 sRand.forEach((s, i) => L.push(`| ${s.tier} | ${s.win} (평균 ${s.turns}턴) | ${sStart[i] ? `${sStart[i].win} (평균 ${sStart[i].turns}턴)` : '-'} |`));
 L.push('');
+
+// 본편 장
+{
+  const goal = (ch, k) => CH_GOALS.find(([c, g]) => c === ch && g === k);
+  const miss = (ch, k, w) => { const g = goal(ch, k); return g && (w < g[2] || w > g[3]); };
+  L.push('## 본편 장 (마지막 보스 격파율)');
+  L.push('');
+  L.push(`무작위 파티 ${CH_N}판씩, 끝없는 탑 제외. 레벨 L은 파티 모두 그 레벨 + 재능, 별자리 6은 힘만. 목표 칸은 [목표 …], 목표 밖이면 **굵게**.`);
+  L.push('');
+  L.push(`| 장 | 마지막 보스 | ${GROWS.map(g => g.label).join(' | ')} |`);
+  L.push(`|---|---|${GROWS.map(() => '---').join('|')}|`);
+  for (const ch of [1, 2, 3]) {
+    const fin = CHAPTERS[ch].final, bossName = FOE[fin]?.name || fin;
+    const cells = GROWS.map(g => {
+      const r = CH[ch][g.key], s = pct(r.win), gl = goal(ch, g.key);
+      const t = miss(ch, g.key, r.win) ? `**${s}**` : s;
+      return gl ? `${t} [목표 ${gl[2] * 100}~${gl[3] * 100}%]` : t;
+    });
+    L.push(`| ${CHAPTERS[ch].name} | ${bossName} | ${cells.join(' | ')} |`);
+  }
+  L.push('');
+  L.push('목표: ' + CH_GOALS.map(([c, k, lo, hi]) => {
+    const w = CH[c][k].win, s = `${c}장 ${GROWS.find(g => g.key === k).label} ${lo * 100}~${hi * 100}% → ${pct(w)}`;
+    return miss(c, k, w) ? `**${s} (목표 밖)**` : s;
+  }).join(' · ') + '.');
+  L.push('');
+  L.push('어디서 졌나 (장마다 목표 기준 단계, 진 판 중 비율 상위 3):');
+  L.push('');
+  for (const ch of [1, 2, 3]) {
+    const k = CH_GOALS.find(([c]) => c === ch)?.[1] || 'base', r = CH[ch][k], lost = r.runs - Math.round(r.win * r.runs);
+    const top = Object.entries(r.deathAt).sort((a, b) => b[1] - a[1]).slice(0, 3);
+    L.push(`- ${CHAPTERS[ch].name} (${GROWS.find(g => g.key === k).label}): ${top.length ? top.map(([k, v]) => `${k} ${pct(v / lost)}`).join(' · ') : '-'}`);
+  }
+  L.push('');
+}
 
 // 듀오
 const played = R.stats.duoPlayed || {}, made = R.stats.duoMade || {};
