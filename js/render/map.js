@@ -87,7 +87,7 @@ export function mapView() {
       <span class="rowlabel ${r < G.row ? 'past' : r === G.row ? 'here' : ''}" style="top:${y - 14}px">${r === rows - 1 ? (G.endless ? '관문' : '꼭대기') : `${G.endless ? segStart() + r : r + 1}층`}</span>`;
   }).join('');
   const nodes = M.rows.map((row, r) => row.map((t, j) => {
-    const p = P[r][j], ok = r === G.row && can.includes(j), cls = r < G.row ? 'past' : ok ? 'now' : 'future';
+    const p = P[r][j], ok = r === G.row && can.includes(j), cls = r < G.row ? 'past' : ok ? 'now' : reach[r].has(j) || t === 'boss' ? 'future' : 'future out';   // out = 이제 못 가는 칸(지도에서 지운다)
     const name = t === 'boss' && M.boss && !G.tutorial && !G.endless ? FOE[M.boss].name : NODE[t].name;
     const when = ok ? ` → ${fmt(G.clock + nodeTime(t))}` : '';
     // 고를 수 있는 칸: 난간 아래에 도착 시각만(종류는 아이콘이, 이름·걸리는 시간은 커서를 대면)
