@@ -191,8 +191,13 @@ function epBgm() {
 }
 // 일반 전투: 같은 주제를 막마다 조·악기·빠르기를 바꿔 편곡 (1 금관 144 · 2 FM 리드 152 · 3 금관+종 160)
 const BATTLE_SONG = { 1: 'battle', 2: 'battle2', 3: 'battle3' };
-// 보스별 곡 (막 보스 변형: 안개 마녀 여왕·폭풍 고래, 시즌 1 보스: 떨어진 별의 왕)
-const BOSS_SONG = { keeper: 'boss1', queen: 'boss_queen', captain: 'boss2', whale: 'boss_whale', starking: 'boss_star' };
+// 보스별 곡 (막 보스 변형: 안개 마녀 여왕·폭풍 고래, 시즌 1 보스: 떨어진 별의 왕,
+// 본편 2장: 수문장·멈춘 태엽 기사 → 운하, 침묵의 종지기 → 종 / 3장: 얼어붙은 등대지기·오로라 파수꾼 → 얼음, 첫 밤)
+const BOSS_SONG = { keeper: 'boss1', queen: 'boss_queen', captain: 'boss2', whale: 'boss_whale', starking: 'boss_star',
+  floodgate: 'boss_canal', clockknight: 'boss_canal', bellkeeper: 'boss_bell',
+  frostkeeper: 'boss_ice', warden: 'boss_ice', firstnight: 'boss_firstnight' };
+// 3단계가 되면 바뀌는 곡 (같은 주제를 빠르고 높게 / 밝게)
+const BOSS_SONG_P3 = { starking: 'boss_star3', bellkeeper: 'boss_bell2', firstnight: 'boss_firstnight2' };
 function pickBgm() {
   const G = S.G;
   if (S.view === 'ep') return epBgm();
@@ -205,7 +210,7 @@ function pickBgm() {
     if (S.C.kind === 'boss') {
       const b = S.C.all[0];
       if (b?.key === 'dawn') return b.p3 ? 'dawn3' : b.p2 ? 'dawn2' : 'dawn';
-      if (b?.key === 'starking' && b.p3) return 'boss_star3';   // 3단계(체력 25% 아래, 두 번 행동)
+      if (b?.p3 && BOSS_SONG_P3[b.key]) return BOSS_SONG_P3[b.key];   // 3단계(두 번 행동)
       return BOSS_SONG[b?.key] || `boss${Math.min(2, G.act)}`;
     }
     if (G.tutorial) return 'tutorial';
