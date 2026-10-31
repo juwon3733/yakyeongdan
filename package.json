@@ -15,6 +15,7 @@
     "sim": "node tools/sim.mjs",
     "balance": "node tools/balance-report.mjs",
     "text": "node tools/text-check.mjs",
-    "next": "node tools/next-batch.mjs"
+    "next": "node tools/next-batch.mjs",
+    "shotdiff": "node tools/shot-diff.mjs"
   }
 }
