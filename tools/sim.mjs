@@ -31,7 +31,9 @@ const ENDLESS_ON = !args.includes('--no-endless');
 const ENDLESS_CAP = +opt('--endless-cap', 80);
 // --grow L: 파티 모두 레벨 L + 재능(짝수 레벨마다 1점, 칼날 → 방패 → 별 순으로 앞에서부터) — 키운 동료가 얼마나 센지
 const GROW = +opt('--grow', 0);
-const CHAPTER = +opt('--chapter', 1);   // 본편 장 (js/data/chapters.js)
+const CHAPTER = +opt('--chapter', 1);
+const STAR = +opt('--star', 0);   // 파티 모두 별자리 n칸(힘만, js/data/gacha.js starFx)
+const { starFx } = await import('../js/data/gacha.js');   // 본편 장 (js/data/chapters.js)
 const { BRANCHES, LV_HP, LV_POWER, talentPoints } = await import('../js/data/growth.js');
 function growFx(lv) {
   if (!lv) return {};
@@ -389,7 +391,8 @@ function chooseBossRelic() {
 let runMade = new Set();   // 이번 판에 생긴 듀오(짝)
 function playRun(party, seed, stats) {
   runMade = new Set();
-  newRun(party, seed, { depth: DEPTH, chapter: CHAPTER, grow: GROW ? Object.fromEntries(party.map(p => [p, growFx(GROW)])) : undefined });
+  const both = p => { const a = growFx(GROW), b = starFx(STAR); for (const [k, v] of Object.entries(b)) a[k] = k === 'burstMul' ? v : (a[k] || 0) + v; return a; };
+  newRun(party, seed, { depth: DEPTH, chapter: CHAPTER, grow: GROW || STAR ? Object.fromEntries(party.map(p => [p, both(p)])) : undefined });
   S.G.rng = rngFrom(S.G.rng.state);
   const rec = { party, seed, won: false, why: '', bossReach: [0, 0, 0, 0], bossClock: [null, null, null, null], over6: false, clock: 0, duos: 0, act: 1, fights: 0, boss: [null, null, null, null], bossKill: [0, 0, 0, 0] };
   drive(rec, stats, 4000);

@@ -12,7 +12,7 @@ import { AFFIX } from '../data/affixes.js';
 import { MOONS } from '../data/moons.js';
 import { TALKS } from '../data/talks.js';
 import { DEPTH, DEPTH_MAX } from '../data/depth.js';
-import { P, nextRate5, epNewCount, pickupNow, starsOf, costumeOpen, wearing, packCards, packsOpen, startUp, sigOpen, sigOf, duoSpecial,
+import { P, nextRate5, epNewCount, pickupNow, starsOf, costumeOpen, wearing, packCards, packsOpen, startUp, sigOpen, sigOf, duoSpecial, starRingOn,
   canExchange, exchangePrice, depthOpen, startPickOpen } from '../meta.js';
 import { stars, palOf, fmt, esc, cardHTML, charSrc, fcImg } from './common.js';
 import { moonImg, sprite } from './sprites.js';
@@ -31,7 +31,7 @@ const head = (back = 'base', label = '본부') => `<div class="bhead"><button ty
 const img = (id, alt) => `<img class="px" src="${charSrc(id, 'stand', alt)}" alt="">`;
 // 아직 없는 동료: 같은 그림을 검은 실루엣으로(빈 네모는 깨진 그림처럼 보인다)
 const sil = id => `<img class="px sil" src="${charSrc(id, 'stand')}" alt="" aria-hidden="true">`;
-const starRing = id => duoSpecial(id) ? 'star5' : '';
+const starRing = id => starRingOn(id) ? 'star5' : '';   // 별자리 6: 이름 옆 별 테두리
 
 // 본부에서 쉬는 셋: 들어올 때마다 가진 동료 중 무작위 셋(같은 방문 동안은 그대로), 하나가 말풍선으로 한 줄.
 const ls = (k, v) => { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } return null; };

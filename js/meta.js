@@ -4,7 +4,7 @@
 import { makeRng, newSeed } from './rng.js';
 import { ROSTER, ROSTER_IDS, byRarity } from './data/roster.js';
 import { STARTER_OWNED, CHARACTERS } from './data/characters.js';
-import { SUMMON, SUMMON_ITEMS, SHARDS, ITEM_DUST, PICKUPS, PICKUP_DAYS, PICKUP_EPOCH, EXCHANGE, START_PICK_RUNS, PACK_SIZE, PACK_COUNT } from './data/gacha.js';
+import { SUMMON, SUMMON_ITEMS, SHARDS, ITEM_DUST, PICKUPS, PICKUP_DAYS, PICKUP_EPOCH, EXCHANGE, START_PICK_RUNS, PACK_SIZE, PACK_COUNT, starFx } from './data/gacha.js';
 import { RULES } from './data/rules.js';
 import { passXp, seasonNow } from './season.js';
 import { MOONS } from './data/moons.js';
@@ -104,7 +104,7 @@ const uniqPush = (arr, x) => { if (!arr.includes(x)) arr.push(x); };
 
 // ---------- 별자리 (§4) ----------
 export const starsOf = id => P.owned[id]?.stars ?? -1;
-export const costumeOpen = id => owns(id) && (P.costumeOwn.includes(id) || starsOf(id) >= 1);
+export const costumeOpen = id => owns(id) && (P.costumeOwn.includes(id) || starsOf(id) >= 6);   // 두 번째 의상: 별자리 6 또는 교환소
 export const wearing = id => !!P.costume[id] && costumeOpen(id);
 // 카드 묶음: 보상 풀(시작 카드가 아닌 카드)의 마지막 4장을 2장씩
 export function packCards(id) {
@@ -118,6 +118,7 @@ export const packsOpen = id => Math.min(packCards(id).length, (P.packs[id] || 0)
 export const startUp = id => starsOf(id) >= 3;
 export const sigOpen = id => starsOf(id) >= 4;
 export const duoSpecial = id => starsOf(id) >= 5;
+export const starRingOn = id => starsOf(id) >= 6;
 export const sigOf = id => Object.keys(RELICS).find(k => RELICS[k].tier === 'sig' && RELICS[k].owner === id);
 
 // 판을 시작할 때 넘기는 것 (run.js newRun opts)
@@ -432,6 +433,7 @@ export const talentLeft = id => { const g = growRec(id); return talentPoints(g.l
 export function growthFx(id) {
   const g = growRec(id), fx = { hp: Math.floor((g.lv - 1) * LV_HP), atk: LV_POWER.filter(l => g.lv >= l).length, blk: LV_POWER.filter(l => g.lv >= l).length };
   for (const k of g.tal) for (const [f, v] of Object.entries(NODES[k]?.fx || {})) fx[f] = f === 'legendMul' ? v : (fx[f] || 0) + v;
+  for (const [f, v] of Object.entries(starFx(starsOf(id)))) fx[f] = f === 'burstMul' ? v : (fx[f] || 0) + v;   // 별자리
   return fx;
 }
 export function learnTalent(id, k) {

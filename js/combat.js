@@ -487,7 +487,7 @@ export function playCard(id, pick = {}) {
   if (d.ch !== 'curse') passives('beforeCard', d);
   pushFx({ kind: 'play', uid: inst.uid, id: inst.id, ch: d.ch, a: d.a, b: d.b, actor: who, target: d.target, foe: d.target === 'foe' ? pick.foe : null, ally: d.target === 'ally' ? pick.ally : null, time: !!d.time, atk: !!d.atk, chain: C.chain });
   // 폭발 턴: ③이 터진 동료는 그 턴 남은 공격 피해 ×RULES.burstMul (docs/12_signature.md §1-2)
-  if (d.atk && who && C.burstTurn.has(who)) C.cardMul *= RULES.burstMul;
+  if (d.atk && who && C.burstTurn.has(who)) C.cardMul *= RULES.burstMul * (growthOf(who).burstMul || 1);   // 별자리 5: 폭발 턴 더 세게
   if (d.atk && who && d.ch === who && d.rarity === 'r' && growthOf(who).legendMul) C.cardMul *= growthOf(who).legendMul;
   const twice = (C.double || jackpot) && d.ch !== 'curse' && !d.id.startsWith('seb.service'); if (C.double && twice) C.double = false;
   const bonus = C.bonus, mul = C.cardMul;

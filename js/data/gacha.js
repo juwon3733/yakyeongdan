@@ -14,7 +14,7 @@ export const SUMMON = {
   pickShare5: .5,          // ★5 중 픽업 동료 비율 (놓치면 다음 ★5는 픽업 확정)
   pickShare4: .5,          // ★4 동료 중 픽업 둘 비율
   firstTen: ['noel', 'raven'],   // 첫 10연: ★4 동료 1명 확정 후보
-  maxStars: 5,             // 별자리 최대
+  maxStars: 6,             // 별자리 최대
   dustFullStars: 50,       // 별자리가 꽉 찬 동료 → 별가루
   dustDupItem: 5,          // 겹친 ★3 물건 → 별가루
 };
@@ -22,7 +22,7 @@ export const SUMMON = {
 //   costume 가진 동료 하나의 두 번째 의상 · relic 시작 도구 고르기에 들어갈 도구(tier 등급) · pack 동료 카드 묶음(보상 풀에 2장)
 //   talk 도감 휴식 대화 하나 · dust 별가루
 export const SUMMON_ITEMS = {
-  4: [ { kind: 'costume', name: '동료 의상', text: '가진 동료 하나의 두 번째 의상' },
+  4: [ { kind: 'dust', name: '별가루 30', text: '교환소에서 쓰는 별가루', dust: 30 },   // 두 번째 의상은 소환에서 안 나온다(별자리 6·교환소)
        { kind: 'relic', tier: 'r', name: '레전더리 도구', text: '판을 시작할 때 고를 수 있는 레전더리 도구' },
        { kind: 'pack', name: '카드 묶음', text: '가진 동료 하나의 보상 카드 2장 추가' } ],
   3: [ { kind: 'relic', tier: 'c', name: '레어 도구', text: '판을 시작할 때 고를 수 있는 레어 도구' },
@@ -42,18 +42,26 @@ export const PICKUPS = [
 export const PICKUP_DAYS = 14;
 export const PICKUP_EPOCH = Date.UTC(2026, 9, 26);
 
-// 별자리 (§4). 같은 동료가 또 나오면 한 칸씩, 최대 5.
+// 별자리 (§4). 같은 동료가 또 나오면 한 칸씩, 최대 6. 칸마다 그 동료가 확실히 세진다(fx는 js/meta.js growthFx가 레벨·재능과 합친다).
+//   두 번째 의상은 6칸(꽉 채움)에서만 — 아니면 교환소에서 비싸게.
 export const STAR_STEPS = [
-  { n: 1, text: '두 번째 의상' },
-  { n: 2, text: '카드 묶음 1 해금(보상 카드 2장 추가)' },
-  { n: 3, text: '시작 카드 1장을 강화판으로' },
-  { n: 4, text: '전용 도구 해금(파티에 있으면 강적·야시장에서 나온다)' },
-  { n: 5, text: '듀오 컷인 특별판, 이름 옆에 별 테두리' },
+  { n: 1, text: '공격·방어 카드 +1', fx: { atk: 1, blk: 1 } },
+  { n: 2, text: '카드 묶음 1 해금(보상 카드 2장 추가) · 최대 체력 +4', fx: { hp: 4 } },
+  { n: 3, text: '시작 카드 1장을 강화판으로 · 공격·방어 카드 +1', fx: { atk: 1, blk: 1 } },
+  { n: 4, text: '전용 도구 해금 · 전투 시작에 방어 6', fx: { startBlock: 6 } },
+  { n: 5, text: '패시브 ③ 폭발 턴 공격 ×1.25 · 듀오 컷인 특별판', fx: { burstMul: 1.25 } },
+  { n: 6, text: '두 번째 의상 · 공격·방어 카드 +2 · 이름 옆 별 테두리', fx: { atk: 2, blk: 2 } },
 ];
+// 별자리 n칸까지의 힘 합
+export function starFx(n) {
+  const fx = {};
+  for (const st of STAR_STEPS.slice(0, Math.max(0, n))) for (const [k, v] of Object.entries(st.fx || {})) fx[k] = k === 'burstMul' ? v : (fx[k] || 0) + v;
+  return fx;
+}
 // 교환소 (§5) 별가루 가격
 export const EXCHANGE = {
   char: { 3: 80, 4: 150, 5: 400 },   // 동료 직접 고르기 (가진 동료면 별자리 +1)
-  costume: 40, pack: 30, talk: 10,
+  costume: 300, pack: 30, talk: 10,   // 의상은 비싸게(별자리 6이면 공짜)
   relic: { c: 20, r: 60 },           // 시작 도구 고르기에 넣을 도구
 };
 // 시작 도구 고르기: 판을 이만큼 끝내면 열린다 (시작 도구 셋 + 소환·교환소로 얻은 도구)
