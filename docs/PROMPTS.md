@@ -1375,185 +1375,185 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `act1_foes_1` | `assets/sheets/act1_foes_1.png` → `sea_ghost.png` `crab_soldier.png` `dock_pirate.png` `gulls.png` `lamp_eel.png` `powder_sailor.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 sea_ghost·crab_soldier·dock_pirate·gulls·lamp_eel·powder_sailor |
-| `act1_foes_2` | `assets/sheets/act1_foes_2.png` → `captain_parrot.png` `mistling.png` `anchor_giant.png` `fog_witch.png` `smuggler_boss.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 captain_parrot·mistling·anchor_giant·fog_witch·smuggler_boss |
+| `act1_foes_1` | `assets/sheets/act1_foes_1.png` → `sea_ghost.png` `crab_soldier.png` `dock_pirate.png` `gulls.png` `lamp_eel.png` `powder_sailor.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 sea_ghost·crab_soldier·dock_pirate·gulls·lamp_eel·powder_sailor |
+| `act1_foes_2` | `assets/sheets/act1_foes_2.png` → `captain_parrot.png` `mistling.png` `anchor_giant.png` `fog_witch.png` `smuggler_boss.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 captain_parrot·mistling·anchor_giant·fog_witch·smuggler_boss |
 
 ## `enemy-act2` — 2막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `act2_foes_1` | `assets/sheets/act2_foes_1.png` → `cloud_spirit.png` `feather_knight.png` `thunder_sheep.png` `vane_soldier.png` `mist_jelly.png` `kite_knight.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 cloud_spirit·feather_knight·thunder_sheep·vane_soldier·mist_jelly·kite_knight |
-| `act2_foes_2` | `assets/sheets/act2_foes_2.png` → `puff_bomber.png` `thunderbird.png` `twin_vanes.png` `storm_trumpeter.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 puff_bomber·thunderbird·twin_vanes·storm_trumpeter |
+| `act2_foes_1` | `assets/sheets/act2_foes_1.png` → `cloud_spirit.png` `feather_knight.png` `thunder_sheep.png` `vane_soldier.png` `mist_jelly.png` `kite_knight.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 cloud_spirit·feather_knight·thunder_sheep·vane_soldier·mist_jelly·kite_knight |
+| `act2_foes_2` | `assets/sheets/act2_foes_2.png` → `puff_bomber.png` `thunderbird.png` `twin_vanes.png` `storm_trumpeter.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 puff_bomber·thunderbird·twin_vanes·storm_trumpeter |
 
 ## `enemy-act3` — 3막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `act3_foes_1` | `assets/sheets/act3_foes_1.png` → `star_statue.png` `shadow_cat.png` `meteor_archer.png` `clock_angel.png` `tail_comet.png` `gear_knight.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 star_statue·shadow_cat·meteor_archer·clock_angel·tail_comet·gear_knight |
-| `act3_foes_2` | `assets/sheets/act3_foes_2.png` → `star_thief.png` `meteor_rider.png` `moon_shadow.png` `constellation_sage.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 star_thief·meteor_rider·moon_shadow·constellation_sage |
+| `act3_foes_1` | `assets/sheets/act3_foes_1.png` → `star_statue.png` `shadow_cat.png` `meteor_archer.png` `clock_angel.png` `tail_comet.png` `gear_knight.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 star_statue·shadow_cat·meteor_archer·clock_angel·tail_comet·gear_knight |
+| `act3_foes_2` | `assets/sheets/act3_foes_2.png` → `star_thief.png` `meteor_rider.png` `moon_shadow.png` `constellation_sage.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 star_thief·meteor_rider·moon_shadow·constellation_sage |
 
 ## `enemy-ch2_act1` — 2장 1막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `ch2_act1_foes_1` | `assets/sheets/ch2_act1_foes_1.png` → `gondola_ghost.png` `mask_dancer.png` `canal_rats.png` `lamp_fish.png` `bridge_troll.png` `masque_host.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 gondola_ghost·mask_dancer·canal_rats·lamp_fish·bridge_troll·masque_host |
+| `ch2_act1_foes_1` | `assets/sheets/ch2_act1_foes_1.png` → `gondola_ghost.png` `mask_dancer.png` `canal_rats.png` `lamp_fish.png` `bridge_troll.png` `masque_host.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 gondola_ghost·mask_dancer·canal_rats·lamp_fish·bridge_troll·masque_host |
 
 ## `enemy-ch2_act2` — 2장 2막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `ch2_act2_foes_1` | `assets/sheets/ch2_act2_foes_1.png` → `clockwork_doll.png` `spring_cat.png` `oil_blob.png` `cuckoo_clock.png` `giant_automaton.png` `tinker_ghost.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 clockwork_doll·spring_cat·oil_blob·cuckoo_clock·giant_automaton·tinker_ghost |
+| `ch2_act2_foes_1` | `assets/sheets/ch2_act2_foes_1.png` → `clockwork_doll.png` `spring_cat.png` `oil_blob.png` `cuckoo_clock.png` `giant_automaton.png` `tinker_ghost.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 clockwork_doll·spring_cat·oil_blob·cuckoo_clock·giant_automaton·tinker_ghost |
 
 ## `enemy-ch2_act3` — 2장 3막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `ch2_act3_foes_1` | `assets/sheets/ch2_act3_foes_1.png` → `choir_ghost.png` `bell_bats.png` `glass_saint.png` `moon_moth.png` `ghost_organist.png` `stone_gargoyle.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 choir_ghost·bell_bats·glass_saint·moon_moth·ghost_organist·stone_gargoyle |
+| `ch2_act3_foes_1` | `assets/sheets/ch2_act3_foes_1.png` → `choir_ghost.png` `bell_bats.png` `glass_saint.png` `moon_moth.png` `ghost_organist.png` `stone_gargoyle.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 choir_ghost·bell_bats·glass_saint·moon_moth·ghost_organist·stone_gargoyle |
 
 ## `enemy-ch3_act1` — 3장 1막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `ch3_act1_foes_1` | `assets/sheets/ch3_act1_foes_1.png` → `frost_wisp.png` `ice_crab.png` `snow_owl.png` `ice_seal.png` `ice_knight.png` `blizzard_witch.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 frost_wisp·ice_crab·snow_owl·ice_seal·ice_knight·blizzard_witch |
+| `ch3_act1_foes_1` | `assets/sheets/ch3_act1_foes_1.png` → `frost_wisp.png` `ice_crab.png` `snow_owl.png` `ice_seal.png` `ice_knight.png` `blizzard_witch.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 frost_wisp·ice_crab·snow_owl·ice_seal·ice_knight·blizzard_witch |
 
 ## `enemy-ch3_act2` — 3장 2막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `ch3_act2_foes_1` | `assets/sheets/ch3_act2_foes_1.png` → `aurora_sprite.png` `crystal_golem.png` `sky_ray.png` `echo_shadow.png` `storm_drake.png` `twin_aurora.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 aurora_sprite·crystal_golem·sky_ray·echo_shadow·storm_drake·twin_aurora |
+| `ch3_act2_foes_1` | `assets/sheets/ch3_act2_foes_1.png` → `aurora_sprite.png` `crystal_golem.png` `sky_ray.png` `echo_shadow.png` `storm_drake.png` `twin_aurora.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 aurora_sprite·crystal_golem·sky_ray·echo_shadow·storm_drake·twin_aurora |
 
 ## `enemy-ch3_act3` — 3장 3막 적 (시트 → 한 마리씩)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `ch3_act3_foes_1` | `assets/sheets/ch3_act3_foes_1.png` → `night_shade.png` `void_star.png` `dream_sleeper.png` `dark_knight.png` `eclipse_lord.png` `nightmare_mask.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 night_shade·void_star·dream_sleeper·dark_knight·eclipse_lord·nightmare_mask |
+| `ch3_act3_foes_1` | `assets/sheets/ch3_act3_foes_1.png` → `night_shade.png` `void_star.png` `dream_sleeper.png` `dark_knight.png` `eclipse_lord.png` `nightmare_mask.png` | 1536×1024 투명 | `assets/enemies/anchor_giant.png` | 3×2 칸에 night_shade·void_star·dream_sleeper·dark_knight·eclipse_lord·nightmare_mask |
 
 ## `foepose-act1` — 1막 적 공격·피격 자세 (시트 → 적마다 2칸)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `act1_foepose_1` | `assets/sheets/act1_foepose_1.png` → `sea_ghost_attack.png` `sea_ghost_hurt.png` `crab_soldier_attack.png` `crab_soldier_hurt.png` `dock_pirate_attack.png` `dock_pirate_hurt.png` | 1536×1024 투명 | `assets/enemies/sea_ghost.png` `assets/enemies/crab_soldier.png` `assets/enemies/dock_pirate.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): sea_ghost·crab_soldier·dock_pirate |
-| `act1_foepose_2` | `assets/sheets/act1_foepose_2.png` → `gulls_attack.png` `gulls_hurt.png` `lamp_eel_attack.png` `lamp_eel_hurt.png` `powder_sailor_attack.png` `powder_sailor_hurt.png` | 1536×1024 투명 | `assets/enemies/gulls.png` `assets/enemies/lamp_eel.png` `assets/enemies/powder_sailor.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): gulls·lamp_eel·powder_sailor |
-| `act1_foepose_3` | `assets/sheets/act1_foepose_3.png` → `captain_parrot_attack.png` `captain_parrot_hurt.png` `mistling_attack.png` `mistling_hurt.png` `anchor_giant_attack.png` `anchor_giant_hurt.png` | 1536×1024 투명 | `assets/enemies/captain_parrot.png` `assets/enemies/mistling.png` `assets/enemies/anchor_giant.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): captain_parrot·mistling·anchor_giant |
-| `act1_foepose_4` | `assets/sheets/act1_foepose_4.png` → `fog_witch_attack.png` `fog_witch_hurt.png` `smuggler_boss_attack.png` `smuggler_boss_hurt.png` | 1536×1024 투명 | `assets/enemies/fog_witch.png` `assets/enemies/smuggler_boss.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): fog_witch·smuggler_boss |
+| `act1_foepose_1` | `assets/sheets/act1_foepose_1.png` → `sea_ghost_attack.png` `sea_ghost_hurt.png` `crab_soldier_attack.png` `crab_soldier_hurt.png` `dock_pirate_attack.png` `dock_pirate_hurt.png` | 1536×1024 투명 | `assets/enemies/sea_ghost.png` `assets/enemies/crab_soldier.png` `assets/enemies/dock_pirate.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): sea_ghost·crab_soldier·dock_pirate |
+| `act1_foepose_2` | `assets/sheets/act1_foepose_2.png` → `gulls_attack.png` `gulls_hurt.png` `lamp_eel_attack.png` `lamp_eel_hurt.png` `powder_sailor_attack.png` `powder_sailor_hurt.png` | 1536×1024 투명 | `assets/enemies/gulls.png` `assets/enemies/lamp_eel.png` `assets/enemies/powder_sailor.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): gulls·lamp_eel·powder_sailor |
+| `act1_foepose_3` | `assets/sheets/act1_foepose_3.png` → `captain_parrot_attack.png` `captain_parrot_hurt.png` `mistling_attack.png` `mistling_hurt.png` `anchor_giant_attack.png` `anchor_giant_hurt.png` | 1536×1024 투명 | `assets/enemies/captain_parrot.png` `assets/enemies/mistling.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): captain_parrot·mistling·anchor_giant |
+| `act1_foepose_4` | `assets/sheets/act1_foepose_4.png` → `fog_witch_attack.png` `fog_witch_hurt.png` `smuggler_boss_attack.png` `smuggler_boss_hurt.png` | 1536×1024 투명 | `assets/enemies/fog_witch.png` `assets/enemies/smuggler_boss.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): fog_witch·smuggler_boss |
 
 ## `foepose-act2` — 2막 적 공격·피격 자세 (시트 → 적마다 2칸)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `act2_foepose_1` | `assets/sheets/act2_foepose_1.png` → `cloud_spirit_attack.png` `cloud_spirit_hurt.png` `feather_knight_attack.png` `feather_knight_hurt.png` `thunder_sheep_attack.png` `thunder_sheep_hurt.png` | 1536×1024 투명 | `assets/enemies/cloud_spirit.png` `assets/enemies/feather_knight.png` `assets/enemies/thunder_sheep.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): cloud_spirit·feather_knight·thunder_sheep |
-| `act2_foepose_2` | `assets/sheets/act2_foepose_2.png` → `vane_soldier_attack.png` `vane_soldier_hurt.png` `mist_jelly_attack.png` `mist_jelly_hurt.png` `kite_knight_attack.png` `kite_knight_hurt.png` | 1536×1024 투명 | `assets/enemies/vane_soldier.png` `assets/enemies/mist_jelly.png` `assets/enemies/kite_knight.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): vane_soldier·mist_jelly·kite_knight |
-| `act2_foepose_3` | `assets/sheets/act2_foepose_3.png` → `puff_bomber_attack.png` `puff_bomber_hurt.png` `thunderbird_attack.png` `thunderbird_hurt.png` `twin_vanes_attack.png` `twin_vanes_hurt.png` | 1536×1024 투명 | `assets/enemies/puff_bomber.png` `assets/enemies/thunderbird.png` `assets/enemies/twin_vanes.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): puff_bomber·thunderbird·twin_vanes |
-| `act2_foepose_4` | `assets/sheets/act2_foepose_4.png` → `storm_trumpeter_attack.png` `storm_trumpeter_hurt.png` | 1536×1024 투명 | `assets/enemies/storm_trumpeter.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): storm_trumpeter |
+| `act2_foepose_1` | `assets/sheets/act2_foepose_1.png` → `cloud_spirit_attack.png` `cloud_spirit_hurt.png` `feather_knight_attack.png` `feather_knight_hurt.png` `thunder_sheep_attack.png` `thunder_sheep_hurt.png` | 1536×1024 투명 | `assets/enemies/cloud_spirit.png` `assets/enemies/feather_knight.png` `assets/enemies/thunder_sheep.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): cloud_spirit·feather_knight·thunder_sheep |
+| `act2_foepose_2` | `assets/sheets/act2_foepose_2.png` → `vane_soldier_attack.png` `vane_soldier_hurt.png` `mist_jelly_attack.png` `mist_jelly_hurt.png` `kite_knight_attack.png` `kite_knight_hurt.png` | 1536×1024 투명 | `assets/enemies/vane_soldier.png` `assets/enemies/mist_jelly.png` `assets/enemies/kite_knight.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): vane_soldier·mist_jelly·kite_knight |
+| `act2_foepose_3` | `assets/sheets/act2_foepose_3.png` → `puff_bomber_attack.png` `puff_bomber_hurt.png` `thunderbird_attack.png` `thunderbird_hurt.png` `twin_vanes_attack.png` `twin_vanes_hurt.png` | 1536×1024 투명 | `assets/enemies/puff_bomber.png` `assets/enemies/thunderbird.png` `assets/enemies/twin_vanes.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): puff_bomber·thunderbird·twin_vanes |
+| `act2_foepose_4` | `assets/sheets/act2_foepose_4.png` → `storm_trumpeter_attack.png` `storm_trumpeter_hurt.png` | 1536×1024 투명 | `assets/enemies/storm_trumpeter.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): storm_trumpeter |
 
 ## `foepose-act3` — 3막 적 공격·피격 자세 (시트 → 적마다 2칸)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `act3_foepose_1` | `assets/sheets/act3_foepose_1.png` → `star_statue_attack.png` `star_statue_hurt.png` `shadow_cat_attack.png` `shadow_cat_hurt.png` `meteor_archer_attack.png` `meteor_archer_hurt.png` | 1536×1024 투명 | `assets/enemies/star_statue.png` `assets/enemies/shadow_cat.png` `assets/enemies/meteor_archer.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): star_statue·shadow_cat·meteor_archer |
-| `act3_foepose_2` | `assets/sheets/act3_foepose_2.png` → `clock_angel_attack.png` `clock_angel_hurt.png` `tail_comet_attack.png` `tail_comet_hurt.png` `gear_knight_attack.png` `gear_knight_hurt.png` | 1536×1024 투명 | `assets/enemies/clock_angel.png` `assets/enemies/tail_comet.png` `assets/enemies/gear_knight.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): clock_angel·tail_comet·gear_knight |
-| `act3_foepose_3` | `assets/sheets/act3_foepose_3.png` → `star_thief_attack.png` `star_thief_hurt.png` `meteor_rider_attack.png` `meteor_rider_hurt.png` `moon_shadow_attack.png` `moon_shadow_hurt.png` | 1536×1024 투명 | `assets/enemies/star_thief.png` `assets/enemies/meteor_rider.png` `assets/enemies/moon_shadow.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): star_thief·meteor_rider·moon_shadow |
-| `act3_foepose_4` | `assets/sheets/act3_foepose_4.png` → `constellation_sage_attack.png` `constellation_sage_hurt.png` | 1536×1024 투명 | `assets/enemies/constellation_sage.png` `assets/style/akane_c.png` | 열마다 적 하나(위 공격·아래 피격): constellation_sage |
+| `act3_foepose_1` | `assets/sheets/act3_foepose_1.png` → `star_statue_attack.png` `star_statue_hurt.png` `shadow_cat_attack.png` `shadow_cat_hurt.png` `meteor_archer_attack.png` `meteor_archer_hurt.png` | 1536×1024 투명 | `assets/enemies/star_statue.png` `assets/enemies/shadow_cat.png` `assets/enemies/meteor_archer.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): star_statue·shadow_cat·meteor_archer |
+| `act3_foepose_2` | `assets/sheets/act3_foepose_2.png` → `clock_angel_attack.png` `clock_angel_hurt.png` `tail_comet_attack.png` `tail_comet_hurt.png` `gear_knight_attack.png` `gear_knight_hurt.png` | 1536×1024 투명 | `assets/enemies/clock_angel.png` `assets/enemies/tail_comet.png` `assets/enemies/gear_knight.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): clock_angel·tail_comet·gear_knight |
+| `act3_foepose_3` | `assets/sheets/act3_foepose_3.png` → `star_thief_attack.png` `star_thief_hurt.png` `meteor_rider_attack.png` `meteor_rider_hurt.png` `moon_shadow_attack.png` `moon_shadow_hurt.png` | 1536×1024 투명 | `assets/enemies/star_thief.png` `assets/enemies/meteor_rider.png` `assets/enemies/moon_shadow.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): star_thief·meteor_rider·moon_shadow |
+| `act3_foepose_4` | `assets/sheets/act3_foepose_4.png` → `constellation_sage_attack.png` `constellation_sage_hurt.png` | 1536×1024 투명 | `assets/enemies/constellation_sage.png` `assets/enemies/anchor_giant.png` | 열마다 적 하나(위 공격·아래 피격): constellation_sage |
 
 ## `boss-star_king` — 보스 떨어진 별의 왕
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_star_king_1` | `assets/enemies/boss_star_king_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_star_king_2` | `assets/enemies/boss_star_king_2.png` | 1024×1536 투명 | `assets/enemies/boss_star_king_1.png` `assets/style/akane_c.png` | — |
-| `boss_star_king_3` | `assets/enemies/boss_star_king_3.png` | 1024×1536 투명 | `assets/enemies/boss_star_king_1.png` `assets/style/akane_c.png` | — |
-| `boss_star_king_cutin` | `assets/cutins/boss_star_king_cutin.png` | 1536×576 | `assets/enemies/boss_star_king_1.png` `assets/style/akane_c.png` | — |
+| `boss_star_king_1` | `assets/enemies/boss_star_king_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_star_king_2` | `assets/enemies/boss_star_king_2.png` | 1024×1536 투명 | `assets/enemies/boss_star_king_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_star_king_3` | `assets/enemies/boss_star_king_3.png` | 1024×1536 투명 | `assets/enemies/boss_star_king_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_star_king_cutin` | `assets/cutins/boss_star_king_cutin.png` | 1536×576 | `assets/enemies/boss_star_king_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-lighthouse` — 보스 등대지기
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_lighthouse_1` | `assets/enemies/boss_lighthouse_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_lighthouse_2` | `assets/enemies/boss_lighthouse_2.png` | 1024×1536 투명 | `assets/enemies/boss_lighthouse_1.png` `assets/style/akane_c.png` | — |
-| `boss_lighthouse_cutin` | `assets/cutins/boss_lighthouse_cutin.png` | 1536×576 | `assets/enemies/boss_lighthouse_1.png` `assets/style/akane_c.png` | — |
+| `boss_lighthouse_1` | `assets/enemies/boss_lighthouse_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_lighthouse_2` | `assets/enemies/boss_lighthouse_2.png` | 1024×1536 투명 | `assets/enemies/boss_lighthouse_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_lighthouse_cutin` | `assets/cutins/boss_lighthouse_cutin.png` | 1536×576 | `assets/enemies/boss_lighthouse_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-cloud_captain` — 보스 구름 기사단장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_cloud_captain_1` | `assets/enemies/boss_cloud_captain_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_cloud_captain_2` | `assets/enemies/boss_cloud_captain_2.png` | 1024×1536 투명 | `assets/enemies/boss_cloud_captain_1.png` `assets/style/akane_c.png` | — |
-| `boss_cloud_captain_cutin` | `assets/cutins/boss_cloud_captain_cutin.png` | 1536×576 | `assets/enemies/boss_cloud_captain_1.png` `assets/style/akane_c.png` | — |
+| `boss_cloud_captain_1` | `assets/enemies/boss_cloud_captain_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_cloud_captain_2` | `assets/enemies/boss_cloud_captain_2.png` | 1024×1536 투명 | `assets/enemies/boss_cloud_captain_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_cloud_captain_cutin` | `assets/cutins/boss_cloud_captain_cutin.png` | 1536×576 | `assets/enemies/boss_cloud_captain_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-fog_queen` — 보스 안개 마녀 여왕
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_fog_queen_1` | `assets/enemies/boss_fog_queen_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_fog_queen_2` | `assets/enemies/boss_fog_queen_2.png` | 1024×1536 투명 | `assets/enemies/boss_fog_queen_1.png` `assets/style/akane_c.png` | — |
-| `boss_fog_queen_cutin` | `assets/cutins/boss_fog_queen_cutin.png` | 1536×576 | `assets/enemies/boss_fog_queen_1.png` `assets/style/akane_c.png` | — |
+| `boss_fog_queen_1` | `assets/enemies/boss_fog_queen_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_fog_queen_2` | `assets/enemies/boss_fog_queen_2.png` | 1024×1536 투명 | `assets/enemies/boss_fog_queen_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_fog_queen_cutin` | `assets/cutins/boss_fog_queen_cutin.png` | 1536×576 | `assets/enemies/boss_fog_queen_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-storm_whale` — 보스 폭풍 고래
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_storm_whale_1` | `assets/enemies/boss_storm_whale_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_storm_whale_2` | `assets/enemies/boss_storm_whale_2.png` | 1024×1536 투명 | `assets/enemies/boss_storm_whale_1.png` `assets/style/akane_c.png` | — |
-| `boss_storm_whale_cutin` | `assets/cutins/boss_storm_whale_cutin.png` | 1536×576 | `assets/enemies/boss_storm_whale_1.png` `assets/style/akane_c.png` | — |
+| `boss_storm_whale_1` | `assets/enemies/boss_storm_whale_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_storm_whale_2` | `assets/enemies/boss_storm_whale_2.png` | 1024×1536 투명 | `assets/enemies/boss_storm_whale_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_storm_whale_cutin` | `assets/cutins/boss_storm_whale_cutin.png` | 1536×576 | `assets/enemies/boss_storm_whale_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-floodgate` — 보스 수문장
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_floodgate_1` | `assets/enemies/boss_floodgate_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_floodgate_2` | `assets/enemies/boss_floodgate_2.png` | 1024×1536 투명 | `assets/enemies/boss_floodgate_1.png` `assets/style/akane_c.png` | — |
-| `boss_floodgate_cutin` | `assets/cutins/boss_floodgate_cutin.png` | 1536×576 | `assets/enemies/boss_floodgate_1.png` `assets/style/akane_c.png` | — |
+| `boss_floodgate_1` | `assets/enemies/boss_floodgate_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_floodgate_2` | `assets/enemies/boss_floodgate_2.png` | 1024×1536 투명 | `assets/enemies/boss_floodgate_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_floodgate_cutin` | `assets/cutins/boss_floodgate_cutin.png` | 1536×576 | `assets/enemies/boss_floodgate_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-clockknight` — 보스 멈춘 태엽 기사
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_clockknight_1` | `assets/enemies/boss_clockknight_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_clockknight_2` | `assets/enemies/boss_clockknight_2.png` | 1024×1536 투명 | `assets/enemies/boss_clockknight_1.png` `assets/style/akane_c.png` | — |
-| `boss_clockknight_cutin` | `assets/cutins/boss_clockknight_cutin.png` | 1536×576 | `assets/enemies/boss_clockknight_1.png` `assets/style/akane_c.png` | — |
+| `boss_clockknight_1` | `assets/enemies/boss_clockknight_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_clockknight_2` | `assets/enemies/boss_clockknight_2.png` | 1024×1536 투명 | `assets/enemies/boss_clockknight_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_clockknight_cutin` | `assets/cutins/boss_clockknight_cutin.png` | 1536×576 | `assets/enemies/boss_clockknight_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-bellkeeper` — 보스 침묵의 종지기
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_bellkeeper_1` | `assets/enemies/boss_bellkeeper_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_bellkeeper_2` | `assets/enemies/boss_bellkeeper_2.png` | 1024×1536 투명 | `assets/enemies/boss_bellkeeper_1.png` `assets/style/akane_c.png` | — |
-| `boss_bellkeeper_3` | `assets/enemies/boss_bellkeeper_3.png` | 1024×1536 투명 | `assets/enemies/boss_bellkeeper_1.png` `assets/style/akane_c.png` | — |
-| `boss_bellkeeper_cutin` | `assets/cutins/boss_bellkeeper_cutin.png` | 1536×576 | `assets/enemies/boss_bellkeeper_1.png` `assets/style/akane_c.png` | — |
+| `boss_bellkeeper_1` | `assets/enemies/boss_bellkeeper_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_bellkeeper_2` | `assets/enemies/boss_bellkeeper_2.png` | 1024×1536 투명 | `assets/enemies/boss_bellkeeper_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_bellkeeper_3` | `assets/enemies/boss_bellkeeper_3.png` | 1024×1536 투명 | `assets/enemies/boss_bellkeeper_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_bellkeeper_cutin` | `assets/cutins/boss_bellkeeper_cutin.png` | 1536×576 | `assets/enemies/boss_bellkeeper_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-frostkeeper` — 보스 얼어붙은 등대지기
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_frostkeeper_1` | `assets/enemies/boss_frostkeeper_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_frostkeeper_2` | `assets/enemies/boss_frostkeeper_2.png` | 1024×1536 투명 | `assets/enemies/boss_frostkeeper_1.png` `assets/style/akane_c.png` | — |
-| `boss_frostkeeper_cutin` | `assets/cutins/boss_frostkeeper_cutin.png` | 1536×576 | `assets/enemies/boss_frostkeeper_1.png` `assets/style/akane_c.png` | — |
+| `boss_frostkeeper_1` | `assets/enemies/boss_frostkeeper_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_frostkeeper_2` | `assets/enemies/boss_frostkeeper_2.png` | 1024×1536 투명 | `assets/enemies/boss_frostkeeper_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_frostkeeper_cutin` | `assets/cutins/boss_frostkeeper_cutin.png` | 1536×576 | `assets/enemies/boss_frostkeeper_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-warden` — 보스 오로라 파수꾼
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_warden_1` | `assets/enemies/boss_warden_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_warden_2` | `assets/enemies/boss_warden_2.png` | 1024×1536 투명 | `assets/enemies/boss_warden_1.png` `assets/style/akane_c.png` | — |
-| `boss_warden_cutin` | `assets/cutins/boss_warden_cutin.png` | 1536×576 | `assets/enemies/boss_warden_1.png` `assets/style/akane_c.png` | — |
+| `boss_warden_1` | `assets/enemies/boss_warden_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_warden_2` | `assets/enemies/boss_warden_2.png` | 1024×1536 투명 | `assets/enemies/boss_warden_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_warden_cutin` | `assets/cutins/boss_warden_cutin.png` | 1536×576 | `assets/enemies/boss_warden_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-firstnight` — 보스 첫 밤
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_firstnight_1` | `assets/enemies/boss_firstnight_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_firstnight_2` | `assets/enemies/boss_firstnight_2.png` | 1024×1536 투명 | `assets/enemies/boss_firstnight_1.png` `assets/style/akane_c.png` | — |
-| `boss_firstnight_3` | `assets/enemies/boss_firstnight_3.png` | 1024×1536 투명 | `assets/enemies/boss_firstnight_1.png` `assets/style/akane_c.png` | — |
-| `boss_firstnight_cutin` | `assets/cutins/boss_firstnight_cutin.png` | 1536×576 | `assets/enemies/boss_firstnight_1.png` `assets/style/akane_c.png` | — |
+| `boss_firstnight_1` | `assets/enemies/boss_firstnight_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_firstnight_2` | `assets/enemies/boss_firstnight_2.png` | 1024×1536 투명 | `assets/enemies/boss_firstnight_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_firstnight_3` | `assets/enemies/boss_firstnight_3.png` | 1024×1536 투명 | `assets/enemies/boss_firstnight_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_firstnight_cutin` | `assets/cutins/boss_firstnight_cutin.png` | 1536×576 | `assets/enemies/boss_firstnight_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `boss-dawn` — 보스 새벽
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `boss_dawn_1` | `assets/enemies/boss_dawn_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
-| `boss_dawn_2` | `assets/enemies/boss_dawn_2.png` | 1024×1536 투명 | `assets/enemies/boss_dawn_1.png` `assets/style/akane_c.png` | — |
-| `boss_dawn_3` | `assets/enemies/boss_dawn_3.png` | 1024×1536 투명 | `assets/enemies/boss_dawn_1.png` `assets/style/akane_c.png` | — |
-| `boss_dawn_cutin` | `assets/cutins/boss_dawn_cutin.png` | 1536×576 | `assets/enemies/boss_dawn_1.png` `assets/style/akane_c.png` | — |
+| `boss_dawn_1` | `assets/enemies/boss_dawn_1.png` | 1024×1536 투명 | `assets/enemies/anchor_giant.png` | — |
+| `boss_dawn_2` | `assets/enemies/boss_dawn_2.png` | 1024×1536 투명 | `assets/enemies/boss_dawn_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_dawn_3` | `assets/enemies/boss_dawn_3.png` | 1024×1536 투명 | `assets/enemies/boss_dawn_1.png` `assets/enemies/anchor_giant.png` | — |
+| `boss_dawn_cutin` | `assets/cutins/boss_dawn_cutin.png` | 1536×576 | `assets/enemies/boss_dawn_1.png` `assets/enemies/anchor_giant.png` | — |
 
 ## `fx-common` — 공용 타격 이펙트 4종 (시트 4장 → 6프레임씩)
 
@@ -1758,49 +1758,49 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `bg_act1` | `assets/bg/act1.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_act2` | `assets/bg/act2.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_act3` | `assets/bg/act3.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_hq` | `assets/bg/hq.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_map1` | `assets/bg/map1.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_map2` | `assets/bg/map2.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_map3` | `assets/bg/map3.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ep_clocktower` | `assets/bg/ep_clocktower.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ep_convent` | `assets/bg/ep_convent.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ep_nightmarket` | `assets/bg/ep_nightmarket.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ep_lighthouse` | `assets/bg/ep_lighthouse.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ep_kitchen` | `assets/bg/ep_kitchen.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ep_harbor` | `assets/bg/ep_harbor.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_act1` | `assets/bg/act1.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_act2` | `assets/bg/act2.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_act3` | `assets/bg/act3.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_hq` | `assets/bg/hq.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_map1` | `assets/bg/map1.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_map2` | `assets/bg/map2.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_map3` | `assets/bg/map3.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ep_clocktower` | `assets/bg/ep_clocktower.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ep_convent` | `assets/bg/ep_convent.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ep_nightmarket` | `assets/bg/ep_nightmarket.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ep_lighthouse` | `assets/bg/ep_lighthouse.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ep_kitchen` | `assets/bg/ep_kitchen.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ep_harbor` | `assets/bg/ep_harbor.png` | 1280×720 | `assets/bg/act1.png` | — |
 
 ## `bg-ch2` — 2장 배경 (전투 3 · 지도 3)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `bg_ch2_act1` | `assets/bg/ch2_act1.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ch2_act2` | `assets/bg/ch2_act2.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ch2_act3` | `assets/bg/ch2_act3.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ch2_map1` | `assets/bg/ch2_map1.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ch2_map2` | `assets/bg/ch2_map2.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ch2_map3` | `assets/bg/ch2_map3.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch2_act1` | `assets/bg/ch2_act1.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ch2_act2` | `assets/bg/ch2_act2.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ch2_act3` | `assets/bg/ch2_act3.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ch2_map1` | `assets/bg/ch2_map1.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ch2_map2` | `assets/bg/ch2_map2.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ch2_map3` | `assets/bg/ch2_map3.png` | 1280×720 | `assets/bg/act1.png` | — |
 
 ## `bg-ch3` — 3장 배경 (전투 3 · 지도 3)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `bg_ch3_act1` | `assets/bg/ch3_act1.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ch3_act2` | `assets/bg/ch3_act2.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ch3_act3` | `assets/bg/ch3_act3.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ch3_map1` | `assets/bg/ch3_map1.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ch3_map2` | `assets/bg/ch3_map2.png` | 1280×720 | `assets/style/akane_c.png` | — |
-| `bg_ch3_map3` | `assets/bg/ch3_map3.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch3_act1` | `assets/bg/ch3_act1.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ch3_act2` | `assets/bg/ch3_act2.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ch3_act3` | `assets/bg/ch3_act3.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ch3_map1` | `assets/bg/ch3_map1.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ch3_map2` | `assets/bg/ch3_map2.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `bg_ch3_map3` | `assets/bg/ch3_map3.png` | 1280×720 | `assets/bg/act1.png` | — |
 
 ## `tower` — 지도 탑 (막마다 1장)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
-| `tower1` | `assets/bg/tower1.png` | 1200×1272 투명 | `assets/style/akane_c.png` | — |
-| `tower2` | `assets/bg/tower2.png` | 1200×1272 투명 | `assets/style/akane_c.png` | — |
-| `tower3` | `assets/bg/tower3.png` | 1200×1272 투명 | `assets/style/akane_c.png` | — |
+| `tower1` | `assets/bg/tower1.png` | 1200×1272 투명 | `assets/bg/act1.png` | — |
+| `tower2` | `assets/bg/tower2.png` | 1200×1272 투명 | `assets/bg/act1.png` | — |
+| `tower3` | `assets/bg/tower3.png` | 1200×1272 투명 | `assets/bg/act1.png` | — |
 
 ## `title` — 타이틀 키아트
 

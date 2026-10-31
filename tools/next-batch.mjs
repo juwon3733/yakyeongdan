@@ -61,7 +61,7 @@ try {
     .split('\n').map((l) => l.split('refs/heads/assets/')[1]).filter(Boolean);
 } catch { /* 원격을 못 보면 대기 중 브랜치는 모름 */ }
 // 프롬프트를 바꿔 다시 그려야 하는 묶음: 이 시각(월일시분) 이전 브랜치는 검수 대기로 치지 않는다(옛 그림은 안 씀)
-const REDO_AFTER = { 'aura-akane': '10300110', 'aura-sion': '10300110', 'aura-lunaria': '10300110', 'aura-eleonore': '10300110', 'aura-nerea': '10300110' };
+const REDO_AFTER = { 'boss-bellkeeper': '10311330', 'aura-akane': '10300110', 'aura-sion': '10300110', 'aura-lunaria': '10300110', 'aura-eleonore': '10300110', 'aura-nerea': '10300110' };
 const stampOf = (b) => (/-(\d{4})-(\d{4})$/.exec(b) || []).slice(1).join('');
 const inReview = (id) => pending.some((b) => (b === id || b.startsWith(id + '-')) && !((REDO_AFTER[id] || REDRAW[id]) && stampOf(b) && stampOf(b) <= (REDO_AFTER[id] || REDRAW[id])));
 
@@ -80,4 +80,4 @@ const MAX_REF = 5;
 const room = Math.max(0, MAX_REF - 1 - Math.max(0, ...missing(next).map((i) => (i.reference_images || []).length)));
 if (done.length) console.log(`이미 있음(다시 만들지 말 것): ${done.map((i) => i.file).join(', ')}`);
 if (done.length && room) console.log(`그중 기준으로 첨부할 것(${room}장까지): ${done.slice(0, room).map((i) => i.file).join(', ')}`);
-console.log(`첨부(그림마다 최대 ${MAX_REF}장): style/akane_c.png + 그 그림의 reference_images${done.length && room ? ' + 위 기준' : ''}. 5장을 넘기지 말 것.`);
+console.log(`첨부(그림마다 최대 ${MAX_REF}장): 그 그림의 reference_images 전부(그림체 기준 그림이 이미 들어 있다 — 동료는 style/akane_c.png, 적·보스·배경은 게임 그림)${done.length && room ? ' + 위 기준' : ''}. 5장을 넘기지 말 것.`);
