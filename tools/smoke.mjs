@@ -344,7 +344,7 @@ try {
     await page.evaluate(() => { window.__yk.stars('iris', 6); window.__yk.S.view = 'mates'; window.__yk.render(); });
     await page.click('[data-mate="iris"]');
     await page.click('[data-costume="iris:1"]');
-    const cos = await page.evaluate(() => window.__yk.P().costume.iris === 1 && document.querySelectorAll('.stcs .stc.on').length === 5);
+    const cos = await page.evaluate(() => window.__yk.P().costume.iris === 1 && document.querySelectorAll('.stcs .stc.on').length === 6);
     await page.evaluate(() => { window.__yk.S.view = 'codex'; window.__yk.render(); });
     for (const t of ['mates', 'duos', 'cards', 'foes', 'talks']) await page.click(`[data-ctab="${t}"]`);
     // 도감 「적」: 막 묶음 넷(시즌 1 포함), 만난 적 칸을 누르면 행동 패턴 아이콘 줄
