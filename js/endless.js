@@ -42,7 +42,7 @@ export function nextSegment() {
   const map = makeMap(G.rng, G.moon), gate = E.seg * ENDLESS.seg;
   map.rows[map.rows.length - 1] = [isBossGate(gate) ? 'boss' : 'elite'];
   G.map = map; G.row = 0; G.took = []; G.nextElite = pickElite();
-  G.screen = 'map'; G.note = `${gate - ENDLESS.seg + 1}~${gate}층 · 새 규칙 「${rule.name}」`;
+  G.screen = 'map'; G.note = `${gate - ENDLESS.seg + 1}~${gate}층 · 새 규칙: ${rule.name}`;
 }
 
 // 지금 층 수 (지도에서 고른 칸마다 +1, map.js goNode)

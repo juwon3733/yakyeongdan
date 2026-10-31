@@ -135,23 +135,23 @@ function pityBar(r5) {
 export function oddsView() {
   const pk = pickupNow();
   const c4 = SUMMON.rate4 * SUMMON.char4Share, c3 = (1 - SUMMON.rate5 - SUMMON.rate4) * SUMMON.char3Share;
-  const row = (r, list, each) => `<tr><th>${stars(r)}</th><td class="ofaces">${list.map(k => `<span class="oface ${k === pk.five || pk.four.includes(k) ? 'pk' : ''}" style="--c:${ROSTER[k].col}" title="${esc(ROSTER[k].name)}"><span class="of">${fcImg(k, 1.7)}</span><small>${ROSTER[k].name}</small>${k === pk.five || pk.four.includes(k) ? '<b class="pkmark">픽업</b>' : ''}</span>`).join('')}</td><td>${each}</td></tr>`;
+  const row = (r, list, each) => `<tr><th>★${r}</th><td class="ofaces">${list.map(k => `<span class="oface ${k === pk.five || pk.four.includes(k) ? 'pk' : ''}" style="--c:${ROSTER[k].col}" title="${esc(ROSTER[k].name)}"><span class="of">${fcImg(k, 1.7)}</span><small>${ROSTER[k].name}</small>${k === pk.five || pk.four.includes(k) ? '<b class="pkmark">픽업</b>' : ''}</span>`).join('')}</td><td>${each}</td></tr>`;
   const n4 = byRarity(4).length - 2;
   return `<div class="epsel">
     ${head('summon', '별 소환')}
     <h2>소환 확률</h2>
     <div class="oddsline big">${oddsRow()}</div>
     ${pityBar(nextRate5())}
-    <details class="fold"><summary>등급별로 나오는 것</summary>
+    <details class="fold" open><summary>등급별로 나오는 것</summary>
     <table class="odds big">
       <tr><th>등급</th><td>나오는 것</td><td>확률</td></tr>
-      ${row(5, byRarity(5), `${pct(SUMMON.rate5)} (픽업 ${ROSTER[pk.five].name} ${pct(SUMMON.rate5 * SUMMON.pickShare5)}, 나머지 셋 각 ${pct(SUMMON.rate5 * (1 - SUMMON.pickShare5) / 3)})`)}
+      ${row(5, byRarity(5), `${pct(SUMMON.rate5)} (픽업 ${ROSTER[pk.five].name} ${pct(SUMMON.rate5 * SUMMON.pickShare5)}, 나머지 ${byRarity(5).length - 1}명 각 ${pct(SUMMON.rate5 * (1 - SUMMON.pickShare5) / (byRarity(5).length - 1))})`)}
       ${row(4, byRarity(4), `동료 ${pct(c4)} (그중 ${pct(SUMMON.pickShare4)}는 픽업 둘 중 하나, 나머지는 ★4 ${n4 + 2}명 중 하나)`)}
       <tr><th>★4</th><td>동료 의상 · 레전더리 도구 · 카드 묶음</td><td>${pct(SUMMON.rate4 - c4)} (셋 같은 확률)</td></tr>
       ${row(3, byRarity(3), `동료 ${pct(c3)} (${byRarity(3).length}명 같은 확률)`)}
       <tr><th>★3</th><td>레어 도구 · 별가루 10 · 휴식 대화 조각</td><td>${pct(1 - SUMMON.rate5 - SUMMON.rate4 - c3)} (셋 같은 확률)</td></tr>
     </table></details>
-    <details class="fold"><summary>천장 · 확정 규칙</summary>
+    <details class="fold" open><summary>천장 · 확정 규칙</summary>
     <ul class="note rules">
       <li>${SUMMON.softFrom}번째 뽑기부터 ★5 확률이 매번 +${pct(SUMMON.softStep)}, ★5 없이 ${SUMMON.hard - 1}번이면 ${SUMMON.hard}번째 확정. 횟수는 픽업이 바뀌어도 이어진다.</li>
       <li>10연은 ★4 이상 1개 확정. 첫 10연은 노엘·레이븐 중 1명 확정.</li>
