@@ -1289,26 +1289,32 @@
     },
     {
       "id": "bg-ch2",
-      "title": "2장 배경 (전투 3 · 지도 3)",
+      "title": "2장 배경 (전투 3 · 지도 3 · 탑 3)",
       "items": [
         "bg_ch2_act1",
         "bg_ch2_act2",
         "bg_ch2_act3",
         "bg_ch2_map1",
         "bg_ch2_map2",
-        "bg_ch2_map3"
+        "bg_ch2_map3",
+        "ch2_tower1",
+        "ch2_tower2",
+        "ch2_tower3"
       ]
     },
     {
       "id": "bg-ch3",
-      "title": "3장 배경 (전투 3 · 지도 3)",
+      "title": "3장 배경 (전투 3 · 지도 3 · 탑 3)",
       "items": [
         "bg_ch3_act1",
         "bg_ch3_act2",
         "bg_ch3_act3",
         "bg_ch3_map1",
         "bg_ch3_map2",
-        "bg_ch3_map3"
+        "bg_ch3_map3",
+        "ch3_tower1",
+        "ch3_tower2",
+        "ch3_tower3"
       ]
     },
     {
@@ -17414,6 +17420,57 @@
       ]
     },
     {
+      "id": "ch2_tower1",
+      "kind": "tower",
+      "batch": "bg-ch2",
+      "file": "bg/ch2_tower1.png",
+      "width": 1200,
+      "height": 1272,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "300×318",
+      "note": "지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nA single tall TOWER seen straight from the front (orthographic, no perspective), a slender canal-city tower of pale sandstone rising out of still canal water, small arched bridges at its feet, gondola moored, lamps reflected in water, an arched water gate at the bottom center. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges sticking out (the game draws its own markers on top). Fully transparent background around the tower. No people, no text. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272. The attached style image is ONLY a reference for pixel size, outline and shading — do NOT copy its character, face, hair, colors or costume.",
+      "reference_images": [
+        "bg/tower1.png",
+        "bg/act1.png"
+      ]
+    },
+    {
+      "id": "ch2_tower2",
+      "kind": "tower",
+      "batch": "bg-ch2",
+      "file": "bg/ch2_tower2.png",
+      "width": 1200,
+      "height": 1272,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "300×318",
+      "note": "지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nA single tall TOWER seen straight from the front (orthographic, no perspective), a brass clockwork tower: riveted copper plates, big frozen gears set into the walls, steam pipes, a stopped clock face near the top, warm amber windows, an arched workshop door at the bottom center. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges sticking out (the game draws its own markers on top). Fully transparent background around the tower. No people, no text. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272. The attached style image is ONLY a reference for pixel size, outline and shading — do NOT copy its character, face, hair, colors or costume.",
+      "reference_images": [
+        "bg/tower2.png",
+        "bg/act1.png"
+      ]
+    },
+    {
+      "id": "ch2_tower3",
+      "kind": "tower",
+      "batch": "bg-ch2",
+      "file": "bg/ch2_tower3.png",
+      "width": 1200,
+      "height": 1272,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "300×318",
+      "note": "지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nA single tall TOWER seen straight from the front (orthographic, no perspective), a gothic cathedral bell tower: dark slate stone, tall stained-glass lancet windows glowing violet and blue, gargoyles at the corners, a silent bell visible in the open belfry under a pointed roof, an arched church door at the bottom center. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges sticking out (the game draws its own markers on top). Fully transparent background around the tower. No people, no text. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272. The attached style image is ONLY a reference for pixel size, outline and shading — do NOT copy its character, face, hair, colors or costume.",
+      "reference_images": [
+        "bg/tower3.png",
+        "bg/act1.png"
+      ]
+    },
+    {
       "id": "bg_ch3_act1",
       "kind": "bg",
       "batch": "bg-ch3",
@@ -17506,6 +17563,57 @@
       "note": "배경 16:9 · 사람 없음 · 아래 1/3은 단순하게(캐릭터가 서는 자리)",
       "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nBackground: a staircase of stars rising to a floating throne at the edge of the universe. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720. The attached style image is ONLY a reference for pixel size, outline and shading — do NOT copy its character, face, hair, colors or costume.",
       "reference_images": [
+        "bg/act1.png"
+      ]
+    },
+    {
+      "id": "ch3_tower1",
+      "kind": "tower",
+      "batch": "bg-ch3",
+      "file": "bg/ch3_tower1.png",
+      "width": 1200,
+      "height": 1272,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "300×318",
+      "note": "지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nA single tall TOWER seen straight from the front (orthographic, no perspective), an ice-covered lighthouse tower on a frozen rock, snow on every ledge, icicles, a dead dark lantern room at the top, frozen waves at the base, an arched door at the bottom center. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges sticking out (the game draws its own markers on top). Fully transparent background around the tower. No people, no text. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272. The attached style image is ONLY a reference for pixel size, outline and shading — do NOT copy its character, face, hair, colors or costume.",
+      "reference_images": [
+        "bg/tower1.png",
+        "bg/act1.png"
+      ]
+    },
+    {
+      "id": "ch3_tower2",
+      "kind": "tower",
+      "batch": "bg-ch3",
+      "file": "bg/ch3_tower2.png",
+      "width": 1200,
+      "height": 1272,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "300×318",
+      "note": "지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nA single tall TOWER seen straight from the front (orthographic, no perspective), a tower of violet and green crystal growing out of a canyon cliff, aurora light shining through the crystal, a narrow sky bridge attached to one side, an arched opening at the bottom center. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges sticking out (the game draws its own markers on top). Fully transparent background around the tower. No people, no text. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272. The attached style image is ONLY a reference for pixel size, outline and shading — do NOT copy its character, face, hair, colors or costume.",
+      "reference_images": [
+        "bg/tower2.png",
+        "bg/act1.png"
+      ]
+    },
+    {
+      "id": "ch3_tower3",
+      "kind": "tower",
+      "batch": "bg-ch3",
+      "file": "bg/ch3_tower3.png",
+      "width": 1200,
+      "height": 1272,
+      "transparent": true,
+      "max_colors": 64,
+      "native": "300×318",
+      "note": "지도 화면의 탑(정면, 세로) · 투명 배경 · 난간·계단·사람 없이 벽만 — 게임이 층 난간과 계단을 위에 그린다",
+      "prompt": "이미지를 만들어줘. 진짜 도트(픽셀아트)여야 해. 고해상도 일러스트처럼 그리지 마.\n\nAuthentic low-resolution pixel art. No anti-aliasing, no smooth gradients, no blur, no fine details smaller than one pixel. Fine, detailed pixel art (like a premium modern pixel gacha game): crisp pixel clusters, careful pixel shading on hair, eyes, skin and fabric, flat colors with a little dithering, clean dark 1-pixel outlines. Match the attached style reference (style/akane_c.png) in pixel size, detail level and color richness. Night mood: deep navy and violet base colors, warm orange lantern light, white and gold starlight. No text, no letters, no numbers, no watermark, no UI, no speech bubbles.\n\nMake it look HAND-PLACED by a human pixel artist, not AI-generated: a deliberate limited palette with clear color ramps, intentional pixel clusters and clean readable shapes, flat cel shading with one light direction. AVOID the typical AI look: no excess ornament (no gold filigree, tassels, chains and jewels covering everything), no glossy plastic shine or wet-looking highlights, no glowing particles and bokeh filling the background, no soft airbrushed gradients, no perfectly symmetrical front-facing glamour pose, no same-face anime beauty, no extra or fused fingers, no straps or belts that lead nowhere, no nonsense details. Fewer, bigger, cleaner shapes beat many tiny details.\n\nA single tall TOWER seen straight from the front (orthographic, no perspective), a tower made of stacked starlight blocks floating in a void, faint galaxy swirls behind, glowing white-gold seams, a throne-like crown at the top, an arched gate of light at the bottom center. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges sticking out (the game draws its own markers on top). Fully transparent background around the tower. No people, no text. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272. The attached style image is ONLY a reference for pixel size, outline and shading — do NOT copy its character, face, hair, colors or costume.",
+      "reference_images": [
+        "bg/tower3.png",
         "bg/act1.png"
       ]
     },

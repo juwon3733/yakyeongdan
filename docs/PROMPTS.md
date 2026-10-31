@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 8 · GPT가 그릴 그림 370장(시트 포함, 잘라 내면 970장) · 묶음 190개
+style_version 8 · GPT가 그릴 그림 376장(시트 포함, 잘라 내면 976장) · 묶음 190개
 
 ## 묶음
 
@@ -165,8 +165,8 @@ style_version 8 · GPT가 그릴 그림 370장(시트 포함, 잘라 내면 970�
 | `pet-sion` | ★5 시온 동반자 (시트 1장 → 대기 3·공격 3프레임) | 1 |
 | `proj` | 원거리 투사체 9종 (시트 5장 → 3프레임씩) | 5 |
 | `bg` | 배경 | 13 |
-| `bg-ch2` | 2장 배경 (전투 3 · 지도 3) | 6 |
-| `bg-ch3` | 3장 배경 (전투 3 · 지도 3) | 6 |
+| `bg-ch2` | 2장 배경 (전투 3 · 지도 3 · 탑 3) | 9 |
+| `bg-ch3` | 3장 배경 (전투 3 · 지도 3 · 탑 3) | 9 |
 | `tower` | 지도 탑 (막마다 1장) | 3 |
 | `title` | 타이틀 키아트 | 1 |
 | `summon` | 별 소환 연출 | 4 |
@@ -1772,7 +1772,7 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `bg_ep_kitchen` | `assets/bg/ep_kitchen.png` | 1280×720 | `assets/bg/act1.png` | — |
 | `bg_ep_harbor` | `assets/bg/ep_harbor.png` | 1280×720 | `assets/bg/act1.png` | — |
 
-## `bg-ch2` — 2장 배경 (전투 3 · 지도 3)
+## `bg-ch2` — 2장 배경 (전투 3 · 지도 3 · 탑 3)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -1782,8 +1782,11 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `bg_ch2_map1` | `assets/bg/ch2_map1.png` | 1280×720 | `assets/bg/act1.png` | — |
 | `bg_ch2_map2` | `assets/bg/ch2_map2.png` | 1280×720 | `assets/bg/act1.png` | — |
 | `bg_ch2_map3` | `assets/bg/ch2_map3.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `ch2_tower1` | `assets/bg/ch2_tower1.png` | 1200×1272 투명 | `assets/bg/tower1.png` `assets/bg/act1.png` | — |
+| `ch2_tower2` | `assets/bg/ch2_tower2.png` | 1200×1272 투명 | `assets/bg/tower2.png` `assets/bg/act1.png` | — |
+| `ch2_tower3` | `assets/bg/ch2_tower3.png` | 1200×1272 투명 | `assets/bg/tower3.png` `assets/bg/act1.png` | — |
 
-## `bg-ch3` — 3장 배경 (전투 3 · 지도 3)
+## `bg-ch3` — 3장 배경 (전투 3 · 지도 3 · 탑 3)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
 |---|---|---|---|---|
@@ -1793,6 +1796,9 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `bg_ch3_map1` | `assets/bg/ch3_map1.png` | 1280×720 | `assets/bg/act1.png` | — |
 | `bg_ch3_map2` | `assets/bg/ch3_map2.png` | 1280×720 | `assets/bg/act1.png` | — |
 | `bg_ch3_map3` | `assets/bg/ch3_map3.png` | 1280×720 | `assets/bg/act1.png` | — |
+| `ch3_tower1` | `assets/bg/ch3_tower1.png` | 1200×1272 투명 | `assets/bg/tower1.png` `assets/bg/act1.png` | — |
+| `ch3_tower2` | `assets/bg/ch3_tower2.png` | 1200×1272 투명 | `assets/bg/tower2.png` `assets/bg/act1.png` | — |
+| `ch3_tower3` | `assets/bg/ch3_tower3.png` | 1200×1272 투명 | `assets/bg/tower3.png` `assets/bg/act1.png` | — |
 
 ## `tower` — 지도 탑 (막마다 1장)
 

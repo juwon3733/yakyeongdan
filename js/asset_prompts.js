@@ -687,9 +687,19 @@ One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2
     ch3: { act1: 'an icy lighthouse island at the edge of a star sea, snow and frozen waves, a dead lighthouse', act2: 'an aurora canyon: crystal cliffs, green and violet aurora curtains, a narrow sky bridge', act3: 'a throne room made of stars floating in a void, steps of light, galaxies all around',
            map1: 'a lone frozen island with a lighthouse in a sea full of stars', map2: 'a deep canyon of crystal under aurora lights, seen from far', map3: 'a staircase of stars rising to a floating throne at the edge of the universe' },
   };
+  // 장마다 지도 탑(1장 등대 탑이 2·3장에도 그대로 나오던 것): 1장 탑과 같은 틀(정면, 가운데, 폭 76%)
+  const CH_TOWER = {
+    ch2: { 1: 'a slender canal-city tower of pale sandstone rising out of still canal water, small arched bridges at its feet, gondola moored, lamps reflected in water, an arched water gate at the bottom center',
+           2: 'a brass clockwork tower: riveted copper plates, big frozen gears set into the walls, steam pipes, a stopped clock face near the top, warm amber windows, an arched workshop door at the bottom center',
+           3: 'a gothic cathedral bell tower: dark slate stone, tall stained-glass lancet windows glowing violet and blue, gargoyles at the corners, a silent bell visible in the open belfry under a pointed roof, an arched church door at the bottom center' },
+    ch3: { 1: 'an ice-covered lighthouse tower on a frozen rock, snow on every ledge, icicles, a dead dark lantern room at the top, frozen waves at the base, an arched door at the bottom center',
+           2: 'a tower of violet and green crystal growing out of a canyon cliff, aurora light shining through the crystal, a narrow sky bridge attached to one side, an arched opening at the bottom center',
+           3: 'a tower made of stacked starlight blocks floating in a void, faint galaxy swirls behind, glowing white-gold seams, a throne-like crown at the top, an arched gate of light at the bottom center' },
+  };
   for (const [ch, list] of Object.entries(CH_BG)) {
-    batches.push({ id: `bg-${ch}`, title: `${ch.slice(2)}장 배경 (전투 3 · 지도 3)` });
+    batches.push({ id: `bg-${ch}`, title: `${ch.slice(2)}장 배경 (전투 3 · 지도 3 · 탑 3)` });
     for (const [k, desc] of Object.entries(list)) out.push(item('bg', `bg_${ch}_${k}`, `bg-${ch}`, `${ch}_${k}.png`, join(STYLE.pixel, STYLE.handmade, `Background: ${desc}. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.`)));
+    for (const [n, desc] of Object.entries(CH_TOWER[ch] || {})) out.push(item('tower', `${ch}_tower${n}`, `bg-${ch}`, `${ch}_tower${n}.png`, join(STYLE.pixel, STYLE.handmade, `A single tall TOWER seen straight from the front (orthographic, no perspective), ${desc}. The tower body is centered and about 76% of the canvas width, rising from the bottom edge; the top 16% is its pointed roof. FLAT front wall with a few small windows spread evenly — NO balconies, NO ledges sticking out (the game draws its own markers on top). Fully transparent background around the tower. No people, no text. Native resolution 300x318 pixels, about 48 colors, chunky readable pixels, upscaled exactly 4x with nearest-neighbor to 1200x1272.`), { reference_images: [`bg/tower${n}.png`] }));
   }
   // 지도 화면의 탑: 막마다 한 장. 게임(js/render/map.js)이 이 위에 층 난간·계단·칸 아이콘을 얹는다
   batches.push({ id: 'tower', title: '지도 탑 (막마다 1장)' });
