@@ -269,3 +269,17 @@ body.aiming .bottom .hand .card.sel,body.aiming #app[data-screen="combat"] .bott
 /* 폰 야시장: 카드 효과 글이 주인 이름 줄에 잘려 반만 보이던 것 → 이름 줄은 숨기고(그림에 얼굴이 있다) 효과 글 자리를 넓힌다 */
 #stage.bigtext .shopscr .card .who{display:none}
 #stage.bigtext .shopscr .card .bd{-webkit-line-clamp:3;line-clamp:3;max-height:none}
+/* 적 넷·다섯: 그림도 한 단계 작게(무리가 아군 바로 앞까지 밀려오던 것), 가운데 빈 땅 유지 */
+:is(#app,.frozen)[data-screen="combat"] .foes:is([data-n="4"],[data-n="5"]) > .foe > img{width:62px;height:62px}
+:is(#app,.frozen)[data-screen="combat"] .foes:is([data-n="4"],[data-n="5"]) > .foe.sm > img{width:52px;height:52px}
+/* 적 속성 칩(「가시 돋친」): 점선 테두리 상자 대신 속성 색 글자만 */
+:is(#app,.frozen)[data-screen="combat"] .chip.trait{border:0;background:none;box-shadow:none;padding:0;font-size:8px;text-shadow:1px 1px 0 #000}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe{width:56px;min-width:0;margin:0 4px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe .lab{width:56px;overflow:visible}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe .hpw .hpbar{width:50px;flex-basis:50px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe .hp,:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe .hp small{font-size:7px}
+/* 다섯은 서로 겹쳐 서서 무리 폭을 판의 ⅓ 안으로 (뒷줄은 위로 올라가 있어 겹쳐도 가리지 않는다) */
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe{width:50px;margin:0 -3px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe .lab{width:50px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="5"] > .foe .hpw .hpbar{width:44px;flex-basis:44px}
+:is(#app,.frozen)[data-screen="combat"] .foes[data-n="4"] > .foe{width:60px;margin:0 -2px}
