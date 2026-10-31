@@ -222,12 +222,16 @@ function pickBgm() {
 
 // 화면 → 환경음: 판 안이면 막(1 파도 · 2 바람 · 3 탑 안), 판 밖(타이틀·본부)은 파도. 에피소드 특별 전투는 없음.
 const AMB_ACT = { 1: 'sea', 2: 'wind', 3: 'tower' };
+const AMB_EP = { harbor: 'harbor_town', convent: 'convent', clock: 'clock' };   // 에피소드 장소(S.ep.bg) → 환경음
+const AMB_CHAPTER = { 2: 'canal', 3: 'icesea' };                              // 본편 2장 운하 도시·3장 별바다 끝
 function pickAmb() {
   const G = S.G;
-  if (!G || S.view !== 'run') return S.view === 'ep' ? null : 'sea';
+  if (S.view === 'ep') return AMB_EP[S.ep?.bg] || null;
+  if (!G || S.view !== 'run') return 'sea';
   if (G.episode) return null;
+  if (G.screen === 'rest') return 'campfire';
   if (G.endless) return AMB_ACT[(G.endless.seg - 1) % 3 + 1];
-  return AMB_ACT[Math.min(3, G.act)] || 'sea';
+  return AMB_CHAPTER[G.chapter] || AMB_ACT[Math.min(3, G.act)] || 'sea';
 }
 
 function setRate(r) {

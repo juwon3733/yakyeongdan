@@ -116,6 +116,12 @@
   "windup"
  ],
  "amb": [
+  "campfire",
+  "canal",
+  "clock",
+  "convent",
+  "harbor_town",
+  "icesea",
   "sea",
   "tower",
   "wind"
