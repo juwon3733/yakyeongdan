@@ -16,6 +16,7 @@ import { EPISODES, BOND_SCENES } from './data/episodes.js';
 import { DAILY_SHARDS, DAILY_CANDIDATES, dailyKey, dailySeed, dailyRule } from './data/daily.js';
 import { ACHIEVEMENTS } from './data/achievements.js';
 import { MASTERY_GAIN, MASTERY_REWARDS, masteryLv } from './data/mastery.js';
+import { LV_MAX, lvNeed, XP_GAIN, LV_HP, LV_POWER, talentPoints, NODES, needOf } from './data/growth.js';
 import { ENDLESS } from './data/endless.js';
 
 const KEY = 'yk-profile';
@@ -36,6 +37,7 @@ function fresh() {
     tutDone: false,   // 첫 실행 튜토리얼을 끝냈거나 건너뜀 (js/tutorial.js)
     // v3: 매일의 밤(날짜 → { best 가장 빠른 도착, won, tries }) · 업적(달성한 id) · 평생 기록 · 최근 판 20개 · 숙련도 점수 · 카드 뒷면
     daily: {}, achDone: [], history: [], mxp: {}, cardBack: null,
+    grow: {},   // v5 동료 성장: { 동료: { lv, xp, tal: [재능 id] } } (js/data/growth.js)
     life: { bestTurn: 0, bigTurns: 0, bossKills: 0, dailyWins: 0, facts: [] },
   };
 }
@@ -116,12 +118,13 @@ export const duoSpecial = id => starsOf(id) >= 5;
 export const sigOf = id => Object.keys(RELICS).find(k => RELICS[k].tier === 'sig' && RELICS[k].owner === id);
 
 // 판을 시작할 때 넘기는 것 (run.js newRun opts)
-export function runOptions(party, depth = 0, startRelic) {
+export function runOptions(party, depth = 0, startRelic, { noGrow = false } = {}) {
   const locked = [];
   for (const id of party) packCards(id).slice(packsOpen(id)).forEach(pk => locked.push(...pk));
   return {
     depth: depthOpen() ? Math.min(depth, depthMax()) : 0, locked,
     upgrades: party.filter(startUp), sigs: party.filter(sigOpen),
+    grow: noGrow ? {} : Object.fromEntries(party.filter(owns).map(id => [id, growthFx(id)])),
     startRelic: startPickOpen() && startRelicChoices().includes(startRelic) ? startRelic : undefined,
   };
 }
@@ -371,6 +374,7 @@ export function grantRun(G) {
   for (const k of r.newBonds) P.bondOpen.push(k);
   r.daily = recordDaily(G);
   r.mastery = recordMastery(G);
+  r.levels = recordGrowth(G);
   recordLife(G);
   recordHistory(G);
   r.ach = achCheck();
@@ -413,6 +417,36 @@ export const masteryTitles = () => {
 };
 export const backOpen = id => mastery(id) >= 4;
 export function setCardBack(id) { if (id && !backOpen(id)) return; P.cardBack = id || null; save(); }
+// ---------- 동료 성장 (js/data/growth.js) ----------
+export const growRec = id => P.grow[id] ||= { lv: 1, xp: 0, tal: [] };
+export const talentLeft = id => { const g = growRec(id); return talentPoints(g.lv) - g.tal.reduce((t, k) => t + (NODES[k]?.cost || 0), 0); };
+// 레벨·재능을 엔진이 읽는 효과 하나로 모은다(js/run.js G.grow)
+export function growthFx(id) {
+  const g = growRec(id), fx = { hp: Math.floor((g.lv - 1) * LV_HP), atk: LV_POWER.filter(l => g.lv >= l).length, blk: LV_POWER.filter(l => g.lv >= l).length };
+  for (const k of g.tal) for (const [f, v] of Object.entries(NODES[k]?.fx || {})) fx[f] = f === 'legendMul' ? v : (fx[f] || 0) + v;
+  return fx;
+}
+export function learnTalent(id, k) {
+  const g = growRec(id), n = NODES[k]; if (!n || g.tal.includes(k)) return false;
+  const need = needOf(k); if (need && !g.tal.includes(need)) return false;
+  if (talentLeft(id) < n.cost) return false;
+  g.tal.push(k); save(); return true;
+}
+export function resetTalents(id) { growRec(id).tal = []; save(); }
+// 판 끝: 데려간(가진) 동료마다 경험치 → 레벨 업 목록
+function recordGrowth(G) {
+  if (G.daily || G.tutorial) return [];
+  const xp = XP_GAIN.run + (G.fights || 0) * XP_GAIN.fight + (G.elites || 0) * XP_GAIN.elite + (G.bossKills || 0) * XP_GAIN.boss + (G.won ? XP_GAIN.win : 0);
+  const ups = [];
+  for (const id of G.party.filter(owns)) {
+    const g = growRec(id), before = g.lv;
+    g.xp += xp;
+    while (g.lv < LV_MAX && g.xp >= lvNeed(g.lv)) { g.xp -= lvNeed(g.lv); g.lv++; }
+    if (g.lv >= LV_MAX) g.xp = 0;
+    if (g.lv > before) ups.push({ id, from: before, lv: g.lv });
+  }
+  return { xp, ups };
+}
 function recordMastery(G) {
   const ups = [];
   for (const id of G.party.filter(owns)) {

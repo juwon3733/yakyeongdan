@@ -1,5 +1,5 @@
 // 전투 엔진: 턴, 손패, 적 1~3마리(의도·노림·상태), 동료별 체력·방어·상태, 대열, 쓰러짐, 연계·듀오, 패시브, 저주.
-import { S, addTime, rewind, timeCost, moonFx, logMsg, isDawn, depthRule, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll } from './run.js';
+import { S, addTime, rewind, timeCost, moonFx, logMsg, isDawn, depthRule, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll, growthOf } from './run.js';
 import { endlessHp, endlessStr } from './endless.js';
 import { hasRelic, relicSum, relicFlag, rollRelic } from './relics.js';
 import { RELICS } from './data/relics.js';
@@ -27,6 +27,8 @@ function passives(hook, ...args) {
   }
 }
 
+// 살아 있는 동료들의 성장 효과 합 (첫 턴 카드·에너지)
+const growSum = k => living().reduce((t, p) => t + (growthOf(p)[k] || 0), 0);
 export const livingFoes = () => S.C.all.filter(f => !f.dead);
 // 단일 대상으로 고를 수 있는 적: 「숨은」 속성은 첫 턴에 빠진다 (다 숨었으면 전부)
 export const targetableFoes = () => { const L = livingFoes(), T = L.filter(f => !f.hidden); return T.length ? T : L; };
@@ -63,7 +65,7 @@ export function startCombat(ids, kind) {
     timeUsedTurn: 0, rewardExtra: 0, winGold: 0, swapsBonus: 0, moonBase: G.moon, moonChanged: false, moonPick: false,
     lostTurn: {}, flameGuard: 0, sigCounter: 0, burnAll: 0, reserve: 0, keepCards: [], atkCard: false,
     // 패시브 ①②③ (docs/12_signature.md): 턴 단위 세기와 ③ 폭발 기록
-    dmgTurn: 0, dmgBy: {}, dmgPrev: {}, burstTurn: new Set(), bursts: {}, burstBond: new Set(), cardMul: 1, curCard: null, curSlash: false,
+    firstAtkDone: new Set(), dmgTurn: 0, dmgBy: {}, dmgPrev: {}, burstTurn: new Set(), bursts: {}, burstBond: new Set(), cardMul: 1, curCard: null, curSlash: false,
     moonTurn: 0, allMoons: false, pairTurn: 0, mirrorWorld: false, zeroTurn: 0, randTurn: 0, jackpot: false,
     healTurn: 0, feastTurn: false, partyStr: 0, aimTurn: 0, tomoriLit: false, diveStreak: 0, valkyrie: false, landPending: false,
     lostCombat: {}, zenoSaved: false, timeFree: false, supportUsed: false, supportFree: 0, chainUps: 0, chain3Streak: 0,
@@ -140,6 +142,7 @@ function relicsAtStart() {
   const C = S.C, L = living();
   if (L.length && relicSum('blockFront')) C.blocks[L[0]] += relicSum('blockFront');
   if (L.length && relicSum('blockBackFirst')) C.blocks[L[L.length - 1]] += relicSum('blockBackFirst');
+  for (const p of L) C.blocks[p] += growthOf(p).startBlock || 0;   // 재능 「경계」
   // 전용 도구: 주인 방어 · 모든 적 독/화상
   for (const id of S.G.relics) {
     const d = RELICS[id];
@@ -172,7 +175,7 @@ function startTurn() {
     C.blocks[p] = C.retain ? Math.floor(C.blocks[p] / 2) : 0;
   }
   const first = C.turn === 1;
-  C.energy = RULES.energy + C.nextEnergy + relicSum('energy') + (first ? relicSum('firstEnergy') : 0); C.nextEnergy = 0;
+  C.energy = RULES.energy + C.nextEnergy + relicSum('energy') + (first ? relicSum('firstEnergy') + growSum('firstEnergy') : 0); C.nextEnergy = 0;
   C.chain = 0; C.last = null; C.lastKey = null; C.lastSub = null; C.slashes = 0; C.counter = 0; C.mirror = 0; C.taunt = null; C.swaps = 0; C.pending = null;
   C.turnAtk = C.nextAtk; C.nextAtk = 0; C.zeroBonus = 0; C.playedTurn = 0; C.turnChars = new Set(); C.playedUp = false; C.timeUsedTurn = 0;
   C.moonChanged = false; C.flameGuard = 0; C.sigCounter = 0; C.burnAll = 0; C.swapsBonus = 0; C.atkFree = false; C.freeNext = 0; C.noDmg = false;
@@ -202,7 +205,7 @@ function startTurn() {
   // 녹슨 열쇠: 손패에 있는 동안 1장 덜 뽑는다. 별의 왕관 -1, 야경단 완장 첫 턴 +1
   // 남긴 카드(세바스·예약)는 손으로 먼저, 뽑는 수와 따로
   const kept = C.keepCards.length; C.hand.push(...C.keepCards); C.keepCards = [];
-  const size = RULES.handSize + relicSum('handSize') + (first ? relicSum('firstDraw') : 0) + C.nextDraw + kept; C.nextDraw = 0;
+  const size = RULES.handSize + relicSum('handSize') + (first ? relicSum('firstDraw') + growSum('firstDraw') : 0) + C.nextDraw + kept; C.nextDraw = 0;
   const want = () => size - C.hand.filter(h => cardDef(h).drawLess).length;
   for (let k = 0; k < size + 3 && C.hand.length < want(); k++) {
     const before = C.hand.length; draw(1); if (C.hand.length === before) break;
@@ -328,6 +331,8 @@ function hurtMember(id, d, src, fi = null) {
   // 제노 「흑룡」③: 이번 전투에 잃은 체력 20 이상이면 한 번 체력 1에서 버틴다
   if (id === 'zeno' && m.hp <= 0 && (C.lostCombat.zeno || 0) >= 20 && !C.zenoSaved) { C.zenoSaved = true; m.hp = 1; E.burst('zeno', '흑룡'); logMsg('제노가 용의 피로 버텼다'); }
   logMsg(`${src} → ${nm}: 피해 <b>${d}</b>${b ? ` (방어 ${b} 막음)` : ''}`);
+  // 재능 「불굴」: 판마다 한 번 체력 1로 버틴다
+  if (m.hp <= 0 && !m.down && growthOf(id).undying && !m.undying) { m.undying = true; m.hp = 1; logMsg(`불굴: <b>${nm}</b>이(가) 버텼다`); }
   // 금빛 깃털: 판마다 동료당 한 번 버틴다
   if (m.hp <= 0 && !m.down && hasRelic('gold_feather') && !m.feather) { m.feather = true; m.hp = RELICS.gold_feather.goldFeather; logMsg(`금빛 깃털: <b>${nm}</b>이(가) 버텼다`); }
   if (m.hp <= 0 && !m.down) { m.down = true; m.wasDown = true; S.G.downs = (S.G.downs || 0) + 1; logMsg(`<b>${nm} 쓰러짐</b> · 카드를 쓸 수 없다`); }
@@ -463,6 +468,8 @@ export function playCard(id, pick = {}) {
   // 공격 보너스: 연계 + 이번 턴 모든 동료 공격 + 이번 전투 모든 동료 힘(고든) + 비용 0 카드(각오) + 제노(포효·각성)
   C.bonus = d.atk ? C.chain + C.turnAtk + C.partyStr + (paid === 0 ? C.zeroBonus : 0)
     + (who === 'zeno' ? C.zenoStr + (C.zenoAwake && E.low('zeno') ? C.zenoAwake : 0) : 0) : 0;
+  // 동료 성장: 자기 공격 카드 +레벨·칼날, 전투 첫 공격 +선제
+  if (d.atk && who && d.ch === who) { const g = growthOf(who); C.bonus += g.atk || 0; if (g.firstAtk && !C.firstAtkDone.has(who)) { C.firstAtkDone.add(who); C.bonus += g.firstAtk; } }
   // 브릭 「여분 탄약」①: 다른 동료 공격에 장전 1을 실어 보낸다(피해 +6, 턴당 1번, 탄띠면 공짜)
   if (d.atk && who && who !== 'brick' && alive('brick') && G.party.includes('brick')) {
     if (C.supportFree > 0) { C.supportFree--; C.bonus += 6; }
@@ -478,6 +485,7 @@ export function playCard(id, pick = {}) {
   pushFx({ kind: 'play', uid: inst.uid, id: inst.id, ch: d.ch, a: d.a, b: d.b, actor: who, target: d.target, foe: d.target === 'foe' ? pick.foe : null, ally: d.target === 'ally' ? pick.ally : null, time: !!d.time, atk: !!d.atk, chain: C.chain });
   // 폭발 턴: ③이 터진 동료는 그 턴 남은 공격 피해 ×RULES.burstMul (docs/12_signature.md §1-2)
   if (d.atk && who && C.burstTurn.has(who)) C.cardMul *= RULES.burstMul;
+  if (d.atk && who && d.ch === who && d.rarity === 'r' && growthOf(who).legendMul) C.cardMul *= growthOf(who).legendMul;
   const twice = (C.double || jackpot) && d.ch !== 'curse' && !d.id.startsWith('seb.service'); if (C.double && twice) C.double = false;
   const bonus = C.bonus, mul = C.cardMul;
   d.play?.(C, E, d.v, d.up);

@@ -114,7 +114,7 @@ export function mapView() {
     : G.endless ? `<p class="note">탑은 무너지지 않는다 · 대신 층마다 적이 강해지고, 밤 시계가 흐를수록 여명이 짙어진다</p>`
     : isDawn() ? `<p class="banner">해가 떴다 · 적이 힘 +${RULES.dawnStartStr}으로 시작, 매 턴 +${RULES.dawnStrPerTurn} · ${fmt(RULES.collapse)}에 탑이 무너진다</p>`
     : `<p class="note moon"><b>${MOONS[G.moon].name}</b> ${moonFits(G) ? moonForParty(G) : '이번 파티에는 효과가 없다.'}</p>`;
-  const art = !G.endless && artURL(`bg/tower${G.act}.png`);
+  const art = artURL(`bg/tower${G.endless ? (G.endless.seg - 1) % 3 + 1 : G.act}.png`);   // 끝없는 탑은 층 묶음마다 1·2·3막 탑 그림을 돌아가며
   return `<div class="mapwrap towermap a${G.endless ? 'e' : G.act}">
       <div class="mapgrid${art ? ' art' : ''}" style="width:${TW}px;height:${TH}px${art ? `;--tower:url('${new URL(art, location.href).href}')` : ''}">
         <i class="towerbody" aria-hidden="true"></i><i class="spire" aria-hidden="true"></i><i class="door" aria-hidden="true"></i>
