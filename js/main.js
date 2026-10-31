@@ -117,7 +117,7 @@ function placeTip(el) {
   let x, y;
   if (el.closest('.bottom .hand')) {
     x = r.right + 6 + w <= innerWidth - 4 ? r.right + 6 : Math.max(4, r.left - w - 6);
-    y = Math.min(Math.max(4, r.bottom - h), innerHeight - h - 4);   // 카드 아래 끝에 맞춘다(위 동료를 가리지 않게)
+    y = Math.min(Math.max(4, r.top), innerHeight - h - 4);   // 커진 카드 위 끝에 맞춘다(아래 끝에 맞추면 옆 손패 카드를 덮었다)
   } else {
     x = Math.min(Math.max(4, r.left + r.width / 2 - w / 2), innerWidth - w - 4);
     y = r.top - h - 6; if (y < 4) y = Math.min(innerHeight - h - 4, r.bottom + 6);
@@ -539,6 +539,8 @@ addEventListener('keydown', e => {
   else if (S.view === 'ep' && S.ep?.phase === 'read' && modal.hidden && (e.key === ' ' || e.key === 'Enter') && !e.target.closest?.('button')) { e.preventDefault(); epAdvance(); render(); }
 });
 // 에피소드 [자동]: 1.8초마다 다음 줄
+// 에피소드: 대화 창뿐 아니라 그림(배경·인물) 아무 데나 눌러도 다음 줄 (위 단추줄은 제외)
+app.addEventListener('click', e => { if (S.view === 'ep' && S.ep?.phase === 'read' && modal.hidden && !e.target.closest('button, a, .ephead, [data-epnext]') && e.target.closest('.epscene, .epview, .epstage, #app')) { epAdvance(); render(); } });
 setInterval(() => { if (S.view === 'ep' && S.ep?.auto && S.ep.phase === 'read' && modal.hidden && !epTyping()) { epAdvance(); render(); } }, 1800);
 
 render();

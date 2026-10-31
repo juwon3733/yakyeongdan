@@ -102,3 +102,8 @@ button.srank:hover{background:rgba(30,30,60,.8)}
 @keyframes spReady{50%{border-color:var(--gold);transform:translateY(-2px)}}
 @keyframes spTw{33%{opacity:.3}66%{opacity:1;transform:translate(-2px,2px)}}
 .seasonscr .bhead .srankb{margin-left:8px}
+/* 시즌 화면(열리기 전): 글이 등대 그림 위에 얇게 겹쳐 안 읽히던 것 → 왼쪽 어둠 + 글 그림자 */
+.seasonscr{position:relative}
+.seasonscr::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(6,6,18,.85),rgba(6,6,18,.55) 40%,transparent 70%);z-index:0}
+.seasonscr > *{position:relative;z-index:1}
+.seasonscr .note{text-shadow:1px 1px 0 #000;color:#d8d4ec}

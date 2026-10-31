@@ -142,3 +142,6 @@
 .h3menu .h3go::before{top:9px}
 .hub3 .h2side.s1{left:calc(50% + 40px)}
 .h3menu{padding-top:38px}
+/* 본부: 왼쪽 동료 말풍선이 글자 메뉴 위로 뻗어 겹치던 것 → 머리 위 가운데, 오른쪽으로 펼침 */
+.hub3 .h2side.s0 .bubble{left:30%;transform:none}
+.hub3 .h2side.s0 .bubble::after{left:20px}

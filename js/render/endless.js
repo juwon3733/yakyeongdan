@@ -11,9 +11,9 @@ import { fmt, face, esc, charSrc } from './common.js';
 // 위 띠: 페이스 칩 대신 층·적 강화·쌓인 규칙
 export function endlessChip(G) {
   const fl = endlessFloor(), hp = Math.round(fl * ENDLESS.hpPerFloor * 100);
-  const rules = endlessRules().map(r => `「${r.name}」 ${r.text}`).join('\n');
+  const rules = endlessRules().map(r => `${r.name}: ${r.text}`).join('\n');
   const tip = `끝없는 탑 ${fl}층. 적 체력 +${hp}%, 시작 힘 +${endlessStr()} (층 ${Math.floor(fl * ENDLESS.strPerFloor)} + 여명 ${dawnStacks()}: 들어선 뒤 밤 시계 ${ENDLESS.dawnMin}분마다 +1).\n탑은 무너지지 않는다. 쌓인 규칙:\n${rules}`;
-  return `<span class="chip endchip" data-tip="${esc(tip)}">탑 위 <b>${fl}</b>층 · 힘 +${endlessStr()}</span><span class="chip endrules" data-tip="${esc(rules)}">규칙 ${endlessRules().length}</span>`;
+  return `<span class="endchip" data-tip="${esc(tip)}"><b>${fl}</b>층${endlessStr() ? ` · 힘 +${endlessStr()}` : ''}</span><span class="endrules" data-tip="${esc(rules)}">규칙 ${endlessRules().length}</span>`;
 }
 // 지도 머리: 층 묶음 이름
 export function endlessHead(G) {
