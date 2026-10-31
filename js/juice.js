@@ -435,8 +435,9 @@ function flyCard(e, P, t0) {
     { transform: 'translate(0,0) scale(1)', opacity: 1, filter: 'none' },
     { transform: `translate(0,-34px) scale(${K})`, opacity: 1, filter: 'brightness(1.25)', offset: .3, easing: 'cubic-bezier(.2,.9,.3,1)' },
     { transform: `translate(0,-38px) scale(${K})`, opacity: 1, filter: 'brightness(1.1)', offset: .48, easing: 'cubic-bezier(.6,0,.9,.5)' },
-    { transform: `translate(${dx}px,${dy}px) scale(.5)`, opacity: 1, filter: 'brightness(2.4)', offset: .86 },
-    { transform: `translate(${dx}px,${dy - 4}px) scale(.6)`, opacity: 0, filter: 'brightness(3)' },
+    { transform: `translate(${dx}px,${dy}px) scale(.3)`, opacity: .7, filter: 'brightness(2.4)', offset: .8 },   // 작아진 카드가 동료 몸 위에 붙어 보이던 것: 닿기 전에 빛으로 흩어짐
+    { transform: `translate(${dx}px,${dy - 4}px) scale(.15)`, opacity: 0, filter: 'brightness(3)', offset: .9 },
+    { transform: `translate(${dx}px,${dy - 4}px) scale(.15)`, opacity: 0 },
   ], { duration: D, delay: t0, fill: 'backwards' }).onfinish = () => ghost.remove();
   if (leg) at(t0 + D * .3, () => { const g = ghost.getBoundingClientRect(), sr = stage.getBoundingClientRect(), k = sr.width / stage.offsetWidth || 1;
     const x = (g.left + g.width / 2 - sr.left) / k, y = (g.top + g.height / 2 - sr.top) / k; ring(x, y, '#ffe090', 10, 70, 14); sparks(x, y, '#fff1b0', 16, 2.4); });
@@ -575,6 +576,7 @@ const MOTION = {
 // 오라는 상황에 맞게: 기술을 쓰면 확 커지며 밝아지고(필살은 화면을 덮을 만큼), 맞으면 흔들리며 꺼질 듯 깜빡
 function auraFlare(id, k = 1.5, ms = 600) {
   const el = allyEl(id)?.querySelector(':scope > .jaura'); if (!el || calmNow()) return;
+  k = 1 + (k - 1) * .35;   // 인물이 작아진 뒤로 2.6배 오라가 몸을 통째로 덮어 버려서(시온·엘레오노르) 크게 부풀리지 않고 밝기로 살린다
   el.animate([{ scale: '1', opacity: .55 }, { scale: String(k), opacity: 1, offset: .25 }, { scale: String(1 + (k - 1) * .6), opacity: .9, offset: .7 }, { scale: '1', opacity: .55 }],
     { duration: ms, easing: 'cubic-bezier(.2,.8,.3,1)' });
 }
