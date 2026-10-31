@@ -263,3 +263,9 @@ body.aiming .bottom .hand .card.sel,body.aiming #app[data-screen="combat"] .bott
 .topbar :is(.endchip,.endrules){font-size:11px;color:#d8d4ec;text-shadow:1px 1px 0 #000;cursor:help}
 .topbar .endchip b{color:#fff4d0;font-weight:400}
 .topbar .endrules{color:#b8a0ff}
+/* 「이번 턴」 피해 합계: 오른쪽 위 구석(튜토리얼 도움말 줄·단추 위에 겹치던 것) → 윗줄 아래, 적 무리 위 하늘 */
+#fx .jdmg{top:96px;right:18px}
+#fx .jdmg small{font-size:8px;color:#b8b4d8}
+/* 폰 야시장: 카드 효과 글이 주인 이름 줄에 잘려 반만 보이던 것 → 이름 줄은 숨기고(그림에 얼굴이 있다) 효과 글 자리를 넓힌다 */
+#stage.bigtext .shopscr .card .who{display:none}
+#stage.bigtext .shopscr .card .bd{-webkit-line-clamp:3;line-clamp:3;max-height:none}
