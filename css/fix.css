@@ -79,3 +79,15 @@ img.px.fci{position:absolute!important;margin:0!important;max-width:none!importa
 .dawnbreak .dbr{white-space:normal;max-width:100%;line-height:1.5}
 .chsel .chbtns{display:inline-flex;gap:3px}.chsel .chbtns .mini.on{background:var(--cc);color:#1a1206}.chsel .chname{margin-left:6px}.chsel .chname b{font-weight:400}
 .chtag{display:block;font-size:9px;letter-spacing:.1em;font-family:var(--f-body)}
+/* 재능: 점선 테두리 상자 4개를 선으로 이은 순서도 모양 → 갈래 이름 + 작은 도트 마름모 4개(켜면 갈래 색), 이름은 아래 한 줄. 마우스를 대면 효과 */
+.tbr{gap:6px}
+.tbr .tlink{display:none}
+.tbr .tbn{width:30px}
+.tnode,.tnode:not(:disabled):hover{flex:1;flex-direction:column;gap:1px;border:0!important;border-image:none!important;background:none!important;box-shadow:none!important;filter:none!important;color:#8a86a8}
+.tnode::before{content:"";width:9px;height:9px;transform:rotate(45deg);background:#14122a;border:1px solid #4a4c7a;box-shadow:1px 1px 0 #000}
+.tnode.on::before{background:var(--bc);border-color:#fff}
+.tnode.can::before{border-color:var(--bc);background:color-mix(in srgb,var(--bc) 25%,#14122a)}
+.tnode.on{color:#fff}
+.tnode.can{color:#d8d4ec;animation:none}
+.tnode.can::before{animation:tcan 1.2s steps(2) infinite}
+.tnode:not(:disabled):hover{color:#fff}
