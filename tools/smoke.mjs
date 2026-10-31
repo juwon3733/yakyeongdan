@@ -31,7 +31,7 @@ const browser = await chromium.launch();
 const CALM = 'reduce';
 const fail = msg => { console.error('SMOKE FAIL:', msg); process.exitCode = 1; };
 const seen = { aim: false, swap: false, down: false, ally: false, mapSwap: false, multi: false, curse: false, upgrade: false, num: false, status: false, light: false, act1: false,
-  migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, affix: false, ach: false, history: false, endless: false, climbOn: false,
+  migrate: false, pick5: false, exchange: false, metaScreens: false, depth: false, chooseUi: false, daily: false, affix: false, ach: false, history: false, endless: false, chapter: false,
   fullRun: false, shop: false, bossRelic: false, summon: false, phase: false, dawnClock: false, collapse: false,
   ep1: false, epFight: false, epUnlock: false, moonPick: false, spirit: false, bonds: false, whale: false, guide: false,
   tutorial: false, drag: false, settings: false, wipe: false, amb: false, epClock: false, quick: false, qaTop: false, pwa: false, backup: false, bossVar: false, season: false };
@@ -466,15 +466,16 @@ try {
     await page.click('[data-home]');
     await page.click('[data-view="records"]');
     if (!(await page.$('text=최고'))) fail('기록 화면에 끝없는 탑 줄이 없음');
-    // 「새벽」을 깬 판의 결과 → [더 오르기]
-    await page.evaluate(() => { window.__yk.S.view = 'party'; window.__yk.S.mode = null; window.__yk.S.picked = []; window.__yk.render(); });
+    // 본편 장(docs/10_chapters.md): 1장을 깬 프로필 → 출격 화면 [2장] → 2장 1막 적(운하 도시) · 장 이름 → 이기면 2장 기록
+    await page.evaluate(() => { const y = window.__yk; y.P().chapterClear = 1; y.S.view = 'party'; y.S.mode = null; y.S.picked = []; y.render(); });
     for (const k of ['marta', 'iris', 'brick']) await page.click(`[data-pick="${k}"]`);
+    await page.click('[data-chapter="2"]');
     await page.click('[data-start]');
+    const ch = await page.evaluate(() => { const G = window.__yk.S.G; return { c: G.chapter, head: document.querySelector('.chtag')?.textContent || '', boss: G.map.boss }; });
     await page.evaluate(() => { const G = window.__yk.S.G; G.won = true; G.why = 'win'; G.bossKills = 3; G.clock = 340; G.act = 3; G.screen = 'result'; window.__yk.render(); });
-    await page.click('[data-endless]');
-    const co = await page.evaluate(() => { const G = window.__yk.S.G; return { e: !!G.endless, fresh: G.endless?.fresh, act: G.act, screen: G.screen, start: G.endless?.startClock }; });
-    if (co.e && co.fresh === false && co.act === 4 && co.screen === 'map' && co.start === 340) { seen.climbOn = true; console.log('climbOn: 「새벽」 결과 → [더 오르기] → 같은 판으로 끝없는 탑'); }
-    else fail(`더 오르기 ${JSON.stringify(co)}`);
+    const done = await page.evaluate(() => ({ clear: window.__yk.P().chapterClear, more: !!document.querySelector('[data-endless]') }));
+    if (ch.c === 2 && /2장/.test(ch.head) && ch.boss === 'floodgate' && done.clear === 2 && !done.more) { seen.chapter = true; console.log(`chapter: 2장 출발(1막 보스 ${ch.boss}) → 격파 기록 ${done.clear}장`); }
+    else fail(`본편 장 ${JSON.stringify({ ch, done })}`);
     await page.close();
   }
   // 매일의 밤 → 오늘의 시드·규칙으로 출발 → 이겨서 결과(첫 격파 별 조각 +15, 업적 띠, 숙련도) → 기록 화면 최근 판 · 도감 업적 탭
