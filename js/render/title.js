@@ -2,7 +2,8 @@ import { S } from '../run.js';
 import { CHARACTERS } from '../data/characters.js';
 import { ROSTER, ROSTER_IDS, ROLE_KIND, ROLE_KINDS } from '../data/roster.js';
 import { DUOS, duoKey } from '../data/cards.js';
-import { P, owns, duoSpecial, depthOpen, depthMax, startPickOpen, startRelicChoices } from '../meta.js';
+import { P, owns, duoSpecial, depthOpen, depthMax, startPickOpen, startRelicChoices, chapterNext } from '../meta.js';
+import { CHAPTERS } from '../data/chapters.js';
 import { RELICS } from '../data/relics.js';
 import { DEPTH } from '../data/depth.js';
 import { stars, palOf, esc, charSrc, fcImg } from './common.js';
@@ -50,6 +51,13 @@ function bondsOf(picked) {
 // 밤의 깊이(「새벽」을 한 번 이기면) · 시작 도구 고르기(판을 한 번 끝내면)
 function runSetup() {
   let out = '';
+  // 본편 장 고르기: 깬 장 다음 장까지 (js/data/chapters.js)
+  if (!S.mode) {
+    const open = chapterNext(), cur = Math.min(S.chapter || open, open), C = CHAPTERS[cur];
+    out += `<div class="setup chsel"><span class="note small">본편</span><span class="chbtns">${Object.values(CHAPTERS).map(c =>
+      `<button type="button" class="mini ${c.id === cur ? 'on' : ''}" data-chapter="${c.id}" ${c.id > open ? 'disabled title="앞 장을 깨면 열린다"' : ''} style="--cc:${c.col}">${c.id}장${(P.chapterClear || 0) >= c.id ? ' ✓' : ''}</button>`).join('')}</span>
+      <span class="note small chname"><b style="color:${C.col}">${esc(C.short)}</b> ${esc(C.blurb)}</span></div>`;
+  }
   if (depthOpen()) {
     const d = Math.min(S.depth || 0, depthMax());
     out += `<div class="setup"><span class="note small">밤의 깊이</span><span class="depthsel">${Array.from({ length: depthMax() + 1 }, (_, n) =>

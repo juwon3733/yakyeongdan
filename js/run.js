@@ -1,4 +1,5 @@
 // 한 판 상태. S.G = 판, S.C = 지금 전투. 판이 없을 때는 S.view가 화면(타이틀·본부·소환·파티 고르기).
+import { chapterOf } from './data/chapters.js';
 import { makeRng, newSeed } from './rng.js';
 import { CHARACTERS } from './data/characters.js';
 import { canUpgrade } from './data/cards.js';
@@ -37,6 +38,7 @@ export function newRun(party, seed = newSeed(), opts = {}) {
     duoSet: new Set(), stats: Object.fromEntries(party.map(p => [p, { dmg: 0, block: 0, heal: 0 }])),
     floors: 0, elites: 0, bossKills: 0, removes: 0, seenEvents: [], note: '', moonPick: false, shop: null,
     haggle: 0, nextFight: null, smithLeft: 0,
+    chapter: opts.chapter || 1,   // 본편 장 (js/data/chapters.js)
     grow: opts.grow || {},   // 동료 성장 효과 { 동료: { hp, atk, blk, firstAtk, legendMul, startBlock, undying, gold, firstDraw, burstHeal, firstEnergy } }
     // 도감·기록용 (meta.js grantRun이 모은다)
     offered: new Set(), played: new Set(), foesMet: new Set(), foesBeat: new Set(), affixSeen: new Set(), talks: new Set(),
@@ -51,7 +53,7 @@ export function newRun(party, seed = newSeed(), opts = {}) {
 // 이번 막의 다음 강적 (사건 「탑의 낙서」가 미리 알려 준다)
 export function pickElite() {
   const G = S.G;
-  return G.rng.pick(ACTS[G.act].elites);
+  return G.rng.pick((G.endless ? ACTS : chapterOf(G).pools)[G.act]?.elites || ACTS[G.act].elites);
 }
 
 // 대열: formation[0] = 앞줄(적 쪽), [1] = 가운데, [2] = 뒤. 처음엔 최대 체력이 높은 동료가 앞.

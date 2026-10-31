@@ -10,6 +10,7 @@ import { FOE } from '../data/enemies.js';
 import { sprite } from './sprites.js';
 import { esc, palOf, charSrc } from './common.js';
 import { artURL } from '../art.js';
+import { STORY } from '../data/chapters.js';
 
 // 말하는 사람 (명단 → 조연 → 이름만)
 export function who(id) {
@@ -56,6 +57,7 @@ export function episodesView() {
         <div class="ephead"><span class="pic"><img class="px" src="${w.img}" alt=""></span><div><h3>${esc(w.name)}</h3>${P.owned[sel] ? '' : '<small class="note">아직 없는 동료</small>'}</div></div>
         <div class="epeps">${eps}</div>
         ${bonds ? `<h3 class="sub">인연 장면</h3><div class="bondlist">${bonds}</div>` : ''}
+        ${(P.storySeen || []).length ? `<h3 class="sub">본편 이야기</h3><div class="bondlist">${Object.keys(STORY).filter(k => P.storySeen.includes(k)).map(k => `<button type="button" class="epslot bond seen" data-story="${k}"><b>${esc(STORY[k].title)}</b></button>`).join('')}</div>` : ''}
       </div>
     </div>
   </div>`;
@@ -83,7 +85,7 @@ export function epView() {
     const cls = [side, on ? 'on' : '', on && fresh ? 'talk' : '', on && emo ? `emo-${emo}` : ''].join(' ');
     return `<div class="epfig ${cls}" style="--c:${w.col}">${w.img ? `<img class="px" src="${w.img}" alt="${esc(w.name)}">` : ''}</div>`;
   };
-  const head = E.kind === 'ep' ? `${esc(who(E.cid).name)} 에피소드 ${E.n + 1}화 · ${esc(E.title)}` : `인연 장면 · ${esc(E.title)}`;
+  const head = E.kind === 'ep' ? `${esc(who(E.cid).name)} 에피소드 ${E.n + 1}화 · ${esc(E.title)}` : E.kind === 'story' ? `본편 · ${esc(E.title)}` : `인연 장면 · ${esc(E.title)}`;
   let box;
   if (E.phase === 'read' && line) {
     const [id, text] = line, w = id ? who(id) : null;
@@ -101,7 +103,7 @@ export function epView() {
     const extra = E.extra?.length ? ` · ${E.extra.join(' · ')}` : '';
     box = `<div class="epbox act"><span class="who" style="color:var(--gold)">끝</span>
       <span class="tx">${E.reward ? `처음 다 봤다. 별 조각 +${E.reward}${esc(extra)}` : '다시 본 이야기.'}</span>
-      <span class="btns"><button type="button" class="primary" data-view="episodes">에피소드 목록</button></span></div>`;
+      <span class="btns">${E.kind === 'story' ? '<button type="button" class="primary" data-storydone>계속</button>' : '<button type="button" class="primary" data-view="episodes">에피소드 목록</button>'}</span></div>`;
   }
   // 배경 전환(바로 앞 줄에서 바뀌었으면 이전 배경이 디더로 사라진다) · 화면 효과 줄 명령
   const swap = fresh && E.bgPrev && E.bgAt === E.i - 1;
@@ -116,7 +118,7 @@ export function epView() {
     ${fig(E.left, 'L')}${fig(E.right, 'R')}
     <div class="eptop"><span class="ttl">${head}</span><span class="grow"></span>
       ${E.phase === 'read' ? `<button type="button" class="mini ${E.auto ? 'on' : ''}" data-epauto aria-pressed="${E.auto}">자동</button><button type="button" class="mini" data-epskip>빨리</button>` : ''}
-      <button type="button" class="mini" data-eplog>기록</button><button type="button" class="mini" data-view="episodes">나가기</button></div>
+      <button type="button" class="mini" data-eplog>기록</button>${E.kind === 'story' ? '<button type="button" class="mini" data-storydone>건너뛰기</button>' : '<button type="button" class="mini" data-view="episodes">나가기</button>'}</div>
     ${box}
   </div>`;
 }

@@ -2,7 +2,7 @@
 
 > 자동 생성 파일. 고치지 말 것. 원본은 `js/asset_prompts.js`, 다시 만들기: `node tools/export-prompts.mjs`.
 
-style_version 8 · GPT가 그릴 그림 332장(시트 포함, 잘라 내면 902장) · 묶음 176개
+style_version 8 · GPT가 그릴 그림 370장(시트 포함, 잘라 내면 970장) · 묶음 190개
 
 ## 묶음
 
@@ -111,6 +111,12 @@ style_version 8 · GPT가 그릴 그림 332장(시트 포함, 잘라 내면 902�
 | `enemy-act1` | 1막 적 (시트 → 한 마리씩) | 2 |
 | `enemy-act2` | 2막 적 (시트 → 한 마리씩) | 2 |
 | `enemy-act3` | 3막 적 (시트 → 한 마리씩) | 2 |
+| `enemy-ch2_act1` | 2장 1막 적 (시트 → 한 마리씩) | 1 |
+| `enemy-ch2_act2` | 2장 2막 적 (시트 → 한 마리씩) | 1 |
+| `enemy-ch2_act3` | 2장 3막 적 (시트 → 한 마리씩) | 1 |
+| `enemy-ch3_act1` | 3장 1막 적 (시트 → 한 마리씩) | 1 |
+| `enemy-ch3_act2` | 3장 2막 적 (시트 → 한 마리씩) | 1 |
+| `enemy-ch3_act3` | 3장 3막 적 (시트 → 한 마리씩) | 1 |
 | `foepose-act1` | 1막 적 공격·피격 자세 (시트 → 적마다 2칸) | 4 |
 | `foepose-act2` | 2막 적 공격·피격 자세 (시트 → 적마다 2칸) | 4 |
 | `foepose-act3` | 3막 적 공격·피격 자세 (시트 → 적마다 2칸) | 4 |
@@ -119,6 +125,12 @@ style_version 8 · GPT가 그릴 그림 332장(시트 포함, 잘라 내면 902�
 | `boss-cloud_captain` | 보스 구름 기사단장 | 3 |
 | `boss-fog_queen` | 보스 안개 마녀 여왕 | 3 |
 | `boss-storm_whale` | 보스 폭풍 고래 | 3 |
+| `boss-floodgate` | 보스 수문장 | 3 |
+| `boss-clockknight` | 보스 멈춘 태엽 기사 | 3 |
+| `boss-bellkeeper` | 보스 침묵의 종지기 | 4 |
+| `boss-frostkeeper` | 보스 얼어붙은 등대지기 | 3 |
+| `boss-warden` | 보스 오로라 파수꾼 | 3 |
+| `boss-firstnight` | 보스 첫 밤 | 4 |
 | `boss-dawn` | 보스 새벽 | 4 |
 | `fx-common` | 공용 타격 이펙트 4종 (시트 4장 → 6프레임씩) | 4 |
 | `fx-sion` | 시온 시그니처 이펙트 (시트 1장 → 공격 3·스킬 3프레임) | 1 |
@@ -153,6 +165,8 @@ style_version 8 · GPT가 그릴 그림 332장(시트 포함, 잘라 내면 902�
 | `pet-sion` | ★5 시온 동반자 (시트 1장 → 대기 3·공격 3프레임) | 1 |
 | `proj` | 원거리 투사체 9종 (시트 5장 → 3프레임씩) | 5 |
 | `bg` | 배경 | 13 |
+| `bg-ch2` | 2장 배경 (전투 3 · 지도 3) | 6 |
+| `bg-ch3` | 3장 배경 (전투 3 · 지도 3) | 6 |
 | `tower` | 지도 탑 (막마다 1장) | 3 |
 | `title` | 타이틀 키아트 | 1 |
 | `summon` | 별 소환 연출 | 4 |
@@ -1378,6 +1392,42 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `act3_foes_1` | `assets/sheets/act3_foes_1.png` → `star_statue.png` `shadow_cat.png` `meteor_archer.png` `clock_angel.png` `tail_comet.png` `gear_knight.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 star_statue·shadow_cat·meteor_archer·clock_angel·tail_comet·gear_knight |
 | `act3_foes_2` | `assets/sheets/act3_foes_2.png` → `star_thief.png` `meteor_rider.png` `moon_shadow.png` `constellation_sage.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 star_thief·meteor_rider·moon_shadow·constellation_sage |
 
+## `enemy-ch2_act1` — 2장 1막 적 (시트 → 한 마리씩)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `ch2_act1_foes_1` | `assets/sheets/ch2_act1_foes_1.png` → `gondola_ghost.png` `mask_dancer.png` `canal_rats.png` `lamp_fish.png` `bridge_troll.png` `masque_host.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 gondola_ghost·mask_dancer·canal_rats·lamp_fish·bridge_troll·masque_host |
+
+## `enemy-ch2_act2` — 2장 2막 적 (시트 → 한 마리씩)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `ch2_act2_foes_1` | `assets/sheets/ch2_act2_foes_1.png` → `clockwork_doll.png` `spring_cat.png` `oil_blob.png` `cuckoo_clock.png` `giant_automaton.png` `tinker_ghost.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 clockwork_doll·spring_cat·oil_blob·cuckoo_clock·giant_automaton·tinker_ghost |
+
+## `enemy-ch2_act3` — 2장 3막 적 (시트 → 한 마리씩)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `ch2_act3_foes_1` | `assets/sheets/ch2_act3_foes_1.png` → `choir_ghost.png` `bell_bats.png` `glass_saint.png` `moon_moth.png` `ghost_organist.png` `stone_gargoyle.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 choir_ghost·bell_bats·glass_saint·moon_moth·ghost_organist·stone_gargoyle |
+
+## `enemy-ch3_act1` — 3장 1막 적 (시트 → 한 마리씩)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `ch3_act1_foes_1` | `assets/sheets/ch3_act1_foes_1.png` → `frost_wisp.png` `ice_crab.png` `snow_owl.png` `ice_seal.png` `ice_knight.png` `blizzard_witch.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 frost_wisp·ice_crab·snow_owl·ice_seal·ice_knight·blizzard_witch |
+
+## `enemy-ch3_act2` — 3장 2막 적 (시트 → 한 마리씩)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `ch3_act2_foes_1` | `assets/sheets/ch3_act2_foes_1.png` → `aurora_sprite.png` `crystal_golem.png` `sky_ray.png` `echo_shadow.png` `storm_drake.png` `twin_aurora.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 aurora_sprite·crystal_golem·sky_ray·echo_shadow·storm_drake·twin_aurora |
+
+## `enemy-ch3_act3` — 3장 3막 적 (시트 → 한 마리씩)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `ch3_act3_foes_1` | `assets/sheets/ch3_act3_foes_1.png` → `night_shade.png` `void_star.png` `dream_sleeper.png` `dark_knight.png` `eclipse_lord.png` `nightmare_mask.png` | 1536×1024 투명 | `assets/style/akane_c.png` | 3×2 칸에 night_shade·void_star·dream_sleeper·dark_knight·eclipse_lord·nightmare_mask |
+
 ## `foepose-act1` — 1막 적 공격·피격 자세 (시트 → 적마다 2칸)
 
 | id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
@@ -1445,6 +1495,56 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `boss_storm_whale_1` | `assets/enemies/boss_storm_whale_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
 | `boss_storm_whale_2` | `assets/enemies/boss_storm_whale_2.png` | 1024×1536 투명 | `assets/enemies/boss_storm_whale_1.png` `assets/style/akane_c.png` | — |
 | `boss_storm_whale_cutin` | `assets/cutins/boss_storm_whale_cutin.png` | 1536×576 | `assets/enemies/boss_storm_whale_1.png` `assets/style/akane_c.png` | — |
+
+## `boss-floodgate` — 보스 수문장
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `boss_floodgate_1` | `assets/enemies/boss_floodgate_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+| `boss_floodgate_2` | `assets/enemies/boss_floodgate_2.png` | 1024×1536 투명 | `assets/enemies/boss_floodgate_1.png` `assets/style/akane_c.png` | — |
+| `boss_floodgate_cutin` | `assets/cutins/boss_floodgate_cutin.png` | 1536×576 | `assets/enemies/boss_floodgate_1.png` `assets/style/akane_c.png` | — |
+
+## `boss-clockknight` — 보스 멈춘 태엽 기사
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `boss_clockknight_1` | `assets/enemies/boss_clockknight_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+| `boss_clockknight_2` | `assets/enemies/boss_clockknight_2.png` | 1024×1536 투명 | `assets/enemies/boss_clockknight_1.png` `assets/style/akane_c.png` | — |
+| `boss_clockknight_cutin` | `assets/cutins/boss_clockknight_cutin.png` | 1536×576 | `assets/enemies/boss_clockknight_1.png` `assets/style/akane_c.png` | — |
+
+## `boss-bellkeeper` — 보스 침묵의 종지기
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `boss_bellkeeper_1` | `assets/enemies/boss_bellkeeper_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+| `boss_bellkeeper_2` | `assets/enemies/boss_bellkeeper_2.png` | 1024×1536 투명 | `assets/enemies/boss_bellkeeper_1.png` `assets/style/akane_c.png` | — |
+| `boss_bellkeeper_3` | `assets/enemies/boss_bellkeeper_3.png` | 1024×1536 투명 | `assets/enemies/boss_bellkeeper_1.png` `assets/style/akane_c.png` | — |
+| `boss_bellkeeper_cutin` | `assets/cutins/boss_bellkeeper_cutin.png` | 1536×576 | `assets/enemies/boss_bellkeeper_1.png` `assets/style/akane_c.png` | — |
+
+## `boss-frostkeeper` — 보스 얼어붙은 등대지기
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `boss_frostkeeper_1` | `assets/enemies/boss_frostkeeper_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+| `boss_frostkeeper_2` | `assets/enemies/boss_frostkeeper_2.png` | 1024×1536 투명 | `assets/enemies/boss_frostkeeper_1.png` `assets/style/akane_c.png` | — |
+| `boss_frostkeeper_cutin` | `assets/cutins/boss_frostkeeper_cutin.png` | 1536×576 | `assets/enemies/boss_frostkeeper_1.png` `assets/style/akane_c.png` | — |
+
+## `boss-warden` — 보스 오로라 파수꾼
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `boss_warden_1` | `assets/enemies/boss_warden_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+| `boss_warden_2` | `assets/enemies/boss_warden_2.png` | 1024×1536 투명 | `assets/enemies/boss_warden_1.png` `assets/style/akane_c.png` | — |
+| `boss_warden_cutin` | `assets/cutins/boss_warden_cutin.png` | 1536×576 | `assets/enemies/boss_warden_1.png` `assets/style/akane_c.png` | — |
+
+## `boss-firstnight` — 보스 첫 밤
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `boss_firstnight_1` | `assets/enemies/boss_firstnight_1.png` | 1024×1536 투명 | `assets/style/akane_c.png` | — |
+| `boss_firstnight_2` | `assets/enemies/boss_firstnight_2.png` | 1024×1536 투명 | `assets/enemies/boss_firstnight_1.png` `assets/style/akane_c.png` | — |
+| `boss_firstnight_3` | `assets/enemies/boss_firstnight_3.png` | 1024×1536 투명 | `assets/enemies/boss_firstnight_1.png` `assets/style/akane_c.png` | — |
+| `boss_firstnight_cutin` | `assets/cutins/boss_firstnight_cutin.png` | 1536×576 | `assets/enemies/boss_firstnight_1.png` `assets/style/akane_c.png` | — |
 
 ## `boss-dawn` — 보스 새벽
 
@@ -1671,6 +1771,28 @@ Character reference sheet of 후쿠로 (fukuro): a mysterious night-market merch
 | `bg_ep_lighthouse` | `assets/bg/ep_lighthouse.png` | 1280×720 | `assets/style/akane_c.png` | — |
 | `bg_ep_kitchen` | `assets/bg/ep_kitchen.png` | 1280×720 | `assets/style/akane_c.png` | — |
 | `bg_ep_harbor` | `assets/bg/ep_harbor.png` | 1280×720 | `assets/style/akane_c.png` | — |
+
+## `bg-ch2` — 2장 배경 (전투 3 · 지도 3)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `bg_ch2_act1` | `assets/bg/ch2_act1.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch2_act2` | `assets/bg/ch2_act2.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch2_act3` | `assets/bg/ch2_act3.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch2_map1` | `assets/bg/ch2_map1.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch2_map2` | `assets/bg/ch2_map2.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch2_map3` | `assets/bg/ch2_map3.png` | 1280×720 | `assets/style/akane_c.png` | — |
+
+## `bg-ch3` — 3장 배경 (전투 3 · 지도 3)
+
+| id | 파일 | 크기 | 첨부 | 꼭 보여야 할 것 |
+|---|---|---|---|---|
+| `bg_ch3_act1` | `assets/bg/ch3_act1.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch3_act2` | `assets/bg/ch3_act2.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch3_act3` | `assets/bg/ch3_act3.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch3_map1` | `assets/bg/ch3_map1.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch3_map2` | `assets/bg/ch3_map2.png` | 1280×720 | `assets/style/akane_c.png` | — |
+| `bg_ch3_map3` | `assets/bg/ch3_map3.png` | 1280×720 | `assets/style/akane_c.png` | — |
 
 ## `tower` — 지도 탑 (막마다 1장)
 

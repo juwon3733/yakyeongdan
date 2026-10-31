@@ -1,4 +1,5 @@
 // 지도 생성·이동·시간 계산, 보상·휴식·야시장·사건 처리.
+import { chapterOf } from './data/chapters.js';
 import { S, addTime, rewind, healAll, healMember, member, swapFormation, pickElite, gainRelic, gainGold, endRun, partySum, depthRule } from './run.js';
 import { TALKS } from './data/talks.js';
 import { startCombat, rewardCards } from './combat.js';
@@ -67,7 +68,7 @@ export function makeMap(rng, moon, act = 1) {
     if (valid(rows, edges)) break;
   }
   // 보스는 판 난수를 쓰지 않고 지금 상태에서 따로 굴린다 (지도·셔플 순서를 바꾸지 않게)
-  best.boss = makeRng((rng.state ^ Math.imul(act, 0x9e3779b1)) >>> 0).pick([ACTS[act]?.boss || ['keeper']].flat());
+  best.boss = makeRng((rng.state ^ Math.imul(act, 0x9e3779b1)) >>> 0).pick([actPools(act)?.boss || ['keeper']].flat());
   return best;
 }
 // 이 층에서 갈 수 있는 칸 번호
@@ -90,7 +91,7 @@ export function goNode(r, i) {
   G.took[r] = i; G.floors++; G.note = '';
   if (G.endless) G.endless.floor++;   // 끝없는 탑: 층 세기 (js/endless.js)
   addTime(nodeTime(t));
-  const pool = ACTS[G.act], tn = tutNode(r);
+  const pool = actPools(G.act), tn = tutNode(r);
   // 첫 실행 튜토리얼: 정해진 적·사건, 첫 턴 손패 맞추기 (js/tutorial.js)
   if (tn?.foes) { startCombat(tn.foes.slice(), tn.kind); if (tn.rig) rigHand(tn.rig); }
   else if (tn?.event) openEvent(tn.event);
@@ -239,6 +240,9 @@ export function shopBuy(kind, i) {
   }
 }
 export function leaveShop() { S.G.shop = null; nextRow(); }
+
+// 이 판의 장(js/data/chapters.js)의 막 적 묶음. 끝없는 탑·튜토리얼·에피소드는 1장
+export const actPools = act => (S.G?.endless ? ACTS : chapterOf(S.G).pools)[act] || ACTS[act];
 
 // ---------- 사건 ----------
 function openEvent(id) {

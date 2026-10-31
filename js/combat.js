@@ -1,4 +1,5 @@
 // 전투 엔진: 턴, 손패, 적 1~3마리(의도·노림·상태), 동료별 체력·방어·상태, 대열, 쓰러짐, 연계·듀오, 패시브, 저주.
+import { chapterOf } from './data/chapters.js';
 import { S, addTime, rewind, timeCost, moonFx, logMsg, isDawn, depthRule, member, alive, living, swapFormation, endRun, pushFx, gainRelic, gainGold, healMember, healAll, growthOf } from './run.js';
 import { endlessHp, endlessStr } from './endless.js';
 import { hasRelic, relicSum, relicFlag, rollRelic } from './relics.js';
@@ -43,7 +44,9 @@ export function startCombat(ids, kind) {
   // 밤의 깊이: 강적·보스·일반 적 체력 +%
   const hpMul = (1 + (depthRule(kind === 'elite' ? 'eliteHp' : kind === 'boss' ? 'bossHp' : 'fightHp') || 0))
     * (G.tutorial || G.episode ? 1 : G.endless ? endlessHp(kind) : RULES.foeHpMul?.[G.act]?.[kind] || 1);
-  const foes = ids.map((k, i) => makeFoe(k, i, hpMul));
+  const CH = G.tutorial || G.episode || G.endless || G.season ? null : chapterOf(G).scale;   // 장이 높을수록 적 체력·힘
+  const foes = ids.map((k, i) => makeFoe(k, i, hpMul * (CH?.hp || 1)));
+  if (CH?.str) for (const f of foes) f.str = (f.str || 0) + CH.str;
   rollAffixes(foes, kind);
   if (!G.tutorial) { P.foesSeen ||= []; for (const k of ids) if (!P.foesSeen.includes(k)) P.foesSeen.push(k); save(); }   // 도감 「적」: 만난 적
   const C = S.C = {

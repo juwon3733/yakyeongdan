@@ -263,12 +263,82 @@ export const ENEMIES = {
   },
 };
 
+// 본편 2·3장 적 (js/data/chapters.js) — 막마다 일반 4 + 강적 2 = 시트 한 장
+Object.assign(ENEMIES, {
+  ch2_act1: {
+    gondola_ghost: '뱃사공 유령 — a pale ghost gondolier in a striped shirt and straw hat, rowing with a long oar, misty canal water around his feet',
+    mask_dancer: '가면 무희 — a graceful masquerade dancer with a white porcelain mask and a flowing ribbon dress, mid-twirl (adult woman, modest outfit)',
+    canal_rats: '운하 쥐 떼 — three plump canal rats wearing tiny bandanas, one holding a stolen coin',
+    lamp_fish: '등불 물고기 — a round glowing fish with a lantern fin and spiky scales, floating',
+  },
+  ch2_act1_elite: {
+    bridge_troll: '다리 문지기 — a hulking stone-and-brass bridge gatekeeper with a toll lantern and a giant key',
+    masque_host: '가면 무도회 주인 — a tall elegant adult masquerade host in a long coat with a golden mask and a cane, an aura of ribbons',
+  },
+  ch2_act2: {
+    clockwork_doll: '태엽 인형병 — a wind-up toy soldier doll with a big brass key in its back and a bayonet',
+    spring_cat: '태엽 고양이 — a sleek clockwork cat made of brass plates and springs, glowing blue eyes',
+    oil_blob: '기름 덩어리 — a dark glossy oil slime with gears floating inside it',
+    cuckoo_clock: '뻐꾸기 시계 — a living cuckoo clock with tiny legs, the cuckoo bird shouting out of the door',
+  },
+  ch2_act2_elite: {
+    giant_automaton: '거인 자동인형 — a huge brass automaton with furnace-glow chest, riveted arms and pipes venting steam',
+    tinker_ghost: '땜장이 유령 — a hunched ghost tinkerer with goggles, many tools floating around him',
+  },
+  ch2_act3: {
+    choir_ghost: '성가대 유령 — a pale ghost choir singer in a white robe holding a hymn book, notes floating',
+    bell_bats: '종 박쥐 — two small bats with tiny bronze bells hanging from their feet',
+    glass_saint: '유리 성자 — a stained-glass saint statue come alive, glowing colored glass panels, a halo',
+    moon_moth: '달빛 나방 — a large pale moth with silver moon-pattern wings, glittering dust',
+  },
+  ch2_act3_elite: {
+    ghost_organist: '오르간 연주자 — a ghost organist fused with huge pipe organ pipes, playing with long fingers',
+    stone_gargoyle: '돌 괴수 — a cathedral stone gargoyle with cracked wings and glowing eyes, perched',
+  },
+  ch3_act1: {
+    frost_wisp: '서리 도깨비불 — a floating blue frost will-o-wisp with an icy crown of flame',
+    ice_crab: '얼음 게 — a crab with a shell of clear blue ice crystals',
+    snow_owl: '눈부엉이 — a fluffy white snow owl with frost-tipped feathers',
+    ice_seal: '얼음바다 물범 — a round grey seal with a frosty mustache and icicle whiskers',
+  },
+  ch3_act1_elite: {
+    ice_knight: '얼음 기사 — a tall knight in jagged ice armor holding a frozen greatsword',
+    blizzard_witch: '눈보라 마녀 — an adult snow witch in a white fur cloak, long pale hair whipping in a blizzard, an ice staff',
+  },
+  ch3_act2: {
+    aurora_sprite: '오로라 요정 — a tiny fairy with green-violet aurora wings, trailing ribbons of light',
+    crystal_golem: '수정 골렘 — a golem made of glowing aurora crystals, heavy fists',
+    sky_ray: '하늘 가오리 — a manta ray gliding through the night sky, aurora-colored fins',
+    echo_shadow: '메아리 그림자 — a dark silhouette that repeats itself in fading after-images',
+  },
+  ch3_act2_elite: {
+    storm_drake: '폭풍 비룡 — a slender storm drake with crackling lightning on its scales, wings spread',
+    twin_aurora: '쌍둥이 오로라 — two spirits of green and violet light twisting around each other',
+  },
+  ch3_act3: {
+    night_shade: '밤그림자 — a hooded shade of pure night with star-like eyes, a long scythe of dark light',
+    void_star: '빈 별 — a hollow black star with a glowing pink core, cracking',
+    dream_sleeper: '잠꾸러기 꿈 — a drowsy cloud-like dream creature in a nightcap, yawning, stars around it',
+    dark_knight: '그믐 기사 — a knight in crescent-moon black armor with a dark shield',
+  },
+  ch3_act3_elite: {
+    eclipse_lord: '일식 — a towering figure whose head is a black sun with a fiery corona ring',
+    nightmare_mask: '악몽 — a shifting phantom with many smiling masks floating around a dark cloak',
+  },
+});
+
 export const BOSSES = {
   star_king: { name: '떨어진 별의 왕', beast: false, p1: 'season-1 boss "The Fallen Star King": a tall regal adult man who fell from the night sky, long white-blue hair floating like a comet tail, a cracked golden star crown, a deep-navy royal coat embroidered with constellations, a scepter tipped with a burning star, small star shards orbiting him', p2: 'second phase: the crown blazes, a rain of falling stars pours around him, the coat torn open showing a glowing star core in his chest', p3: 'third phase "Fall": he becomes a falling meteor himself — body wreathed in white-gold fire, hair streaming upward, the crown shattered, descending with a burning trail', cutin: 'close-up of the fallen star king raising his star scepter, a meteor shower streaking behind him, eyes like cold stars' },
   lighthouse: { name: '등대지기', p1: 'a huge burly old lighthouse keeper with a white beard, a raincoat, carrying a rotating lighthouse lamp that shoots a beam of light', p2: 'second phase: the lamp splits into two beams, his coat torn by the wind, eyes glowing', cutin: 'close-up of the old keeper and the blinding lighthouse beam sweeping across' },
   cloud_captain: { name: '구름 기사단장', p1: 'an adult woman knight commander in heavy cloud-white armor, long silver hair, a long lance, a plumed helmet', p2: 'second phase: she has thrown off the heavy armor, now in a sleek fitted battle suit, silver hair loose, lance crackling with wind', cutin: 'close-up of her casting off the heavy armor, plates flying, silver hair whipping' },
   fog_queen: { name: '안개 마녀 여왕', p1: 'act-1 alternate boss: the queen of the sea-fog witches — an elegant tall adult woman with very long flowing lavender hair that dissolves into mist at the tips, pale green glowing eyes, a crown of frosted sea-glass and pearls, a fitted gown of layered translucent fog-silk with bare shoulders and a high slit, a lantern-scepter whose green flame drips fog, a veil of mist curtaining around her like a stage', p2: 'second phase: she raises the scepter high, the mist veil tears open into swirling fog-shadow silhouettes around her, her hair whipping upward, eyes blazing green, the crown glowing', cutin: 'close-up of her half-veiled face, one green eye visible through parting fog, a sly smile, pearls and sea-glass catching the lantern light' },
   storm_whale: { name: '폭풍 고래', beast: true, p1: 'act-2 alternate boss: a colossal sky whale swimming through a sea of clouds, deep navy hide with glowing pale-blue constellation-like markings, a crackling thundercloud riding on its back like a mane, small clock-gear barnacles along its jaw, huge calm golden eye (draw the head and front half large, the tail fading into cloud)', p2: 'second phase "eye of the storm": the whale rears up as a cyclone wraps around it, lightning arcing between its markings, the thundercloud mane blazing white, rain and wind lines', cutin: 'extreme close-up of the giant golden eye reflecting the tiny night-watch party, lightning crackling across the navy hide' },
+  floodgate: { name: '수문장', beast: true, p1: 'chapter-2 act-1 boss "Floodgate Warden": a giant guardian made of a canal lock gate, brass wheels and green-weathered stone, water pouring from its seams, two huge iron arms', p2: 'second phase: the floodgates on its chest burst open, torrents of water spraying everywhere, glowing teal eyes', cutin: 'the floodgate warden raising its iron arms as a wall of canal water rises behind it' },
+  clockknight: { name: '멈춘 태엽 기사', p1: 'chapter-2 act-2 boss "Stopped Clockwork Knight": a tall knight in brass clockwork armor, a big clock face on the chest frozen at midnight, a long gear-edged sword', p2: 'second phase: the knight has wound its own key, gears spinning fast, steam bursting from the joints, the clock hands racing', cutin: 'the clockwork knight drawing its gear-edged sword, its chest clock frozen at midnight' },
+  bellkeeper: { name: '침묵의 종지기', p1: 'chapter-2 final boss "The Silent Bellkeeper": a tall gaunt hooded bell-ringer in dark robes with bronze chains, holding a giant cracked church bell with both arms, glowing pale eyes', p2: 'second phase: the bellkeeper slams the cracked bell, a silent shockwave of pale blue rings around it, robes torn by the wind', p3: 'third phase: the bell is shaking and glowing gold from inside, the bellkeeper desperately holding it shut, cracks of light', cutin: 'the silent bellkeeper hugging the huge cracked bell under the moonlit cathedral rafters' },
+  frostkeeper: { name: '얼어붙은 등대지기', p1: 'chapter-3 act-1 boss "The Frozen Lighthousekeeper": an old keeper frozen into a pillar of ice, a lighthouse lamp of blue cold fire in one hand, icicle beard', p2: 'second phase: the lamp bursts into bright blue flame, frost cracking off his body, a cold beam sweeping', cutin: 'the frozen keeper lifting a lamp of blue cold fire on an icy island at night' },
+  warden: { name: '오로라 파수꾼', p1: 'chapter-3 act-2 boss "Aurora Warden": an adult woman sentinel in armor of flowing aurora light, long hair like green and violet curtains of light, a spear of light', p2: 'second phase: she has spread the aurora curtain like great wings, healing light swirling around her', cutin: 'the aurora warden spreading curtains of green and violet light across a canyon sky' },
+  firstnight: { name: '첫 밤', p1: 'chapter-3 final boss "The First Night": a serene, very tall adult woman made of the night sky, long hair full of stars, a gown of deep indigo, sitting on a throne of stars; tired gentle eyes', p2: 'second phase: she has pulled all the stars down around her, the sky behind her empty, holding a crescent moon like a blade', p3: 'third phase: she glows softly from within, the first light of dawn leaking through her, calm and exhausted', cutin: 'the First Night rising from her throne of stars, hair spilling into the night sky' },
   dawn: { name: '새벽', p1: 'the master of the tower: an adult woman with long white hair and gold eyes, a sky-blue dress the color of a sunrise, holding a giant clock hand as a weapon, faint sunlight behind her', p2: 'second phase "the sun rises": her dress blazes with sunrise orange and gold, a halo of dawn light, the clock hand glowing', cutin: 'close-up of her golden eyes as the sun rises behind her, the night sky splitting', p3: 'third phase "high noon" (only on deep difficulty): she soars above the tower with the full sun behind her like great wings of light, white hair turned to gold flame, the clock hand now a blazing spear, the dress pure white and gold, overwhelming radiance but the same face' },
 };
 
@@ -501,9 +571,9 @@ ${c.name} is ON-MODEL from the attached references in every cell. Visual motifs:
   }
 
   // 적: 막마다 일반 적 + 강적을 3×2 시트(6마리씩)로
-  for (const act of ['act1', 'act2', 'act3']) {
+  for (const act of ['act1', 'act2', 'act3', 'ch2_act1', 'ch2_act2', 'ch2_act3', 'ch3_act1', 'ch3_act2', 'ch3_act3']) {
     const batch = `enemy-${act}`;
-    batches.push({ id: batch, title: `${act.slice(-1)}막 적 (시트 → 한 마리씩)` });
+    batches.push({ id: batch, title: `${act.startsWith("ch") ? act.slice(2, 3) + "장 " : ""}${act.slice(-1)}막 적 (시트 → 한 마리씩)` });
     const list = [...Object.entries(ENEMIES[act]).map(([id, d]) => ['enemy', id, d]), ...Object.entries(ENEMIES[act + '_elite']).map(([id, d]) => ['elite', id, d])];
     for (let n = 0; n * 6 < list.length; n++) {
       const part = list.slice(n * 6, n * 6 + 6);
@@ -603,6 +673,17 @@ One 1536x1024 canvas split into six equal square cells of 512x512 (3 columns x 2
   batches.push({ id: 'bg', title: '배경' });
   for (const [id, desc] of Object.entries(BGS)) {
     out.push(item('bg', `bg_${id}`, 'bg', `${id}.png`, join(STYLE.pixel, STYLE.handmade, `Background: ${desc}. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 pixels, full color, limited palette of about 64 colors, upscaled exactly 2x with nearest-neighbor to 1280x720.`)));
+  }
+  // 본편 2·3장 배경(전투 3 · 지도 3): 그림이 오기 전엔 1장 그림을 쓴다(js/render/index.js)
+  const CH_BG = {
+    ch2: { act1: 'a narrow night canal street in a sleeping city: gondolas, arched bridges, closed shutters, lamps reflected in still water', act2: 'a clockwork workshop at night: huge frozen gears, workbenches, wind-up toys, warm brass light', act3: 'a moonlit cathedral nave: tall stained glass, pipe organ, a huge cracked bell hanging high',
+           map1: 'a canal city seen from above at night, a clocktower stopped at midnight in the center', map2: 'the clockwork district rising in tiers, chimneys and gears, seen from outside at night', map3: 'a gothic cathedral on a hill above the canal city, moon behind its bell tower' },
+    ch3: { act1: 'an icy lighthouse island at the edge of a star sea, snow and frozen waves, a dead lighthouse', act2: 'an aurora canyon: crystal cliffs, green and violet aurora curtains, a narrow sky bridge', act3: 'a throne room made of stars floating in a void, steps of light, galaxies all around',
+           map1: 'a lone frozen island with a lighthouse in a sea full of stars', map2: 'a deep canyon of crystal under aurora lights, seen from far', map3: 'a staircase of stars rising to a floating throne at the edge of the universe' },
+  };
+  for (const [ch, list] of Object.entries(CH_BG)) {
+    batches.push({ id: `bg-${ch}`, title: `${ch.slice(2)}장 배경 (전투 3 · 지도 3)` });
+    for (const [k, desc] of Object.entries(list)) out.push(item('bg', `bg_${ch}_${k}`, `bg-${ch}`, `${ch}_${k}.png`, join(STYLE.pixel, STYLE.handmade, `Background: ${desc}. No people. Wide 16:9 view; keep the lower third simple so characters can stand in front. Native resolution 640x360 upscaled exactly 2x with nearest-neighbor to 1280x720.`)));
   }
   // 지도 화면의 탑: 막마다 한 장. 게임(js/render/map.js)이 이 위에 층 난간·계단·칸 아이콘을 얹는다
   batches.push({ id: 'tower', title: '지도 탑 (막마다 1장)' });

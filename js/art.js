@@ -47,8 +47,16 @@ const FOE_FILE = {
   statue: 'star_statue', cat: 'shadow_cat', archer: 'meteor_archer', angel: 'clock_angel', rider: 'meteor_rider', shadow: 'moon_shadow',
   comet: 'tail_comet', gear: 'gear_knight', thief: 'star_thief', sage: 'constellation_sage',
   mistling: 'mistling', tut_ghost: 'sea_ghost', tut_gull: 'gulls',
+  // 본편 2·3장 (js/data/chapters.js)
+  gondola: 'gondola_ghost', dancer: 'mask_dancer', rat: 'canal_rats', lampfish: 'lamp_fish', troll: 'bridge_troll', masque: 'masque_host',
+  doll: 'clockwork_doll', springcat: 'spring_cat', oil: 'oil_blob', cuckoo: 'cuckoo_clock', automaton: 'giant_automaton', tinker: 'tinker_ghost',
+  choir: 'choir_ghost', bellbat: 'bell_bats', saint: 'glass_saint', moth: 'moon_moth', organist: 'ghost_organist', gargoyle: 'stone_gargoyle',
+  wisp: 'frost_wisp', icecrab: 'ice_crab', owl: 'snow_owl', seal: 'ice_seal', iceknight: 'ice_knight', yetiwitch: 'blizzard_witch',
+  sprite: 'aurora_sprite', golem: 'crystal_golem', ray: 'sky_ray', echo: 'echo_shadow', drake: 'storm_drake', twinlight: 'twin_aurora',
+  shade: 'night_shade', voidstar: 'void_star', sleeper: 'dream_sleeper', darkknight: 'dark_knight', eclipse: 'eclipse_lord', nightmare: 'nightmare_mask',
 };
-const BOSS_FILE = { starking: 'star_king', keeper: 'lighthouse', queen: 'fog_queen', captain: 'cloud_captain', whale: 'storm_whale', dawn: 'dawn' };
+const BOSS_FILE = { starking: 'star_king', keeper: 'lighthouse', queen: 'fog_queen', captain: 'cloud_captain', whale: 'storm_whale', dawn: 'dawn',
+  floodgate: 'floodgate', clockknight: 'clockknight', bellkeeper: 'bellkeeper', frostkeeper: 'frostkeeper', warden: 'warden', firstnight: 'firstnight' };
 // 보스 컷인(cutins/boss_<파일>_cutin.png): 보스 등장 연출
 export const bossCutin = key => BOSS_FILE[key] ? artURL(`cutins/boss_${BOSS_FILE[key]}_cutin.png`) : null;
 export function foeArt(f) {

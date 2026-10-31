@@ -16,6 +16,9 @@ import { EPISODES, BOND_SCENES } from './data/episodes.js';
 import { DAILY_SHARDS, DAILY_CANDIDATES, dailyKey, dailySeed, dailyRule } from './data/daily.js';
 import { ACHIEVEMENTS } from './data/achievements.js';
 import { MASTERY_GAIN, MASTERY_REWARDS, masteryLv } from './data/mastery.js';
+import { CHAPTER_MAX, chapterOf } from './data/chapters.js';
+import { FOE } from './data/enemies.js';
+const chapterFinal = G => chapterOf(G).final;
 import { LV_MAX, lvNeed, XP_GAIN, LV_HP, LV_POWER, talentPoints, NODES, needOf } from './data/growth.js';
 import { ENDLESS } from './data/endless.js';
 
@@ -118,13 +121,13 @@ export const duoSpecial = id => starsOf(id) >= 5;
 export const sigOf = id => Object.keys(RELICS).find(k => RELICS[k].tier === 'sig' && RELICS[k].owner === id);
 
 // 판을 시작할 때 넘기는 것 (run.js newRun opts)
-export function runOptions(party, depth = 0, startRelic, { noGrow = false } = {}) {
+export function runOptions(party, depth = 0, startRelic, { noGrow = false, chapter = 1 } = {}) {
   const locked = [];
   for (const id of party) packCards(id).slice(packsOpen(id)).forEach(pk => locked.push(...pk));
   return {
     depth: depthOpen() ? Math.min(depth, depthMax()) : 0, locked,
     upgrades: party.filter(startUp), sigs: party.filter(sigOpen),
-    grow: noGrow ? {} : Object.fromEntries(party.filter(owns).map(id => [id, growthFx(id)])),
+    chapter, grow: noGrow ? {} : Object.fromEntries(party.filter(owns).map(id => [id, growthFx(id)])),
     startRelic: startPickOpen() && startRelicChoices().includes(startRelic) ? startRelic : undefined,
   };
 }
@@ -292,7 +295,7 @@ export function runShards(G) {
   const bosses = G.bossKills || 0;
   add(`막 보스 격파 ${bosses}번`, bosses * SHARDS.actBoss);
   if (G.won) {
-    add('「새벽」 격파', SHARDS.dawnWin);
+    add(`「${FOE[chapterFinal(G)]?.name || '새벽'}」 격파`, SHARDS.dawnWin);
     const early = Math.max(0, RULES.dawn - G.clock);
     add(`6시 전 ${early}분`, Math.min(SHARDS.earlyMax, Math.floor(early / 10) * SHARDS.earlyPer10));
     if ((G.depth || 0) > (P.rec.depthBest || 0)) add(`밤의 깊이 ${G.depth} 처음 격파`, G.depth * DEPTH_BONUS);
@@ -302,6 +305,10 @@ export function runShards(G) {
   add(`강적 ${G.elites || 0}번`, (G.elites || 0) * SHARDS.elite);
   if (!G.won) add(`오른 층 ${G.floors || 0}칸`, Math.max(SHARDS.lossMin, G.floors || 0));
   if (G.daily && G.won && !P.daily[G.daily.key]?.won) add('오늘의 매일의 밤 첫 격파', DAILY_SHARDS);
+  // 높은 장일수록 보상 더(장마다 +30%), 장을 처음 깨면 장 보너스
+  const ch = G.chapter || 1;
+  if (ch > 1 && !G.daily) { const sub = lines.reduce((t, [, v]) => t + v, 0); add(`${ch}장 보상 +${(ch - 1) * 30}%`, Math.round(sub * .3 * (ch - 1))); }
+  if (G.won && !G.endless && !G.daily && !G.season && ch > (P.chapterClear || 0)) add(`${ch}장 처음 격파`, 50 * ch);
   return { lines, total: lines.reduce((t, [, v]) => t + v, 0), newDuos };
 }
 // ---------- 에피소드 (docs/09_episodes.md) ----------
@@ -351,6 +358,7 @@ export function grantRun(G) {
   P.shards += r.total; P.runs++;
   r.seasonXp = passXp(G);   // 시즌 패스 별 (js/season.js)
   if (G.won) { P.wins++; if (P.best == null || G.clock < P.best) P.best = G.clock; }
+  if (G.won && !G.endless && !G.daily && !G.season) P.chapterClear = Math.max(P.chapterClear || 0, G.chapter || 1);
   for (const k of r.newDuos) P.seenDuos.push(k);
   // 기록: 동료별 판·이긴 판, 조합별 가장 빠른 도착, 달별 승리, 밤의 깊이
   for (const p of G.party) { const s = P.charStats[p] ||= { runs: 0, wins: 0 }; s.runs++; if (G.won) s.wins++; }
@@ -436,7 +444,8 @@ export function resetTalents(id) { growRec(id).tal = []; save(); }
 // 판 끝: 데려간(가진) 동료마다 경험치 → 레벨 업 목록
 function recordGrowth(G) {
   if (G.daily || G.tutorial) return [];
-  const xp = XP_GAIN.run + (G.fights || 0) * XP_GAIN.fight + (G.elites || 0) * XP_GAIN.elite + (G.bossKills || 0) * XP_GAIN.boss + (G.won ? XP_GAIN.win : 0);
+  const chMul = 1 + .25 * ((G.chapter || 1) - 1);   // 높은 장일수록 경험치 더
+  const xp = Math.round(chMul * (XP_GAIN.run + (G.fights || 0) * XP_GAIN.fight + (G.elites || 0) * XP_GAIN.elite + (G.bossKills || 0) * XP_GAIN.boss + (G.won ? XP_GAIN.win : 0)));
   const ups = [];
   for (const id of G.party.filter(owns)) {
     const g = growRec(id), before = g.lv;
@@ -518,7 +527,9 @@ export function achCheck() {
 }
 
 // ---------- 끝없는 탑 (§12, js/data/endless.js) ----------
-export const endlessOpen = () => P.wins > 0;
+export const endlessOpen = () => true;   // 끝없는 탑은 처음부터 바로 시작할 수 있다
+// 본편 장: 깬 장 다음 장까지 열림 (js/data/chapters.js)
+export const chapterNext = () => Math.min(CHAPTER_MAX, (P.chapterClear || 0) + 1);
 // 끝없는 탑이 끝나면 한 번만: 별 조각(층 비례·상한 + 탑 위 보스) · 최고 층 · 조합별 최고 층 · 최근 판 · 업적
 // 「새벽」을 깬 판에서 이어 올랐으면 그 판의 보상(grantRun)은 이미 받았다. 새로 시작한 판이면 판 수에 넣는다.
 export function grantEndless(G) {
