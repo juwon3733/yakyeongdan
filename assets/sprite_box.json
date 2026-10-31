@@ -55,6 +55,8 @@
  "foe_anchor_giant": [40,40,471,479],
  "foe_anchor_giant_attack": [0,6,505,503],
  "foe_anchor_giant_hurt": [0,14,503,497],
+ "foe_boss_clockknight_1": [2,3,126,191],
+ "foe_boss_clockknight_2": [0,3,127,190],
  "foe_boss_cloud_captain_1": [1,0,127,190],
  "foe_boss_cloud_captain_2": [1,1,126,189],
  "foe_boss_dawn_1": [0,2,127,188],
