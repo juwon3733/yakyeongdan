@@ -101,3 +101,26 @@
 .towermap .mapgrid .node.now .ic{animation:yk-nodebob 1.2s steps(2) infinite}
 @keyframes yk-nodebob{50%{transform:translateY(-2px)}}
 #stage.calm .towermap .mapgrid .node.now .ic{animation:none}
+/* 탑 v3: 탑 그림 위에 깔린 「순서도」(회색 선반 줄·흰 점선 길·층 이름·회색 아이콘 줄)를 걷어 내고, 그림이 주인공.
+   - 층 이름·선반 줄 없음(그림에 층이 있다) / 길은 지금 갈 수 있는 길만 금빛, 지나온 길은 흐린 불빛, 그 너머는 아주 옅게
+   - 이제 못 가는 칸·지나친 다른 칸은 지운다 / 갈 칸 아이콘 아래 창문 불빛 */
+.towermap .mapgrid.art .ledge,.towermap .mapgrid.art .rowlabel{display:none}
+.towermap .mapgrid.art .edges path.dim{display:none}
+.towermap .mapgrid.art .edges path.open{stroke:rgba(255,226,160,.28);stroke-width:1.5;stroke-dasharray:1 4;filter:none}
+.towermap .mapgrid.art .edges path.trail{stroke:rgba(255,190,110,.55);stroke-width:2;stroke-dasharray:2 3;filter:none}
+.towermap .mapgrid.art .edges path.on{stroke:#ffd890;stroke-width:2.5;stroke-dasharray:2 3;filter:drop-shadow(0 0 3px rgba(255,200,110,.9))}
+.towermap .mapgrid .node.out,.towermap .mapgrid .node.past:not(.took){opacity:0;pointer-events:none}
+.towermap .mapgrid .node.past.took .ic{filter:brightness(.55) sepia(.6) drop-shadow(1px 1px 0 #000)}
+.towermap .mapgrid .node.future .ic{filter:brightness(.7) saturate(.7) drop-shadow(1px 1px 0 #000);transform:scale(.8)}
+.towermap .mapgrid .node.now::before{width:44px;height:30px;bottom:6px;background:radial-gradient(ellipse 50% 50%,rgba(255,190,90,.55),transparent 72%)}
+.towermap .mapgrid .node .tag b{text-shadow:1px 1px 0 #000,-1px 0 0 #000}
+/* 대열 판: 큰 상자 셋 쌓은 틀 대신 오른쪽 아래 작은 얼굴 셋(누르면 자리 바꿈) */
+.towermap .formation,.towermap .formation:is(*){border:0!important;border-image:none!important;background:none!important;filter:none!important;padding:0!important;flex-direction:row;align-items:flex-end;justify-content:flex-end;gap:8px}
+.towermap .formation .lbl{align-self:center;font-size:10px;color:#b8b4d8;margin-right:2px}
+.towermap .slot,.towermap .slot:not(:disabled):hover{flex-direction:column;align-items:center;gap:1px;width:58px;padding:2px 0;border:0;border-image:none;background:none;box-shadow:none;filter:none}
+.towermap .slot .face{width:40px;height:40px;border:2px solid var(--c);box-shadow:2px 2px 0 #000}
+.towermap .slot .row{min-width:0;font-size:8px;color:#b8b4d8;order:-1}
+.towermap .slot .nm{flex:none;text-align:center;font-size:9px;text-shadow:1px 1px 0 #000}
+.towermap .slot .hp{font-size:8px;color:#d8b8c0;text-shadow:1px 1px 0 #000}
+.towermap .slot.sel .face{border-color:#fff;box-shadow:0 0 0 2px var(--gold),2px 2px 0 #000}
+.towermap .slot:hover .face{filter:brightness(1.15)}
