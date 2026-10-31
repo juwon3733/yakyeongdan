@@ -116,7 +116,7 @@ export const CHAPTERS = {
   1: { id: 1, name: '1장 · 등대의 탑', short: '등대의 탑', col: '#ffb070',
        acts: { 1: '1막 · 항구층', 2: '2막 · 구름층', 3: '3막 · 별층' }, pools: ACTS, final: 'dawn',
        scale: { hp: 1, str: 0 }, story: { start: 'ch1_start', boss: 'ch1_boss', end: 'ch1_end' },
-       blurb: '밤마다 탑을 올라 「새벽」을 넘긴다.' },
+       blurb: '밤마다 탑을 올라 새벽을 넘긴다.' },
   2: { id: 2, name: '2장 · 잠든 운하 도시', short: '잠든 운하 도시', col: '#7ad0c8',
        acts: { 1: '1막 · 물길 거리', 2: '2막 · 태엽 공방', 3: '3막 · 달빛 대성당' },
        pools: {

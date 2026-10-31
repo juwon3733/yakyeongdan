@@ -118,7 +118,7 @@ export function partyView() {
   S.picked.forEach(a => S.picked.forEach(b => { if (a !== b && DUOS[duoKey(a, b)]) { bonded.add(a); bonded.add(b); } }));
   const order = S.picked.slice().sort((a, b) => (CHARACTERS[a]?.maxHp || 0) - (CHARACTERS[b]?.maxHp || 0));
   // 패시브 글은 이름표에 커서를 대면(무대 아래 글 벽은 뺐다)
-  const ps = S.picked.length ? '' : '<p class="note pempty">아래에서 동료 셋을 고른다. 처음엔 체력이 높은 동료가 앞에 선다.</p>';
+  const ps = '';   // 빈 무대 가운데 설명 글은 뺐다(빈 자리 ? 표시가 고를 곳을 보여 준다)
   return `<div class="title partyscr p2">
     <div class="thead"><button type="button" class="mini" data-view="${S.mode === 'season' ? 'season' : 'base'}">‹ ${S.mode === 'season' ? '시즌' : '본부'}</button><h2>${S.mode === 'endless' ? '끝없는 탑' : S.mode === 'season' ? '시즌 보스' : '출격 준비'}</h2></div>
     <div class="pmain">
