@@ -463,6 +463,7 @@ modal.addEventListener('click', e => {
   if (e.target === modal || e.target.closest('[data-close]')) { closeModal(); return; }
   const b = e.target.closest('button'); if (!b || b.disabled) return;
   const D = b.dataset;
+  if ('dkf' in D) { S.deckFilter = D.dkf; const y = modal.querySelector('.dkbox')?.scrollTop || 0; modal.innerHTML = deckModal(); const bx = modal.querySelector('.dkbox'); if (bx) bx.scrollTop = Math.min(y, bx.querySelector('.dkfilter')?.offsetTop || 0); return; }
   if ('sintro' in D) { closeModal(); S.view = D.sintro; if (D.sintro === 'summon') S.hint = null; render(); return; }
   // 전체 화면 · 저장 백업 (js/pwa.js · js/meta.js)
   if ('fs' in D) { toggleFullscreen().then(() => { if (!modal.hidden) openSettings(); }); return; }

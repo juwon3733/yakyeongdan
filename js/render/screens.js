@@ -207,11 +207,38 @@ function deckGroups(deck) {
     return `<div class="dkgrp" style="--c:${col}"><h3>${nm} <small>${ids.length}</small></h3><div class="dkgrid">${uniq.map(id => cnt(id) > 1 ? `<span class="dkstack" style="--n:${Math.min(3, cnt(id) - 1)}">${cardHTML(id, true, 'none')}<b class="dkn">×${cnt(id)}</b></span>` : cardHTML(id, true, 'none')).join('')}</div></div>`;
   }).join('');
 }
+// 덱 거르기: 전체 · 동료별(파티 셋) · 종류별(공격·방어·스킬·저주). S.deckFilter에 기억해 다시 열어도 그대로.
+const DK_KINDS = [['atk', '공격'], ['guard', '방어'], ['skill', '스킬'], ['curse', '저주']];
+export function deckKind(d) {
+  if (d.ch === 'curse') return 'curse';
+  if (d.atk) return 'atk';
+  if (d.block || /방어/.test(String(d.text || ''))) return 'guard';
+  return 'skill';
+}
+function deckFilterOf(G) {
+  const f = S.deckFilter || 'all';
+  if (f.startsWith('ch:') && !G.party.includes(f.slice(3))) return 'all';
+  return f;
+}
+function deckMatch(f, d) {
+  if (f === 'all') return true;
+  if (f.startsWith('ch:')) { const c = f.slice(3); return d.ch === c || (d.ch === 'duo' && (d.a === c || d.b === c)); }
+  return deckKind(d) === f.slice(2);
+}
+function deckFilterBar(G, f) {
+  const cnt = fn => G.deck.filter(id => fn(cardData(id))).length;
+  const btn = (k, inner, n, tip) => `<button type="button" class="mini dkf${f === k ? ' on' : ''}" data-dkf="${k}"${tip ? ` aria-label="${esc(tip)}"` : ''}>${inner}<small>${n}</small></button>`;
+  return `<div class="dkfilter">${btn('all', '전체', G.deck.length)}<i class="dksep"></i>${
+    G.party.map(p => btn(`ch:${p}`, face(p, 'dkfc'), cnt(d => deckMatch(`ch:${p}`, d)), CHARACTERS[p].name)).join('')}<i class="dksep"></i>${
+    DK_KINDS.map(([k, t]) => btn(`k:${k}`, t, cnt(d => deckKind(d) === k))).join('')}</div>`;
+}
 export function deckModal() {
-  const G = S.G;
+  const G = S.G, f = deckFilterOf(G);
+  const shown = G.deck.filter(id => deckMatch(f, cardData(id)));
   return `<div class="box dkbox" role="dialog" aria-label="덱"><button type="button" class="mini dkclose" data-close>닫기</button>
     <h2>덱 ${G.deck.length}장 <small>별빛 ✦${G.gold}</small></h2>
-    ${deckGroups(G.deck)}
+    ${deckFilterBar(G, f)}
+    ${shown.length ? deckGroups(shown) : '<p class="note dkempty">이 갈래의 카드가 없다.</p>'}
     <h2>도구 ${G.relics.length}개</h2>
     <div class="relicall">${G.relics.map(id => relicBox(id, G.used[id] ? ' (썼다)' : '')).join('')}</div></div>`;
 }

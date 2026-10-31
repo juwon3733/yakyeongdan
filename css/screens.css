@@ -388,3 +388,27 @@ details.fold > :not(summary){margin:4px 6px 5px}
 .fxarr{font-style:normal;font-size:10px;color:var(--dim)}
 .fxarr.loop{color:var(--gold);margin-left:2px}
 @media (max-width:560px){ .fxwrap{flex-direction:column} .fxside{position:static;flex:none;width:100%} }
+
+/* 판 중 덱 보기: 거르기 줄 · 묶음 도장 · 마우스 확대(#cardpeek, js/cardzoom.js) */
+.dkfilter{position:sticky;top:0;z-index:4;display:flex;flex-wrap:wrap;align-items:center;gap:3px;margin:0 60px 4px 0;padding:3px 0;background:var(--panel)}
+.dkfilter .dkf{display:inline-flex;align-items:center;gap:3px;width:auto;min-width:0;padding:2px 6px;font-size:10px}
+.dkfilter .dkf small{font-size:8px;color:var(--dim)}
+.dkfilter .dkf.on small{color:#3a2408}
+.dkfilter .dkf .face.dkfc{width:18px;height:18px;flex:none}
+.dkfilter .dkf .face.dkfc img{width:18px;height:18px}
+.dkfilter .dksep{width:2px;height:14px;background:var(--line);margin:0 2px}
+.dkempty{margin:12px 0;text-align:center}
+.dkgrid .card[data-cid]{cursor:zoom-in;transition:transform .08s steps(2)}
+.dkgrid .card[data-cid]:hover{transform:translate(-1px,-2px);outline:2px solid var(--gold);outline-offset:0}
+.dkstack .dkn{transform:rotate(8deg);border:1px solid #241404}
+#cardpeek{position:absolute;top:50%;right:14px;z-index:61;pointer-events:none;transform:translateY(-50%);animation:peekin .1s steps(2)}
+#cardpeek.left{right:auto;left:14px}
+#stage #cardpeek .card.zoom{flex:none;width:170px;height:252px;--ah:126px;border-width:3px;box-shadow:4px 4px 0 #000;margin:0}
+#stage #cardpeek .card.zoom .cost{width:24px;height:24px;font-size:14px;left:4px;top:4px}
+#stage #cardpeek .card.zoom .hd{font-size:13px;padding:2px 5px}
+#stage #cardpeek .card.zoom .bd{font-size:10.5px;line-height:1.4;padding:4px 6px}
+#stage #cardpeek .card.zoom .tm,#stage #cardpeek .card.zoom .tg{font-size:9px;padding:1px 3px}
+#stage #cardpeek .card.zoom .who{display:flex;font-size:9px;padding:2px 5px 3px;gap:3px}
+#stage #cardpeek .card.zoom .who .fc img{width:16px;height:16px}
+@keyframes peekin{from{transform:translateY(-50%) scale(.6)}to{transform:translateY(-50%) scale(1)}}
+@media (hover:none){#cardpeek{display:none}}

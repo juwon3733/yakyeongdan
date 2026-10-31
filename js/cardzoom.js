@@ -43,3 +43,25 @@ addEventListener('pointerup', cancel, true);
 addEventListener('pointercancel', cancel, true);
 addEventListener('click', e => { if (swallow) { swallow = false; e.stopPropagation(); e.preventDefault(); } }, true);
 addEventListener('keydown', e => { if (e.key === 'Escape' && !box.hidden) { closeZoom(); e.stopPropagation(); } }, true);
+
+// 덱 보기 등 목록 카드에 마우스를 대면 손패처럼 크게 띄운다(누르기 막지 않음). 카드 반대쪽에 띄워 가리지 않게.
+const PEEK_SEL = '.dkgrid .card[data-cid]';
+const peek = document.createElement('div');
+peek.id = 'cardpeek'; peek.hidden = true; peek.setAttribute('aria-hidden', 'true');
+stage.append(peek);
+let peekEl = null;
+const hidePeek = () => { if (!peekEl) return; peekEl = null; peek.hidden = true; peek.innerHTML = ''; };
+addEventListener('pointerover', e => {
+  if (e.pointerType && e.pointerType !== 'mouse') return;
+  const el = e.target.closest?.(PEEK_SEL);
+  if (!el) { hidePeek(); return; }
+  if (el === peekEl) return;
+  peekEl = el;
+  peek.innerHTML = cardHTML(el.dataset.cid, true, 'none').replace('class="card ', 'class="card zoom ');
+  const sr = stage.getBoundingClientRect(), r = el.getBoundingClientRect();
+  peek.classList.toggle('left', (r.left + r.right) / 2 > sr.left + sr.width / 2);
+  peek.hidden = false;
+});
+addEventListener('pointerdown', hidePeek, true);
+addEventListener('keydown', hidePeek, true);
+new MutationObserver(() => { if (peekEl && !peekEl.isConnected) hidePeek(); }).observe(stage, { childList: true, subtree: true });
